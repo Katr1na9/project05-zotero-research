@@ -38,6 +38,13 @@
 | P1 | Beyond RAG for CTI | GraphRAG / HybridRAG 检索架构与失败模式 | 已沉淀 |
 | P1 | A Modular Approach to Automatic Cyber Threat Attribution using Opinion Pools | 模块化可信归因与概率融合 | 已沉淀 |
 | P1 | High Stakes, Low Certainty | 勒索软件归因中高层 IoC/TTP 的证据可靠性 | 已沉淀 |
+| P1 | Multi-Step LLM Pipeline | 多阶段 LLM + retrieval 的 TTP 抽取基线 | 已沉淀 |
+| P1 | Open-CyKG | 开放 CTI 知识图谱底座 | 已沉淀 |
+| P1 | UNICORN | 经典运行时 provenance-based APT 检测 | 已沉淀 |
+| P1 | THREATRACE | 节点级 provenance graph learning 检测与追踪 | 已沉淀 |
+| P1 | PROGRAPHER | snapshot-level provenance graph embedding 与 key indicator generation | 已沉淀 |
+| P1 | APT-MMF | CTI/IOC 异构属性图上的 APT actor attribution | 已沉淀 |
+| P1 | ADAPT it! | 异构文件样本上的 APT campaign/group attribution | 已沉淀 |
 
 ## 本周目标
 
@@ -50,10 +57,10 @@
 
 详见：[reading-roadmap.md](../04-progress/reading-roadmap.md)
 
-### 下一步任务：2026-07-04
+### 下一步任务：2026-07-05
 
-1. 补读 `Multi-Step LLM Pipeline`、`Open-CyKG` 等 CTI 到 ATT&CK/KG 支撑文献。
-2. 继续补齐 `UNICORN`、`THREATRACE`、`PROGRAPHER`、`ADAPT it!` 等对比方法。
+1. 主线阅读已完成一轮沉淀。
+2. 下一步维护 `04-progress/mainline-synthesis-20260705.md`，固定 Project05 当前研究全貌和候选创新空间。
 3. 在所有文献沉淀完成、研究方向初步凝练后，再做截至 2026-07-04 的最新成果/撞题检索。
 
 ## 延后决策
@@ -88,3 +95,10 @@
 | 2026-07-04 | 将 Beyond RAG for CTI 纳入混合检索主线 | GraphRAG 有助于多跳 CTI 关系检索，但必须处理结构性幻觉、拒答失败和延迟不稳定 |
 | 2026-07-04 | 将 Opinion Pools 纳入可信归因主线 | 威胁归因应输出 actor 概率分布，并通过多证据模块融合而不是单一黑盒模型完成 |
 | 2026-07-04 | 将 High Stakes 纳入证据可靠性主线 | 勒索软件场景中 TTP/高层 IoC 区分度不足，归因系统必须表达 evidence sufficiency、不确定性和拒答 |
+| 2026-07-04 | 将 Multi-Step LLM Pipeline 纳入 TTP 抽取基线 | 多阶段 LLM + retrieval 已能较强地完成 ATT&CK technique extraction，后续创新应上移到 intent/evidence/attribution |
+| 2026-07-04 | 将 Open-CyKG 纳入 CTI 知识图谱底座 | Open-CyKG 提供 `NER -> OIE triples -> canonicalization -> KG` 的开放 CTI KG 构建路线，可作为 GraphRAG/HybridRAG 结构化证据源 |
+| 2026-07-04 | 将 UNICORN 纳入日志侧检测基线 | UNICORN 说明 runtime provenance-based graph-level anomaly detection 已经较成熟，后续创新应上移到证据链、ATT&CK/intent 映射和归因解释 |
+| 2026-07-05 | 将 THREATRACE 纳入节点级日志证据基线 | THREATRACE 将 provenance-based detection 推进到 anomalous node tracing，可作为 LLM 证据解释和 attack story reconstruction 的日志侧输入 |
+| 2026-07-05 | 将 PROGRAPHER 纳入图嵌入日志证据基线 | PROGRAPHER 说明 snapshot-level anomaly 可通过 Rooted Subgraph 映射回可疑节点，但仍需要上层语义解释、意图识别和归因证据融合 |
+| 2026-07-05 | 将 APT-MMF 纳入 CTI/IOC 图归因基线 | APT-MMF 说明报告-IOC-属性-关系-metapath 可支撑已知 actor 分类，但仍需要处理 unknown actor、false flag、证据不足和日志侧证据对齐 |
+| 2026-07-05 | 将 ADAPT it! 纳入样本侧归因基线 | ADAPT 说明异构文件与 linking features 可支撑 campaign/group 双层聚类，但仍需要处理混淆、共享工具、false flag 和证据充分性 |

@@ -1,5 +1,12 @@
 # Research Progress
 
+## 2026-07-05：2026 H1 撞题补读已纳入
+
+- 已完成 7 篇 2026 H1 关键文献的下载/抽取/精读登记：TTPrint、CTI-Thinker、OpenSec、Minerva、High-Precision APT Malware Attribution、Synthetic APTs、ARCANE。
+- CTI-Thinker 本地下载为 Springer HTML 页面，未获得可抽取 PDF；已按网页全文/元数据纳入。
+- 关键判断：`LLM + KG/GraphRAG + CTI attack reasoning`、`evidence-grounded TTP extraction`、`可验证 CTI LLM`、`abstention/OOS attribution` 在 2026 年上半年都有推进。
+- Project05 的题目不能停留在泛化的 “多源证据融合 + LLM 辅助 APT 归因解释”；更稳的方向是 `证据不完整 + 开放集/未知 actor + 证据充分性评分 + 分层降级 + 拒答/暂缓归因 + 证据解释`。
+
 ## 总体里程碑
 
 | 阶段 | 目标 | 状态 | 产物 |
@@ -28,6 +35,13 @@
 - [x] 将 `Beyond RAG for CTI` 写成精读笔记。
 - [x] 将 `A Modular Approach to Automatic Cyber Threat Attribution using Opinion Pools` 写成精读笔记。
 - [x] 将 `High Stakes, Low Certainty` 写成精读笔记。
+- [x] 将 `Multi-Step LLM Pipeline for Enhancing TTP Extraction in CTI` 写成精读笔记。
+- [x] 将 `Open-CyKG` 写成精读笔记。
+- [x] 将 `UNICORN` 写成精读笔记。
+- [x] 将 `THREATRACE` 写成精读笔记。
+- [x] 将 `PROGRAPHER` 写成精读笔记。
+- [x] 将 `APT-MMF` 写成精读笔记。
+- [x] 将 `ADAPT it!` 写成精读笔记。
 - [x] 整理威胁归因术语表 v0.1。
 - [ ] 延后：所有核心/扩展文献读完后，再由用户手动决定是否比较 3 个候选选题。
 - [ ] 对候选 idea 做 2024-2026 最新工作新颖性检查。
@@ -192,10 +206,93 @@
   - Opinion Pools 中的 attributor 权重应考虑证据类型的区分度和可靠性，TTP attributor 不应默认高权重。
   - 后续方法应输出 evidence sufficiency、relative/absolute attribution 层级、actor PMF 和拒答，而不是单一 actor label。
 
+### 2026-07-04：Multi-Step LLM Pipeline
+
+- 已沉淀：`Multi-Step LLM Pipeline for Enhancing TTP Extraction in Cyber Threat Intelligence`
+- 核心收获：
+  - 论文将 TTP 抽取拆为 `Extractor -> Technique Candidate Generator -> Validator` 三阶段。
+  - Extractor 将复杂 CTI 文本拆成 atomic threat actions；Candidate Generator 用 ATT&CK procedure embedding 召回 top-k technique；Validator 用 LLM 排序和过滤候选。
+  - 作者框架报告 Precision 86.14、Recall 78.76、F1 82.28，优于 TTPXHunter、Finetuned-SecureBERT、AttacKG、LADDER 和单 ChatGPT-4o baseline。
+  - Atomic reconstruction prompt 与候选约束对降低 LLM TTP 抽取幻觉有价值。
+- 对选题的影响：
+  - `CTI -> ATT&CK technique` 已经有成熟的多阶段 LLM + retrieval 方法，不能作为最终创新点。
+  - 该 pipeline 可作为文本侧 TTP baseline 或前置模块，后续创新应放在 intent、evidence sufficiency、uncertainty-aware attribution 或 CTI-log alignment。
+  - Validator 思想可上移为 technique validator、intent validator、evidence sufficiency validator 和 attribution confidence validator。
+
+### 2026-07-04：Open-CyKG
+
+- 已沉淀：`Open-CyKG: An Open Cyber Threat Intelligence Knowledge Graph`
+- 核心收获：
+  - Open-CyKG 提供了传统 CTI KG 构建路线：cybersecurity NER 识别实体，attention-based neural OIE 抽取关系三元组，再通过 canonicalization / fusion 构建知识图谱。
+  - 它的开放仓库包含 OIE、NER、KG canonicalization notebook 和 Neo4j 可视化流程。
+  - 它补齐的是 `CTI 文本 -> 实体/关系三元组 -> CTI KG` 底座，不直接解决 actor attribution、attack intent 或 evidence sufficiency。
+- 对选题的影响：
+  - CTI KG 可作为 GraphRAG / HybridRAG 的结构化证据源，但 KG 构建本身已经不是足够新的最终创新点。
+  - 后续更有价值的是给 KG edge 加上 source sentence、confidence、temporal validity，并与 provenance graph / InfoPath 对齐。
+  - Open-CyKG 可和 AttacKG、EXTRACTOR 一起构成 CTI text structuring 相关工作线。
+
+### 2026-07-04：UNICORN
+
+- 已沉淀：`UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats`
+- 核心收获：
+  - UNICORN 将 whole-system provenance graph 流式转换为 graph histogram，再用 HistoSketch 生成固定长度 graph sketch，并用演化式聚类模型做 APT 异常检测。
+  - 它针对 APT 的 low-and-slow、zero-day、长期潜伏和模型污染风险设计，不依赖预定义攻击签名。
+  - 在 StreamSpot、DARPA TC 和自建 supply-chain APT 场景上表现较强，但输出主要是 graph-level alarm。
+- 对选题的影响：
+  - Provenance-based APT detection 已经有成熟经典基线，后续创新不宜只做“检测是否异常”。
+  - 更稳的 Project05 方向是把异常检测信号转成可解释 evidence chain，再映射到 ATT&CK / intent / attribution confidence。
+  - UNICORN 可作为 Kairos、DEPCOMM、THREATRACE、PROGRAPHER 之前的日志侧对比基线。
+
+### 2026-07-05：THREATRACE
+
+- 已沉淀：`THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning`
+- 核心收获：
+  - THREATRACE 将主机威胁检测形式化为 provenance graph 上的 anomalous node detection and tracing。
+  - 它用 GraphSAGE 学习 benign node roles，把 node type 作为监督标签，并通过 multi-model framework 缓解节点类别不平衡和隐藏角色差异。
+  - 相比 UNICORN 的 graph-level alarm，THREATRACE 能定位异常实体和 2-hop 局部上下文，更接近调查证据。
+- 对选题的影响：
+  - 日志侧证据粒度已经可到 node-level，Project05 后续创新不宜只做异常节点检测。
+  - 更有价值的是把 anomalous nodes / local context 聚合成 attack story、InfoPath 或 attack summary graph，并映射到 ATT&CK / intent / evidence sufficiency。
+  - THREATRACE 可作为 node-level provenance graph learning baseline。
+
+### 2026-07-05：PROGRAPHER
+
+- 已沉淀：`ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding`
+- 核心收获：
+  - PROGRAPHER 将 streaming provenance graph 切成 temporal snapshots，用 graph2vec 学习 whole graph embedding，再用 TextRCNN 预测下一个 snapshot embedding。
+  - 相比 UNICORN 的 graph-level alarm，PROGRAPHER 通过 Rooted Subgraph 排名把异常 snapshot 映射回 suspicious nodes，进一步降低分析师工作量。
+  - 真实 Production EDR 数据上 PROGRAPHER AUC 0.943，显著高于 UNICORN 的 0.542。
+- 对选题的影响：
+  - PROGRAPHER 可作为 snapshot-level provenance graph embedding baseline。
+  - 它证明日志侧 detector 可以输出 key indicators，但还不能自动生成 ATT&CK、intent 或 actor attribution explanation。
+
+### 2026-07-05：APT-MMF
+
+- 已沉淀：`APT-MMF: An advanced persistent threat actor attribution method based on multimodal and multilevel feature fusion`
+- 核心收获：
+  - APT-MMF 将 APT reports 与 IOC 信息建模为 heterogeneous attributed graph，融合 attribute type、BERT text、Node2vec topology 三类节点特征。
+  - 它通过 IOC type-level、metapath-based neighbor node-level、metapath semantic-level 三层 attention 学习 report node 表示并进行 actor classification。
+  - 数据集包含 1,300 reports、21 APT groups、24,694 nodes、40,335 relationships；最终 Micro-F1 0.8321、Macro-F1 0.7051。
+- 对选题的影响：
+  - APT-MMF 是 CTI/IOC graph-based actor attribution 强基线。
+  - 它提供了 report-IOC-metapath 的证据组织方式，但仍缺少 unknown actor、false flag、证据不足拒答和日志侧 provenance evidence 对齐。
+
+### 2026-07-05：ADAPT it!
+
+- 已沉淀：`ADAPT it! Automating APT Campaign and Group Attribution by Leveraging and Linking Heterogeneous Files`
+- 核心收获：
+  - ADAPT 将 APT attribution 拆成 campaign-level Intra-Clustering 和 group-level Inter-Clustering。
+  - 它覆盖 executables 与 documents，使用 file-specific、generic、pattern-based 和 infrastructure linking features。
+  - 数据集包含 6,134 APT samples、92 groups；campaign reference dataset 包含 230 samples、22 campaigns、17 groups。
+  - Reference dataset 上 campaign clustering 对 executables F1 0.91、documents F1 0.92，group attribution F1 0.89。
+- 对选题的影响：
+  - ADAPT 是样本侧 heterogeneous file-based campaign/group attribution 强基线。
+  - 它与 APT-MMF 互补，可共同支撑“报告侧 + 样本侧 + 日志侧”的多源证据融合方向。
+
 ## 下一步任务
 
-1. 补读 `Multi-Step LLM Pipeline`、`Open-CyKG` 等 CTI 到 ATT&CK/KG 支撑文献。
-2. 继续补齐 `UNICORN`、`THREATRACE`、`PROGRAPHER`、`ADAPT it!` 等对比方法。
+1. 主线阅读已完成一轮沉淀。
+2. 下一步维护 `04-progress/mainline-synthesis-20260705.md`，整理主线收束图：日志侧 evidence、CTI/IOC graph attribution、样本侧 campaign/group attribution、LLM/RAG/KG、可信归因评估。
 3. 在完成文献沉淀并初步凝练方向后，做截至 2026-07-04 的最新成果/撞题检索。
 
 ## 主线校准
@@ -220,3 +317,20 @@
 - 新增 idea：
 - 遇到问题：
 - 下周计划：
+### 2026-07-05：撞题补读 AURA / Guru / AttacKG+ / MM-AttacKG / TAA-EPLMR
+
+- 已沉淀：
+  - `AURA: A Multi-Agent Intelligence Framework for Knowledge-Enhanced Cyber Threat Attribution`
+  - `On Technique Identification and Threat-Actor Attribution using LLMs and Embedding Models`
+  - `AttacKG+: Boosting Attack Knowledge Graph Construction with Large Language Models`
+  - `MM-AttacKG: A Multimodal Approach to Attack Graph Construction with Large Language Models`
+  - `TAA-EPLMR: Threat Actor Attribution via Evidence Path-Enhanced Large Language Model Reasoning`，全文待获取。
+- 核心收获：
+  - AURA 已经把 RAG、多智能体、LLM、APT attribution 和自然语言 justification 结合起来，且输入包括 TTP、IOC、malware、tools、timeline。
+  - Guru et al. 已经做了 `CTI -> TTP -> actor ranking`，并证明 TTP-only attribution 噪声高、只能优于随机但不足以自动化高风险归因。
+  - AttacKG+ 已经用 LLM 构建文本 attack knowledge graph；MM-AttacKG 进一步把 CTI 图像纳入多模态 attack graph construction。
+  - TAA-EPLMR 题名高度接近 Project05 原始 idea，需拿到全文确认是否覆盖 evidence path、confidence、refusal、incomplete evidence ablation。
+- 对选题的影响：
+  - 不能再把“多源证据融合 + LLM 辅助 APT 归因解释”作为宽题直接推进。
+  - 更稳的切口是：面向证据不完整场景的证据充分性感知、置信度校准、分层降级归因与可拒答机制。
+  - 方法设计应以 `能不能归因到 actor` 为核心，而不是只追求输出一个 actor label。

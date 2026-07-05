@@ -27,6 +27,6 @@
 
 ## 当前下一步
 
-1. 补读 `Multi-Step LLM Pipeline`、`Open-CyKG`，补齐 CTI 到 ATT&CK/KG 的支撑线。
-2. 补读 `UNICORN`、`THREATRACE`、`PROGRAPHER`、`ADAPT it!` 等检测/归因对比方法。
+1. 主线阅读已完成一轮沉淀。
+2. 下一步维护 `04-progress/mainline-synthesis-20260705.md`，固定 Project05 当前研究全貌和候选创新空间。
 3. 文献沉淀完成并初步凝练方向后，再做最新成果/撞题检索；3 个候选硕士论文题目仍由用户手动触发。

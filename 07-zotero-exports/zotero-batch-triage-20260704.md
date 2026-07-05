@@ -30,11 +30,28 @@
 - `AttacKG`
 - `EXTRACTOR`
 - `Kairos`
+- `DEPCOMM`
+- `CTIBench`
+- `Large Language Models are Unreliable for CTI`
+- `TTPXHunter`
+- `SEvenLLM`
+- `CTIConnect`
+- `LOCALINTEL`
+- `Beyond RAG for CTI`
+- `A Modular Approach to Automatic Cyber Threat Attribution using Opinion Pools`
+- `High Stakes, Low Certainty`
+- `Multi-Step LLM Pipeline for Enhancing TTP Extraction in CTI`
+- `Open-CyKG`
+- `UNICORN`
+- `THREATRACE`
+- `PROGRAPHER`
+- `APT-MMF`
+- `ADAPT it!`
 
 ### README 当前下一步要求
 
-1. 补读 `Multi-Step LLM Pipeline`、`Open-CyKG`。
-2. 补读 `UNICORN`、`THREATRACE`、`PROGRAPHER`、`ADAPT it!` 等对比方法。
+1. 主线阅读已完成一轮沉淀。
+2. 下一步维护 `04-progress/mainline-synthesis-20260705.md`，固定 Project05 当前研究全貌和候选创新空间。
 3. 文献沉淀完成并初步凝练方向后，再做最新成果/撞题检索。
 
 ### 后续候选精读顺序
@@ -44,6 +61,12 @@
 1. `DEPCOMM`：已完成单篇精读笔记。
 2. `CTIBench`：已完成单篇精读笔记。
 3. `Large Language Models are Unreliable for CTI`：已完成单篇精读笔记。
+4. `Open-CyKG`：已完成单篇精读笔记。
+5. `UNICORN`：已完成单篇精读笔记。
+6. `THREATRACE`：已完成单篇精读笔记。
+7. `PROGRAPHER`：已完成单篇精读笔记。
+8. `APT-MMF`：已完成单篇精读笔记。
+9. `ADAPT it!`：已完成单篇精读笔记。
 
 随后按研究方向需要进入：
 
@@ -52,3 +75,15 @@
 3. `A Modular Approach to Automatic Cyber Threat Attribution using Opinion Pools`：已完成单篇精读笔记。
 4. `High Stakes, Low Certainty`：已完成单篇精读笔记。
 5. `ExCyTIn-Bench`：后置为 Agent appendix，暂不进入主线。
+## 2026-07-05 撞题补读纳入状态
+
+### 已完成全文精读
+
+1. `AURA`
+2. `On Technique Identification and Threat-Actor Attribution using LLMs and Embedding Models`
+3. `AttacKG+`
+4. `MM-AttacKG`
+
+### 已纳入但全文待获取
+
+1. `TAA-EPLMR`：已建立高风险相关工作笔记；IEEE/Crossref PDF 暂无法获取，本地 Zotero storage 未发现全文。
