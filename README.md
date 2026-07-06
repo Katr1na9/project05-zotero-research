@@ -6,6 +6,7 @@
 
 ## 使用原则
 
+- 当前总 workflow 见 `01-sop/project05-skill-driven-workflow-v2.md`。
 - 所有科研输入先进入 `00-dashboard/research-dashboard.md` 或 `03-ideas/research-ideas.md`。
 - 每篇论文都使用 `06-templates/paper-intensive-reading-template.md` 做精读笔记。
 - 每周至少更新一次 `04-progress/research-progress.md`。
@@ -27,6 +28,9 @@
 
 ## 当前下一步
 
-1. 主线阅读已完成一轮沉淀。
-2. 下一步维护 `04-progress/mainline-synthesis-20260705.md`，固定 Project05 当前研究全貌和候选创新空间。
-3. 文献沉淀完成并初步凝练方向后，再做最新成果/撞题检索；3 个候选硕士论文题目仍由用户手动触发。
+1. 主线阅读已完成一轮沉淀，并已完成初步撞题/红线扫描。
+2. 当前推荐方向收束为：证据不完整场景下的 APT 归因可判定性评估、分层降级、拒答控制与 LLM 受控解释。
+3. APT-ATT 正文暂未获取，已作为高风险待复核文献保留；二次深度撞题扫描见 `04-progress/deep-collision-scan-20260706.md`。
+4. APTChaser、GAPT、MLDSJ 与多源特征融合 KG 的补查见 `04-progress/collision-matrix-supplement-20260706.md`。
+5. `08-writing/patent-claims-draft-v0.1-20260706.md` 已被二次深扫标记为偏宽草案，后续不直接扩写，应先重写为“归因粒度门控/可拒答解释/缺失证据生成”版本。
+6. 当前 workflow 状态见 `04-progress/workflow-status-20260706.md` 与 `04-progress/workflow-status-supplement-20260706.md`。

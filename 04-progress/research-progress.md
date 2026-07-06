@@ -1,5 +1,36 @@
 # Research Progress
 
+## 2026-07-06：APTChaser / GAPT / MLDSJ 补查与撞题修正
+
+- 新增 `02-literature-notes/2025-Zhang-APTChaser-Attack-Technique-Modeling.md`：确认 APTChaser 已覆盖 `LLM + attack technique schema/profile + APT attribution`，禁止 Project05 把“LLM 细化 TTP 后归因”作为主创新。
+- 重写 `02-literature-notes/2024-Chen-GAPT-Temporal-Relation-Embeddings.md`：当前只作为二级引用风险项保留，未找到可独立验证 DOI/全文，不能当作已精读文献。
+- 新增 `02-literature-notes/2026-Duan-MLDSJ-Multi-Level-Feature-Joint-Attribution.md`：MLDSJ 直接覆盖 `多层 CTI 特征 + Dempster-Shafer 证据融合 + APT group attribution`，是 Project05 原始宽题的红色风险项。
+- 新增 `04-progress/collision-matrix-supplement-20260706.md` 和 `04-progress/workflow-status-supplement-20260706.md`。
+- 新增 `07-zotero-exports/zotero-import-candidates-20260706-supplement.ris`，包含 APTChaser、MLDSJ 和 `A Multi-Source Feature Fusion-Based Knowledge Graph for APT Attribution` 三条补充导入记录。
+- 当前判断：2026 上半年并非空白；证据融合、KG 归因、LLM 技术建模方向都在推进。Project05 必须继续收窄为“归因粒度门控 / 可拒答解释 / 缺失证据清单”。
+
+## 2026-07-06：APT-ATT 暂未获取情况下继续推进专利主线
+
+- 新增 `04-progress/apt-att-unavailable-risk-note-20260706.md`：明确 APT-ATT 正文未获取是风险保留项，不作为当前主线阻塞项。
+- 新增 `04-progress/final-topic-boundary-20260706.md`：将 Project05 推荐方向收束为“证据不完整场景下的 APT 归因可判定性评估、分层降级、拒答控制与 LLM 受控解释”。
+- 新增 `08-writing/patent-claims-draft-v0.1-20260706.md`：形成专利权利要求草案 v0.1，核心模块包括证据可用性画像、证据区分度/充分性/冲突评分、归因粒度门控、开放集判断、LLM 受控解释和缺失证据采集建议。
+- 当前判断：不再把“多源证据融合 + LLM 辅助归因解释”作为宽泛创新点，而是把“证据不足时系统是否允许输出 actor-level 归因”作为核心技术问题。
+
+## 2026-07-06：二次深度撞题扫描完成
+
+- 新增 `04-progress/deep-collision-scan-20260706.md`。
+- 新增高风险材料包括：`CN121887534A`、`CN118802369A`、`TRAIL`、`APT-scope`、`APT-ATT`、`APTChaser`、`Construction of Cyber-attack Attribution Framework Based on LLM`、`Correlation Analysis of APT Attack Organizations Based on Knowledge Graphs` 等。
+- 更新判断：Project05 不能再以 IOC/KG/HIN/流量/TTP/LLM 框架归因为核心；可保留空间进一步收缩为“归因粒度门控、可拒答解释、缺失证据生成和证据充分性画像”。
+- 继续深扫后新增并精读/风险精读：`CN116467438A`、`CN117560223B`、`CN117786088B`、`CN119766567B`、`HG-CTA`、`AARGS`、`GAPT`、`BAN`。
+- `08-writing/patent-claims-draft-v0.1-20260706.md` 已标记为偏宽草案，后续 v0.2 必须围绕“归因粒度门控”重写。
+
+## 2026-07-06：基于新安装 research skills 重塑 workflow
+
+- 新增 `01-sop/project05-skill-driven-workflow-v2.md`。
+- 新增 `04-progress/workflow-status-20260706.md`。
+- workflow 采用 `nature-literature-pipeline` 的检索/评分/归档思想、`nature-reader` 的全文精读约束、`nature-paper-to-patent` 的 source grounding 和 stage gate、`academic-research-suite` 的 research-to-paper pipeline、`experiment-agent` 的实验设计/验证 gate、`scientific-critical-thinking` 的红线审查框架。
+- 当前正式定位：Project05 位于 Stage 6 功能级撞题矩阵，尚未通过 Stage 7 专利尽调 gate，不应继续扩写专利说明书。
+
 ## 2026-07-05：2026 H1 撞题补读已纳入
 
 - 已完成 7 篇 2026 H1 关键文献的下载/抽取/精读登记：TTPrint、CTI-Thinker、OpenSec、Minerva、High-Precision APT Malware Attribution、Synthetic APTs、ARCANE。

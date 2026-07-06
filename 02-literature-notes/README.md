@@ -29,6 +29,7 @@
 - [x] `2024-Saha-ADAPT-it.md`
 - [x] `2024-Xiao-APT-MMF.md`
 - [x] `2024-Zhang-AttacKG-plus.md`
+- [x] `2025-Zhang-APTChaser-Attack-Technique-Modeling.md`
 - [x] `2025-Basnet-APT-Attribution-DRL.md`
 - [x] `2025-Boge-Unveiling-Cyber-Threat-Actors.md`
 - [x] `2025-Cai-APT-ATT-High-Risk-Related.md`
@@ -51,6 +52,7 @@
 - [x] `2026-Barnes-OpenSec.md`
 - [x] `2026-Cheng-CTIConnect.md`
 - [x] `2026-Cheng-TTPrint.md`
+- [x] `2026-Duan-MLDSJ-Multi-Level-Feature-Joint-Attribution.md`
 - [x] `2026-Hamzic-Beyond-RAG-CTI.md`
 - [x] `2026-Meng-Uncovering-Vulnerabilities-LLM-Assisted-CTI.md`
 - [x] `2026-Saha-Kitten-or-Panda-Group-Profile-Specificity.md`
@@ -61,6 +63,9 @@
 ## 仍需补全文
 
 - [ ] `APT-ATT`: `An efficient APT attribution model based on heterogeneous threat intelligence representation and CTGAN`
+- [ ] `APTChaser`: 当前只有 Springer 摘要和元数据，正文仍需获取。
+- [ ] `GAPT`: 当前只确认二级引用线索，需验证 DOI/全文/独立记录。
+- [ ] `A Multi-Source Feature Fusion-Based Knowledge Graph for APT Attribution`: 当前只有 IEEE 题名/页面线索，需补全文与 DOI。
 
 ## 当前红线判断
 
@@ -74,8 +79,9 @@
 - `APT KG + LLM`
 - `LLM/RAG/KG/TTP + attack tree + attribution`
 - `confidence level + information gap + hunting recommendation`
+- `multi-level feature + Dempster-Shafer evidence fusion + APT group attribution`
+- `LLM-based attack technique schema / technique profile for APT attribution`
 
 相对更安全的收窄方向：
 
-> 证据可用性诊断、证据充分性门控、自适应归因粒度、open-set / mimicry / false-flag 场景下的拒答或暂缓归因。
-
+> 证据可用性诊断、证据充分性门控、自适应归因粒度、long-tail / time drift / mimicry / false-flag 场景下的拒答或暂缓归因。

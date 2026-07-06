@@ -34,6 +34,16 @@
 | SAGA | 无 | 无 | 无 | 无 | 无 | 无 | 无 | 中 | 无 | 无 | 无 | 无 | 强 |
 | Unveiling Cyber Threat Actors | 弱 | 无 | 无 | 无 | 弱 | 中 | 无 | 中 | 无 | 弱 | 中 | 无 | 无 |
 | DRL APT Attribution | 弱 | 无 | 无 | 无 | 弱 | 中 | 无 | 中 | 无 | 无 | 无 | 无 | 无 |
+| TRAIL | 强 | 强 | 强 | 无 | 弱 | 中 | 无 | 中 | 无 | 无 | 中 | 无 | 无 |
+| HG-CTA | 强 | 强 | 中 | 无 | 弱 | 中 | 无 | 中 | 无 | 无 | 无 | 无 | 无 |
+| APT-scope | 强 | 强 | 中 | 无 | 弱 | 中 | 无 | 中 | 弱 | 中 | 无 | 无 | 无 |
+| AARGS | 强 | 强 | 强 | 中 | 强 | 中 | 弱 | 中 | 弱 | 弱 | 弱 | 弱 | 无 |
+| CN116467438A | 中 | 强 | 中 | 无 | 弱 | 无 | 无 | 弱 | 无 | 无 | 无 | 无 | 无 |
+| CN117560223B | 中 | 强 | 中 | 无 | 弱 | 中 | 无 | 弱 | 无 | 无 | 无 | 无 | 无 |
+| CN117786088B | 中 | 中 | 弱 | 中 | 中 | 无 | 无 | 无 | 无 | 无 | 无 | 无 | 无 |
+| CN119766567B | 中 | 中 | 中 | 无 | 弱 | 中 | 无 | 中 | 无 | 无 | 无 | 无 | 无 |
+| GAPT | 中 | 强 | 中 | 无 | 弱 | 中 | 无 | 中 | 无 | 无 | 无 | 无 | 无 |
+| BAN | 弱 | 中 | 中 | 无 | 弱 | 强 | 中 | 中 | 无 | 无 | 无 | 无 | 无 |
 
 ## 已经不安全的题目空间
 
@@ -46,6 +56,10 @@
 5. LLM/RAG/KG/TTP/attack tree 攻击组织归因。
 6. 置信度评分 + information gap + hunting recommendation。
 7. TTP / IOC graph / malware / command sequence 的单一归因模型。
+8. CTI 异构图/GAT/GNN/RGCN 威胁归因。
+9. IP/IOC/基础设施知识图谱归因预测。
+10. APT attack graph + LLM 语义验证/关系补全。
+11. 单纯 open-set / abstention / selective classification。
 
 ## 仍可能保留的空隙
 
@@ -120,4 +134,3 @@ APT-ATT 仍是未决项。它可能进一步压缩：
 - LLM 解释缺失证据。
 
 因此，APT-ATT 需要继续找全文，但不应阻塞 Project05 向“证据充分性门控与可拒答解释”收窄。
-

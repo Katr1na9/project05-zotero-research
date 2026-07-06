@@ -2,22 +2,22 @@
 
 ## 项目定位
 
-研究方向：LLM 增强的威胁溯源 / 攻击归因 / 攻击行为意图感知。RAG、ATT&CK、威胁知识图谱、CTI 和 provenance graph 都是支撑模块；Agentic AI 暂作为后置补充模块。
+研究方向：面向证据不完整场景的 APT 归因粒度门控、可判定性评估与可拒答解释。RAG、ATT&CK、威胁知识图谱、CTI、IOC 图、provenance graph 和 LLM 都只能作为支撑模块或证据通道，不能再作为主创新表述。
 
 目标：不是泛泛地做“大模型安全”，而是找到一个可落地、可实验、可写成硕士论文的研究切入点。
 
 ## 当前主问题
 
-> LLM 如何增强威胁溯源/攻击归因中的证据理解、攻击链重构、意图识别和归因解释？
+> 在证据不完整、证据冲突或候选行为体不可区分的场景下，如何判断当前证据最多支持哪一层 APT 归因结论，并生成可审计的拒答/降级解释与缺失证据需求？
 
 ## 当前候选方向
 
 | 编号 | 方向 | 简述 | 状态 |
 |---|---|---|---|
-| T1 | LLM + RAG/KG 支撑归因证据理解 | 用 RAG/KG 为 LLM 提供 TTP、ATT&CK、CVE/CWE、CTI 证据 | 重点跟进 |
-| T2 | 多智能体安全调查 | 日志检索、TTP 映射、证据验证、报告生成多 agent 协作 | 后置补充 |
-| T3 | 可信 LLM 威胁归因 | 幻觉缓解、置信度校准、证据引用 | 待评估 |
-| T4 | CTI + 日志溯源证据融合 | 将 CTI 文本攻击图与 Kairos/DEPCOMM 类日志证据对齐，服务威胁溯源和归因解释 | 重点跟进 |
+| T1 | APT 归因粒度门控 | 判断当前证据最多支持 technique / intent / campaign / actor 哪一层结论 | 主线 |
+| T2 | 证据充分性画像 | 记录证据可用、缺失、冲突、可模仿性、时效、可信度和粒度 | 主线 |
+| T3 | 可拒答解释与缺失证据生成 | 证据不足时不输出 actor，说明缺什么证据才能升级归因粒度 | 主线 |
+| T4 | CTI/KG/IOC/provenance 证据通道 | 作为输入证据和 baseline，不作为独立创新 | 支撑 |
 
 ## 核心文献优先队列
 
@@ -55,13 +55,13 @@
 
 ## 当前阅读路线
 
-详见：[reading-roadmap.md](../04-progress/reading-roadmap.md)
+详见：[project05-skill-driven-workflow-v2.md](../01-sop/project05-skill-driven-workflow-v2.md) 和 [reading-roadmap.md](../04-progress/reading-roadmap.md)
 
 ### 下一步任务：2026-07-05
 
-1. 主线阅读已完成一轮沉淀。
-2. 下一步维护 `04-progress/mainline-synthesis-20260705.md`，固定 Project05 当前研究全貌和候选创新空间。
-3. 在所有文献沉淀完成、研究方向初步凝练后，再做截至 2026-07-04 的最新成果/撞题检索。
+1. 当前已完成二次深度撞题扫描。
+2. 项目位于 Stage 6 功能级撞题矩阵，尚未通过 Stage 7 专利尽调 gate。
+3. 下一步不是扩写专利说明书，而是导入深扫 RIS、补齐 APT-ATT/APTChaser/GAPT/AARGS 全文、重写专利 v0.2。
 
 ## 延后决策
 
