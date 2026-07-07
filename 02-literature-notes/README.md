@@ -10,7 +10,9 @@
 
 ## 当前精读清单
 
+- [x] `2019-Milajerdi-POIROT.md`
 - [x] `2020-Han-UNICORN.md`
+- [x] `2021-Wei-DeepHunter.md`
 - [x] `2021-Sarhan-Open-CyKG.md`
 - [x] `2021-Satvat-EXTRACTOR.md`
 - [x] `2021-US20210281585A1-Confidence-Level-Cyber-Campaign-Attribution.md`
@@ -22,6 +24,7 @@
 - [x] `2024-Alam-CTIBench.md`
 - [x] `2024-Chen-GAPT-Temporal-Relation-Embeddings.md`
 - [x] `2024-Cheng-KAIROS.md`
+- [x] `2024-Aly-MEGR-APT.md`
 - [x] `2024-CN118646607A-APT-KG-LLM-Enhancement-Patent.md`
 - [x] `2024-HG-CTA-Heterogeneous-Graph-Cyber-Threat-Attribution.md`
 - [x] `2024-Huang-Cascade-APT-Campaign-Attribution-Logs.md`
@@ -45,6 +48,7 @@
 - [x] `2025-Li-CLIProv.md`
 - [x] `2025-Mezzi-LLMs-Unreliable-CTI.md`
 - [x] `2025-Mitra-LocalIntel.md`
+- [x] `2025-NOCTA-Non-Greedy-Objective-Cost-Tradeoff-Acquisition.md`
 - [x] `2025-Prasad-Cyber-Threat-Attribution-Survey.md`
 - [x] `2025-Qiu-APT-CGLP.md`
 - [x] `2025-Rani-AURA.md`
@@ -52,7 +56,9 @@
 - [x] `2025-Xiao-TAA-EPLMR.md`
 - [x] `2025-Zhang-APTChaser-Attack-Technique-Modeling.md`
 - [x] `2025-Zhang-MM-AttacKG.md`
+- [x] `2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`
 - [x] `2026-AARGS-APT-Attack-Inference-Organization-Patent.md`
+- [x] `2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`
 - [x] `2026-Alam-Minerva.md`
 - [x] `2026-Alshamrani-LLMAPT.md`
 - [x] `2026-APTA2D-Attention-Pruning-2D-Convolutional-Reasoning.md`
@@ -76,13 +82,22 @@
 - `2025-Qiu-APT-CGLP.md`: 命中 CTI report 与 provenance graph 的 graph-language pre-training，进一步压缩单独做 CTI-local alignment 的空间。
 - `2026-Varonis-US12530469-LLM-Alert-Investigation.md`: 专利红线，覆盖 LLM 多阶段告警调查、置信收敛和追加上下文请求的宽泛循环。
 
+## 2026-07-07 精读补齐增量
+
+- `2019-Milajerdi-POIROT.md`: CTI query graph 与 provenance graph 对齐的起点文献，确认“CTI-local evidence alignment”不能作为 Project05 主创新。
+- `2021-Wei-DeepHunter.md`: GNN 增强 POIROT 式威胁狩猎，压缩“攻击图表示学习匹配”创新空间。
+- `2024-Aly-MEGR-APT.md`: 大规模、内存高效 provenance graph hunting 系统，提示 Project05 不应写成可扩展图匹配。
+- `2025-Li-CLIProv.md`: 已由摘要级占位升级为全文精读；确认 log-to-intelligence semantic alignment 与 TTP/attack scenario 输出已被覆盖。
+- `2025-Qiu-APT-CGLP.md`: 已由摘要级占位升级为全文精读；确认 graph-language pre-training + LLM synthetic CTI 已被覆盖。
+- `2025-NOCTA-Non-Greedy-Objective-Cost-Tradeoff-Acquisition.md`: 为 Project05 的 cost-aware next evidence action planning 提供非贪心 AFA 参照。
+- `2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`: 作为安全调查 agent benchmark 参照，可借鉴其 graph-grounded evaluation，但不把 LLM agent 调查作为主创新。
+- `2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`: 安全侧顺序特征获取最近邻，适合作为 Project05 planner baseline/对比对象。
+
 ## 仍需补全文
 
 - [ ] `APT-ATT`: `An efficient APT attribution model based on heterogeneous threat intelligence representation and CTGAN`
 - [ ] `APTChaser`: 当前只有 Springer 摘要和元数据，正文仍需获取。
 - [ ] `GAPT`: 当前只确认二级引用线索，需验证 DOI、全文和独立记录。
-- [ ] `CLIProv`: 当前为摘要级红线笔记，需获取全文后升级为完整精读。
-- [ ] `APT-CGLP`: 当前为摘要级红线笔记，需获取全文后升级为完整精读。
 - [x] `US12530469`: 当前保留为说明书/摘要级风险笔记；权利要求原文补读已从当前 workflow 剔除。
 - [ ] `TAA-EPLMR`: 已有正文线索，但需复核是否覆盖 confidence / reasoning chain / evidence path / incomplete evidence。
 

@@ -1,10 +1,26 @@
 # Research Progress
 
+## 2026-07-07：缺口精读笔记补齐
+
+- 新增 6 篇精读笔记：`2019-Milajerdi-POIROT.md`、`2021-Wei-DeepHunter.md`、`2024-Aly-MEGR-APT.md`、`2025-NOCTA-Non-Greedy-Objective-Cost-Tradeoff-Acquisition.md`、`2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`、`2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`。
+- 升级 2 篇原摘要级占位为全文精读：`2025-Li-CLIProv.md`、`2025-Qiu-APT-CGLP.md`。
+- 结论进一步固定：POIROT -> DeepHunter -> MEGR-APT -> CLIProv -> APT-CGLP 已经覆盖 CTI/provenance/log 对齐、图匹配、语义检索、graph-language pre-training 和 LLM 合成 CTI；Project05 不再把 alignment 本身作为主创新。
+- 实验理论与 baseline 侧补强：NOCTA 支撑非贪心 cost-aware acquisition，ExCyTIn-Bench 支撑 graph-grounded 调查评测，D3QN 恶意软件工作可作为安全侧顺序特征获取 baseline。
+- 仍需保留的全文待办：APT-ATT、APTChaser、GAPT、TAA-EPLMR 复核；CLIProv/APT-CGLP 已从待补全文中移除。
+
+## 2026-07-07：实验方案 v0.1 完成
+
+- 新增 `08-writing/experiment-plan-v0.1-20260707.md`。
+- 实验路线确定为 evidence ablation：从完整攻击案例构造 CTI 行为图和本地证据图，遮蔽部分证据，再让不同取证策略逐步恢复证据并比较成本与归因粒度收益。
+- 明确了 v0.1 的核心模块：证据状态表示、归因粒度规则、取证动作空间、动作价值函数、baseline、LLM 受控参与方式和评价指标。
+- G5 当前状态：草案完成，待案例清单与 schema 验证。
+- 下一步：建立 `experiment-case-inventory-v0.1-20260707.md`，再设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+
 ## 2026-07-06：US12530469 权利要求原文补读剔除
 
 - 根据用户决策，US12530469 的“权利要求原文补读”从当前 workflow 中剔除，不再作为 G2/G4 阻塞项。
 - US12530469 仍保留为摘要级专利红线材料，用于约束 Project05 不写成泛化的“LLM 告警调查 + 置信不足追加上下文 + 循环收敛”。
-- 当前剩余补洞改为：CLIProv 全文、APT-CGLP 全文、TAA-EPLMR 复核、中文专利侧证据采集/取证规划检索。
+- 当前剩余补洞改为：TAA-EPLMR 复核、中文专利侧证据采集/取证规划检索、APT-ATT/APTChaser/GAPT 正文获取。
 - 下一步优先级不变：起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 
 ## 2026-07-06：Stage 1 RQ 固化完成
@@ -12,7 +28,7 @@
 - 新增 `03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md`，作为当前主线的 G1 通过版研究问题卡。
 - 将 Project05 当前研究对象明确为：对齐之后的证据状态建模与取证动作规划，而不是新的对齐算法、actor 分类器或 LLM 归因框架。
 - 明确了 3 个可检验假设：对齐感知状态优于普通证据计数、主动取证优于随机/固定顺序补证、LLM 受控参与优于 LLM 直接归因。
-- G1 判定：通过，但带两个条件进入下一阶段：继续补 CLIProv/APT-CGLP/TAA-EPLMR 的深扫材料，并起草 experiment-plan-v0.1 验证数据与 baseline 可执行。US12530469 权利要求原文补读已剔除。
+- G1 判定：通过，但带两个条件进入下一阶段：继续补 TAA-EPLMR 等剩余深扫材料，并起草 experiment-plan-v0.1 验证数据与 baseline 可执行。US12530469 权利要求原文补读已剔除；CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读。
 
 ## 2026-07-06：全项目重扫并同步新主线索引
 
@@ -22,7 +38,7 @@
 - 当前 RQ v2 见：`03-ideas/topic-rq-brief-v2-20260706.md`，G1 基本通过。
 - 当前核心红线：不能把 CTI-local evidence alignment 本身作为主创新；CLIProv、APT-CGLP、POIROT/DeepHunter/MEGR-APT/ActMiner/ProHunter 等已经覆盖大量对齐/狩猎链路。
 - 当前理论基座：Active Feature Acquisition / POMDP。Project05 的新贡献应落在“部分观测证据状态 + 取证动作价值估计 + 成本约束规划 + STOP/粒度门控”上。
-- 下一步：补 CLIProv/APT-CGLP/TAA-EPLMR 正文，并起草 `08-writing/experiment-plan-v0.1-20260706.md`；US12530469 权利要求原文补读已剔除。
+- 下一步：补 TAA-EPLMR 复核与剩余高风险全文，并推进 `08-writing/experiment-plan-v0.1-20260707.md` 后续案例清单与 schema；US12530469 权利要求原文补读已剔除。
 
 ## 2026-07-06：新主线拍板"A 主 + B 辅"，首轮深扫立即修正 A 的定位
 

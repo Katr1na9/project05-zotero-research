@@ -45,10 +45,10 @@
 
 ## 当前下一步
 
-1. 导入 `07-zotero-exports/zotero-import-candidates-20260706-alignment.ris`，同步 Zotero。
-2. 补齐 CLIProv、APT-CGLP、TAA-EPLMR 正文；US12530469 仅保留摘要级红线，不再补权利要求原文。
-3. 写 `08-writing/experiment-plan-v0.1-20260706.md`，把新主线落成可执行实验。
-4. 根据实验计划判断是否重写专利 `v0.3`，不要继续扩写旧的 `v0.2`。
+1. 已完成 `08-writing/experiment-plan-v0.1-20260707.md`，下一步进入案例清单和数据 schema。
+2. CLIProv、APT-CGLP 已升级为全文精读；继续复核 TAA-EPLMR，并保留 APT-ATT、APTChaser、GAPT 正文获取待办。
+3. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+4. 根据最小可行实验结果判断是否重写专利 `v0.3`，不要继续扩写旧的 `v0.2`。
 
 ## 当前红线
 

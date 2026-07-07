@@ -20,6 +20,8 @@
 - `02-literature-notes/2026-Varonis-US12530469-LLM-Alert-Investigation.md`
 - `02-literature-notes/2025-Au-Multi-Source-Feature-Fusion-HKG-APT-Attribution-IDS.md`
 
+2026-07-07 补充：CLIProv、APT-CGLP 已由摘要级占位升级为全文精读，并新增 POIROT、DeepHunter、MEGR-APT、NOCTA、ExCyTIn-Bench、D3QN 恶意软件顺序特征选择精读笔记。
+
 ### 主线和撞题文件
 
 - `03-ideas/topic-rq-brief-v2-20260706.md`
@@ -86,10 +88,10 @@ Project05 与常规 AFA 的差异在于：证据不是扁平表格特征，而�
 
 ## 当前待办
 
-1. 导入 `07-zotero-exports/zotero-import-candidates-20260706-alignment.ris`。
-2. 补 CLIProv、APT-CGLP、TAA-EPLMR 正文。
+1. 根据 `08-writing/experiment-plan-v0.1-20260707.md` 建立案例清单和数据 schema。
+2. 继续 TAA-EPLMR 复核，并保留 APT-ATT、APTChaser、GAPT 正文获取待办。
 3. 继续中文专利侧与证据采集/取证规划相关检索。
-4. 起草 `08-writing/experiment-plan-v0.1-20260706.md`，把新主线落到数据、动作空间、baseline 和指标。
-5. 在 experiment plan 通过后，再判断是否重写专利 `v0.3`。
+4. 把 POIROT/DeepHunter/MEGR-APT/CLIProv/APT-CGLP 写入相关工作和 baseline 设计。
+5. 在 experiment plan 后续验证通过后，再判断是否重写专利 `v0.3`。
 
 注：US12530469 权利要求原文补读已按用户决策从当前 workflow 剔除；该材料仅作为摘要级专利红线保留。

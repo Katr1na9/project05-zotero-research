@@ -1,15 +1,51 @@
 # Project05 Workflow Status
 
+## 2026-07-07 第七次更新：缺口精读笔记已补齐
+
+已新增/升级 8 篇核心精读笔记：
+
+1. `2019-Milajerdi-POIROT.md`
+2. `2021-Wei-DeepHunter.md`
+3. `2024-Aly-MEGR-APT.md`
+4. `2025-Li-CLIProv.md`（由摘要级占位升级）
+5. `2025-Qiu-APT-CGLP.md`（由摘要级占位升级）
+6. `2025-NOCTA-Non-Greedy-Objective-Cost-Tradeoff-Acquisition.md`
+7. `2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`
+8. `2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`
+
+当前状态修正：
+
+> CLIProv / APT-CGLP 已不再是待补全文项。对齐谱系红线与主动取证理论/baseline 侧材料已补齐到可支撑下一步实验案例清单。
+
+下一步：
+
+1. 继续推进 `08-writing/experiment-case-inventory-v0.1-20260707.md`。
+2. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+3. 仅保留 APT-ATT、APTChaser、GAPT、TAA-EPLMR 复核作为后续高风险待办。
+
+## 2026-07-07 第六次更新：实验方案 v0.1 已完成
+
+已新增 `08-writing/experiment-plan-v0.1-20260707.md`。实验路线采用 evidence ablation：从完整攻击案例出发，遮蔽部分证据，模拟不完整证据场景；不同策略通过取证动作逐步恢复证据，比较达到目标归因粒度的成本、步数、过度归因率和解释证据回指质量。
+
+当前状态：
+
+> G5 从“未通过”推进到“草案完成，待案例清单和 schema 验证”。
+
+下一步：
+
+1. 建立 `08-writing/experiment-case-inventory-v0.1-20260707.md`。
+2. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+3. 决定 MVP 是否先只评估 G1-G3，即 technique / intent / campaign 粒度。
+
 ## 2026-07-06 第五次更新：US12530469 权利要求原文补读剔除
 
 根据用户决策，US12530469 的“权利要求原文补读”不再作为当前 workflow 的 G2/G4 阻塞项。该专利仍作为摘要级红线材料保留，用于提醒 Project05 避免写成泛化的“LLM 告警调查 + 置信不足追加上下文 + 循环收敛”。
 
 当前剩余补洞修正为：
 
-1. CLIProv 全文；
-2. APT-CGLP 全文；
-3. TAA-EPLMR 复核；
-4. 中文专利侧与证据采集/取证规划相关检索。
+1. TAA-EPLMR 复核；
+2. 中文专利侧与证据采集/取证规划相关检索；
+3. APT-ATT / APTChaser / GAPT 正文获取。
 
 下一步仍优先起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 
@@ -24,7 +60,7 @@
 下一步优先级：
 
 1. 起草 `08-writing/experiment-plan-v0.1-20260706.md`，先验证这条主线能不能跑起来。
-2. 继续补 CLIProv/APT-CGLP/TAA-EPLMR 全文；US12530469 权利要求原文补读已剔除。
+2. 继续补 TAA-EPLMR 与剩余高风险全文；US12530469 权利要求原文补读已剔除，CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读。
 3. 旧专利 v0.2 继续冻结，等 experiment-plan-v0.1 通过后再进入 v0.3。
 
 ## 2026-07-06 第三次更新：全项目重扫后的当前状态
@@ -48,7 +84,7 @@
 下一步任务：
 
 1. 导入 `07-zotero-exports/zotero-import-candidates-20260706-alignment.ris`。
-2. 补 CLIProv、APT-CGLP、TAA-EPLMR 正文；US12530469 仅保留摘要级红线。
+2. 补 TAA-EPLMR 复核与剩余高风险全文；US12530469 仅保留摘要级红线，CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读。
 3. 起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 4. 暂停扩写旧专利 v0.2，等实验计划成型后再重写 v0.3。
 

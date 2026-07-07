@@ -185,7 +185,7 @@ G1 通过。
 
 带条件通过项：
 
-- G2 仍需补 CLIProv/APT-CGLP/TAA-EPLMR 全文；US12530469 权利要求原文已从当前 workflow 剔除，仅保留摘要级红线提醒。
+- G2 仍需补 TAA-EPLMR 复核、APT-ATT/APTChaser/GAPT 正文获取和中文专利侧检索；CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读，US12530469 权利要求原文已从当前 workflow 剔除，仅保留摘要级红线提醒。
 - G5 仍需通过 experiment-plan-v0.1 证明数据构造和 baseline 可执行。
 
 ## 10. 下一步进入实验设计时必须回答

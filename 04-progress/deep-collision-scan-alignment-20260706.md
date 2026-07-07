@@ -80,10 +80,12 @@ pivot 文档中对候选 A 的原始预估（"novelty-checks 缺口 3 至今未�
 
 1. 中文专利检索：跨源证据对齐、取证规划、证据采集调度相关（需 CNIPA/incoPat 渠道）；
 2. TAA-EPLMR 全文复核（原有待办，与新主线仍相关）；
-3. ActMiner、ProvG-Searcher、ProHunter 摘要级核查（确认无归因/取证规划延伸）；
-4. AFA 综述（arXiv:2502.11067）全文精读——新主线方法章的理论基座，优先级高且可直接获取。
+3. APT-ATT、APTChaser、GAPT 正文获取；
+4. ActMiner、ProvG-Searcher、ProHunter 摘要级核查（确认无归因/取证规划延伸）。
 
-## 6. 本轮材料入库记录
+## 7. 本轮材料入库记录
 
-- 新增风险精读笔记：CLIProv、APT-CGLP（摘要级高风险占位，全文待获取）；
+- 新增风险精读笔记：CLIProv、APT-CGLP（2026-07-07 已从摘要级占位升级为全文精读）；
 - 新增 RIS：`07-zotero-exports/zotero-import-candidates-20260706-alignment.ris`（POIROT、DeepHunter、MEGR-APT、CLIProv、APT-CGLP、ExCyTIn-Bench）。
+
+2026-07-07 更新：CLIProv、APT-CGLP 已升级为全文精读；POIROT、DeepHunter、MEGR-APT、NOCTA、ExCyTIn-Bench、D3QN 恶意软件顺序特征选择已新增单篇精读笔记。
