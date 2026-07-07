@@ -21,7 +21,7 @@
 
 1. 继续推进 `08-writing/experiment-case-inventory-v0.1-20260707.md`。
 2. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
-3. 仅保留 APT-ATT、APTChaser、GAPT、TAA-EPLMR 复核作为后续高风险待办。
+3. 仅保留 APTChaser、GAPT、TAA-EPLMR 复核作为后续高风险待办；APT-ATT 已于 2026-07-07 获取并精读。
 
 ## 2026-07-07 第六次更新：实验方案 v0.1 已完成
 
@@ -45,7 +45,7 @@
 
 1. TAA-EPLMR 复核；
 2. 中文专利侧与证据采集/取证规划相关检索；
-3. APT-ATT / APTChaser / GAPT 正文获取。
+3. APTChaser / GAPT 正文获取；APT-ATT 已于 2026-07-07 获取并精读。
 
 下一步仍优先起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 
@@ -150,12 +150,12 @@
 - 数据集未最终确定；
 - baseline 未最终确定；
 - 缺失证据生成的评价方式未确定；
-- APT-ATT、APTChaser、GAPT、AARGS 全文仍需补齐。
+- APTChaser、GAPT、AARGS 全文仍需补齐；APT-ATT 已于 2026-07-07 获取并精读。
 
 ## 下一步任务
 
 1. 导入 `07-zotero-exports/zotero-import-candidates-20260706-deep-scan.ris`。
-2. 获取 APT-ATT、APTChaser、GAPT、AARGS 正文。
+2. 获取 APTChaser、GAPT、AARGS 正文；APT-ATT 已于 2026-07-07 获取并精读。
 3. 把摘要级风险精读升级为全文精读。
 4. 已完成：重写 `08-writing/patent-claims-draft-v0.2-20260706.md`。
 5. 下一步：起草 `experiment-plan-v0.1`。

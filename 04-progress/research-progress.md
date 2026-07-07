@@ -1,12 +1,19 @@
 # Research Progress
 
+## 2026-07-07：APT-ATT 正文获取并升级精读
+
+- 用户找到 `1-s2.0-S1389128625004785-main(科研通-ablesci.com) (1).pdf`，确认对应 APT-ATT：`APT-ATT: An efficient APT attribution model based on heterogeneous threat intelligence representation and CTGAN`，DOI `10.1016/j.comnet.2025.111511`。
+- 已将 `02-literature-notes/2025-Cai-APT-ATT-High-Risk-Related.md` 从高风险占位升级为正文精读。
+- 结论：APT-ATT 覆盖 heterogeneous CTI representation + CTGAN minority-class augmentation + stacking ensemble APT organization classification；Project05 不能写异构 CTI 表示、CTGAN 数据增强或闭集 actor classifier 作为核心创新。
+- 同时确认其不覆盖 evidence sufficiency、confidence calibration、missing evidence、refusal / abstention、attribution granularity gate 或 active evidence acquisition planning；因此不推翻当前“对齐感知证据状态建模 + 主动取证规划”主线。
+
 ## 2026-07-07：缺口精读笔记补齐
 
 - 新增 6 篇精读笔记：`2019-Milajerdi-POIROT.md`、`2021-Wei-DeepHunter.md`、`2024-Aly-MEGR-APT.md`、`2025-NOCTA-Non-Greedy-Objective-Cost-Tradeoff-Acquisition.md`、`2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`、`2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`。
 - 升级 2 篇原摘要级占位为全文精读：`2025-Li-CLIProv.md`、`2025-Qiu-APT-CGLP.md`。
 - 结论进一步固定：POIROT -> DeepHunter -> MEGR-APT -> CLIProv -> APT-CGLP 已经覆盖 CTI/provenance/log 对齐、图匹配、语义检索、graph-language pre-training 和 LLM 合成 CTI；Project05 不再把 alignment 本身作为主创新。
 - 实验理论与 baseline 侧补强：NOCTA 支撑非贪心 cost-aware acquisition，ExCyTIn-Bench 支撑 graph-grounded 调查评测，D3QN 恶意软件工作可作为安全侧顺序特征获取 baseline。
-- 仍需保留的全文待办：APT-ATT、APTChaser、GAPT、TAA-EPLMR 复核；CLIProv/APT-CGLP 已从待补全文中移除。
+- 仍需保留的全文待办：APTChaser、GAPT、TAA-EPLMR 复核；CLIProv/APT-CGLP/APT-ATT 已从待补全文中移除。
 
 ## 2026-07-07：实验方案 v0.1 完成
 
@@ -20,7 +27,7 @@
 
 - 根据用户决策，US12530469 的“权利要求原文补读”从当前 workflow 中剔除，不再作为 G2/G4 阻塞项。
 - US12530469 仍保留为摘要级专利红线材料，用于约束 Project05 不写成泛化的“LLM 告警调查 + 置信不足追加上下文 + 循环收敛”。
-- 当前剩余补洞改为：TAA-EPLMR 复核、中文专利侧证据采集/取证规划检索、APT-ATT/APTChaser/GAPT 正文获取。
+- 当前剩余补洞改为：TAA-EPLMR 复核、中文专利侧证据采集/取证规划检索、APTChaser/GAPT 正文获取；APT-ATT 已于 2026-07-07 获取并精读。
 - 下一步优先级不变：起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 
 ## 2026-07-06：Stage 1 RQ 固化完成

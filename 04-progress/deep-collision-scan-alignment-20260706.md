@@ -80,7 +80,7 @@ pivot 文档中对候选 A 的原始预估（"novelty-checks 缺口 3 至今未�
 
 1. 中文专利检索：跨源证据对齐、取证规划、证据采集调度相关（需 CNIPA/incoPat 渠道）；
 2. TAA-EPLMR 全文复核（原有待办，与新主线仍相关）；
-3. APT-ATT、APTChaser、GAPT 正文获取；
+3. APTChaser、GAPT 正文获取；APT-ATT 已于 2026-07-07 获取并精读；
 4. ActMiner、ProvG-Searcher、ProHunter 摘要级核查（确认无归因/取证规划延伸）。
 
 ## 7. 本轮材料入库记录

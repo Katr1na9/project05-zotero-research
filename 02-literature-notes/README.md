@@ -92,10 +92,10 @@
 - `2025-NOCTA-Non-Greedy-Objective-Cost-Tradeoff-Acquisition.md`: 为 Project05 的 cost-aware next evidence action planning 提供非贪心 AFA 参照。
 - `2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`: 作为安全调查 agent benchmark 参照，可借鉴其 graph-grounded evaluation，但不把 LLM agent 调查作为主创新。
 - `2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`: 安全侧顺序特征获取最近邻，适合作为 Project05 planner baseline/对比对象。
+- `2025-Cai-APT-ATT-High-Risk-Related.md`: 已从高风险占位升级为正文精读，确认异构 CTI 表示 + CTGAN + stacking actor classification 已被覆盖，但未覆盖证据充分性和主动取证规划。
 
 ## 仍需补全文
 
-- [ ] `APT-ATT`: `An efficient APT attribution model based on heterogeneous threat intelligence representation and CTGAN`
 - [ ] `APTChaser`: 当前只有 Springer 摘要和元数据，正文仍需获取。
 - [ ] `GAPT`: 当前只确认二级引用线索，需验证 DOI、全文和独立记录。
 - [x] `US12530469`: 当前保留为说明书/摘要级风险笔记；权利要求原文补读已从当前 workflow 剔除。

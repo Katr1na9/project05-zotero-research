@@ -6,7 +6,6 @@
 
 | 优先级 | 完整标题 | 当前状态 | 为什么重要 | 当前处理 |
 |---|---|---|---|---|
-| A1 | An efficient APT attribution model based on heterogeneous threat intelligence representation and CTGAN | 已有题名/摘要线索，正文未得 | 可能覆盖 heterogeneous CTI representation、CTGAN 增强、APT attribution | 作为 APT-ATT 高风险项保留；不再把异构情报表示/数据增强作为创新 |
 | A2 | APTChaser: Cyber Threat Attribution via Attack Technique Modeling | Springer 元数据和摘要可验证，正文未得 | 覆盖 LLM 构建 attack technique schema/profile 并服务归因 | 不把 LLM 细化 TTP 或 technique profile 作为主创新 |
 
 ## B 级待证：目前只作为二级引用风险项
@@ -20,7 +19,6 @@
 1. 以上四篇不再阻塞 Project05 当前主线。
 2. 专利 v0.2 可以推进，但必须避开它们可能覆盖的宽题空间。
 3. 最终正式提交前，至少要再查一次：
-   - APT-ATT 是否覆盖 evidence weighting、confidence calibration、missing evidence、refusal；
    - APTChaser 是否覆盖 granularity gate 或 refusal；
    - GAPT 是否真实存在且覆盖 temporal evidence sufficiency；
 4. 若后续拿到全文，优先更新：
@@ -31,4 +29,5 @@
 
 | 完整标题 | 当前状态 | 对 Project05 的结论 |
 |---|---|---|
+| An efficient APT attribution model based on heterogeneous threat intelligence representation and CTGAN | PDF 已获取，已升级为完整精读 | 红色风险项。确认覆盖 heterogeneous CTI representation + CTGAN + stacking ensemble APT actor classification；但不覆盖 evidence sufficiency、granularity gate、missing evidence、refusal 或主动取证规划 |
 | A Multi-Source Feature Fusion-Based Knowledge Graph Construction from Cyber Threat Intelligence to Facilitate APT Attribution in IDS | PDF 已获取，已抽取全文并精读 | 红色风险项。直接覆盖 multi-source feature fusion + HKG + APT attribution，进一步确认 Project05 不能以多源特征融合知识图谱为核心 |

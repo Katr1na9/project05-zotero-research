@@ -3,7 +3,7 @@
 日期：2026-07-06
 
 状态：incomplete draft。  
-原因：APT-ATT、APTChaser、GAPT 三篇全文或独立记录仍待补；本草案还需要发明人确认算法细节、阈值设计和实验实现。`A Multi-Source Feature Fusion-Based Knowledge Graph Construction from Cyber Threat Intelligence to Facilitate APT Attribution in IDS` 已获取全文并确认为红色风险项。
+原因：APTChaser、GAPT 全文或独立记录仍待补；APT-ATT 已于 2026-07-07 获取并确认为红色风险项。本草案还需要发明人确认算法细节、阈值设计和实验实现。`A Multi-Source Feature Fusion-Based Knowledge Graph Construction from Cyber Threat Intelligence to Facilitate APT Attribution in IDS` 已获取全文并确认为红色风险项。
 
 ## 题名
 
