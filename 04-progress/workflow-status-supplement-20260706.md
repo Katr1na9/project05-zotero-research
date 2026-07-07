@@ -29,7 +29,7 @@
 - APT-ATT 正文仍未获得。
 - APTChaser 正文仍未获得。
 - GAPT 的独立存在性、DOI 与全文仍待验证。
-- IEEE `A Multi-Source Feature Fusion-Based Knowledge Graph for APT Attribution` 需要继续找全文或至少补齐 DOI/会议元数据。
+- `A Multi-Source Feature Fusion-Based Knowledge Graph Construction from Cyber Threat Intelligence to Facilitate APT Attribution in IDS` 已获取 PDF，并已升级为全文精读红色风险项。
 
 ## 当前决策
 

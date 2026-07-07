@@ -1,5 +1,19 @@
 # 全局复利日志：科研版
 
+### 2026-07-06：AFA 综述成为新主线理论基座，"取证规划"从直觉升格为 POMDP 实例化
+
+- 来源：`A Survey on Active Feature Acquisition Strategies`（Aronsson et al., arXiv:2502.11067 v2，已全文精读）。
+- 内容：AFA 把"逐步花成本获取特征、何时停止并预测"统一形式化为 POMDP；短视 CMI 贪心是最强 baseline；非自适应近似 Q^NA 可借子模性拿贪心保证；熵目标不是自适应子模的，唯一适配的自适应子模目标是 EC²；MCTS 在线规划在 AFA 中未被充分利用。
+- 为什么有复利：
+  - Project05-B 的每个部件都能在 AFA 语言里找到对应物和现成方法族：价值估计=CMI 类目标、粒度门控=广义停止决策、证据分组取证=grouped acquisition、非对称归因损失=misclassification cost 进 ℓ、缺失感知评测=von Kleist 线。
+  - "为什么不是直接套 AFA"的四点差异（结构化对齐状态、粒度格决策、训练假设崩塌、开放观测空间）就是论文的贡献清单。
+  - benchmark 教训直接可用：先证明场景确实需要非短视，否则短视贪心就够——实验必须含这组对照。
+- 下次如何复用：
+  - 方法章以 AFA-POMDP 记号开场，再逐条写推广；
+  - baseline 固定包含：随机、固定顺序、短视 CMI 贪心、熵阈值停止；
+  - 写作时引用 schütz2025afabench 的"短视经常打赢非短视"来预防审稿人质疑复杂度。
+- 关联文件：`02-literature-notes/2025-Aronsson-AFA-Survey.md`；`03-ideas/topic-rq-brief-v2-20260706.md`
+
 ### 2026-07-05：2026 H1 不是空白，Project05 要从“融合”转到“充分性/拒答”
 
 - 来源：TTPrint、CTI-Thinker、OpenSec、Minerva、High-Precision APT Malware Attribution、Synthetic APTs、ARCANE。

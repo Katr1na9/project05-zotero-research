@@ -1,5 +1,85 @@
 # Research Progress
 
+## 2026-07-06：US12530469 权利要求原文补读剔除
+
+- 根据用户决策，US12530469 的“权利要求原文补读”从当前 workflow 中剔除，不再作为 G2/G4 阻塞项。
+- US12530469 仍保留为摘要级专利红线材料，用于约束 Project05 不写成泛化的“LLM 告警调查 + 置信不足追加上下文 + 循环收敛”。
+- 当前剩余补洞改为：CLIProv 全文、APT-CGLP 全文、TAA-EPLMR 复核、中文专利侧证据采集/取证规划检索。
+- 下一步优先级不变：起草 `08-writing/experiment-plan-v0.1-20260706.md`。
+
+## 2026-07-06：Stage 1 RQ 固化完成
+
+- 新增 `03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md`，作为当前主线的 G1 通过版研究问题卡。
+- 将 Project05 当前研究对象明确为：对齐之后的证据状态建模与取证动作规划，而不是新的对齐算法、actor 分类器或 LLM 归因框架。
+- 明确了 3 个可检验假设：对齐感知状态优于普通证据计数、主动取证优于随机/固定顺序补证、LLM 受控参与优于 LLM 直接归因。
+- G1 判定：通过，但带两个条件进入下一阶段：继续补 CLIProv/APT-CGLP/TAA-EPLMR 的深扫材料，并起草 experiment-plan-v0.1 验证数据与 baseline 可执行。US12530469 权利要求原文补读已剔除。
+
+## 2026-07-06：全项目重扫并同步新主线索引
+
+- 完成全项目增量重扫，确认当前新增量已经改变 Project05 主线：从“归因粒度门控 / 拒答解释 / 缺失证据 list”转向“对齐感知证据状态建模 + 面向归因粒度提升的主动取证规划”。
+- 新增总报告：`04-progress/project-rescan-increment-20260706.md`。
+- 已同步修正索引：`README.md`、`00-dashboard/research-dashboard.md`、`02-literature-notes/README.md`。
+- 当前 RQ v2 见：`03-ideas/topic-rq-brief-v2-20260706.md`，G1 基本通过。
+- 当前核心红线：不能把 CTI-local evidence alignment 本身作为主创新；CLIProv、APT-CGLP、POIROT/DeepHunter/MEGR-APT/ActMiner/ProHunter 等已经覆盖大量对齐/狩猎链路。
+- 当前理论基座：Active Feature Acquisition / POMDP。Project05 的新贡献应落在“部分观测证据状态 + 取证动作价值估计 + 成本约束规划 + STOP/粒度门控”上。
+- 下一步：补 CLIProv/APT-CGLP/TAA-EPLMR 正文，并起草 `08-writing/experiment-plan-v0.1-20260706.md`；US12530469 权利要求原文补读已剔除。
+
+## 2026-07-06：新主线拍板"A 主 + B 辅"，首轮深扫立即修正 A 的定位
+
+- 用户确认新主线：A（CTI-本地证据跨源对齐与语义提升）为论文主线 + B（证据价值建模与主动取证规划）为第二贡献。
+- 随即执行 Stage 2 首轮深扫（英文论文侧），**发现红色警报**：威胁狩猎图匹配谱系 POIROT(2019)→DeepHunter(2021)→MEGR-APT(2024)→ActMiner(2025)→CLIProv(2025-07)→APT-CGLP(2025-11) 已完整覆盖"CTI 图↔溯源图对齐/匹配"机制，其中 CLIProv 还覆盖"日志→TTP 语义提升+攻击场景生成"。
+- 主线修正（v2）：对齐模块降级为复用上游（POIROT/MEGR-APT/CLIProv 式匹配器作基座与 baseline），主创新上移为**"对齐感知证据状态建模 + 面向归因粒度提升的主动取证规划"闭环**——狩猎线的终点（匹配结果）是 Project05 的起点（证据状态）。
+- 关键区分：整条狩猎谱系无一做"对齐之后"的归因粒度评估、对齐缺口的证据学解释、取证规划与迭代闭环。
+- 2026-07-06 用户补充决定：**暂不引入 Project03/CENI 平台联动**，Project05 独立推进，实验立足公开数据集（DARPA TC/OpTC + 公开 CTI 报告的 evidence ablation 构造）。
+- 新增文件：`04-progress/deep-collision-scan-alignment-20260706.md`、`02-literature-notes/2025-Li-CLIProv.md`、`02-literature-notes/2025-Qiu-APT-CGLP.md`、`07-zotero-exports/zotero-import-candidates-20260706-alignment.ris`。
+- 剩余深扫待办：中文专利侧、TAA-EPLMR 复核、ActMiner/ProvG-Searcher/ProHunter 细查、"证据采集调度"学术侧二轮换词检索。US12530469 权利要求全文补读已从当前 workflow 剔除。
+
+## 2026-07-06：深扫第二轮——US12530469 定性 + 找到 B 模块理论基座 AFA
+
+- 用户决定 Project05 与 Project03 解耦独立推进后，继续完成深扫第二轮。
+- US12530469（Varonis，2026-01-20 授权）完成摘要+说明书概要级风险精读：任务边界是**告警真/假阳性判定**（剧本生成+风险分收敛循环），与归因粒度判定可区分；但"置信不足→拉数据→循环"的朴素写法被其覆盖，B 模块写法应限定在"归因粒度层级的证据价值估计 + 对齐缺口驱动的取证动作规划"。权利要求原文补读已从当前 workflow 剔除。新增笔记 `02-literature-notes/2026-Varonis-US12530469-LLM-Alert-Investigation.md`。
+- **关键进展**：换词检索命中 ML 领域成熟研究线 Active Feature Acquisition（AFA，arXiv:2502.11067 综述，POMDP 统一形式化）。安全侧仅有"RL 顺序特征选择做恶意软件分类"（DQFSA、Dueling DDQN）的扁平特征先例；"AFA 形式化 + 对齐状态证据 + 归因粒度分层目标 + 异构取证动作"空档确认未被占据。B 模块从"控制层"升级为有理论根基的 POMDP 实例化问题。
+- RIS 补充 4 条（AFA 综述、NOCTA、US12530469、DDQN 恶意软件）。
+- 下一步：AFA 综述全文精读（A 级、可直接获取）→ RQ brief v2 起草。
+
+## 2026-07-06：AFA 综述全文精读完成 + RQ brief v2 起草，G1 基本通过
+
+- AFA 综述（arXiv:2502.11067 v2）已全文精读（arXiv HTML 版），新增 `02-literature-notes/2025-Aronsson-AFA-Survey.md`：含 POMDP 形式化、短视/非短视谱系、四类方法分类、九条开放方向到 Project05 的逐条映射、"为什么不是直接套 AFA"的四点差异、可复用清单（baseline/方法候选/评测协议）。
+- 新增 `03-ideas/topic-rq-brief-v2-20260706.md`：主 RQ + 4 个子 RQ + 输入/输出/场景/指标 + 撞题快查表 + G1 自检。
+- **G1 判定：基本通过**，带两项黄色条件：(1) evidence ablation 数据构造方案待实验设计阶段细化；(2) 剩余深扫（中文专利、TAA-EPLMR 全文）仍需补。US12530469 权利要求原文补读已从当前 workflow 剔除。
+- 复利日志新增"AFA 理论基座"条目。
+- 下一步候选：(a) 完成剩余深扫过 G2；(b) 起草 experiment-plan-v0.1（含小规模可行性验证设计）。
+
+## 2026-07-06：用户判定"归因控制层"方向偏弱，触发 G3 回退，启动主线转向
+
+- 用户明确判断："归因可判定性评估 + 归因粒度门控 + 拒答解释 + 缺失证据生成"组合偏弱，本质是给别人的归因系统加保护层，不足以支撑硕士论文 + 专利主创新。
+- 按 workflow v2 的 G3 回退规则，Project05 从 Stage 6/7 回退到 Stage 1（RQ Scoping）。
+- 新增 `04-progress/mainline-pivot-candidates-20260706.md`：分析 4 个候选强主线，推荐"A：CTI 侧攻击图与本地流量/溯源证据的可验证对齐与语义提升"为论文主线，"B：证据价值建模与主动取证规划"为第二贡献模块。
+- 本轮初步联网核查新增高风险专利：US12530469（LLM 多阶段告警调查，置信不足触发追加数据请求循环），直接压缩候选 B 的朴素专利写法；当前仅保留摘要级红线，不再补权利要求全文。
+- 交互式调查 agent 方向（ExCyTIn-Bench、CyberSleuth、AutoBnB-RAG 等）确认拥挤，排除。
+- 原充分性画像/粒度门控/拒答积累降级为候选主线的组成模块与评价维度，不作废。
+- 待用户确认主线选择后，针对选定主线执行正式 Stage 2 深扫。
+
+## 2026-07-06：缺全文项转待办并推进专利 v0.2
+
+- 新增 `04-progress/fulltext-todo-20260706.md`：将 APT-ATT、APTChaser、GAPT、A Multi-Source Feature Fusion-Based Knowledge Graph for APT Attribution 四篇设为“全文待补，不阻塞主线”。
+- 新增 `04-progress/collision-matrix-final-20260706.md`：合并主矩阵和补充矩阵，确定最终红线与白区。
+- 新增 `08-writing/patent-claims-draft-v0.2-20260706.md`：将 v0.1 的“多源证据融合 + LLM 归因”重写为“归因粒度门控 + 可拒答解释”。
+- 当前判断：可以继续推进实验设计 v0.1，但 v0.2 仍需标记为 incomplete draft，等待四篇全文和发明人确认。
+
+## 2026-07-06：Multi-Source Feature Fusion HKG 全文已获取
+
+- 新增 `02-literature-notes/2025-Au-Multi-Source-Feature-Fusion-HKG-APT-Attribution-IDS.md`。
+- 本地 PDF 已归档到 `07-zotero-exports/pdfs_20260706_deep/Au_2025_Multi_Source_Feature_Fusion_HKG_APT_Attribution_IDS.pdf`。
+- 已抽取全文到 `07-zotero-exports/pdf_text_20260706_deep/Au_2025_Multi_Source_Feature_Fusion_HKG_APT_Attribution_IDS.txt`。
+- 结论：该文是红色风险项，直接覆盖 multi-source CTI + HKG + attribute/BERT/node2vec feature fusion + multi-level attention + APT group attribution。
+- 待补全文清单中该项已从“待补”转为“已获取并确认红线”。
+
+## 2026-07-06：形成当前结论简报
+
+- 新增 `04-progress/project05-current-conclusion-brief-20260706.md`。
+- 用于对外讨论当前调研范围、已完成工作、主线方向、拟定技术路线、预期效果和当前疑虑。
+
 ## 2026-07-06：APTChaser / GAPT / MLDSJ 补查与撞题修正
 
 - 新增 `02-literature-notes/2025-Zhang-APTChaser-Attack-Technique-Modeling.md`：确认 APTChaser 已覆盖 `LLM + attack technique schema/profile + APT attribution`，禁止 Project05 把“LLM 细化 TTP 后归因”作为主创新。
