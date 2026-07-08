@@ -1,5 +1,25 @@
 # Project05 Workflow Status
 
+## 2026-07-08 第八次更新：实验案例清单与 schema 已完成
+
+已新增实验设计 Phase 0/1 产物：
+
+1. `08-writing/experiment-case-inventory-v0.1-20260708.md`
+2. `09-experiments/README.md`
+3. `09-experiments/data_schema/evidence_claim.schema.json`
+4. `09-experiments/data_schema/alignment_state.schema.json`
+5. `09-experiments/data_schema/acquisition_action.schema.json`
+
+当前状态修正：
+
+> G5 从“草案完成，待案例清单和 schema 验证”推进为“Phase 0/1 草案完成，待小样例与模拟器验证”。
+
+下一步：
+
+1. 构造 C01-C03 的最小样例数据。
+2. 实现 evidence ablation + action recovery 模拟器。
+3. 跑 random / fixed-order / coverage-greedy / Project05-M1 / full-evidence 五个最小 baseline。
+
 ## 2026-07-07 第七次更新：缺口精读笔记已补齐
 
 已新增/升级 8 篇核心精读笔记：
@@ -19,8 +39,8 @@
 
 下一步：
 
-1. 继续推进 `08-writing/experiment-case-inventory-v0.1-20260707.md`。
-2. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+1. 已完成 `08-writing/experiment-case-inventory-v0.1-20260708.md`。
+2. 已完成 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
 3. 仅保留 APTChaser、GAPT 作为后续高风险全文待办；APT-ATT 已于 2026-07-07 获取并精读，TAA-EPLMR 已于 2026-07-08 完成新主线复核。
 
 ## 2026-07-07 第六次更新：实验方案 v0.1 已完成
@@ -29,13 +49,13 @@
 
 当前状态：
 
-> G5 从“未通过”推进到“草案完成，待案例清单和 schema 验证”。
+> G5 从“未通过”推进到“草案完成”；2026-07-08 已进一步完成案例清单和 schema，待小样例与模拟器验证。
 
 下一步：
 
-1. 建立 `08-writing/experiment-case-inventory-v0.1-20260707.md`。
-2. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
-3. 决定 MVP 是否先只评估 G1-G3，即 technique / intent / campaign 粒度。
+1. 已建立 `08-writing/experiment-case-inventory-v0.1-20260708.md`。
+2. 已设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+3. MVP 已暂定先评估 G1-G3，即 technique / intent / campaign 粒度。
 
 ## 2026-07-06 第五次更新：US12530469 权利要求原文补读剔除
 

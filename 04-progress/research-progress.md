@@ -1,5 +1,13 @@
 # Research Progress
 
+## 2026-07-08：实验案例清单与三个数据 schema 完成
+
+- 新增 `08-writing/experiment-case-inventory-v0.1-20260708.md`，将 MVP 案例池收束为 C01 Linux provenance、C02 FreeBSD provenance、C03 Windows provenance 三个主案例，并保留 OpTC、POIROT/MEGR-APT、ExCyTIn、TAA-EPLMR、APT-ATT 作为扩展或 baseline 案例。
+- 新增 `09-experiments/README.md` 和 `09-experiments/data_schema/`。
+- 已建立三个 JSON Schema：`evidence_claim.schema.json`、`alignment_state.schema.json`、`acquisition_action.schema.json`。
+- schema 已通过 PowerShell `ConvertFrom-Json` 解析校验。
+- G5 当前状态：Phase 0/1 草案完成；下一步是构造 C01-C03 的小样例数据，并实现 evidence ablation + action recovery 模拟器。
+
 ## 2026-07-08：TAA-EPLMR 新主线复核完成
 
 - 已按当前主线复核 `02-literature-notes/2025-Xiao-TAA-EPLMR.md`，确认它已覆盖 `CTI-KG evidence path retrieval + pruning/aggregation + LLM evidence-aware CoT + actor attribution explanation + confidence score`。
@@ -28,8 +36,8 @@
 - 新增 `08-writing/experiment-plan-v0.1-20260707.md`。
 - 实验路线确定为 evidence ablation：从完整攻击案例构造 CTI 行为图和本地证据图，遮蔽部分证据，再让不同取证策略逐步恢复证据并比较成本与归因粒度收益。
 - 明确了 v0.1 的核心模块：证据状态表示、归因粒度规则、取证动作空间、动作价值函数、baseline、LLM 受控参与方式和评价指标。
-- G5 当前状态：草案完成，待案例清单与 schema 验证。
-- 下一步：建立 `experiment-case-inventory-v0.1-20260707.md`，再设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+- G5 当前状态：Phase 0/1 草案完成，案例清单与 schema 已于 2026-07-08 建立。
+- 下一步：构造 C01-C03 的小样例数据，并实现 evidence ablation + action recovery 模拟器。
 
 ## 2026-07-06：US12530469 权利要求原文补读剔除
 

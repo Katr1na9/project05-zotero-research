@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/evidence_claim.schema.json",
+  "title": "EvidenceClaim",
+  "description": "A normalized atomic security evidence claim extracted from CTI text, local logs, provenance graphs, network summaries, IOC enrichment, or malware analysis.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "claim_id",
+    "case_id",
+    "source_type",
+    "claim_type",
+    "subject",
+    "predicate",
+    "object",
+    "observable_status",
+    "source_pointer"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^C[0-9]{2}.*$"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "cti_text",
+        "attck_knowledge",
+        "local_log",
+        "provenance_graph",
+        "network_summary",
+        "ioc_enrichment",
+        "malware_analysis",
+        "infrastructure_history",
+        "human_review",
+        "synthetic"
+      ]
+    },
+    "claim_type": {
+      "type": "string",
+      "enum": [
+        "process_execution",
+        "file_activity",
+        "registry_activity",
+        "network_connection",
+        "dns_resolution",
+        "ioc_observation",
+        "malware_behavior",
+        "infrastructure_relation",
+        "credential_activity",
+        "persistence_activity",
+        "lateral_movement",
+        "data_access",
+        "exfiltration_activity",
+        "cti_behavior",
+        "negative_evidence",
+        "conflict_evidence",
+        "other"
+      ]
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_type",
+        "value"
+      ],
+      "properties": {
+        "entity_type": {
+          "$ref": "#/$defs/entity_type"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_value": {
+          "type": "string"
+        }
+      }
+    },
+    "predicate": {
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "executed",
+        "wrote",
+        "connected_to",
+        "resolved_to",
+        "loaded",
+        "matched_ioc"
+      ]
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_type",
+        "value"
+      ],
+      "properties": {
+        "entity_type": {
+          "$ref": "#/$defs/entity_type"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_value": {
+          "type": "string"
+        }
+      }
+    },
+    "time_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "relative_order": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "mapped_tactic": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "mapped_technique": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+      },
+      "uniqueItems": true
+    },
+    "evidence_strength": {
+      "type": "string",
+      "enum": [
+        "weak",
+        "medium",
+        "strong",
+        "critical",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "observable_status": {
+      "type": "string",
+      "enum": [
+        "visible",
+        "hidden",
+        "recovered",
+        "withheld_for_oracle",
+        "not_available"
+      ]
+    },
+    "source_pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id"
+      ],
+      "properties": {
+        "artifact_id": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "line_start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "line_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record_id": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        }
+      }
+    },
+    "supports_hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "contradicts_hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "process",
+        "file",
+        "registry_key",
+        "ip",
+        "domain",
+        "url",
+        "hash",
+        "malware",
+        "user",
+        "host",
+        "service",
+        "command",
+        "ttp",
+        "report",
+        "campaign",
+        "actor",
+        "unknown"
+      ]
+    }
+  }
+}

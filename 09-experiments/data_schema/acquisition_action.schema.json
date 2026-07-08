@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/acquisition_action.schema.json",
+  "title": "AcquisitionAction",
+  "description": "A concrete evidence acquisition action that can recover hidden evidence claims or resolve alignment gaps under a cost budget.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "action_id",
+    "case_id",
+    "action_type",
+    "target",
+    "cost",
+    "recoverable_claim_ids",
+    "expected_effects",
+    "status"
+  ],
+  "properties": {
+    "action_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^C[0-9]{2}.*$"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "extend_log_window",
+        "query_host_subgraph",
+        "recover_network_summary",
+        "ioc_enrichment",
+        "malware_analysis",
+        "infrastructure_history",
+        "ttp_local_probe",
+        "human_review",
+        "cti_report_lookup",
+        "other"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_type",
+        "target_value"
+      ],
+      "properties": {
+        "target_type": {
+          "type": "string",
+          "enum": [
+            "host",
+            "process",
+            "file",
+            "registry_key",
+            "ip",
+            "domain",
+            "hash",
+            "time_window",
+            "technique",
+            "tactic",
+            "campaign",
+            "actor",
+            "claim",
+            "case",
+            "other"
+          ]
+        },
+        "target_value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time_window": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "cost": {
+      "type": "number",
+      "minimum": 0
+    },
+    "cost_breakdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "time_cost": {
+          "type": "number",
+          "minimum": 0
+        },
+        "compute_cost": {
+          "type": "number",
+          "minimum": 0
+        },
+        "analyst_cost": {
+          "type": "number",
+          "minimum": 0
+        },
+        "data_access_cost": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "operator",
+          "value"
+        ],
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "equals",
+              "not_equals",
+              "greater_than",
+              "less_than",
+              "contains",
+              "exists",
+              "not_exists"
+            ]
+          },
+          "value": {}
+        }
+      }
+    },
+    "recoverable_claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "expected_evidence_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "cti_text",
+          "local_log",
+          "provenance_graph",
+          "network_summary",
+          "ioc_enrichment",
+          "malware_analysis",
+          "infrastructure_history",
+          "human_review"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "expected_effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_granularity_gain",
+        "expected_uncertainty_reduction",
+        "expected_over_attribution_risk_reduction",
+        "expected_conflict_resolution"
+      ],
+      "properties": {
+        "expected_granularity_gain": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "expected_uncertainty_reduction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "expected_over_attribution_risk_reduction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "expected_conflict_resolution": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "expected_coverage_delta": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "oracle_effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actual_recovered_claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "actual_granularity_gain": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "actual_uncertainty_reduction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "actual_conflict_resolution": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "planner_score": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "taken",
+        "masked",
+        "blocked",
+        "not_applicable"
+      ]
+    },
+    "natural_language_request": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

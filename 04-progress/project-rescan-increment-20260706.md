@@ -88,7 +88,7 @@ Project05 与常规 AFA 的差异在于：证据不是扁平表格特征，而�
 
 ## 当前待办
 
-1. 根据 `08-writing/experiment-plan-v0.1-20260707.md` 建立案例清单和数据 schema。
+1. 已根据 `08-writing/experiment-plan-v0.1-20260707.md` 建立案例清单和数据 schema；下一步构造小样例与模拟器。
 2. 保留 APTChaser、GAPT 正文获取待办；APT-ATT 已于 2026-07-07 获取并精读，TAA-EPLMR 已于 2026-07-08 完成新主线复核。
 3. 继续中文专利侧与证据采集/取证规划相关检索。
 4. 把 POIROT/DeepHunter/MEGR-APT/CLIProv/APT-CGLP/TAA-EPLMR 写入相关工作和 baseline 设计。

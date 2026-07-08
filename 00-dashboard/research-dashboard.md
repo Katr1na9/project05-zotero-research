@@ -66,11 +66,11 @@ flowchart LR
 | G2 撞题扫描 | 进行中 | CLIProv/APT-CGLP/APT-ATT 已升级全文精读，TAA-EPLMR 已完成新主线复核；仍需补中文专利侧、APTChaser/GAPT 正文 |
 | G3 创新强度 | 暂时好转 | 从“保护层/list 生成”转为“主动取证规划” |
 | G4 专利权利要求 | 未通过 | v0.2 已是历史草稿，需等新主线后重写 v0.3 |
-| G5 实验可执行性 | 草案完成 | `experiment-plan-v0.1-20260707.md` 已形成，下一步验证案例清单和数据 schema |
+| G5 实验可执行性 | Phase 0/1 草案完成 | `experiment-plan-v0.1-20260707.md`、案例清单和三个 schema 已形成，下一步构造小样例与模拟器 |
 
 ## 下一步
 
-1. 根据 `08-writing/experiment-plan-v0.1-20260707.md` 建立案例清单和数据 schema。
+1. 根据案例清单构造 C01-C03 的最小样例 evidence_claim / alignment_state / acquisition_action 数据。
 2. 保留 APTChaser、GAPT 正文获取待办，并继续中文专利侧证据采集/取证规划检索；US12530469 仅作为摘要级专利红线保留。
 3. 将 POIROT/DeepHunter/MEGR-APT/CLIProv/APT-CGLP 作为上游对齐谱系写入相关工作和 baseline 设计。
-4. 在最小可行实验通过后判断是否可以启动新专利 v0.3。
+4. 实现 evidence ablation + action recovery 最小模拟器；通过后判断是否可以启动新专利 v0.3。

@@ -42,12 +42,13 @@
 - `06-templates/`: 可复用模板。
 - `07-zotero-exports/`: Zotero/RIS/BibTeX/PDF 导入包。
 - `08-writing/`: 开题报告、综述、论文草稿、专利草稿、实验设计。
+- `09-experiments/`: 实验 schema、配置、脚本和后续小样例。
 
 ## 当前下一步
 
-1. 已完成 `08-writing/experiment-plan-v0.1-20260707.md`，下一步进入案例清单和数据 schema。
+1. 已完成 `08-writing/experiment-plan-v0.1-20260707.md`、`08-writing/experiment-case-inventory-v0.1-20260708.md` 和 `09-experiments/data_schema/` 三个核心 schema。
 2. CLIProv、APT-CGLP、APT-ATT 已升级为全文精读；TAA-EPLMR 已完成新主线复核，继续保留 APTChaser、GAPT 正文获取待办。
-3. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
+3. 下一步构造 C01-C03 的最小样例数据，并实现 evidence ablation + action recovery 模拟器。
 4. 根据最小可行实验结果判断是否重写专利 `v0.3`，不要继续扩写旧的 `v0.2`。
 
 ## 当前红线

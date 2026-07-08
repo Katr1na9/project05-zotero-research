@@ -429,7 +429,7 @@ v0.1 最小矩阵：
 
 产物：
 
-- `08-writing/experiment-case-inventory-v0.1-20260707.md`
+- `08-writing/experiment-case-inventory-v0.1-20260708.md`
 - 每个案例记录：攻击阶段、可用证据类型、可映射 technique、是否有 campaign/actor 标签。
 
 ### Phase 1：数据 schema
@@ -479,7 +479,7 @@ v0.1 最小矩阵：
 ```text
 08-writing/
   experiment-plan-v0.1-20260707.md
-  experiment-case-inventory-v0.1-20260707.md
+  experiment-case-inventory-v0.1-20260708.md
 
 09-experiments/
   README.md
