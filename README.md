@@ -49,7 +49,7 @@
 
 1. 已完成 `08-writing/experiment-plan-v0.1-20260707.md`、`08-writing/experiment-case-inventory-v0.1-20260708.md` 和 `09-experiments/data_schema/` 三个核心 schema。
 2. CLIProv、APT-CGLP、APT-ATT 已升级为全文精读；TAA-EPLMR 已完成新主线复核，继续保留 APTChaser、GAPT 正文获取待办。
-3. 下一步构造 C01-C03 的最小样例数据，并实现 evidence ablation + action recovery 模拟器。
+3. C01 小样例和最小模拟器已跑通；下一步构造 C02/C03，并扩展 mask 强度和统计汇总。
 4. 根据最小可行实验结果判断是否重写专利 `v0.3`，不要继续扩写旧的 `v0.2`。
 
 ## 当前红线

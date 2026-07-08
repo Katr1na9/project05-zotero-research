@@ -1,0 +1,225 @@
+[
+  {
+    "action_id": "C01-AA-001",
+    "case_id": "C01-linux-provenance",
+    "action_type": "extend_log_window",
+    "target": {
+      "target_type": "time_window",
+      "target_value": "2026-07-01T10:01:30Z/2026-07-01T10:03:00Z"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C01-EC-002",
+      "C01-EC-003",
+      "C01-EC-004"
+    ],
+    "expected_evidence_types": [
+      "local_log",
+      "provenance_graph"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.2,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Expand the Linux audit/provenance time window around the initial shell execution.",
+    "notes": "Good first action when execution evidence is missing."
+  },
+  {
+    "action_id": "C01-AA-002",
+    "case_id": "C01-linux-provenance",
+    "action_type": "query_host_subgraph",
+    "target": {
+      "target_type": "process",
+      "target_value": "/tmp/.cache/upd"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": [
+      "C01-EC-004",
+      "C01-EC-005",
+      "C01-EC-006",
+      "C01-EC-009",
+      "C01-EC-010",
+      "C01-EC-012"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph",
+      "malware_analysis"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 2,
+      "expected_uncertainty_reduction": 0.35,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.5
+    },
+    "status": "available",
+    "natural_language_request": "Query the local provenance subgraph rooted at /tmp/.cache/upd.",
+    "notes": "High-value action for payload, discovery, collection, and exfil support."
+  },
+  {
+    "action_id": "C01-AA-003",
+    "case_id": "C01-linux-provenance",
+    "action_type": "recover_network_summary",
+    "target": {
+      "target_type": "ip",
+      "target_value": "198.51.100.77"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C01-EC-007",
+      "C01-EC-011"
+    ],
+    "expected_evidence_types": [
+      "network_summary"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 2,
+      "expected_uncertainty_reduction": 0.4,
+      "expected_over_attribution_risk_reduction": 0.4,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.33
+    },
+    "status": "available",
+    "natural_language_request": "Recover network flow summaries involving 198.51.100.77.",
+    "notes": "Targets C2 and exfiltration evidence."
+  },
+  {
+    "action_id": "C01-AA-004",
+    "case_id": "C01-linux-provenance",
+    "action_type": "ttp_local_probe",
+    "target": {
+      "target_type": "technique",
+      "target_value": "T1059"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C01-EC-002",
+      "C01-EC-003",
+      "C01-EC-006"
+    ],
+    "expected_evidence_types": [
+      "local_log",
+      "provenance_graph"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.15,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Probe local evidence for command and scripting interpreter behavior.",
+    "notes": "Technique-level recovery action."
+  },
+  {
+    "action_id": "C01-AA-005",
+    "case_id": "C01-linux-provenance",
+    "action_type": "malware_analysis",
+    "target": {
+      "target_type": "file",
+      "target_value": "/tmp/.cache/upd"
+    },
+    "cost": 4,
+    "recoverable_claim_ids": [
+      "C01-EC-005"
+    ],
+    "expected_evidence_types": [
+      "malware_analysis"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.35,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.16
+    },
+    "status": "available",
+    "natural_language_request": "Analyze the dropped payload /tmp/.cache/upd.",
+    "notes": "High-confidence but expensive sample analysis action."
+  },
+  {
+    "action_id": "C01-AA-006",
+    "case_id": "C01-linux-provenance",
+    "action_type": "ioc_enrichment",
+    "target": {
+      "target_type": "ip",
+      "target_value": "198.51.100.77"
+    },
+    "cost": 1,
+    "recoverable_claim_ids": [
+      "C01-EC-008"
+    ],
+    "expected_evidence_types": [
+      "ioc_enrichment"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.3,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.16
+    },
+    "status": "available",
+    "natural_language_request": "Enrich IP 198.51.100.77 against historical infrastructure observations.",
+    "notes": "Cheap discriminative IOC enrichment action."
+  },
+  {
+    "action_id": "C01-AA-007",
+    "case_id": "C01-linux-provenance",
+    "action_type": "query_host_subgraph",
+    "target": {
+      "target_type": "file",
+      "target_value": "/tmp/.cache/archive.tgz"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": [
+      "C01-EC-009",
+      "C01-EC-010",
+      "C01-EC-012"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 2,
+      "expected_uncertainty_reduction": 0.3,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.33
+    },
+    "status": "available",
+    "natural_language_request": "Query provenance around the archive file created during collection.",
+    "notes": "Targets collection and exfiltration chain closure."
+  },
+  {
+    "action_id": "C01-AA-008",
+    "case_id": "C01-linux-provenance",
+    "action_type": "recover_network_summary",
+    "target": {
+      "target_type": "time_window",
+      "target_value": "2026-07-01T10:06:00Z/2026-07-01T10:08:00Z"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C01-EC-011"
+    ],
+    "expected_evidence_types": [
+      "network_summary"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.25,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.16
+    },
+    "status": "available",
+    "natural_language_request": "Recover outbound network summary during the suspected exfiltration window.",
+    "notes": "Focused exfiltration action."
+  }
+]

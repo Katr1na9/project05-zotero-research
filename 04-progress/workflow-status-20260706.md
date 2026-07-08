@@ -1,5 +1,29 @@
 # Project05 Workflow Status
 
+## 2026-07-08 第九次更新：C01 toy MVP 已跑通
+
+已新增 C01 小样例和最小模拟器：
+
+1. `09-experiments/examples/C01/case_config.json`
+2. `09-experiments/examples/C01/evidence_claims.json`
+3. `09-experiments/examples/C01/acquisition_actions.json`
+4. `09-experiments/scripts/run_mvp.py`
+5. `09-experiments/results/c01_mvp_results.csv`
+6. `09-experiments/results/c01_mvp_summary.json`
+7. `09-experiments/results/c01_mvp_traces.json`
+
+当前状态修正：
+
+> G5 从“Phase 0/1 草案完成，待小样例与模拟器验证”推进为“C01 toy MVP 跑通，待 C02/C03 扩展验证”。
+
+当前 C01 结果仅作为工程闭环验证：`project05_m1` 平均达到 G3 成本为 3.0，低于 `coverage_greedy` 的 3.4 和 `fixed_order` 的 6.2667。该结果还不能作为论文实验结论。
+
+下一步：
+
+1. 构造 C02/C03。
+2. 增加 mask intensity 20% / 40% / 60%。
+3. 增加统计汇总脚本和结果表模板。
+
 ## 2026-07-08 第八次更新：实验案例清单与 schema 已完成
 
 已新增实验设计 Phase 0/1 产物：
@@ -12,13 +36,13 @@
 
 当前状态修正：
 
-> G5 从“草案完成，待案例清单和 schema 验证”推进为“Phase 0/1 草案完成，待小样例与模拟器验证”。
+> G5 从“草案完成，待案例清单和 schema 验证”推进为“Phase 0/1 草案完成”；2026-07-08 已进一步跑通 C01 toy MVP。
 
 下一步：
 
-1. 构造 C01-C03 的最小样例数据。
-2. 实现 evidence ablation + action recovery 模拟器。
-3. 跑 random / fixed-order / coverage-greedy / Project05-M1 / full-evidence 五个最小 baseline。
+1. 已构造 C01 最小样例数据。
+2. 已实现 evidence ablation + action recovery 模拟器。
+3. 已跑 random / fixed-order / coverage-greedy / Project05-M1 / full-evidence 五个最小 baseline。
 
 ## 2026-07-07 第七次更新：缺口精读笔记已补齐
 

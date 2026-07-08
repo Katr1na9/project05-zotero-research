@@ -1,5 +1,13 @@
 # Research Progress
 
+## 2026-07-08：C01 小样例与最小模拟器跑通
+
+- 新增 `09-experiments/examples/C01/`，包含 `case_config.json`、`evidence_claims.json`、`acquisition_actions.json`。
+- 新增 `09-experiments/scripts/run_mvp.py`，实现 evidence ablation、action recovery、state update、granularity judgment 和 5 个 planner：`random`、`fixed_order`、`coverage_greedy`、`project05_m1`、`full_evidence`。
+- 已生成 `09-experiments/results/c01_mvp_results.csv`、`c01_mvp_summary.json`、`c01_mvp_traces.json`。
+- 当前 C01 toy result：`project05_m1` success_rate 1.0，mean_cost_to_target 3.0；`coverage_greedy` 为 3.4，`fixed_order` 为 6.2667，`random` success_rate 为 0.4。
+- 结论：最小闭环已经跑通，但还只是 toy simulator；不能作为论文结论。下一步应构造 C02/C03，并加入更多 mask 强度与统计汇总。
+
 ## 2026-07-08：实验案例清单与三个数据 schema 完成
 
 - 新增 `08-writing/experiment-case-inventory-v0.1-20260708.md`，将 MVP 案例池收束为 C01 Linux provenance、C02 FreeBSD provenance、C03 Windows provenance 三个主案例，并保留 OpTC、POIROT/MEGR-APT、ExCyTIn、TAA-EPLMR、APT-ATT 作为扩展或 baseline 案例。

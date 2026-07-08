@@ -1,0 +1,132 @@
+{
+  "case_id": "C01-linux-provenance",
+  "case_name": "Linux provenance multi-stage intrusion toy case",
+  "description": "A small hand-built Linux provenance case for validating evidence ablation, action recovery, state update, and attribution granularity planning.",
+  "target_granularity": "G3_campaign",
+  "budget_total": 7,
+  "mask_intensity": 0.4,
+  "mask_strategies": [
+    "random",
+    "stage",
+    "discriminative"
+  ],
+  "random_seeds": [
+    11,
+    23,
+    37,
+    41,
+    53
+  ],
+  "fixed_action_order": [
+    "C01-AA-001",
+    "C01-AA-002",
+    "C01-AA-003",
+    "C01-AA-004",
+    "C01-AA-005",
+    "C01-AA-006",
+    "C01-AA-007",
+    "C01-AA-008"
+  ],
+  "stage_mask_tags": [
+    "stage:command_and_control",
+    "stage:collection",
+    "stage:exfiltration"
+  ],
+  "discriminative_claim_ids": [
+    "C01-EC-005",
+    "C01-EC-007",
+    "C01-EC-008",
+    "C01-EC-010",
+    "C01-EC-011"
+  ],
+  "cti_nodes": [
+    {
+      "node_id": "N01_initial_execution",
+      "stage": "execution",
+      "required_claim_ids": [
+        "C01-EC-002",
+        "C01-EC-003"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N02_payload_drop",
+      "stage": "execution",
+      "required_claim_ids": [
+        "C01-EC-004",
+        "C01-EC-005"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N03_local_discovery",
+      "stage": "discovery",
+      "required_claim_ids": [
+        "C01-EC-006"
+      ],
+      "critical": false
+    },
+    {
+      "node_id": "N04_c2_connection",
+      "stage": "command_and_control",
+      "required_claim_ids": [
+        "C01-EC-007",
+        "C01-EC-008"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N05_collection",
+      "stage": "collection",
+      "required_claim_ids": [
+        "C01-EC-009",
+        "C01-EC-010"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N06_exfiltration",
+      "stage": "exfiltration",
+      "required_claim_ids": [
+        "C01-EC-011",
+        "C01-EC-012"
+      ],
+      "critical": true
+    }
+  ],
+  "cti_edges": [
+    {
+      "edge_id": "E01_exec_to_payload",
+      "source": "N01_initial_execution",
+      "target": "N02_payload_drop"
+    },
+    {
+      "edge_id": "E02_payload_to_discovery",
+      "source": "N02_payload_drop",
+      "target": "N03_local_discovery"
+    },
+    {
+      "edge_id": "E03_payload_to_c2",
+      "source": "N02_payload_drop",
+      "target": "N04_c2_connection"
+    },
+    {
+      "edge_id": "E04_discovery_to_collection",
+      "source": "N03_local_discovery",
+      "target": "N05_collection"
+    },
+    {
+      "edge_id": "E05_collection_to_exfiltration",
+      "source": "N05_collection",
+      "target": "N06_exfiltration"
+    }
+  ],
+  "granularity_order": [
+    "G0_unknown",
+    "G1_technique",
+    "G2_tactic_intent",
+    "G3_campaign",
+    "G4_actor_cluster",
+    "G5_named_actor"
+  ]
+}

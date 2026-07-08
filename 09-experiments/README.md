@@ -1,12 +1,67 @@
 # Project05 Experiments
 
-本目录用于后续最小可行实验实现。当前先放置数据 schema，后续再补脚本、配置和结果。
+本目录用于 Project05 最小可行实验实现。当前已经完成 C01 小样例和 dependency-free MVP 模拟器。
 
 ## 当前产物
 
 - `data_schema/evidence_claim.schema.json`
 - `data_schema/alignment_state.schema.json`
 - `data_schema/acquisition_action.schema.json`
+- `examples/C01/case_config.json`
+- `examples/C01/evidence_claims.json`
+- `examples/C01/acquisition_actions.json`
+- `scripts/run_mvp.py`
+- `results/c01_mvp_results.csv`
+- `results/c01_mvp_summary.json`
+- `results/c01_mvp_traces.json`
+
+## 如何运行
+
+在仓库根目录执行：
+
+```powershell
+python .\09-experiments\scripts\run_mvp.py
+```
+
+脚本只依赖 Python 标准库。默认读取：
+
+```text
+09-experiments/examples/C01/
+```
+
+并输出：
+
+```text
+09-experiments/results/c01_mvp_results.csv
+09-experiments/results/c01_mvp_summary.json
+09-experiments/results/c01_mvp_traces.json
+```
+
+## C01 实验设计
+
+C01 是一个手工构造的 Linux provenance 多阶段入侵小样例：
+
+- 12 条 `evidence_claim`；
+- 8 个 `acquisition_action`；
+- 3 种遮蔽策略：`random`、`stage`、`discriminative`；
+- 每种遮蔽策略 5 个随机种子；
+- 5 个策略：`random`、`fixed_order`、`coverage_greedy`、`project05_m1`、`full_evidence`。
+
+G3 campaign-level 判定要求所有 critical CTI 节点被覆盖，因此遮蔽 C2、collection 或 exfiltration 关键证据后，系统必须通过动作恢复证据才能达到目标粒度。
+
+## 当前结果快照
+
+`results/c01_mvp_summary.json` 当前结果：
+
+| Planner | success_rate | mean_cost_to_target | mean_steps_to_target |
+|---|---:|---:|---:|
+| random | 0.4000 | 5.5000 | 2.1667 |
+| fixed_order | 1.0000 | 6.2667 | 2.6667 |
+| coverage_greedy | 1.0000 | 3.4000 | 1.4667 |
+| project05_m1 | 1.0000 | 3.0000 | 1.4667 |
+| full_evidence | 1.0000 | 0.0000 | 0.0000 |
+
+这个结果只说明 C01 toy simulator 可以跑通，并初步显示 cost-aware Project05-M1 比固定顺序和 coverage-greedy 更省成本。它还不能作为论文实验结论，后续需要 C02/C03、更多 mask 强度和更严格统计。
 
 ## 与写作文档的关系
 
