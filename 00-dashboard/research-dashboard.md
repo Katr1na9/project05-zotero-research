@@ -63,7 +63,7 @@ flowchart LR
 | Gate | 状态 | 说明 |
 |---|---|---|
 | G1 RQ 清晰性 | 基本通过 | RQ v2 已形成，主线更强 |
-| G2 撞题扫描 | 进行中 | CLIProv/APT-CGLP/APT-ATT 已升级全文精读；仍需补中文专利侧、TAA-EPLMR 复核、APTChaser/GAPT 正文 |
+| G2 撞题扫描 | 进行中 | CLIProv/APT-CGLP/APT-ATT 已升级全文精读，TAA-EPLMR 已完成新主线复核；仍需补中文专利侧、APTChaser/GAPT 正文 |
 | G3 创新强度 | 暂时好转 | 从“保护层/list 生成”转为“主动取证规划” |
 | G4 专利权利要求 | 未通过 | v0.2 已是历史草稿，需等新主线后重写 v0.3 |
 | G5 实验可执行性 | 草案完成 | `experiment-plan-v0.1-20260707.md` 已形成，下一步验证案例清单和数据 schema |
@@ -71,6 +71,6 @@ flowchart LR
 ## 下一步
 
 1. 根据 `08-writing/experiment-plan-v0.1-20260707.md` 建立案例清单和数据 schema。
-2. 继续复核 TAA-EPLMR，并保留 APTChaser、GAPT 正文获取待办；US12530469 仅作为摘要级专利红线保留。
+2. 保留 APTChaser、GAPT 正文获取待办，并继续中文专利侧证据采集/取证规划检索；US12530469 仅作为摘要级专利红线保留。
 3. 将 POIROT/DeepHunter/MEGR-APT/CLIProv/APT-CGLP 作为上游对齐谱系写入相关工作和 baseline 设计。
 4. 在最小可行实验通过后判断是否可以启动新专利 v0.3。

@@ -138,3 +138,84 @@ Project05 如果继续推进，应解决：
 给定不完整、冲突、可能被模仿、可能 open-set 的证据，如何判断能否归因、归因到哪一层、何时拒答，并解释缺失证据。
 ```
 
+## 2026-07-08 新主线复核
+
+复核目标：按 Project05 当前主线“对齐感知证据状态建模 + 主动取证规划”重新审计 TAA-EPLMR 是否已经覆盖核心创新。
+
+### 覆盖度矩阵
+
+| 能力点 | TAA-EPLMR 是否覆盖 | 复核判断 |
+|---|---|---|
+| CTI-KG evidence path 检索 | 是 | 19 类 evidence path pattern + CTI-KG 检索，是论文核心。 |
+| 证据路径剪枝 / 聚合 | 是 | 做 attacker-discriminability pruning 和 attacker-wise aggregation。 |
+| LLM evidence-aware CoT | 是 | prompt 中显式加入 evidence-aware attribution logic 与 progressive demonstrations。 |
+| APT actor attribution | 是 | 输出最可能 APT group，评价 Micro-F1 / Macro-F1。 |
+| attribution explanation | 是 | 输出归因解释。 |
+| confidence score | 是 | 要求 LLM 输出 0-1 confidence score，案例中给出 0.85。 |
+| confidence calibration | 否 | 未见 ECE、Brier、reliability diagram 或置信度校准实验。 |
+| incomplete evidence robustness | 部分覆盖 | Dataset-Incomplete 删除 vulnerability、filename、registry、email 后继续闭集分类；这是鲁棒性实验，不是证据不足判定。 |
+| noisy evidence robustness | 部分覆盖 | Dataset-Noise 加入 unrelated malware/domain/URL/filepath/IP 后继续闭集分类；未做反证、false flag 或 mimicry 机制。 |
+| evidence weighting | 部分覆盖 | 通过路径数量、多样性、优先级、关联报告数量指导 LLM 判断，但不是可学习/可校准的证据权重模型。 |
+| evidence enhancement | 部分覆盖 | 它的 enhancement 是 evidence path retrieval/pruning/aggregation，即检索增强；不是对缺失证据状态的主动增强或闭环补证。 |
+| evidence sufficiency gate | 否 | 没有判断“当前证据是否足以支撑 actor-level 归因”。 |
+| attribution granularity gate | 否 | 没有 technique / intent / campaign / actor 的层级降级机制，默认输出 actor。 |
+| refusal / abstention | 否 | 没有证据不足时拒答或暂缓归因。 |
+| open-set / unknown actor | 否 | off-list 只是评价时处理无法匹配标签的输出，不是开放集归因机制。 |
+| active evidence acquisition | 否 | 没有候选取证动作、成本、动作价值估计、下一步证据规划。 |
+| iterative re-alignment loop | 否 | 没有“对齐-评估-补证-再对齐”的闭环。 |
+| CTI-local provenance/log alignment | 否 | 证据主要来自 IOC-based CTI-KG，不处理本地 provenance/log 证据与 CTI 行为图对齐。 |
+
+### 复核结论
+
+TAA-EPLMR 已经把旧方向中最危险的一段做实了：
+
+```text
+IOC / CTI-KG evidence paths
+  -> evidence path retrieval and pruning
+  -> LLM CoT attribution reasoning
+  -> actor label + explanation + confidence
+```
+
+因此 Project05 不能再写成：
+
+- evidence path-enhanced LLM APT attribution；
+- CTI-KG + LLM reasoning + confidence score；
+- incomplete/noisy IOC 下的鲁棒 actor classification；
+- 让 LLM 根据 evidence path 输出归因解释。
+
+但它没有覆盖当前新主线：
+
+```text
+alignment output / evidence state
+  -> supportable attribution granularity
+  -> next evidence acquisition action
+  -> cost-aware planning
+  -> re-alignment / stop / downgrade
+```
+
+也就是说，TAA-EPLMR 的终点是“证据路径增强后的闭集 actor 归因”；Project05 的起点应当是“已有归因/对齐证据状态是否足够，以及不够时下一步取什么证据最有价值”。
+
+### 对实验设计的影响
+
+TAA-EPLMR 应作为强 baseline 或红线参照，而不是被重复：
+
+- baseline：`TAA-EPLMR-like CTI-KG evidence path + LLM actor attribution`；
+- Project05 的对照任务：在相同证据被遮蔽时，不只比较 actor F1，还比较是否正确降级、拒答、选择下一步证据动作；
+- 指标必须加入 over-attribution rate、correct downgrade / abstention、granularity selection accuracy、next-best-evidence ranking、cost-to-target-granularity；
+- 如果只做 Dataset-Incomplete 风格删除 IOC 后继续分类，会落回 TAA-EPLMR 的实验边界。
+
+### 对专利写法的红线
+
+后续专利 v0.3 不应主张：
+
+- “基于证据路径增强的大语言模型 APT 归因方法”；
+- “构建 CTI-KG 并检索证据路径供 LLM 推理”；
+- “根据证据路径数量、优先级、多样性生成归因解释与置信度”。
+
+更安全的权利要求焦点应限定为：
+
+- 对齐结果到证据状态的结构化建模；
+- 归因粒度可支撑性判定；
+- 面向归因粒度提升的候选取证动作价值估计；
+- 成本约束下的主动取证规划；
+- 预算终止或证据不足时的降级/停止/解释。

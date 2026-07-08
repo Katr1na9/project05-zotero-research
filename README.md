@@ -46,7 +46,7 @@
 ## 当前下一步
 
 1. 已完成 `08-writing/experiment-plan-v0.1-20260707.md`，下一步进入案例清单和数据 schema。
-2. CLIProv、APT-CGLP、APT-ATT 已升级为全文精读；继续复核 TAA-EPLMR，并保留 APTChaser、GAPT 正文获取待办。
+2. CLIProv、APT-CGLP、APT-ATT 已升级为全文精读；TAA-EPLMR 已完成新主线复核，继续保留 APTChaser、GAPT 正文获取待办。
 3. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
 4. 根据最小可行实验结果判断是否重写专利 `v0.3`，不要继续扩写旧的 `v0.2`。
 

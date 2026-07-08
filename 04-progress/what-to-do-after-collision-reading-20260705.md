@@ -8,7 +8,7 @@
 | Guru et al. 2025 | 从 CTI 文档抽 TTP，再用 actor-TTP profile 做 actor ranking | 堵住“CTI->TTP->actor”的朴素路线；TTP-only attribution 只能做 baseline |
 | AttacKG+ | 用 LLM 从 CTI 文本构建 behavior graph、ATT&CK labels、state summary | 堵住“用 LLM 构建文本 attack graph”的创新 |
 | MM-AttacKG | 用 MLLM 解析 CTI 图像，把图像信息补进 attack graph | 堵住“多模态 CTI 图文融合构图”的创新 |
-| TAA-EPLMR | 题名显示其做 evidence path-enhanced LLM reasoning for threat actor attribution | 最高撞题风险；全文未获取前必须避开 evidence-path 宽题 |
+| TAA-EPLMR | 做 evidence path-enhanced LLM reasoning for threat actor attribution | 最高撞题风险；2026-07-08 复核确认必须避开 evidence-path + LLM actor attribution 宽题 |
 
 ## 2. 已经不能作为主创新的方向
 
@@ -159,4 +159,3 @@ Project05 不应该继续推进原宽题：
 更稳、更像专利、也更能转论文的方向是：
 
 > 证据不完整条件下，LLM 辅助归因系统如何判断证据是否足以支撑某一级别的归因，并在证据不足时进行降级或拒答。
-

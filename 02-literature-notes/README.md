@@ -93,13 +93,14 @@
 - `2025-ExCyTIn-Bench-Cyber-Threat-Investigation.md`: 作为安全调查 agent benchmark 参照，可借鉴其 graph-grounded evaluation，但不把 LLM agent 调查作为主创新。
 - `2026-Adaptive-Malware-Detection-Sequential-Feature-Selection-DDQN.md`: 安全侧顺序特征获取最近邻，适合作为 Project05 planner baseline/对比对象。
 - `2025-Cai-APT-ATT-High-Risk-Related.md`: 已从高风险占位升级为正文精读，确认异构 CTI 表示 + CTGAN + stacking actor classification 已被覆盖，但未覆盖证据充分性和主动取证规划。
+- `2025-Xiao-TAA-EPLMR.md`: 已完成新主线复核，确认 evidence path + LLM CoT + explanation + confidence + incomplete/noisy IOC 鲁棒归因已被覆盖，但未覆盖归因粒度门控、主动取证规划和对齐-补证闭环。
 
 ## 仍需补全文
 
 - [ ] `APTChaser`: 当前只有 Springer 摘要和元数据，正文仍需获取。
 - [ ] `GAPT`: 当前只确认二级引用线索，需验证 DOI、全文和独立记录。
 - [x] `US12530469`: 当前保留为说明书/摘要级风险笔记；权利要求原文补读已从当前 workflow 剔除。
-- [ ] `TAA-EPLMR`: 已有正文线索，但需复核是否覆盖 confidence / reasoning chain / evidence path / incomplete evidence。
+- [x] `TAA-EPLMR`: 已完成新主线复核，确认覆盖 confidence / reasoning chain / evidence path / incomplete evidence robustness，但不覆盖主动取证规划。
 
 ## 当前红线判断
 

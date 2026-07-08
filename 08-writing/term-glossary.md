@@ -453,6 +453,6 @@
 | adaptive attribution granularity | 自适应归因粒度 | 证据不足时从 actor 降级到 campaign、intent 或 technique |
 | refusal / abstention | 拒答 / 暂缓归因 | 证据不足、冲突或候选 actor 难区分时不强行输出 actor |
 | over-attribution rate | 过度归因率 | 在证据不足时仍输出高置信 actor 的比例 |
-| evidence path-enhanced reasoning | 证据路径增强推理 | TAA-EPLMR 语境；全文待获取，暂按高风险相关术语记录 |
+| evidence path-enhanced reasoning | 证据路径增强推理 | TAA-EPLMR 语境；2026-07-08 已完成新主线复核，作为 Project05 的红线与 baseline 参照 |
 | agentic attribution | 智能体式归因 | AURA 语境；多 agent 协作完成查询改写、检索、归因和解释 |
 | justification synthesis | 解释合成 | AURA 语境；生成自然语言 attribution justification |

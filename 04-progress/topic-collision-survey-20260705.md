@@ -125,7 +125,7 @@
 ## 2026-07-05 补读更新
 
 - 已新增全文精读：AURA、Guru et al. 2025、AttacKG+、MM-AttacKG。
-- 已建立高风险笔记：TAA-EPLMR，但全文未获取，暂不能算完成精读。
+- 已建立高风险笔记：TAA-EPLMR；2026-07-08 已完成新主线复核，确认其覆盖 evidence path + LLM CoT + confidence + incomplete/noisy IOC 鲁棒归因。
 - 更新判断：
   - AURA 已经覆盖 RAG + multi-agent + LLM 的可解释 APT attribution。
   - Guru et al. 已经覆盖 CTI -> TTP -> actor ranking。

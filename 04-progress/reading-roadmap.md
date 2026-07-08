@@ -178,7 +178,7 @@ CTI 文本侧：EXTRACTOR / AttacKG
 2. `Guru et al. 2025`：CTI -> TTP -> actor ranking 的 LLM/embedding baseline，已沉淀。
 3. `AttacKG+`：LLM-based attack knowledge graph construction，已沉淀。
 4. `MM-AttacKG`：多模态 CTI image-enhanced attack graph construction，已沉淀。
-5. `TAA-EPLMR`：evidence path-enhanced LLM reasoning for threat actor attribution，全文待获取，暂不能算完成全文精读。
+5. `TAA-EPLMR`：evidence path-enhanced LLM reasoning for threat actor attribution，2026-07-08 已完成新主线复核，确认其覆盖 evidence path + LLM CoT + confidence + incomplete/noisy IOC 鲁棒归因。
 
 更新后的主线判断：
 

@@ -21,7 +21,7 @@
 
 1. 继续推进 `08-writing/experiment-case-inventory-v0.1-20260707.md`。
 2. 设计 `evidence_claim / alignment_state / acquisition_action` 三个 schema。
-3. 仅保留 APTChaser、GAPT、TAA-EPLMR 复核作为后续高风险待办；APT-ATT 已于 2026-07-07 获取并精读。
+3. 仅保留 APTChaser、GAPT 作为后续高风险全文待办；APT-ATT 已于 2026-07-07 获取并精读，TAA-EPLMR 已于 2026-07-08 完成新主线复核。
 
 ## 2026-07-07 第六次更新：实验方案 v0.1 已完成
 
@@ -43,9 +43,8 @@
 
 当前剩余补洞修正为：
 
-1. TAA-EPLMR 复核；
-2. 中文专利侧与证据采集/取证规划相关检索；
-3. APTChaser / GAPT 正文获取；APT-ATT 已于 2026-07-07 获取并精读。
+1. 中文专利侧与证据采集/取证规划相关检索；
+2. APTChaser / GAPT 正文获取；APT-ATT 已于 2026-07-07 获取并精读，TAA-EPLMR 已于 2026-07-08 完成新主线复核。
 
 下一步仍优先起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 
@@ -60,7 +59,7 @@
 下一步优先级：
 
 1. 起草 `08-writing/experiment-plan-v0.1-20260706.md`，先验证这条主线能不能跑起来。
-2. 继续补 TAA-EPLMR 与剩余高风险全文；US12530469 权利要求原文补读已剔除，CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读。
+2. 继续补剩余高风险全文；US12530469 权利要求原文补读已剔除，CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读，TAA-EPLMR 已于 2026-07-08 完成新主线复核。
 3. 旧专利 v0.2 继续冻结，等 experiment-plan-v0.1 通过后再进入 v0.3。
 
 ## 2026-07-06 第三次更新：全项目重扫后的当前状态
@@ -84,7 +83,7 @@
 下一步任务：
 
 1. 导入 `07-zotero-exports/zotero-import-candidates-20260706-alignment.ris`。
-2. 补 TAA-EPLMR 复核与剩余高风险全文；US12530469 仅保留摘要级红线，CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读。
+2. 补剩余高风险全文；US12530469 仅保留摘要级红线，CLIProv/APT-CGLP 已于 2026-07-07 升级为全文精读，TAA-EPLMR 已于 2026-07-08 完成新主线复核。
 3. 起草 `08-writing/experiment-plan-v0.1-20260706.md`。
 4. 暂停扩写旧专利 v0.2，等实验计划成型后再重写 v0.3。
 
