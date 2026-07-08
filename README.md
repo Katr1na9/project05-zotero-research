@@ -24,6 +24,7 @@
 ## 使用原则
 
 - 当前 workflow 见：[project05-skill-driven-workflow-v2.md](01-sop/project05-skill-driven-workflow-v2.md)
+- Project05 学习路线见：[project05-ml-learning-roadmap.md](01-sop/project05-ml-learning-roadmap.md)
 - 项目总览和当前任务见：[research-dashboard.md](00-dashboard/research-dashboard.md)
 - 每篇论文使用：[paper-intensive-reading-template.md](06-templates/paper-intensive-reading-template.md)
 - 周进展写入：[research-progress.md](04-progress/research-progress.md)
