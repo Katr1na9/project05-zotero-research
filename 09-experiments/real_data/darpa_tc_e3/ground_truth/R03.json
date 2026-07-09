@@ -1,0 +1,62 @@
+{
+  "case_id": "R03",
+  "case_name": "CADETS Nginx Exploitation with Drakon and Micro Activity",
+  "development_only": true,
+  "source_id": "cadets_e3_official_2_json",
+  "platform": "FreeBSD",
+  "scenario_date": "2018-04-12",
+  "source_timezone": "America/New_York",
+  "local_window": {
+    "start": "2018-04-12T13:30:00-04:00",
+    "end": "2018-04-12T15:00:00-04:00"
+  },
+  "utc_window": {
+    "start": "2018-04-12T17:30:00Z",
+    "end": "2018-04-12T19:00:00Z"
+  },
+  "ground_truth_document": "e3_ground_truth",
+  "ground_truth_section": "3.13",
+  "natural_incompleteness": true,
+  "supportable_ceiling": "G3_campaign",
+  "attack_stages": [
+    {
+      "stage": "initial_access_execution",
+      "status": "observed",
+      "summary": "The attacker exploited Nginx and delivered attacker-controlled payloads."
+    },
+    {
+      "stage": "privilege_activity",
+      "status": "partially_observed",
+      "summary": "Privilege-elevation attempts include both successful and failed activity."
+    },
+    {
+      "stage": "command_and_control",
+      "status": "observed",
+      "summary": "Drakon and Micro payload activity contacted external infrastructure."
+    },
+    {
+      "stage": "discovery",
+      "status": "observed",
+      "summary": "The compromised environment performed internal port scanning."
+    }
+  ],
+  "gold_observables": [
+    "nginx",
+    "tmux-1002",
+    "minions",
+    "font",
+    "XIM",
+    "netlog",
+    "sendmail",
+    "main",
+    "test",
+    "25.159.96.207",
+    "76.56.184.25",
+    "155.162.39.48",
+    "198.115.236.119",
+    "53.158.101.118",
+    "98.15.44.232",
+    "192.113.144.28"
+  ],
+  "notes": "Internal same-family holdout selected before M2 evaluation; it is not evidence of cross-dataset generalization."
+}

@@ -29,7 +29,7 @@ class DarpaE3ManifestTests(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
-            for case_id in ("R01", "R02")
+            for case_id in ("R01", "R02", "R03")
         }
 
     def test_selected_sources_match_official_drive_files(self):
@@ -63,6 +63,25 @@ class DarpaE3ManifestTests(unittest.TestCase):
             [],
             validator.validate_manifest(REAL_DATA_DIR),
         )
+
+    def test_r03_is_the_frozen_cadets_april_12_holdout(self):
+        case = self.cases["R03"]
+        references = {
+            item["case_id"]: item for item in self.manifest["cases"]
+        }
+
+        self.assertEqual(
+            "cadets_e3_official_2_json",
+            references["R03"]["source_id"],
+        )
+        self.assertEqual(
+            {
+                "start": "2018-04-12T17:30:00Z",
+                "end": "2018-04-12T19:00:00Z",
+            },
+            case["utc_window"],
+        )
+        self.assertEqual("G3_campaign", case["supportable_ceiling"])
 
     def test_raw_data_paths_are_ignored(self):
         gitignore = (
