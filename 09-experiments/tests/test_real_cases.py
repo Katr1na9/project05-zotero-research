@@ -6,14 +6,15 @@ from pathlib import Path
 EXPERIMENT_DIR = Path(__file__).resolve().parents[1]
 REAL_CASES_DIR = EXPERIMENT_DIR / "real_cases"
 EXPECTED = {
-    "C04-darpa-e3-fivedirections": "G3_campaign",
-    "C05-darpa-e3-cadets": "G2_tactic_intent",
+    "C04-darpa-e3-fivedirections": ("G3_campaign", 8),
+    "C05-darpa-e3-cadets": ("G2_tactic_intent", 8),
+    "C06-darpa-e3-cadets-0412": ("G3_campaign", 10),
 }
 
 
 class RealCaseIntegrityTests(unittest.TestCase):
     def test_real_cases_are_complete_and_cross_referenced(self):
-        for folder_name, ceiling in EXPECTED.items():
+        for folder_name, (ceiling, motif_count) in EXPECTED.items():
             with self.subTest(case=folder_name):
                 case_dir = REAL_CASES_DIR / folder_name
                 self.assertTrue(
@@ -25,8 +26,8 @@ class RealCaseIntegrityTests(unittest.TestCase):
                 actions = self.load(case_dir / "acquisition_actions.json")
                 spec = self.load(case_dir / "motif_spec.json")
 
-                self.assertEqual(8, len(spec["motifs"]))
-                self.assertEqual(8, len(claims))
+                self.assertEqual(motif_count, len(spec["motifs"]))
+                self.assertEqual(motif_count, len(claims))
                 self.assertEqual(ceiling, config["target_granularity"])
                 self.assertEqual(ceiling, config["support_ceiling"])
 
@@ -50,6 +51,7 @@ class RealCaseIntegrityTests(unittest.TestCase):
                         set(node["required_claim_ids"]) <= claim_ids
                     )
                 for action in actions:
+                    self.assertIn("expected_stages", action)
                     self.assertTrue(
                         set(action["recoverable_claim_ids"])
                         <= hideable_ids

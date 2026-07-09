@@ -1,0 +1,128 @@
+{
+  "case_id": "C06-darpa-e3-cadets-0412",
+  "source_case_id": "R03",
+  "artifact_id": "darpa_e3_R03_events",
+  "construction_boundary": "Ground-truth-informed offline motif labels are compiled from the held-out trace; planners receive only claims and public action metadata.",
+  "motifs": [
+    {
+      "motif_id": "C06-EC-001",
+      "match": {"event_type_in": ["EVENT_ACCEPT"], "process_in": ["nginx"], "remote_ip_in": ["25.159.96.207"]},
+      "claim": {
+        "source_type": "network_summary", "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "nginx"}, "predicate": "accepted_external_connection",
+        "object": {"entity_type": "ip", "value": "25.159.96.207"},
+        "mapped_tactic": ["initial_access"], "evidence_strength": "critical", "confidence": 0.98,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-002",
+      "match": {"event_type_in": ["EVENT_RECVFROM"], "process_in": ["nginx"], "remote_ip_in": ["76.56.184.25"]},
+      "claim": {
+        "source_type": "network_summary", "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "nginx"}, "predicate": "received_shellcode_from",
+        "object": {"entity_type": "ip", "value": "76.56.184.25"},
+        "mapped_tactic": ["execution"], "mapped_technique": ["T1105"], "evidence_strength": "critical", "confidence": 0.97,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-003",
+      "match": {"event_type_in": ["EVENT_RECVFROM"], "process_in": ["nginx"], "remote_ip_in": ["155.162.39.48"]},
+      "claim": {
+        "source_type": "network_summary", "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "nginx"}, "predicate": "received_loader_from",
+        "object": {"entity_type": "ip", "value": "155.162.39.48"},
+        "mapped_tactic": ["execution"], "mapped_technique": ["T1105"], "evidence_strength": "critical", "confidence": 0.97,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-004",
+      "match": {"event_type_in": ["EVENT_WRITE"], "process_in": ["nginx"], "path_contains_any": ["tmux-1002"]},
+      "claim": {
+        "source_type": "provenance_graph", "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "nginx"}, "predicate": "wrote",
+        "object": {"entity_type": "file", "value": "/tmp/tmux-1002"},
+        "mapped_tactic": ["execution"], "mapped_technique": ["T1105"], "evidence_strength": "critical", "confidence": 0.98,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N02_payload_privilege", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-005",
+      "match": {"event_type_in": ["EVENT_EXECUTE"], "path_contains_any": ["/tmp/minions"]},
+      "claim": {
+        "source_type": "local_log", "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "master"}, "predicate": "executed",
+        "object": {"entity_type": "file", "value": "/tmp/minions"},
+        "mapped_tactic": ["execution", "privilege_escalation"], "evidence_strength": "critical", "confidence": 0.97,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N02_payload_privilege", "critical", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-006",
+      "match": {"event_type_in": ["EVENT_EXECUTE"], "path_contains_any": ["/tmp/font"]},
+      "claim": {
+        "source_type": "local_log", "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "sshd"}, "predicate": "attempted_execution_of",
+        "object": {"entity_type": "file", "value": "/tmp/font"},
+        "mapped_tactic": ["execution", "privilege_escalation"], "evidence_strength": "strong", "confidence": 0.93,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N02_payload_privilege", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-007",
+      "match": {"event_type_in": ["EVENT_RECVFROM"], "process_in": ["XIM"], "remote_ip_in": ["53.158.101.118"]},
+      "claim": {
+        "source_type": "network_summary", "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "XIM"}, "predicate": "received_data_from",
+        "object": {"entity_type": "ip", "value": "53.158.101.118"},
+        "mapped_tactic": ["command_and_control"], "mapped_technique": ["T1071"], "evidence_strength": "critical", "confidence": 0.98,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:command_and_control", "node:N03_drakon", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-008",
+      "match": {"event_type_in": ["EVENT_WRITE"], "process_in": ["XIM"], "path_contains_any": ["netlog"]},
+      "claim": {
+        "source_type": "provenance_graph", "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "XIM"}, "predicate": "wrote",
+        "object": {"entity_type": "file", "value": "/var/log/netlog"},
+        "mapped_tactic": ["command_and_control"], "evidence_strength": "strong", "confidence": 0.94,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:command_and_control", "node:N03_drakon"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-009",
+      "match": {"event_type_in": ["EVENT_RECVFROM"], "process_in": ["test"], "remote_ip_in": ["192.113.144.28"]},
+      "claim": {
+        "source_type": "network_summary", "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "test"}, "predicate": "received_data_from",
+        "object": {"entity_type": "ip", "value": "192.113.144.28"},
+        "mapped_tactic": ["command_and_control"], "mapped_technique": ["T1071"], "evidence_strength": "critical", "confidence": 0.97,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:command_and_control", "node:N04_micro", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C06-EC-010",
+      "match": {"event_type_in": ["EVENT_CLOSE"], "process_in": ["test"], "remote_ip_in": ["128.55.12.1", "128.55.12.10", "128.55.12.55", "128.55.12.67", "128.55.12.110", "128.55.12.141"]},
+      "claim": {
+        "source_type": "network_summary", "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "test"}, "predicate": "scanned_internal_hosts",
+        "object": {"entity_type": "subnet", "value": "128.55.12.0/24"},
+        "mapped_tactic": ["discovery"], "mapped_technique": ["T1046"], "evidence_strength": "strong", "confidence": 0.92,
+        "observable_status": "visible", "supports_hypotheses": ["R03_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:discovery", "node:N05_scan", "discriminative"]
+      }
+    }
+  ]
+}

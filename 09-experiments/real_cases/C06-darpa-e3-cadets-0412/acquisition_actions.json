@@ -1,0 +1,86 @@
+[
+  {
+    "action_id": "C06-AA-001",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "extend_log_window",
+    "target": {"target_type": "process", "target_value": "nginx"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C06-EC-001", "C06-EC-002", "C06-EC-003"],
+    "expected_evidence_types": ["local_log", "network_summary"],
+    "expected_stages": ["execution"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.25, "expected_over_attribution_risk_reduction": 0.2, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available"
+  },
+  {
+    "action_id": "C06-AA-002",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "query_host_subgraph",
+    "target": {"target_type": "host", "target_value": "CADETS victim payload chain"},
+    "cost": 3,
+    "recoverable_claim_ids": ["C06-EC-004", "C06-EC-005", "C06-EC-006"],
+    "expected_evidence_types": ["provenance_graph", "local_log"],
+    "expected_stages": ["execution"],
+    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.4, "expected_over_attribution_risk_reduction": 0.35, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available"
+  },
+  {
+    "action_id": "C06-AA-003",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "recover_network_summary",
+    "target": {"target_type": "process", "target_value": "XIM"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C06-EC-007"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.3, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available"
+  },
+  {
+    "action_id": "C06-AA-004",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "query_host_subgraph",
+    "target": {"target_type": "file", "target_value": "/var/log/netlog"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C06-EC-008"],
+    "expected_evidence_types": ["provenance_graph"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.22, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available"
+  },
+  {
+    "action_id": "C06-AA-005",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "recover_network_summary",
+    "target": {"target_type": "process", "target_value": "test"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C06-EC-009"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.3, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available"
+  },
+  {
+    "action_id": "C06-AA-006",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "ttp_local_probe",
+    "target": {"target_type": "technique", "target_value": "T1046"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C06-EC-010"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_stages": ["discovery"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.25, "expected_over_attribution_risk_reduction": 0.28, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available"
+  },
+  {
+    "action_id": "C06-AA-007",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "action_type": "query_host_subgraph",
+    "target": {"target_type": "case", "target_value": "R03 post-exploitation chain"},
+    "cost": 4,
+    "recoverable_claim_ids": ["C06-EC-007", "C06-EC-008", "C06-EC-009", "C06-EC-010"],
+    "expected_evidence_types": ["provenance_graph", "network_summary"],
+    "expected_stages": ["command_and_control", "discovery"],
+    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.38, "expected_over_attribution_risk_reduction": 0.42, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.4},
+    "status": "available"
+  }
+]

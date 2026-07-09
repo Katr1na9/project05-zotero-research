@@ -1,0 +1,394 @@
+[
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "nginx"
+    },
+    "predicate": "accepted_external_connection",
+    "object": {
+      "entity_type": "ip",
+      "value": "25.159.96.207"
+    },
+    "mapped_tactic": [
+      "initial_access"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.98,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:execution",
+      "node:N01_initial_access",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C06-EC-001",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "5BE5F046-B216-5B83-B32A-B8EF914C89E8"
+    },
+    "notes": "matched_event_count=1; first_timestamp_nanos=1523556022876190369; last_timestamp_nanos=1523556022876190369; representative_event_uuids=5BE5F046-B216-5B83-B32A-B8EF914C89E8"
+  },
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "nginx"
+    },
+    "predicate": "received_shellcode_from",
+    "object": {
+      "entity_type": "ip",
+      "value": "76.56.184.25"
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1105"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:execution",
+      "node:N01_initial_access",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C06-EC-002",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "5945E37C-4D90-546D-AC2C-DD937BE704C5"
+    },
+    "notes": "matched_event_count=156; first_timestamp_nanos=1523556022876190369; last_timestamp_nanos=1523556022956198395; representative_event_uuids=5945E37C-4D90-546D-AC2C-DD937BE704C5,6CAF4C66-62C3-5FF9-94CF-4D2C75C649A5,D0B758B7-903C-5757-820A-03D06B857598,576238AC-CD08-525E-90F5-6B0CAC9ED1D1,F60E2BC8-F12A-5392-AD0C-4CE74DF01787"
+  },
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "nginx"
+    },
+    "predicate": "received_loader_from",
+    "object": {
+      "entity_type": "ip",
+      "value": "155.162.39.48"
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1105"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:execution",
+      "node:N01_initial_access",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C06-EC-003",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "A2F9DC5D-0A37-5E9E-AFF0-2E6B20296182"
+    },
+    "notes": "matched_event_count=198; first_timestamp_nanos=1523556023216189287; last_timestamp_nanos=1523558358286140661; representative_event_uuids=A2F9DC5D-0A37-5E9E-AFF0-2E6B20296182,4E8B8571-DBF7-5055-928B-CFADC64C461D,7835D48A-6F3B-5D90-B23E-0AA526AE2CBE,F5AC70A1-D783-557B-A5A0-2859960276FB,3B67EE2B-4590-5F11-9BB8-C702A7AD7DB7"
+  },
+  {
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "nginx"
+    },
+    "predicate": "wrote",
+    "object": {
+      "entity_type": "file",
+      "value": "/tmp/tmux-1002"
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1105"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.98,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:execution",
+      "node:N02_payload_privilege",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C06-EC-004",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "58A15EC1-9BE9-5B97-9C54-1F5746A8AD2E"
+    },
+    "notes": "matched_event_count=1; first_timestamp_nanos=1523556130376185722; last_timestamp_nanos=1523556130376185722; representative_event_uuids=58A15EC1-9BE9-5B97-9C54-1F5746A8AD2E"
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "master"
+    },
+    "predicate": "executed",
+    "object": {
+      "entity_type": "file",
+      "value": "/tmp/minions"
+    },
+    "mapped_tactic": [
+      "execution",
+      "privilege_escalation"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:execution",
+      "node:N02_payload_privilege",
+      "critical",
+      "discriminative"
+    ],
+    "claim_id": "C06-EC-005",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "C00C73B6-F952-5E57-BF20-80413CBA5A52"
+    },
+    "notes": "matched_event_count=2; first_timestamp_nanos=1523556762536176905; last_timestamp_nanos=1523556929346168722; representative_event_uuids=C00C73B6-F952-5E57-BF20-80413CBA5A52,6FEFAC0C-064F-5EBB-AAD9-AFCE9AAC8FAF"
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "sshd"
+    },
+    "predicate": "attempted_execution_of",
+    "object": {
+      "entity_type": "file",
+      "value": "/tmp/font"
+    },
+    "mapped_tactic": [
+      "execution",
+      "privilege_escalation"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.93,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:execution",
+      "node:N02_payload_privilege",
+      "discriminative"
+    ],
+    "claim_id": "C06-EC-006",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "310DD1F1-2D2A-5CDC-8726-0D6296384796"
+    },
+    "notes": "matched_event_count=1; first_timestamp_nanos=1523557044046166780; last_timestamp_nanos=1523557044046166780; representative_event_uuids=310DD1F1-2D2A-5CDC-8726-0D6296384796"
+  },
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "XIM"
+    },
+    "predicate": "received_data_from",
+    "object": {
+      "entity_type": "ip",
+      "value": "53.158.101.118"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.98,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:command_and_control",
+      "node:N03_drakon",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C06-EC-007",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "E7847F43-90C2-5CB6-BD56-D60C4BCF324E"
+    },
+    "notes": "matched_event_count=188; first_timestamp_nanos=1523557273276164010; last_timestamp_nanos=1523558344366136644; representative_event_uuids=E7847F43-90C2-5CB6-BD56-D60C4BCF324E,BA25D01F-874B-50A1-B02E-F446FBD1AB7E,85328422-3AFB-5B99-9784-4FDED265E5DD,784E7A97-A634-5F6A-955B-12B25CADAAA7,70DD8273-3F54-568A-8D8C-020D5F7BD24D"
+  },
+  {
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "XIM"
+    },
+    "predicate": "wrote",
+    "object": {
+      "entity_type": "file",
+      "value": "/var/log/netlog"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.94,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:command_and_control",
+      "node:N03_drakon"
+    ],
+    "claim_id": "C06-EC-008",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "88163BED-F274-5E7A-B744-31826AF9F4AC"
+    },
+    "notes": "matched_event_count=1; first_timestamp_nanos=1523557424536159661; last_timestamp_nanos=1523557424536159661; representative_event_uuids=88163BED-F274-5E7A-B744-31826AF9F4AC"
+  },
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "test"
+    },
+    "predicate": "received_data_from",
+    "object": {
+      "entity_type": "ip",
+      "value": "192.113.144.28"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:command_and_control",
+      "node:N04_micro",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C06-EC-009",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "2FD2C6B6-9F13-5BAC-AAE7-130DC0F599CE"
+    },
+    "notes": "matched_event_count=24; first_timestamp_nanos=1523558131806155232; last_timestamp_nanos=1523558311376137816; representative_event_uuids=2FD2C6B6-9F13-5BAC-AAE7-130DC0F599CE,60EFCAAC-B356-5709-B183-B55A56E1BCBE,5B9D5D19-86C4-5754-BCF7-9E5D907ED843,CAC41FF6-B034-5E9D-A220-C15AD2675652,2ABB498F-CB2A-5C00-AFB6-1F47A8BE81FE"
+  },
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "test"
+    },
+    "predicate": "scanned_internal_hosts",
+    "object": {
+      "entity_type": "subnet",
+      "value": "128.55.12.0/24"
+    },
+    "mapped_tactic": [
+      "discovery"
+    ],
+    "mapped_technique": [
+      "T1046"
+    ],
+    "evidence_strength": "strong",
+    "confidence": 0.92,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R03_campaign"
+    ],
+    "tags": [
+      "hideable",
+      "real_cdm",
+      "stage:discovery",
+      "node:N05_scan",
+      "discriminative"
+    ],
+    "claim_id": "C06-EC-010",
+    "case_id": "C06-darpa-e3-cadets-0412",
+    "source_pointer": {
+      "artifact_id": "darpa_e3_R03_events",
+      "record_id": "C77DEF20-B4F7-544C-AE2B-4462ABDECAFD"
+    },
+    "notes": "matched_event_count=23; first_timestamp_nanos=1523558215466144928; last_timestamp_nanos=1523558290856140954; representative_event_uuids=C77DEF20-B4F7-544C-AE2B-4462ABDECAFD,077B4BF5-24AA-5783-9EDD-38AFC8FC33E1,60B0811A-187F-5F1C-B399-AFB452BD5882,E0586A85-CB34-5302-A699-14A89B9A12C5,4FE748FD-17F2-5DB9-B7A7-67CE6AB105EE"
+  }
+]
