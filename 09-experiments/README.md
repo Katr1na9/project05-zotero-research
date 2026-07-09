@@ -1,5 +1,16 @@
 # Project05 Experiments
 
+## C06 独立留出验证（2026-07-09）
+
+- 数据：CADETS 2018-04-12，318,821 条窗口事件，29,620 个引用节点全部解析。
+- 案例：10/10 个真实 CDM motif，目标与支持上限均为 `G3_campaign`。
+- 协议：M2 公式先冻结，再构建和运行 C06；585 次运行均保留。
+- 总体成功率：M2 `0.5111`，M1 `0.5111`，coverage greedy `0.7111`，Oracle `1.0000`。
+- 在 27 个初始未达目标的挑战条件中：M2/M1 均为 `5/27`，coverage greedy 为 `14/27`，Oracle 为 `27/27`。
+- 结论：当前 M2 是负结果。粗粒度阶段/证据类型缺口及零收益反馈不足以识别预算内应恢复的关键 claim；不得将 C06 表述为跨数据集泛化。
+
+结果文件：`results/c06_holdout_results.csv`、`results/c06_holdout_summary.json`、`results/c06_holdout_analysis.json`。
+
 本目录用于 Project05 最小可行实验实现。当前已经完成 C01 小样例和 dependency-free MVP 模拟器。
 
 ## 当前产物

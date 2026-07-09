@@ -364,7 +364,7 @@ class ActionFeedbackTests(unittest.TestCase):
             },
         ]
 
-        _, trace = run_mvp.run_episode(
+        result, trace = run_mvp.run_episode(
             config,
             claims,
             actions,
@@ -375,6 +375,7 @@ class ActionFeedbackTests(unittest.TestCase):
         )
 
         self.assertGreaterEqual(len(trace), 2)
+        self.assertEqual(1, result["zero_yield_actions"])
         self.assertEqual(
             [
                 {
@@ -384,6 +385,34 @@ class ActionFeedbackTests(unittest.TestCase):
                 }
             ],
             trace[1]["state"]["action_feedback"],
+        )
+
+    def test_overlap_waste_weights_action_cost_by_signature_overlap(self):
+        actions = [
+            {
+                "action_id": "first",
+                "action_type": "query_host_subgraph",
+                "target": {"target_type": "host", "target_value": "victim"},
+                "cost": 2,
+                "expected_evidence_types": ["provenance_graph"],
+                "expected_stages": ["execution"],
+            },
+            {
+                "action_id": "duplicate",
+                "action_type": "query_host_subgraph",
+                "target": {"target_type": "host", "target_value": "victim"},
+                "cost": 3,
+                "expected_evidence_types": ["provenance_graph"],
+                "expected_stages": ["execution"],
+            },
+        ]
+
+        self.assertEqual(
+            3.0,
+            run_mvp.overlap_waste_cost(
+                actions,
+                ["first", "duplicate"],
+            ),
         )
 
 

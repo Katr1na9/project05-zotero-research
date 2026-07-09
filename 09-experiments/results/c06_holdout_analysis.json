@@ -1,0 +1,114 @@
+{
+  "case_id": "C06-darpa-e3-cadets-0412",
+  "evaluation_role": "internal_same_dataset_family_holdout",
+  "formula_frozen_before_evaluation": true,
+  "m2_formula_commit": "920966c",
+  "run_count": 585,
+  "condition_count": 45,
+  "planner_count": 13,
+  "quality_gates": {
+    "full_evidence_reaches_g3": true,
+    "ceiling_violations": 0,
+    "negative_oracle_regrets": 0,
+    "motifs_observed": "10/10"
+  },
+  "primary_comparison": {
+    "project05_m2": {
+      "independent_case_count": 1,
+      "repeated_run_count": 45,
+      "success_rate": 0.5111,
+      "mean_cost_to_target": 1.2609,
+      "mean_steps_to_target": 0.3478,
+      "mean_budget_used": 4.0667,
+      "mean_zero_yield_actions": 0.4444,
+      "mean_overlap_waste_cost": 0.3879,
+      "mean_final_node_coverage": 0.88,
+      "mean_cost_regret_vs_oracle": 0.4348,
+      "oracle_top1_action_hit_rate": 0.0222
+    },
+    "project05_m1": {
+      "independent_case_count": 1,
+      "repeated_run_count": 45,
+      "success_rate": 0.5111,
+      "mean_cost_to_target": 1.2609,
+      "mean_steps_to_target": 0.3478,
+      "mean_budget_used": 4.0667,
+      "mean_zero_yield_actions": 0.4444,
+      "mean_overlap_waste_cost": 0.3031,
+      "mean_final_node_coverage": 0.88,
+      "mean_cost_regret_vs_oracle": 0.4348,
+      "oracle_top1_action_hit_rate": 0.0
+    },
+    "cmi_proxy": {
+      "independent_case_count": 1,
+      "repeated_run_count": 45,
+      "success_rate": 0.5111,
+      "mean_cost_to_target": 1.087,
+      "mean_steps_to_target": 0.4783,
+      "mean_budget_used": 3.9778,
+      "mean_zero_yield_actions": 1.0444,
+      "mean_overlap_waste_cost": 0.7407,
+      "mean_final_node_coverage": 0.8578,
+      "mean_cost_regret_vs_oracle": 0.2609,
+      "oracle_top1_action_hit_rate": 0.0444
+    },
+    "coverage_greedy": {
+      "independent_case_count": 1,
+      "repeated_run_count": 45,
+      "success_rate": 0.7111,
+      "mean_cost_to_target": 2.5,
+      "mean_steps_to_target": 0.8125,
+      "mean_budget_used": 4.0889,
+      "mean_zero_yield_actions": 0.7778,
+      "mean_overlap_waste_cost": 0.221,
+      "mean_final_node_coverage": 0.92,
+      "mean_cost_regret_vs_oracle": 1.625,
+      "oracle_top1_action_hit_rate": 0.0
+    },
+    "oracle_optimal": {
+      "independent_case_count": 1,
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 2.0667,
+      "mean_steps_to_target": 0.8889,
+      "mean_budget_used": 2.0667,
+      "mean_zero_yield_actions": 0.0,
+      "mean_overlap_waste_cost": 0.1333,
+      "mean_final_node_coverage": 0.9556,
+      "mean_cost_regret_vs_oracle": 0.0,
+      "oracle_top1_action_hit_rate": 0.6
+    }
+  },
+  "challenge_subset": {
+    "definition": "initial_granularity != target_granularity",
+    "initially_satisfied_conditions": 18,
+    "challenge_conditions": 27,
+    "project05_m2": {
+      "successes": 5,
+      "success_rate": 0.1852,
+      "mean_success_cost": 5.8
+    },
+    "project05_m1": {
+      "successes": 5,
+      "success_rate": 0.1852,
+      "mean_success_cost": 5.8
+    },
+    "cmi_proxy": {
+      "successes": 5,
+      "success_rate": 0.1852,
+      "mean_success_cost": 5.0
+    },
+    "coverage_greedy": {
+      "successes": 14,
+      "success_rate": 0.5185,
+      "mean_success_cost": 5.7143
+    },
+    "oracle_optimal": {
+      "successes": 27,
+      "success_rate": 1.0,
+      "mean_success_cost": 3.4444
+    }
+  },
+  "finding": "Frozen M2 changes some first actions but does not improve target attainment over M1. Coarse stage/type gaps and recovered-count feedback do not identify which critical claims remain recoverable under budget.",
+  "interpretation_boundary": "C06 is an internal CADETS holdout and does not establish cross-dataset generalization."
+}

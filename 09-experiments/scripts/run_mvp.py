@@ -485,6 +485,28 @@ def jaccard(left: set[str], right: set[str]) -> float:
     return len(left & right) / len(union)
 
 
+def overlap_waste_cost(
+    actions: list[dict[str, Any]],
+    actions_taken: list[str],
+) -> float:
+    action_map = action_by_id(actions)
+    prior_signatures: list[set[str]] = []
+    waste = 0.0
+    for action_id in actions_taken:
+        action = action_map[action_id]
+        signature = action_signature(action)
+        max_overlap = max(
+            (
+                jaccard(signature, prior_signature)
+                for prior_signature in prior_signatures
+            ),
+            default=0.0,
+        )
+        waste += float(action["cost"]) * max_overlap
+        prior_signatures.append(signature)
+    return round(waste, 4)
+
+
 def m2_action_score(
     action: dict[str, Any],
     state: dict[str, Any],
@@ -896,6 +918,14 @@ def run_episode(
         "steps_to_target": len(actions_taken) if reached else "",
         "steps_taken": len(actions_taken),
         "actions_taken": "|".join(actions_taken),
+        "zero_yield_actions": sum(
+            feedback["recovered_count"] == 0
+            for feedback in action_feedback
+        ),
+        "overlap_waste_cost": overlap_waste_cost(
+            actions,
+            actions_taken,
+        ),
         "initial_hidden_claims": len(
             build_hidden_claims(
                 config,
@@ -1066,6 +1096,16 @@ def summarize_group(rows: list[dict[str, Any]]) -> dict[str, Any]:
         ),
         "mean_budget_used": round(
             sum(float(row["budget_used"]) for row in rows) / len(rows),
+            4,
+        ),
+        "mean_zero_yield_actions": round(
+            sum(float(row.get("zero_yield_actions", 0)) for row in rows)
+            / len(rows),
+            4,
+        ),
+        "mean_overlap_waste_cost": round(
+            sum(float(row.get("overlap_waste_cost", 0)) for row in rows)
+            / len(rows),
             4,
         ),
         "mean_final_node_coverage": round(
