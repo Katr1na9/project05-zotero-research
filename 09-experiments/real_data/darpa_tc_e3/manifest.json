@@ -1,7 +1,7 @@
 {
   "dataset_id": "darpa-tc-e3-project05-pilot",
   "dataset_name": "DARPA Transparent Computing Engagement 3",
-  "phase": "phase0_manifest_only",
+  "phase": "phase1_raw_window_extracted",
   "development_only": true,
   "official_root_url": "https://drive.google.com/drive/folders/1QlbUFWAGq3Hpl8wVdzOdIoZLFxkII4EK",
   "cdm_version": "CDM18",
@@ -28,7 +28,8 @@
       "google_drive_id": "1BeP80zUUmm4eZl0UuU43PsKNkl_xgskj",
       "format": "CDM18 JSON tar.gz",
       "raw_target": "raw/ta1-fivedirections-e3-official-2.json.tar.gz",
-      "download_status": "deferred_large_archive"
+      "download_status": "available_local_verified",
+      "sha256": "245A35C12A8557A3BDBBE2187E40629A12B4B4F8D99368271721B02D3A9B5E2F"
     },
     {
       "source_id": "cadets_e3_official_json",
@@ -38,7 +39,8 @@
       "google_drive_id": "1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb",
       "format": "CDM18 JSON tar.gz",
       "raw_target": "raw/ta1-cadets-e3-official.json.tar.gz",
-      "download_status": "blocked_network_reset"
+      "download_status": "available_local_verified",
+      "sha256": "E2A81CB467A3097BA09EBEA60DB47B2250BD2BB9413B562ED397A41FC871911E"
     }
   ],
   "auxiliary_sources": [
@@ -89,6 +91,18 @@
       "path": "derived/adapt_candidate_index.json",
       "status": "generated",
       "use": "Candidate UUID lookup only; not final evidence"
+    },
+    {
+      "artifact_id": "r01_extraction_summary",
+      "path": "derived/R01_extraction_summary.json",
+      "status": "generated",
+      "use": "Reproducibility metadata for the ignored R01 event and node subset"
+    },
+    {
+      "artifact_id": "r02_extraction_summary",
+      "path": "derived/R02_extraction_summary.json",
+      "status": "generated",
+      "use": "Reproducibility metadata for the ignored R02 event and node subset"
     }
   ],
   "cases": [

@@ -177,3 +177,25 @@ real_data/darpa_tc_e3/raw/pidsmaker/fivedirections_e3.dump
 ```
 
 R01/R02 的宽时间窗继续作为上下文抽取窗；PIDSMaker 的窄攻击时间窗只作为标签窗。两者不得合并，否则会把攻击标签提前泄漏给证据规划器。
+
+### 官方 CDM 时间窗抽取结果
+
+官方原始归档已到位，当前不再依赖 PIDSMaker 转储。流式抽取器不会完整解压归档，而是在单次扫描中建立节点 SQLite 索引，并输出宽上下文窗内的 Event 与被引用节点：
+
+```powershell
+python .\09-experiments\scripts\extract_cdm_window.py `
+  --archive <archive.tar.gz> `
+  --case <R01-or-R02.json> `
+  --output-dir <ignored-output-directory>
+```
+
+结果概况：
+
+| 案例 | 全量 Event | 窗内 Event | 引用节点解析 |
+|---|---:|---:|---:|
+| R01 FiveDirections | 256,634,196 | 3,617,566 | 278,976 / 278,983 |
+| R02 CADETS | 12,915,596 | 258,074 | 16,646 / 16,646 |
+
+大型 `events.jsonl`、`nodes.jsonl` 与 SQLite 索引位于 Git 忽略的 `extracted/`。可提交的计数、SHA-256 与 observable 复核结果位于 `real_data/darpa_tc_e3/derived/R0*_extraction_summary.json`。
+
+R01 中 `firefox.exe` 和三个基础设施 IP 命中，`www.cnpc.com.cn` 未出现在 FiveDirections CDM 中，应作为“提供方未观测”而非正证据。R02 的六个预设 observable 均命中。部分 FiveDirections 导出行末带逗号，抽取器已兼容该格式。

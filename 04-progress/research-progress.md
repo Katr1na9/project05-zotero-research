@@ -15,6 +15,10 @@
 - 已锁定 PIDSMaker E3 紧凑 PostgreSQL 转储：CADETS 约 1.4 GB、FiveDirections 约 3.2 GB，并登记官方文件 ID 与源码 commit `3260273`。
 - 新增断点续传下载器；Google Drive 下载仍需只读 OAuth 或浏览器登录。令牌只从环境变量读取，不落盘。
 - 后续抽取同时保留宽上下文窗和窄攻击标签窗，防止标签信息进入证据规划器。
+- DARPA E3 官方原始归档已到位并完成 R01/R02 宽窗抽取，不再以 PIDSMaker dump 获取作为阻塞项。
+- R01 扫描 256,634,196 条 Event，抽取 3,617,566 条，解析 278,976/278,983 个引用节点；R02 扫描 12,915,596 条，抽取 258,074 条，解析 16,646/16,646 个引用节点。
+- R01 命中 `firefox.exe` 与 3 个基础设施 IP，但 provider CDM 中没有 `www.cnpc.com.cn`；R02 的 6 个预设 observable 全部命中。
+- 新增流式 CDM 时间窗抽取器和紧凑可复现摘要，大型事件/节点/SQLite 产物继续排除在 Git 外。
 
 ## 2026-07-09：规划器信息泄漏修正、Oracle/CMI proxy 与 M1 消融
 
