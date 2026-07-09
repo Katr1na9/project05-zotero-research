@@ -2,6 +2,7 @@ import importlib.util
 import json
 import tempfile
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 
@@ -412,11 +413,88 @@ class PlannerInformationBoundaryTests(unittest.TestCase):
         )
 
     def test_ordinary_planners_ignore_changed_hidden_outcomes(self):
-        for planner in ("coverage_greedy", "project05_m1"):
+        for planner in ("coverage_greedy", "project05_m1", "project05_m2"):
             with self.subTest(planner=planner):
                 first = self.select(planner, {"C01-EC-002"})
                 second = self.select(planner, {"C01-EC-011"})
                 self.assertEqual(first["action_id"], second["action_id"])
+
+    def test_m2_ignores_recoverable_claim_ids(self):
+        changed_actions = deepcopy(self.actions)
+        for index, action in enumerate(changed_actions):
+            action["recoverable_claim_ids"] = [f"hidden-outcome-{index}"]
+
+        first = self.select("project05_m2", set())
+        second = run_mvp.select_action(
+            "project05_m2",
+            self.config,
+            self.claims,
+            changed_actions,
+            self.state,
+            self.visible_ids,
+            set(),
+            [],
+            11,
+        )
+
+        self.assertEqual(first["action_id"], second["action_id"])
+
+    def test_zero_yield_feedback_penalizes_same_action_type(self):
+        action = {
+            "action_id": "candidate",
+            "action_type": "query_host_subgraph",
+            "target": {"target_type": "host", "target_value": "victim"},
+            "cost": 1,
+            "expected_evidence_types": ["provenance_graph"],
+            "expected_stages": ["execution"],
+            "expected_effects": {},
+        }
+        clean_state = deepcopy(self.state)
+        clean_state["action_feedback"] = []
+        failed_state = deepcopy(self.state)
+        failed_state["action_feedback"] = [
+            {
+                "action_id": "failed",
+                "action_type": "query_host_subgraph",
+                "recovered_count": 0,
+            }
+        ]
+
+        self.assertGreater(
+            run_mvp.m2_action_score(action, clean_state, [action]),
+            run_mvp.m2_action_score(action, failed_state, [action]),
+        )
+
+    def test_signature_overlap_penalizes_redundant_action(self):
+        done = {
+            "action_id": "done",
+            "action_type": "query_host_subgraph",
+            "target": {"target_type": "host", "target_value": "victim"},
+            "cost": 1,
+            "expected_evidence_types": ["provenance_graph"],
+            "expected_stages": ["execution"],
+            "expected_effects": {},
+        }
+        redundant = {**deepcopy(done), "action_id": "redundant"}
+        novel = {
+            **deepcopy(done),
+            "action_id": "novel",
+            "action_type": "recover_network_summary",
+            "target": {"target_type": "ip", "target_value": "198.51.100.1"},
+            "expected_evidence_types": ["network_summary"],
+            "expected_stages": ["command_and_control"],
+        }
+        state = deepcopy(self.state)
+        state["actions_taken"] = ["done"]
+
+        self.assertGreater(
+            run_mvp.m2_action_score(novel, state, [done, redundant, novel]),
+            run_mvp.m2_action_score(
+                redundant,
+                state,
+                [done, redundant, novel],
+            ),
+        )
 
     def test_oracle_reacts_to_changed_hidden_outcomes(self):
         first = self.select("oracle_optimal", {"C01-EC-002"})

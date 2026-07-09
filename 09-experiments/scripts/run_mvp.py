@@ -25,6 +25,7 @@ PLANNERS = [
     "fixed_order",
     "coverage_greedy",
     "project05_m1",
+    "project05_m2",
     "m1_no_granularity",
     "m1_no_uncertainty",
     "m1_no_risk",
@@ -459,6 +460,108 @@ def m1_action_score(
     return score
 
 
+def action_signature(action: dict[str, Any]) -> set[str]:
+    target = action.get("target", {})
+    signature = {
+        f"action_type:{action.get('action_type', '')}",
+        f"target_type:{target.get('target_type', '')}",
+        f"target_value:{target.get('target_value', '')}",
+    }
+    signature.update(
+        f"evidence_type:{evidence_type}"
+        for evidence_type in action.get("expected_evidence_types", [])
+    )
+    signature.update(
+        f"stage:{stage}"
+        for stage in action.get("expected_stages", [])
+    )
+    return signature
+
+
+def jaccard(left: set[str], right: set[str]) -> float:
+    union = left | right
+    if not union:
+        return 0.0
+    return len(left & right) / len(union)
+
+
+def m2_action_score(
+    action: dict[str, Any],
+    state: dict[str, Any],
+    actions: list[dict[str, Any]],
+) -> float:
+    coverage = state.get("coverage", {})
+    stage_coverage = coverage.get("stage_coverage", {})
+    evidence_coverage = coverage.get("evidence_type_coverage", {})
+    expected_stages = action.get("expected_stages", [])
+    expected_evidence_types = action.get("expected_evidence_types", [])
+
+    stage_gap = (
+        sum(1.0 - float(stage_coverage.get(stage, 0.0)) for stage in expected_stages)
+        / len(expected_stages)
+        if expected_stages
+        else 0.0
+    )
+    evidence_gap = (
+        sum(
+            1.0 - float(evidence_coverage.get(evidence_type, 0.0))
+            for evidence_type in expected_evidence_types
+        )
+        / len(expected_evidence_types)
+        if expected_evidence_types
+        else 0.0
+    )
+
+    action_map = action_by_id(actions)
+    candidate_signature = action_signature(action)
+    overlap = max(
+        (
+            jaccard(
+                candidate_signature,
+                action_signature(action_map[action_id]),
+            )
+            for action_id in state.get("actions_taken", [])
+            if action_id in action_map
+        ),
+        default=0.0,
+    )
+
+    same_type_feedback = [
+        feedback
+        for feedback in state.get("action_feedback", [])
+        if feedback.get("action_type") == action.get("action_type")
+    ]
+    no_yield_risk = (
+        sum(
+            1
+            for feedback in same_type_feedback
+            if int(feedback.get("recovered_count", 0)) == 0
+        )
+        / len(same_type_feedback)
+        if same_type_feedback
+        else 0.0
+    )
+    cost_ratio = float(action["cost"]) / max(
+        0.1,
+        float(state["budget"]["budget_remaining"]),
+    )
+
+    return (
+        2.00 * expected_effect(action, "expected_granularity_gain")
+        + 1.50 * expected_effect(action, "expected_uncertainty_reduction")
+        + 1.50
+        * expected_effect(
+            action,
+            "expected_over_attribution_risk_reduction",
+        )
+        + 1.50 * stage_gap
+        + 1.00 * evidence_gap
+        - 1.50 * overlap
+        - 1.00 * no_yield_risk
+        - 0.75 * cost_ratio
+    )
+
+
 def select_oracle_optimal_action(
     config: dict[str, Any],
     actions: list[dict[str, Any]],
@@ -596,6 +699,17 @@ def select_action(
             key=lambda action: (
                 m1_action_score(action, state, excluded),
                 -action["cost"],
+                action["action_id"],
+            ),
+        )
+
+    if planner == "project05_m2":
+        return min(
+            candidates,
+            key=lambda action: (
+                -m2_action_score(action, state, actions),
+                action["cost"],
+                -len(action.get("expected_stages", [])),
                 action["action_id"],
             ),
         )
