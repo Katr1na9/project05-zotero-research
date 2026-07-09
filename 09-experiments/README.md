@@ -118,3 +118,26 @@ results/all_cases_summary.json
 | fixed_order | 1.0000 | 4.8741 | 2.4963 |
 
 `cmi_proxy` 只使用动作元数据中的预期不确定性下降，不是真实条件互信息。`m1_no_uncertainty` 和 `m1_no_risk` 与完整 M1 结果相同，说明当前 toy 动作元数据不足以让这两个分量改变动作排序。以上数字仍只验证多案例 toy 协议，不构成论文有效性结论。
+
+## DARPA TC E3 真实数据接入
+
+Phase 0 已固定两个开发案例：
+
+- `R01`：2018-04-11 FiveDirections Firefox/Drakon 完整攻击链，来源 topic 为 `ta1-fivedirections-e3-official-2`；
+- `R02`：2018-04-06 CADETS Nginx/Drakon 失败攻击链，来源 topic 为 `ta1-cadets-e3-official`。
+
+清单与 ground-truth slice：
+
+```text
+real_data/darpa_tc_e3/manifest.json
+real_data/darpa_tc_e3/ground_truth/R01.json
+real_data/darpa_tc_e3/ground_truth/R02.json
+```
+
+验证：
+
+```powershell
+python .\09-experiments\scripts\validate_real_manifest.py
+```
+
+当前阶段没有下载大型事件归档。后续只获取 manifest 中锁定的两个 JSON archive，并优先采用流式时间窗扫描；`raw/` 和 `extracted/` 已从 Git 排除。

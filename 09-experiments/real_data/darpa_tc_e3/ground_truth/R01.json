@@ -1,0 +1,51 @@
+{
+  "case_id": "R01",
+  "case_name": "FiveDirections Firefox Backdoor with Drakon In-Memory",
+  "development_only": true,
+  "source_id": "fivedirections_e3_official_2_json",
+  "platform": "Windows 10",
+  "scenario_date": "2018-04-11",
+  "source_timezone": "America/New_York",
+  "local_window": {
+    "start": "2018-04-11T09:45:00-04:00",
+    "end": "2018-04-11T11:00:00-04:00"
+  },
+  "utc_window": {
+    "start": "2018-04-11T13:45:00Z",
+    "end": "2018-04-11T15:00:00Z"
+  },
+  "ground_truth_document": "e3_ground_truth",
+  "ground_truth_section": "3.4",
+  "natural_incompleteness": false,
+  "supportable_ceiling": "G3_campaign",
+  "attack_stages": [
+    {
+      "stage": "initial_access_execution",
+      "status": "observed",
+      "summary": "Firefox 54.0.1 was exploited through a malicious web destination."
+    },
+    {
+      "stage": "command_and_control",
+      "status": "observed",
+      "summary": "Drakon executed in Firefox memory and connected to the operator console."
+    },
+    {
+      "stage": "discovery",
+      "status": "observed",
+      "summary": "The attacker deployed netrecon to inspect network interfaces."
+    },
+    {
+      "stage": "collection_exfiltration",
+      "status": "observed",
+      "summary": "The attacker exfiltrated netrecon output and multiple document files."
+    }
+  ],
+  "gold_observables": [
+    "firefox.exe",
+    "www.cnpc.com.cn",
+    "156.78.147.114",
+    "16.54.116.146",
+    "193.189.212.26"
+  ],
+  "notes": "Positive development case for complete-chain masking and acquisition planning."
+}

@@ -1,5 +1,14 @@
 # Research Progress
 
+## 2026-07-09：DARPA TC E3 真实数据接入 Phase 0
+
+- 已精读 47 页 E3 ground-truth report，并结合 operational event log 确认 topic 切换边界。
+- R01 锁定为 FiveDirections 2018-04-11 Firefox/Drakon 完整链，对应 `ta1-fivedirections-e3-official-2.json.tar.gz`。
+- R02 锁定为 CADETS 2018-04-06 Nginx/Drakon 失败链，对应崩溃前的 `ta1-cadets-e3-official.json.tar.gz`。
+- 已记录官方 Google Drive ID、文档 SHA-256、本地/UTC 时间窗、自然不完整性与可支持粒度上限。
+- 新增 manifest 验证器与 4 项真实数据清单测试；完整测试总数增至 18。
+- 大型原始归档尚未下载，`raw/` 与 `extracted/` 已加入 Git 忽略规则。
+
 ## 2026-07-09：规划器信息泄漏修正、Oracle/CMI proxy 与 M1 消融
 
 - 发现并修正普通规划器读取真实 `hidden_ids` 的 Oracle 信息泄漏；旧 675-run 快照退役。
