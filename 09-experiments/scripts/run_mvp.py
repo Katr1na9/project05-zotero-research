@@ -219,12 +219,24 @@ def supportable_granularity(
     )
 
     if node_cov >= 0.75 and edge_cov >= 0.60 and critical_covered == len(critical_nodes):
-        return "G3_campaign"
-    if node_cov >= 0.45 and len(stages) >= 2:
-        return "G2_tactic_intent"
-    if node_cov >= 0.15:
-        return "G1_technique"
-    return "G0_unknown"
+        structural_granularity = "G3_campaign"
+    elif node_cov >= 0.45 and len(stages) >= 2:
+        structural_granularity = "G2_tactic_intent"
+    elif node_cov >= 0.15:
+        structural_granularity = "G1_technique"
+    else:
+        structural_granularity = "G0_unknown"
+
+    support_ceiling = config.get(
+        "support_ceiling",
+        config["granularity_order"][-1],
+    )
+    if (
+        granularity_index(config, structural_granularity)
+        > granularity_index(config, support_ceiling)
+    ):
+        return support_ceiling
+    return structural_granularity
 
 
 def build_state(
@@ -727,6 +739,15 @@ def run_episode(
     final_state = trace[-1]["state"]
     reached = granularity_index(config, final_state["supportable_granularity"]) >= target_idx
     initial_state = trace[0]["state"]
+    support_ceiling = config.get(
+        "support_ceiling",
+        config["granularity_order"][-1],
+    )
+    final_idx = granularity_index(
+        config,
+        final_state["supportable_granularity"],
+    )
+    ceiling_idx = granularity_index(config, support_ceiling)
     initial_direct_over_attr = (
         granularity_index(config, config["target_granularity"])
         > granularity_index(config, initial_state["supportable_granularity"])
@@ -738,9 +759,12 @@ def run_episode(
         "seed": seed,
         "planner": planner,
         "target_granularity": config["target_granularity"],
+        "support_ceiling": support_ceiling,
         "initial_granularity": initial_state["supportable_granularity"],
         "final_granularity": final_state["supportable_granularity"],
         "reached_target": int(reached),
+        "correct_stop": int(reached and final_idx <= ceiling_idx),
+        "ceiling_violation": int(final_idx > ceiling_idx),
         "cost_to_target": budget_used if reached else "",
         "budget_used": budget_used,
         "steps_to_target": len(actions_taken) if reached else "",

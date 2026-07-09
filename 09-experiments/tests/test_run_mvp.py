@@ -255,6 +255,57 @@ class CaseIntegrityTests(unittest.TestCase):
                 )
 
 
+class SupportCeilingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        case_dir = Path(__file__).resolve().parents[1] / "examples" / "C01"
+        cls.config = run_mvp.load_json(case_dir / "case_config.json")
+        cls.claims = run_mvp.load_json(case_dir / "evidence_claims.json")
+        cls.actions = run_mvp.load_json(
+            case_dir / "acquisition_actions.json"
+        )
+        cls.all_ids = {
+            claim["claim_id"]
+            for claim in cls.claims
+        }
+
+    def test_clamps_structural_granularity_to_support_ceiling(self):
+        config = {
+            **self.config,
+            "target_granularity": "G2_tactic_intent",
+            "support_ceiling": "G2_tactic_intent",
+        }
+
+        granularity = run_mvp.supportable_granularity(
+            config,
+            self.all_ids,
+        )
+
+        self.assertEqual("G2_tactic_intent", granularity)
+
+    def test_reports_correct_stop_without_ceiling_violation(self):
+        config = {
+            **self.config,
+            "target_granularity": "G2_tactic_intent",
+            "support_ceiling": "G2_tactic_intent",
+        }
+
+        result, _ = run_mvp.run_episode(
+            config,
+            self.claims,
+            self.actions,
+            "random",
+            0.2,
+            11,
+            "full_evidence",
+        )
+
+        self.assertEqual("G2_tactic_intent", result["final_granularity"])
+        self.assertEqual("G2_tactic_intent", result["support_ceiling"])
+        self.assertEqual(1, result["correct_stop"])
+        self.assertEqual(0, result["ceiling_violation"])
+
+
 class PlannerInformationBoundaryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
