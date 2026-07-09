@@ -98,6 +98,27 @@ class DarpaE3ManifestTests(unittest.TestCase):
                 index["providers"][provider]["episode_assignment"],
             )
 
+    def test_pidsmaker_dump_ids_match_official_download_script(self):
+        source = next(
+            source
+            for source in self.manifest["auxiliary_sources"]
+            if source["source_id"] == "pidsmaker_e3_postgres_dumps"
+        )
+        datasets = {
+            dataset["name"]: dataset
+            for dataset in source["datasets"]
+        }
+
+        self.assertEqual(
+            "1DGcGBhpavNmXTnCDd_s4NWBNh2n4-6nd",
+            datasets["cadets_e3"]["google_drive_id"],
+        )
+        self.assertEqual(
+            "17YHqUMbuNwP05iaOaifxvcQc2oC9pJbZ",
+            datasets["fivedirections_e3"]["google_drive_id"],
+        )
+        self.assertEqual("oauth_required", source["download_status"])
+
 
 if __name__ == "__main__":
     unittest.main()

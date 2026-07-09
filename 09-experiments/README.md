@@ -158,3 +158,22 @@ python .\09-experiments\scripts\build_adapt_candidate_index.py `
   --source-commit 8fa6b58333d18d4601449298d9028c34370fbdd9 `
   --output .\09-experiments\real_data\darpa_tc_e3\derived\adapt_candidate_index.json
 ```
+
+### PIDSMaker E3 转储获取
+
+PIDSMaker 提供保留节点 UUID、provenance 边和纳秒时间戳的 PostgreSQL 转储。`cadets_e3` 约 1.4 GB，`fivedirections_e3` 约 3.2 GB，是当前优先真实数据入口。下载需要 Google Drive 只读 OAuth，令牌只通过环境变量传入，不写入仓库或命令参数：
+
+```powershell
+$env:PIDSMaker_GOOGLE_ACCESS_TOKEN = '<temporary-readonly-token>'
+python .\09-experiments\scripts\download_pidsmaker_dumps.py
+Remove-Item Env:PIDSMaker_GOOGLE_ACCESS_TOKEN
+```
+
+令牌申请范围必须是 `https://www.googleapis.com/auth/drive.readonly`。也可从 [PIDSMaker 官方 Drive 文件夹](https://drive.google.com/drive/folders/1hqfz8__zVqb3QzBuOI2SxrW4lLIdYqFr) 手动下载，并放入：
+
+```text
+real_data/darpa_tc_e3/raw/pidsmaker/cadets_e3.dump
+real_data/darpa_tc_e3/raw/pidsmaker/fivedirections_e3.dump
+```
+
+R01/R02 的宽时间窗继续作为上下文抽取窗；PIDSMaker 的窄攻击时间窗只作为标签窗。两者不得合并，否则会把攻击标签提前泄漏给证据规划器。

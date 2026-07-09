@@ -12,6 +12,9 @@
 - 已审计 MAGIC 的 CADETS 预处理包：缺少原始 UUID/时间/边回指，不作为主数据。
 - 已采用 ADAPT E3 commit `8fa6b58` 构建辅助候选索引，FiveDirections `9/9`、CADETS `11/11` ground-truth process UUID 全部命中。
 - ADAPT 索引缺少时间戳和原始边，仅用于未来官方 CDM 回查，不用于直接生成最终 evidence claim。
+- 已锁定 PIDSMaker E3 紧凑 PostgreSQL 转储：CADETS 约 1.4 GB、FiveDirections 约 3.2 GB，并登记官方文件 ID 与源码 commit `3260273`。
+- 新增断点续传下载器；Google Drive 下载仍需只读 OAuth 或浏览器登录。令牌只从环境变量读取，不落盘。
+- 后续抽取同时保留宽上下文窗和窄攻击标签窗，防止标签信息进入证据规划器。
 
 ## 2026-07-09：规划器信息泄漏修正、Oracle/CMI proxy 与 M1 消融
 
