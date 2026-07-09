@@ -1,5 +1,14 @@
 # Research Progress
 
+## 2026-07-09：M2 负结果后的 M3 方法研究
+
+- 定位 C06 的核心失败：20 个 stage/discriminative 挑战条件均缺 `N01_initial_access`，Oracle 全部首选 `AA-001`，M2 却因 stage 粗粒度相同和手写 gain 偏置而全部首选 `AA-002`。
+- 新增 2026 年高风险近邻 WinRegRL：其已覆盖 Windows forensic MDP、39 个 atomic actions、专家 transition、value iteration、有限 Q-learning 及 POMDP 扩展；Project05 不得再宽泛主张“MDP/RL 主动取证”。
+- 主线收束为 GCEU-Net：预测 `action × current evidence-gap graph` 对每个关键 CTI 节点的解决概率，以及归因粒度迁移概率。
+- 决定先做 M3a action-gap compatibility baseline，再做可校准 small model；独立 case 足够后才引入 GNN 和 depth-2 planning。
+- LLM 保持受控角色：证据语义编译、动作到候选缺口节点映射、结果解释；不直接预测效用或自由归因。
+- 完整设计见 `04-progress/m3-gap-conditioned-evidence-utility-research-20260709.md`。
+
 ## 2026-07-09：M2 动态边际效用规划器与 C06 留出验证
 
 - M2 只使用公开动作元数据、当前覆盖缺口、动作签名、剩余预算和执行后的恢复数量反馈；信息边界测试禁止读取隐藏证据和真实可恢复集合。

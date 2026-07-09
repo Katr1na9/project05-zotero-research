@@ -1,5 +1,7 @@
 # Project05 最终撞题矩阵与选题边界 - 2026-07-06
 
+> **2026-07-09 覆盖性更新**：本文件以下“粒度门控 + 缺失证据清单”结论仅保留为历史决策记录，不再代表当前主线。M2 留出实验已经证明固定启发式取证规划不足；新主线为 **归因证据缺口图上的节点级条件收益学习与成本约束序贯取证**。新增红线 WinRegRL（Ghanem et al., Scientific Reports, 2026）已经覆盖 forensic MDP、动作本体、专家 transition、动态规划、有限 Q-learning 和 POMDP 扩展，因此不得再宽泛主张“首次用 MDP/RL 进行主动取证”。当前边界详见 `04-progress/m3-gap-conditioned-evidence-utility-research-20260709.md`。
+
 ## 结论先行
 
 Project05 不应继续使用以下宽题：
