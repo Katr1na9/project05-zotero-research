@@ -1,0 +1,125 @@
+{
+  "snapshot": "darpa_e3_real_motif_development_v1",
+  "development_only": true,
+  "independent_case_count": 2,
+  "repeated_run_count": 1080,
+  "planner_count": 12,
+  "design": {
+    "cases": [
+      "C04-darpa-e3-fivedirections",
+      "C05-darpa-e3-cadets"
+    ],
+    "mask_strategies": [
+      "random",
+      "stage",
+      "discriminative"
+    ],
+    "mask_intensities": [
+      0.2,
+      0.4,
+      0.6
+    ],
+    "seeds_per_condition": 5
+  },
+  "validation": {
+    "negative_oracle_regret_count": 0,
+    "ceiling_violation_count": 0,
+    "c04_full_evidence_final": "G3_campaign",
+    "c05_full_evidence_final": "G2_tactic_intent"
+  },
+  "overall_selected_planners": {
+    "oracle_optimal": {
+      "correct_stop_rate": 1.0,
+      "mean_success_cost": 1.4444
+    },
+    "cmi_proxy": {
+      "correct_stop_rate": 1.0,
+      "mean_success_cost": 1.5333,
+      "mean_cost_regret_vs_oracle": 0.0889
+    },
+    "project05_m1": {
+      "correct_stop_rate": 0.9889,
+      "mean_success_cost": 2.0112,
+      "mean_cost_regret_vs_oracle": 0.5955
+    },
+    "coverage_greedy": {
+      "correct_stop_rate": 1.0,
+      "mean_success_cost": 2.0667,
+      "mean_cost_regret_vs_oracle": 0.6222
+    },
+    "random": {
+      "correct_stop_rate": 0.7778,
+      "mean_success_cost": 2.1714,
+      "mean_cost_regret_vs_oracle": 1.1143
+    }
+  },
+  "c04_selected_planners": {
+    "oracle_optimal": {
+      "correct_stop_rate": 1.0,
+      "mean_success_cost": 2.8444
+    },
+    "cmi_proxy": {
+      "correct_stop_rate": 1.0,
+      "mean_success_cost": 3.0222
+    },
+    "project05_m1": {
+      "correct_stop_rate": 0.9778,
+      "mean_success_cost": 3.9545
+    },
+    "coverage_greedy": {
+      "correct_stop_rate": 1.0,
+      "mean_success_cost": 4.0444
+    },
+    "random": {
+      "correct_stop_rate": 0.5556,
+      "mean_success_cost": 6.0
+    }
+  },
+  "c04_by_mask_intensity": {
+    "0.2": {
+      "oracle_optimal_success": 1.0,
+      "oracle_optimal_cost": 2.1333,
+      "cmi_proxy_success": 1.0,
+      "cmi_proxy_cost": 2.2667,
+      "project05_m1_success": 1.0,
+      "project05_m1_cost": 2.6667
+    },
+    "0.4": {
+      "oracle_optimal_success": 1.0,
+      "oracle_optimal_cost": 2.4,
+      "cmi_proxy_success": 1.0,
+      "cmi_proxy_cost": 2.6667,
+      "project05_m1_success": 1.0,
+      "project05_m1_cost": 3.3333
+    },
+    "0.6": {
+      "oracle_optimal_success": 1.0,
+      "oracle_optimal_cost": 4.0,
+      "cmi_proxy_success": 1.0,
+      "cmi_proxy_cost": 4.1333,
+      "project05_m1_success": 0.9333,
+      "project05_m1_cost": 6.0
+    }
+  },
+  "m1_failure_audit": {
+    "case_id": "C04-darpa-e3-fivedirections",
+    "mask_strategy": "random",
+    "mask_intensity": 0.6,
+    "seed": 37,
+    "final_granularity": "G2_tactic_intent",
+    "budget_used": 8.0,
+    "actions_taken": [
+      "C04-AA-002",
+      "C04-AA-005",
+      "C04-AA-004"
+    ],
+    "root_cause": "Static expected-effect scores selected an action with zero actual recovery and then a high-cost overlapping action; the remaining budget could not recover initial-access evidence."
+  },
+  "interpretation": [
+    "The real-data pipeline and support-ceiling logic are operational.",
+    "CMI proxy currently outperforms the full M1 scorer on these two development cases.",
+    "C05 is weakly discriminative because many masked states already support the G2 target.",
+    "The result does not establish generalization because only two development cases are used.",
+    "M1 weights must not be tuned on C04/C05 and then evaluated on the same cases."
+  ]
+}

@@ -19,6 +19,10 @@
 - R01 扫描 256,634,196 条 Event，抽取 3,617,566 条，解析 278,976/278,983 个引用节点；R02 扫描 12,915,596 条，抽取 258,074 条，解析 16,646/16,646 个引用节点。
 - R01 命中 `firefox.exe` 与 3 个基础设施 IP，但 provider CDM 中没有 `www.cnpc.com.cn`；R02 的 6 个预设 observable 全部命中。
 - 新增流式 CDM 时间窗抽取器和紧凑可复现摘要，大型事件/节点/SQLite 产物继续排除在 Git 外。
+- 已将 R01/R02 编译为 C04/C05 真实行为基元案例，每例 8 条 claim，全部具有真实 Event UUID 回指。
+- 新增 `support_ceiling`：C04 full-evidence 到 G3，C05 full-evidence 正确停在 G2；1,080 次运行中没有 ceiling violation 或负 Oracle regret。
+- 首轮真实实验中 CMI proxy 暂时优于完整 M1：总体成功率/成本为 `1.0000/1.5333`，M1 为 `0.9889/2.0112`。
+- M1 在 C04 `random/60%/seed37` 失败，根因是静态 expected-effect 评分没有充分处理 action 的实际零恢复与动态重叠；该结果作为待改进问题保留，不在同一开发案例上事后调权。
 
 ## 2026-07-09：规划器信息泄漏修正、Oracle/CMI proxy 与 M1 消融
 

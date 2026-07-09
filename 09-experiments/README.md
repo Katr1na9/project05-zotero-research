@@ -199,3 +199,23 @@ python .\09-experiments\scripts\extract_cdm_window.py `
 大型 `events.jsonl`、`nodes.jsonl` 与 SQLite 索引位于 Git 忽略的 `extracted/`。可提交的计数、SHA-256 与 observable 复核结果位于 `real_data/darpa_tc_e3/derived/R0*_extraction_summary.json`。
 
 R01 中 `firefox.exe` 和三个基础设施 IP 命中，`www.cnpc.com.cn` 未出现在 FiveDirections CDM 中，应作为“提供方未观测”而非正证据。R02 的六个预设 observable 均命中。部分 FiveDirections 导出行末带逗号，抽取器已兼容该格式。
+
+### DARPA E3 真实行为基元首轮实验
+
+R01/R02 已分别编译为 C04/C05，每例包含 8 条具有 Event UUID 回指的真实行为基元。实验包含 2 个开发案例、3 种遮蔽策略、3 档遮蔽强度、5 个重复 seed 和 12 个规划器，共 1,080 次运行。seed 是同一案例的重复运行，不是独立攻击样本。
+
+关键结果：
+
+| 规划器 | 总体正确停止率 | 总体成功成本 | C04 正确停止率 | C04 成功成本 |
+|---|---:|---:|---:|---:|
+| Oracle optimal | 1.0000 | 1.4444 | 1.0000 | 2.8444 |
+| CMI proxy | 1.0000 | 1.5333 | 1.0000 | 3.0222 |
+| Project05 M1 | 0.9889 | 2.0112 | 0.9778 | 3.9545 |
+| Coverage greedy | 1.0000 | 2.0667 | 1.0000 | 4.0444 |
+| Random | 0.7778 | 2.1714 | 0.5556 | 6.0000 |
+
+C04 在 60% 遮蔽下，M1 成功率降至 `0.9333`，而 CMI proxy 保持 `1.0000`。失败发生在 `random/0.6/seed37`：静态 expected-effect 评分先选择了实际恢复为零的 action，随后选择高成本重叠 action，预算耗尽时仍缺初始访问证据。
+
+C05 的 full-evidence 正确停在 G2，全部运行均未越过 support ceiling；但多数状态初始已达到 G2，因此该案例更适合验证停止/降级逻辑，暂时不适合区分规划器优劣。
+
+当前结论是负结果与工程验证并存：真实数据管线有效，但 CMI proxy 在这两个开发案例上暂时优于完整 M1。不得在 C04/C05 上调权后再用同一案例宣称改进，下一轮应在独立 E3/E5/OpTC 案例上评估动态冗余感知评分。
