@@ -28,7 +28,7 @@
       "google_drive_id": "1BeP80zUUmm4eZl0UuU43PsKNkl_xgskj",
       "format": "CDM18 JSON tar.gz",
       "raw_target": "raw/ta1-fivedirections-e3-official-2.json.tar.gz",
-      "download_status": "not_downloaded"
+      "download_status": "deferred_large_archive"
     },
     {
       "source_id": "cadets_e3_official_json",
@@ -38,7 +38,30 @@
       "google_drive_id": "1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb",
       "format": "CDM18 JSON tar.gz",
       "raw_target": "raw/ta1-cadets-e3-official.json.tar.gz",
-      "download_status": "not_downloaded"
+      "download_status": "blocked_network_reset"
+    }
+  ],
+  "auxiliary_sources": [
+    {
+      "source_id": "adapt_e3_contexts",
+      "repository": "https://gitlab.com/adaptdata/e3",
+      "commit": "8fa6b58333d18d4601449298d9028c34370fbdd9",
+      "purpose": "Provider-wide malicious process UUID and feature candidate index",
+      "five_directions_ground_truth_sha256": "CC9E60D5DFFB07254086DFD7D522C47EE78303A97C1FBE125390CF5615B2C2BA",
+      "cadets_ground_truth_sha256": "87E83563AEA3A89E572BC4A267516019ABD123E9C6A592BFF60E069DAA2A9596",
+      "limitations": [
+        "No event timestamps",
+        "No original provenance edges",
+        "Ground truth is provider-wide rather than episode-specific"
+      ]
+    }
+  ],
+  "derived_artifacts": [
+    {
+      "artifact_id": "adapt_candidate_index",
+      "path": "derived/adapt_candidate_index.json",
+      "status": "generated",
+      "use": "Candidate UUID lookup only; not final evidence"
     }
   ],
   "cases": [

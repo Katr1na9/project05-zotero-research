@@ -141,3 +141,20 @@ python .\09-experiments\scripts\validate_real_manifest.py
 ```
 
 当前阶段没有下载大型事件归档。后续只获取 manifest 中锁定的两个 JSON archive，并优先采用流式时间窗扫描；`raw/` 和 `extracted/` 已从 Git 排除。
+
+官方 Google Drive 大文件下载当前被网络连接重置。为避免停滞，已使用 ADAPT E3 的公开上下文构建辅助候选索引：
+
+```text
+real_data/darpa_tc_e3/derived/adapt_candidate_index.json
+```
+
+该索引命中 FiveDirections `9/9` 和 CADETS `11/11` 个 provider-wide ground-truth process UUID，并保留可执行名、父进程、事件类型和网络端点特征。它不包含事件时间或原始 provenance 边，只用于后续原始 CDM 回查，不能直接作为 R01/R02 的最终证据。
+
+重新生成：
+
+```powershell
+python .\09-experiments\scripts\build_adapt_candidate_index.py `
+  --adapt-root <adapt-e3-checkout> `
+  --source-commit 8fa6b58333d18d4601449298d9028c34370fbdd9 `
+  --output .\09-experiments\real_data\darpa_tc_e3\derived\adapt_candidate_index.json
+```

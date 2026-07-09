@@ -8,6 +8,10 @@
 - 已记录官方 Google Drive ID、文档 SHA-256、本地/UTC 时间窗、自然不完整性与可支持粒度上限。
 - 新增 manifest 验证器与 4 项真实数据清单测试；完整测试总数增至 18。
 - 大型原始归档尚未下载，`raw/` 与 `extracted/` 已加入 Git 忽略规则。
+- C 盘剩余约 842.85 GB，容量不是阻塞；官方 Google Drive 大文件连接被远端重置。
+- 已审计 MAGIC 的 CADETS 预处理包：缺少原始 UUID/时间/边回指，不作为主数据。
+- 已采用 ADAPT E3 commit `8fa6b58` 构建辅助候选索引，FiveDirections `9/9`、CADETS `11/11` ground-truth process UUID 全部命中。
+- ADAPT 索引缺少时间戳和原始边，仅用于未来官方 CDM 回查，不用于直接生成最终 evidence claim。
 
 ## 2026-07-09：规划器信息泄漏修正、Oracle/CMI proxy 与 M1 消融
 

@@ -75,6 +75,29 @@ class DarpaE3ManifestTests(unittest.TestCase):
             gitignore,
         )
 
+    def test_adapt_candidate_index_is_complete_but_not_episode_labeled(self):
+        index = json.loads(
+            (
+                REAL_DATA_DIR
+                / "derived"
+                / "adapt_candidate_index.json"
+            ).read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(
+            9,
+            index["providers"]["5dir"]["matched_uuid_count"],
+        )
+        self.assertEqual(
+            11,
+            index["providers"]["cadets"]["matched_uuid_count"],
+        )
+        for provider in ("5dir", "cadets"):
+            self.assertEqual(
+                "unresolved_without_raw_time",
+                index["providers"][provider]["episode_assignment"],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
