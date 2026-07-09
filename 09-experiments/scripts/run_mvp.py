@@ -253,6 +253,7 @@ def build_state(
     recovered_ids: set[str],
     actions_taken: list[str],
     budget_used: float,
+    action_feedback: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     claim_by_id = {claim["claim_id"]: claim for claim in claims}
     nodes = config["cti_nodes"]
@@ -376,6 +377,7 @@ def build_state(
             "budget_remaining": budget_remaining,
         },
         "actions_taken": actions_taken[:],
+        "action_feedback": deepcopy(action_feedback or []),
         "remaining_action_ids": remaining_action_ids,
         "stop_recommendation": {
             "should_stop": granularity_index(config, granularity) >= granularity_index(config, config["target_granularity"]),
@@ -649,6 +651,7 @@ def run_episode(
     visible_ids = all_ids - hidden_ids
     recovered_ids: set[str] = set()
     actions_taken: list[str] = []
+    action_feedback: list[dict[str, Any]] = []
     budget_used = 0.0
     run_id = make_run_id(
         config["case_id"],
@@ -677,6 +680,7 @@ def run_episode(
         recovered_ids,
         actions_taken,
         budget_used,
+        action_feedback,
     )
     trace.append({"event": "initial_state", "state": deepcopy(state)})
 
@@ -706,6 +710,13 @@ def run_episode(
         recovered = recoverable_hidden(action, hidden_ids)
         budget_used += action["cost"]
         actions_taken.append(action["action_id"])
+        action_feedback.append(
+            {
+                "action_id": action["action_id"],
+                "action_type": action["action_type"],
+                "recovered_count": len(recovered),
+            }
+        )
         visible_ids |= recovered
         hidden_ids -= recovered
         recovered_ids |= recovered
@@ -724,6 +735,7 @@ def run_episode(
             recovered_ids,
             actions_taken,
             budget_used,
+            action_feedback,
         )
         trace.append(
             {

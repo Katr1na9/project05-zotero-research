@@ -306,6 +306,86 @@ class SupportCeilingTests(unittest.TestCase):
         self.assertEqual(0, result["ceiling_violation"])
 
 
+class ActionFeedbackTests(unittest.TestCase):
+    def test_exposes_zero_yield_feedback_after_action_execution(self):
+        config = {
+            "case_id": "T-feedback",
+            "target_granularity": "G3_campaign",
+            "budget_total": 3,
+            "fixed_action_order": ["A-zero", "A-recover"],
+            "cti_nodes": [
+                {
+                    "node_id": f"N{i}",
+                    "stage": "execution" if i < 3 else "collection",
+                    "required_claim_ids": [f"E{i}"],
+                    "critical": False,
+                }
+                for i in range(1, 5)
+            ],
+            "cti_edges": [
+                {"edge_id": "X1", "source": "N1", "target": "N2"},
+                {"edge_id": "X2", "source": "N2", "target": "N3"},
+                {"edge_id": "X3", "source": "N3", "target": "N4"},
+            ],
+            "granularity_order": [
+                "G0_unknown",
+                "G1_technique",
+                "G2_tactic_intent",
+                "G3_campaign",
+                "G4_actor_cluster",
+                "G5_named_actor",
+            ],
+            "discriminative_claim_ids": [],
+            "stage_mask_tags": ["stage:execution"],
+        }
+        claims = [
+            {
+                "claim_id": f"E{i}",
+                "source_type": "provenance_graph",
+                "tags": ["hideable", "stage:execution"],
+            }
+            for i in range(1, 5)
+        ]
+        actions = [
+            {
+                "action_id": "A-zero",
+                "action_type": "extend_log_window",
+                "cost": 1,
+                "recoverable_claim_ids": [],
+                "expected_effects": {},
+            },
+            {
+                "action_id": "A-recover",
+                "action_type": "query_host_subgraph",
+                "cost": 2,
+                "recoverable_claim_ids": ["E1", "E2", "E3", "E4"],
+                "expected_effects": {},
+            },
+        ]
+
+        _, trace = run_mvp.run_episode(
+            config,
+            claims,
+            actions,
+            "random",
+            0.5,
+            11,
+            "fixed_order",
+        )
+
+        self.assertGreaterEqual(len(trace), 2)
+        self.assertEqual(
+            [
+                {
+                    "action_id": "A-zero",
+                    "action_type": "extend_log_window",
+                    "recovered_count": 0,
+                }
+            ],
+            trace[1]["state"]["action_feedback"],
+        )
+
+
 class PlannerInformationBoundaryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

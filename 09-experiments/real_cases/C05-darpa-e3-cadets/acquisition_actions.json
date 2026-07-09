@@ -7,6 +7,7 @@
     "cost": 2,
     "recoverable_claim_ids": ["C05-EC-001", "C05-EC-002"],
     "expected_evidence_types": ["local_log", "network_summary"],
+    "expected_stages": ["execution"],
     "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.2, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.25},
     "status": "available",
     "natural_language_request": "Extend Nginx audit and flow telemetry around the exploit window."
@@ -19,6 +20,7 @@
     "cost": 3,
     "recoverable_claim_ids": ["C05-EC-003", "C05-EC-004", "C05-EC-005"],
     "expected_evidence_types": ["provenance_graph", "local_log"],
+    "expected_stages": ["execution"],
     "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.38, "expected_over_attribution_risk_reduction": 0.35, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.25},
     "status": "available",
     "natural_language_request": "Recover the provenance subgraph for the downloaded and elevated payload."
@@ -31,6 +33,7 @@
     "cost": 2,
     "recoverable_claim_ids": ["C05-EC-006", "C05-EC-008"],
     "expected_evidence_types": ["network_summary"],
+    "expected_stages": ["command_and_control"],
     "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.32, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.25},
     "status": "available",
     "natural_language_request": "Recover flow summaries for the post-exploitation external endpoints."
@@ -43,6 +46,7 @@
     "cost": 2,
     "recoverable_claim_ids": ["C05-EC-007"],
     "expected_evidence_types": ["provenance_graph"],
+    "expected_stages": ["discovery"],
     "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.18, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.25},
     "status": "available",
     "natural_language_request": "Probe local provenance for post-exploitation discovery activity."
@@ -55,6 +59,7 @@
     "cost": 4,
     "recoverable_claim_ids": [],
     "expected_evidence_types": ["human_review"],
+    "expected_stages": [],
     "expected_effects": {"expected_granularity_gain": 0, "expected_uncertainty_reduction": 0.08, "expected_over_attribution_risk_reduction": 0.45, "expected_conflict_resolution": 0.2, "expected_coverage_delta": 0},
     "status": "available",
     "natural_language_request": "Confirm that the provider trace contains no supportable complete collection or exfiltration chain."
