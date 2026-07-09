@@ -1,0 +1,175 @@
+{
+  "case_id": "C04-darpa-e3-fivedirections",
+  "source_case_id": "R01",
+  "artifact_id": "darpa_e3_R01_events",
+  "construction_boundary": "Rules are ground-truth-informed offline labels; planners receive only compiled claims.",
+  "motifs": [
+    {
+      "motif_id": "C04-EC-001",
+      "match": {
+        "event_type_in": ["EVENT_WRITE"],
+        "path_contains_any": ["AppCrash_firefox.exe"]
+      },
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "firefox.exe"},
+        "predicate": "produced_crash_report",
+        "object": {"entity_type": "file", "value": "Windows Error Reporting AppCrash_firefox.exe"},
+        "mapped_tactic": ["initial_access", "execution"],
+        "evidence_strength": "medium",
+        "confidence": 0.82,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-002",
+      "match": {
+        "event_type_in": ["EVENT_CONNECT"],
+        "process_contains_any": ["firefox.exe"],
+        "remote_ip_in": ["156.78.147.114"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "firefox.exe"},
+        "predicate": "connected_to",
+        "object": {"entity_type": "ip", "value": "156.78.147.114:80"},
+        "mapped_tactic": ["initial_access"],
+        "evidence_strength": "strong",
+        "confidence": 0.94,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-003",
+      "match": {
+        "event_type_in": ["EVENT_CONNECT", "EVENT_SENDTO", "EVENT_RECVFROM"],
+        "process_contains_any": ["firefox.exe"],
+        "remote_ip_in": ["16.54.116.146"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "firefox.exe"},
+        "predicate": "exchanged_data_with",
+        "object": {"entity_type": "ip", "value": "16.54.116.146:80"},
+        "mapped_tactic": ["command_and_control"],
+        "mapped_technique": ["T1071"],
+        "evidence_strength": "critical",
+        "confidence": 0.97,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:command_and_control", "node:N02_c2", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-004",
+      "match": {
+        "event_type_in": ["EVENT_CONNECT"],
+        "process_contains_any": ["firefox.exe"],
+        "remote_ip_in": ["193.189.212.26"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "firefox.exe"},
+        "predicate": "opened_netrecon_channel_to",
+        "object": {"entity_type": "ip", "value": "193.189.212.26:80"},
+        "mapped_tactic": ["discovery", "command_and_control"],
+        "evidence_strength": "critical",
+        "confidence": 0.96,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:discovery", "node:N03_discovery", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-005",
+      "match": {
+        "event_type_in": ["EVENT_WRITE"],
+        "path_contains_any": ["ethinfo.txt"]
+      },
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "unresolved in-memory module"},
+        "predicate": "wrote",
+        "object": {"entity_type": "file", "value": "C:\\Users\\admin\\ethinfo.txt"},
+        "mapped_tactic": ["discovery"],
+        "evidence_strength": "strong",
+        "confidence": 0.9,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:discovery", "node:N03_discovery"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-006",
+      "match": {
+        "event_type_in": ["EVENT_WRITE"],
+        "path_contains_any": ["recondata.txt"]
+      },
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "unresolved in-memory module"},
+        "predicate": "wrote",
+        "object": {"entity_type": "file", "value": "C:\\Users\\admin\\recondata.txt"},
+        "mapped_tactic": ["discovery", "collection"],
+        "evidence_strength": "strong",
+        "confidence": 0.91,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:discovery", "node:N03_discovery", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-007",
+      "match": {
+        "event_type_in": ["EVENT_READ"],
+        "path_contains_any": ["\\Users\\admin\\Documents\\"]
+      },
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "data_access",
+        "subject": {"entity_type": "process", "value": "unresolved in-memory module"},
+        "predicate": "read_multiple_files_from",
+        "object": {"entity_type": "file", "value": "C:\\Users\\admin\\Documents\\"},
+        "mapped_tactic": ["collection"],
+        "mapped_technique": ["T1005"],
+        "evidence_strength": "critical",
+        "confidence": 0.94,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:collection", "node:N04_collection", "critical", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C04-EC-008",
+      "match": {
+        "event_type_in": ["EVENT_SENDTO"],
+        "process_contains_any": ["firefox.exe"],
+        "remote_ip_in": ["193.189.212.26"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "exfiltration_activity",
+        "subject": {"entity_type": "process", "value": "firefox.exe"},
+        "predicate": "sent_netrecon_output_to",
+        "object": {"entity_type": "ip", "value": "193.189.212.26:80"},
+        "mapped_tactic": ["exfiltration"],
+        "mapped_technique": ["T1041"],
+        "evidence_strength": "critical",
+        "confidence": 0.97,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R01_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:exfiltration", "node:N05_exfiltration", "critical", "discriminative", "unique"]
+      }
+    }
+  ]
+}

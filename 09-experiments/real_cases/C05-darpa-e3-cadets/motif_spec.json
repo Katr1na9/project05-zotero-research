@@ -1,0 +1,146 @@
+{
+  "case_id": "C05-darpa-e3-cadets",
+  "source_case_id": "R02",
+  "artifact_id": "darpa_e3_R02_events",
+  "construction_boundary": "Rules are ground-truth-informed offline labels; planners receive only compiled claims.",
+  "motifs": [
+    {
+      "motif_id": "C05-EC-001",
+      "match": {"event_type_in": ["EVENT_ACCEPT"], "process_in": ["nginx"]},
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "nginx"},
+        "predicate": "accepted_external_connection",
+        "object": {"entity_type": "service", "value": "HTTP service"},
+        "mapped_tactic": ["initial_access"],
+        "evidence_strength": "medium",
+        "confidence": 0.8,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-002",
+      "match": {"event_type_in": ["EVENT_RECVFROM"], "process_in": ["nginx"], "remote_ip_in": ["78.205.235.65"]},
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "nginx"},
+        "predicate": "received_data_from",
+        "object": {"entity_type": "ip", "value": "78.205.235.65:80"},
+        "mapped_tactic": ["initial_access"],
+        "evidence_strength": "critical",
+        "confidence": 0.96,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N01_initial_access", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-003",
+      "match": {"event_type_in": ["EVENT_WRITE"], "process_in": ["nginx"], "path_contains_any": ["/tmp/vUgefal"]},
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "nginx"},
+        "predicate": "wrote",
+        "object": {"entity_type": "file", "value": "/tmp/vUgefal"},
+        "mapped_tactic": ["execution"],
+        "mapped_technique": ["T1105"],
+        "evidence_strength": "critical",
+        "confidence": 0.98,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N02_payload", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-004",
+      "match": {"event_type_in": ["EVENT_EXECUTE"], "path_contains_any": ["/tmp/vUgefal"]},
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "master"},
+        "predicate": "executed",
+        "object": {"entity_type": "file", "value": "/tmp/vUgefal"},
+        "mapped_tactic": ["execution", "privilege_escalation"],
+        "evidence_strength": "critical",
+        "confidence": 0.98,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N02_payload", "critical", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-005",
+      "match": {"event_type_in": ["EVENT_WRITE"], "process_in": ["vUgefal"], "path_contains_any": ["/var/log/devc"]},
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "vUgefal"},
+        "predicate": "wrote",
+        "object": {"entity_type": "file", "value": "/var/log/devc"},
+        "mapped_tactic": ["execution"],
+        "evidence_strength": "critical",
+        "confidence": 0.97,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:execution", "node:N02_payload", "critical", "discriminative"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-006",
+      "match": {"event_type_in": ["EVENT_RECVFROM"], "process_in": ["nginx"], "remote_ip_in": ["200.36.109.214"]},
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "nginx"},
+        "predicate": "received_data_from",
+        "object": {"entity_type": "ip", "value": "200.36.109.214:80"},
+        "mapped_tactic": ["command_and_control"],
+        "mapped_technique": ["T1071"],
+        "evidence_strength": "critical",
+        "confidence": 0.96,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:command_and_control", "node:N03_c2", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-007",
+      "match": {"event_type_in": ["EVENT_READ"], "process_in": ["vUgefal"], "path_contains_any": ["/etc/passwd"]},
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "data_access",
+        "subject": {"entity_type": "process", "value": "vUgefal"},
+        "predicate": "read",
+        "object": {"entity_type": "file", "value": "/etc/passwd"},
+        "mapped_tactic": ["discovery"],
+        "evidence_strength": "strong",
+        "confidence": 0.91,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:discovery", "node:N04_discovery"]
+      }
+    },
+    {
+      "motif_id": "C05-EC-008",
+      "match": {"event_type_in": ["EVENT_SENDTO"], "process_in": ["vUgefal"], "remote_ip_in": ["139.123.0.113"]},
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "vUgefal"},
+        "predicate": "sent_data_to",
+        "object": {"entity_type": "ip", "value": "139.123.0.113"},
+        "mapped_tactic": ["command_and_control", "discovery"],
+        "evidence_strength": "strong",
+        "confidence": 0.9,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R02_campaign"],
+        "tags": ["hideable", "real_cdm", "stage:command_and_control", "node:N03_c2", "discriminative"]
+      }
+    }
+  ]
+}

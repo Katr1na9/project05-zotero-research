@@ -1,0 +1,62 @@
+[
+  {
+    "action_id": "C04-AA-001",
+    "case_id": "C04-darpa-e3-fivedirections",
+    "action_type": "extend_log_window",
+    "target": {"target_type": "process", "target_value": "firefox.exe"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C04-EC-001", "C04-EC-002"],
+    "expected_evidence_types": ["local_log", "network_summary"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.2, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available",
+    "natural_language_request": "Extend Firefox host and network telemetry around the exploitation attempts."
+  },
+  {
+    "action_id": "C04-AA-002",
+    "case_id": "C04-darpa-e3-fivedirections",
+    "action_type": "recover_network_summary",
+    "target": {"target_type": "process", "target_value": "firefox.exe"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C04-EC-003", "C04-EC-004", "C04-EC-008"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.4, "expected_over_attribution_risk_reduction": 0.35, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.4},
+    "status": "available",
+    "natural_language_request": "Recover Firefox flows to the C2 and netrecon endpoints."
+  },
+  {
+    "action_id": "C04-AA-003",
+    "case_id": "C04-darpa-e3-fivedirections",
+    "action_type": "query_host_subgraph",
+    "target": {"target_type": "file", "target_value": "ethinfo.txt|recondata.txt"},
+    "cost": 3,
+    "recoverable_claim_ids": ["C04-EC-005", "C04-EC-006"],
+    "expected_evidence_types": ["provenance_graph"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.28, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available",
+    "natural_language_request": "Recover the provenance neighborhood of the reconnaissance output files."
+  },
+  {
+    "action_id": "C04-AA-004",
+    "case_id": "C04-darpa-e3-fivedirections",
+    "action_type": "ttp_local_probe",
+    "target": {"target_type": "technique", "target_value": "T1005"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C04-EC-007"],
+    "expected_evidence_types": ["provenance_graph"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.2},
+    "status": "available",
+    "natural_language_request": "Probe document access in the target user's Documents directory."
+  },
+  {
+    "action_id": "C04-AA-005",
+    "case_id": "C04-darpa-e3-fivedirections",
+    "action_type": "query_host_subgraph",
+    "target": {"target_type": "case", "target_value": "R01 collection-to-exfiltration chain"},
+    "cost": 4,
+    "recoverable_claim_ids": ["C04-EC-006", "C04-EC-007", "C04-EC-008"],
+    "expected_evidence_types": ["provenance_graph", "network_summary"],
+    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.35, "expected_over_attribution_risk_reduction": 0.4, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.4},
+    "status": "available",
+    "natural_language_request": "Recover the joined collection and netrecon exfiltration subgraph."
+  }
+]
