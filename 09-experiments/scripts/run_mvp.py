@@ -27,6 +27,11 @@ PLANNERS = [
     "project05_m1",
     "full_evidence",
 ]
+CASE_FILENAMES = (
+    "case_config.json",
+    "evidence_claims.json",
+    "acquisition_actions.json",
+)
 
 
 def load_json(path: Path) -> Any:
@@ -39,6 +44,29 @@ def write_json(path: Path, data: Any) -> None:
     with path.open("w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write("\n")
+
+
+def discover_case_dirs(examples_dir: Path) -> list[Path]:
+    return sorted(
+        (
+            path
+            for path in examples_dir.iterdir()
+            if path.is_dir()
+            and all((path / filename).is_file() for filename in CASE_FILENAMES)
+        ),
+        key=lambda path: path.name,
+    )
+
+
+def validate_unique_case_ids(case_dirs: list[Path]) -> None:
+    seen: dict[str, Path] = {}
+    for case_dir in case_dirs:
+        case_id = load_json(case_dir / "case_config.json")["case_id"]
+        if case_id in seen:
+            raise ValueError(
+                f"Duplicate case_id {case_id!r}: {seen[case_id]} and {case_dir}"
+            )
+        seen[case_id] = case_dir
 
 
 def claim_tags(claim: dict[str, Any]) -> set[str]:
@@ -58,9 +86,15 @@ def build_hidden_claims(
     claims: list[dict[str, Any]],
     strategy: str,
     seed: int,
+    mask_intensity: float | None = None,
 ) -> set[str]:
     hideable = hideable_claim_ids(claims)
-    k = max(1, math.ceil(config.get("mask_intensity", 0.4) * len(hideable)))
+    intensity = (
+        config.get("mask_intensity", 0.4)
+        if mask_intensity is None
+        else mask_intensity
+    )
+    k = max(1, math.ceil(intensity * len(hideable)))
     rng = random.Random(seed)
 
     if strategy == "random":
@@ -73,7 +107,14 @@ def build_hidden_claims(
             for claim in claims
             if "hideable" in claim_tags(claim) and claim_tags(claim) & mask_tags
         ]
-        return set(stage_hidden[: max(k, len(stage_hidden))])
+        if len(stage_hidden) >= k:
+            return set(stage_hidden[:k])
+        remaining = [
+            claim_id for claim_id in hideable if claim_id not in stage_hidden
+        ]
+        return set(
+            stage_hidden + rng.sample(remaining, k - len(stage_hidden))
+        )
 
     if strategy == "discriminative":
         configured = [
@@ -87,6 +128,32 @@ def build_hidden_claims(
         return set(configured + rng.sample(remaining, k - len(configured)))
 
     raise ValueError(f"Unsupported mask strategy: {strategy}")
+
+
+def experiment_conditions(
+    config: dict[str, Any],
+) -> list[tuple[str, float, int]]:
+    intensities = config.get(
+        "mask_intensities",
+        [config.get("mask_intensity", 0.4)],
+    )
+    return [
+        (strategy, float(intensity), int(seed))
+        for strategy in config["mask_strategies"]
+        for intensity in intensities
+        for seed in config["random_seeds"]
+    ]
+
+
+def make_run_id(
+    case_id: str,
+    mask_strategy: str,
+    mask_intensity: float,
+    seed: int,
+    planner: str,
+) -> str:
+    intensity_label = f"m{round(mask_intensity * 100):03d}"
+    return f"{case_id}-{mask_strategy}-{intensity_label}-{seed}-{planner}"
 
 
 def granularity_index(config: dict[str, Any], granularity: str) -> int:
@@ -153,6 +220,7 @@ def build_state(
     run_id: str,
     step_index: int,
     mask_strategy: str,
+    mask_intensity: float,
     seed: int,
     visible_ids: set[str],
     hidden_ids: set[str],
@@ -227,7 +295,7 @@ def build_state(
         "run_id": run_id,
         "step_index": step_index,
         "mask_strategy": mask_strategy,
-        "mask_intensity": config.get("mask_intensity", 0.4),
+        "mask_intensity": mask_intensity,
         "random_seed": seed,
         "visible_claim_ids": sorted(visible_ids),
         "hidden_claim_ids": sorted(hidden_ids),
@@ -381,6 +449,7 @@ def select_action(
                 state["run_id"],
                 state["step_index"] + 1,
                 state["mask_strategy"],
+                state["mask_intensity"],
                 state["random_seed"],
                 after_visible,
                 hidden_ids - recovered,
@@ -412,16 +481,29 @@ def run_episode(
     claims: list[dict[str, Any]],
     actions: list[dict[str, Any]],
     mask_strategy: str,
+    mask_intensity: float,
     seed: int,
     planner: str,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     all_ids = {claim["claim_id"] for claim in claims}
-    hidden_ids = build_hidden_claims(config, claims, mask_strategy, seed)
+    hidden_ids = build_hidden_claims(
+        config,
+        claims,
+        mask_strategy,
+        seed,
+        mask_intensity,
+    )
     visible_ids = all_ids - hidden_ids
     recovered_ids: set[str] = set()
     actions_taken: list[str] = []
     budget_used = 0.0
-    run_id = f"{config['case_id']}-{mask_strategy}-{seed}-{planner}"
+    run_id = make_run_id(
+        config["case_id"],
+        mask_strategy,
+        mask_intensity,
+        seed,
+        planner,
+    )
 
     if planner == "full_evidence":
         hidden_ids = set()
@@ -435,6 +517,7 @@ def run_episode(
         run_id,
         0,
         mask_strategy,
+        mask_intensity,
         seed,
         visible_ids,
         hidden_ids,
@@ -481,6 +564,7 @@ def run_episode(
             run_id,
             step,
             mask_strategy,
+            mask_intensity,
             seed,
             visible_ids,
             hidden_ids,
@@ -509,6 +593,7 @@ def run_episode(
     result = {
         "case_id": config["case_id"],
         "mask_strategy": mask_strategy,
+        "mask_intensity": mask_intensity,
         "seed": seed,
         "planner": planner,
         "target_granularity": config["target_granularity"],
@@ -520,7 +605,17 @@ def run_episode(
         "steps_to_target": len(actions_taken) if reached else "",
         "steps_taken": len(actions_taken),
         "actions_taken": "|".join(actions_taken),
-        "initial_hidden_claims": len(build_hidden_claims(config, claims, mask_strategy, seed)) if planner != "full_evidence" else 0,
+        "initial_hidden_claims": len(
+            build_hidden_claims(
+                config,
+                claims,
+                mask_strategy,
+                seed,
+                mask_intensity,
+            )
+        )
+        if planner != "full_evidence"
+        else 0,
         "recovered_claims": len(recovered_ids),
         "final_node_coverage": round(final_state["coverage"]["cti_node_coverage"], 4),
         "final_edge_coverage": round(final_state["coverage"]["cti_edge_coverage"], 4),
@@ -530,33 +625,60 @@ def run_episode(
     return result, trace
 
 
-def run_all(case_dir: Path, output_dir: Path) -> None:
+def execute_case(
+    case_dir: Path,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     config = load_json(case_dir / "case_config.json")
     claims = load_json(case_dir / "evidence_claims.json")
     actions = load_json(case_dir / "acquisition_actions.json")
 
     rows: list[dict[str, Any]] = []
     traces: list[dict[str, Any]] = []
-    for mask_strategy in config["mask_strategies"]:
-        for seed in config["random_seeds"]:
-            for planner in PLANNERS:
-                row, trace = run_episode(config, claims, actions, mask_strategy, seed, planner)
-                rows.append(row)
-                traces.append(
-                    {
-                        "run_id": f"{config['case_id']}-{mask_strategy}-{seed}-{planner}",
-                        "result": row,
-                        "trace": trace,
-                    }
-                )
+    for mask_strategy, mask_intensity, seed in experiment_conditions(config):
+        for planner in PLANNERS:
+            row, trace = run_episode(
+                config,
+                claims,
+                actions,
+                mask_strategy,
+                mask_intensity,
+                seed,
+                planner,
+            )
+            rows.append(row)
+            traces.append(
+                {
+                    "run_id": make_run_id(
+                        config["case_id"],
+                        mask_strategy,
+                        mask_intensity,
+                        seed,
+                        planner,
+                    ),
+                    "result": row,
+                    "trace": trace,
+                }
+            )
 
-    output_dir.mkdir(parents=True, exist_ok=True)
-    csv_path = output_dir / "c01_mvp_results.csv"
+    return rows, traces
+
+
+def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        raise ValueError("Cannot write an empty result set")
+    path.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = list(rows[0].keys())
-    with csv_path.open("w", encoding="utf-8", newline="") as f:
+    with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def run_all(case_dir: Path, output_dir: Path) -> None:
+    rows, traces = execute_case(case_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    csv_path = output_dir / "c01_mvp_results.csv"
+    write_csv(csv_path, rows)
 
     write_json(output_dir / "c01_mvp_traces.json", traces)
     summary = summarize(rows)
@@ -566,6 +688,36 @@ def run_all(case_dir: Path, output_dir: Path) -> None:
     print(f"Wrote {output_dir / 'c01_mvp_traces.json'}")
     print(f"Wrote {output_dir / 'c01_mvp_summary.json'}")
     print(json.dumps(summary, indent=2, ensure_ascii=False))
+
+
+def run_cases(
+    case_dirs: list[Path],
+    output_dir: Path,
+    write_traces: bool = True,
+) -> list[dict[str, Any]]:
+    if not case_dirs:
+        raise ValueError("No complete case directories were found")
+    validate_unique_case_ids(case_dirs)
+
+    rows: list[dict[str, Any]] = []
+    traces: list[dict[str, Any]] = []
+    for case_dir in case_dirs:
+        case_rows, case_traces = execute_case(case_dir)
+        rows.extend(case_rows)
+        traces.extend(case_traces)
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    csv_path = output_dir / "all_cases_results.csv"
+    write_csv(csv_path, rows)
+    write_json(output_dir / "all_cases_summary.json", summarize_stratified(rows))
+    if write_traces:
+        write_json(output_dir / "all_cases_traces.json", traces)
+
+    print(f"Wrote {csv_path}")
+    print(f"Wrote {output_dir / 'all_cases_summary.json'}")
+    if write_traces:
+        print(f"Wrote {output_dir / 'all_cases_traces.json'}")
+    return rows
 
 
 def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -589,13 +741,102 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return summary
 
 
+def summarize_group(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    successes = [row for row in rows if row["reached_target"] == 1]
+    costs = [
+        float(row["cost_to_target"])
+        for row in successes
+        if row["cost_to_target"] != ""
+    ]
+    steps = [
+        int(row["steps_to_target"])
+        for row in successes
+        if row["steps_to_target"] != ""
+    ]
+    return {
+        "independent_case_count": len({row["case_id"] for row in rows}),
+        "repeated_run_count": len(rows),
+        "success_rate": round(len(successes) / len(rows), 4),
+        "mean_cost_to_target": (
+            round(sum(costs) / len(costs), 4) if costs else None
+        ),
+        "mean_steps_to_target": (
+            round(sum(steps) / len(steps), 4) if steps else None
+        ),
+        "mean_budget_used": round(
+            sum(float(row["budget_used"]) for row in rows) / len(rows),
+            4,
+        ),
+        "mean_final_node_coverage": round(
+            sum(float(row["final_node_coverage"]) for row in rows) / len(rows),
+            4,
+        ),
+    }
+
+
+def group_by(
+    rows: list[dict[str, Any]],
+    keys: tuple[str, ...],
+) -> dict[tuple[Any, ...], list[dict[str, Any]]]:
+    grouped: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+    for row in rows:
+        group_key = tuple(row[key] for key in keys)
+        grouped.setdefault(group_key, []).append(row)
+    return grouped
+
+
+def summarize_stratified(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    if not rows:
+        raise ValueError("Cannot summarize an empty result set")
+
+    overall = {
+        planner_key[0]: summarize_group(group_rows)
+        for planner_key, group_rows in group_by(rows, ("planner",)).items()
+    }
+    by_case: dict[str, dict[str, Any]] = {}
+    for (case_id, planner), group_rows in group_by(
+        rows,
+        ("case_id", "planner"),
+    ).items():
+        by_case.setdefault(str(case_id), {})[str(planner)] = summarize_group(
+            group_rows
+        )
+
+    by_mask_condition: dict[str, dict[str, Any]] = {}
+    for (strategy, intensity, planner), group_rows in group_by(
+        rows,
+        ("mask_strategy", "mask_intensity", "planner"),
+    ).items():
+        condition = f"{strategy}|{float(intensity):.3f}"
+        by_mask_condition.setdefault(condition, {})[str(planner)] = (
+            summarize_group(group_rows)
+        )
+
+    return {
+        "design": {
+            "independent_case_count": len(
+                {row["case_id"] for row in rows}
+            ),
+            "repeated_run_count": len(rows),
+        },
+        "overall_by_planner": overall,
+        "by_case_planner": by_case,
+        "by_mask_condition_planner": by_mask_condition,
+    }
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run Project05 C01 MVP simulator.")
-    parser.add_argument(
+    parser = argparse.ArgumentParser(description="Run the Project05 MVP simulator.")
+    input_group = parser.add_mutually_exclusive_group()
+    input_group.add_argument(
         "--case-dir",
         type=Path,
-        default=Path(__file__).resolve().parents[1] / "examples" / "C01",
         help="Directory containing case_config.json, evidence_claims.json, and acquisition_actions.json.",
+    )
+    input_group.add_argument(
+        "--examples-dir",
+        type=Path,
+        help="Directory containing multiple complete case directories.",
     )
     parser.add_argument(
         "--output-dir",
@@ -604,7 +845,13 @@ def main() -> None:
         help="Directory for simulator outputs.",
     )
     args = parser.parse_args()
-    run_all(args.case_dir, args.output_dir)
+    if args.examples_dir is not None:
+        run_cases(discover_case_dirs(args.examples_dir), args.output_dir)
+        return
+    case_dir = args.case_dir or (
+        Path(__file__).resolve().parents[1] / "examples" / "C01"
+    )
+    run_all(case_dir, args.output_dir)
 
 
 if __name__ == "__main__":

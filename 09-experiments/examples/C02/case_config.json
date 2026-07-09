@@ -1,0 +1,29 @@
+{
+  "case_id": "C02-freebsd-provenance",
+  "case_name": "FreeBSD audit and provenance intrusion toy case",
+  "description": "A FreeBSD-oriented case for testing cross-platform evidence acquisition and a noncritical noisy observation.",
+  "target_granularity": "G3_campaign",
+  "budget_total": 7,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C02-AA-001", "C02-AA-002", "C02-AA-003", "C02-AA-004", "C02-AA-005", "C02-AA-006"],
+  "stage_mask_tags": ["stage:command_and_control", "stage:collection", "stage:exfiltration"],
+  "discriminative_claim_ids": ["C02-EC-004", "C02-EC-005", "C02-EC-008", "C02-EC-009"],
+  "cti_nodes": [
+    {"node_id": "N01_initial_execution", "stage": "execution", "required_claim_ids": ["C02-EC-002"], "critical": true},
+    {"node_id": "N02_payload_drop", "stage": "execution", "required_claim_ids": ["C02-EC-003", "C02-EC-004"], "critical": true},
+    {"node_id": "N03_persistence", "stage": "persistence", "required_claim_ids": ["C02-EC-006"], "critical": false},
+    {"node_id": "N04_c2_connection", "stage": "command_and_control", "required_claim_ids": ["C02-EC-005", "C02-EC-010"], "critical": true},
+    {"node_id": "N05_collection", "stage": "collection", "required_claim_ids": ["C02-EC-007", "C02-EC-008"], "critical": true},
+    {"node_id": "N06_exfiltration", "stage": "exfiltration", "required_claim_ids": ["C02-EC-009"], "critical": true}
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_initial_execution", "target": "N02_payload_drop"},
+    {"edge_id": "E02", "source": "N02_payload_drop", "target": "N03_persistence"},
+    {"edge_id": "E03", "source": "N02_payload_drop", "target": "N04_c2_connection"},
+    {"edge_id": "E04", "source": "N04_c2_connection", "target": "N05_collection"},
+    {"edge_id": "E05", "source": "N05_collection", "target": "N06_exfiltration"}
+  ],
+  "granularity_order": ["G0_unknown", "G1_technique", "G2_tactic_intent", "G3_campaign", "G4_actor_cluster", "G5_named_actor"]
+}

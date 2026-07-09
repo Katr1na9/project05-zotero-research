@@ -1,5 +1,15 @@
 # Research Progress
 
+## 2026-07-09：多案例实验矩阵跑通
+
+- 模拟器已从 C01 单案例扩展为 C01-C03 批量运行。
+- 新增 C02 FreeBSD audit/provenance 和 C03 Windows 多源主机证据 toy case。
+- mask 设计扩展为 3 种缺失机制 × 3 档强度 × 5 个随机种子。
+- 新增 `unittest` 回归测试，覆盖实验矩阵、mask intensity、案例发现、重复 case ID、引用完整性和独立样本统计。
+- 完整矩阵包含 3 个独立案例和 675 个重复运行。
+- 当前 `project05_m1` 总体 success rate 为 1.0，平均达标成本为 2.5926；`coverage_greedy` 为 2.9778，`fixed_order` 为 4.8741。
+- 结论边界：仍是手工 toy case，只能说明工程闭环和实验协议可执行；下一步需要增加 oracle/CMI baseline、消融实验和更多真实 attack trace。
+
 ## 2026-07-08：C01 小样例与最小模拟器跑通
 
 - 新增 `09-experiments/examples/C01/`，包含 `case_config.json`、`evidence_claims.json`、`acquisition_actions.json`。

@@ -1,0 +1,31 @@
+{
+  "case_id": "C03-windows-host",
+  "case_name": "Windows host multi-source intrusion toy case",
+  "description": "A Windows-oriented case combining process, command-line, registry, file, DNS, network, and IOC evidence.",
+  "target_granularity": "G3_campaign",
+  "budget_total": 8,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C03-AA-001", "C03-AA-002", "C03-AA-003", "C03-AA-004", "C03-AA-005", "C03-AA-006", "C03-AA-007"],
+  "stage_mask_tags": ["stage:command_and_control", "stage:collection", "stage:exfiltration"],
+  "discriminative_claim_ids": ["C03-EC-003", "C03-EC-005", "C03-EC-007", "C03-EC-009", "C03-EC-010"],
+  "cti_nodes": [
+    {"node_id": "N01_powershell", "stage": "execution", "required_claim_ids": ["C03-EC-002"], "critical": true},
+    {"node_id": "N02_payload", "stage": "execution", "required_claim_ids": ["C03-EC-003"], "critical": true},
+    {"node_id": "N03_persistence", "stage": "persistence", "required_claim_ids": ["C03-EC-004"], "critical": false},
+    {"node_id": "N04_credential_access", "stage": "credential_access", "required_claim_ids": ["C03-EC-005"], "critical": false},
+    {"node_id": "N05_c2", "stage": "command_and_control", "required_claim_ids": ["C03-EC-006", "C03-EC-007", "C03-EC-011"], "critical": true},
+    {"node_id": "N06_collection", "stage": "collection", "required_claim_ids": ["C03-EC-008", "C03-EC-009"], "critical": true},
+    {"node_id": "N07_exfiltration", "stage": "exfiltration", "required_claim_ids": ["C03-EC-010"], "critical": true}
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_powershell", "target": "N02_payload"},
+    {"edge_id": "E02", "source": "N02_payload", "target": "N03_persistence"},
+    {"edge_id": "E03", "source": "N02_payload", "target": "N04_credential_access"},
+    {"edge_id": "E04", "source": "N02_payload", "target": "N05_c2"},
+    {"edge_id": "E05", "source": "N04_credential_access", "target": "N06_collection"},
+    {"edge_id": "E06", "source": "N06_collection", "target": "N07_exfiltration"}
+  ],
+  "granularity_order": ["G0_unknown", "G1_technique", "G2_tactic_intent", "G3_campaign", "G4_actor_cluster", "G5_named_actor"]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "action_id": "C02-AA-001",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "extend_log_window",
+    "target": {"target_type": "host", "target_value": "freebsd-web-01"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C02-EC-002", "C02-EC-003", "C02-EC-004"],
+    "expected_evidence_types": ["local_log", "provenance_graph"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.2, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.33},
+    "status": "available",
+    "natural_language_request": "Extend BSM audit coverage around the initial shell execution."
+  },
+  {
+    "action_id": "C02-AA-002",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "query_host_subgraph",
+    "target": {"target_type": "process", "target_value": "/tmp/.kworker"},
+    "cost": 3,
+    "recoverable_claim_ids": ["C02-EC-003", "C02-EC-004", "C02-EC-006", "C02-EC-007", "C02-EC-008"],
+    "expected_evidence_types": ["provenance_graph", "local_log"],
+    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.35, "expected_over_attribution_risk_reduction": 0.35, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.5},
+    "status": "available",
+    "natural_language_request": "Recover the provenance subgraph rooted at /tmp/.kworker."
+  },
+  {
+    "action_id": "C02-AA-003",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "recover_network_summary",
+    "target": {"target_type": "ip", "target_value": "203.0.113.44"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C02-EC-005", "C02-EC-009", "C02-EC-010"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.4, "expected_over_attribution_risk_reduction": 0.4, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.33},
+    "status": "available",
+    "natural_language_request": "Recover DNS and flow summaries for the suspected external endpoint."
+  },
+  {
+    "action_id": "C02-AA-004",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "ttp_local_probe",
+    "target": {"target_type": "technique", "target_value": "T1560"},
+    "cost": 2,
+    "recoverable_claim_ids": ["C02-EC-007", "C02-EC-008"],
+    "expected_evidence_types": ["local_log", "provenance_graph"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.17},
+    "status": "available",
+    "natural_language_request": "Probe local audit evidence for collection and archive creation."
+  },
+  {
+    "action_id": "C02-AA-005",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "malware_analysis",
+    "target": {"target_type": "file", "target_value": "/tmp/.kworker"},
+    "cost": 4,
+    "recoverable_claim_ids": ["C02-EC-004"],
+    "expected_evidence_types": ["local_log"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.3, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.17},
+    "status": "available",
+    "natural_language_request": "Analyze the recovered FreeBSD payload."
+  },
+  {
+    "action_id": "C02-AA-006",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "human_review",
+    "target": {"target_type": "claim", "target_value": "C02-EC-010"},
+    "cost": 5,
+    "recoverable_claim_ids": ["C02-EC-010"],
+    "expected_evidence_types": ["human_review"],
+    "expected_effects": {"expected_granularity_gain": 0, "expected_uncertainty_reduction": 0.1, "expected_over_attribution_risk_reduction": 0.15, "expected_conflict_resolution": 0.5, "expected_coverage_delta": 0},
+    "status": "available",
+    "natural_language_request": "Review the weak DNS observation before treating it as C2 support."
+  }
+]

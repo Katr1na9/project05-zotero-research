@@ -71,3 +71,44 @@ G3 campaign-level 判定要求所有 critical CTI 节点被覆盖，因此遮蔽
 ## MVP 原则
 
 第一版只提交 schema、配置、小样例和结果表。大型原始日志、PDF、威胁情报全文和中间大体量图数据不进入 GitHub。
+
+## 多案例实验矩阵
+
+2026-07-09 已将模拟器扩展为多案例运行器，并加入：
+
+- C01 Linux provenance；
+- C02 FreeBSD audit/provenance；
+- C03 Windows process/registry/network；
+- `20% / 40% / 60%` 三档 mask intensity；
+- `random / stage / discriminative` 三种缺失机制；
+- 每种条件 5 个随机种子；
+- 分案例、分 mask 条件和总体的统计汇总。
+
+运行完整矩阵：
+
+```powershell
+python .\09-experiments\scripts\run_mvp.py `
+  --examples-dir .\09-experiments\examples `
+  --output-dir .\09-experiments\results
+```
+
+版本库保留：
+
+```text
+results/all_cases_results.csv
+results/all_cases_summary.json
+```
+
+`all_cases_traces.json` 约 7.6 MB，由命令在本地生成，不进入 Git。
+
+当前共 3 个独立案例、675 个重复运行。总体结果如下：
+
+| Planner | success_rate | mean_cost_to_target |
+|---|---:|---:|
+| random | 0.6444 | 4.1034 |
+| fixed_order | 1.0000 | 4.8741 |
+| coverage_greedy | 1.0000 | 2.9778 |
+| project05_m1 | 1.0000 | 2.5926 |
+| full_evidence | 1.0000 | 0.0000 |
+
+这些数字只验证多案例 toy 闭环和实验代码，不构成论文有效性结论。不同 mask 和 seed 是同一案例上的重复测量，不能作为额外独立样本。
