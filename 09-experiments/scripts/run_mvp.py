@@ -25,8 +25,22 @@ PLANNERS = [
     "fixed_order",
     "coverage_greedy",
     "project05_m1",
+    "m1_no_granularity",
+    "m1_no_uncertainty",
+    "m1_no_risk",
+    "m1_no_coverage",
+    "m1_no_cost",
+    "cmi_proxy",
+    "oracle_optimal",
     "full_evidence",
 ]
+M1_ABLATIONS = {
+    "m1_no_granularity": {"granularity"},
+    "m1_no_uncertainty": {"uncertainty"},
+    "m1_no_risk": {"risk"},
+    "m1_no_coverage": {"coverage"},
+    "m1_no_cost": {"cost"},
+}
 CASE_FILENAMES = (
     "case_config.json",
     "evidence_claims.json",
@@ -392,6 +406,133 @@ def available_actions(
     ]
 
 
+def expected_effect(
+    action: dict[str, Any],
+    name: str,
+) -> float:
+    return float(action.get("expected_effects", {}).get(name, 0.0))
+
+
+def m1_action_score(
+    action: dict[str, Any],
+    state: dict[str, Any],
+    excluded_components: set[str] | None = None,
+) -> float:
+    excluded = excluded_components or set()
+    has_critical_gap = state["coverage"]["critical_gap_count"] > 0
+    components = {
+        "granularity": 2.0
+        * expected_effect(action, "expected_granularity_gain"),
+        "uncertainty": expected_effect(
+            action,
+            "expected_uncertainty_reduction",
+        ),
+        "risk": (1.25 if has_critical_gap else 1.0)
+        * expected_effect(
+            action,
+            "expected_over_attribution_risk_reduction",
+        ),
+        "coverage": (1.5 if has_critical_gap else 1.0)
+        * expected_effect(action, "expected_coverage_delta"),
+        "cost": -0.35 * float(action["cost"]),
+    }
+    score = sum(
+        value
+        for name, value in components.items()
+        if name not in excluded
+    )
+    score += expected_effect(action, "expected_conflict_resolution")
+    return score
+
+
+def select_oracle_optimal_action(
+    config: dict[str, Any],
+    actions: list[dict[str, Any]],
+    visible_ids: set[str],
+    hidden_ids: set[str],
+    actions_taken: list[str],
+    budget_used: float,
+) -> dict[str, Any] | None:
+    target_idx = granularity_index(config, config["target_granularity"])
+    action_map = action_by_id(actions)
+    initial_taken = frozenset(actions_taken)
+    initial_remaining = float(config["budget_total"]) - budget_used
+    memo: dict[
+        tuple[frozenset[str], frozenset[str], float],
+        tuple[float, tuple[str, ...]],
+    ] = {}
+
+    def search(
+        current_visible: frozenset[str],
+        current_hidden: frozenset[str],
+        taken: frozenset[str],
+        budget_remaining: float,
+    ) -> tuple[float, tuple[str, ...]]:
+        if granularity_index(
+            config,
+            supportable_granularity(config, set(current_visible)),
+        ) >= target_idx:
+            return 0.0, ()
+
+        key = (current_hidden, taken, round(budget_remaining, 6))
+        if key in memo:
+            return memo[key]
+
+        best_cost = math.inf
+        best_path: tuple[str, ...] = ()
+        for action in actions:
+            action_id = action["action_id"]
+            action_cost = float(action["cost"])
+            if action_id in taken or action_cost > budget_remaining:
+                continue
+            recovered = (
+                set(action["recoverable_claim_ids"]) & set(current_hidden)
+            )
+            if not recovered:
+                continue
+            tail_cost, tail_path = search(
+                frozenset(set(current_visible) | recovered),
+                frozenset(set(current_hidden) - recovered),
+                taken | {action_id},
+                budget_remaining - action_cost,
+            )
+            total_cost = action_cost + tail_cost
+            path = (action_id,) + tail_path
+            if (total_cost, path) < (best_cost, best_path):
+                best_cost = total_cost
+                best_path = path
+
+        memo[key] = (best_cost, best_path)
+        return memo[key]
+
+    _, path = search(
+        frozenset(visible_ids),
+        frozenset(hidden_ids),
+        initial_taken,
+        initial_remaining,
+    )
+    if path:
+        return action_map[path[0]]
+
+    candidates = available_actions(
+        actions,
+        actions_taken,
+        initial_remaining,
+    )
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda action: (
+            len(recoverable_hidden(action, hidden_ids))
+            / max(0.1, action["cost"]),
+            len(recoverable_hidden(action, hidden_ids)),
+            -action["cost"],
+            action["action_id"],
+        ),
+    )
+
+
 def select_action(
     planner: str,
     config: dict[str, Any],
@@ -427,51 +568,51 @@ def select_action(
         return max(
             candidates,
             key=lambda action: (
-                len(recoverable_hidden(action, hidden_ids)) / max(0.1, action["cost"]),
-                len(recoverable_hidden(action, hidden_ids)),
+                expected_effect(action, "expected_coverage_delta")
+                / max(0.1, action["cost"]),
+                expected_effect(action, "expected_coverage_delta"),
                 -action["cost"],
             ),
         )
 
-    if planner == "project05_m1":
-        before_idx = granularity_index(config, state["supportable_granularity"])
-        before_cov = state["coverage"]["cti_node_coverage"]
-        before_entropy = state["discriminability"]["candidate_entropy"]
-        before_critical_gap = state["coverage"]["critical_gap_count"]
+    if planner == "project05_m1" or planner in M1_ABLATIONS:
+        excluded = M1_ABLATIONS.get(planner, set())
+        return max(
+            candidates,
+            key=lambda action: (
+                m1_action_score(action, state, excluded),
+                -action["cost"],
+                action["action_id"],
+            ),
+        )
 
-        def score(action: dict[str, Any]) -> float:
-            recovered = recoverable_hidden(action, hidden_ids)
-            after_visible = visible_ids | recovered
-            after_state = build_state(
-                config,
-                claims,
-                actions,
-                state["run_id"],
-                state["step_index"] + 1,
-                state["mask_strategy"],
-                state["mask_intensity"],
-                state["random_seed"],
-                after_visible,
-                hidden_ids - recovered,
-                set(state.get("recovered_claim_ids", [])) | recovered,
-                actions_taken + [action["action_id"]],
-                state["budget"]["budget_used"] + action["cost"],
-            )
-            gain = granularity_index(config, after_state["supportable_granularity"]) - before_idx
-            coverage_delta = after_state["coverage"]["cti_node_coverage"] - before_cov
-            entropy_reduction = max(0.0, before_entropy - after_state["discriminability"]["candidate_entropy"])
-            critical_gap_reduction = max(0, before_critical_gap - after_state["coverage"]["critical_gap_count"])
-            wasted = 1 if not recovered else 0
-            return (
-                2.0 * gain
-                + 1.5 * coverage_delta
-                + 1.0 * entropy_reduction
-                + 0.75 * critical_gap_reduction
-                - 0.35 * action["cost"]
-                - 1.0 * wasted
-            )
+    if planner == "cmi_proxy":
+        return max(
+            candidates,
+            key=lambda action: (
+                expected_effect(
+                    action,
+                    "expected_uncertainty_reduction",
+                )
+                / max(0.1, action["cost"]),
+                expected_effect(
+                    action,
+                    "expected_uncertainty_reduction",
+                ),
+                -action["cost"],
+                action["action_id"],
+            ),
+        )
 
-        return max(candidates, key=lambda action: (score(action), -action["cost"], action["action_id"]))
+    if planner == "oracle_optimal":
+        return select_oracle_optimal_action(
+            config,
+            actions,
+            visible_ids,
+            hidden_ids,
+            actions_taken,
+            state["budget"]["budget_used"],
+        )
 
     raise ValueError(f"Unsupported planner: {planner}")
 
@@ -543,7 +684,7 @@ def run_episode(
             actions,
             state,
             visible_ids,
-            hidden_ids,
+            hidden_ids if planner == "oracle_optimal" else set(),
             actions_taken,
             seed,
         )
@@ -660,7 +801,7 @@ def execute_case(
                 }
             )
 
-    return rows, traces
+    return add_oracle_relative_metrics(rows), traces
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -753,6 +894,16 @@ def summarize_group(rows: list[dict[str, Any]]) -> dict[str, Any]:
         for row in successes
         if row["steps_to_target"] != ""
     ]
+    regrets = [
+        float(row["cost_regret_vs_oracle"])
+        for row in rows
+        if row.get("cost_regret_vs_oracle", "") != ""
+    ]
+    top1_hits = [
+        int(row["oracle_top1_action_hit"])
+        for row in rows
+        if row.get("oracle_top1_action_hit", "") != ""
+    ]
     return {
         "independent_case_count": len({row["case_id"] for row in rows}),
         "repeated_run_count": len(rows),
@@ -771,7 +922,76 @@ def summarize_group(rows: list[dict[str, Any]]) -> dict[str, Any]:
             sum(float(row["final_node_coverage"]) for row in rows) / len(rows),
             4,
         ),
+        "mean_cost_regret_vs_oracle": (
+            round(sum(regrets) / len(regrets), 4) if regrets else None
+        ),
+        "oracle_top1_action_hit_rate": (
+            round(sum(top1_hits) / len(top1_hits), 4)
+            if top1_hits
+            else None
+        ),
     }
+
+
+def first_action_id(row: dict[str, Any]) -> str:
+    actions = str(row.get("actions_taken", ""))
+    return actions.split("|", 1)[0] if actions else ""
+
+
+def add_oracle_relative_metrics(
+    rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    condition_keys = (
+        "case_id",
+        "mask_strategy",
+        "mask_intensity",
+        "seed",
+    )
+    oracle_by_condition: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for row in rows:
+        if row["planner"] != "oracle_optimal":
+            continue
+        key = tuple(row[field] for field in condition_keys)
+        oracle_by_condition[key] = row
+
+    enriched: list[dict[str, Any]] = []
+    for row in rows:
+        updated = dict(row)
+        if row["planner"] == "full_evidence":
+            updated["oracle_cost_to_target"] = ""
+            updated["cost_regret_vs_oracle"] = ""
+            updated["oracle_top1_action_id"] = ""
+            updated["oracle_top1_action_hit"] = ""
+            enriched.append(updated)
+            continue
+        key = tuple(row[field] for field in condition_keys)
+        oracle = oracle_by_condition.get(key)
+        if oracle is None:
+            updated["oracle_cost_to_target"] = ""
+            updated["cost_regret_vs_oracle"] = ""
+            updated["oracle_top1_action_id"] = ""
+            updated["oracle_top1_action_hit"] = ""
+        else:
+            oracle_cost = oracle.get("cost_to_target", "")
+            updated["oracle_cost_to_target"] = oracle_cost
+            if (
+                row.get("cost_to_target", "") != ""
+                and oracle_cost != ""
+            ):
+                updated["cost_regret_vs_oracle"] = round(
+                    float(row["cost_to_target"]) - float(oracle_cost),
+                    4,
+                )
+            else:
+                updated["cost_regret_vs_oracle"] = ""
+            oracle_first = first_action_id(oracle)
+            updated["oracle_top1_action_id"] = oracle_first
+            updated["oracle_top1_action_hit"] = int(
+                bool(oracle_first)
+                and first_action_id(row) == oracle_first
+            )
+        enriched.append(updated)
+    return enriched
 
 
 def group_by(

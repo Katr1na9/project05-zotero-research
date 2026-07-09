@@ -126,6 +126,86 @@ class StratifiedSummaryTests(unittest.TestCase):
         self.assertEqual(0.75, planner_summary["success_rate"])
         self.assertEqual(3.0, planner_summary["mean_cost_to_target"])
 
+    def test_adds_oracle_relative_metrics_within_condition(self):
+        rows = [
+            {
+                **self.row("C01", 11, 1, 2),
+                "planner": "oracle_optimal",
+                "actions_taken": "A|B",
+            },
+            {
+                **self.row("C01", 11, 1, 3),
+                "planner": "project05_m1",
+                "actions_taken": "A|C",
+            },
+            {
+                **self.row("C01", 11, 0, 7),
+                "planner": "random",
+                "actions_taken": "D",
+            },
+            {
+                **self.row("C01", 11, 1, 0),
+                "planner": "full_evidence",
+                "actions_taken": "",
+            },
+        ]
+
+        enriched = run_mvp.add_oracle_relative_metrics(rows)
+        by_planner = {row["planner"]: row for row in enriched}
+
+        self.assertEqual(
+            1.0,
+            by_planner["project05_m1"]["cost_regret_vs_oracle"],
+        )
+        self.assertEqual(
+            1,
+            by_planner["project05_m1"]["oracle_top1_action_hit"],
+        )
+        self.assertEqual(
+            "",
+            by_planner["random"]["cost_regret_vs_oracle"],
+        )
+        self.assertEqual(
+            0,
+            by_planner["random"]["oracle_top1_action_hit"],
+        )
+        self.assertEqual(
+            "",
+            by_planner["full_evidence"]["cost_regret_vs_oracle"],
+        )
+        self.assertEqual(
+            "",
+            by_planner["full_evidence"]["oracle_top1_action_hit"],
+        )
+
+    def test_registers_all_m1_ablation_variants(self):
+        expected = {
+            "m1_no_granularity",
+            "m1_no_uncertainty",
+            "m1_no_risk",
+            "m1_no_coverage",
+            "m1_no_cost",
+        }
+
+        self.assertTrue(expected <= set(run_mvp.PLANNERS))
+        self.assertEqual(expected, set(run_mvp.M1_ABLATIONS))
+
+    def test_exact_oracle_is_a_cost_lower_bound_on_c01(self):
+        self.assertIn("oracle_optimal", run_mvp.PLANNERS)
+        self.assertNotIn("oracle_greedy", run_mvp.PLANNERS)
+        case_dir = Path(__file__).resolve().parents[1] / "examples" / "C01"
+
+        rows, _ = run_mvp.execute_case(case_dir)
+        comparable = [
+            float(row["cost_regret_vs_oracle"])
+            for row in rows
+            if row["planner"] != "full_evidence"
+            and row["cost_regret_vs_oracle"] != ""
+        ]
+
+        self.assertTrue(comparable)
+        self.assertGreaterEqual(min(comparable), 0.0)
+
     @staticmethod
     def row(case_id, seed, reached_target, budget_used):
         return {
@@ -173,6 +253,94 @@ class CaseIntegrityTests(unittest.TestCase):
                 self.assertTrue(
                     set(config["discriminative_claim_ids"]) <= hideable_ids
                 )
+
+
+class PlannerInformationBoundaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        case_dir = Path(__file__).resolve().parents[1] / "examples" / "C01"
+        cls.config = run_mvp.load_json(case_dir / "case_config.json")
+        cls.claims = run_mvp.load_json(case_dir / "evidence_claims.json")
+        cls.actions = run_mvp.load_json(case_dir / "acquisition_actions.json")
+        all_ids = {claim["claim_id"] for claim in cls.claims}
+        cls.visible_ids = all_ids - {"C01-EC-002", "C01-EC-011"}
+        cls.state = run_mvp.build_state(
+            cls.config,
+            cls.claims,
+            cls.actions,
+            "boundary-test",
+            0,
+            "random",
+            0.2,
+            11,
+            cls.visible_ids,
+            {"C01-EC-002", "C01-EC-011"},
+            set(),
+            [],
+            0,
+        )
+
+    def test_ordinary_planners_ignore_changed_hidden_outcomes(self):
+        for planner in ("coverage_greedy", "project05_m1"):
+            with self.subTest(planner=planner):
+                first = self.select(planner, {"C01-EC-002"})
+                second = self.select(planner, {"C01-EC-011"})
+                self.assertEqual(first["action_id"], second["action_id"])
+
+    def test_oracle_reacts_to_changed_hidden_outcomes(self):
+        first = self.select("oracle_optimal", {"C01-EC-002"})
+        second = self.select("oracle_optimal", {"C01-EC-011"})
+
+        self.assertNotEqual(first["action_id"], second["action_id"])
+
+    def test_cmi_proxy_uses_expected_uncertainty_reduction_per_cost(self):
+        actions = [
+            {
+                "action_id": "expensive",
+                "action_type": "other",
+                "cost": 2,
+                "recoverable_claim_ids": [],
+                "expected_effects": {
+                    "expected_uncertainty_reduction": 0.4,
+                },
+            },
+            {
+                "action_id": "efficient",
+                "action_type": "other",
+                "cost": 1,
+                "recoverable_claim_ids": [],
+                "expected_effects": {
+                    "expected_uncertainty_reduction": 0.3,
+                },
+            },
+        ]
+
+        selected = run_mvp.select_action(
+            "cmi_proxy",
+            self.config,
+            self.claims,
+            actions,
+            self.state,
+            self.visible_ids,
+            set(),
+            [],
+            11,
+        )
+
+        self.assertEqual("efficient", selected["action_id"])
+
+    def select(self, planner, hidden_ids):
+        return run_mvp.select_action(
+            planner,
+            self.config,
+            self.claims,
+            self.actions,
+            self.state,
+            self.visible_ids,
+            hidden_ids,
+            [],
+            11,
+        )
 
 
 if __name__ == "__main__":

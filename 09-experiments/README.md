@@ -45,11 +45,11 @@ C01 是一个手工构造的 Linux provenance 多阶段入侵小样例：
 - 8 个 `acquisition_action`；
 - 3 种遮蔽策略：`random`、`stage`、`discriminative`；
 - 每种遮蔽策略 5 个随机种子；
-- 5 个策略：`random`、`fixed_order`、`coverage_greedy`、`project05_m1`、`full_evidence`。
+- 初始 5 个策略：`random`、`fixed_order`、`coverage_greedy`、`project05_m1`、`full_evidence`；2026-07-09 后增加 Oracle、CMI proxy 和 M1 消融。
 
 G3 campaign-level 判定要求所有 critical CTI 节点被覆盖，因此遮蔽 C2、collection 或 exfiltration 关键证据后，系统必须通过动作恢复证据才能达到目标粒度。
 
-## 当前结果快照
+## 已退役的 C01 调试快照
 
 `results/c01_mvp_summary.json` 当前结果：
 
@@ -61,7 +61,7 @@ G3 campaign-level 判定要求所有 critical CTI 节点被覆盖，因此遮蔽
 | project05_m1 | 1.0000 | 3.0000 | 1.4667 |
 | full_evidence | 1.0000 | 0.0000 | 0.0000 |
 
-这个结果只说明 C01 toy simulator 可以跑通，并初步显示 cost-aware Project05-M1 比固定顺序和 coverage-greedy 更省成本。它还不能作为论文实验结论，后续需要 C02/C03、更多 mask 强度和更严格统计。
+该快照中的 `coverage_greedy` 和 `project05_m1` 在动作评分时读取了真实隐藏证据，存在 Oracle 信息泄漏。它只保留为工程历史，不得用于论文结论；有效结果以 `all_cases_*` 严格版本为准。
 
 ## 与写作文档的关系
 
@@ -99,16 +99,22 @@ results/all_cases_results.csv
 results/all_cases_summary.json
 ```
 
-`all_cases_traces.json` 约 7.6 MB，由命令在本地生成，不进入 Git。
+`all_cases_traces.json` 约 20.5 MB，由命令在本地生成，不进入 Git。
 
-当前共 3 个独立案例、675 个重复运行。总体结果如下：
+修正信息泄漏后，当前共 3 个独立案例、1620 个重复运行。总体结果如下：
 
-| Planner | success_rate | mean_cost_to_target |
-|---|---:|---:|
-| random | 0.6444 | 4.1034 |
-| fixed_order | 1.0000 | 4.8741 |
-| coverage_greedy | 1.0000 | 2.9778 |
-| project05_m1 | 1.0000 | 2.5926 |
-| full_evidence | 1.0000 | 0.0000 |
+| Planner | success_rate | mean_cost_to_target | mean regret vs Oracle |
+|---|---:|---:|---:|
+| oracle_optimal | 1.0000 | 2.3778 | 0.0000 |
+| project05_m1 | 0.9333 | 3.5714 | 1.1984 |
+| m1_no_granularity | 0.9630 | 4.1000 | 1.7385 |
+| m1_no_uncertainty | 0.9333 | 3.5714 | 1.1984 |
+| m1_no_risk | 0.9333 | 3.5714 | 1.1984 |
+| m1_no_coverage | 0.8741 | 3.3390 | 1.0424 |
+| m1_no_cost | 0.9333 | 3.9048 | 1.5317 |
+| cmi_proxy | 0.7704 | 4.0000 | 1.9423 |
+| coverage_greedy | 0.9630 | 4.3077 | 1.9462 |
+| random | 0.6444 | 4.1034 | 2.0920 |
+| fixed_order | 1.0000 | 4.8741 | 2.4963 |
 
-这些数字只验证多案例 toy 闭环和实验代码，不构成论文有效性结论。不同 mask 和 seed 是同一案例上的重复测量，不能作为额外独立样本。
+`cmi_proxy` 只使用动作元数据中的预期不确定性下降，不是真实条件互信息。`m1_no_uncertainty` 和 `m1_no_risk` 与完整 M1 结果相同，说明当前 toy 动作元数据不足以让这两个分量改变动作排序。以上数字仍只验证多案例 toy 协议，不构成论文有效性结论。

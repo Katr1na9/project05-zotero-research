@@ -1,13 +1,23 @@
 # Research Progress
 
+## 2026-07-09：规划器信息泄漏修正、Oracle/CMI proxy 与 M1 消融
+
+- 发现并修正普通规划器读取真实 `hidden_ids` 的 Oracle 信息泄漏；旧 675-run 快照退役。
+- 新增 `oracle_optimal`，穷举预算内动作组合，给出达到目标粒度的最低成本路径。
+- 新增 `cmi_proxy`；由于当前案例缺少多候选假设和动作结果分布，明确不宣称真实 CMI。
+- 新增五个 M1 消融：移除 granularity、uncertainty、risk、coverage 或 cost。
+- 严格版本包含 3 个独立案例、1620 个重复运行；所有非 `full_evidence` 结果相对 Oracle 的 cost regret 均非负。
+- `project05_m1` success rate 为 0.9333，平均达标成本为 3.5714；`oracle_optimal` 为 2.3778，`coverage_greedy` 为 4.3077。
+- `m1_no_uncertainty` 与 `m1_no_risk` 未改变结果，暴露当前动作元数据区分度不足；这是下一轮状态/动作建模需要解决的问题。
+
 ## 2026-07-09：多案例实验矩阵跑通
 
 - 模拟器已从 C01 单案例扩展为 C01-C03 批量运行。
 - 新增 C02 FreeBSD audit/provenance 和 C03 Windows 多源主机证据 toy case。
 - mask 设计扩展为 3 种缺失机制 × 3 档强度 × 5 个随机种子。
 - 新增 `unittest` 回归测试，覆盖实验矩阵、mask intensity、案例发现、重复 case ID、引用完整性和独立样本统计。
-- 完整矩阵包含 3 个独立案例和 675 个重复运行。
-- 当前 `project05_m1` 总体 success rate 为 1.0，平均达标成本为 2.5926；`coverage_greedy` 为 2.9778，`fixed_order` 为 4.8741。
+- 当时的完整矩阵包含 3 个独立案例和 675 个重复运行。
+- 当时 `project05_m1` 总体 success rate 为 1.0，平均达标成本为 2.5926；该结果后续确认受隐藏证据信息泄漏影响，已退役。
 - 结论边界：仍是手工 toy case，只能说明工程闭环和实验协议可执行；下一步需要增加 oracle/CMI baseline、消融实验和更多真实 attack trace。
 
 ## 2026-07-08：C01 小样例与最小模拟器跑通

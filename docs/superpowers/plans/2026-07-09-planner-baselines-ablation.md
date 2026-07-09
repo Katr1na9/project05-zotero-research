@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- Only `oracle_greedy` may inspect `hidden_ids` while scoring actions.
+- Only `oracle_optimal` may inspect `hidden_ids` while scoring actions.
 - `cmi_proxy` must never be described as true conditional mutual information.
 - Preserve the three-case factorial experiment and case-level independence.
 - Do not introduce real attack data in this implementation batch.
@@ -34,7 +34,7 @@
 - Modify: `09-experiments/tests/test_run_mvp.py`
 - Modify: `09-experiments/scripts/run_mvp.py`
 
-- [ ] Write failing tests proving `oracle_greedy` reacts to changed hidden outcomes and `cmi_proxy` ranks by expected uncertainty reduction per cost.
+- [ ] Write failing tests proving `oracle_optimal` reacts to changed hidden outcomes and `cmi_proxy` ranks by expected uncertainty reduction per cost.
 - [ ] Confirm RED with the full unit-test command.
 - [ ] Implement both planners and add them to `PLANNERS`.
 - [ ] Confirm GREEN with the full unit-test command.

@@ -1,7 +1,7 @@
 {
   "design": {
     "independent_case_count": 3,
-    "repeated_run_count": 675
+    "repeated_run_count": 1620
   },
   "overall_by_planner": {
     "random": {
@@ -11,7 +11,9 @@
       "mean_cost_to_target": 4.1034,
       "mean_steps_to_target": 1.7701,
       "mean_budget_used": 5.1556,
-      "mean_final_node_coverage": 0.9005
+      "mean_final_node_coverage": 0.9005,
+      "mean_cost_regret_vs_oracle": 2.092,
+      "oracle_top1_action_hit_rate": 0.0593
     },
     "fixed_order": {
       "independent_case_count": 3,
@@ -20,25 +22,108 @@
       "mean_cost_to_target": 4.8741,
       "mean_steps_to_target": 2.0963,
       "mean_budget_used": 4.8741,
-      "mean_final_node_coverage": 0.9779
+      "mean_final_node_coverage": 0.9779,
+      "mean_cost_regret_vs_oracle": 2.4963,
+      "oracle_top1_action_hit_rate": 0.2889
     },
     "coverage_greedy": {
       "independent_case_count": 3,
       "repeated_run_count": 135,
-      "success_rate": 1.0,
-      "mean_cost_to_target": 2.9778,
-      "mean_steps_to_target": 1.3556,
-      "mean_budget_used": 2.9778,
-      "mean_final_node_coverage": 0.985
+      "success_rate": 0.963,
+      "mean_cost_to_target": 4.3077,
+      "mean_steps_to_target": 1.8231,
+      "mean_budget_used": 4.3704,
+      "mean_final_node_coverage": 0.9704,
+      "mean_cost_regret_vs_oracle": 1.9462,
+      "oracle_top1_action_hit_rate": 0.3111
     },
     "project05_m1": {
       "independent_case_count": 3,
       "repeated_run_count": 135,
+      "success_rate": 0.9333,
+      "mean_cost_to_target": 3.5714,
+      "mean_steps_to_target": 1.4921,
+      "mean_budget_used": 3.7926,
+      "mean_final_node_coverage": 0.976,
+      "mean_cost_regret_vs_oracle": 1.1984,
+      "oracle_top1_action_hit_rate": 0.2
+    },
+    "m1_no_granularity": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
+      "success_rate": 0.963,
+      "mean_cost_to_target": 4.1,
+      "mean_steps_to_target": 1.9615,
+      "mean_budget_used": 4.1704,
+      "mean_final_node_coverage": 0.9824,
+      "mean_cost_regret_vs_oracle": 1.7385,
+      "oracle_top1_action_hit_rate": 0.2
+    },
+    "m1_no_uncertainty": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
+      "success_rate": 0.9333,
+      "mean_cost_to_target": 3.5714,
+      "mean_steps_to_target": 1.4921,
+      "mean_budget_used": 3.7926,
+      "mean_final_node_coverage": 0.976,
+      "mean_cost_regret_vs_oracle": 1.1984,
+      "oracle_top1_action_hit_rate": 0.2
+    },
+    "m1_no_risk": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
+      "success_rate": 0.9333,
+      "mean_cost_to_target": 3.5714,
+      "mean_steps_to_target": 1.4921,
+      "mean_budget_used": 3.7926,
+      "mean_final_node_coverage": 0.976,
+      "mean_cost_regret_vs_oracle": 1.1984,
+      "oracle_top1_action_hit_rate": 0.2
+    },
+    "m1_no_coverage": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
+      "success_rate": 0.8741,
+      "mean_cost_to_target": 3.339,
+      "mean_steps_to_target": 1.3898,
+      "mean_budget_used": 3.7926,
+      "mean_final_node_coverage": 0.9661,
+      "mean_cost_regret_vs_oracle": 1.0424,
+      "oracle_top1_action_hit_rate": 0.2
+    },
+    "m1_no_cost": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
+      "success_rate": 0.9333,
+      "mean_cost_to_target": 3.9048,
+      "mean_steps_to_target": 1.5317,
+      "mean_budget_used": 4.1037,
+      "mean_final_node_coverage": 0.9841,
+      "mean_cost_regret_vs_oracle": 1.5317,
+      "oracle_top1_action_hit_rate": 0.1926
+    },
+    "cmi_proxy": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
+      "success_rate": 0.7704,
+      "mean_cost_to_target": 4.0,
+      "mean_steps_to_target": 2.0673,
+      "mean_budget_used": 4.7185,
+      "mean_final_node_coverage": 0.9353,
+      "mean_cost_regret_vs_oracle": 1.9423,
+      "oracle_top1_action_hit_rate": 0.3185
+    },
+    "oracle_optimal": {
+      "independent_case_count": 3,
+      "repeated_run_count": 135,
       "success_rate": 1.0,
-      "mean_cost_to_target": 2.5926,
+      "mean_cost_to_target": 2.3778,
       "mean_steps_to_target": 1.2074,
-      "mean_budget_used": 2.5926,
-      "mean_final_node_coverage": 0.9827
+      "mean_budget_used": 2.3778,
+      "mean_final_node_coverage": 0.9571,
+      "mean_cost_regret_vs_oracle": 0.0,
+      "oracle_top1_action_hit_rate": 0.8519
     },
     "full_evidence": {
       "independent_case_count": 3,
@@ -47,7 +132,9 @@
       "mean_cost_to_target": 0.0,
       "mean_steps_to_target": 0.0,
       "mean_budget_used": 0.0,
-      "mean_final_node_coverage": 1.0
+      "mean_final_node_coverage": 1.0,
+      "mean_cost_regret_vs_oracle": null,
+      "oracle_top1_action_hit_rate": null
     }
   },
   "by_case_planner": {
@@ -59,7 +146,9 @@
         "mean_cost_to_target": 5.4211,
         "mean_steps_to_target": 2.1579,
         "mean_budget_used": 6.3111,
-        "mean_final_node_coverage": 0.8667
+        "mean_final_node_coverage": 0.8667,
+        "mean_cost_regret_vs_oracle": 3.5789,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "fixed_order": {
         "independent_case_count": 1,
@@ -68,25 +157,108 @@
         "mean_cost_to_target": 6.1556,
         "mean_steps_to_target": 2.6222,
         "mean_budget_used": 6.1556,
-        "mean_final_node_coverage": 0.9889
+        "mean_final_node_coverage": 0.9889,
+        "mean_cost_regret_vs_oracle": 3.6667,
+        "oracle_top1_action_hit_rate": 0.1778
       },
       "coverage_greedy": {
         "independent_case_count": 1,
         "repeated_run_count": 45,
-        "success_rate": 1.0,
-        "mean_cost_to_target": 3.1556,
-        "mean_steps_to_target": 1.5333,
-        "mean_budget_used": 3.1556,
-        "mean_final_node_coverage": 1.0
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 4.575,
+        "mean_steps_to_target": 1.8,
+        "mean_budget_used": 4.7333,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 2.125,
+        "oracle_top1_action_hit_rate": 0.4222
       },
       "project05_m1": {
         "independent_case_count": 1,
         "repeated_run_count": 45,
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 3.6,
+        "mean_steps_to_target": 1.525,
+        "mean_budget_used": 3.8667,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.15,
+        "oracle_top1_action_hit_rate": 0.0222
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 4.15,
+        "mean_steps_to_target": 2.075,
+        "mean_budget_used": 4.3556,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.7,
+        "oracle_top1_action_hit_rate": 0.0222
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 3.6,
+        "mean_steps_to_target": 1.525,
+        "mean_budget_used": 3.8667,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.15,
+        "oracle_top1_action_hit_rate": 0.0222
+      },
+      "m1_no_risk": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 3.6,
+        "mean_steps_to_target": 1.525,
+        "mean_budget_used": 3.8667,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.15,
+        "oracle_top1_action_hit_rate": 0.0222
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 3.6,
+        "mean_steps_to_target": 1.525,
+        "mean_budget_used": 3.8667,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.15,
+        "oracle_top1_action_hit_rate": 0.0222
+      },
+      "m1_no_cost": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8889,
+        "mean_cost_to_target": 4.575,
+        "mean_steps_to_target": 1.8,
+        "mean_budget_used": 4.7333,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 2.125,
+        "oracle_top1_action_hit_rate": 0.4222
+      },
+      "cmi_proxy": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.5778,
+        "mean_cost_to_target": 2.8846,
+        "mean_steps_to_target": 1.9231,
+        "mean_budget_used": 4.6222,
+        "mean_final_node_coverage": 0.8889,
+        "mean_cost_regret_vs_oracle": 1.3077,
+        "oracle_top1_action_hit_rate": 0.3556
+      },
+      "oracle_optimal": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.6444,
+        "mean_cost_to_target": 2.4889,
         "mean_steps_to_target": 1.4,
-        "mean_budget_used": 2.6444,
-        "mean_final_node_coverage": 1.0
+        "mean_budget_used": 2.4889,
+        "mean_final_node_coverage": 0.9852,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.9778
       },
       "full_evidence": {
         "independent_case_count": 1,
@@ -95,7 +267,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "C02-freebsd-provenance": {
@@ -106,7 +280,9 @@
         "mean_cost_to_target": 3.0345,
         "mean_steps_to_target": 1.2414,
         "mean_budget_used": 4.4,
-        "mean_final_node_coverage": 0.8889
+        "mean_final_node_coverage": 0.8889,
+        "mean_cost_regret_vs_oracle": 1.1379,
+        "oracle_top1_action_hit_rate": 0.1556
       },
       "fixed_order": {
         "independent_case_count": 1,
@@ -115,25 +291,108 @@
         "mean_cost_to_target": 4.8667,
         "mean_steps_to_target": 2.0889,
         "mean_budget_used": 4.8667,
-        "mean_final_node_coverage": 0.9926
+        "mean_final_node_coverage": 0.9926,
+        "mean_cost_regret_vs_oracle": 2.4889,
+        "oracle_top1_action_hit_rate": 0.2
       },
       "coverage_greedy": {
         "independent_case_count": 1,
         "repeated_run_count": 45,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.6222,
-        "mean_steps_to_target": 1.2,
-        "mean_budget_used": 2.6222,
-        "mean_final_node_coverage": 0.9741
+        "mean_cost_to_target": 4.9778,
+        "mean_steps_to_target": 2.1111,
+        "mean_budget_used": 4.9778,
+        "mean_final_node_coverage": 0.9963,
+        "mean_cost_regret_vs_oracle": 2.6,
+        "oracle_top1_action_hit_rate": 0.0222
       },
       "project05_m1": {
         "independent_case_count": 1,
         "repeated_run_count": 45,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.4444,
+        "mean_cost_to_target": 3.4,
+        "mean_steps_to_target": 1.4444,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.0222,
+        "oracle_top1_action_hit_rate": 0.4889
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.4,
+        "mean_steps_to_target": 1.4444,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.0222,
+        "oracle_top1_action_hit_rate": 0.4889
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.4,
+        "mean_steps_to_target": 1.4444,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.0222,
+        "oracle_top1_action_hit_rate": 0.4889
+      },
+      "m1_no_risk": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.4,
+        "mean_steps_to_target": 1.4444,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9815,
+        "mean_cost_regret_vs_oracle": 1.0222,
+        "oracle_top1_action_hit_rate": 0.4889
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8222,
+        "mean_cost_to_target": 2.6216,
+        "mean_steps_to_target": 1.1081,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9518,
+        "mean_cost_regret_vs_oracle": 0.4865,
+        "oracle_top1_action_hit_rate": 0.4889
+      },
+      "m1_no_cost": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 4.0444,
+        "mean_steps_to_target": 1.6444,
+        "mean_budget_used": 4.0444,
+        "mean_final_node_coverage": 0.9963,
+        "mean_cost_regret_vs_oracle": 1.6667,
+        "oracle_top1_action_hit_rate": 0.0222
+      },
+      "cmi_proxy": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.8222,
+        "mean_cost_to_target": 2.6216,
+        "mean_steps_to_target": 1.1081,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9518,
+        "mean_cost_regret_vs_oracle": 0.4865,
+        "oracle_top1_action_hit_rate": 0.4889
+      },
+      "oracle_optimal": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.3778,
         "mean_steps_to_target": 1.1778,
-        "mean_budget_used": 2.4444,
-        "mean_final_node_coverage": 0.9704
+        "mean_budget_used": 2.3778,
+        "mean_final_node_coverage": 0.9593,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.7556
       },
       "full_evidence": {
         "independent_case_count": 1,
@@ -142,7 +401,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "C03-windows-host": {
@@ -153,7 +414,9 @@
         "mean_cost_to_target": 4.2564,
         "mean_steps_to_target": 1.9744,
         "mean_budget_used": 4.7556,
-        "mean_final_node_coverage": 0.946
+        "mean_final_node_coverage": 0.946,
+        "mean_cost_regret_vs_oracle": 2.0769,
+        "oracle_top1_action_hit_rate": 0.0222
       },
       "fixed_order": {
         "independent_case_count": 1,
@@ -162,25 +425,108 @@
         "mean_cost_to_target": 3.6,
         "mean_steps_to_target": 1.5778,
         "mean_budget_used": 3.6,
-        "mean_final_node_coverage": 0.9524
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.4889
       },
       "coverage_greedy": {
         "independent_case_count": 1,
         "repeated_run_count": 45,
         "success_rate": 1.0,
-        "mean_cost_to_target": 3.1556,
-        "mean_steps_to_target": 1.3333,
-        "mean_budget_used": 3.1556,
-        "mean_final_node_coverage": 0.9809
+        "mean_cost_to_target": 3.4,
+        "mean_steps_to_target": 1.5556,
+        "mean_budget_used": 3.4,
+        "mean_final_node_coverage": 0.9333,
+        "mean_cost_regret_vs_oracle": 1.1333,
+        "oracle_top1_action_hit_rate": 0.4889
       },
       "project05_m1": {
         "independent_case_count": 1,
         "repeated_run_count": 45,
+        "success_rate": 0.9111,
+        "mean_cost_to_target": 3.7317,
+        "mean_steps_to_target": 1.5122,
+        "mean_budget_used": 4.1111,
+        "mean_final_node_coverage": 0.9651,
+        "mean_cost_regret_vs_oracle": 1.439,
+        "oracle_top1_action_hit_rate": 0.0889
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.6889,
+        "mean_cost_to_target": 4.7556,
+        "mean_steps_to_target": 2.3778,
+        "mean_budget_used": 4.7556,
+        "mean_final_node_coverage": 0.9841,
+        "mean_cost_regret_vs_oracle": 2.4889,
+        "oracle_top1_action_hit_rate": 0.0889
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.9111,
+        "mean_cost_to_target": 3.7317,
+        "mean_steps_to_target": 1.5122,
+        "mean_budget_used": 4.1111,
+        "mean_final_node_coverage": 0.9651,
+        "mean_cost_regret_vs_oracle": 1.439,
+        "oracle_top1_action_hit_rate": 0.0889
+      },
+      "m1_no_risk": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.9111,
+        "mean_cost_to_target": 3.7317,
+        "mean_steps_to_target": 1.5122,
+        "mean_budget_used": 4.1111,
+        "mean_final_node_coverage": 0.9651,
+        "mean_cost_regret_vs_oracle": 1.439,
+        "oracle_top1_action_hit_rate": 0.0889
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.9111,
+        "mean_cost_to_target": 3.7317,
+        "mean_steps_to_target": 1.5122,
+        "mean_budget_used": 4.1111,
+        "mean_final_node_coverage": 0.9651,
+        "mean_cost_regret_vs_oracle": 1.439,
+        "oracle_top1_action_hit_rate": 0.0889
+      },
+      "m1_no_cost": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.9111,
+        "mean_cost_to_target": 3.0976,
+        "mean_steps_to_target": 1.1463,
+        "mean_budget_used": 3.5333,
+        "mean_final_node_coverage": 0.9746,
+        "mean_cost_regret_vs_oracle": 0.8049,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "cmi_proxy": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 0.9111,
+        "mean_cost_to_target": 5.9512,
+        "mean_steps_to_target": 3.0244,
+        "mean_budget_used": 6.1333,
+        "mean_final_node_coverage": 0.9651,
+        "mean_cost_regret_vs_oracle": 3.6585,
+        "oracle_top1_action_hit_rate": 0.1111
+      },
+      "oracle_optimal": {
+        "independent_case_count": 1,
+        "repeated_run_count": 45,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.2667,
         "mean_steps_to_target": 1.0444,
-        "mean_budget_used": 2.6889,
-        "mean_final_node_coverage": 0.9778
+        "mean_budget_used": 2.2667,
+        "mean_final_node_coverage": 0.927,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.8222
       },
       "full_evidence": {
         "independent_case_count": 1,
@@ -189,7 +535,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     }
   },
@@ -202,7 +550,9 @@
         "mean_cost_to_target": 3.1818,
         "mean_steps_to_target": 1.2727,
         "mean_budget_used": 4.2,
-        "mean_final_node_coverage": 0.9238
+        "mean_final_node_coverage": 0.9238,
+        "mean_cost_regret_vs_oracle": 1.9091,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -211,25 +561,108 @@
         "mean_cost_to_target": 3.4,
         "mean_steps_to_target": 1.4667,
         "mean_budget_used": 3.4,
-        "mean_final_node_coverage": 0.9682
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.9333,
+        "oracle_top1_action_hit_rate": 0.2667
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
-        "success_rate": 1.0,
-        "mean_cost_to_target": 1.7333,
-        "mean_steps_to_target": 0.8667,
-        "mean_budget_used": 1.7333,
-        "mean_final_node_coverage": 0.9794
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 2.9286,
+        "mean_steps_to_target": 1.2143,
+        "mean_budget_used": 3.1333,
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.5,
+        "oracle_top1_action_hit_rate": 0.2
       },
       "project05_m1": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 2.6429,
+        "mean_steps_to_target": 1.1429,
+        "mean_budget_used": 2.8667,
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.2143,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 2.8571,
+        "mean_steps_to_target": 1.3571,
+        "mean_budget_used": 3.0667,
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.4286,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 2.6429,
+        "mean_steps_to_target": 1.1429,
+        "mean_budget_used": 2.8667,
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.2143,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 2.6429,
+        "mean_steps_to_target": 1.1429,
+        "mean_budget_used": 2.8667,
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.2143,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 2.3077,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.8667,
+        "mean_final_node_coverage": 0.9571,
+        "mean_cost_regret_vs_oracle": 0.9231,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.1429,
+        "mean_budget_used": 3.2,
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 1.5714,
+        "oracle_top1_action_hit_rate": 0.0667
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.6154,
+        "mean_budget_used": 3.5333,
+        "mean_final_node_coverage": 0.946,
+        "mean_cost_regret_vs_oracle": 1.6923,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "oracle_optimal": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
         "mean_cost_to_target": 1.4667,
         "mean_steps_to_target": 0.7333,
         "mean_budget_used": 1.4667,
-        "mean_final_node_coverage": 0.9794
+        "mean_final_node_coverage": 0.9682,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.7333
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -238,7 +671,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "random|0.400": {
@@ -249,7 +684,9 @@
         "mean_cost_to_target": 4.4,
         "mean_steps_to_target": 1.8,
         "mean_budget_used": 5.2667,
-        "mean_final_node_coverage": 0.8682
+        "mean_final_node_coverage": 0.8682,
+        "mean_cost_regret_vs_oracle": 2.5,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -258,25 +695,108 @@
         "mean_cost_to_target": 4.0,
         "mean_steps_to_target": 1.7333,
         "mean_budget_used": 4.0,
-        "mean_final_node_coverage": 0.9587
+        "mean_final_node_coverage": 0.9587,
+        "mean_cost_regret_vs_oracle": 1.8,
+        "oracle_top1_action_hit_rate": 0.5333
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
-        "success_rate": 1.0,
-        "mean_cost_to_target": 2.6667,
-        "mean_steps_to_target": 1.2,
-        "mean_budget_used": 2.6667,
-        "mean_final_node_coverage": 0.9571
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 3.6923,
+        "mean_steps_to_target": 1.5385,
+        "mean_budget_used": 4.0,
+        "mean_final_node_coverage": 0.9492,
+        "mean_cost_regret_vs_oracle": 1.6154,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "project05_m1": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.0909,
+        "mean_steps_to_target": 1.7273,
+        "mean_budget_used": 4.8667,
+        "mean_final_node_coverage": 0.9174,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.3846,
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 0.9365,
+        "mean_cost_regret_vs_oracle": 2.9231,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.0909,
+        "mean_steps_to_target": 1.7273,
+        "mean_budget_used": 4.8667,
+        "mean_final_node_coverage": 0.9174,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.0909,
+        "mean_steps_to_target": 1.7273,
+        "mean_budget_used": 4.8667,
+        "mean_final_node_coverage": 0.9174,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.6,
+        "mean_cost_to_target": 3.4444,
+        "mean_steps_to_target": 1.4444,
+        "mean_budget_used": 4.8667,
+        "mean_final_node_coverage": 0.8952,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.1818,
+        "mean_steps_to_target": 1.6364,
+        "mean_budget_used": 4.9333,
+        "mean_final_node_coverage": 0.9492,
+        "mean_cost_regret_vs_oracle": 2.0909,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.6,
+        "mean_cost_to_target": 4.5556,
+        "mean_steps_to_target": 2.4444,
+        "mean_budget_used": 5.6667,
+        "mean_final_node_coverage": 0.873,
+        "mean_cost_regret_vs_oracle": 2.4444,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "oracle_optimal": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.2667,
+        "mean_cost_to_target": 2.2,
         "mean_steps_to_target": 1.0667,
-        "mean_budget_used": 2.2667,
-        "mean_final_node_coverage": 0.9476
+        "mean_budget_used": 2.2,
+        "mean_final_node_coverage": 0.927,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.9333
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -285,7 +805,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "random|0.600": {
@@ -296,7 +818,9 @@
         "mean_cost_to_target": 5.1111,
         "mean_steps_to_target": 2.2222,
         "mean_budget_used": 5.8,
-        "mean_final_node_coverage": 0.8159
+        "mean_final_node_coverage": 0.8159,
+        "mean_cost_regret_vs_oracle": 2.4444,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -305,25 +829,108 @@
         "mean_cost_to_target": 5.4667,
         "mean_steps_to_target": 2.3333,
         "mean_budget_used": 5.4667,
-        "mean_final_node_coverage": 0.9698
+        "mean_final_node_coverage": 0.9698,
+        "mean_cost_regret_vs_oracle": 2.5333,
+        "oracle_top1_action_hit_rate": 0.4
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
-        "success_rate": 1.0,
-        "mean_cost_to_target": 2.9333,
-        "mean_steps_to_target": 1.3333,
-        "mean_budget_used": 2.9333,
-        "mean_final_node_coverage": 0.9286
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.1538,
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 0.9397,
+        "mean_cost_regret_vs_oracle": 2.0769,
+        "oracle_top1_action_hit_rate": 0.4
       },
       "project05_m1": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.2727,
+        "mean_steps_to_target": 1.8182,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 0.8984,
+        "mean_cost_regret_vs_oracle": 1.1818,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 5.1538,
+        "mean_steps_to_target": 2.4615,
+        "mean_budget_used": 5.2667,
+        "mean_final_node_coverage": 0.9365,
+        "mean_cost_regret_vs_oracle": 2.2308,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.2727,
+        "mean_steps_to_target": 1.8182,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 0.8984,
+        "mean_cost_regret_vs_oracle": 1.1818,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.2727,
+        "mean_steps_to_target": 1.8182,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 0.8984,
+        "mean_cost_regret_vs_oracle": 1.1818,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.6,
+        "mean_cost_to_target": 3.6667,
+        "mean_steps_to_target": 1.5556,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 0.8762,
+        "mean_cost_regret_vs_oracle": 0.7778,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.7333,
+        "mean_cost_to_target": 4.8182,
+        "mean_steps_to_target": 1.9091,
+        "mean_budget_used": 5.4,
+        "mean_final_node_coverage": 0.9397,
+        "mean_cost_regret_vs_oracle": 1.7273,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.5333,
+        "mean_cost_to_target": 4.625,
+        "mean_steps_to_target": 2.5,
+        "mean_budget_used": 5.8667,
+        "mean_final_node_coverage": 0.8206,
+        "mean_cost_regret_vs_oracle": 1.875,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "oracle_optimal": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
         "mean_cost_to_target": 2.9333,
         "mean_steps_to_target": 1.3333,
         "mean_budget_used": 2.9333,
-        "mean_final_node_coverage": 0.9286
+        "mean_final_node_coverage": 0.9174,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 1.0
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -332,7 +939,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "stage|0.200": {
@@ -343,7 +952,9 @@
         "mean_cost_to_target": 1.4615,
         "mean_steps_to_target": 0.6154,
         "mean_budget_used": 2.2,
-        "mean_final_node_coverage": 0.9778
+        "mean_final_node_coverage": 0.9778,
+        "mean_cost_regret_vs_oracle": 1.2308,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -352,25 +963,108 @@
         "mean_cost_to_target": 2.3333,
         "mean_steps_to_target": 1.0,
         "mean_budget_used": 2.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 0.3333,
-        "mean_steps_to_target": 0.3333,
-        "mean_budget_used": 0.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_cost_to_target": 1.6667,
+        "mean_steps_to_target": 0.6667,
+        "mean_budget_used": 1.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "project05_m1": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 0.6667,
+        "mean_steps_to_target": 0.3333,
+        "mean_budget_used": 0.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 0.6667,
+        "mean_steps_to_target": 0.3333,
+        "mean_budget_used": 0.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 0.6667,
+        "mean_steps_to_target": 0.3333,
+        "mean_budget_used": 0.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 0.6667,
+        "mean_steps_to_target": 0.3333,
+        "mean_budget_used": 0.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 0.6667,
+        "mean_steps_to_target": 0.3333,
+        "mean_budget_used": 0.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 1.6667,
+        "mean_steps_to_target": 0.6667,
+        "mean_budget_used": 1.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "cmi_proxy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
         "mean_cost_to_target": 0.3333,
         "mean_steps_to_target": 0.3333,
         "mean_budget_used": 0.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "oracle_optimal": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 0.3333,
+        "mean_steps_to_target": 0.3333,
+        "mean_budget_used": 0.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -379,7 +1073,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "stage|0.400": {
@@ -390,7 +1086,9 @@
         "mean_cost_to_target": 5.625,
         "mean_steps_to_target": 2.5,
         "mean_budget_used": 6.2,
-        "mean_final_node_coverage": 0.9222
+        "mean_final_node_coverage": 0.9222,
+        "mean_cost_regret_vs_oracle": 2.25,
+        "oracle_top1_action_hit_rate": 0.1333
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -399,25 +1097,108 @@
         "mean_cost_to_target": 6.3333,
         "mean_steps_to_target": 2.6667,
         "mean_budget_used": 6.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.6667,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 5.0,
-        "mean_steps_to_target": 2.3333,
-        "mean_budget_used": 5.0,
-        "mean_final_node_coverage": 1.0
+        "mean_cost_to_target": 6.3333,
+        "mean_steps_to_target": 2.6667,
+        "mean_budget_used": 6.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.6667,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "project05_m1": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.6667,
+        "mean_steps_to_target": 2.6667,
+        "mean_budget_used": 5.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 5.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 4.3333,
+        "mean_steps_to_target": 1.6667,
+        "mean_budget_used": 4.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.6667,
+        "oracle_top1_action_hit_rate": 0.6667
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.6667,
+        "mean_cost_to_target": 6.5,
+        "mean_steps_to_target": 3.0,
+        "mean_budget_used": 6.6667,
+        "mean_final_node_coverage": 0.9444,
+        "mean_cost_regret_vs_oracle": 3.0,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "oracle_optimal": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
         "mean_cost_to_target": 3.6667,
         "mean_steps_to_target": 1.6667,
         "mean_budget_used": 3.6667,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 1.0
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -426,7 +1207,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "stage|0.600": {
@@ -437,7 +1220,9 @@
         "mean_cost_to_target": 6.0,
         "mean_steps_to_target": 2.75,
         "mean_budget_used": 6.4,
-        "mean_final_node_coverage": 0.8667
+        "mean_final_node_coverage": 0.8667,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.2
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -446,25 +1231,108 @@
         "mean_cost_to_target": 7.0,
         "mean_steps_to_target": 3.0,
         "mean_budget_used": 7.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.8667,
+        "oracle_top1_action_hit_rate": 0.0667
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 5.4,
-        "mean_steps_to_target": 2.4,
-        "mean_budget_used": 5.4,
-        "mean_final_node_coverage": 1.0
+        "mean_cost_to_target": 6.3333,
+        "mean_steps_to_target": 2.6667,
+        "mean_budget_used": 6.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.2,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "project05_m1": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 4.9333,
+        "mean_cost_to_target": 5.1333,
         "mean_steps_to_target": 2.0667,
-        "mean_budget_used": 4.9333,
-        "mean_final_node_coverage": 1.0
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.0,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.8,
+        "mean_steps_to_target": 2.7333,
+        "mean_budget_used": 5.8,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.6667,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.1333,
+        "mean_steps_to_target": 2.0667,
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.0,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.1333,
+        "mean_steps_to_target": 2.0667,
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.0,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.9333,
+        "mean_cost_to_target": 5.0,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 0.9889,
+        "mean_cost_regret_vs_oracle": 1.0,
+        "oracle_top1_action_hit_rate": 0.2667
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.1333,
+        "mean_steps_to_target": 2.0667,
+        "mean_budget_used": 5.1333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.0,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.6,
+        "mean_cost_to_target": 6.6667,
+        "mean_steps_to_target": 3.1111,
+        "mean_budget_used": 6.8,
+        "mean_final_node_coverage": 0.9111,
+        "mean_cost_regret_vs_oracle": 2.6667,
+        "oracle_top1_action_hit_rate": 0.6
+      },
+      "oracle_optimal": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 4.1333,
+        "mean_steps_to_target": 2.0667,
+        "mean_budget_used": 4.1333,
+        "mean_final_node_coverage": 0.9778,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 1.0
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -473,7 +1341,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "discriminative|0.200": {
@@ -484,7 +1354,9 @@
         "mean_cost_to_target": 3.0909,
         "mean_steps_to_target": 1.3636,
         "mean_budget_used": 4.2667,
-        "mean_final_node_coverage": 0.9397
+        "mean_final_node_coverage": 0.9397,
+        "mean_cost_regret_vs_oracle": 2.2727,
+        "oracle_top1_action_hit_rate": 0.0
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -493,25 +1365,108 @@
         "mean_cost_to_target": 3.0,
         "mean_steps_to_target": 1.3333,
         "mean_budget_used": 3.0,
-        "mean_final_node_coverage": 0.9524
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 1.3333,
-        "mean_steps_to_target": 0.6667,
-        "mean_budget_used": 1.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_cost_to_target": 2.3333,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.3333,
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "project05_m1": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 1.3333,
+        "mean_cost_to_target": 2.3333,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.6667,
+        "mean_steps_to_target": 1.3333,
+        "mean_budget_used": 2.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.6667,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.3333,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.3333,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.3333,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 2.6667,
+        "mean_steps_to_target": 1.0,
+        "mean_budget_used": 2.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.6667,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.6667,
+        "mean_budget_used": 3.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "oracle_optimal": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 1.0,
         "mean_steps_to_target": 0.6667,
-        "mean_budget_used": 1.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_budget_used": 1.0,
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 0.6667
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -520,7 +1475,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "discriminative|0.400": {
@@ -531,7 +1488,9 @@
         "mean_cost_to_target": 4.8889,
         "mean_steps_to_target": 2.1111,
         "mean_budget_used": 5.8667,
-        "mean_final_node_coverage": 0.9174
+        "mean_final_node_coverage": 0.9174,
+        "mean_cost_regret_vs_oracle": 3.2222,
+        "oracle_top1_action_hit_rate": 0.1333
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -540,25 +1499,108 @@
         "mean_cost_to_target": 5.3333,
         "mean_steps_to_target": 2.3333,
         "mean_budget_used": 5.3333,
-        "mean_final_node_coverage": 0.9524
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 3.6667,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.3333,
-        "mean_steps_to_target": 1.0,
-        "mean_budget_used": 2.3333,
-        "mean_final_node_coverage": 1.0
+        "mean_cost_to_target": 4.6667,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 4.6667,
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 3.0,
+        "oracle_top1_action_hit_rate": 0.3333
       },
       "project05_m1": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 2.0,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.3333,
+        "mean_budget_used": 3.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.3333,
+        "mean_steps_to_target": 1.6667,
+        "mean_budget_used": 3.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.6667,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.3333,
+        "mean_budget_used": 3.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.3333,
+        "mean_budget_used": 3.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.0,
+        "mean_steps_to_target": 1.3333,
+        "mean_budget_used": 3.0,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.3333,
+        "oracle_top1_action_hit_rate": 0.3333
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 4.3333,
+        "mean_steps_to_target": 1.6667,
+        "mean_budget_used": 4.3333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.6667,
+        "oracle_top1_action_hit_rate": 0.0
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 3.6667,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 3.6667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 2.0,
+        "oracle_top1_action_hit_rate": 0.6667
+      },
+      "oracle_optimal": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 1.6667,
         "mean_steps_to_target": 1.0,
-        "mean_budget_used": 2.0,
-        "mean_final_node_coverage": 1.0
+        "mean_budget_used": 1.6667,
+        "mean_final_node_coverage": 0.9524,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 1.0
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -567,7 +1609,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     },
     "discriminative|0.600": {
@@ -578,7 +1622,9 @@
         "mean_cost_to_target": 5.25,
         "mean_steps_to_target": 2.25,
         "mean_budget_used": 6.2,
-        "mean_final_node_coverage": 0.873
+        "mean_final_node_coverage": 0.873,
+        "mean_cost_regret_vs_oracle": 1.25,
+        "oracle_top1_action_hit_rate": 0.0667
       },
       "fixed_order": {
         "independent_case_count": 3,
@@ -587,25 +1633,108 @@
         "mean_cost_to_target": 7.0,
         "mean_steps_to_target": 3.0,
         "mean_budget_used": 7.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 3.0,
+        "oracle_top1_action_hit_rate": 0.6667
       },
       "coverage_greedy": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 5.0667,
-        "mean_steps_to_target": 2.0667,
-        "mean_budget_used": 5.0667,
-        "mean_final_node_coverage": 1.0
+        "mean_cost_to_target": 5.7333,
+        "mean_steps_to_target": 2.4667,
+        "mean_budget_used": 5.7333,
+        "mean_final_node_coverage": 0.9714,
+        "mean_cost_regret_vs_oracle": 1.7333,
+        "oracle_top1_action_hit_rate": 0.5333
       },
       "project05_m1": {
         "independent_case_count": 3,
         "repeated_run_count": 15,
         "success_rate": 1.0,
-        "mean_cost_to_target": 4.4,
+        "mean_cost_to_target": 5.2667,
+        "mean_steps_to_target": 2.1333,
+        "mean_budget_used": 5.2667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.2667,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "m1_no_granularity": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.9333,
+        "mean_steps_to_target": 2.8,
+        "mean_budget_used": 5.9333,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.9333,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "m1_no_uncertainty": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.2667,
+        "mean_steps_to_target": 2.1333,
+        "mean_budget_used": 5.2667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.2667,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "m1_no_risk": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.2667,
+        "mean_steps_to_target": 2.1333,
+        "mean_budget_used": 5.2667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.2667,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "m1_no_coverage": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.8667,
+        "mean_cost_to_target": 5.0,
         "mean_steps_to_target": 2.0,
-        "mean_budget_used": 4.4,
-        "mean_final_node_coverage": 0.9889
+        "mean_budget_used": 5.2667,
+        "mean_final_node_coverage": 0.9778,
+        "mean_cost_regret_vs_oracle": 1.0,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "m1_no_cost": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 5.2667,
+        "mean_steps_to_target": 2.1333,
+        "mean_budget_used": 5.2667,
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": 1.2667,
+        "oracle_top1_action_hit_rate": 0.2
+      },
+      "cmi_proxy": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 0.6667,
+        "mean_cost_to_target": 6.9,
+        "mean_steps_to_target": 3.4,
+        "mean_budget_used": 6.9333,
+        "mean_final_node_coverage": 0.9222,
+        "mean_cost_regret_vs_oracle": 2.9,
+        "oracle_top1_action_hit_rate": 0.1333
+      },
+      "oracle_optimal": {
+        "independent_case_count": 3,
+        "repeated_run_count": 15,
+        "success_rate": 1.0,
+        "mean_cost_to_target": 4.0,
+        "mean_steps_to_target": 2.0,
+        "mean_budget_used": 4.0,
+        "mean_final_node_coverage": 0.919,
+        "mean_cost_regret_vs_oracle": 0.0,
+        "oracle_top1_action_hit_rate": 1.0
       },
       "full_evidence": {
         "independent_case_count": 3,
@@ -614,7 +1743,9 @@
         "mean_cost_to_target": 0.0,
         "mean_steps_to_target": 0.0,
         "mean_budget_used": 0.0,
-        "mean_final_node_coverage": 1.0
+        "mean_final_node_coverage": 1.0,
+        "mean_cost_regret_vs_oracle": null,
+        "oracle_top1_action_hit_rate": null
       }
     }
   }

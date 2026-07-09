@@ -13,7 +13,7 @@
 1. **Environment**：持有完整证据、隐藏证据和动作执行后的真实恢复结果。
 2. **Planner**：只接收当前可见 `alignment_state` 与公开的动作元数据。
 
-只有 `oracle_greedy` 可以读取 `hidden_ids`。`coverage_greedy`、`project05_m1`、`cmi_proxy` 和所有 M1 消融都不得根据真实隐藏集合计算动作分数。
+只有 `oracle_optimal` 可以读取 `hidden_ids`。`coverage_greedy`、`project05_m1`、`cmi_proxy` 和所有 M1 消融都不得根据真实隐藏集合计算动作分数。
 
 动作执行仍由 Environment 使用 `recoverable_claim_ids ∩ hidden_ids` 决定真实恢复结果。
 
@@ -21,7 +21,7 @@
 
 ### Oracle
 
-`oracle_greedy` 枚举动作的真实恢复结果，计算执行后的真实粒度提升、关键缺口减少、覆盖提升和成本，作为可达到的单步贪心上界。
+`oracle_optimal` 穷举预算内剩余动作组合及其真实恢复结果，选择达到目标粒度的最低成本路径。案例最多 8 个动作，精确搜索规模可控；该结果作为 cost regret 的下界。
 
 ### Coverage Greedy
 
