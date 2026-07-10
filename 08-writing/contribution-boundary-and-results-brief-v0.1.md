@@ -1,7 +1,7 @@
 # Project05 贡献边界与结果简报 v0.1
 
-日期：2026-07-10（补丁：C07/C08 真留出 + intended≠OR 规范）
-状态：M4 压力测试后冻结版；**技术主线 = M3a**；C07 THEIA + C08 ClearScope 两条 E5 真留出已完成
+日期：2026-07-10（补丁：C07/C08/C09 三真留出 + intended≠OR 规范）
+状态：M4 压力测试后冻结版；**技术主线 = M3a**；C07 THEIA + C08 ClearScope + C09 OpTC 三条真留出已完成
 对应 RQ：[topic-rq-brief-v2.1-g1-final-20260706.md](../03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)
 
 ## 1. 一句话定位
@@ -22,7 +22,7 @@ Project05 不做新的 CTI–provenance 对齐器，也不做可学习效用模�
 - 动作公开字段：`intended_cti_node_ids`、`cost`、`acquisition_channel`、手写 `expected_*`（M3a **不依赖**后者）。
 - 隐藏字段：`recoverable_claim_ids` 仅用于环境实现与 Oracle；规划器不可读。
 - **P0-#1（运行时）**：通道可靠性门控——通道离线时“声明目标 ≠ 实际恢复”；`network_telemetry` 先验 0.5，可靠回退在其他通道。
-- **标注规范（编译时）**：`intended` 不得等于 `OR(recoverable)` 覆盖节点集（空意图且无覆盖的噪声动作除外）。见 [intended-cti-node-annotation-protocol-v0.1-20260710.md](intended-cti-node-annotation-protocol-v0.1-20260710.md)。**C01–C08 均已合规**（2026-07-10 清零 allowlist）。
+- **标注规范（编译时）**：`intended` 不得等于 `OR(recoverable)` 覆盖节点集（空意图且无覆盖的噪声动作除外）。见 [intended-cti-node-annotation-protocol-v0.1-20260710.md](intended-cti-node-annotation-protocol-v0.1-20260710.md)。**C01–C09 均已合规**（2026-07-10 清零 allowlist）。
 
 > 注意：仅通道门控**不能**消除通道在线时的答案键；完整解耦 = 运行时门控 + 编译时 intended≠OR。
 
@@ -107,9 +107,21 @@ STOP 的 break-even utility = 0
 
 - 案例：`C08-darpa-e5-clearscope-0515`（45 条件/planner）；产物：`09-experiments/results/c08_holdout_m3a/`。
 - **支持**：相对 C07 的异构 performer（Android ClearScope）上冻结管线可复现；intended≠OR；自然缺失（scrubbed C2 IP、缺 DB 路径）显式保留。
-- **不支持**：M3a 成本优于 M2（再次更贵）；第三数据集 / OpTC 泛化。
+- **不支持**：M3a 成本优于 M2（再次更贵）；见 §3.5 C09 第三来源。
 
-### 3.5 诊断性（不可当独立泛化）
+### 3.5 C09 第三真留出（OpTC eCAR，公式冻结后）
+
+| Planner | success | mean cost | mean regret vs Oracle |
+|---|---:|---:|---:|
+| Oracle | 1.0000 | 4.1333 | 0.0000 |
+| M2 | 1.0000 | 4.7556 | 0.6222 |
+| **M3a** | **1.0000** | **5.2444** | **1.1111** |
+
+- 案例：`C09-darpa-optc-sysclient0201-0923`（45 条件/planner）；产物：`09-experiments/results/c09_holdout_m3a/`。
+- **支持**：相对 C07/C08 的独立 engagement 家族（企业 Windows eCAR）上冻结管线可复现；intended≠OR；Mimikatz/`news.com` 等自然缺失显式保留。
+- **不支持**：M3a 成本优于 M2（三源同向更贵）。配对表见 `c07-c08-paired-regret-summary-v0.1-20260710.md`。
+
+### 3.6 诊断性（不可当独立泛化）
 
 - C06 挑战子集曾显示 M3a 修复 M2 的节点级错选（27/27 vs 5/27，**P0-#1 前快照**）。
 - **C06 / R03 已用于 M2 诊断 → 不得写成最终 holdout。**
@@ -123,18 +135,18 @@ STOP 的 break-even utility = 0
 3. **信息边界纠错方向**：必须同时做通道运行时门控与 intended≠OR 编译约束；否则 `intended_cti_node_ids` 会泄题。
 4. **停止机制**：真不可达时强规划器可与 Oracle 对齐 `justified_degrade`；弱规划器过早停。
 5. **负结果也是贡献**：logistic 条件效用与反馈自适应，在当前设定下**不能**稳定超越 M3a 选路。
-6. **C07/C08 工程验证**：两条异构 E5 真留出上冻结 M3a 可达标且不越 ceiling（成本均不优于 M2）。
+6. **C07/C08/C09 工程验证**：三条异构真留出（E5 Linux / E5 Android / OpTC Windows）上冻结 M3a 可达标且不越 ceiling（成本均不优于 M2）。
 
 ### 4.2 不可以主张
 
-1. 跨数据集 / 多 holdout 泛化到 OpTC 或更多 engagement（已有 **两条** E5 holdout，仍缺第三独立来源）。
+1. M3a 成本优于 M2，或“跨数据集已证明更强选路”（三源均是 success 持平、M3a 更贵）。
 2. “首次 MDP/RL 主动取证”（撞 WinRegRL 等红线）。
 3. “可学习效用 / GCEU-Net 已验证”（M3b 已冻结为近负对照）。
 4. C06 为独立 holdout。
 5. LLM 在线效用预测或自由归因（LLM 仅限语义编译/解释，未进主循环）。
 6. 部分可达紧预算下 M3a 已会可靠选路（当前失败；属已知边界）。
-7. M3a 已是通道感知规划器，或已在 C07/C08 上证明成本优于 M2。
-8. ~~“声明与实现已在数据层完全解耦”（C01–C06 仍 intended==OR）~~ **已过时**：C01–C08 均已 intended≠OR；但仍须同时依赖通道门控，且过宽意图会抬高 M3a 成本。
+7. M3a 已是通道感知规划器，或已在 C07/C08/C09 上证明成本优于 M2。
+8. ~~“声明与实现已在数据层完全解耦”（C01–C06 仍 intended==OR）~~ **已过时**：C01–C09 均已 intended≠OR；但仍须同时依赖通道门控，且过宽意图会抬高 M3a 成本。
 
 ## 5. 专利 / 论文叙事骨架（对齐 M3a）
 
@@ -152,12 +164,12 @@ STOP 的 break-even utility = 0
 
 ## 6. 主线下一步（按优先级）
 
-1. **第三真留出 OpTC（进行中）**：协议已预登记 `08-writing/c09-optc-true-holdout-protocol-v0.1-20260710.md`；先锁 GT 窗口再下 eCAR 子集；保持 M3a 公式冻结；汇总 C07/C08/C09 paired regret。
+1. ~~第三真留出 OpTC~~ **已完成（C09，2026-07-10）**：`results/c09_holdout_m3a/`；三源 paired regret 已写入 `c07-c08-paired-regret-summary-v0.1-20260710.md`。
 2. **专利 v0.3**：中文补检与独立权利要求措辞（骨架已有；不急时可后置）。
 3. ~~清理 C01–C06 intended≠OR 债务~~ **已完成（2026-07-10）**。
 4. ~~第二真留出 ClearScope~~ **已完成（C08，2026-07-10）**。
-5. **并行可选（不替代 C09）**：开发集噪声/误导动作鲁棒性。
-6. **明确不做**：logistic/GNN/RL 升级；再堆同构 decoy/离线压力；为 C09 调 M3a。
+5. **并行可选**：开发集噪声/误导动作鲁棒性；论文/专利叙事收口。
+6. **明确不做**：logistic/GNN/RL 升级；再堆同构 decoy/离线压力；为 holdout 调 M3a。
 
 ## 7. 关键产物索引
 
@@ -170,6 +182,7 @@ STOP 的 break-even utility = 0
 | P0-#1 | `04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md` |
 | M3a 实验 | `04-progress/m3a-action-gap-compatibility-experiment-20260710.md` |
 | M4 套件 | `04-progress/m4-*.md` |
-| C07 协议/结果 | `08-writing/c07-true-holdout-protocol-v0.1-20260710.md`；`09-experiments/results/c07_holdout_m3a/` |
-| C08 结果 | `09-experiments/results/c08_holdout_m3a/` |
+| C07/C08/C09 paired regret | `08-writing/c07-c08-paired-regret-summary-v0.1-20260710.md` |
+| C09 OpTC 协议 | `08-writing/c09-optc-true-holdout-protocol-v0.1-20260710.md` |
+| C09 结果 | `09-experiments/results/c09_holdout_m3a/` |
 | 本简报 | `08-writing/contribution-boundary-and-results-brief-v0.1.md` |

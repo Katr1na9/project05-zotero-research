@@ -1,11 +1,12 @@
 {
   "dataset_id": "darpa-optc-project05-c09-holdout",
   "dataset_name": "DARPA Operationally Transparent Cyber (OpTC)",
-  "phase": "phase0_ground_truth_locked_awaiting_primary_ecar",
+  "phase": "phase1_c09_compiled_and_freeze_eval",
   "evaluation_role": "true_cross_engagement_third_holdout",
   "development_only": false,
   "official_index_url": "https://github.com/FiveDirections/OpTC-data",
-  "data_drive_note": "Large eCAR payloads are on the Google Drive linked from FiveDirections/OpTC-data README. R06 needs AIA-201-225 (Sysclient0201), not AIA-351-375.",
+  "official_drive_root": "https://drive.google.com/drive/folders/1n3kkS3KR31KUegn42yk3-e6JkZvf0Caa",
+  "data_drive_note": "R06 uses official Drive path ecar/evaluation/23Sep19-red/AIA-201-225/. The afternoon attack window lives in AIA-201-225.ecar-last.json.gz (~2.22 GB), not the smaller morning shard.",
   "documents": [
     {
       "document_id": "optc_redteam_ground_truth",
@@ -24,10 +25,40 @@
       "sha256": "FBC09EE25B0B6EC1020CC0EF3360F61E9C56C0DA77205540BA8E5A5716C60C96",
       "size_bytes": 374,
       "download_status": "available_local_verified",
-      "notes": "Passwords for .cryptOPTC2019 / .zip.passwdOPTC2019 alternatives are OPTC2019."
+      "notes": "Passwords for .cryptOPTC2019 / .zip.passwdOPTC2019 alternatives are OPTC2019.",
+      "pipeline_ingestion_note": "stream_ecar_event_window.py directly accepts .json.gz and .zip.passwdOPTC2019. It rejects opaque .cryptOPTC2019 files until their decryption format is independently verified."
     }
   ],
   "sources": [
+    {
+      "source_id": "optc_ecar_23sep19_aia_201_225_last",
+      "dataset_name": "OpTC eCAR 23Sep19-red AIA-201-225 ecar-last",
+      "format": "eCAR JSON.gz",
+      "drive_folder_id": "15nia2-dLBVw1ieLHz-JMKXCXvO226Ktx",
+      "drive_file_id": "1HFSyvmgH0jvdnnnTdKfWRjZYOrLWoIkv",
+      "raw_target": "raw/ecar/evaluation/23Sep19-red/AIA-201-225/AIA-201-225.ecar-last.json.gz",
+      "download_status": "available_local_verified",
+      "size_bytes": 2217842713,
+      "sha256": "FAF181CBF7E4F00F9C912DA3EC2D7BC19667E0249CE7A297D0D2A7BE9BEE5FD7",
+      "host_range": "SysClient0201-SysClient0225",
+      "notes": [
+        "Contains SysClient0201 R06 attack window 2019-09-23T15:23Z–19:30Z (753973 selected rows).",
+        "Companion morning shard AIA-201-225.ecar-2019-12-08T11-05-10.046.json.gz (~110 MB) ends before the R06 window and is retained only as packaging context."
+      ]
+    },
+    {
+      "source_id": "optc_ecar_23sep19_aia_201_225_morning_shard",
+      "dataset_name": "OpTC eCAR 23Sep19-red AIA-201-225 morning shard",
+      "format": "eCAR JSON.gz",
+      "drive_file_id": "1pJLxJsDV8sngiedbfVajMetczIgM3PQd",
+      "raw_target": "raw/ecar/evaluation/23Sep19-red/AIA-201-225/AIA-201-225.ecar-2019-12-08T11-05-10.046.json.gz",
+      "download_status": "available_local_verified_wrong_hours_for_R06",
+      "size_bytes": 109692169,
+      "host_range": "SysClient0201-SysClient0225",
+      "limitations": [
+        "SysClient0201 coverage in this shard is ~13:06–13:31 UTC only; R06 window selected 0 rows."
+      ]
+    },
     {
       "source_id": "optc_ecar_23sep19_aia_351_375_av_bypass",
       "dataset_name": "OpTC eCAR 23Sep19-red AIA-351-375",
@@ -41,17 +72,6 @@
         "Does not contain Sysclient0201/0402/0660/DC1 required by locked R06 Day1 campaign.",
         "Retained only as packaging probe / possible later Day3 Sysclient0351 material."
       ]
-    },
-    {
-      "source_id": "optc_ecar_23sep19_sysclient0201",
-      "dataset_name": "OpTC eCAR 23Sep19-red AIA-201-225 (expected)",
-      "format": "eCAR JSON.gz or AV-bypass zip",
-      "raw_target": "raw/ecar/evaluation/23Sep19-red/AIA-201-225/",
-      "download_status": "pending",
-      "limitations": [
-        "Required for R06 primary host Sysclient0201.",
-        "Folder name follows OpTC AIA-###-### host-number batches; confirm on Drive if numbering differs."
-      ]
     }
   ],
   "derived_artifacts": [
@@ -60,17 +80,32 @@
       "path": "derived/_gt_extract.txt",
       "status": "generated",
       "use": "Local text extract of the red-team GT PDF used to lock R06 before eCAR inspection."
+    },
+    {
+      "artifact_id": "r06_sysclient0201_window",
+      "path": "extracted/R06_sysclient0201_window.jsonl",
+      "status": "generated",
+      "rows_selected": 753973,
+      "sha256": "D2E2348C0F6D3AA02E90361ED7F87A739EE5A05DCA1C58C48CF663BB336C97C9",
+      "use": "Hostname+UTC window extract feeding C09 motif compilation."
+    },
+    {
+      "artifact_id": "r06_extraction_summary",
+      "path": "derived/R06_extraction_summary.json",
+      "status": "generated"
     }
   ],
   "cases": [
     {
       "case_id": "R06",
-      "source_id": "optc_ecar_23sep19_sysclient0201",
+      "compiled_case_id": "C09-darpa-optc-sysclient0201-0923",
+      "source_id": "optc_ecar_23sep19_aia_201_225_last",
       "ground_truth_file": "ground_truth/R06.json"
     }
   ],
   "notes": [
-    "C09 is pre-registered after C07/C08. M3a weights remain frozen.",
-    "R06 locked to 2019-09-23 Day1 Plain PowerShell Empire on Sysclient0201."
+    "C09 is the third true holdout after C07/C08. M3a weights remain frozen.",
+    "R06 locked to 2019-09-23 Day1 Plain PowerShell Empire on Sysclient0201 before event inspection.",
+    "Do not retarget R06 to Day2 just because a 24Sep file exists."
   ]
 }

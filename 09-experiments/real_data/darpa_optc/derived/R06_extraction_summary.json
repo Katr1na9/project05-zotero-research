@@ -1,0 +1,46 @@
+{
+  "source_format": "OpTC eCAR JSONL",
+  "inputs": [
+    "09-experiments/real_data/darpa_optc/raw/ecar/evaluation/23Sep19-red/AIA-201-225/AIA-201-225.ecar-last.json.gz"
+  ],
+  "input_sha256": [
+    "FAF181CBF7E4F00F9C912DA3EC2D7BC19667E0249CE7A297D0D2A7BE9BEE5FD7"
+  ],
+  "hostnames": [
+    "SysClient0201"
+  ],
+  "hostname_match_mode": "contains",
+  "utc_window": {
+    "start": "2019-09-23T15:23:00Z",
+    "end": "2019-09-23T19:30:00Z"
+  },
+  "rows_scanned": 34146068,
+  "rows_selected": 753973,
+  "rows_bad_json": 0,
+  "rows_bad_timestamp": 0,
+  "selected_host_counts": {
+    "SysClient0201.systemia.com": 753973
+  },
+  "selected_object_counts": {
+    "FLOW": 522606,
+    "REGISTRY": 1945,
+    "TASK": 331,
+    "THREAD": 27569,
+    "FILE": 97580,
+    "PROCESS": 45835,
+    "MODULE": 40661,
+    "USER_SESSION": 67,
+    "SHELL": 17379
+  },
+  "first_selected_timestamp_utc": "2019-09-23T15:23:00.024000Z",
+  "last_selected_timestamp_utc": "2019-09-23T19:29:59.937000Z",
+  "output_path": "09-experiments/real_data/darpa_optc/extracted/R06_sysclient0201_window.jsonl",
+  "output_sha256": "D2E2348C0F6D3AA02E90361ED7F87A739EE5A05DCA1C58C48CF663BB336C97C9",
+  "scan_scope": "hostname_and_utc_window",
+  "notes": [
+    "Engineering extractor only; do not retune M3a from extraction stats.",
+    "Passworded AV-bypass zips use OPTC2019 unless --zip-password overrides.",
+    "cryptOPTC2019 files are rejected; use the password-zip twin or decrypt upstream.",
+    "Official Drive path: OpTCNCR/ecar/evaluation/23Sep19-red/AIA-201-225/AIA-201-225.ecar-last.json.gz"
+  ]
+}

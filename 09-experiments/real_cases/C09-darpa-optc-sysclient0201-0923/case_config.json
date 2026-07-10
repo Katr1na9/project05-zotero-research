@@ -1,0 +1,77 @@
+{
+  "case_id": "C09-darpa-optc-sysclient0201-0923",
+  "source_case_id": "R06",
+  "case_name": "DARPA OpTC Day1 Plain PowerShell Empire on SysClient0201",
+  "description": "Third true cross-engagement holdout compiled from the OpTC 2019-09-23 SysClient0201 eCAR window. Claims are event-backed only; Mimikatz cleartext recovery and news.com hostname remain report-only gaps.",
+  "development_only": false,
+  "holdout_role": "true_cross_engagement_third_holdout",
+  "target_granularity": "G3_campaign",
+  "support_ceiling": "G3_campaign",
+  "budget_total": 11,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C09-AA-001", "C09-AA-002", "C09-AA-003", "C09-AA-004", "C09-AA-005", "C09-AA-006"],
+  "stage_mask_tags": [
+    "stage:command_and_control",
+    "stage:privilege_escalation",
+    "stage:collection",
+    "stage:lateral_movement"
+  ],
+  "discriminative_claim_ids": ["C09-EC-001", "C09-EC-002", "C09-EC-003", "C09-EC-004"],
+  "channel_reliability": {
+    "network_telemetry": 0.5,
+    "host_forensics": 1.0,
+    "host_probe": 1.0,
+    "analyst": 1.0
+  },
+  "cti_nodes": [
+    {
+      "node_id": "N01_empire_c2",
+      "stage": "command_and_control",
+      "required_claim_ids": ["C09-EC-001"],
+      "critical": true
+    },
+    {
+      "node_id": "N02_uac_windir",
+      "stage": "privilege_escalation",
+      "required_claim_ids": ["C09-EC-002"],
+      "critical": true
+    },
+    {
+      "node_id": "N03_screenshot",
+      "stage": "collection",
+      "required_claim_ids": ["C09-EC-003"],
+      "critical": true
+    },
+    {
+      "node_id": "N04_wmi_0402",
+      "stage": "lateral_movement",
+      "required_claim_ids": ["C09-EC-004"],
+      "critical": true
+    }
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_empire_c2", "target": "N02_uac_windir"},
+    {"edge_id": "E02", "source": "N02_uac_windir", "target": "N03_screenshot"},
+    {"edge_id": "E03", "source": "N02_uac_windir", "target": "N04_wmi_0402"}
+  ],
+  "natural_incompleteness": {
+    "report_only_observables": [
+      "Mimikatz cleartext recovery for user zleazer (no mimikatz/sekurlsa string in the SysClient0201 eCAR window)",
+      "news.com C2 hostname (flows are IP-backed to 132.197.158.98)",
+      "Failed LSASS process injection",
+      "Full SysClient0402/0660/DC1 local host chains (primary-host window only)"
+    ],
+    "schema_unavailable_observables": [],
+    "policy": "No synthetic claim is created for report-only Mimikatz/news.com observables. The planner may reach only the G3 campaign ceiling supported by Empire C2, windir UAC bypass, screenshot collection, and WMI pivot references observed on SysClient0201."
+  },
+  "granularity_order": [
+    "G0_unknown",
+    "G1_technique",
+    "G2_tactic_intent",
+    "G3_campaign",
+    "G4_actor_cluster",
+    "G5_named_actor"
+  ]
+}

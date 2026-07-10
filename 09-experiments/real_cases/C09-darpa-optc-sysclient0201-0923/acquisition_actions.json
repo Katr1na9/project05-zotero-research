@@ -1,0 +1,152 @@
+[
+  {
+    "action_id": "C09-AA-001",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "action_type": "recover_network_summary",
+    "acquisition_channel": "network_telemetry",
+    "target": {
+      "target_type": "endpoint",
+      "target_value": "powershell Empire C2 to 132.197.158.98:80"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C09-EC-001"],
+    "intended_cti_node_ids": ["N01_empire_c2", "N02_uac_windir"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.32,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.28
+    },
+    "status": "available",
+    "natural_language_request": "Recover Empire C2 flow summaries and any concurrent elevation indicators around the same window.",
+    "notes": "Over-declared intent: request asks about C2 plus elevation clues, but this channel only recovers the C2 claim (N01)."
+  },
+  {
+    "action_id": "C09-AA-002",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "process",
+      "target_value": "powershell.exe Empire C2 lineage"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": ["C09-EC-001"],
+    "intended_cti_node_ids": ["N01_empire_c2", "N02_uac_windir"],
+    "expected_evidence_types": ["network_summary", "host_forensics"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.38,
+      "expected_over_attribution_risk_reduction": 0.38,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.28
+    },
+    "status": "available",
+    "natural_language_request": "Recover host lineage for powershell Empire C2 and look for elevation-adjacent registry context.",
+    "notes": "Reliable host fallback for the C2 claim. Intent mirrors the analyst request (C2 + elevation) while recoverable coverage remains N01 only."
+  },
+  {
+    "action_id": "C09-AA-003",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "action_type": "ttp_local_probe",
+    "acquisition_channel": "host_probe",
+    "target": {
+      "target_type": "registry_key",
+      "target_value": "HKCU\\Environment\\windir UAC bypass"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C09-EC-002"],
+    "intended_cti_node_ids": ["N02_uac_windir", "N03_screenshot"],
+    "expected_evidence_types": ["host_forensics"],
+    "expected_stages": ["privilege_escalation"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.34,
+      "expected_over_attribution_risk_reduction": 0.31,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.24
+    },
+    "status": "available",
+    "natural_language_request": "Probe the windir Environment UAC bypass and any concurrent desktop-collection artifacts.",
+    "notes": "Over-declared intent: request spans elevation and collection; this probe only recovers the windir claim (N02)."
+  },
+  {
+    "action_id": "C09-AA-004",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "module",
+      "target_value": "Empire Get-Screenshot"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C09-EC-003"],
+    "intended_cti_node_ids": ["N01_empire_c2", "N03_screenshot"],
+    "expected_evidence_types": ["host_forensics"],
+    "expected_stages": ["collection"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.34,
+      "expected_over_attribution_risk_reduction": 0.36,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.24
+    },
+    "status": "available",
+    "natural_language_request": "Recover shell provenance around Get-Screenshot to place collection in the Empire C2 campaign.",
+    "notes": "Over-declared intent: analyst frames screenshot beside C2; recoverable coverage is N03 only."
+  },
+  {
+    "action_id": "C09-AA-005",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "host",
+      "target_value": "Invoke-WmiMethod to SysClient0402"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": ["C09-EC-004"],
+    "intended_cti_node_ids": ["N04_wmi_0402", "N03_screenshot"],
+    "expected_evidence_types": ["host_forensics"],
+    "expected_stages": ["lateral_movement"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.36,
+      "expected_over_attribution_risk_reduction": 0.34,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.24
+    },
+    "status": "available",
+    "natural_language_request": "Recover WMI pivot evidence to SysClient0402 and any concurrent collection context.",
+    "notes": "Over-declared intent: request spans lateral movement and collection; recoverable coverage is N04 only."
+  },
+  {
+    "action_id": "C09-AA-006",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "action_type": "human_review",
+    "acquisition_channel": "analyst",
+    "target": {
+      "target_type": "process",
+      "target_value": "GoogleUpdate.exe benign updater activity"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C09-EC-005"],
+    "intended_cti_node_ids": [],
+    "expected_evidence_types": ["local_log"],
+    "expected_stages": ["benign_context"],
+    "expected_effects": {
+      "expected_granularity_gain": 0,
+      "expected_uncertainty_reduction": 0.1,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 1,
+      "expected_coverage_delta": 0
+    },
+    "status": "available",
+    "natural_language_request": "Review interleaved Google Update process activity that should not be treated as an Empire attack-chain gap.",
+    "notes": "Noise/benign review: empty intended CTI nodes; recoverable claims do not cover attack-graph nodes."
+  }
+]

@@ -1,8 +1,10 @@
 # C09 OpTC 第三真留出协议 v0.1
 
 日期：2026-07-10  
-状态：**预登记 / 未编译**（M3a 公式已冻结；C07/C08 已完成）  
-前置：`contribution-boundary-and-results-brief-v0.1.md`；C07/C08 结果 README
+状态：**已编译并冻结评估**（2026-07-10；M3a 公式未改）  
+案例：`09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/`  
+结果：`09-experiments/results/c09_holdout_m3a/`  
+前置：`contribution-boundary-and-results-brief-v0.1.md`；C07/C08/C09 paired regret 汇总
 
 ## 1. 目的
 
@@ -47,7 +49,7 @@
 推荐下载顺序：
 
 1. **必下（小）**：`OpTCRedTeamGroundTruth.pdf`、`ecar.md`、`errata.md`  
-2. **必下（中）**：ground truth 锁定后的 **evaluation 日目录** 中、与目标主机相关的 eCAR 分片（优先 `ecar/evaluation/`；若需网络枢轴再补对应 `ecar-bro` / `bro`）  
+2. **必下（中）**：ground truth 锁定后的 **evaluation 日目录** 中、与目标主机相关的 eCAR 分片（优先 `ecar/evaluation/`；若需网络枢轴再补对应 `ecar-bro` / `bro`）。直接编译支持 `.json.gz` 与 `.zip.passwdOPTC2019`；若只取得 `.cryptOPTC2019`，先使用来源方的已验证方式转换或取得 password-ZIP twin，禁止把 opaque crypt 文件直接喂给编译器。
 3. **不下**：benign 全量、无关主机、全 evaluation 全机
 
 IEEE DataPort / 文献常见划分：红队活动约在 **2019-09-23 / 09-24 / 09-25**；具体主机与 IOC **以 GT PDF 为准，在读事件前写入 `ground_truth/R06.json`**。

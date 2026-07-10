@@ -1,0 +1,191 @@
+{
+  "case_id": "C09-darpa-optc-sysclient0201-0923",
+  "artifact_id": "darpa_optc_R06_sysclient0201_ecar_window",
+  "source_case_id": "R06",
+  "motifs": [
+    {
+      "motif_id": "C09-EC-001",
+      "match": {
+        "object_in": ["FLOW"],
+        "process_contains_any": ["powershell.exe"],
+        "remote_ip_contains_any": ["132.197.158.98"],
+        "property_contains_any": ["dest_port=80"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {
+          "entity_type": "process",
+          "value": "powershell.exe"
+        },
+        "predicate": "connected_to",
+        "object": {
+          "entity_type": "endpoint",
+          "value": "132.197.158.98:80"
+        },
+        "mapped_tactic": ["command_and_control"],
+        "mapped_technique": ["T1071"],
+        "evidence_strength": "critical",
+        "confidence": 0.93,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R06_campaign"],
+        "notes": "PowerShell Empire C2 flows to the GT listener IP on port 80. The GT also names news.com; hostname resolution is not required for this IP-backed claim.",
+        "tags": [
+          "hideable",
+          "real_ecar",
+          "stage:command_and_control",
+          "node:N01_empire_c2",
+          "critical",
+          "discriminative",
+          "unique"
+        ]
+      }
+    },
+    {
+      "motif_id": "C09-EC-002",
+      "match": {
+        "object_in": ["REGISTRY"],
+        "action_in": ["ADD"],
+        "path_contains_any": ["Environment\\windir"],
+        "process_contains_any": ["powershell.exe"]
+      },
+      "claim": {
+        "source_type": "host_forensics",
+        "claim_type": "registry_modification",
+        "subject": {
+          "entity_type": "process",
+          "value": "powershell.exe"
+        },
+        "predicate": "modified",
+        "object": {
+          "entity_type": "registry_key",
+          "value": "HKCU\\Environment\\windir"
+        },
+        "mapped_tactic": ["privilege_escalation"],
+        "mapped_technique": ["T1548.002"],
+        "evidence_strength": "critical",
+        "confidence": 0.95,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R06_campaign"],
+        "notes": "Matches the GT UAC bypass that writes the Environment windir value from the unelevated Empire agent (PID 5452 / VL8B5T3U).",
+        "tags": [
+          "hideable",
+          "real_ecar",
+          "stage:privilege_escalation",
+          "node:N02_uac_windir",
+          "critical",
+          "discriminative",
+          "unique"
+        ]
+      }
+    },
+    {
+      "motif_id": "C09-EC-003",
+      "match": {
+        "object_in": ["SHELL"],
+        "action_in": ["COMMAND"],
+        "property_contains_any": ["Get-Screenshot"]
+      },
+      "claim": {
+        "source_type": "host_forensics",
+        "claim_type": "process_execution",
+        "subject": {
+          "entity_type": "process",
+          "value": "powershell.exe"
+        },
+        "predicate": "executed",
+        "object": {
+          "entity_type": "module",
+          "value": "Get-Screenshot"
+        },
+        "mapped_tactic": ["collection"],
+        "mapped_technique": ["T1113"],
+        "evidence_strength": "critical",
+        "confidence": 0.92,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R06_campaign"],
+        "notes": "Shell telemetry captures the Empire Get-Screenshot Invoke-Expression payload on the elevated agent (PID 2952 / LUAVR71T).",
+        "tags": [
+          "hideable",
+          "real_ecar",
+          "stage:collection",
+          "node:N03_screenshot",
+          "critical",
+          "discriminative",
+          "unique"
+        ]
+      }
+    },
+    {
+      "motif_id": "C09-EC-004",
+      "match": {
+        "object_in": ["SHELL"],
+        "action_in": ["COMMAND"],
+        "property_contains_any": ["SYSCLIENT0402"]
+      },
+      "claim": {
+        "source_type": "host_forensics",
+        "claim_type": "lateral_movement",
+        "subject": {
+          "entity_type": "process",
+          "value": "powershell.exe"
+        },
+        "predicate": "invoked_wmi_against",
+        "object": {
+          "entity_type": "host",
+          "value": "SysClient0402"
+        },
+        "mapped_tactic": ["lateral_movement"],
+        "mapped_technique": ["T1047"],
+        "evidence_strength": "critical",
+        "confidence": 0.94,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R06_campaign"],
+        "notes": "Shell payloads reference Invoke-WmiMethod / ComputerName SYSCLIENT0402. This claim is scoped to the primary-host window only; SysClient0402 local eCAR is not required.",
+        "tags": [
+          "hideable",
+          "real_ecar",
+          "stage:lateral_movement",
+          "node:N04_wmi_0402",
+          "critical",
+          "discriminative",
+          "unique"
+        ]
+      }
+    },
+    {
+      "motif_id": "C09-EC-005",
+      "match": {
+        "object_in": ["PROCESS"],
+        "action_in": ["CREATE"],
+        "process_contains_any": ["GoogleUpdate.exe"]
+      },
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "process_execution",
+        "subject": {
+          "entity_type": "process",
+          "value": "GoogleUpdate.exe"
+        },
+        "predicate": "executed",
+        "object": {
+          "entity_type": "host",
+          "value": "SysClient0201"
+        },
+        "mapped_tactic": ["benign_context"],
+        "mapped_technique": [],
+        "evidence_strength": "supporting",
+        "confidence": 0.7,
+        "observable_status": "visible",
+        "supports_hypotheses": [],
+        "notes": "Benign Google Update process creates interleaved with the attack window; not part of the Empire campaign graph.",
+        "tags": [
+          "hideable",
+          "real_ecar",
+          "stage:benign_context",
+          "noise"
+        ]
+      }
+    }
+  ]
+}
