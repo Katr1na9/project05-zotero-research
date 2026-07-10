@@ -242,14 +242,23 @@ class CaseIntegrityTests(unittest.TestCase):
                     for claim in claims
                     if "hideable" in claim.get("tags", [])
                 }
+                node_ids = {
+                    node["node_id"]
+                    for node in config["cti_nodes"]
+                }
 
                 self.assertEqual(len(claim_ids), len(set(claim_ids)))
                 self.assertEqual(len(action_ids), len(set(action_ids)))
                 for node in config["cti_nodes"]:
                     self.assertTrue(set(node["required_claim_ids"]) <= set(claim_ids))
                 for action in actions:
+                    self.assertIn("intended_cti_node_ids", action)
                     self.assertTrue(
                         set(action["recoverable_claim_ids"]) <= hideable_ids
+                    )
+                    self.assertTrue(
+                        set(action.get("intended_cti_node_ids", []))
+                        <= node_ids
                     )
                 self.assertTrue(
                     set(config["discriminative_claim_ids"]) <= hideable_ids
@@ -467,6 +476,117 @@ class PlannerInformationBoundaryTests(unittest.TestCase):
         )
 
         self.assertEqual(first["action_id"], second["action_id"])
+
+    def test_m3a_ignores_recoverable_claim_ids(self):
+        actions = [
+            {
+                "action_id": "target-gap",
+                "action_type": "extend_log_window",
+                "target": {"target_type": "process", "target_value": "nginx"},
+                "cost": 1,
+                "recoverable_claim_ids": ["secret-a"],
+                "intended_cti_node_ids": ["N01_initial_access"],
+                "expected_effects": {},
+                "status": "available",
+            },
+            {
+                "action_id": "off-gap",
+                "action_type": "query_host_subgraph",
+                "target": {"target_type": "file", "target_value": "/tmp/payload"},
+                "cost": 1,
+                "recoverable_claim_ids": ["secret-b"],
+                "intended_cti_node_ids": ["N02_payload_privilege"],
+                "expected_effects": {},
+                "status": "available",
+            },
+        ]
+        state = deepcopy(self.state)
+        state["unmatched_cti_node_ids"] = ["N01_initial_access"]
+        changed_actions = deepcopy(actions)
+        changed_actions[0]["recoverable_claim_ids"] = ["secret-b"]
+        changed_actions[1]["recoverable_claim_ids"] = ["secret-a"]
+
+        first = run_mvp.select_action(
+            "project05_m3a_gap_compat",
+            self.config,
+            self.claims,
+            actions,
+            state,
+            self.visible_ids,
+            {"secret-a", "secret-b"},
+            [],
+            11,
+        )
+        second = run_mvp.select_action(
+            "project05_m3a_gap_compat",
+            self.config,
+            self.claims,
+            changed_actions,
+            state,
+            self.visible_ids,
+            {"secret-a", "secret-b"},
+            [],
+            11,
+        )
+
+        self.assertEqual("target-gap", first["action_id"])
+        self.assertEqual(first["action_id"], second["action_id"])
+
+    def test_m3a_prefers_action_targeting_unmatched_critical_node(self):
+        config = deepcopy(self.config)
+        config["cti_nodes"] = [
+            {
+                "node_id": "N01_initial_access",
+                "stage": "execution",
+                "required_claim_ids": ["E1"],
+                "critical": True,
+            },
+            {
+                "node_id": "N02_payload_privilege",
+                "stage": "execution",
+                "required_claim_ids": ["E2"],
+                "critical": True,
+            },
+        ]
+        state = deepcopy(self.state)
+        state["unmatched_cti_node_ids"] = ["N01_initial_access"]
+        state["coverage"]["critical_gap_count"] = 1
+        actions = [
+            {
+                "action_id": "wrong-high-gain",
+                "action_type": "query_host_subgraph",
+                "target": {"target_type": "file", "target_value": "/tmp/payload"},
+                "cost": 1,
+                "recoverable_claim_ids": [],
+                "intended_cti_node_ids": ["N02_payload_privilege"],
+                "expected_effects": {"expected_granularity_gain": 5},
+                "status": "available",
+            },
+            {
+                "action_id": "right-gap",
+                "action_type": "extend_log_window",
+                "target": {"target_type": "process", "target_value": "nginx"},
+                "cost": 2,
+                "recoverable_claim_ids": [],
+                "intended_cti_node_ids": ["N01_initial_access"],
+                "expected_effects": {"expected_granularity_gain": 0},
+                "status": "available",
+            },
+        ]
+
+        selected = run_mvp.select_action(
+            "project05_m3a_gap_compat",
+            config,
+            self.claims,
+            actions,
+            state,
+            self.visible_ids,
+            set(),
+            [],
+            11,
+        )
+
+        self.assertEqual("right-gap", selected["action_id"])
 
     def test_zero_yield_feedback_penalizes_same_action_type(self):
         action = {

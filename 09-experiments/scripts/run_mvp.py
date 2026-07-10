@@ -26,6 +26,7 @@ PLANNERS = [
     "coverage_greedy",
     "project05_m1",
     "project05_m2",
+    "project05_m3a_gap_compat",
     "m1_no_granularity",
     "m1_no_uncertainty",
     "m1_no_risk",
@@ -584,6 +585,39 @@ def m2_action_score(
     )
 
 
+def critical_cti_node_ids(config: dict[str, Any]) -> set[str]:
+    return {
+        node["node_id"]
+        for node in config.get("cti_nodes", [])
+        if node.get("critical")
+    }
+
+
+def m3a_gap_compat_score(
+    action: dict[str, Any],
+    state: dict[str, Any],
+    config: dict[str, Any],
+) -> float:
+    intended_nodes = set(action.get("intended_cti_node_ids", []))
+    unmatched_nodes = set(state.get("unmatched_cti_node_ids", []))
+    if not intended_nodes or not unmatched_nodes:
+        return -float(action["cost"])
+
+    targeted_gaps = intended_nodes & unmatched_nodes
+    critical_targets = targeted_gaps & critical_cti_node_ids(config)
+    precision = len(targeted_gaps) / max(1, len(intended_nodes))
+    recall = len(targeted_gaps) / max(1, len(unmatched_nodes))
+    cost = max(0.1, float(action["cost"]))
+
+    return (
+        8.0 * len(critical_targets)
+        + 3.0 * len(targeted_gaps)
+        + 2.0 * precision
+        + recall
+        - 0.5 * cost
+    ) / cost
+
+
 def select_oracle_optimal_action(
     config: dict[str, Any],
     actions: list[dict[str, Any]],
@@ -732,6 +766,16 @@ def select_action(
                 -m2_action_score(action, state, actions),
                 action["cost"],
                 -len(action.get("expected_stages", [])),
+                action["action_id"],
+            ),
+        )
+
+    if planner == "project05_m3a_gap_compat":
+        return max(
+            candidates,
+            key=lambda action: (
+                m3a_gap_compat_score(action, state, config),
+                -action["cost"],
                 action["action_id"],
             ),
         )

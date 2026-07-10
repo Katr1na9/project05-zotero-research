@@ -40,6 +40,10 @@ class RealCaseIntegrityTests(unittest.TestCase):
                     for claim in claims
                     if "hideable" in claim.get("tags", [])
                 }
+                node_ids = {
+                    node["node_id"]
+                    for node in config["cti_nodes"]
+                }
                 for claim in claims:
                     self.assertIn("real_cdm", claim.get("tags", []))
                     self.assertIn(
@@ -52,9 +56,14 @@ class RealCaseIntegrityTests(unittest.TestCase):
                     )
                 for action in actions:
                     self.assertIn("expected_stages", action)
+                    self.assertIn("intended_cti_node_ids", action)
                     self.assertTrue(
                         set(action["recoverable_claim_ids"])
                         <= hideable_ids
+                    )
+                    self.assertTrue(
+                        set(action.get("intended_cti_node_ids", []))
+                        <= node_ids
                     )
                 self.assertTrue(
                     set(config["discriminative_claim_ids"])
