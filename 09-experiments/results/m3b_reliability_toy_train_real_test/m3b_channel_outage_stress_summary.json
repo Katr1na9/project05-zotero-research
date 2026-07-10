@@ -1,18 +1,19 @@
 {
-  "intervention": "repeated_matched_zero_yield_critical_action",
+  "intervention": "realised_channel_outage",
+  "outage_channel": "network_telemetry",
   "label_column": "label_resolves_critical_gap_node",
   "cost_penalty": 0.1,
-  "copies_per_action": 2,
   "train_case_count": 3,
   "test_case_count": 3,
+  "cases_with_outage": 3,
+  "outage_condition_count": 54,
   "baseline_planners": [
     "coverage_greedy",
     "project05_m2",
     "project05_m3a_gap_compat",
     "oracle_optimal"
   ],
-  "original_action_count": 19,
-  "augmented_action_count": 49,
+  "reliability_group": "acquisition_channel",
   "model": {
     "feature_columns": [
       "cost",
@@ -91,52 +92,52 @@
   },
   "summary": {
     "project05_m3b_reliability_policy": {
-      "runs": 135,
-      "success_rate": 0.5778,
-      "mean_cost_to_target": 1.0128,
-      "mean_steps_to_target": 0.5,
-      "mean_budget_used": 3.6444,
-      "mean_final_node_coverage": 0.7878
+      "runs": 54,
+      "success_rate": 0.963,
+      "mean_cost_to_target": 1.5962,
+      "mean_steps_to_target": 0.6154,
+      "mean_budget_used": 1.7963,
+      "mean_final_node_coverage": 0.8833
     },
     "project05_m3b_policy": {
-      "runs": 135,
-      "success_rate": 0.6519,
-      "mean_cost_to_target": 1.7045,
-      "mean_steps_to_target": 0.8523,
-      "mean_budget_used": 3.7556,
-      "mean_final_node_coverage": 0.8244
+      "runs": 54,
+      "success_rate": 0.963,
+      "mean_cost_to_target": 1.5962,
+      "mean_steps_to_target": 0.6154,
+      "mean_budget_used": 1.7963,
+      "mean_final_node_coverage": 0.8833
     },
     "coverage_greedy": {
-      "runs": 135,
-      "success_rate": 0.6074,
-      "mean_cost_to_target": 0.5366,
-      "mean_steps_to_target": 0.2439,
-      "mean_budget_used": 3.4667,
-      "mean_final_node_coverage": 0.8056
+      "runs": 54,
+      "success_rate": 0.7407,
+      "mean_cost_to_target": 1.5,
+      "mean_steps_to_target": 0.5,
+      "mean_budget_used": 3.1852,
+      "mean_final_node_coverage": 0.8463
     },
     "project05_m2": {
-      "runs": 135,
-      "success_rate": 0.8,
-      "mean_cost_to_target": 1.7685,
-      "mean_steps_to_target": 0.6111,
-      "mean_budget_used": 2.8519,
-      "mean_final_node_coverage": 0.8693
+      "runs": 54,
+      "success_rate": 0.6481,
+      "mean_cost_to_target": 0.7714,
+      "mean_steps_to_target": 0.2571,
+      "mean_budget_used": 3.0556,
+      "mean_final_node_coverage": 0.8278
     },
     "project05_m3a_gap_compat": {
-      "runs": 135,
-      "success_rate": 0.837,
-      "mean_cost_to_target": 2.8319,
-      "mean_steps_to_target": 1.4159,
-      "mean_budget_used": 3.6741,
-      "mean_final_node_coverage": 0.8648
+      "runs": 54,
+      "success_rate": 0.9444,
+      "mean_cost_to_target": 1.7255,
+      "mean_steps_to_target": 0.7059,
+      "mean_budget_used": 2.037,
+      "mean_final_node_coverage": 0.8796
     },
     "oracle_optimal": {
-      "runs": 135,
+      "runs": 54,
       "success_rate": 1.0,
-      "mean_cost_to_target": 1.7852,
-      "mean_steps_to_target": 0.7778,
-      "mean_budget_used": 1.7852,
-      "mean_final_node_coverage": 0.9033
+      "mean_cost_to_target": 1.7593,
+      "mean_steps_to_target": 0.6481,
+      "mean_budget_used": 1.7593,
+      "mean_final_node_coverage": 0.8907
     }
   }
 }

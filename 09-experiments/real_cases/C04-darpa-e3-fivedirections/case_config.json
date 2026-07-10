@@ -10,9 +10,10 @@
   "mask_intensities": [0.2, 0.4, 0.6],
   "mask_strategies": ["random", "stage", "discriminative"],
   "random_seeds": [11, 23, 37, 41, 53],
-  "fixed_action_order": ["C04-AA-001", "C04-AA-002", "C04-AA-003", "C04-AA-004", "C04-AA-005"],
+  "fixed_action_order": ["C04-AA-001", "C04-AA-002", "C04-AA-003", "C04-AA-004", "C04-AA-005", "C04-AA-006"],
   "stage_mask_tags": ["stage:command_and_control", "stage:discovery", "stage:collection", "stage:exfiltration"],
   "discriminative_claim_ids": ["C04-EC-002", "C04-EC-003", "C04-EC-004", "C04-EC-006", "C04-EC-007", "C04-EC-008"],
+  "channel_reliability": {"network_telemetry": 0.5},
   "cti_nodes": [
     {"node_id": "N01_initial_access", "stage": "execution", "required_claim_ids": ["C04-EC-001", "C04-EC-002"], "critical": true},
     {"node_id": "N02_c2", "stage": "command_and_control", "required_claim_ids": ["C04-EC-003"], "critical": true},

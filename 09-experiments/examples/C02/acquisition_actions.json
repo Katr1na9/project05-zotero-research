@@ -76,5 +76,20 @@
     "expected_effects": {"expected_granularity_gain": 0, "expected_uncertainty_reduction": 0.1, "expected_over_attribution_risk_reduction": 0.15, "expected_conflict_resolution": 0.5, "expected_coverage_delta": 0},
     "status": "available",
     "natural_language_request": "Review the weak DNS observation before treating it as C2 support."
+  },
+  {
+    "action_id": "C02-AA-007",
+    "case_id": "C02-freebsd-provenance",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {"target_type": "file", "target_value": "/var/spool/exfil.tar"},
+    "cost": 3,
+    "recoverable_claim_ids": ["C02-EC-009"],
+    "intended_cti_node_ids": ["N06_exfiltration"],
+    "expected_evidence_types": ["provenance_graph"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.25, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.17},
+    "status": "available",
+    "natural_language_request": "Recover host provenance for the staged archive to confirm the exfiltration node when network telemetry is unavailable.",
+    "notes": "Reliable host-side fallback for the exfiltration node; costlier than the cheap network summary (C02-AA-003) but not subject to network_telemetry outages."
   }
 ]

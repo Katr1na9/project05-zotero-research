@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import random
@@ -405,6 +406,77 @@ def recoverable_hidden(action: dict[str, Any], hidden_ids: set[str]) -> set[str]
     return set(action["recoverable_claim_ids"]) & hidden_ids
 
 
+# Public mapping from acquisition action type to the collection channel / data
+# source that fulfils it. The channel is what carries a (documented, pre-
+# registered) reliability profile: some channels occasionally return nothing
+# even when the underlying evidence exists. This decouples an action's public
+# *declared* target (intended_cti_node_ids) from its *realised* recovery, so
+# that a planner cannot treat the declaration as a ground-truth answer key.
+ACTION_TYPE_CHANNELS: dict[str, str] = {
+    "extend_log_window": "log_retention",
+    "query_host_subgraph": "host_forensics",
+    "recover_network_summary": "network_telemetry",
+    "ioc_enrichment": "threat_intel",
+    "infrastructure_history": "threat_intel",
+    "cti_report_lookup": "threat_intel",
+    "malware_analysis": "sample_lab",
+    "ttp_local_probe": "host_probe",
+    "human_review": "analyst",
+    "other": "other",
+}
+
+
+def acquisition_channel(action: dict[str, Any]) -> str:
+    explicit = action.get("acquisition_channel")
+    if explicit:
+        return str(explicit)
+    return ACTION_TYPE_CHANNELS.get(action.get("action_type", "other"), "other")
+
+
+def channel_reliability(config: dict[str, Any], channel: str) -> float:
+    profile = config.get("channel_reliability", {}) or {}
+    return float(profile.get(channel, 1.0))
+
+
+def channel_is_up(config: dict[str, Any], channel: str, seed: int) -> bool:
+    """Deterministically decide whether ``channel`` is online for this episode.
+
+    Reliability ``p`` is the pre-registered probability that the channel
+    delivers. Whether it is online in a given episode is a reproducible
+    Bernoulli(p) draw keyed on (case_id, channel, seed) so that every planner
+    (including the oracle) observes the same realised channel state and results
+    stay reproducible across runs and platforms.
+    """
+
+    p = channel_reliability(config, channel)
+    if p >= 1.0:
+        return True
+    if p <= 0.0:
+        return False
+    key = f"{config.get('case_id', '')}|{channel}|{int(seed)}".encode("utf-8")
+    draw = int.from_bytes(hashlib.sha256(key).digest()[:8], "big") / float(1 << 64)
+    return draw < p
+
+
+def realized_recovery(
+    config: dict[str, Any],
+    action: dict[str, Any],
+    hidden_ids: set[str],
+    seed: int,
+) -> set[str]:
+    """Claims actually recovered by ``action`` this episode.
+
+    Equal to the hidden claims the action can recover, but only if the action's
+    channel is online; a down channel yields nothing even though the evidence
+    exists. Backward compatible: when the case declares no ``channel_reliability``
+    every channel has p=1.0 and this equals :func:`recoverable_hidden`.
+    """
+
+    if not channel_is_up(config, acquisition_channel(action), seed):
+        return set()
+    return recoverable_hidden(action, hidden_ids)
+
+
 def action_by_id(actions: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {action["action_id"]: action for action in actions}
 
@@ -625,6 +697,7 @@ def select_oracle_optimal_action(
     hidden_ids: set[str],
     actions_taken: list[str],
     budget_used: float,
+    seed: int,
 ) -> dict[str, Any] | None:
     target_idx = granularity_index(config, config["target_granularity"])
     action_map = action_by_id(actions)
@@ -658,9 +731,12 @@ def select_oracle_optimal_action(
             action_cost = float(action["cost"])
             if action_id in taken or action_cost > budget_remaining:
                 continue
-            recovered = (
-                set(action["recoverable_claim_ids"]) & set(current_hidden)
-            )
+            if channel_is_up(config, acquisition_channel(action), seed):
+                recovered = (
+                    set(action["recoverable_claim_ids"]) & set(current_hidden)
+                )
+            else:
+                recovered = set()
             if not recovered:
                 continue
             tail_cost, tail_path = search(
@@ -697,9 +773,9 @@ def select_oracle_optimal_action(
     return max(
         candidates,
         key=lambda action: (
-            len(recoverable_hidden(action, hidden_ids))
+            len(realized_recovery(config, action, hidden_ids, seed))
             / max(0.1, action["cost"]),
-            len(recoverable_hidden(action, hidden_ids)),
+            len(realized_recovery(config, action, hidden_ids, seed)),
             -action["cost"],
             action["action_id"],
         ),
@@ -806,6 +882,7 @@ def select_action(
             hidden_ids,
             actions_taken,
             state["budget"]["budget_used"],
+            seed,
         )
 
     raise ValueError(f"Unsupported planner: {planner}")
@@ -891,7 +968,9 @@ def run_episode(
         if action is None:
             break
 
-        recovered = recoverable_hidden(action, hidden_ids)
+        channel = acquisition_channel(action)
+        channel_online = channel_is_up(config, channel, seed)
+        recovered = recoverable_hidden(action, hidden_ids) if channel_online else set()
         budget_used += action["cost"]
         actions_taken.append(action["action_id"])
         action_feedback.append(
@@ -926,6 +1005,8 @@ def run_episode(
                 "event": "action_taken",
                 "action_id": action["action_id"],
                 "action_type": action["action_type"],
+                "acquisition_channel": channel,
+                "channel_up": int(channel_online),
                 "cost": action["cost"],
                 "recovered_claim_ids": sorted(recovered),
                 "state": deepcopy(state),

@@ -68,5 +68,21 @@
     "expected_effects": {"expected_granularity_gain": 0, "expected_uncertainty_reduction": 0.08, "expected_over_attribution_risk_reduction": 0.45, "expected_conflict_resolution": 0.2, "expected_coverage_delta": 0},
     "status": "available",
     "natural_language_request": "Confirm that the provider trace contains no supportable complete collection or exfiltration chain."
+  },
+  {
+    "action_id": "C05-AA-006",
+    "case_id": "C05-darpa-e3-cadets",
+    "action_type": "ioc_enrichment",
+    "acquisition_channel": "threat_intel",
+    "target": {"target_type": "case", "target_value": "R02 external endpoints"},
+    "cost": 3,
+    "recoverable_claim_ids": ["C05-EC-006", "C05-EC-008"],
+    "intended_cti_node_ids": ["N03_c2"],
+    "expected_evidence_types": ["ioc_enrichment"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.3, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.25},
+    "status": "available",
+    "natural_language_request": "Enrich the R02 external endpoints against threat-intel infrastructure to confirm the C2 node when flow telemetry is unavailable.",
+    "notes": "Reliable threat-intel fallback for the C2 node; costlier than the cheap network summary (C05-AA-003) but not subject to network_telemetry outages."
   }
 ]

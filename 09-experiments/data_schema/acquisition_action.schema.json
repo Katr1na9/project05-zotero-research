@@ -151,12 +151,16 @@
       "uniqueItems": true
     },
     "intended_cti_node_ids": {
-      "description": "Public action-to-gap intent: CTI node ids that this acquisition action is expected to help resolve. This field is available to non-oracle planners and must not encode hidden claim outcomes.",
+      "description": "Public *declared* target: the CTI node ids this acquisition action advertises it will help resolve. Available to non-oracle planners. This is a declaration of intent, NOT ground truth: realised recovery can diverge from it (e.g. the action's acquisition channel is unreliable and returns nothing, or the underlying evidence is absent). Planners must not treat this field as an answer key for hidden claim outcomes.",
       "type": "array",
       "items": {
         "type": "string"
       },
       "uniqueItems": true
+    },
+    "acquisition_channel": {
+      "description": "Public collection channel / data source that fulfils this action (e.g. host_forensics, network_telemetry, threat_intel). Channels carry a documented, pre-registered reliability profile in the case config (channel_reliability); an unreliable channel can return nothing even when the target evidence exists. When omitted, the channel is derived from action_type.",
+      "type": "string"
     },
     "expected_evidence_types": {
       "type": "array",

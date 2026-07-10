@@ -36,6 +36,7 @@ FEATURE_COLUMNS = [
     "intended_critical_gap_overlap_count",
     "intended_gap_precision",
     "intended_gap_recall",
+    "channel_prior_reliability",
     "expected_granularity_gain",
     "expected_uncertainty_reduction",
     "expected_over_attribution_risk_reduction",
@@ -117,6 +118,9 @@ def feature_row(
         "intended_gap_recall": float(
             len(intended_gap_overlap) / max(1, len(unmatched_nodes))
         ),
+        "channel_prior_reliability": run_mvp.channel_reliability(
+            config, run_mvp.acquisition_channel(action)
+        ),
         "expected_granularity_gain": run_mvp.expected_effect(
             action,
             "expected_granularity_gain",
@@ -145,9 +149,10 @@ def counterfactual_labels(
     visible_ids: set[str],
     hidden_ids: set[str],
     action: dict[str, Any],
+    seed: int,
 ) -> dict[str, int]:
     before_nodes = run_mvp.covered_node_ids(config, visible_ids)
-    recovered = run_mvp.recoverable_hidden(action, hidden_ids)
+    recovered = run_mvp.realized_recovery(config, action, hidden_ids, seed)
     after_visible = visible_ids | recovered
     after_nodes = run_mvp.covered_node_ids(config, after_visible)
     resolved_nodes = (
@@ -230,7 +235,9 @@ def build_case_rows(
                 "target_granularity": config["target_granularity"],
             }
             row.update(feature_row(config, state, action))
-            row.update(counterfactual_labels(config, visible_ids, hidden_ids, action))
+            row.update(
+                counterfactual_labels(config, visible_ids, hidden_ids, action, seed)
+            )
             rows.append(row)
 
     return rows
@@ -360,10 +367,15 @@ def select_model_action(
 
 
 def reliability_group(action: dict[str, Any]) -> str:
-    evidence_types = sorted(
-        action.get("expected_evidence_types", []) or ["unknown"]
-    )
-    return f"{action.get('action_type', 'unknown')}|{','.join(evidence_types)}"
+    """Public reliability key: the acquisition channel that fulfils the action.
+
+    Grouping by channel (not action_type) lets a zero-yield observation on one
+    network action transfer to other actions that share the same flaky channel,
+    while leaving reliable-channel alternatives untouched. Identical twins that
+    share a channel remain an intentional negative control.
+    """
+
+    return run_mvp.acquisition_channel(action)
 
 
 def reliability_posteriors(
@@ -853,6 +865,94 @@ def run_reliability_decoy_stress_experiment(
     return report
 
 
+def channel_outage_conditions(
+    config: dict[str, Any],
+    channel: str = "network_telemetry",
+) -> list[tuple[str, float, int]]:
+    """Keep only episodes where ``channel`` is realised offline.
+
+    The public prior in ``channel_reliability`` is left unchanged, so static
+    planners still see the pre-registered reliability. Adaptive planners must
+    learn from the first zero-yield feedback and switch to a reliable channel.
+    """
+
+    return [
+        (strategy, intensity, seed)
+        for strategy, intensity, seed in run_mvp.experiment_conditions(config)
+        if not run_mvp.channel_is_up(config, channel, seed)
+    ]
+
+
+def run_channel_outage_stress_experiment(
+    train_root: Path,
+    test_root: Path,
+    output_dir: Path,
+    label_column: str,
+    cost_penalty: float,
+    baseline_planners: list[str],
+    channel: str = "network_telemetry",
+) -> dict[str, Any]:
+    """Positive stress: evaluate policies only on realised channel-outage seeds.
+
+    Unlike matched identical twins, the failure mode is publicly distinguishable
+    after the first zero-yield observation on the outage channel, because
+    reliable fallback actions live on a different ``acquisition_channel``.
+    """
+
+    train_dirs = resolve_case_dirs(train_root)
+    test_dirs = resolve_case_dirs(test_root)
+    train_rows = build_rows_for_case_dirs(train_dirs)
+    model = train_logistic_baseline(train_rows, FEATURE_COLUMNS, label_column)
+
+    rows: list[dict[str, Any]] = []
+    condition_count = 0
+    cases_with_outage = 0
+    for case_dir in test_dirs:
+        config = load_json(case_dir / "case_config.json")
+        claims = load_json(case_dir / "evidence_claims.json")
+        actions = load_json(case_dir / "acquisition_actions.json")
+        conditions = channel_outage_conditions(config, channel)
+        if not conditions:
+            continue
+        cases_with_outage += 1
+        condition_count += len(conditions)
+        case_rows, _ = evaluate_reliability_policy_case_dirs(
+            [(config, claims, actions)],
+            model,
+            cost_penalty,
+            baseline_planners,
+            conditions=conditions,
+        )
+        rows.extend(case_rows)
+
+    if not rows:
+        raise ValueError(
+            f"No outage conditions found for channel={channel!r}; "
+            "cases need a channel_reliability profile below 1.0"
+        )
+
+    rows = run_mvp.add_oracle_relative_metrics(rows)
+    summary = run_mvp.summarize(rows)
+    report = {
+        "intervention": "realised_channel_outage",
+        "outage_channel": channel,
+        "label_column": label_column,
+        "cost_penalty": cost_penalty,
+        "train_case_count": len(train_dirs),
+        "test_case_count": len(test_dirs),
+        "cases_with_outage": cases_with_outage,
+        "outage_condition_count": condition_count,
+        "baseline_planners": baseline_planners,
+        "reliability_group": "acquisition_channel",
+        "model": model,
+        "summary": summary,
+    }
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "m3b_channel_outage_stress_results.csv", rows)
+    write_json(output_dir / "m3b_channel_outage_stress_summary.json", report)
+    return report
+
+
 def brier_score(probs: list[float], labels: list[int]) -> float | None:
     if not probs:
         return None
@@ -1014,6 +1114,11 @@ def main() -> None:
         help="Run repeated matched-decoy stress for the adaptive policy.",
     )
     parser.add_argument(
+        "--channel-outage-stress",
+        action="store_true",
+        help="Evaluate adaptive vs static policies on realised network-channel outage seeds.",
+    )
+    parser.add_argument(
         "--decoy-copies",
         type=int,
         default=2,
@@ -1093,6 +1198,21 @@ def main() -> None:
                 "oracle_optimal",
             ],
             copies_per_action=args.decoy_copies,
+        )
+        print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
+    if args.channel_outage_stress:
+        report = run_channel_outage_stress_experiment(
+            args.train_dir,
+            args.test_dir,
+            args.output_dir,
+            args.label_column,
+            args.cost_penalty,
+            [
+                "coverage_greedy",
+                "project05_m2",
+                "project05_m3a_gap_compat",
+                "oracle_optimal",
+            ],
         )
         print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
 

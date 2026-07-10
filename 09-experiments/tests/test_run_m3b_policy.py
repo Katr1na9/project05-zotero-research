@@ -131,19 +131,49 @@ class M3bPolicyTests(unittest.TestCase):
 
         posterior = run_m3b.reliability_posteriors(self.actions, feedback)
 
+        self.assertEqual("host_forensics", run_m3b.reliability_group(self.actions[0]))
+        self.assertEqual("network_telemetry", run_m3b.reliability_group(self.actions[1]))
+        self.assertEqual(1.0, posterior["host_forensics"]["alpha"])
+        self.assertEqual(2.0, posterior["host_forensics"]["beta"])
+        self.assertAlmostEqual(1 / 3, posterior["host_forensics"]["mean"])
+        self.assertAlmostEqual(2 / 3, posterior["network_telemetry"]["mean"])
+
+    def test_channel_failure_transfers_within_channel_not_across(self):
+        network_a = {
+            "action_id": "net-a",
+            "action_type": "recover_network_summary",
+            "cost": 2,
+            "recoverable_claim_ids": ["E-critical"],
+            "intended_cti_node_ids": ["N-critical"],
+            "expected_effects": {},
+        }
+        network_b = {
+            "action_id": "net-b",
+            "action_type": "recover_network_summary",
+            "cost": 2,
+            "recoverable_claim_ids": ["E-other"],
+            "intended_cti_node_ids": ["N-other"],
+            "expected_effects": {},
+        }
+        host = {
+            "action_id": "host",
+            "action_type": "query_host_subgraph",
+            "cost": 3,
+            "recoverable_claim_ids": ["E-critical"],
+            "intended_cti_node_ids": ["N-critical"],
+            "expected_effects": {},
+        }
+        actions = [network_a, network_b, host]
+        posterior = run_m3b.reliability_posteriors(
+            actions,
+            [{"action_id": "net-a", "recovered_count": 0}],
+        )
+
+        self.assertAlmostEqual(1 / 3, posterior["network_telemetry"]["mean"])
+        self.assertNotIn("host_forensics", posterior)
         self.assertEqual(
-            "query_host_subgraph|unknown",
-            run_m3b.reliability_group(self.actions[0]),
-        )
-        self.assertEqual(1.0, posterior["query_host_subgraph|unknown"]["alpha"])
-        self.assertEqual(2.0, posterior["query_host_subgraph|unknown"]["beta"])
-        self.assertAlmostEqual(
-            1 / 3,
-            posterior["query_host_subgraph|unknown"]["mean"],
-        )
-        self.assertAlmostEqual(
-            2 / 3,
-            posterior["recover_network_summary|unknown"]["mean"],
+            run_m3b.reliability_group(network_a),
+            run_m3b.reliability_group(network_b),
         )
 
     def test_reliability_selector_ignores_hidden_outcomes_before_execution(self):
@@ -317,6 +347,38 @@ class M3bPolicyTests(unittest.TestCase):
             self.assertIn("project05_m3b_policy", report["summary"])
             self.assertTrue(
                 (output_dir / "m3b_reliability_decoy_stress_results.csv").is_file()
+            )
+
+    def test_channel_outage_stress_filters_to_offline_seeds(self):
+        root = Path(__file__).resolve().parents[1]
+        config = run_mvp.load_json(
+            root / "real_cases" / "C04-darpa-e3-fivedirections" / "case_config.json"
+        )
+        conditions = run_m3b.channel_outage_conditions(config, "network_telemetry")
+        self.assertTrue(conditions)
+        for _, _, seed in conditions:
+            self.assertFalse(
+                run_mvp.channel_is_up(config, "network_telemetry", seed)
+            )
+
+    def test_channel_outage_stress_writes_results(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output_dir = Path(temp_dir)
+            report = run_m3b.run_channel_outage_stress_experiment(
+                root / "examples",
+                root / "real_cases",
+                output_dir,
+                "label_resolves_critical_gap_node",
+                0.1,
+                ["project05_m3a_gap_compat", "oracle_optimal"],
+            )
+
+            self.assertEqual("realised_channel_outage", report["intervention"])
+            self.assertGreater(report["outage_condition_count"], 0)
+            self.assertIn("project05_m3b_reliability_policy", report["summary"])
+            self.assertTrue(
+                (output_dir / "m3b_channel_outage_stress_results.csv").is_file()
             )
 
 

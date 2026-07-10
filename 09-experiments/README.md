@@ -1,15 +1,30 @@
 # Project05 Experiments
 
-## C06 独立留出验证（2026-07-09）
+## P0-#1 纠错：打破 `intended_cti_node_ids` 特征泄题（2026-07-10）
+
+审查发现所有案例（C01–C06）的动作 `intended_cti_node_ids`（公开"声称目标"）在 OR 覆盖语义下恰好等于该动作 `recoverable_claim_ids` 实际覆盖的节点集合，等同于把答案键交给 M3a/M3b 规划器，使 M3a 近似 Oracle 等价、M3b 无真实可学习空间。
+
+纠错引入**采集通道可靠性（channel reliability）**机制，把"声称目标（declared）"与"实际恢复（actual）"解耦：
+
+- 每个动作有公开的采集通道（默认由 `action_type` 派生，可用 `acquisition_channel` 覆盖）；不可靠通道即使证据存在也可能零收益。
+- 通道是否在线：按 `sha256(case_id|channel|seed)` 的确定性伯努利抽样（可复现、跨平台一致）。可靠性写在各 `case_config.json` 的 `channel_reliability` 里（预登记）。
+- 缺省完全向后兼容：未声明 `channel_reliability` 的 config 通道可靠性=1.0，行为不变。
+
+预登记档案：`network_telemetry`（`recover_network_summary`）可靠性 0.5，其余通道 1.0。为保证单通道关键节点仍有可靠恢复路径，给 C02/C04/C05 各补一个更贵的可靠回退动作（`C02-AA-007`、`C04-AA-006`、`C05-AA-006`）。
+
+不变量（通道门控下仍严格成立，见 `tests/test_channel_reliability.py`）：Oracle 仍是成本下界（`regret ≥ 0`），且任一规划器达标时 Oracle 必达标。通道离线导致部分高遮蔽 episode 在预算内不可解，属于预期——这正是"何时应停/降级"论线要测的能力。
+
+细节与预登记见 `../04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md`。`results/` 已于 2026-07-10 按该机制重跑刷新。M4 通道离线正向压力见 `../04-progress/m4-channel-reliability-outage-stress-20260710.md`。
+
+## C06 独立留出验证（2026-07-10 重跑）
 
 - 数据：CADETS 2018-04-12，318,821 条窗口事件，29,620 个引用节点全部解析。
 - 案例：10/10 个真实 CDM motif，目标与支持上限均为 `G3_campaign`。
-- 协议：M2 公式先冻结，再构建和运行 C06；585 次运行均保留。
-- 总体成功率：M2 `0.5111`，M1 `0.5111`，coverage greedy `0.7111`，Oracle `1.0000`。
-- 在 27 个初始未达目标的挑战条件中：M2/M1 均为 `5/27`，coverage greedy 为 `14/27`，Oracle 为 `27/27`。
-- 结论：当前 M2 是负结果。粗粒度阶段/证据类型缺口及零收益反馈不足以识别预算内应恢复的关键 claim；不得将 C06 表述为跨数据集泛化。
+- 协议：含通道可靠性门控；585 次运行均保留。
+- 总体成功率：M2 `0.5111`，M1 `0.5111`，coverage greedy `0.7111`，M3a `0.9778`，Oracle `1.0000`。
+- 结论：当前 M2 仍是负结果；通道门控后 M3a 仍强，但不再与 Oracle 成本等价（见下方 toy 矩阵 regret）。不得将 C06 表述为跨数据集泛化。
 
-结果文件：`results/c06_holdout_results.csv`、`results/c06_holdout_summary.json`、`results/c06_holdout_analysis.json`。
+结果文件：`results/c06_holdout_results.csv`、`results/c06_holdout_summary.json`。
 
 本目录用于 Project05 最小可行实验实现。当前已经完成 C01 小样例和 dependency-free MVP 模拟器。
 
@@ -112,23 +127,25 @@ results/all_cases_summary.json
 
 `all_cases_traces.json` 约 20.5 MB，由命令在本地生成，不进入 Git。
 
-修正信息泄漏后，当前共 3 个独立案例、1620 个重复运行。总体结果如下：
+P0-#1 通道可靠性纠错后（2026-07-10 重跑），3 个独立 toy 案例总体结果如下：
 
 | Planner | success_rate | mean_cost_to_target | mean regret vs Oracle |
 |---|---:|---:|---:|
-| oracle_optimal | 1.0000 | 2.3778 | 0.0000 |
-| project05_m1 | 0.9333 | 3.5714 | 1.1984 |
-| m1_no_granularity | 0.9630 | 4.1000 | 1.7385 |
-| m1_no_uncertainty | 0.9333 | 3.5714 | 1.1984 |
-| m1_no_risk | 0.9333 | 3.5714 | 1.1984 |
-| m1_no_coverage | 0.8741 | 3.3390 | 1.0424 |
-| m1_no_cost | 0.9333 | 3.9048 | 1.5317 |
-| cmi_proxy | 0.7704 | 4.0000 | 1.9423 |
-| coverage_greedy | 0.9630 | 4.3077 | 1.9462 |
-| random | 0.6444 | 4.1034 | 2.0920 |
-| fixed_order | 1.0000 | 4.8741 | 2.4963 |
+| oracle_optimal | 0.9778 | 2.4924 | 0.0000 |
+| project05_m3a_gap_compat | 0.9556 | 2.6744 | 0.2558 |
+| project05_m1 | 0.8148 | 3.9545 | 1.7000 |
+| m1_no_uncertainty | 0.8148 | 3.9545 | 1.7000 |
+| m1_no_risk | 0.8148 | 3.9545 | 1.7000 |
+| m1_no_cost | 0.8148 | 3.9818 | 1.7273 |
+| coverage_greedy | 0.8000 | 4.0648 | 1.9352 |
+| project05_m2 | 0.8000 | 3.7315 | 1.4907 |
+| m1_no_granularity | 0.8000 | 4.0648 | 1.9352 |
+| m1_no_coverage | 0.7704 | 3.7788 | 1.5865 |
+| fixed_order | 0.7481 | 4.1584 | 2.0198 |
+| cmi_proxy | 0.6000 | 3.5679 | 1.9136 |
+| random | 0.5704 | 4.1818 | 2.2857 |
 
-`cmi_proxy` 只使用动作元数据中的预期不确定性下降，不是真实条件互信息。`m1_no_uncertainty` 和 `m1_no_risk` 与完整 M1 结果相同，说明当前 toy 动作元数据不足以让这两个分量改变动作排序。以上数字仍只验证多案例 toy 协议，不构成论文有效性结论。
+要点：Oracle 成功率不再恒为 1.0（部分 episode 因 `network_telemetry` 离线在预算内不可解）；M3a 相对 Oracle 的 mean regret 升至 `0.2558`，不再近似等价。`cmi_proxy` 只使用动作元数据中的预期不确定性下降，不是真实条件互信息。以上数字仍只验证多案例 toy 协议，不构成论文有效性结论。
 
 ## DARPA TC E3 真实数据接入
 
