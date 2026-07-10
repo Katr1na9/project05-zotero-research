@@ -1,0 +1,74 @@
+{
+  "dataset_id": "darpa-tc-e5-project05-c07-holdout",
+  "dataset_name": "DARPA Transparent Computing Engagement 5",
+  "phase": "phase1_raw_window_extracted",
+  "evaluation_role": "true_cross_engagement_holdout",
+  "development_only": false,
+  "official_root_url": "https://github.com/darpa-i2o/Transparent-Computing",
+  "source_timezone": "America/New_York",
+  "documents": [
+    {
+      "document_id": "e5_ta51_final_report",
+      "local_filename": "TA51_Final_report_E5.pdf",
+      "official_filename": "tc_ground_truth_report_e5_update.pdf",
+      "document_type": "TA5.1 ground-truth final report",
+      "sha256": "95785DD6E32E1585E3A3B49F7F69AAC785CA9D2DB05593AD919B1B627897F0A1",
+      "download_status": "available_local_verified"
+    },
+    {
+      "document_id": "e5_operational_event_log",
+      "local_filename": "Engagement-5-Event-Log.md",
+      "official_filename": "operational_event_log.md",
+      "document_type": "engagement operational event log",
+      "sha256": "70B111FFF7BC4662D4C22664BE19C4C08702A36676F31F160D4B3A856EE5C3C9",
+      "download_status": "available_local_verified"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "theia_e5_pidsmaker_postgres_dump",
+      "dataset_name": "THEIA_E5",
+      "performer": "THEIA",
+      "repository": "https://github.com/ubc-provenance/PIDSMaker",
+      "format": "PostgreSQL custom archive (PGDMP)",
+      "raw_target": "raw/pidsmaker/theia_e5.dump",
+      "download_status": "available_local_verified",
+      "size_bytes": 6187437078,
+      "sha256": "8072F8F767EC9CE680D359957F4D394DF171BD7EB6604393C2F50FA45BA8D303",
+      "catalog_status": "cataloged_and_window_extracted",
+      "limitations": [
+        "PIDSMaker is a preprocessed derivative rather than a byte-identical official CDM archive.",
+        "The local checksum attests to the acquired file only; no upstream checksum has been independently verified.",
+        "The archive catalog, schema, event totals, and record identifiers remain uninspected until PostgreSQL client tools are available.",
+        "The selected window is locked from TA5.1 ground truth before any event-level motif compilation."
+      ]
+    }
+  ],
+  "derived_artifacts": [
+    {
+      "artifact_id": "r04_postgres_catalog",
+      "path": "derived/R04_postgres_catalog.json",
+      "status": "generated",
+      "use": "Non-destructive archive catalog used to select tables and confirm the time field before extraction."
+    },
+    {
+      "artifact_id": "r04_extraction_summary",
+      "path": "derived/R04_extraction_summary.json",
+      "status": "generated",
+      "use": "Reproducibility metadata for the bounded E5 event and node subset."
+    },
+    {
+      "artifact_id": "r04_node_resolution_summary",
+      "path": "derived/R04_node_resolution_summary.json",
+      "status": "generated",
+      "use": "Coverage and checksum metadata for resolving event-node hashes through the three PIDSMaker node tables."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "R04",
+      "source_id": "theia_e5_pidsmaker_postgres_dump",
+      "ground_truth_file": "ground_truth/R04.json"
+    }
+  ]
+}

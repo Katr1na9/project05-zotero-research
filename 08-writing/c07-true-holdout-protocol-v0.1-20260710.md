@@ -1,7 +1,7 @@
 # C07 真留出协议 v0.1
 
 日期：2026-07-10  
-状态：协议锁定；**数据尚未接入**  
+状态：已评估；**单一 E5 真留出完成，待第二独立留出复现**
 前置：`contribution-boundary-and-results-brief-v0.1.md`（M3a 主线已冻结）
 
 ## 1. 目的
@@ -65,15 +65,25 @@
 | 项 | 状态 |
 |---|---|
 | E3 R01/R02/R03 原始窗 | 已有管线与摘要；R03=C06，不可作 C07 |
-| E5 / OpTC 原始数据 | **未下载、未建 manifest** |
+| E5 THEIA R04 原始数据 | 已接入本地 `theia_e5.dump`；哈希、manifest、ground truth、流式抽取摘要均已记录 |
+| C07 E5 THEIA | 已编译并评估：2019-05-15 14:48–15:07 EDT Firefox Drakon BinFmt-Elevate trace |
+| OpTC / 第二留出 | 尚未接入；用于检验单一 C07 结论是否可复现 |
 | M3a 公式 | 已冻结于 `run_mvp.py` |
 
-**下一步工程动作（有数据后）**：
+### C07 首轮结果（冻结后执行）
 
-1. 选定 E5 ground-truth 中的单一攻击窗 → 写 `real_data/darpa_tc_e5/manifest.json` + `ground_truth/R04.json`（编号可调）。
-2. 流式抽取 → motif 编译 → C07 三件套。
-3. `python run_mvp.py` 指向 C07；结果写入 `results/c07_holdout_*`。
-4. 更新本协议状态为 `evaluated`，并回写贡献边界简报第 4.2 节（删除“尚无真留出”）。
+- 真实窗口：全表流式扫描 140,994,662 条 event row，抽出 256,297 条窗口事件，解析 7,043/7,043 个节点哈希。
+- 真实对齐：Firefox 与 `208.203.20.42:80` 通信、两次 `binfmt-0000` 执行、`sshd` 打开 `/var/log/sshdlog` 均可回指 event UUID；报告中的 `189.141.204.211:80` 与直接 injection event 未在此 schema/window 中观察到。
+- 评估：每个规划器 45 个 mask 条件；M3a 和 M2 的 success 均为 1.0，M3a 平均代价 4.356、M2 为 4.311、Oracle 为 3.644；无 ceiling violation。
+- 解释：M3a 在网络通道失效后 16/16 次走可靠主机回退，且不选良性驱动审查动作；但本案例中 M3a 的成本略高于 M2，**不能**据此主张成本优越。
+
+详细源验证见 `09-experiments/real_data/darpa_tc_e5/derived/R04-trace-validation-20260710.md`，结果见 `09-experiments/results/c07_holdout_m3a/README.md`。
+
+**下一步工程动作（不调 M3a 参数）**：
+
+1. 接入 OpTC 或第二个 E5 异构 performer 窗口，复用冻结公式与当前编译规范。
+2. 对 M3a/M2 的 paired regret 做第二留出汇总，再决定是否可写非劣或稳健性结论。
+3. 扩展真实 trace 的自然缺口审计，不把 report-only observable 伪造成 event-level claim。
 
 ## 7. 临时可做、但不替代 C07 的工作
 

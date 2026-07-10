@@ -1,0 +1,91 @@
+{
+  "case_id": "R04",
+  "case_name": "THEIA Firefox Drakon APT BinFmt-Elevate Inject",
+  "development_only": false,
+  "holdout_role": "true_cross_engagement_holdout",
+  "source_id": "theia_e5_pidsmaker_postgres_dump",
+  "platform": "Ubuntu 12.04",
+  "target_host": "ta1-theia-target-1",
+  "target_ip": "128.55.12.110",
+  "scenario_date": "2019-05-15",
+  "source_timezone": "America/New_York",
+  "local_window": {
+    "start": "2019-05-15T14:48:00-04:00",
+    "end": "2019-05-15T15:07:00-04:00"
+  },
+  "utc_window": {
+    "start": "2019-05-15T18:48:00Z",
+    "end": "2019-05-15T19:07:00Z"
+  },
+  "ground_truth_document": "e5_ta51_final_report",
+  "ground_truth_section": "8.6, PDF pages 79-81",
+  "ground_truth_summary": "A Firefox visit to www.nhra.com established a Drakon backdoor. The operator used the BinFmt-Elevate capability, enumerated processes, injected into sshd, and the injected shellcode wrote sshdlog to disk.",
+  "evidence_readiness": "ground_truth_and_raw_window_validated",
+  "natural_incompleteness": true,
+  "supportable_ceiling": "G3_campaign",
+  "attack_stages": [
+    {
+      "stage": "initial_access_execution",
+      "status": "reported",
+      "summary": "Firefox browsed to www.nhra.com and a Drakon backdoor console connected to the target."
+    },
+    {
+      "stage": "command_and_control",
+      "status": "reported",
+      "summary": "The report identifies C2 connections to 189.141.204.211:80 and 208.203.20.42:80."
+    },
+    {
+      "stage": "privilege_escalation",
+      "status": "reported",
+      "summary": "The BinFmt-Elevate capability ultimately changed the console identity to uid 0 root."
+    },
+    {
+      "stage": "discovery",
+      "status": "reported",
+      "summary": "The operator enumerated processes and selected the sshd process (PID 1162 in the report)."
+    },
+    {
+      "stage": "process_injection",
+      "status": "reported",
+      "summary": "The operator injected shellcode into sshd using Inject2."
+    },
+    {
+      "stage": "file_write",
+      "status": "reported",
+      "summary": "Injected shellcode wrote sshdlog under /var/log."
+    }
+  ],
+  "gold_observables": [
+    "ta1-theia-target-1",
+    "128.55.12.110",
+    "Firefox",
+    "www.nhra.com",
+    "189.141.204.211",
+    "208.203.20.42",
+    "elevate",
+    "sshd",
+    "1162",
+    "sshdlog",
+    "/var/log"
+  ],
+  "data_quality_notes": [
+    "The operational log records THEIA publishing and recording instability before 14:30 EDT on 2019-05-15; the selected attack begins at 14:48 EDT after publishing resumed.",
+    "The report says the hosts that were not publishing eventually pushed out accumulated data; event-level completeness is therefore an extraction-time validation question, not an assumption.",
+    "No event UUID, database table, timestamp field, or motif is asserted until the PGDMP archive is cataloged and extracted."
+  ],
+  "raw_validation": {
+    "event_rows_in_locked_window": 256297,
+    "node_hashes_resolved": "7043/7043",
+    "trace_confirmed_observables": [
+      "Firefox bidirectional C2 traffic with 208.203.20.42:80",
+      "Two /sbin/modprobe -q -- binfmt-0000 executions at 14:50 and 14:54 EDT",
+      "The /var/log/sshdlog artifact opened by /usr/sbin/sshd at 14:58 EDT",
+      "Benign load_helper.ko and read_scan.ko driver installations"
+    ],
+    "trace_unconfirmed_report_observables": [
+      "189.141.204.211:80 C2 endpoint",
+      "A direct process-injection event"
+    ]
+  },
+  "notes": "This case was selected only after M3a, its STOP semantics, and channel priors were frozen. It is a true cross-engagement holdout, not an input to method design or parameter tuning. The ground truth supports campaign-level reconstruction, not attribution to a named threat actor."
+}

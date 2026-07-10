@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the DARPA TC E3 real-data pilot manifest."""
+"""Validate a DARPA TC real-data manifest."""
 
 from __future__ import annotations
 
@@ -71,8 +71,8 @@ def validate_manifest(real_data_dir: Path) -> list[str]:
             errors.append(f"{case_id}: case_id mismatch")
         if case.get("source_id") != case_ref.get("source_id"):
             errors.append(f"{case_id}: source_id mismatch")
-        if not case.get("development_only"):
-            errors.append(f"{case_id}: must be development_only")
+        if not isinstance(case.get("development_only"), bool):
+            errors.append(f"{case_id}: development_only must be a boolean")
         if case.get("ground_truth_document") not in document_id_set:
             errors.append(f"{case_id}: unknown ground_truth_document")
         try:

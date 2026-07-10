@@ -1,0 +1,117 @@
+{
+  "case_id": "C07-darpa-e5-theia-0515",
+  "source_case_id": "R04",
+  "artifact_id": "darpa_e5_R04_pidsmaker_event_table",
+  "construction_boundary": "Ground-truth-informed offline motif labels are compiled from the frozen E5 THEIA event window. Planners receive only claims and public action metadata; M3a parameters are not changed for C07.",
+  "motifs": [
+    {
+      "motif_id": "C07-EC-001",
+      "match": {
+        "event_type_in": ["EVENT_RECVFROM"],
+        "process_contains_any": ["/usr/local/lib/firefox-54.0.1/firefox"],
+        "remote_ip_in": ["208.203.20.42"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "Firefox (report PID 534051)"},
+        "predicate": "received_data_from",
+        "object": {"entity_type": "ip", "value": "208.203.20.42:80"},
+        "mapped_tactic": ["command_and_control"],
+        "mapped_technique": ["T1071"],
+        "evidence_strength": "critical",
+        "confidence": 0.98,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R04_campaign"],
+        "notes": "The raw window directly links Firefox to the observed 208.203.20.42:80 endpoint. The separate report-only 189.141.204.211 endpoint is not turned into a trace claim.",
+        "tags": ["hideable", "real_pidsmaker", "stage:command_and_control", "node:N01_firefox_c2", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C07-EC-002",
+      "match": {
+        "event_type_in": ["EVENT_EXECUTE"],
+        "process_contains_any": ["/sbin/modprobe -q -- binfmt-0000"]
+      },
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "/sbin/modprobe"},
+        "predicate": "executed_binfmt_handler",
+        "object": {"entity_type": "command", "value": "/sbin/modprobe -q -- binfmt-0000"},
+        "mapped_tactic": ["privilege_escalation"],
+        "evidence_strength": "critical",
+        "confidence": 0.94,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R04_campaign"],
+        "notes": "The raw observation is the binfmt handler execution. The TA5.1 report links this capability to elevation; this claim does not independently assert a root transition.",
+        "tags": ["hideable", "real_pidsmaker", "stage:privilege_escalation", "node:N02_binfmt_elevation", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C07-EC-003",
+      "match": {
+        "event_type_in": ["EVENT_OPEN"],
+        "process_contains_any": ["/usr/sbin/sshd"],
+        "path_contains_any": ["/var/log/sshdlog"]
+      },
+      "claim": {
+        "source_type": "provenance_graph",
+        "claim_type": "file_activity",
+        "subject": {"entity_type": "process", "value": "/usr/sbin/sshd"},
+        "predicate": "opened",
+        "object": {"entity_type": "file", "value": "/var/log/sshdlog"},
+        "mapped_tactic": ["defense_evasion"],
+        "mapped_technique": ["T1055"],
+        "evidence_strength": "critical",
+        "confidence": 0.93,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R04_campaign"],
+        "notes": "The TA5.1 report attributes sshdlog to Inject2 shellcode. The PGDMP schema directly exposes only the linked sshd file-open artifact, not a dedicated injection event type.",
+        "tags": ["hideable", "real_pidsmaker", "stage:post_compromise", "node:N03_sshd_artifact", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C07-EC-004",
+      "match": {
+        "event_type_in": ["EVENT_EXECUTE"],
+        "process_contains_any": ["sudo insmod ./load_helper.ko"]
+      },
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "benign_maintenance",
+        "subject": {"entity_type": "process", "value": "/usr/bin/sudo"},
+        "predicate": "installed_kernel_module",
+        "object": {"entity_type": "file", "value": "/home/admin/load_helper.ko"},
+        "mapped_tactic": [],
+        "evidence_strength": "context",
+        "confidence": 0.99,
+        "observable_status": "visible",
+        "supports_hypotheses": ["benign_context"],
+        "notes": "The TA5.1 report identifies this driver installation as benign activity during the engagement.",
+        "tags": ["hideable", "real_pidsmaker", "stage:benign_context", "benign_context", "decoy"]
+      }
+    },
+    {
+      "motif_id": "C07-EC-005",
+      "match": {
+        "event_type_in": ["EVENT_EXECUTE"],
+        "process_contains_any": ["sudo insmod ./read_scan.ko"]
+      },
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "benign_maintenance",
+        "subject": {"entity_type": "process", "value": "/usr/bin/sudo"},
+        "predicate": "installed_kernel_module",
+        "object": {"entity_type": "file", "value": "/home/admin/read_scan.ko"},
+        "mapped_tactic": [],
+        "evidence_strength": "context",
+        "confidence": 0.99,
+        "observable_status": "visible",
+        "supports_hypotheses": ["benign_context"],
+        "notes": "The TA5.1 report identifies this driver installation as benign activity during the engagement.",
+        "tags": ["hideable", "real_pidsmaker", "stage:benign_context", "benign_context", "decoy"]
+      }
+    }
+  ]
+}

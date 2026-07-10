@@ -1,0 +1,38 @@
+{
+  "case_id": "C07-darpa-e5-theia-0515",
+  "source_case_id": "R04",
+  "case_name": "DARPA E5 THEIA Firefox Drakon BinFmt-Elevate trace",
+  "description": "True cross-engagement holdout compiled from the E5 THEIA 2019-05-15 bounded PGDMP trace. The campaign graph uses only trace-backed motifs and preserves documented evidence gaps.",
+  "development_only": false,
+  "holdout_role": "true_cross_engagement_holdout",
+  "target_granularity": "G3_campaign",
+  "support_ceiling": "G3_campaign",
+  "budget_total": 9,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C07-AA-001", "C07-AA-002", "C07-AA-003", "C07-AA-004", "C07-AA-005"],
+  "stage_mask_tags": ["stage:command_and_control", "stage:privilege_escalation", "stage:post_compromise"],
+  "discriminative_claim_ids": ["C07-EC-001", "C07-EC-002", "C07-EC-003"],
+  "channel_reliability": {
+    "network_telemetry": 0.5,
+    "host_forensics": 1.0,
+    "host_probe": 1.0,
+    "analyst": 1.0
+  },
+  "cti_nodes": [
+    {"node_id": "N01_firefox_c2", "stage": "command_and_control", "required_claim_ids": ["C07-EC-001"], "critical": true},
+    {"node_id": "N02_binfmt_elevation", "stage": "privilege_escalation", "required_claim_ids": ["C07-EC-002"], "critical": true},
+    {"node_id": "N03_sshd_artifact", "stage": "post_compromise", "required_claim_ids": ["C07-EC-003"], "critical": true}
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_firefox_c2", "target": "N02_binfmt_elevation"},
+    {"edge_id": "E02", "source": "N02_binfmt_elevation", "target": "N03_sshd_artifact"}
+  ],
+  "natural_incompleteness": {
+    "report_only_observables": ["189.141.204.211:80 C2 endpoint"],
+    "schema_unavailable_observables": ["direct process-injection operation"],
+    "policy": "No synthetic claim is created for either gap. The planner may reach only the G3 campaign ceiling supported by the observed chain."
+  },
+  "granularity_order": ["G0_unknown", "G1_technique", "G2_tactic_intent", "G3_campaign", "G4_actor_cluster", "G5_named_actor"]
+}

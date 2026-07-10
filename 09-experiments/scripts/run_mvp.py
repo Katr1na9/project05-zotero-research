@@ -193,6 +193,37 @@ def covered_node_ids(config: dict[str, Any], visible_ids: set[str]) -> set[str]:
     return covered
 
 
+def or_covered_node_ids(
+    config: dict[str, Any],
+    claim_ids: set[str] | list[str],
+) -> set[str]:
+    """CTI nodes covered under OR semantics by a claim set (e.g. recoverable ids)."""
+
+    return covered_node_ids(config, set(claim_ids))
+
+
+def intended_equals_recoverable_or(
+    config: dict[str, Any],
+    action: dict[str, Any],
+) -> bool:
+    """True when public intent is an exact answer key for recoverable OR-coverage.
+
+    Empty intent with empty recoverable coverage (noise / STOP-like actions) is
+    not treated as a leak. STOP actions are never flagged.
+    """
+
+    if is_stop_action(action):
+        return False
+    intended = set(action.get("intended_cti_node_ids", []))
+    covered = or_covered_node_ids(
+        config,
+        action.get("recoverable_claim_ids", []),
+    )
+    if not intended and not covered:
+        return False
+    return intended == covered
+
+
 def covered_edge_ids(config: dict[str, Any], covered_nodes: set[str]) -> set[str]:
     covered = set()
     for edge in config["cti_edges"]:
@@ -1279,19 +1310,31 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
+def single_case_output_paths(output_dir: Path, case_id: str) -> dict[str, Path]:
+    """Return case-specific output paths while retaining the C01 legacy names."""
+
+    prefix = case_id.casefold()
+    return {
+        "results": output_dir / f"{prefix}_mvp_results.csv",
+        "traces": output_dir / f"{prefix}_mvp_traces.json",
+        "summary": output_dir / f"{prefix}_mvp_summary.json",
+    }
+
+
 def run_all(case_dir: Path, output_dir: Path) -> None:
     rows, traces = execute_case(case_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    csv_path = output_dir / "c01_mvp_results.csv"
-    write_csv(csv_path, rows)
+    case_id = load_json(case_dir / "case_config.json")["case_id"]
+    output_paths = single_case_output_paths(output_dir, case_id)
+    write_csv(output_paths["results"], rows)
 
-    write_json(output_dir / "c01_mvp_traces.json", traces)
+    write_json(output_paths["traces"], traces)
     summary = summarize(rows)
-    write_json(output_dir / "c01_mvp_summary.json", summary)
+    write_json(output_paths["summary"], summary)
 
-    print(f"Wrote {csv_path}")
-    print(f"Wrote {output_dir / 'c01_mvp_traces.json'}")
-    print(f"Wrote {output_dir / 'c01_mvp_summary.json'}")
+    print(f"Wrote {output_paths['results']}")
+    print(f"Wrote {output_paths['traces']}")
+    print(f"Wrote {output_paths['summary']}")
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
 

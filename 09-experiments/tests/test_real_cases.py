@@ -9,6 +9,7 @@ EXPECTED = {
     "C04-darpa-e3-fivedirections": ("G3_campaign", 8),
     "C05-darpa-e3-cadets": ("G2_tactic_intent", 8),
     "C06-darpa-e3-cadets-0412": ("G3_campaign", 10),
+    "C07-darpa-e5-theia-0515": ("G3_campaign", 5),
 }
 
 
@@ -45,7 +46,10 @@ class RealCaseIntegrityTests(unittest.TestCase):
                     for node in config["cti_nodes"]
                 }
                 for claim in claims:
-                    self.assertIn("real_cdm", claim.get("tags", []))
+                    self.assertTrue(
+                        {"real_cdm", "real_pidsmaker"}
+                        & set(claim.get("tags", []))
+                    )
                     self.assertIn(
                         "representative_event_uuids=",
                         claim["notes"],

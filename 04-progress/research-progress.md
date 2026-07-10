@@ -1,12 +1,22 @@
 # Research Progress
 
+## 2026-07-10：DARPA TC E5 THEIA 真留出 C07 完成
+
+- 接入本地 PIDSMaker `theia_e5.dump`（6,187,437,078 bytes），登记 SHA-256、TA5.1 final report 与 E5 operational event log 的哈希；原始和派生产物继续排除在 Git 外。
+- 将 TA5.1 report 第 8.6 节锁定为 R04：2019-05-15 `14:48–15:07 EDT`，`ta1-theia-target-1` 的 Firefox Drakon BinFmt-Elevate Inject trace；窗口先于 event-level 读取确定。
+- 新增 PGDMP 流式 catalog、事件窗口抽取和节点解析器：完整扫描 140,994,662 条事件，抽得 256,297 条窗口事件，解析 7,043/7,043 个节点哈希；`timestamp_rec` 存在 48,543 次逆序，禁止使用提前停止扫描。
+- Trace 直接验证 Firefox 与 `208.203.20.42:80` 通信、两次 `binfmt-0000` 执行、`sshd` 打开 `/var/log/sshdlog`，并保留 `load_helper.ko` / `read_scan.ko` 良性驱动活动；报告中的 `189.141.204.211:80` 与直接 injection event 不在该 schema/window 中，未伪造为 claim。
+- C07 编译 5/5 个带 event UUID 回指的 motif，并建立廉价不可靠网络动作与可靠主机回退。冻结 M3a 后，每个 planner 运行 45 个条件：M3a 与 M2 success 均为 1.0；**intended≠OR 合规重跑后** M3a/M2/Oracle 平均成本为 `4.9333/4.3111/3.6444`（合规前快照为 `4.3556/4.3111/3.6444`），无 ceiling violation。
+- M3a 网络通道离线后 16/16 次使用可靠回退，且不选择良性驱动审查动作；但其本例平均成本高于 M2，不主张成本优越。下一步是 OpTC 或第二异构 performer 的不调参复现。
+- 同日补丁：按 `intended-cti-node-annotation-protocol-v0.1` 将 C07 动作改为过宽意图（intended≠OR(recoverable)），并重跑 holdout；C01–C06 仍在 CI allowlist。
+
 ## 2026-07-10：冻结 M3a 为主线，写出贡献边界
 
 - 决策：logistic M3b 在应停打平、部分可达近负后**不再作为升级对象**；技术主轴回到 `project05_m3a_gap_compat`。
 - 新增 `08-writing/contribution-boundary-and-results-brief-v0.1.md`：可主张/不可主张、常规矩阵与 M4 压力总表、专利叙事骨架。
 - 新增 `08-writing/c07-true-holdout-protocol-v0.1-20260710.md`：真留出必须来自 E5/OpTC；明确禁止再包装 C06/R03。
 - 新增专利骨架 `08-writing/patent-claims-draft-v0.3-20260710.md`（对齐缺口状态 + 公开意图 + 成本规划 + 停止/降级）。
-- 阻塞：本机尚无 E5/OpTC 原始数据；C07 评估需先建 manifest 与抽取。
+- **后续同日已完成 C07**（见上条）；本段不再保留“尚无 E5 数据”的过时阻塞表述。
 
 ## 2026-07-10：M4 部分可达选路压力（近负结果）
 

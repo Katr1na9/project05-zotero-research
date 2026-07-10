@@ -68,11 +68,11 @@ flowchart LR
 | G2 撞题扫描 | 进行中 | 对齐谱系与 WinRegRL 红线已记；仍需补中文专利侧、APTChaser/GAPT 正文 |
 | G3 创新强度 | 可写边界已收紧 | 主张表示+规划+停止，不主张可学习效用打赢规则 |
 | G4 专利权利要求 | 骨架更新 | [v0.3](../08-writing/patent-claims-draft-v0.3-20260710.md) 对齐 M3a；正式检索与措辞待补 |
-| G5 实验可执行性 | Phase 1+ 已跑通 | C01–C06 + 通道可靠性 + STOP/M4 压力；**缺 E5/OpTC 真留出 C07** |
+| G5 实验可执行性 | C07 首轮完成 | C01–C06 + 通道可靠性 + STOP/M4 压力；E5 THEIA C07 已跑，**缺第二独立留出复现** |
 
 ## 下一步
 
-1. 按 [C07 真留出协议](../08-writing/c07-true-holdout-protocol-v0.1-20260710.md) 接入 DARPA TC **E5**（优先 THEIA/ClearScope）或 OpTC；冻结 M3a 公式后评估。
+1. 按 [C07 真留出协议](../08-writing/c07-true-holdout-protocol-v0.1-20260710.md) 接入 OpTC 或 E5 第二异构 performer；不调 M3a 参数，做第二独立留出复现。
 2. 完成专利 v0.3 的中文专利补检与独立权利要求措辞审阅。
-3. 可选：为 `intended_cti_node_ids` 写离线 LLM/规则映射标注规范（不进在线效用）。
+3. 可选：按 [intended 标注规范](../08-writing/intended-cti-node-annotation-protocol-v0.1-20260710.md) 清理 C01–C06 的 intended==OR 债务；为新动作写离线映射规范（不进在线效用）。
 4. **明确不做**：继续堆 logistic/GNN/RL，或再做同构 decoy/离线压力。

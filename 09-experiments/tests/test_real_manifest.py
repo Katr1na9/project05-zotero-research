@@ -7,6 +7,7 @@ from pathlib import Path
 
 EXPERIMENT_DIR = Path(__file__).resolve().parents[1]
 REAL_DATA_DIR = EXPERIMENT_DIR / "real_data" / "darpa_tc_e3"
+E5_REAL_DATA_DIR = EXPERIMENT_DIR / "real_data" / "darpa_tc_e5"
 MODULE_PATH = EXPERIMENT_DIR / "scripts" / "validate_real_manifest.py"
 SPEC = importlib.util.spec_from_file_location(
     "validate_real_manifest",
@@ -137,6 +138,47 @@ class DarpaE3ManifestTests(unittest.TestCase):
             datasets["fivedirections_e3"]["google_drive_id"],
         )
         self.assertEqual("oauth_required", source["download_status"])
+
+
+class DarpaE5HoldoutManifestTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.manifest = json.loads(
+            (E5_REAL_DATA_DIR / "manifest.json").read_text(encoding="utf-8")
+        )
+        cls.case = json.loads(
+            (E5_REAL_DATA_DIR / "ground_truth" / "R04.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+    def test_r04_is_a_true_e5_holdout_with_a_locked_window(self):
+        self.assertFalse(self.case["development_only"])
+        self.assertEqual("true_cross_engagement_holdout", self.case["holdout_role"])
+        self.assertEqual(
+            {
+                "start": "2019-05-15T18:48:00Z",
+                "end": "2019-05-15T19:07:00Z",
+            },
+            self.case["utc_window"],
+        )
+        self.assertEqual("G3_campaign", self.case["supportable_ceiling"])
+
+    def test_r04_source_and_local_dump_are_provenance_tracked(self):
+        sources = {
+            source["source_id"]: source for source in self.manifest["sources"]
+        }
+        source = sources["theia_e5_pidsmaker_postgres_dump"]
+        self.assertEqual("THEIA", source["performer"])
+        self.assertEqual("available_local_verified", source["download_status"])
+        self.assertEqual(6187437078, source["size_bytes"])
+        self.assertEqual(
+            "8072F8F767EC9CE680D359957F4D394DF171BD7EB6604393C2F50FA45BA8D303",
+            source["sha256"],
+        )
+
+    def test_e5_manifest_cross_references_are_valid(self):
+        self.assertEqual([], validator.validate_manifest(E5_REAL_DATA_DIR))
 
 
 if __name__ == "__main__":
