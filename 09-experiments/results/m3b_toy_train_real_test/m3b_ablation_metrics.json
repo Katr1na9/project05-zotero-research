@@ -1,0 +1,106 @@
+{
+  "label_column": "label_resolves_critical_gap_node",
+  "train_split": "09-experiments/examples",
+  "test_split": "09-experiments/real_cases",
+  "feature_sets": {
+    "full": {
+      "features": [
+        "cost",
+        "budget_remaining",
+        "cti_node_coverage",
+        "cti_edge_coverage",
+        "critical_gap_count",
+        "intended_node_count",
+        "intended_gap_overlap_count",
+        "intended_critical_gap_overlap_count",
+        "intended_gap_precision",
+        "intended_gap_recall",
+        "expected_granularity_gain",
+        "expected_uncertainty_reduction",
+        "expected_over_attribution_risk_reduction",
+        "expected_conflict_resolution",
+        "expected_coverage_delta"
+      ],
+      "train": {
+        "rows": 945,
+        "positive_rate": 0.3576719576719577,
+        "accuracy_at_0_5": 1.0,
+        "brier_score": 0.0037899721758515954,
+        "auroc": 1.0,
+        "average_precision": 1.0,
+        "top1_label_hit_rate": 0.8518518518518519
+      },
+      "test": {
+        "rows": 765,
+        "positive_rate": 0.19215686274509805,
+        "accuracy_at_0_5": 1.0,
+        "brier_score": 0.006938671813330993,
+        "auroc": 1.0,
+        "average_precision": 1.0,
+        "top1_label_hit_rate": 0.7111111111111111
+      }
+    },
+    "no_gap_compat": {
+      "features": [
+        "cost",
+        "budget_remaining",
+        "cti_node_coverage",
+        "cti_edge_coverage",
+        "critical_gap_count",
+        "intended_node_count",
+        "expected_granularity_gain",
+        "expected_uncertainty_reduction",
+        "expected_over_attribution_risk_reduction",
+        "expected_conflict_resolution",
+        "expected_coverage_delta"
+      ],
+      "train": {
+        "rows": 945,
+        "positive_rate": 0.3576719576719577,
+        "accuracy_at_0_5": 0.7714285714285715,
+        "brier_score": 0.14898821292883463,
+        "auroc": 0.8512814014017918,
+        "average_precision": 0.7760766871159696,
+        "top1_label_hit_rate": 0.5037037037037037
+      },
+      "test": {
+        "rows": 765,
+        "positive_rate": 0.19215686274509805,
+        "accuracy_at_0_5": 0.873202614379085,
+        "brier_score": 0.10885850209986918,
+        "auroc": 0.8274002157497303,
+        "average_precision": 0.6580275329941428,
+        "top1_label_hit_rate": 0.45185185185185184
+      }
+    },
+    "expected_effects_only": {
+      "features": [
+        "cost",
+        "budget_remaining",
+        "expected_granularity_gain",
+        "expected_uncertainty_reduction",
+        "expected_over_attribution_risk_reduction",
+        "expected_conflict_resolution",
+        "expected_coverage_delta"
+      ],
+      "train": {
+        "rows": 945,
+        "positive_rate": 0.3576719576719577,
+        "accuracy_at_0_5": 0.6687830687830688,
+        "brier_score": 0.19647307080154894,
+        "auroc": 0.7306303188637494,
+        "average_precision": 0.5789272964588171,
+        "top1_label_hit_rate": 0.6
+      },
+      "test": {
+        "rows": 765,
+        "positive_rate": 0.19215686274509805,
+        "accuracy_at_0_5": 0.85359477124183,
+        "brier_score": 0.15442023625874124,
+        "auroc": 0.6528135526055082,
+        "average_precision": 0.44781972513811946,
+        "top1_label_hit_rate": 0.45185185185185184
+      }
+    }
+  }
+}
