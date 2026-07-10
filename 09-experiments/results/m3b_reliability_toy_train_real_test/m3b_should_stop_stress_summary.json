@@ -1,0 +1,207 @@
+{
+  "intervention": "outage_plus_strip_reliable_fallbacks",
+  "outage_channel": "network_telemetry",
+  "label_column": "label_resolves_critical_gap_node",
+  "cost_penalty": 0.1,
+  "train_case_count": 3,
+  "test_case_count": 3,
+  "cases_used": 3,
+  "outage_condition_count": 54,
+  "baseline_planners": [
+    "coverage_greedy",
+    "project05_m2",
+    "project05_m3a_gap_compat",
+    "oracle_optimal"
+  ],
+  "reliability_group": "acquisition_channel",
+  "case_interventions": [
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "outage_channel": "network_telemetry",
+      "outage_owned_claim_ids": [
+        "C04-EC-003",
+        "C04-EC-004",
+        "C04-EC-008"
+      ],
+      "stripped_claim_count": 2,
+      "stripped_action_ids": [
+        "C04-AA-005",
+        "C04-AA-006"
+      ]
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "outage_channel": "network_telemetry",
+      "outage_owned_claim_ids": [
+        "C05-EC-006",
+        "C05-EC-008"
+      ],
+      "stripped_claim_count": 2,
+      "stripped_action_ids": [
+        "C05-AA-006"
+      ]
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "outage_channel": "network_telemetry",
+      "outage_owned_claim_ids": [
+        "C06-EC-007",
+        "C06-EC-009"
+      ],
+      "stripped_claim_count": 2,
+      "stripped_action_ids": [
+        "C06-AA-007"
+      ]
+    }
+  ],
+  "model": {
+    "feature_columns": [
+      "cost",
+      "budget_remaining",
+      "cti_node_coverage",
+      "cti_edge_coverage",
+      "critical_gap_count",
+      "intended_node_count",
+      "intended_gap_overlap_count",
+      "intended_critical_gap_overlap_count",
+      "intended_gap_precision",
+      "intended_gap_recall",
+      "channel_prior_reliability",
+      "expected_granularity_gain",
+      "expected_uncertainty_reduction",
+      "expected_over_attribution_risk_reduction",
+      "expected_conflict_resolution",
+      "expected_coverage_delta"
+    ],
+    "label_column": "label_resolves_critical_gap_node",
+    "means": {
+      "cost": 2.6363636363636362,
+      "budget_remaining": 7.318181818181818,
+      "cti_node_coverage": 0.7045454545454504,
+      "cti_edge_coverage": 0.5170370370370396,
+      "critical_gap_count": 1.5101010101010102,
+      "intended_node_count": 1.7727272727272727,
+      "intended_gap_overlap_count": 0.5171717171717172,
+      "intended_critical_gap_overlap_count": 0.4313131313131313,
+      "intended_gap_precision": 0.2987373737373739,
+      "intended_gap_recall": 0.24166666666666692,
+      "channel_prior_reliability": 0.9090909090909091,
+      "expected_granularity_gain": 1.2727272727272727,
+      "expected_uncertainty_reduction": 0.27272727272727254,
+      "expected_over_attribution_risk_reduction": 0.2749999999999993,
+      "expected_conflict_resolution": 0.040909090909090846,
+      "expected_coverage_delta": 0.251363636363633
+    },
+    "scales": {
+      "cost": 1.0679400113155229,
+      "budget_remaining": 0.4657704893618024,
+      "cti_node_coverage": 0.18437703542431969,
+      "cti_edge_coverage": 0.30311398769662334,
+      "critical_gap_count": 0.9730712546184069,
+      "intended_node_count": 0.8491609860122454,
+      "intended_gap_overlap_count": 0.6854977405735222,
+      "intended_critical_gap_overlap_count": 0.6087155652047355,
+      "intended_gap_precision": 0.3969437528469114,
+      "intended_gap_recall": 0.333555271233196,
+      "channel_prior_reliability": 0.19284730395996943,
+      "expected_granularity_gain": 0.6165754530113872,
+      "expected_uncertainty_reduction": 0.08884009220769143,
+      "expected_over_attribution_risk_reduction": 0.07941547822570995,
+      "expected_conflict_resolution": 0.1302413525626771,
+      "expected_coverage_delta": 0.1224854519949734
+    },
+    "weights": [
+      0.023463699617978714,
+      -0.3958514733900054,
+      0.0837311299633201,
+      -0.26475475605905835,
+      0.32044431687480457,
+      0.25327205592146196,
+      0.3731656652423882,
+      1.6431735199342723,
+      0.46475321889993,
+      0.9078327895333759,
+      1.016984224097261,
+      -0.04599845953120131,
+      -0.1169607600566812,
+      0.09025678096549457,
+      -0.007268734842742397,
+      0.06446021825477256
+    ],
+    "bias": -1.718388528774013
+  },
+  "summary": {
+    "project05_m3b_reliability_policy": {
+      "runs": 54,
+      "success_rate": 0.8148,
+      "correct_stop_rate": 1.0,
+      "explicit_stop_rate": 0.1852,
+      "premature_stop_rate": 0.0,
+      "justified_degrade_stop_rate": 0.1852,
+      "mean_cost_to_target": 1.0455,
+      "mean_steps_to_target": 0.4545,
+      "mean_budget_used": 2.2037,
+      "mean_final_node_coverage": 0.85
+    },
+    "project05_m3b_policy": {
+      "runs": 54,
+      "success_rate": 0.8148,
+      "correct_stop_rate": 1.0,
+      "explicit_stop_rate": 0.1852,
+      "premature_stop_rate": 0.0,
+      "justified_degrade_stop_rate": 0.1852,
+      "mean_cost_to_target": 1.0455,
+      "mean_steps_to_target": 0.4545,
+      "mean_budget_used": 2.2222,
+      "mean_final_node_coverage": 0.8463
+    },
+    "coverage_greedy": {
+      "runs": 54,
+      "success_rate": 0.5556,
+      "correct_stop_rate": 0.7407,
+      "explicit_stop_rate": 0.4444,
+      "premature_stop_rate": 0.2593,
+      "justified_degrade_stop_rate": 0.1852,
+      "mean_cost_to_target": 0.0,
+      "mean_steps_to_target": 0.0,
+      "mean_budget_used": 3.5556,
+      "mean_final_node_coverage": 0.7796
+    },
+    "project05_m2": {
+      "runs": 54,
+      "success_rate": 0.5556,
+      "correct_stop_rate": 0.7407,
+      "explicit_stop_rate": 0.4444,
+      "premature_stop_rate": 0.2593,
+      "justified_degrade_stop_rate": 0.1852,
+      "mean_cost_to_target": 0.0,
+      "mean_steps_to_target": 0.0,
+      "mean_budget_used": 3.2407,
+      "mean_final_node_coverage": 0.8056
+    },
+    "project05_m3a_gap_compat": {
+      "runs": 54,
+      "success_rate": 0.8148,
+      "correct_stop_rate": 1.0,
+      "explicit_stop_rate": 0.1852,
+      "premature_stop_rate": 0.0,
+      "justified_degrade_stop_rate": 0.1852,
+      "mean_cost_to_target": 1.0455,
+      "mean_steps_to_target": 0.4545,
+      "mean_budget_used": 2.037,
+      "mean_final_node_coverage": 0.8463
+    },
+    "oracle_optimal": {
+      "runs": 54,
+      "success_rate": 0.8148,
+      "correct_stop_rate": 1.0,
+      "explicit_stop_rate": 0.1852,
+      "premature_stop_rate": 0.0,
+      "justified_degrade_stop_rate": 0.1852,
+      "mean_cost_to_target": 1.0455,
+      "mean_steps_to_target": 0.4545,
+      "mean_budget_used": 1.5556,
+      "mean_final_node_coverage": 0.85
+    }
+  }
+}

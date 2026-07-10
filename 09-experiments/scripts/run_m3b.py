@@ -964,6 +964,143 @@ def run_channel_outage_stress_experiment(
     return report
 
 
+def claims_recoverable_on_channel(
+    actions: list[dict[str, Any]],
+    channel: str,
+) -> set[str]:
+    owned: set[str] = set()
+    for action in actions:
+        if run_mvp.is_stop_action(action):
+            continue
+        if run_mvp.acquisition_channel(action) != channel:
+            continue
+        owned.update(action.get("recoverable_claim_ids", []))
+    return owned
+
+
+def apply_should_stop_intervention(
+    config: dict[str, Any],
+    actions: list[dict[str, Any]],
+    outage_channel: str = "network_telemetry",
+) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, Any]]:
+    """Make the target unreachable when ``outage_channel`` is offline.
+
+    Intervention (evaluation-only): strip outage-channel claims from every
+    *other* channel's ``recoverable_claim_ids``. Tempting flaky actions remain,
+    but their reliable fallbacks no longer secretly cover the same claims.
+    Combined with realised outage seeds, Oracle must STOP — creating a true
+    should-stop / justified-degrade condition.
+    """
+
+    owned = claims_recoverable_on_channel(actions, outage_channel)
+    modified_actions: list[dict[str, Any]] = []
+    stripped_claim_count = 0
+    stripped_action_ids: list[str] = []
+    for action in actions:
+        if run_mvp.is_stop_action(action):
+            modified_actions.append(deepcopy(action))
+            continue
+        if run_mvp.acquisition_channel(action) == outage_channel:
+            modified_actions.append(deepcopy(action))
+            continue
+        updated = deepcopy(action)
+        before = set(updated.get("recoverable_claim_ids", []))
+        after = sorted(before - owned)
+        if after != sorted(before):
+            stripped_claim_count += len(before - set(after))
+            stripped_action_ids.append(updated["action_id"])
+        updated["recoverable_claim_ids"] = after
+        modified_actions.append(updated)
+
+    meta = {
+        "outage_channel": outage_channel,
+        "outage_owned_claim_ids": sorted(owned),
+        "stripped_claim_count": stripped_claim_count,
+        "stripped_action_ids": stripped_action_ids,
+    }
+    return deepcopy(config), modified_actions, meta
+
+
+def run_should_stop_stress_experiment(
+    train_root: Path,
+    test_root: Path,
+    output_dir: Path,
+    label_column: str,
+    cost_penalty: float,
+    baseline_planners: list[str],
+    channel: str = "network_telemetry",
+) -> dict[str, Any]:
+    """Evaluate stop/degrade behaviour when the target is truly unreachable.
+
+    Uses realised ``channel`` outage seeds *and* strips reliable fallbacks for
+    claims owned by that channel, so Oracle also cannot reach the target and
+    ``justified_degrade_stop`` becomes the primary success signal.
+    """
+
+    train_dirs = resolve_case_dirs(train_root)
+    test_dirs = resolve_case_dirs(test_root)
+    train_rows = build_rows_for_case_dirs(train_dirs)
+    model = train_logistic_baseline(train_rows, FEATURE_COLUMNS, label_column)
+
+    rows: list[dict[str, Any]] = []
+    condition_count = 0
+    cases_used = 0
+    intervention_meta: list[dict[str, Any]] = []
+    for case_dir in test_dirs:
+        config = load_json(case_dir / "case_config.json")
+        claims = load_json(case_dir / "evidence_claims.json")
+        actions = load_json(case_dir / "acquisition_actions.json")
+        conditions = channel_outage_conditions(config, channel)
+        if not conditions:
+            continue
+        config, actions, meta = apply_should_stop_intervention(
+            config,
+            actions,
+            outage_channel=channel,
+        )
+        if meta["stripped_claim_count"] == 0:
+            continue
+        cases_used += 1
+        condition_count += len(conditions)
+        intervention_meta.append({"case_id": config["case_id"], **meta})
+        case_rows, _ = evaluate_reliability_policy_case_dirs(
+            [(config, claims, actions)],
+            model,
+            cost_penalty,
+            baseline_planners,
+            conditions=conditions,
+        )
+        rows.extend(case_rows)
+
+    if not rows:
+        raise ValueError(
+            "No should-stop conditions found; need outage seeds and "
+            "reliable fallbacks that share claims with the outage channel"
+        )
+
+    rows = run_mvp.add_oracle_relative_metrics(rows)
+    summary = run_mvp.summarize(rows)
+    report = {
+        "intervention": "outage_plus_strip_reliable_fallbacks",
+        "outage_channel": channel,
+        "label_column": label_column,
+        "cost_penalty": cost_penalty,
+        "train_case_count": len(train_dirs),
+        "test_case_count": len(test_dirs),
+        "cases_used": cases_used,
+        "outage_condition_count": condition_count,
+        "baseline_planners": baseline_planners,
+        "reliability_group": "acquisition_channel",
+        "case_interventions": intervention_meta,
+        "model": model,
+        "summary": summary,
+    }
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "m3b_should_stop_stress_results.csv", rows)
+    write_json(output_dir / "m3b_should_stop_stress_summary.json", report)
+    return report
+
+
 def brier_score(probs: list[float], labels: list[int]) -> float | None:
     if not probs:
         return None
@@ -1130,6 +1267,11 @@ def main() -> None:
         help="Evaluate adaptive vs static policies on realised network-channel outage seeds.",
     )
     parser.add_argument(
+        "--should-stop-stress",
+        action="store_true",
+        help="Evaluate stop/degrade when outage plus stripped fallbacks make the target unreachable.",
+    )
+    parser.add_argument(
         "--decoy-copies",
         type=int,
         default=2,
@@ -1213,6 +1355,21 @@ def main() -> None:
         print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
     if args.channel_outage_stress:
         report = run_channel_outage_stress_experiment(
+            args.train_dir,
+            args.test_dir,
+            args.output_dir,
+            args.label_column,
+            args.cost_penalty,
+            [
+                "coverage_greedy",
+                "project05_m2",
+                "project05_m3a_gap_compat",
+                "oracle_optimal",
+            ],
+        )
+        print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
+    if args.should_stop_stress:
+        report = run_should_stop_stress_experiment(
             args.train_dir,
             args.test_dir,
             args.output_dir,
