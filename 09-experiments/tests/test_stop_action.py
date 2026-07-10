@@ -1,6 +1,7 @@
 """Tests for the explicit STOP / degrade action."""
 
 import importlib.util
+import math
 import tempfile
 import unittest
 from pathlib import Path
@@ -411,6 +412,188 @@ class ShouldStopInterventionTests(unittest.TestCase):
             )
             self.assertTrue(
                 (output_dir / "m3b_should_stop_stress_results.csv").is_file()
+            )
+
+
+class PartialReachabilityInterventionTests(unittest.TestCase):
+    def setUp(self):
+        self.config = {
+            "case_id": "T-partial",
+            "target_granularity": "G3_campaign",
+            "support_ceiling": "G3_campaign",
+            "budget_total": 7,
+            "channel_reliability": {"network_telemetry": 0.0},
+            "cti_nodes": [
+                {
+                    "node_id": "N1",
+                    "stage": "execution",
+                    "required_claim_ids": ["E1"],
+                    "critical": True,
+                },
+                {
+                    "node_id": "N2",
+                    "stage": "command_and_control",
+                    "required_claim_ids": ["E2"],
+                    "critical": True,
+                },
+                {
+                    "node_id": "N3",
+                    "stage": "exfiltration",
+                    "required_claim_ids": ["E3"],
+                    "critical": True,
+                },
+            ],
+            "cti_edges": [
+                {"edge_id": "X1", "source": "N1", "target": "N2"},
+                {"edge_id": "X2", "source": "N2", "target": "N3"},
+            ],
+            "granularity_order": [
+                "G0_unknown",
+                "G1_technique",
+                "G2_tactic_intent",
+                "G3_campaign",
+            ],
+            "discriminative_claim_ids": [],
+            "stage_mask_tags": [],
+        }
+        self.claims = [
+            {"claim_id": "E1", "source_type": "local_log", "tags": ["hideable"]},
+            {"claim_id": "E2", "source_type": "network_summary", "tags": ["hideable"]},
+            {"claim_id": "E3", "source_type": "local_log", "tags": ["hideable"]},
+        ]
+        self.actions = [
+            {
+                "action_id": "host",
+                "action_type": "query_host_subgraph",
+                "cost": 2,
+                "recoverable_claim_ids": ["E1", "E3"],
+                "intended_cti_node_ids": ["N1", "N3"],
+                "expected_effects": {},
+                "status": "available",
+            },
+            {
+                "action_id": "net",
+                "action_type": "recover_network_summary",
+                "cost": 2,
+                "recoverable_claim_ids": ["E2"],
+                "intended_cti_node_ids": ["N2"],
+                "expected_effects": {},
+                "status": "available",
+            },
+            {
+                "action_id": "fallback",
+                "action_type": "ioc_enrichment",
+                "acquisition_channel": "threat_intel",
+                "cost": 2,
+                "recoverable_claim_ids": ["E2"],
+                "intended_cti_node_ids": ["N2"],
+                "expected_effects": {},
+                "status": "available",
+            },
+        ]
+
+    def test_tightens_budget_to_oracle_min_cost(self):
+        tightened, meta = run_m3b.apply_partial_reachability_budget(
+            self.config,
+            self.claims,
+            self.actions,
+            "random",
+            1.0,
+            11,
+            outage_channel="network_telemetry",
+        )
+        self.assertIsNotNone(tightened)
+        assert tightened is not None
+        self.assertEqual(4.0, tightened["budget_total"])
+        self.assertEqual(4.0, meta["oracle_min_cost"])
+        self.assertEqual(2.0, meta["min_dead_channel_cost"])
+        self.assertIn("net", meta["tempting_dead_action_ids"])
+        self.assertNotIn("skip_reason", meta)
+
+    def test_oracle_succeeds_but_dead_first_fails(self):
+        tightened, meta = run_m3b.apply_partial_reachability_budget(
+            self.config,
+            self.claims,
+            self.actions,
+            "random",
+            1.0,
+            11,
+        )
+        self.assertIsNotNone(tightened)
+        assert tightened is not None
+        actions = run_mvp.ensure_stop_action(tightened, self.actions)
+
+        oracle_row, _ = run_mvp.run_episode(
+            tightened,
+            self.claims,
+            actions,
+            "random",
+            1.0,
+            11,
+            "oracle_optimal",
+        )
+        self.assertEqual(1, oracle_row["reached_target"])
+        self.assertEqual(meta["oracle_min_cost"], oracle_row["budget_used"])
+
+        # Manual wasteful path: burn the dead network action, then try the
+        # reliable plan. Remaining budget is below C*, so the episode fails.
+        hidden = run_mvp.build_hidden_claims(
+            tightened, self.claims, "random", 11, 1.0
+        )
+        all_ids = {claim["claim_id"] for claim in self.claims}
+        visible = all_ids - hidden
+        remaining = float(tightened["budget_total"]) - 2.0
+        cost_after_waste, _ = run_mvp.oracle_optimal_plan(
+            tightened,
+            actions,
+            visible,
+            hidden,
+            11,
+            remaining,
+            actions_taken=["net"],
+        )
+        self.assertTrue(math.isinf(cost_after_waste))
+
+    def test_skips_when_fallbacks_stripped_like_should_stop(self):
+        config, actions, _ = run_m3b.apply_should_stop_intervention(
+            self.config, self.actions, outage_channel="network_telemetry"
+        )
+        tightened, meta = run_m3b.apply_partial_reachability_budget(
+            config,
+            self.claims,
+            actions,
+            "random",
+            1.0,
+            11,
+        )
+        self.assertIsNone(tightened)
+        self.assertEqual("already_unreachable", meta["skip_reason"])
+
+    def test_partial_reachability_stress_writes_results(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output_dir = Path(temp_dir)
+            report = run_m3b.run_partial_reachability_stress_experiment(
+                root / "examples",
+                root / "real_cases",
+                output_dir,
+                "label_resolves_critical_gap_node",
+                0.1,
+                ["project05_m3a_gap_compat", "oracle_optimal"],
+            )
+            self.assertEqual(
+                "outage_plus_tight_budget_keep_fallbacks",
+                report["intervention"],
+            )
+            self.assertGreater(report["partial_reachability_condition_count"], 0)
+            self.assertIn("oracle_optimal", report["summary"])
+            # Oracle should still reach under partial reachability (contrast should-stop).
+            self.assertGreaterEqual(
+                report["summary"]["oracle_optimal"]["success_rate"],
+                0.99,
+            )
+            self.assertTrue(
+                (output_dir / "m3b_partial_reachability_stress_results.csv").is_file()
             )
 
 

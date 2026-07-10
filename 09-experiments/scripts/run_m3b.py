@@ -1101,6 +1101,203 @@ def run_should_stop_stress_experiment(
     return report
 
 
+def tempting_dead_channel_actions(
+    actions: list[dict[str, Any]],
+    hidden_ids: set[str],
+    outage_channel: str = "network_telemetry",
+) -> list[dict[str, Any]]:
+    """Outage-channel actions that still *claim* to recover currently hidden evidence."""
+
+    tempting: list[dict[str, Any]] = []
+    for action in actions:
+        if run_mvp.is_stop_action(action):
+            continue
+        if run_mvp.acquisition_channel(action) != outage_channel:
+            continue
+        if set(action.get("recoverable_claim_ids", [])) & hidden_ids:
+            tempting.append(action)
+    return tempting
+
+
+def apply_partial_reachability_budget(
+    config: dict[str, Any],
+    claims: list[dict[str, Any]],
+    actions: list[dict[str, Any]],
+    mask_strategy: str,
+    mask_intensity: float,
+    seed: int,
+    outage_channel: str = "network_telemetry",
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    """Tighten budget so the reliable path fits, but any dead-channel waste does not.
+
+    Evaluation-only intervention on realised ``outage_channel`` offline seeds:
+    keep reliable fallbacks (unlike should-stop), set ``budget_total`` to the
+    oracle min-cost ``C*`` under the realised outage. Then:
+
+    - going straight to the reliable path still reaches the target;
+    - spending once on a tempting dead-channel action leaves ``remaining < C*``,
+      so the target becomes unreachable.
+
+    Returns ``(None, meta)`` when the condition does not create this contrast
+    (already at target, already unreachable, or no tempting dead action).
+    """
+
+    if run_mvp.channel_is_up(config, outage_channel, seed):
+        return None, {"skip_reason": "channel_up"}
+
+    actions = run_mvp.ensure_stop_action(config, actions)
+    hidden_ids = run_mvp.build_hidden_claims(
+        config,
+        claims,
+        mask_strategy,
+        seed,
+        mask_intensity,
+    )
+    all_ids = {claim["claim_id"] for claim in claims}
+    visible_ids = all_ids - hidden_ids
+    oracle_cost, oracle_path = run_mvp.oracle_optimal_plan(
+        config,
+        actions,
+        visible_ids,
+        hidden_ids,
+        seed,
+        budget_remaining=100.0,
+    )
+    original_budget = float(config["budget_total"])
+    meta: dict[str, Any] = {
+        "outage_channel": outage_channel,
+        "mask_strategy": mask_strategy,
+        "mask_intensity": mask_intensity,
+        "seed": seed,
+        "oracle_min_cost": None if oracle_cost >= math.inf else oracle_cost,
+        "oracle_path": list(oracle_path),
+        "original_budget": original_budget,
+    }
+    if oracle_cost <= 0.0:
+        meta["skip_reason"] = "already_at_target"
+        return None, meta
+    if oracle_cost >= math.inf or oracle_cost > original_budget:
+        meta["skip_reason"] = "already_unreachable"
+        return None, meta
+
+    tempting = tempting_dead_channel_actions(actions, hidden_ids, outage_channel)
+    if not tempting:
+        meta["skip_reason"] = "no_tempting_dead_action"
+        return None, meta
+
+    min_dead_cost = min(float(action["cost"]) for action in tempting)
+    tightened_budget = float(oracle_cost)
+    if tightened_budget + min_dead_cost <= tightened_budget:
+        meta["skip_reason"] = "dead_cost_nonpositive"
+        return None, meta
+
+    updated = deepcopy(config)
+    updated["budget_total"] = tightened_budget
+    meta.update(
+        {
+            "tightened_budget": tightened_budget,
+            "min_dead_channel_cost": min_dead_cost,
+            "tempting_dead_action_ids": [action["action_id"] for action in tempting],
+            "budget_slack_removed": round(original_budget - tightened_budget, 6),
+        }
+    )
+    return updated, meta
+
+
+def run_partial_reachability_stress_experiment(
+    train_root: Path,
+    test_root: Path,
+    output_dir: Path,
+    label_column: str,
+    cost_penalty: float,
+    baseline_planners: list[str],
+    channel: str = "network_telemetry",
+) -> dict[str, Any]:
+    """Positive routing stress: outage + tight budget, reliable path still open.
+
+    Contrasts with should-stop (which strips fallbacks). Here fallbacks remain;
+    the only pressure is that wasting budget on the dead channel makes the
+    still-open reliable path unaffordable.
+    """
+
+    train_dirs = resolve_case_dirs(train_root)
+    test_dirs = resolve_case_dirs(test_root)
+    train_rows = build_rows_for_case_dirs(train_dirs)
+    model = train_logistic_baseline(train_rows, FEATURE_COLUMNS, label_column)
+
+    rows: list[dict[str, Any]] = []
+    condition_count = 0
+    cases_used = 0
+    intervention_meta: list[dict[str, Any]] = []
+    skip_counts: dict[str, int] = {}
+
+    for case_dir in test_dirs:
+        config = load_json(case_dir / "case_config.json")
+        claims = load_json(case_dir / "evidence_claims.json")
+        actions = load_json(case_dir / "acquisition_actions.json")
+        case_conditions = 0
+        for mask_strategy, mask_intensity, seed in channel_outage_conditions(
+            config, channel
+        ):
+            tightened, meta = apply_partial_reachability_budget(
+                config,
+                claims,
+                actions,
+                mask_strategy,
+                mask_intensity,
+                seed,
+                outage_channel=channel,
+            )
+            if tightened is None:
+                reason = str(meta.get("skip_reason", "unknown"))
+                skip_counts[reason] = skip_counts.get(reason, 0) + 1
+                continue
+            case_conditions += 1
+            intervention_meta.append({"case_id": config["case_id"], **meta})
+            case_rows, _ = evaluate_reliability_policy_case_dirs(
+                [(tightened, claims, actions)],
+                model,
+                cost_penalty,
+                baseline_planners,
+                conditions=[(mask_strategy, mask_intensity, seed)],
+            )
+            rows.extend(case_rows)
+
+        if case_conditions:
+            cases_used += 1
+            condition_count += case_conditions
+
+    if not rows:
+        raise ValueError(
+            "No partial-reachability conditions found; need outage seeds where "
+            "oracle min-cost C* is in (0, original_budget] and a tempting "
+            "dead-channel action remains"
+        )
+
+    rows = run_mvp.add_oracle_relative_metrics(rows)
+    summary = run_mvp.summarize(rows)
+    report = {
+        "intervention": "outage_plus_tight_budget_keep_fallbacks",
+        "outage_channel": channel,
+        "label_column": label_column,
+        "cost_penalty": cost_penalty,
+        "train_case_count": len(train_dirs),
+        "test_case_count": len(test_dirs),
+        "cases_used": cases_used,
+        "partial_reachability_condition_count": condition_count,
+        "skip_counts": skip_counts,
+        "baseline_planners": baseline_planners,
+        "reliability_group": "acquisition_channel",
+        "case_interventions": intervention_meta,
+        "model": model,
+        "summary": summary,
+    }
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "m3b_partial_reachability_stress_results.csv", rows)
+    write_json(output_dir / "m3b_partial_reachability_stress_summary.json", report)
+    return report
+
+
 def brier_score(probs: list[float], labels: list[int]) -> float | None:
     if not probs:
         return None
@@ -1272,6 +1469,14 @@ def main() -> None:
         help="Evaluate stop/degrade when outage plus stripped fallbacks make the target unreachable.",
     )
     parser.add_argument(
+        "--partial-reachability-stress",
+        action="store_true",
+        help=(
+            "Evaluate routing under outage with budget tightened to oracle min-cost; "
+            "reliable fallbacks remain, but dead-channel waste makes the target unreachable."
+        ),
+    )
+    parser.add_argument(
         "--decoy-copies",
         type=int,
         default=2,
@@ -1370,6 +1575,21 @@ def main() -> None:
         print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
     if args.should_stop_stress:
         report = run_should_stop_stress_experiment(
+            args.train_dir,
+            args.test_dir,
+            args.output_dir,
+            args.label_column,
+            args.cost_penalty,
+            [
+                "coverage_greedy",
+                "project05_m2",
+                "project05_m3a_gap_compat",
+                "oracle_optimal",
+            ],
+        )
+        print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
+    if args.partial_reachability_stress:
+        report = run_partial_reachability_stress_experiment(
             args.train_dir,
             args.test_dir,
             args.output_dir,

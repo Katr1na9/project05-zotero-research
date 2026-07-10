@@ -745,19 +745,23 @@ def m3a_gap_compat_score(
     ) / cost
 
 
-def select_oracle_optimal_action(
+def oracle_optimal_plan(
     config: dict[str, Any],
     actions: list[dict[str, Any]],
     visible_ids: set[str],
     hidden_ids: set[str],
-    actions_taken: list[str],
-    budget_used: float,
     seed: int,
-) -> dict[str, Any] | None:
+    budget_remaining: float,
+    actions_taken: list[str] | None = None,
+) -> tuple[float, tuple[str, ...]]:
+    """Exact min-cost acquisition plan under realised channel states.
+
+    Returns ``(cost, action_id_path)``. Cost is ``math.inf`` when unreachable
+    within ``budget_remaining``. Stop actions are ignored (they recover nothing).
+    """
+
     target_idx = granularity_index(config, config["target_granularity"])
-    action_map = action_by_id(actions)
-    initial_taken = frozenset(actions_taken)
-    initial_remaining = float(config["budget_total"]) - budget_used
+    initial_taken = frozenset(actions_taken or [])
     memo: dict[
         tuple[frozenset[str], frozenset[str], float],
         tuple[float, tuple[str, ...]],
@@ -767,7 +771,7 @@ def select_oracle_optimal_action(
         current_visible: frozenset[str],
         current_hidden: frozenset[str],
         taken: frozenset[str],
-        budget_remaining: float,
+        remaining: float,
     ) -> tuple[float, tuple[str, ...]]:
         if granularity_index(
             config,
@@ -775,16 +779,18 @@ def select_oracle_optimal_action(
         ) >= target_idx:
             return 0.0, ()
 
-        key = (current_hidden, taken, round(budget_remaining, 6))
+        key = (current_hidden, taken, round(remaining, 6))
         if key in memo:
             return memo[key]
 
         best_cost = math.inf
         best_path: tuple[str, ...] = ()
         for action in actions:
+            if is_stop_action(action):
+                continue
             action_id = action["action_id"]
             action_cost = float(action["cost"])
-            if action_id in taken or action_cost > budget_remaining:
+            if action_id in taken or action_cost > remaining:
                 continue
             if channel_is_up(config, acquisition_channel(action), seed):
                 recovered = (
@@ -798,7 +804,7 @@ def select_oracle_optimal_action(
                 frozenset(set(current_visible) | recovered),
                 frozenset(set(current_hidden) - recovered),
                 taken | {action_id},
-                budget_remaining - action_cost,
+                remaining - action_cost,
             )
             total_cost = action_cost + tail_cost
             path = (action_id,) + tail_path
@@ -809,11 +815,33 @@ def select_oracle_optimal_action(
         memo[key] = (best_cost, best_path)
         return memo[key]
 
-    _, path = search(
+    return search(
         frozenset(visible_ids),
         frozenset(hidden_ids),
         initial_taken,
+        float(budget_remaining),
+    )
+
+
+def select_oracle_optimal_action(
+    config: dict[str, Any],
+    actions: list[dict[str, Any]],
+    visible_ids: set[str],
+    hidden_ids: set[str],
+    actions_taken: list[str],
+    budget_used: float,
+    seed: int,
+) -> dict[str, Any] | None:
+    action_map = action_by_id(actions)
+    initial_remaining = float(config["budget_total"]) - budget_used
+    _, path = oracle_optimal_plan(
+        config,
+        actions,
+        visible_ids,
+        hidden_ids,
+        seed,
         initial_remaining,
+        actions_taken=actions_taken,
     )
     if path:
         return action_map[path[0]]
