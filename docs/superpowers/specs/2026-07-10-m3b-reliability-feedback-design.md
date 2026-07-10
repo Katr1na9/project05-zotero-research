@@ -1,69 +1,51 @@
-# M3b-3 Reliability Feedback Design
+# M3b-3：基于执行反馈的动作可靠性设计
 
-## Goal
+## 目标
 
-Extend the Project05 M3b sequential evidence-acquisition policy with a
-lightweight reliability posterior. The policy must learn only from the
-observable outcome of actions it has already executed, so it can reduce repeat
-waste after a source or acquisition interface returns no useful evidence.
+在 Project05 的 M3b 序贯证据采集策略中加入一个轻量的“动作可靠性后验”模块。策略只能从**已经执行过**的动作结果中学习，用于减少某个数据源或取证接口连续无有效产出时造成的重复预算浪费。
 
-This is intentionally not a claim that the policy can identify an unseen,
-publicly indistinguishable decoy before its first execution.
+本模块不宣称能够在第一次执行前识别一个公开信息完全相同的诱饵动作。对于这种动作，决策前不存在可用的区分信息；模块的价值在于获得第一次反馈后改变后续决策。
 
-## Scope
+## 范围
 
-In scope:
+本轮包含：
 
-- A Beta posterior for the reliability of a public action group.
-- A sequential policy score that multiplies M3b's predicted critical-gap
-  resolution probability by that posterior mean.
-- Trace fields that expose the posterior before and after each action.
-- Matched normal and decoy stress evaluations against M2, M3a, static M3b, and
-  the oracle.
+- 为公开动作分组建立 Beta 可靠性后验。
+- 将 M3b 对“补上关键缺口”的预测概率与可靠性后验结合，形成新的序贯策略分数。
+- 在每一步 trace 中记录动作执行前后的可靠性后验。
+- 在正常动作空间和诱饵动作压力测试中，对比 M2、M3a、静态 M3b 与 Oracle。
 
-Out of scope:
+本轮不包含：
 
-- Learning from hidden `recoverable_claim_ids` before an action is executed.
-- Fine-tuning an LLM, a neural sequence model, or external threat-intelligence
-  retrieval.
-- Claiming statistical independence among multiple masks derived from one
-  attack case.
+- 在动作执行前读取隐藏的 `recoverable_claim_ids`。
+- 微调 LLM、训练神经序列模型，或接入外部威胁情报检索。
+- 将同一攻击案例派生出的多个遮蔽条件误称为相互独立的攻击样本。
 
-## Public Reliability Group
+## 公开可靠性分组
 
-Each action belongs to a public group:
+每个动作按照以下公开字段划分为一个可靠性组：
 
 ```text
 action_type + sorted(expected_evidence_types)
 ```
 
-For example, an `extend_log_window` action expected to return `local_log`
-evidence belongs to a different group than `recover_network_summary` expected
-to return `network_summary`. The grouping deliberately excludes action ID,
-hidden recovery targets, and actual evidence content.
+例如，预期获得 `local_log` 的 `extend_log_window` 动作，与预期获得 `network_summary` 的 `recover_network_summary` 动作属于不同组。分组刻意不使用 action ID、隐藏恢复目标或实际获得的证据内容。
 
-The initial posterior for every unseen group is `Beta(alpha=1, beta=1)`, whose
-mean reliability is `0.5`. A positive yield increments `alpha`; a zero yield
-increments `beta`. For an action group with no history in the current episode,
-the posterior remains neutral.
+每个未见组的初始后验为 `Beta(alpha=1, beta=1)`，其可靠性均值为 `0.5`。动作获得有效证据时 `alpha += 1`；零产出时 `beta += 1`。在当前 episode 中没有历史记录的组保持中性先验。
 
-## Policy and Data Flow
+## 策略与数据流
 
-For every available candidate action `a` in state `s`:
+对于状态 `s` 中每个可执行候选动作 `a`：
 
 ```text
-p_gap(a, s)  = M3b logistic model prediction from public features
+p_gap(a, s)  = M3b 逻辑回归模型基于公开特征给出的预测
 r(a, s)      = alpha_group / (alpha_group + beta_group)
 utility(a,s) = p_gap(a, s) * r(a, s) - lambda * cost(a)
 ```
 
-The policy selects the action with maximal utility, executes it through the
-existing simulator, observes only `recovered_count`, and updates the posterior
-for that action's group. Its action selector receives state, public actions,
-and its own local posterior only. The simulator continues to keep hidden claim
-IDs out of non-oracle planner selection.
+策略选择 utility 最大的动作，交由既有模拟器执行，只观察 `recovered_count`，随后更新该动作分组的后验。动作选择器只能接收当前状态、公开动作描述及自身维护的本地后验；既有模拟器继续确保除 Oracle 外的规划器不能读取隐藏 claim ID。
 
-Each action trace records:
+每个动作 trace 增加：
 
 - `reliability_group`
 - `reliability_mean_before`
@@ -71,48 +53,30 @@ Each action trace records:
 - `predicted_gap_probability`
 - `reliability_adjusted_utility`
 
-## Evaluation Design
+## 实验设计
 
-The model is trained only on C01-C03 and replayed only on C04-C06. Each
-`case_id + mask_strategy + mask_intensity + seed` condition is paired across
-planners; summaries must report the independent case count separately from the
-repeated condition count.
+模型训练只使用 C01-C03，策略回放只使用 C04-C06。每个 `case_id + mask_strategy + mask_intensity + seed` 条件在不同规划器之间严格配对；汇总时必须分别报告独立案例数与重复条件数。
 
-Two evaluations are required:
+需要完成两类评估：
 
-1. Normal candidate-action space: adaptive M3b must not read hidden outcomes
-   and its cost/success should be reported beside static M3b, M2, M3a,
-   coverage-greedy, and oracle.
-2. Matched zero-yield decoy stress: adaptive M3b should change subsequent
-   rankings after a failure. This measures online adaptation, not clairvoyant
-   detection. A repeated-decoy variant is required only if the single-twin
-   stress condition cannot expose a second decision in the same group.
+1. 正常候选动作空间：自适应 M3b 不得读取隐藏结果，并与静态 M3b、M2、M3a、coverage-greedy、Oracle 并列报告成功率与成本。
+2. 匹配的零产出诱饵压力测试：自适应 M3b 在失败发生后应改变后续排序。此测试衡量在线适应能力，而不是测试策略是否具有预知能力。若单个 twin 诱饵不足以产生同组的第二次决策，则增加重复诱饵变体。
 
-## Failure Handling
+## 边界与异常处理
 
-- Missing `expected_evidence_types` maps to the stable sentinel `unknown`.
-- A no-yield action is a valid observation, not an exception.
-- No actions within budget stops the episode exactly as in the existing runner.
-- A posterior never reaches zero or one with the specified Beta prior, avoiding
-  irreversible decisions from a single observation.
+- 缺少 `expected_evidence_types` 的动作使用稳定的 `unknown` 分组。
+- 零产出是有效观测，而不是异常。
+- 没有预算内可执行动作时，episode 按既有 runner 的规则停止。
+- 使用上述 Beta 先验后，后验均值不会变成严格的 0 或 1，单次反馈不会导致不可逆决策。
 
-## Tests
+## 测试要求
 
-1. A positive and a zero-yield observation update the intended group's Beta
-   parameters and do not affect another group.
-2. The reliability-adjusted selector changes after a zero-yield observation
-   while an otherwise identical static selector does not.
-3. Changing `recoverable_claim_ids` before execution does not change the
-   adaptive selector's first action.
-4. An episode trace records posterior values and uses feedback only after the
-   corresponding action event.
-5. The experiment writer creates separate adaptive-policy and stress-test
-   outputs.
+1. 正产出与零产出应正确更新目标组的 Beta 参数，且不影响其他组。
+2. 零产出后，可靠性校正策略应改变选择；相同输入下的静态策略不应改变。
+3. 在执行动作前修改 `recoverable_claim_ids`，不得改变自适应策略的首次选择。
+4. episode trace 应记录后验值，并保证反馈只在对应动作执行之后被使用。
+5. 实验入口应写出独立的自适应策略与压力测试结果文件。
 
-## Decision
+## 设计选择
 
-This design uses a Beta posterior rather than a sequence model because the
-current project has three training cases and a small action space. It introduces
-a falsifiable sequential capability with interpretable uncertainty, while
-leaving a later hierarchical or learned reliability estimator as a clearly
-separable extension.
+此处选择 Beta 后验，而不是序列模型，原因是当前项目只有 3 个训练案例且候选动作空间很小。该设计提供可证伪、可解释且带不确定性的序贯增量；未来可在其基础上加入分层可靠性模型或学习式可靠性估计器，但它们属于独立扩展。
