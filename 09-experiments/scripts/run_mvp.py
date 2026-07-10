@@ -49,6 +49,7 @@ CASE_FILENAMES = (
     "evidence_claims.json",
     "acquisition_actions.json",
 )
+STOP_ACTION_ID = "STOP"
 
 
 def load_json(path: Path) -> Any:
@@ -422,8 +423,59 @@ ACTION_TYPE_CHANNELS: dict[str, str] = {
     "malware_analysis": "sample_lab",
     "ttp_local_probe": "host_probe",
     "human_review": "analyst",
+    "stop": "decision",
     "other": "other",
 }
+
+
+def is_stop_action(action: dict[str, Any]) -> bool:
+    return (
+        action.get("action_id") == STOP_ACTION_ID
+        or action.get("action_type") == "stop"
+    )
+
+
+def make_stop_action(case_id: str) -> dict[str, Any]:
+    """Public zero-cost action that ends acquisition and accepts current granularity."""
+
+    return {
+        "action_id": STOP_ACTION_ID,
+        "case_id": case_id,
+        "action_type": "stop",
+        "acquisition_channel": "decision",
+        "target": {"target_type": "case", "target_value": case_id},
+        "cost": 0,
+        "recoverable_claim_ids": [],
+        "intended_cti_node_ids": [],
+        "expected_evidence_types": [],
+        "expected_stages": [],
+        "expected_effects": {
+            "expected_granularity_gain": 0,
+            "expected_uncertainty_reduction": 0,
+            "expected_over_attribution_risk_reduction": 0,
+            "expected_conflict_resolution": 0,
+            "expected_coverage_delta": 0,
+        },
+        "status": "available",
+        "natural_language_request": (
+            "Stop acquisition and accept the currently supportable "
+            "attribution granularity."
+        ),
+        "notes": (
+            "Public stop/degrade action: ends the episode without recovering "
+            "claims. Planners should choose it when continuing is not worth "
+            "the remaining budget."
+        ),
+    }
+
+
+def ensure_stop_action(
+    config: dict[str, Any],
+    actions: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    if any(is_stop_action(action) for action in actions):
+        return actions
+    return list(actions) + [make_stop_action(config["case_id"])]
 
 
 def acquisition_channel(action: dict[str, Any]) -> str:
@@ -670,6 +722,9 @@ def m3a_gap_compat_score(
     state: dict[str, Any],
     config: dict[str, Any],
 ) -> float:
+    # Break-even utility: continue only when some acquisition action scores > 0.
+    if is_stop_action(action):
+        return 0.0
     intended_nodes = set(action.get("intended_cti_node_ids", []))
     unmatched_nodes = set(state.get("unmatched_cti_node_ids", []))
     if not intended_nodes or not unmatched_nodes:
@@ -770,8 +825,20 @@ def select_oracle_optimal_action(
     )
     if not candidates:
         return None
+    stop = next((action for action in candidates if is_stop_action(action)), None)
+    productive = [
+        action
+        for action in candidates
+        if not is_stop_action(action)
+        and realized_recovery(config, action, hidden_ids, seed)
+    ]
+    # No remaining productive recovery under realised channel state: stop.
+    if stop is not None and not productive:
+        return stop
+    if not productive:
+        return candidates[0]
     return max(
-        candidates,
+        productive,
         key=lambda action: (
             len(realized_recovery(config, action, hidden_ids, seed))
             / max(0.1, action["cost"]),
@@ -820,7 +887,9 @@ def select_action(
                 expected_effect(action, "expected_coverage_delta")
                 / max(0.1, action["cost"]),
                 expected_effect(action, "expected_coverage_delta"),
+                int(is_stop_action(action)),
                 -action["cost"],
+                action["action_id"],
             ),
         )
 
@@ -830,6 +899,7 @@ def select_action(
             candidates,
             key=lambda action: (
                 m1_action_score(action, state, excluded),
+                int(is_stop_action(action)),
                 -action["cost"],
                 action["action_id"],
             ),
@@ -840,6 +910,7 @@ def select_action(
             candidates,
             key=lambda action: (
                 -m2_action_score(action, state, actions),
+                -int(is_stop_action(action)),
                 action["cost"],
                 -len(action.get("expected_stages", [])),
                 action["action_id"],
@@ -851,6 +922,7 @@ def select_action(
             candidates,
             key=lambda action: (
                 m3a_gap_compat_score(action, state, config),
+                int(is_stop_action(action)),
                 -action["cost"],
                 action["action_id"],
             ),
@@ -869,6 +941,7 @@ def select_action(
                     action,
                     "expected_uncertainty_reduction",
                 ),
+                int(is_stop_action(action)),
                 -action["cost"],
                 action["action_id"],
             ),
@@ -898,6 +971,7 @@ def run_episode(
     planner: str,
     action_selector: Any | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    actions = ensure_stop_action(config, actions)
     all_ids = {claim["claim_id"] for claim in claims}
     hidden_ids = build_hidden_claims(
         config,
@@ -968,6 +1042,47 @@ def run_episode(
         if action is None:
             break
 
+        if is_stop_action(action):
+            budget_used += float(action["cost"])
+            actions_taken.append(action["action_id"])
+            action_feedback.append(
+                {
+                    "action_id": action["action_id"],
+                    "action_type": action["action_type"],
+                    "recovered_count": 0,
+                }
+            )
+            state = build_state(
+                config,
+                claims,
+                actions,
+                run_id,
+                step,
+                mask_strategy,
+                mask_intensity,
+                seed,
+                visible_ids,
+                hidden_ids,
+                recovered_ids,
+                actions_taken,
+                budget_used,
+                action_feedback,
+            )
+            trace.append(
+                {
+                    "event": "action_taken",
+                    "action_id": action["action_id"],
+                    "action_type": action["action_type"],
+                    "acquisition_channel": acquisition_channel(action),
+                    "channel_up": 1,
+                    "cost": action["cost"],
+                    "recovered_claim_ids": [],
+                    "explicit_stop": 1,
+                    "state": deepcopy(state),
+                }
+            )
+            break
+
         channel = acquisition_channel(action)
         channel_online = channel_is_up(config, channel, seed)
         recovered = recoverable_hidden(action, hidden_ids) if channel_online else set()
@@ -1029,6 +1144,14 @@ def run_episode(
         granularity_index(config, config["target_granularity"])
         > granularity_index(config, initial_state["supportable_granularity"])
     )
+    explicit_stop = int(any(action_id == STOP_ACTION_ID for action_id in actions_taken))
+    # Target success, or an explicit stop that stays within the support ceiling
+    # (accepting a lower granularity instead of burning budget). Premature stops
+    # relative to the oracle are flagged later in add_oracle_relative_metrics.
+    correct_target_stop = int(reached and final_idx <= ceiling_idx)
+    correct_degrade_stop = int(
+        explicit_stop and not reached and final_idx <= ceiling_idx
+    )
     result = {
         "case_id": config["case_id"],
         "mask_strategy": mask_strategy,
@@ -1040,7 +1163,10 @@ def run_episode(
         "initial_granularity": initial_state["supportable_granularity"],
         "final_granularity": final_state["supportable_granularity"],
         "reached_target": int(reached),
-        "correct_stop": int(reached and final_idx <= ceiling_idx),
+        "explicit_stop": explicit_stop,
+        "correct_target_stop": correct_target_stop,
+        "correct_degrade_stop": correct_degrade_stop,
+        "correct_stop": int(correct_target_stop or correct_degrade_stop),
         "ceiling_violation": int(final_idx > ceiling_idx),
         "cost_to_target": budget_used if reached else "",
         "budget_used": budget_used,
@@ -1050,10 +1176,11 @@ def run_episode(
         "zero_yield_actions": sum(
             feedback["recovered_count"] == 0
             for feedback in action_feedback
+            if feedback["action_id"] != STOP_ACTION_ID
         ),
         "overlap_waste_cost": overlap_waste_cost(
             actions,
-            actions_taken,
+            [action_id for action_id in actions_taken if action_id != STOP_ACTION_ID],
         ),
         "initial_hidden_claims": len(
             build_hidden_claims(
@@ -1183,6 +1310,26 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         summary[planner] = {
             "runs": len(planner_rows),
             "success_rate": round(len(successes) / len(planner_rows), 4),
+            "correct_stop_rate": round(
+                sum(int(row.get("correct_stop", 0)) for row in planner_rows)
+                / len(planner_rows),
+                4,
+            ),
+            "explicit_stop_rate": round(
+                sum(int(row.get("explicit_stop", 0)) for row in planner_rows)
+                / len(planner_rows),
+                4,
+            ),
+            "premature_stop_rate": round(
+                sum(int(row.get("premature_stop", 0)) for row in planner_rows)
+                / len(planner_rows),
+                4,
+            ),
+            "justified_degrade_stop_rate": round(
+                sum(int(row.get("justified_degrade_stop", 0)) for row in planner_rows)
+                / len(planner_rows),
+                4,
+            ),
             "mean_cost_to_target": round(sum(costs) / len(costs), 4) if costs else None,
             "mean_steps_to_target": round(sum(steps) / len(steps), 4) if steps else None,
             "mean_budget_used": round(sum(float(row["budget_used"]) for row in planner_rows) / len(planner_rows), 4),
@@ -1249,6 +1396,27 @@ def summarize_group(rows: list[dict[str, Any]]) -> dict[str, Any]:
             if top1_hits
             else None
         ),
+        "correct_stop_rate": round(
+            sum(int(row.get("correct_stop", 0)) for row in rows) / len(rows),
+            4,
+        ),
+        "explicit_stop_rate": round(
+            sum(int(row.get("explicit_stop", 0)) for row in rows) / len(rows),
+            4,
+        ),
+        "premature_stop_rate": round(
+            sum(int(row.get("premature_stop", 0)) for row in rows) / len(rows),
+            4,
+        ),
+        "justified_degrade_stop_rate": round(
+            sum(int(row.get("justified_degrade_stop", 0)) for row in rows)
+            / len(rows),
+            4,
+        ),
+        "ceiling_violation_rate": round(
+            sum(int(row.get("ceiling_violation", 0)) for row in rows) / len(rows),
+            4,
+        ),
     }
 
 
@@ -1308,6 +1476,27 @@ def add_oracle_relative_metrics(
             updated["oracle_top1_action_hit"] = int(
                 bool(oracle_first)
                 and first_action_id(row) == oracle_first
+            )
+            oracle_reached = int(oracle.get("reached_target", 0))
+            explicit_stop = int(row.get("explicit_stop", 0))
+            reached = int(row.get("reached_target", 0))
+            # Stopped short while the oracle still reached the target under the
+            # same realised channel state: premature abstention.
+            updated["premature_stop"] = int(
+                explicit_stop and not reached and oracle_reached == 1
+            )
+            # Explicit stop when the oracle also failed: justified degrade/abstain.
+            updated["justified_degrade_stop"] = int(
+                explicit_stop and not reached and oracle_reached == 0
+            )
+            # Recompute correct_stop with oracle-aware premature filter.
+            ceiling_ok = int(row.get("ceiling_violation", 0)) == 0
+            updated["correct_degrade_stop"] = int(
+                explicit_stop and not reached and ceiling_ok and oracle_reached == 0
+            )
+            updated["correct_stop"] = int(
+                (reached and ceiling_ok)
+                or updated["correct_degrade_stop"]
             )
         enriched.append(updated)
     return enriched

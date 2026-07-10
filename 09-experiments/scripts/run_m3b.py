@@ -337,6 +337,9 @@ def model_action_score(
     cost_penalty: float,
 ) -> tuple[float, float]:
     """Return the public model utility and its predicted success probability."""
+    # Break-even: stop when every acquisition action has non-positive utility.
+    if run_mvp.is_stop_action(action):
+        return 0.0, 0.0
     probability = predict_probability(model, feature_row(config, state, action))
     utility = probability - cost_penalty * float(action["cost"])
     return utility, probability
@@ -360,6 +363,7 @@ def select_model_action(
         candidates,
         key=lambda action: (
             *model_action_score(config, state, action, model, cost_penalty),
+            int(run_mvp.is_stop_action(action)),
             -float(action["cost"]),
             action["action_id"],
         ),
@@ -409,6 +413,8 @@ def reliability_action_score(
     model: dict[str, Any],
     cost_penalty: float,
 ) -> tuple[float, float, float]:
+    if run_mvp.is_stop_action(action):
+        return 0.0, 0.0, 1.0
     probability = predict_probability(model, feature_row(config, state, action))
     posterior = reliability_posteriors(
         actions,
@@ -447,6 +453,7 @@ def select_reliability_model_action(
                 model,
                 cost_penalty,
             ),
+            int(run_mvp.is_stop_action(action)),
             -float(action["cost"]),
             action["action_id"],
         ),
@@ -464,6 +471,7 @@ def run_model_episode(
     cost_penalty: float,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Evaluate a learned M3b policy without exposing hidden outcomes."""
+    actions = run_mvp.ensure_stop_action(config, actions)
     result, trace = run_mvp.run_episode(
         config,
         claims,
@@ -508,6 +516,7 @@ def run_reliability_model_episode(
     cost_penalty: float,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Replay M3b with an action-group posterior reconstructed from feedback."""
+    actions = run_mvp.ensure_stop_action(config, actions)
     result, trace = run_mvp.run_episode(
         config,
         claims,
@@ -617,6 +626,8 @@ def inject_matched_decoys(
     critical_nodes = run_mvp.critical_cti_node_ids(config)
     augmented = deepcopy(actions)
     for action in actions:
+        if run_mvp.is_stop_action(action):
+            continue
         if not (set(action.get("intended_cti_node_ids", [])) & critical_nodes):
             continue
         for copy_index in range(1, copies_per_action + 1):

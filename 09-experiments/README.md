@@ -14,7 +14,7 @@
 
 不变量（通道门控下仍严格成立，见 `tests/test_channel_reliability.py`）：Oracle 仍是成本下界（`regret ≥ 0`），且任一规划器达标时 Oracle 必达标。通道离线导致部分高遮蔽 episode 在预算内不可解，属于预期——这正是"何时应停/降级"论线要测的能力。
 
-细节与预登记见 `../04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md`。`results/` 已于 2026-07-10 按该机制重跑刷新。M4 通道离线正向压力见 `../04-progress/m4-channel-reliability-outage-stress-20260710.md`。
+细节与预登记见 `../04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md`。`results/` 已于 2026-07-10 按该机制重跑刷新。M4 通道离线正向压力见 `../04-progress/m4-channel-reliability-outage-stress-20260710.md`。显式 STOP/降级见 `../04-progress/m4-explicit-stop-degrade-20260710.md`。
 
 ## C06 独立留出验证（2026-07-10 重跑）
 
