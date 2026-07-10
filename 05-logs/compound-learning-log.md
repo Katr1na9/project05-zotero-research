@@ -1,5 +1,11 @@
 # 全局复利日志：科研版
 
+### 2026-07-10：M3a 主线冻结与贡献边界
+
+- 触发：部分可达选路压力下 M3a/M3b 均难赢 Oracle 选路，M3b 无独立优势。
+- 决策：技术主轴 = M3a；logistic M3b 冻结为对照；下一实验 = E5/OpTC 真留出 C07。
+- 产物：`08-writing/contribution-boundary-and-results-brief-v0.1.md`、`c07-true-holdout-protocol-v0.1-20260710.md`、`patent-claims-draft-v0.3-20260710.md`。
+
 ### 2026-07-06：AFA 综述成为新主线理论基座，"取证规划"从直觉升格为 POMDP 实例化
 
 - 来源：`A Survey on Active Feature Acquisition Strategies`（Aronsson et al., arXiv:2502.11067 v2，已全文精读）。

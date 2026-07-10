@@ -1,5 +1,19 @@
 # Research Progress
 
+## 2026-07-10：冻结 M3a 为主线，写出贡献边界
+
+- 决策：logistic M3b 在应停打平、部分可达近负后**不再作为升级对象**；技术主轴回到 `project05_m3a_gap_compat`。
+- 新增 `08-writing/contribution-boundary-and-results-brief-v0.1.md`：可主张/不可主张、常规矩阵与 M4 压力总表、专利叙事骨架。
+- 新增 `08-writing/c07-true-holdout-protocol-v0.1-20260710.md`：真留出必须来自 E5/OpTC；明确禁止再包装 C06/R03。
+- 新增专利骨架 `08-writing/patent-claims-draft-v0.3-20260710.md`（对齐缺口状态 + 公开意图 + 成本规划 + 停止/降级）。
+- 阻塞：本机尚无 E5/OpTC 原始数据；C07 评估需先建 manifest 与抽取。
+
+## 2026-07-10：M4 部分可达选路压力（近负结果）
+
+- 干预：离线 seed 上预算收紧为 Oracle `C*`，保留可靠回退。
+- Oracle success 1.0；M3a 0.0；M3b ≈ 0.1；典型失败为先烧死通道再过早 STOP。
+- 结论：会停 ≠ 会选路；冻结 logistic 加戏。详见 `04-progress/m4-partial-reachability-routing-stress-20260710.md`。
+
 ## 2026-07-09：M2 负结果后的 M3 方法研究
 
 - 定位 C06 的核心失败：20 个 stage/discriminative 挑战条件均缺 `N01_initial_access`，Oracle 全部首选 `AA-001`，M2 却因 stage 粗粒度相同和手写 gain 偏置而全部首选 `AA-002`。

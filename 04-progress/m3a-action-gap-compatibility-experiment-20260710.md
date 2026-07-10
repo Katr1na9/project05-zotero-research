@@ -145,43 +145,13 @@ M3a 目前还不能直接作为最终论文贡献，因为：
 3. M3a 是启发式 baseline，不是可学习模型。它验证表示空间重要，但还没有证明 conditional utility model 的泛化能力。
 4. 现有 C01-C06 的 action 空间较干净，后续要加入噪声 action、冗余 action、误导 action 和不可用 action。
 
-## 7. 下一步
+## 7. 后续（2026-07-10 更新）
 
-### M3b: 可校准条件收益模型
+**M3b 可学习效用路线已冻结为对照**（见 `m4-partial-reachability-routing-stress-20260710.md` 与贡献边界简报）。主线规划器保持 M3a。
 
-将 M3a 的公开 action-gap 表示升级为可学习模型：
+下一优先级：
 
-```text
-Input: evidence-gap state + action features + action-gap compatibility
-Output:
-  P(action resolves node v | state)
-  P(recovered_count > 0 | state, action)
-  P(next granularity >= target | state, action)
-```
-
-首选模型不是大模型，也不是 RL，而是：
-
-- logistic regression
-- random forest / XGBoost
-- small MLP
-
-评估指标：
-
-- node-resolution AUROC / AUPRC
-- Brier score / ECE
-- oracle top-1 hit
-- NDCG
-- budget success rate
-- zero-yield action count
-- regret vs oracle
-
-### 新 holdout
-
-下一轮必须接入真正未参与设计的攻击 trace：
-
-- DARPA TC E5
-- 或 OPTC
-- 或其他 campaign-level provenance trace
-
-只有在新 holdout 上仍然成立，M3 才能从“诊断性改进”变成“论文级证据”。
+1. 按 `08-writing/c07-true-holdout-protocol-v0.1-20260710.md` 接入 E5/OpTC 真留出；
+2. 专利 v0.3 补检与措辞；
+3. 可选：噪声动作鲁棒性、`intended_cti_node_ids` 离线映射规范。
 

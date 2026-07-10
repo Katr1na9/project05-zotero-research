@@ -6,6 +6,8 @@ Project05 当前主线已经从“证据不完整场景下的 APT 归因粒度�
 
 > 面向 APT 归因的对齐感知证据状态建模与主动取证规划。
 
+**2026-07-10 技术主轴冻结**：默认规划器为 **M3a（action–gap compatibility）**；logistic M3b 仅作冻结对照（无稳定独立胜出）。贡献边界与结果总表见 [contribution-boundary-and-results-brief-v0.1.md](../08-writing/contribution-boundary-and-results-brief-v0.1.md)。
+
 更具体地说，项目不再把“CTI-日志 / CTI-provenance 对齐算法”本身作为主创新，因为这一块已经被 POIROT、DeepHunter、MEGR-APT、ActMiner、CLIProv、APT-CGLP、ProHunter 等工作覆盖。Project05 的更安全位置是把这些对齐结果作为“证据状态”，进一步判断当前证据能支撑的归因粒度，并规划下一步最值得获取的证据。
 
 ## 当前主 RQ
@@ -62,15 +64,15 @@ flowchart LR
 
 | Gate | 状态 | 说明 |
 |---|---|---|
-| G1 RQ 清晰性 | 基本通过 | RQ v2 已形成，主线更强 |
-| G2 撞题扫描 | 进行中 | CLIProv/APT-CGLP/APT-ATT 已升级全文精读，TAA-EPLMR 已完成新主线复核；仍需补中文专利侧、APTChaser/GAPT 正文 |
-| G3 创新强度 | 暂时好转 | 从“保护层/list 生成”转为“主动取证规划” |
-| G4 专利权利要求 | 未通过 | v0.2 已是历史草稿，需等新主线后重写 v0.3 |
-| G5 实验可执行性 | Phase 0/1 草案完成 | `experiment-plan-v0.1-20260707.md`、案例清单和三个 schema 已形成，下一步构造小样例与模拟器 |
+| G1 RQ 清晰性 | 通过 | RQ v2.1；主线为证据状态 + 主动取证 |
+| G2 撞题扫描 | 进行中 | 对齐谱系与 WinRegRL 红线已记；仍需补中文专利侧、APTChaser/GAPT 正文 |
+| G3 创新强度 | 可写边界已收紧 | 主张表示+规划+停止，不主张可学习效用打赢规则 |
+| G4 专利权利要求 | 骨架更新 | [v0.3](../08-writing/patent-claims-draft-v0.3-20260710.md) 对齐 M3a；正式检索与措辞待补 |
+| G5 实验可执行性 | Phase 1+ 已跑通 | C01–C06 + 通道可靠性 + STOP/M4 压力；**缺 E5/OpTC 真留出 C07** |
 
 ## 下一步
 
-1. 根据案例清单构造 C01-C03 的最小样例 evidence_claim / alignment_state / acquisition_action 数据。
-2. 保留 APTChaser、GAPT 正文获取待办，并继续中文专利侧证据采集/取证规划检索；US12530469 仅作为摘要级专利红线保留。
-3. 将 POIROT/DeepHunter/MEGR-APT/CLIProv/APT-CGLP 作为上游对齐谱系写入相关工作和 baseline 设计。
-4. 实现 evidence ablation + action recovery 最小模拟器；通过后判断是否可以启动新专利 v0.3。
+1. 按 [C07 真留出协议](../08-writing/c07-true-holdout-protocol-v0.1-20260710.md) 接入 DARPA TC **E5**（优先 THEIA/ClearScope）或 OpTC；冻结 M3a 公式后评估。
+2. 完成专利 v0.3 的中文专利补检与独立权利要求措辞审阅。
+3. 可选：为 `intended_cti_node_ids` 写离线 LLM/规则映射标注规范（不进在线效用）。
+4. **明确不做**：继续堆 logistic/GNN/RL，或再做同构 decoy/离线压力。
