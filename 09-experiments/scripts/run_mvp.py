@@ -819,6 +819,7 @@ def run_episode(
     mask_intensity: float,
     seed: int,
     planner: str,
+    action_selector: Any | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     all_ids = {claim["claim_id"] for claim in claims}
     hidden_ids = build_hidden_claims(
@@ -873,17 +874,20 @@ def run_episode(
         if planner == "full_evidence":
             break
 
-        action = select_action(
-            planner,
-            config,
-            claims,
-            actions,
-            state,
-            visible_ids,
-            hidden_ids if planner == "oracle_optimal" else set(),
-            actions_taken,
-            seed,
-        )
+        if action_selector is None:
+            action = select_action(
+                planner,
+                config,
+                claims,
+                actions,
+                state,
+                visible_ids,
+                hidden_ids if planner == "oracle_optimal" else set(),
+                actions_taken,
+                seed,
+            )
+        else:
+            action = action_selector(config, state, actions)
         if action is None:
             break
 

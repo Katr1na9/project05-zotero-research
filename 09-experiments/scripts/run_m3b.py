@@ -11,6 +11,7 @@ import argparse
 import csv
 import json
 import math
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -321,6 +322,237 @@ def predict_probability(model: dict[str, Any], row: dict[str, Any]) -> float:
     return sigmoid(score)
 
 
+def model_action_score(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    action: dict[str, Any],
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> tuple[float, float]:
+    """Return the public model utility and its predicted success probability."""
+    probability = predict_probability(model, feature_row(config, state, action))
+    utility = probability - cost_penalty * float(action["cost"])
+    return utility, probability
+
+
+def select_model_action(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    actions: list[dict[str, Any]],
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> dict[str, Any] | None:
+    candidates = run_mvp.available_actions(
+        actions,
+        state.get("actions_taken", []),
+        state["budget"]["budget_remaining"],
+    )
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda action: (
+            *model_action_score(config, state, action, model, cost_penalty),
+            -float(action["cost"]),
+            action["action_id"],
+        ),
+    )
+
+
+def run_model_episode(
+    config: dict[str, Any],
+    claims: list[dict[str, Any]],
+    actions: list[dict[str, Any]],
+    mask_strategy: str,
+    mask_intensity: float,
+    seed: int,
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """Evaluate a learned M3b policy without exposing hidden outcomes."""
+    result, trace = run_mvp.run_episode(
+        config,
+        claims,
+        actions,
+        mask_strategy,
+        mask_intensity,
+        seed,
+        "project05_m3b_policy",
+        action_selector=lambda episode_config, state, episode_actions: select_model_action(
+            episode_config,
+            state,
+            episode_actions,
+            model,
+            cost_penalty,
+        ),
+    )
+    actions_by_id = run_mvp.action_by_id(actions)
+    for prior_event, event in zip(trace, trace[1:]):
+        if event.get("event") != "action_taken":
+            continue
+        action = actions_by_id[event["action_id"]]
+        utility, probability = model_action_score(
+            config,
+            prior_event["state"],
+            action,
+            model,
+            cost_penalty,
+        )
+        event["predicted_probability"] = round(probability, 6)
+        event["model_utility"] = round(utility, 6)
+    return result, trace
+
+
+def evaluate_policy_case_dirs(
+    cases: list[tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]],
+    model: dict[str, Any],
+    cost_penalty: float,
+    baseline_planners: list[str],
+    conditions: list[tuple[str, float, int]] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Compare the learned policy with named planners over matched episodes."""
+    rows: list[dict[str, Any]] = []
+    for config, claims, actions in cases:
+        episode_conditions = conditions or run_mvp.experiment_conditions(config)
+        for mask_strategy, mask_intensity, seed in episode_conditions:
+            model_row, _ = run_model_episode(
+                config,
+                claims,
+                actions,
+                mask_strategy,
+                mask_intensity,
+                seed,
+                model,
+                cost_penalty,
+            )
+            rows.append(model_row)
+            for planner in baseline_planners:
+                baseline_row, _ = run_mvp.run_episode(
+                    config,
+                    claims,
+                    actions,
+                    mask_strategy,
+                    mask_intensity,
+                    seed,
+                    planner,
+                )
+                rows.append(baseline_row)
+    rows = run_mvp.add_oracle_relative_metrics(rows)
+    return rows, run_mvp.summarize(rows)
+
+
+def inject_matched_decoys(
+    config: dict[str, Any],
+    actions: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Add zero-yield twins for actions publicly aimed at critical CTI gaps.
+
+    The intervention changes only the hidden counterfactual outcome and the
+    action identifier. It is a negative control for planners whose public
+    features cannot distinguish a reliable source from an unreliable twin.
+    """
+    critical_nodes = run_mvp.critical_cti_node_ids(config)
+    augmented = deepcopy(actions)
+    for action in actions:
+        if not (set(action.get("intended_cti_node_ids", [])) & critical_nodes):
+            continue
+        decoy = deepcopy(action)
+        decoy["action_id"] = f"zz_decoy_{action['action_id']}"
+        decoy["recoverable_claim_ids"] = []
+        augmented.append(decoy)
+    return augmented
+
+
+def run_policy_experiment(
+    train_root: Path,
+    test_root: Path,
+    output_dir: Path,
+    label_column: str,
+    cost_penalty: float,
+    baseline_planners: list[str],
+) -> dict[str, Any]:
+    """Train on source cases and replay a learned policy on matched test cases."""
+    train_dirs = resolve_case_dirs(train_root)
+    test_dirs = resolve_case_dirs(test_root)
+    train_rows = build_rows_for_case_dirs(train_dirs)
+    model = train_logistic_baseline(train_rows, FEATURE_COLUMNS, label_column)
+    cases = [
+        (
+            load_json(case_dir / "case_config.json"),
+            load_json(case_dir / "evidence_claims.json"),
+            load_json(case_dir / "acquisition_actions.json"),
+        )
+        for case_dir in test_dirs
+    ]
+    rows, summary = evaluate_policy_case_dirs(
+        cases,
+        model,
+        cost_penalty,
+        baseline_planners,
+    )
+    report = {
+        "label_column": label_column,
+        "cost_penalty": cost_penalty,
+        "train_case_count": len(train_dirs),
+        "test_case_count": len(test_dirs),
+        "baseline_planners": baseline_planners,
+        "model": model,
+        "summary": summary,
+    }
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "m3b_policy_results.csv", rows)
+    write_json(output_dir / "m3b_policy_summary.json", report)
+    return report
+
+
+def run_decoy_stress_experiment(
+    train_root: Path,
+    test_root: Path,
+    output_dir: Path,
+    label_column: str,
+    cost_penalty: float,
+    baseline_planners: list[str],
+) -> dict[str, Any]:
+    """Run a negative control with zero-yield twins of critical-gap actions."""
+    train_dirs = resolve_case_dirs(train_root)
+    test_dirs = resolve_case_dirs(test_root)
+    train_rows = build_rows_for_case_dirs(train_dirs)
+    model = train_logistic_baseline(train_rows, FEATURE_COLUMNS, label_column)
+    cases = []
+    original_action_count = 0
+    augmented_action_count = 0
+    for case_dir in test_dirs:
+        config = load_json(case_dir / "case_config.json")
+        claims = load_json(case_dir / "evidence_claims.json")
+        actions = load_json(case_dir / "acquisition_actions.json")
+        augmented_actions = inject_matched_decoys(config, actions)
+        original_action_count += len(actions)
+        augmented_action_count += len(augmented_actions)
+        cases.append((config, claims, augmented_actions))
+    rows, summary = evaluate_policy_case_dirs(
+        cases,
+        model,
+        cost_penalty,
+        baseline_planners,
+    )
+    report = {
+        "intervention": "matched_zero_yield_critical_action",
+        "label_column": label_column,
+        "cost_penalty": cost_penalty,
+        "train_case_count": len(train_dirs),
+        "test_case_count": len(test_dirs),
+        "baseline_planners": baseline_planners,
+        "original_action_count": original_action_count,
+        "augmented_action_count": augmented_action_count,
+        "model": model,
+        "summary": summary,
+    }
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "m3b_decoy_stress_results.csv", rows)
+    write_json(output_dir / "m3b_decoy_stress_summary.json", report)
+    return report
+
+
 def brier_score(probs: list[float], labels: list[int]) -> float | None:
     if not probs:
         return None
@@ -461,6 +693,22 @@ def main() -> None:
         choices=LABEL_COLUMNS,
         default="label_resolves_critical_gap_node",
     )
+    parser.add_argument(
+        "--evaluate-policy",
+        action="store_true",
+        help="Replay the trained model as a sequential policy on the test cases.",
+    )
+    parser.add_argument(
+        "--decoy-stress",
+        action="store_true",
+        help="Run the matched zero-yield action negative-control experiment.",
+    )
+    parser.add_argument(
+        "--cost-penalty",
+        type=float,
+        default=0.1,
+        help="Utility penalty multiplied by acquisition cost during policy replay.",
+    )
     args = parser.parse_args()
 
     metrics = run_experiment(
@@ -470,6 +718,36 @@ def main() -> None:
         args.label_column,
     )
     print(json.dumps(metrics, indent=2, ensure_ascii=False))
+    if args.evaluate_policy:
+        report = run_policy_experiment(
+            args.train_dir,
+            args.test_dir,
+            args.output_dir,
+            args.label_column,
+            args.cost_penalty,
+            [
+                "coverage_greedy",
+                "project05_m2",
+                "project05_m3a_gap_compat",
+                "oracle_optimal",
+            ],
+        )
+        print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
+    if args.decoy_stress:
+        report = run_decoy_stress_experiment(
+            args.train_dir,
+            args.test_dir,
+            args.output_dir,
+            args.label_column,
+            args.cost_penalty,
+            [
+                "coverage_greedy",
+                "project05_m2",
+                "project05_m3a_gap_compat",
+                "oracle_optimal",
+            ],
+        )
+        print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
