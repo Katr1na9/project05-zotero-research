@@ -67,22 +67,32 @@
 | E3 R01/R02/R03 原始窗 | 已有管线与摘要；R03=C06，不可作 C07 |
 | E5 THEIA R04 原始数据 | 已接入本地 `theia_e5.dump`；哈希、manifest、ground truth、流式抽取摘要均已记录 |
 | C07 E5 THEIA | 已编译并评估：2019-05-15 14:48–15:07 EDT Firefox Drakon BinFmt-Elevate trace |
-| OpTC / 第二留出 | 尚未接入；用于检验单一 C07 结论是否可复现 |
+| C08 E5 ClearScope | 已编译并评估：2019-05-15 15:38–16:19 EDT Appstarter Micro APT Elevate trace |
+| OpTC / 第三留出 | 尚未接入；用于检验 E5 双留出结论是否可外推 |
 | M3a 公式 | 已冻结于 `run_mvp.py` |
 
 ### C07 首轮结果（冻结后执行）
 
 - 真实窗口：全表流式扫描 140,994,662 条 event row，抽出 256,297 条窗口事件，解析 7,043/7,043 个节点哈希。
 - 真实对齐：Firefox 与 `208.203.20.42:80` 通信、两次 `binfmt-0000` 执行、`sshd` 打开 `/var/log/sshdlog` 均可回指 event UUID；报告中的 `189.141.204.211:80` 与直接 injection event 未在此 schema/window 中观察到。
-- 评估：每个规划器 45 个 mask 条件；M3a 和 M2 的 success 均为 1.0，M3a 平均代价 4.356、M2 为 4.311、Oracle 为 3.644；无 ceiling violation。
-- 解释：M3a 在网络通道失效后 16/16 次走可靠主机回退，且不选良性驱动审查动作；但本案例中 M3a 的成本略高于 M2，**不能**据此主张成本优越。
+- 评估：每个规划器 45 个 mask 条件；M3a 和 M2 的 success 均为 1.0，M3a 平均代价 4.933、M2 为 4.311、Oracle 为 3.644；无 ceiling violation。
+- 解释：M3a 在网络通道失效后 16/16 次走可靠主机回退，且不选良性驱动审查动作；但本案例中 M3a 的成本高于 M2，**不能**据此主张成本优越。
 
 详细源验证见 `09-experiments/real_data/darpa_tc_e5/derived/R04-trace-validation-20260710.md`，结果见 `09-experiments/results/c07_holdout_m3a/README.md`。
 
+### C08 第二留出结果（冻结后执行）
+
+- 真实窗口：全表流式扫描 198,794,211 条 event row，抽出 694,872 条窗口事件，解析 4,968/4,968 个节点哈希。
+- 真实对齐：Appstarter busybox 套接字活动、`/dev/msm_g711tlaw` elevate、`screencap` execute、良性 `/data/local/tmp/sl` 可回指；报告 C2 IP 与 DB 外泄路径未在 PGDMP 中观察到。
+- 评估：每个规划器 45 个 mask 条件；M3a/M2 success 均为 1.0，M3a 平均代价 5.044、M2 为 4.511、Oracle 为 3.889；无 ceiling violation。
+- 与 C07 同向：异构 Android performer 上管线可复现，**仍不支持** M3a 成本优于 M2。
+
+结果见 `09-experiments/results/c08_holdout_m3a/README.md`。
+
 **下一步工程动作（不调 M3a 参数）**：
 
-1. 接入 OpTC 或第二个 E5 异构 performer 窗口，复用冻结公式与当前编译规范。
-2. 对 M3a/M2 的 paired regret 做第二留出汇总，再决定是否可写非劣或稳健性结论。
+1. 可选接入 OpTC 作为第三独立来源，复用冻结公式与当前编译规范。
+2. 对 M3a/M2 的 paired regret 做 C07+C08（+可选 C09）汇总。
 3. 扩展真实 trace 的自然缺口审计，不把 report-only observable 伪造成 event-level claim。
 
 ## 7. 临时可做、但不替代 C07 的工作

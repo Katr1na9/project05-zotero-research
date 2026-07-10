@@ -1,0 +1,91 @@
+{
+  "case_id": "R06",
+  "case_name": "OpTC Day1 Plain PowerShell Empire on Sysclient0201",
+  "development_only": false,
+  "holdout_role": "true_cross_engagement_third_holdout",
+  "source_id": "optc_ecar_23sep19_sysclient0201",
+  "platform": "Windows 10",
+  "target_host": "Sysclient0201",
+  "target_fqdn": "Sysclient0201.systemia.com",
+  "target_ip": "142.20.56.202",
+  "scenario_date": "2019-09-23",
+  "source_timezone": "America/New_York",
+  "timezone_note": "GT wall-clock times are recorded as 09/23/19 local engagement time; treat as America/New_York until eCAR epoch timestamps are cross-checked after subset download.",
+  "local_window": {
+    "start": "2019-09-23T11:23:00-04:00",
+    "end": "2019-09-23T15:30:00-04:00"
+  },
+  "utc_window": {
+    "start": "2019-09-23T15:23:00Z",
+    "end": "2019-09-23T19:30:00Z"
+  },
+  "ground_truth_document": "optc_redteam_ground_truth",
+  "ground_truth_section": "Day 1 Plain PowerShell Empire",
+  "ground_truth_summary": "An operator manually accessed Sysclient0201, downloaded a PowerShell Empire stager (runme.bat) from news.com:8000, obtained an elevated agent via UAC bypass, ran Mimikatz, collected a desktop screenshot, scanned the local /24, and pivoted with WMI to Sysclient0402 (then 0660 and DC1). Persistence via registry was later removed.",
+  "evidence_readiness": "ground_truth_locked_pending_raw_validation",
+  "natural_incompleteness": true,
+  "supportable_ceiling": "G3_campaign",
+  "primary_host_focus": "Sysclient0201",
+  "secondary_hosts_in_campaign": [
+    "Sysclient0402",
+    "Sysclient0660",
+    "DC1"
+  ],
+  "attack_stages": [
+    {
+      "stage": "initial_access_execution",
+      "status": "reported",
+      "summary": "Downloaded and ran runme.bat PowerShell Empire stager from news.com:8000."
+    },
+    {
+      "stage": "privilege_escalation",
+      "status": "reported",
+      "summary": "Bypass UAC via windir Environment registry modification; elevated agent LUAVR71T."
+    },
+    {
+      "stage": "credential_access",
+      "status": "reported",
+      "summary": "Mimikatz collected cleartext credentials including user zleazer."
+    },
+    {
+      "stage": "command_and_control",
+      "status": "reported",
+      "summary": "Empire C2 to news.com / 132.197.158.98:80."
+    },
+    {
+      "stage": "discovery_lateral_movement",
+      "status": "reported",
+      "summary": "Ping/ARP discovery then WMI pivot to Sysclient0402 and beyond."
+    }
+  ],
+  "gold_observables": [
+    "Sysclient0201",
+    "142.20.56.202",
+    "news.com",
+    "132.197.158.98",
+    "runme.bat",
+    "PowerShell Empire",
+    "windir",
+    "mimikatz",
+    "screenshot",
+    "invoke_wmi",
+    "Sysclient0402"
+  ],
+  "data_quality_notes": [
+    "Window locked from OpTCRedTeamGroundTruth.pdf Day 1 before compiling event-level motifs.",
+    "Day 2 (DeathStar) and Day 3 (Meterpreter/notepad++) are not used for R06.",
+    "Local package AIA-351-375 covers Sysclient0351-0375 only and does NOT contain Sysclient0201; it is retained as a non-R06 raw probe artifact only.",
+    "AV-blocked Drive downloads may ship as .cryptOPTC2019 / .zip.passwdOPTC2019 with password OPTC2019."
+  ],
+  "required_ecar_subsets": [
+    {
+      "drive_relative_hint": "ecar/evaluation/23Sep19-red/AIA-201-225/",
+      "reason": "Expected batch containing Sysclient0201 (host number 201)."
+    },
+    {
+      "drive_relative_hint": "ecar/evaluation/23Sep19-red/AIA-401-425/",
+      "reason": "Optional secondary host Sysclient0402 for lateral-movement claim validation."
+    }
+  ],
+  "notes": "Third true holdout after C07 THEIA and C08 ClearScope. Selected only after M3a formula, STOP semantics, channel priors, and intended!=OR rules were frozen. Not an input to method design or parameter tuning."
+}

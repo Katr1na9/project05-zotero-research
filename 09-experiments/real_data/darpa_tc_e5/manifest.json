@@ -1,5 +1,5 @@
 {
-  "dataset_id": "darpa-tc-e5-project05-c07-holdout",
+  "dataset_id": "darpa-tc-e5-project05-holdouts",
   "dataset_name": "DARPA Transparent Computing Engagement 5",
   "phase": "phase1_raw_window_extracted",
   "evaluation_role": "true_cross_engagement_holdout",
@@ -42,6 +42,24 @@
         "The archive catalog, schema, event totals, and record identifiers remain uninspected until PostgreSQL client tools are available.",
         "The selected window is locked from TA5.1 ground truth before any event-level motif compilation."
       ]
+    },
+    {
+      "source_id": "clearscope_e5_pidsmaker_postgres_dump",
+      "dataset_name": "CLEARSCOPE_E5",
+      "performer": "ClearScope",
+      "repository": "https://github.com/ubc-provenance/PIDSMaker",
+      "format": "PostgreSQL custom archive (PGDMP)",
+      "raw_target": "raw/pidsmaker/clearscope_e5.dump",
+      "download_status": "available_local_verified",
+      "size_bytes": 6630620258,
+      "sha256": "793C875B9FAD8B19FA5C661781159AC415B4451E2D28345626CD8EA04C9426BD",
+      "catalog_status": "cataloged_and_window_extracted",
+      "limitations": [
+        "PIDSMaker is a preprocessed derivative rather than a byte-identical official CDM archive.",
+        "The local checksum attests to the acquired file only; no upstream checksum has been independently verified.",
+        "Android ClearScope provenance differs from THEIA Linux host semantics; motif compilation must use Android observables from TA5.1 section 8.7.",
+        "The selected window is locked from TA5.1 ground truth before any event-level motif compilation."
+      ]
     }
   ],
   "derived_artifacts": [
@@ -62,6 +80,24 @@
       "path": "derived/R04_node_resolution_summary.json",
       "status": "generated",
       "use": "Coverage and checksum metadata for resolving event-node hashes through the three PIDSMaker node tables."
+    },
+    {
+      "artifact_id": "r05_postgres_catalog",
+      "path": "derived/R05_postgres_catalog.json",
+      "status": "generated",
+      "use": "Non-destructive ClearScope archive catalog used to select tables and confirm the time field before extraction."
+    },
+    {
+      "artifact_id": "r05_extraction_summary",
+      "path": "derived/R05_extraction_summary.json",
+      "status": "generated",
+      "use": "Reproducibility metadata for the bounded ClearScope E5 event and node subset."
+    },
+    {
+      "artifact_id": "r05_node_resolution_summary",
+      "path": "derived/R05_node_resolution_summary.json",
+      "status": "generated",
+      "use": "Coverage and checksum metadata for resolving ClearScope event-node hashes through the three PIDSMaker node tables."
     }
   ],
   "cases": [
@@ -69,6 +105,11 @@
       "case_id": "R04",
       "source_id": "theia_e5_pidsmaker_postgres_dump",
       "ground_truth_file": "ground_truth/R04.json"
+    },
+    {
+      "case_id": "R05",
+      "source_id": "clearscope_e5_pidsmaker_postgres_dump",
+      "ground_truth_file": "ground_truth/R05.json"
     }
   ]
 }

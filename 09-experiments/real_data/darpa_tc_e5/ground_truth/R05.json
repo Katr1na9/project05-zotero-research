@@ -1,0 +1,84 @@
+{
+  "case_id": "R05",
+  "case_name": "ClearScope Appstarter APK Micro APT Elevate",
+  "development_only": false,
+  "holdout_role": "true_cross_engagement_second_holdout",
+  "source_id": "clearscope_e5_pidsmaker_postgres_dump",
+  "platform": "Android 8",
+  "target_host": "ta1-clearscope-translate-test",
+  "target_ip": "128.55.12.114",
+  "scenario_date": "2019-05-15",
+  "source_timezone": "America/New_York",
+  "local_window": {
+    "start": "2019-05-15T15:38:00-04:00",
+    "end": "2019-05-15T16:19:00-04:00"
+  },
+  "utc_window": {
+    "start": "2019-05-15T19:38:00Z",
+    "end": "2019-05-15T20:19:00Z"
+  },
+  "ground_truth_document": "e5_ta51_final_report",
+  "ground_truth_section": "8.7, PDF pages 81-85",
+  "ground_truth_summary": "The user installed and ran the Appstarter APK, which loaded the Micro APT shared object. Micro APT connected to 77.138.117.150:80 for C2. During the attack, the elevate driver was installed as benign setup activity, then used for privilege escalation. Elevated privileges were used to exfiltrate calllog.db, calendar.db, and mmssms.db, and to capture a screenshot.",
+  "evidence_readiness": "ground_truth_and_raw_window_validated",
+  "natural_incompleteness": true,
+  "supportable_ceiling": "G3_campaign",
+  "attack_stages": [
+    {
+      "stage": "initial_access_execution",
+      "status": "reported",
+      "summary": "Appstarter APK was installed and launched, loading the Micro APT shared object."
+    },
+    {
+      "stage": "command_and_control",
+      "status": "reported",
+      "summary": "Micro APT connected outbound to 77.138.117.150:80."
+    },
+    {
+      "stage": "privilege_escalation",
+      "status": "reported",
+      "summary": "The elevate driver (sl.ko / driver) was used to escalate to uid 0 via /dev/msm_g711tlaw."
+    },
+    {
+      "stage": "collection_exfiltration",
+      "status": "reported",
+      "summary": "Elevated access was used to read sensitive databases and capture a screenshot."
+    }
+  ],
+  "gold_observables": [
+    "ta1-clearscope-translate-test",
+    "128.55.12.114",
+    "appstarter",
+    "de.belu.appstarter",
+    "77.138.117.150",
+    "Micro APT",
+    "sl.ko",
+    "calllog.db",
+    "calendar.db",
+    "mmssms.db",
+    "screenshot"
+  ],
+  "data_quality_notes": [
+    "Window locked from TA5.1 section 8.7 and cross-checked against PIDSMaker CLEARSCOPE_E5 appstarter_0515 attack window 15:38-16:19 EDT before event-level inspection.",
+    "Earlier ClearScope attempts on 05/13 and 05/15 14:14 failed (Metasploit APK / Barephone Micro APT) and are not used as the holdout campaign.",
+    "Elevate driver installation is reported as benign setup interleaved with the attack; event-level validation must separate attack claims from benign driver context where possible."
+  ],
+  "raw_validation": {
+    "event_rows_in_locked_window": 694872,
+    "node_hashes_resolved": "4968/4968",
+    "trace_confirmed_observables": [
+      "de.belu.appstarter / busybox subjects and Appstarter package paths",
+      "busybox CONNECT/RECVFROM/SENDTO socket activity (remote destination scrubbed to 0)",
+      "busybox OPEN/WRITE of /dev/msm_g711tlaw",
+      "busybox EXECUTE of /system/bin/screencap (wall-clock before elevate; matches failed pre-elevate attempt)",
+      "benign /data/local/tmp/sl elevate-driver setup subject"
+    ],
+    "trace_unconfirmed_report_observables": [
+      "77.138.117.150:80 Micro APT C2 endpoint",
+      "calllog.db / calendar.db / mmssms.db exfiltration paths",
+      "successful post-elevate screenshot as a distinct post-elevate execute",
+      "sl.ko file node"
+    ]
+  },
+  "notes": "Second true cross-engagement holdout after C07 THEIA. Selected only after M3a formula, STOP semantics, channel priors, and intended!=OR annotation rules were frozen. Not an input to method design or parameter tuning."
+}

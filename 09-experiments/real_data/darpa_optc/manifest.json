@@ -1,0 +1,76 @@
+{
+  "dataset_id": "darpa-optc-project05-c09-holdout",
+  "dataset_name": "DARPA Operationally Transparent Cyber (OpTC)",
+  "phase": "phase0_ground_truth_locked_awaiting_primary_ecar",
+  "evaluation_role": "true_cross_engagement_third_holdout",
+  "development_only": false,
+  "official_index_url": "https://github.com/FiveDirections/OpTC-data",
+  "data_drive_note": "Large eCAR payloads are on the Google Drive linked from FiveDirections/OpTC-data README. R06 needs AIA-201-225 (Sysclient0201), not AIA-351-375.",
+  "documents": [
+    {
+      "document_id": "optc_redteam_ground_truth",
+      "local_filename": "docs/OpTCRedTeamGroundTruth.pdf",
+      "official_filename": "OpTCRedTeamGroundTruth.pdf",
+      "document_type": "red-team ground-truth report",
+      "sha256": "3CE93669715280F15D49A46B2BFE328A8340F0FDB3BBD709C28A74DF5057B679",
+      "size_bytes": 13727,
+      "download_status": "available_local_verified"
+    },
+    {
+      "document_id": "optc_av_bypass_errata_note",
+      "local_filename": "docs/optc-errata.md",
+      "official_filename": "optc-errata.md",
+      "document_type": "AV-bypass packaging note for blocked gz downloads",
+      "sha256": "FBC09EE25B0B6EC1020CC0EF3360F61E9C56C0DA77205540BA8E5A5716C60C96",
+      "size_bytes": 374,
+      "download_status": "available_local_verified",
+      "notes": "Passwords for .cryptOPTC2019 / .zip.passwdOPTC2019 alternatives are OPTC2019."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "optc_ecar_23sep19_aia_351_375_av_bypass",
+      "dataset_name": "OpTC eCAR 23Sep19-red AIA-351-375",
+      "format": "password-zipped eCAR JSON (passwd OPTC2019)",
+      "raw_target": "raw/errata_av_bypass/AIA-351-375.ecar-last.json.zip.passwdOPTC2019.zip",
+      "download_status": "available_local_verified_wrong_batch_for_R06",
+      "size_bytes": 118978732,
+      "sha256": "0DB33FBA3F1C616BE520B62FAC46B3188A213F86EBB9224A68D5A2651F27A912",
+      "host_range": "Sysclient0351-Sysclient0375",
+      "limitations": [
+        "Does not contain Sysclient0201/0402/0660/DC1 required by locked R06 Day1 campaign.",
+        "Retained only as packaging probe / possible later Day3 Sysclient0351 material."
+      ]
+    },
+    {
+      "source_id": "optc_ecar_23sep19_sysclient0201",
+      "dataset_name": "OpTC eCAR 23Sep19-red AIA-201-225 (expected)",
+      "format": "eCAR JSON.gz or AV-bypass zip",
+      "raw_target": "raw/ecar/evaluation/23Sep19-red/AIA-201-225/",
+      "download_status": "pending",
+      "limitations": [
+        "Required for R06 primary host Sysclient0201.",
+        "Folder name follows OpTC AIA-###-### host-number batches; confirm on Drive if numbering differs."
+      ]
+    }
+  ],
+  "derived_artifacts": [
+    {
+      "artifact_id": "r06_gt_text_extract",
+      "path": "derived/_gt_extract.txt",
+      "status": "generated",
+      "use": "Local text extract of the red-team GT PDF used to lock R06 before eCAR inspection."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "R06",
+      "source_id": "optc_ecar_23sep19_sysclient0201",
+      "ground_truth_file": "ground_truth/R06.json"
+    }
+  ],
+  "notes": [
+    "C09 is pre-registered after C07/C08. M3a weights remain frozen.",
+    "R06 locked to 2019-09-23 Day1 Plain PowerShell Empire on Sysclient0201."
+  ]
+}

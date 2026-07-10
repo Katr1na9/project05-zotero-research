@@ -68,11 +68,11 @@ flowchart LR
 | G2 撞题扫描 | 进行中 | 对齐谱系与 WinRegRL 红线已记；仍需补中文专利侧、APTChaser/GAPT 正文 |
 | G3 创新强度 | 可写边界已收紧 | 主张表示+规划+停止，不主张可学习效用打赢规则 |
 | G4 专利权利要求 | 骨架更新 | [v0.3](../08-writing/patent-claims-draft-v0.3-20260710.md) 对齐 M3a；正式检索与措辞待补 |
-| G5 实验可执行性 | C07 首轮完成 | C01–C06 + 通道可靠性 + STOP/M4 压力；E5 THEIA C07 已跑，**缺第二独立留出复现** |
+| G5 实验可执行性 | C07+C08 完成 | C01–C06 + 通道可靠性 + STOP/M4；E5 THEIA C07 + ClearScope C08 已跑；可选 OpTC 第三留出 |
 
 ## 下一步
 
-1. 按 [C07 真留出协议](../08-writing/c07-true-holdout-protocol-v0.1-20260710.md) 接入 OpTC 或 E5 第二异构 performer；不调 M3a 参数，做第二独立留出复现。
-2. 完成专利 v0.3 的中文专利补检与独立权利要求措辞审阅。
-3. ~~按 intended 标注规范清理 C01–C06 债务~~ **已完成**；可选继续做噪声动作鲁棒性。
+1. **第三真留出 OpTC（进行中）**：见 [C09 协议](../08-writing/c09-optc-true-holdout-protocol-v0.1-20260710.md)；先下 GT PDF 锁窗，再下 eCAR 子集；不调 M3a。
+2. ~~第二真留出 ClearScope~~ **已完成（C08）**。
+3. 专利 v0.3 / 撞题补完可后置（当前不急）。
 4. **明确不做**：继续堆 logistic/GNN/RL，或再做同构 decoy/离线压力。

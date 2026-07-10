@@ -177,6 +177,40 @@ class DarpaE5HoldoutManifestTests(unittest.TestCase):
             source["sha256"],
         )
 
+    def test_r05_is_a_second_e5_holdout_with_a_locked_window(self):
+        case = json.loads(
+            (E5_REAL_DATA_DIR / "ground_truth" / "R05.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertFalse(case["development_only"])
+        self.assertEqual(
+            "true_cross_engagement_second_holdout",
+            case["holdout_role"],
+        )
+        self.assertEqual(
+            {
+                "start": "2019-05-15T19:38:00Z",
+                "end": "2019-05-15T20:19:00Z",
+            },
+            case["utc_window"],
+        )
+        self.assertEqual("G3_campaign", case["supportable_ceiling"])
+        self.assertEqual(694872, case["raw_validation"]["event_rows_in_locked_window"])
+
+    def test_r05_clearscope_source_is_provenance_tracked(self):
+        sources = {
+            source["source_id"]: source for source in self.manifest["sources"]
+        }
+        source = sources["clearscope_e5_pidsmaker_postgres_dump"]
+        self.assertEqual("ClearScope", source["performer"])
+        self.assertEqual("available_local_verified", source["download_status"])
+        self.assertEqual(6630620258, source["size_bytes"])
+        self.assertEqual(
+            "793C875B9FAD8B19FA5C661781159AC415B4451E2D28345626CD8EA04C9426BD",
+            source["sha256"],
+        )
+
     def test_e5_manifest_cross_references_are_valid(self):
         self.assertEqual([], validator.validate_manifest(E5_REAL_DATA_DIR))
 

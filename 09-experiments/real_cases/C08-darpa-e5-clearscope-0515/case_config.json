@@ -1,0 +1,47 @@
+{
+  "case_id": "C08-darpa-e5-clearscope-0515",
+  "source_case_id": "R05",
+  "case_name": "DARPA E5 ClearScope Appstarter Micro APT Elevate trace",
+  "description": "Second true cross-engagement holdout compiled from the E5 ClearScope 2019-05-15 bounded PGDMP trace. The campaign graph uses only trace-backed motifs and preserves documented evidence gaps (scrubbed C2 IP; missing DB exfil paths).",
+  "development_only": false,
+  "holdout_role": "true_cross_engagement_second_holdout",
+  "target_granularity": "G3_campaign",
+  "support_ceiling": "G3_campaign",
+  "budget_total": 9,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C08-AA-001", "C08-AA-002", "C08-AA-003", "C08-AA-004", "C08-AA-005"],
+  "stage_mask_tags": ["stage:command_and_control", "stage:privilege_escalation", "stage:collection"],
+  "discriminative_claim_ids": ["C08-EC-001", "C08-EC-002", "C08-EC-003"],
+  "channel_reliability": {
+    "network_telemetry": 0.5,
+    "host_forensics": 1.0,
+    "host_probe": 1.0,
+    "analyst": 1.0
+  },
+  "cti_nodes": [
+    {"node_id": "N01_appstarter_c2", "stage": "command_and_control", "required_claim_ids": ["C08-EC-001"], "critical": true},
+    {"node_id": "N02_elevate_msm", "stage": "privilege_escalation", "required_claim_ids": ["C08-EC-002"], "critical": true},
+    {"node_id": "N03_screencap", "stage": "collection", "required_claim_ids": ["C08-EC-003"], "critical": true}
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_appstarter_c2", "target": "N02_elevate_msm"},
+    {"edge_id": "E02", "source": "N01_appstarter_c2", "target": "N03_screencap"}
+  ],
+  "natural_incompleteness": {
+    "report_only_observables": [
+      "77.138.117.150:80 Micro APT C2 endpoint",
+      "calllog.db exfiltration",
+      "calendar.db exfiltration",
+      "mmssms.db exfiltration",
+      "successful post-elevate screenshot (trace only shows the pre-elevate screencap execute)"
+    ],
+    "schema_unavailable_observables": [
+      "PIDSMaker netflow remote destination addresses (scrubbed to 0)",
+      "sl.ko file node in the bounded window"
+    ],
+    "policy": "No synthetic claim is created for report-only or scrubbed observables. The planner may reach only the G3 campaign ceiling supported by the observed busybox C2 fork into msm elevate and screencap-attempt claims."
+  },
+  "granularity_order": ["G0_unknown", "G1_technique", "G2_tactic_intent", "G3_campaign", "G4_actor_cluster", "G5_named_actor"]
+}

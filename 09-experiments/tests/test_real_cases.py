@@ -10,6 +10,7 @@ EXPECTED = {
     "C05-darpa-e3-cadets": ("G2_tactic_intent", 8),
     "C06-darpa-e3-cadets-0412": ("G3_campaign", 10),
     "C07-darpa-e5-theia-0515": ("G3_campaign", 5),
+    "C08-darpa-e5-clearscope-0515": ("G3_campaign", 4),
 }
 
 

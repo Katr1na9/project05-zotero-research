@@ -710,23 +710,24 @@ class SingleCaseOutputNamingTests(unittest.TestCase):
         self.assertEqual(Path("results/c01_mvp_summary.json"), paths["summary"])
 
     def test_holdout_case_uses_its_own_case_id_prefix(self):
-        paths = run_mvp.single_case_output_paths(
-            Path("results"),
-            "C07-darpa-e5-theia-0515",
-        )
-
-        self.assertEqual(
-            Path("results/c07-darpa-e5-theia-0515_mvp_results.csv"),
-            paths["results"],
-        )
-        self.assertEqual(
-            Path("results/c07-darpa-e5-theia-0515_mvp_traces.json"),
-            paths["traces"],
-        )
-        self.assertEqual(
-            Path("results/c07-darpa-e5-theia-0515_mvp_summary.json"),
-            paths["summary"],
-        )
+        for case_id, prefix in (
+            ("C07-darpa-e5-theia-0515", "c07-darpa-e5-theia-0515"),
+            ("C08-darpa-e5-clearscope-0515", "c08-darpa-e5-clearscope-0515"),
+        ):
+            with self.subTest(case_id=case_id):
+                paths = run_mvp.single_case_output_paths(Path("results"), case_id)
+                self.assertEqual(
+                    Path(f"results/{prefix}_mvp_results.csv"),
+                    paths["results"],
+                )
+                self.assertEqual(
+                    Path(f"results/{prefix}_mvp_traces.json"),
+                    paths["traces"],
+                )
+                self.assertEqual(
+                    Path(f"results/{prefix}_mvp_summary.json"),
+                    paths["summary"],
+                )
 
 
 if __name__ == "__main__":
