@@ -10,19 +10,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 
-# Historical development cases compiled before the annotation protocol.
-# Do not add new case_ids here; C07+ must pass the inequality check.
-LEGACY_INTENDED_EQUALS_OR_ALLOWLIST = frozenset(
-    {
-        "C01-linux-provenance",
-        "C02-freebsd-provenance",
-        "C03-windows-host",
-        "C04-darpa-e3-fivedirections",
-        "C05-darpa-e3-cadets",
-        "C06-darpa-e3-cadets-0412",
-    }
-)
-
 
 def load_module(name: str, filename: str):
     spec = importlib.util.spec_from_file_location(name, SCRIPT_DIR / filename)
@@ -103,24 +90,18 @@ class IntendedNotRecoverableOrHelperTests(unittest.TestCase):
 
 
 class CaseIntendedInequalityTests(unittest.TestCase):
-    def test_new_cases_must_not_use_intended_as_recoverable_or_answer_key(self):
+    def test_all_cases_must_not_use_intended_as_recoverable_or_answer_key(self):
         violations: list[str] = []
-        legacy_hits: dict[str, int] = {}
         for case_dir in case_dirs():
             config = run_mvp.load_json(case_dir / "case_config.json")
             actions = run_mvp.load_json(case_dir / "acquisition_actions.json")
-            case_id = config["case_id"]
             leaking = [
                 action["action_id"]
                 for action in actions
                 if run_mvp.intended_equals_recoverable_or(config, action)
             ]
-            if not leaking:
-                continue
-            if case_id in LEGACY_INTENDED_EQUALS_OR_ALLOWLIST:
-                legacy_hits[case_id] = len(leaking)
-                continue
-            violations.append(f"{case_id}: {', '.join(leaking)}")
+            if leaking:
+                violations.append(f"{config['case_id']}: {', '.join(leaking)}")
 
         self.assertEqual(
             [],
@@ -128,17 +109,6 @@ class CaseIntendedInequalityTests(unittest.TestCase):
             "intended_cti_node_ids must not equal OR(recoverable) coverage; "
             "see 08-writing/intended-cti-node-annotation-protocol-v0.1-20260710.md. "
             f"Violations: {violations}",
-        )
-        # Allowlist must not silently shrink without noticing missing cases,
-        # and must not grow: every listed legacy case should still exist.
-        discovered = {run_mvp.load_json(d / "case_config.json")["case_id"] for d in case_dirs()}
-        missing_legacy = sorted(LEGACY_INTENDED_EQUALS_OR_ALLOWLIST - discovered)
-        self.assertEqual([], missing_legacy)
-        self.assertEqual(
-            set(legacy_hits),
-            LEGACY_INTENDED_EQUALS_OR_ALLOWLIST,
-            "Legacy allowlist out of sync with actual intended==OR leaks; "
-            f"hits={legacy_hits}",
         )
 
 

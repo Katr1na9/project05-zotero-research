@@ -49,13 +49,9 @@ intended = set(intended_cti_node_ids)
 
 LLM 若参与步骤 2：只输入请求文本 + CTI 节点列表；**不得**输入 `recoverable_claim_ids` 或 event UUID 恢复集合。
 
-## 5. 遗留债务（允许名单）
+## 5. 遗留债务
 
-下列开发集案例在历史编译中仍存在 `intended == covered`，列入 CI allowlist，**不得扩大**：
-
-- C01, C02, C03, C04, C05, C06
-
-**C07 及之后的新案例必须合规。** 清理 allowlist 是独立任务，清理时需重跑对应矩阵并更新贡献边界数字。
+**已清零（2026-07-10）**：C01–C06 已按过宽意图重标，CI 不再保留 allowlist。新案例与旧案例一律必须 `intended ≠ OR(recoverable)`（空意图且无覆盖的噪声动作除外）。
 
 ## 6. 与通道可靠性的关系
 

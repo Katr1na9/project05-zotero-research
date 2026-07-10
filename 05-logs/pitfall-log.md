@@ -22,7 +22,7 @@
 - 场景：为 M3a 增加公开 `intended_cti_node_ids`。
 - 表现：通道在线时 M3a 近乎 Oracle；`intended` 与 `OR(recoverable)` 节点集完全一致（C01–C06）。
 - 原因：编译时用隐藏恢复集合反推公开意图；通道门控只覆盖离线 seed。
-- 解决：P0-#1 通道门控 + `intended≠OR` 标注规范与 CI；C07 过宽意图合规；C01–C06 暂列 allowlist。
+- 解决：P0-#1 通道门控 + `intended≠OR` 标注规范与 CI；C01–C07 均已过宽意图合规（allowlist 已清零）。
 - 预防：禁止脚本从 `recoverable_claim_ids` 生成 `intended`；新案例必须过 `test_intended_not_recoverable_or`。
 - 影响：高——直接威胁“表示假设”实验的可辩护性。
 

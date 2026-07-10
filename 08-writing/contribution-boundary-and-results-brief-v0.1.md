@@ -22,7 +22,7 @@ Project05 不做新的 CTI–provenance 对齐器，也不做可学习效用模�
 - 动作公开字段：`intended_cti_node_ids`、`cost`、`acquisition_channel`、手写 `expected_*`（M3a **不依赖**后者）。
 - 隐藏字段：`recoverable_claim_ids` 仅用于环境实现与 Oracle；规划器不可读。
 - **P0-#1（运行时）**：通道可靠性门控——通道离线时“声明目标 ≠ 实际恢复”；`network_telemetry` 先验 0.5，可靠回退在其他通道。
-- **标注规范（编译时）**：`intended` 不得等于 `OR(recoverable)` 覆盖节点集（空意图且无覆盖的噪声动作除外）。见 [intended-cti-node-annotation-protocol-v0.1-20260710.md](intended-cti-node-annotation-protocol-v0.1-20260710.md)。C01–C06 仍为历史债务（CI allowlist）；**C07+ 必须合规**。
+- **标注规范（编译时）**：`intended` 不得等于 `OR(recoverable)` 覆盖节点集（空意图且无覆盖的噪声动作除外）。见 [intended-cti-node-annotation-protocol-v0.1-20260710.md](intended-cti-node-annotation-protocol-v0.1-20260710.md)。**C01–C07 均已合规**（2026-07-10 清零 allowlist）。
 
 > 注意：仅通道门控**不能**消除通道在线时的答案键；完整解耦 = 运行时门控 + 编译时 intended≠OR。
 
@@ -56,20 +56,22 @@ STOP 的 break-even utility = 0
 
 ## 3. 结果总表（可引用数字）
 
-数字来自 2026-07-10 通道可靠性门控后的重跑产物（除非另标）。
+数字来自 2026-07-10 **intended≠OR 清零后**重跑（通道门控仍在）。
 
-### 3.1 常规矩阵（通道门控后）
+### 3.1 常规矩阵（通道门控 + intended≠OR）
 
 | 设定 | Planner | success | mean cost† | mean zero-yield |
 |---|---|---:|---:|---:|
-| Toy C01–C03 | Oracle | 0.9778 | 2.49 | 0.01 |
-| Toy C01–C03 | **M3a** | **0.9556** | **2.67** | 0.20 |
+| Toy C01–C03 | Oracle | 0.9778 | 2.49 | 0.00 |
+| Toy C01–C03 | **M3a** | **0.9481** | **3.38** | 0.44 |
 | Toy C01–C03 | M2 | 0.8000 | 3.73 | 0.62 |
 | Real C04–C06 | Oracle | 1.0000 | 1.79 | 0.00 |
-| Real C04–C06 | **M3a** | **0.9778** | **1.77** | 0.07 |
+| Real C04–C06 | **M3a** | **0.9630** | **2.12** | 0.16 |
 | Real C04–C06 | M2 | 0.8000 | 1.77 | 0.24 |
 
-† `mean_cost_to_target`（仅达标 episode）。产物：`09-experiments/results/m3a_{toy,real}_cases/`。
+† `mean_cost_to_target`（仅达标 episode）。产物：`m3a_toy_cases/`；C04–C06 过滤摘要：`m3a_real_cases/c04_c06_dev_summary.json`（`m3a_real_cases` 全量现含 C07，论文表用过滤摘要）。
+
+相对清零前（intended==OR）快照：M3a 成功率略降、成本/regret 上升——过宽意图的预期代价；**相对 M2 的成功率优势仍在**。
 
 ### 3.2 M4 压力（真实案例，toy 训练 / real 测试协议下的对照表）
 
@@ -120,7 +122,7 @@ STOP 的 break-even utility = 0
 5. LLM 在线效用预测或自由归因（LLM 仅限语义编译/解释，未进主循环）。
 6. 部分可达紧预算下 M3a 已会可靠选路（当前失败；属已知边界）。
 7. M3a 已是通道感知规划器，或已在 C07 上证明成本优于 M2。
-8. “声明与实现已在数据层完全解耦”（C01–C06 仍 intended==OR；仅 C07+ 强制合规）。
+8. ~~“声明与实现已在数据层完全解耦”（C01–C06 仍 intended==OR）~~ **已过时**：C01–C07 均已 intended≠OR；但仍须同时依赖通道门控，且过宽意图会抬高 M3a 成本。
 
 ## 5. 专利 / 论文叙事骨架（对齐 M3a）
 
@@ -138,10 +140,10 @@ STOP 的 break-even utility = 0
 
 ## 6. 主线下一步（按优先级）
 
-1. **第二真留出复现**：OpTC 或 E5 第二异构 performer；保持 M3a 公式冻结；预登记 M3a vs M2 paired regret。
+1. **第二真留出复现**：OpTC 或 E5 第二异构 performer（ClearScope）；保持 M3a 公式冻结；预登记 M3a vs M2 paired regret。
 2. **专利 v0.3**：中文补检与独立权利要求措辞（骨架已有）。
-3. **清理 C01–C06 intended≠OR 债务**（按标注规范重标并重跑开发矩阵；允许名单只减不增）。
-4. **可选**：噪声/误导动作鲁棒性；M3a 是否消费通道先验（改分须预登记，且不得回头调 C07）。
+3. ~~清理 C01–C06 intended≠OR 债务~~ **已完成（2026-07-10）**。
+4. **可选**：噪声/误导动作鲁棒性；M3a 是否消费通道先验（改分须预登记，且不得回头调 C07/C08）。
 5. **明确不做**：logistic/GNN/RL 升级；再堆同构 decoy/离线压力。
 
 ## 7. 关键产物索引

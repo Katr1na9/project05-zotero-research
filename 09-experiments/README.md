@@ -16,7 +16,7 @@
 
 细节与预登记见 `../04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md`。`results/` 已于 2026-07-10 按该机制重跑刷新。M4 通道离线正向压力见 `../04-progress/m4-channel-reliability-outage-stress-20260710.md`。显式 STOP/降级见 `../04-progress/m4-explicit-stop-degrade-20260710.md`。真正应停压力见 `../04-progress/m4-should-stop-stress-20260710.md`。部分可达选路压力（负/近负结果）见 `../04-progress/m4-partial-reachability-routing-stress-20260710.md`。
 
-**2026-07-10 主线冻结**：默认规划器为 M3a；M3b 仅对照。贡献边界与结果总表：`../08-writing/contribution-boundary-and-results-brief-v0.1.md`。下一实验优先级为真留出 C07（E5/OpTC）：`../08-writing/c07-true-holdout-protocol-v0.1-20260710.md`。
+**2026-07-10 主线冻结**：默认规划器为 M3a；M3b 仅对照。贡献边界与结果总表：`../08-writing/contribution-boundary-and-results-brief-v0.1.md`。真留出 C07（E5 THEIA）：`../08-writing/c07-true-holdout-protocol-v0.1-20260710.md`。`intended≠OR` 标注规范已对 C01–C07 生效（allowlist 已清零）。
 
 ## C06 独立留出验证（2026-07-10 重跑）
 

@@ -3,93 +3,227 @@
     "action_id": "C02-AA-001",
     "case_id": "C02-freebsd-provenance",
     "action_type": "extend_log_window",
-    "target": {"target_type": "host", "target_value": "freebsd-web-01"},
+    "target": {
+      "target_type": "host",
+      "target_value": "freebsd-web-01"
+    },
     "cost": 2,
-    "recoverable_claim_ids": ["C02-EC-002", "C02-EC-003", "C02-EC-004"],
-    "intended_cti_node_ids": ["N01_initial_execution", "N02_payload_drop"],
-    "expected_evidence_types": ["local_log", "provenance_graph"],
-    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.2, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.33},
+    "recoverable_claim_ids": [
+      "C02-EC-002",
+      "C02-EC-003",
+      "C02-EC-004"
+    ],
+    "intended_cti_node_ids": [
+      "N01_initial_execution",
+      "N02_payload_drop",
+      "N03_persistence"
+    ],
+    "expected_evidence_types": [
+      "local_log",
+      "provenance_graph"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.2,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.33
+    },
     "status": "available",
-    "natural_language_request": "Extend BSM audit coverage around the initial shell execution."
+    "natural_language_request": "Extend BSM audit coverage around the initial shell execution.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N03_persistence, while recoverable OR-coverage remains ['N01_initial_execution', 'N02_payload_drop']."
   },
   {
     "action_id": "C02-AA-002",
     "case_id": "C02-freebsd-provenance",
     "action_type": "query_host_subgraph",
-    "target": {"target_type": "process", "target_value": "/tmp/.kworker"},
+    "target": {
+      "target_type": "process",
+      "target_value": "/tmp/.kworker"
+    },
     "cost": 3,
-    "recoverable_claim_ids": ["C02-EC-003", "C02-EC-004", "C02-EC-006", "C02-EC-007", "C02-EC-008"],
-    "intended_cti_node_ids": ["N02_payload_drop", "N03_persistence", "N05_collection"],
-    "expected_evidence_types": ["provenance_graph", "local_log"],
-    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.35, "expected_over_attribution_risk_reduction": 0.35, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.5},
+    "recoverable_claim_ids": [
+      "C02-EC-003",
+      "C02-EC-004",
+      "C02-EC-006",
+      "C02-EC-007",
+      "C02-EC-008"
+    ],
+    "intended_cti_node_ids": [
+      "N02_payload_drop",
+      "N03_persistence",
+      "N04_c2_connection",
+      "N05_collection"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph",
+      "local_log"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 2,
+      "expected_uncertainty_reduction": 0.35,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.5
+    },
     "status": "available",
-    "natural_language_request": "Recover the provenance subgraph rooted at /tmp/.kworker."
+    "natural_language_request": "Recover the provenance subgraph rooted at /tmp/.kworker.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N04_c2_connection, while recoverable OR-coverage remains ['N02_payload_drop', 'N03_persistence', 'N05_collection']."
   },
   {
     "action_id": "C02-AA-003",
     "case_id": "C02-freebsd-provenance",
     "action_type": "recover_network_summary",
-    "target": {"target_type": "ip", "target_value": "203.0.113.44"},
+    "target": {
+      "target_type": "ip",
+      "target_value": "203.0.113.44"
+    },
     "cost": 2,
-    "recoverable_claim_ids": ["C02-EC-005", "C02-EC-009", "C02-EC-010"],
-    "intended_cti_node_ids": ["N04_c2_connection", "N06_exfiltration"],
-    "expected_evidence_types": ["network_summary"],
-    "expected_effects": {"expected_granularity_gain": 2, "expected_uncertainty_reduction": 0.4, "expected_over_attribution_risk_reduction": 0.4, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.33},
+    "recoverable_claim_ids": [
+      "C02-EC-005",
+      "C02-EC-009",
+      "C02-EC-010"
+    ],
+    "intended_cti_node_ids": [
+      "N04_c2_connection",
+      "N05_collection",
+      "N06_exfiltration"
+    ],
+    "expected_evidence_types": [
+      "network_summary"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 2,
+      "expected_uncertainty_reduction": 0.4,
+      "expected_over_attribution_risk_reduction": 0.4,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.33
+    },
     "status": "available",
-    "natural_language_request": "Recover DNS and flow summaries for the suspected external endpoint."
+    "natural_language_request": "Recover DNS and flow summaries for the suspected external endpoint.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N05_collection, while recoverable OR-coverage remains ['N04_c2_connection', 'N06_exfiltration']."
   },
   {
     "action_id": "C02-AA-004",
     "case_id": "C02-freebsd-provenance",
     "action_type": "ttp_local_probe",
-    "target": {"target_type": "technique", "target_value": "T1560"},
+    "target": {
+      "target_type": "technique",
+      "target_value": "T1560"
+    },
     "cost": 2,
-    "recoverable_claim_ids": ["C02-EC-007", "C02-EC-008"],
-    "intended_cti_node_ids": ["N05_collection"],
-    "expected_evidence_types": ["local_log", "provenance_graph"],
-    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.2, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.17},
+    "recoverable_claim_ids": [
+      "C02-EC-007",
+      "C02-EC-008"
+    ],
+    "intended_cti_node_ids": [
+      "N05_collection",
+      "N06_exfiltration"
+    ],
+    "expected_evidence_types": [
+      "local_log",
+      "provenance_graph"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.2,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.17
+    },
     "status": "available",
-    "natural_language_request": "Probe local audit evidence for collection and archive creation."
+    "natural_language_request": "Probe local audit evidence for collection and archive creation.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N06_exfiltration, while recoverable OR-coverage remains ['N05_collection']."
   },
   {
     "action_id": "C02-AA-005",
     "case_id": "C02-freebsd-provenance",
     "action_type": "malware_analysis",
-    "target": {"target_type": "file", "target_value": "/tmp/.kworker"},
+    "target": {
+      "target_type": "file",
+      "target_value": "/tmp/.kworker"
+    },
     "cost": 4,
-    "recoverable_claim_ids": ["C02-EC-004"],
-    "intended_cti_node_ids": ["N02_payload_drop"],
-    "expected_evidence_types": ["local_log"],
-    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.3, "expected_over_attribution_risk_reduction": 0.25, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.17},
+    "recoverable_claim_ids": [
+      "C02-EC-004"
+    ],
+    "intended_cti_node_ids": [
+      "N02_payload_drop",
+      "N03_persistence"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.3,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.17
+    },
     "status": "available",
-    "natural_language_request": "Analyze the recovered FreeBSD payload."
+    "natural_language_request": "Analyze the recovered FreeBSD payload.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N03_persistence, while recoverable OR-coverage remains ['N02_payload_drop']."
   },
   {
     "action_id": "C02-AA-006",
     "case_id": "C02-freebsd-provenance",
     "action_type": "human_review",
-    "target": {"target_type": "claim", "target_value": "C02-EC-010"},
+    "target": {
+      "target_type": "claim",
+      "target_value": "C02-EC-010"
+    },
     "cost": 5,
-    "recoverable_claim_ids": ["C02-EC-010"],
-    "intended_cti_node_ids": ["N04_c2_connection"],
-    "expected_evidence_types": ["human_review"],
-    "expected_effects": {"expected_granularity_gain": 0, "expected_uncertainty_reduction": 0.1, "expected_over_attribution_risk_reduction": 0.15, "expected_conflict_resolution": 0.5, "expected_coverage_delta": 0},
+    "recoverable_claim_ids": [
+      "C02-EC-010"
+    ],
+    "intended_cti_node_ids": [
+      "N04_c2_connection",
+      "N05_collection"
+    ],
+    "expected_evidence_types": [
+      "human_review"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 0,
+      "expected_uncertainty_reduction": 0.1,
+      "expected_over_attribution_risk_reduction": 0.15,
+      "expected_conflict_resolution": 0.5,
+      "expected_coverage_delta": 0
+    },
     "status": "available",
-    "natural_language_request": "Review the weak DNS observation before treating it as C2 support."
+    "natural_language_request": "Review the weak DNS observation before treating it as C2 support.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N05_collection, while recoverable OR-coverage remains ['N04_c2_connection']."
   },
   {
     "action_id": "C02-AA-007",
     "case_id": "C02-freebsd-provenance",
     "action_type": "query_host_subgraph",
     "acquisition_channel": "host_forensics",
-    "target": {"target_type": "file", "target_value": "/var/spool/exfil.tar"},
+    "target": {
+      "target_type": "file",
+      "target_value": "/var/spool/exfil.tar"
+    },
     "cost": 3,
-    "recoverable_claim_ids": ["C02-EC-009"],
-    "intended_cti_node_ids": ["N06_exfiltration"],
-    "expected_evidence_types": ["provenance_graph"],
-    "expected_effects": {"expected_granularity_gain": 1, "expected_uncertainty_reduction": 0.25, "expected_over_attribution_risk_reduction": 0.3, "expected_conflict_resolution": 0, "expected_coverage_delta": 0.17},
+    "recoverable_claim_ids": [
+      "C02-EC-009"
+    ],
+    "intended_cti_node_ids": [
+      "N05_collection",
+      "N06_exfiltration"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.25,
+      "expected_over_attribution_risk_reduction": 0.3,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.17
+    },
     "status": "available",
     "natural_language_request": "Recover host provenance for the staged archive to confirm the exfiltration node when network telemetry is unavailable.",
-    "notes": "Reliable host-side fallback for the exfiltration node; costlier than the cheap network summary (C02-AA-003) but not subject to network_telemetry outages."
+    "notes": "Reliable host-side fallback for the exfiltration node; costlier than the cheap network summary (C02-AA-003) but not subject to network_telemetry outages. Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N05_collection, while recoverable OR-coverage remains ['N06_exfiltration']."
   }
 ]

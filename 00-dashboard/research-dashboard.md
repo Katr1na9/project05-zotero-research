@@ -74,5 +74,5 @@ flowchart LR
 
 1. 按 [C07 真留出协议](../08-writing/c07-true-holdout-protocol-v0.1-20260710.md) 接入 OpTC 或 E5 第二异构 performer；不调 M3a 参数，做第二独立留出复现。
 2. 完成专利 v0.3 的中文专利补检与独立权利要求措辞审阅。
-3. 可选：按 [intended 标注规范](../08-writing/intended-cti-node-annotation-protocol-v0.1-20260710.md) 清理 C01–C06 的 intended==OR 债务；为新动作写离线映射规范（不进在线效用）。
+3. ~~按 intended 标注规范清理 C01–C06 债务~~ **已完成**；可选继续做噪声动作鲁棒性。
 4. **明确不做**：继续堆 logistic/GNN/RL，或再做同构 decoy/离线压力。

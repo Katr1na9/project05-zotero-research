@@ -1,5 +1,12 @@
 # Research Progress
 
+## 2026-07-10：清理 C01–C06 intended≠OR 信息边界债务
+
+- 对 C01–C06 共 40 个泄漏动作做**过宽意图**重标（`intended = covered ∪ 邻接链节点`），并写入请求侧 notes；不改 `recoverable_claim_ids` 与 M3a 权重。
+- CI allowlist 清零：`test_intended_not_recoverable_or` 现要求全部案例合规。
+- 重跑矩阵：Toy M3a success `0.9481` / cost `3.38`（清零前约 `0.9556` / `2.67`）；C04–C06 M3a success `0.9630` / cost `2.12`（清零前约 `0.9778` / `1.77`）。相对 M2（success `0.80`）成功率优势仍在，成本上升符合过宽意图预期。
+- 过滤摘要：`09-experiments/results/m3a_real_cases/c04_c06_dev_summary.json`。
+
 ## 2026-07-10：DARPA TC E5 THEIA 真留出 C07 完成
 
 - 接入本地 PIDSMaker `theia_e5.dump`（6,187,437,078 bytes），登记 SHA-256、TA5.1 final report 与 E5 operational event log 的哈希；原始和派生产物继续排除在 Git 外。
