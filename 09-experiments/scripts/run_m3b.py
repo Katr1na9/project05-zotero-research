@@ -359,6 +359,88 @@ def select_model_action(
     )
 
 
+def reliability_group(action: dict[str, Any]) -> str:
+    evidence_types = sorted(
+        action.get("expected_evidence_types", []) or ["unknown"]
+    )
+    return f"{action.get('action_type', 'unknown')}|{','.join(evidence_types)}"
+
+
+def reliability_posteriors(
+    actions: list[dict[str, Any]],
+    action_feedback: list[dict[str, Any]],
+) -> dict[str, dict[str, float]]:
+    by_id = run_mvp.action_by_id(actions)
+    posterior: dict[str, dict[str, float]] = {}
+    for feedback in action_feedback:
+        action = by_id.get(str(feedback["action_id"]))
+        if action is None:
+            continue
+        stats = posterior.setdefault(
+            reliability_group(action),
+            {"alpha": 1.0, "beta": 1.0},
+        )
+        if int(feedback.get("recovered_count", 0)) > 0:
+            stats["alpha"] += 1.0
+        else:
+            stats["beta"] += 1.0
+    for stats in posterior.values():
+        stats["mean"] = stats["alpha"] / (stats["alpha"] + stats["beta"])
+    return posterior
+
+
+def reliability_action_score(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    action: dict[str, Any],
+    actions: list[dict[str, Any]],
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> tuple[float, float, float]:
+    probability = predict_probability(model, feature_row(config, state, action))
+    posterior = reliability_posteriors(
+        actions,
+        state.get("action_feedback", []),
+    )
+    reliability = posterior.get(
+        reliability_group(action),
+        {"mean": 0.5},
+    )["mean"]
+    utility = probability * reliability - cost_penalty * float(action["cost"])
+    return utility, probability, reliability
+
+
+def select_reliability_model_action(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    actions: list[dict[str, Any]],
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> dict[str, Any] | None:
+    candidates = run_mvp.available_actions(
+        actions,
+        state.get("actions_taken", []),
+        state["budget"]["budget_remaining"],
+    )
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda action: (
+            *reliability_action_score(
+                config,
+                state,
+                action,
+                actions,
+                model,
+                cost_penalty,
+            ),
+            -float(action["cost"]),
+            action["action_id"],
+        ),
+    )
+
+
 def run_model_episode(
     config: dict[str, Any],
     claims: list[dict[str, Any]],

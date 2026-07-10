@@ -123,6 +123,52 @@ class M3bPolicyTests(unittest.TestCase):
 
         self.assertEqual("other-cheap", selected["action_id"])
 
+    def test_reliability_posteriors_update_only_observed_group(self):
+        feedback = [
+            {"action_id": "critical-expensive", "recovered_count": 0},
+            {"action_id": "other-cheap", "recovered_count": 1},
+        ]
+
+        posterior = run_m3b.reliability_posteriors(self.actions, feedback)
+
+        self.assertEqual(
+            "query_host_subgraph|unknown",
+            run_m3b.reliability_group(self.actions[0]),
+        )
+        self.assertEqual(1.0, posterior["query_host_subgraph|unknown"]["alpha"])
+        self.assertEqual(2.0, posterior["query_host_subgraph|unknown"]["beta"])
+        self.assertAlmostEqual(
+            1 / 3,
+            posterior["query_host_subgraph|unknown"]["mean"],
+        )
+        self.assertAlmostEqual(
+            2 / 3,
+            posterior["recover_network_summary|unknown"]["mean"],
+        )
+
+    def test_reliability_selector_ignores_hidden_outcomes_before_execution(self):
+        changed = deepcopy(self.actions)
+        changed[0]["recoverable_claim_ids"] = ["E-other"]
+        changed[1]["recoverable_claim_ids"] = ["E-critical"]
+
+        first = run_m3b.select_reliability_model_action(
+            self.config,
+            self.state,
+            self.actions,
+            self.model,
+            cost_penalty=0.1,
+        )
+        second = run_m3b.select_reliability_model_action(
+            self.config,
+            self.state,
+            changed,
+            self.model,
+            cost_penalty=0.1,
+        )
+
+        self.assertEqual("critical-expensive", first["action_id"])
+        self.assertEqual(first["action_id"], second["action_id"])
+
     def test_model_episode_records_public_prediction_and_reaches_target(self):
         result, trace = run_m3b.run_model_episode(
             self.config,
