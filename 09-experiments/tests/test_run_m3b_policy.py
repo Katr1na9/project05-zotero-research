@@ -169,6 +169,27 @@ class M3bPolicyTests(unittest.TestCase):
         self.assertEqual("critical-expensive", first["action_id"])
         self.assertEqual(first["action_id"], second["action_id"])
 
+    def test_reliability_episode_records_posterior_only_after_feedback(self):
+        actions = run_m3b.inject_matched_decoys(self.config, self.actions)
+
+        result, trace = run_m3b.run_reliability_model_episode(
+            self.config,
+            self.claims,
+            actions,
+            "discriminative",
+            0.5,
+            11,
+            self.model,
+            cost_penalty=0.1,
+        )
+
+        self.assertEqual("project05_m3b_reliability_policy", result["planner"])
+        self.assertEqual("zz_decoy_critical-expensive", trace[1]["action_id"])
+        self.assertEqual(0.5, trace[1]["reliability_mean_before"])
+        self.assertLess(trace[1]["reliability_mean_after"], 0.5)
+        self.assertIn("reliability_adjusted_utility", trace[1])
+        self.assertIn("predicted_gap_probability", trace[1])
+
     def test_model_episode_records_public_prediction_and_reaches_target(self):
         result, trace = run_m3b.run_model_episode(
             self.config,

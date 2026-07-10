@@ -485,6 +485,72 @@ def run_model_episode(
     return result, trace
 
 
+def run_reliability_model_episode(
+    config: dict[str, Any],
+    claims: list[dict[str, Any]],
+    actions: list[dict[str, Any]],
+    mask_strategy: str,
+    mask_intensity: float,
+    seed: int,
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """Replay M3b with an action-group posterior reconstructed from feedback."""
+    result, trace = run_mvp.run_episode(
+        config,
+        claims,
+        actions,
+        mask_strategy,
+        mask_intensity,
+        seed,
+        "project05_m3b_reliability_policy",
+        action_selector=lambda episode_config, state, episode_actions: select_reliability_model_action(
+            episode_config,
+            state,
+            episode_actions,
+            model,
+            cost_penalty,
+        ),
+    )
+    actions_by_id = run_mvp.action_by_id(actions)
+    for prior_event, event in zip(trace, trace[1:]):
+        if event.get("event") != "action_taken":
+            continue
+        action = actions_by_id[event["action_id"]]
+        prior_feedback = prior_event["state"]["action_feedback"]
+        before = reliability_posteriors(actions, prior_feedback)
+        after_feedback = [
+            *prior_feedback,
+            {
+                "action_id": action["action_id"],
+                "recovered_count": len(event["recovered_claim_ids"]),
+            },
+        ]
+        after = reliability_posteriors(actions, after_feedback)
+        utility, probability, reliability = reliability_action_score(
+            config,
+            prior_event["state"],
+            action,
+            actions,
+            model,
+            cost_penalty,
+        )
+        group = reliability_group(action)
+        event.update(
+            {
+                "reliability_group": group,
+                "reliability_mean_before": round(reliability, 6),
+                "reliability_mean_after": round(
+                    after.get(group, {"mean": 0.5})["mean"],
+                    6,
+                ),
+                "predicted_gap_probability": round(probability, 6),
+                "reliability_adjusted_utility": round(utility, 6),
+            }
+        )
+    return result, trace
+
+
 def evaluate_policy_case_dirs(
     cases: list[tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]],
     model: dict[str, Any],
