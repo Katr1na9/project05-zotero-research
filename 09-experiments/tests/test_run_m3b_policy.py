@@ -237,6 +237,29 @@ class M3bPolicyTests(unittest.TestCase):
         self.assertEqual([], decoy["recoverable_claim_ids"])
         self.assertEqual(self.actions, augmented[: len(self.actions)])
 
+    def test_repeated_matched_decoys_keep_public_features(self):
+        augmented = run_m3b.inject_matched_decoys(
+            self.config,
+            self.actions,
+            copies_per_action=2,
+        )
+        decoys = [
+            action
+            for action in augmented
+            if action["action_id"].startswith("zz_decoy_")
+        ]
+
+        self.assertEqual(
+            {"zz_decoy_01_critical-expensive", "zz_decoy_02_critical-expensive"},
+            {action["action_id"] for action in decoys},
+        )
+        for decoy in decoys:
+            self.assertEqual([], decoy["recoverable_claim_ids"])
+            self.assertEqual(
+                run_m3b.feature_row(self.config, self.state, self.actions[0]),
+                run_m3b.feature_row(self.config, self.state, decoy),
+            )
+
     def test_policy_experiment_writes_matched_episode_outputs(self):
         root = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -270,6 +293,31 @@ class M3bPolicyTests(unittest.TestCase):
             self.assertEqual("matched_zero_yield_critical_action", report["intervention"])
             self.assertTrue((output_dir / "m3b_decoy_stress_results.csv").is_file())
             self.assertIn("oracle_optimal", report["summary"])
+
+    def test_reliability_stress_writes_adaptive_and_static_results(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output_dir = Path(temp_dir)
+            report = run_m3b.run_reliability_decoy_stress_experiment(
+                root / "examples",
+                root / "real_cases",
+                output_dir,
+                "label_resolves_critical_gap_node",
+                0.1,
+                [
+                    "coverage_greedy",
+                    "project05_m2",
+                    "project05_m3a_gap_compat",
+                    "oracle_optimal",
+                ],
+                copies_per_action=2,
+            )
+
+            self.assertIn("project05_m3b_reliability_policy", report["summary"])
+            self.assertIn("project05_m3b_policy", report["summary"])
+            self.assertTrue(
+                (output_dir / "m3b_reliability_decoy_stress_results.csv").is_file()
+            )
 
 
 if __name__ == "__main__":
