@@ -623,3 +623,15 @@
 - 完成 `08-writing/patent-work/05-claim-evidence-map-v0.4.json`，并把 Stage 0-4 元数据更新到 C10、XGBoost v0.2 和非短视 Gate。
 - 当前冻结结论：M2 是部署锚点；XGBoost 优于 Logistic 但未超过 M2；M3a 在 C10 出现 20% 过早停止；Gate A 通过、Gate B 不通过，采用轻量非短视规划，不启动 DQN 主模型；LLM 仍是待独立验证的离线语义编译/解释接口。
 - 下一主线：绘制论文/专利方法图；把轻量非短视规划接入真实案例但保持为增强实验；建立 evidence claim 与公开意图的独立标注评测；确认发明人、权属和首次公开日期后再进入正式专利代理审稿。
+
+### 2026-07-11：nature-skills 全流程写作与交付
+
+- 按 `nature-writing` 重构论文 v0.3：新增 RQ1-RQ3 与可证伪判据，统一术语和数学符号，收紧非短视、DQN 与 LLM 主张。
+- 启动 Zotero Desktop API，核验唯一合集“攻击溯源与意图感知”；补入 TAA-EPLMR、AURA、APT-ATT、MM-AttacKG、LLMAPT 和 WinRegRL 六条规范父记录，可导出条目由 82 增至 88。
+- 生成 `paper-main-references-v0.3.bib`，正文改用 Zotero/Pandoc citation keys；完成逐主张引文审计。
+- 按 `nature-figure` Python 后端生成两幅主图及 SVG/PDF/PNG/600 dpi TIFF，完成图表契约、源数据锚点和视觉 QA。
+- 按 `nature-polishing` 清理过强措辞与工作稿语气；按 `nature-reviewer` 生成三份模拟审稿和综合意见；按 ARA 六维量表完成适配严谨性审计。
+- 按 `nature-paper-to-patent` 生成结构化专利草稿并通过 0 error / 0 warning 校验；权利要求审计只保留“权利要求10为第二独立权利要求”的预期 warning。
+- 生成权利要求书、说明书、摘要、摘要附图和完整审阅稿 DOCX，以及五幅黑白专利附图；修复 OOXML 缩放节点并用 Word 导出 18 页 PDF 视觉复核。
+- 当前论文 major risks：四个独立真实案例、粒度代理缺少人工校准、非短视尚未接入真实 trace、claim/意图标注一致性未测量。
+- 当前专利阻塞项：发明人、申请人/权属、首次公开日期和中国专利代理师审查。
