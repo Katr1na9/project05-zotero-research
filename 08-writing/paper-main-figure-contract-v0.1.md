@@ -19,7 +19,7 @@
 - 图形类型：quantitative grid，a 为主面板。
 - 证据链：
   - a：C07-C09 在 Oracle 相对紧预算下的 success 曲线，显示 M2 持续高于 M3a。
-  - b：C07-C10 的序贯 success 与成功条件均成本，显示 M2/XGBoost 全达标但 M2 成本更低。
+  - b：C07-C10 的序贯 success 与成功条件均成本，纳入冻结 Depth-2 Public；显示 M2/XGBoost/Depth-2 均达标，但 M2 成本更低且 Depth-2 未获真实成本收益。
   - c：192 个受控环境中的 one-step、M2、Depth-2 与 DP success，显示多步规划必要性。
 - 统计边界：
   - a 的 135 条条件来自 3 个独立攻击案例的重复遮蔽条件，不作为 135 个独立样本。
@@ -30,6 +30,7 @@
   - `08-writing/table-budget-efficiency-c07-c09.csv`
   - `09-experiments/results/xgboost_c01_c06_train_c07_c10_test/xgboost_policy_results.csv`
   - `09-experiments/results/nonmyopic_dqn_gate_v0.1/nonmyopic_gate_summary.json`
+  - `09-experiments/results/nonmyopic_real_v0.1/nonmyopic_policy_summary.json`
 - 输出：双栏宽 183 mm；SVG、PDF、PNG、600 dpi TIFF；文本可编辑。
 
 ## 视觉规范

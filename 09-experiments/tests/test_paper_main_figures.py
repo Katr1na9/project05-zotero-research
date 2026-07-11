@@ -37,6 +37,33 @@ class PaperMainFigureTests(unittest.TestCase):
             summary.loc["project05_m3a_gap_compat", "success"], 0.95, places=4
         )
 
+    def test_real_depth2_is_added_to_holdout_panel_data(self):
+        policy_source = (
+            ROOT
+            / "09-experiments"
+            / "results"
+            / "xgboost_c01_c06_train_c07_c10_test"
+            / "xgboost_policy_results.csv"
+        )
+        depth2_source = (
+            ROOT
+            / "09-experiments"
+            / "results"
+            / "nonmyopic_real_v0.1"
+            / "nonmyopic_policy_summary.json"
+        )
+        summary = MODULE.add_real_depth2_result(
+            MODULE.aggregate_policy_results(policy_source), depth2_source
+        ).set_index("planner")
+        self.assertEqual(summary.loc["project05_depth2_public", "cases"], 4)
+        self.assertEqual(summary.loc["project05_depth2_public", "episodes"], 180)
+        self.assertAlmostEqual(
+            summary.loc["project05_depth2_public", "success"], 1.0, places=4
+        )
+        self.assertAlmostEqual(
+            summary.loc["project05_depth2_public", "mean_cost"], 4.5556, places=4
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

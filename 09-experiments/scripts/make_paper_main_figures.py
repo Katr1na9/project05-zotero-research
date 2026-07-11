@@ -37,6 +37,7 @@ def configure_style() -> None:
             "font.family": "sans-serif",
             "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans", "sans-serif"],
             "svg.fonttype": "none",
+            "svg.hashsalt": "project05-paper-main-v0.3",
             "pdf.fonttype": 42,
             "font.size": 7,
             "axes.titlesize": 8,
@@ -55,7 +56,17 @@ def configure_style() -> None:
 def save_figure(fig: plt.Figure, stem: str) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     base = OUTPUT_DIR / stem
-    fig.savefig(base.with_suffix(".svg"), bbox_inches="tight")
+    svg_path = base.with_suffix(".svg")
+    fig.savefig(
+        svg_path,
+        bbox_inches="tight",
+        metadata={"Date": "2026-07-11"},
+    )
+    svg_text = svg_path.read_text(encoding="utf-8")
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
+    )
     fig.savefig(base.with_suffix(".pdf"), bbox_inches="tight")
     fig.savefig(base.with_suffix(".png"), dpi=300, bbox_inches="tight")
     fig.savefig(base.with_suffix(".tiff"), dpi=600, bbox_inches="tight")
@@ -216,6 +227,24 @@ def aggregate_policy_results(path: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def add_real_depth2_result(policy: pd.DataFrame, summary_path: Path) -> pd.DataFrame:
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    depth2 = summary["overall_by_planner"]["project05_depth2_public"]
+    row = pd.DataFrame(
+        [
+            {
+                "planner": "project05_depth2_public",
+                "success": float(depth2["success_rate"]),
+                "mean_cost": float(depth2["mean_cost_to_target"]),
+                "zero_yield": float(depth2["mean_zero_yield_actions"]),
+                "episodes": int(depth2["repeated_run_count"]),
+                "cases": int(depth2["independent_case_count"]),
+            }
+        ]
+    )
+    return pd.concat([policy, row], ignore_index=True)
+
+
 def make_results_figure() -> None:
     budget_path = ROOT / "08-writing" / "table-budget-efficiency-c07-c09.csv"
     policy_path = (
@@ -232,9 +261,18 @@ def make_results_figure() -> None:
         / "nonmyopic_dqn_gate_v0.1"
         / "nonmyopic_gate_summary.json"
     )
+    real_depth2_path = (
+        ROOT
+        / "09-experiments"
+        / "results"
+        / "nonmyopic_real_v0.1"
+        / "nonmyopic_policy_summary.json"
+    )
 
     budget = pd.read_csv(budget_path)
-    policy = aggregate_policy_results(policy_path)
+    policy = add_real_depth2_result(
+        aggregate_policy_results(policy_path), real_depth2_path
+    )
     gate = json.loads(gate_path.read_text(encoding="utf-8"))
 
     fig = plt.figure(figsize=(7.2, 4.65), constrained_layout=False)
@@ -283,6 +321,7 @@ def make_results_figure() -> None:
     policy_map = {
         "oracle_optimal": ("Oracle", COLORS["oracle"], "P"),
         "project05_m2": ("M2", COLORS["m2"], "o"),
+        "project05_depth2_public": ("Depth-2 public", COLORS["depth2"], "X"),
         "project05_xgboost_policy": ("XGBoost", COLORS["xgboost"], "s"),
         "project05_m3b_policy": ("Logistic", COLORS["logistic"], "D"),
         "project05_m3a_gap_compat": ("M3a", COLORS["m3a"], "^"),
@@ -290,8 +329,9 @@ def make_results_figure() -> None:
     }
     label_offsets = {
         "Oracle": (4, 3),
-        "M2": (4, -10),
-        "XGBoost": (4, 3),
+        "M2": (4, -14),
+        "Depth-2 public": (-60, 9),
+        "XGBoost": (5, 9),
         "Logistic": (4, -9),
         "M3a": (4, 3),
         "Coverage": (-43, 3),
