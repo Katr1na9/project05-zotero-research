@@ -3,6 +3,8 @@ bibliography: paper-main-references-v0.3.bib
 link-citations: true
 ---
 
+> **历史投稿母本。** 本稿已被 `paper-main-draft-v0.4-major-revision-20260711.md` 取代；其标题、AFA 基线、敏感性结果和 Reviewer 回应均不是当前版本。保留本文件仅用于版本追溯。
+
 # 不完整证据下的 APT 归因：对齐感知证据缺口与成本约束主动取证
 
 **英文题目（暂定）**：Alignment-Aware Evidence-Gap Modeling and Cost-Constrained Active Acquisition for APT Attribution under Incomplete Evidence

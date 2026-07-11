@@ -11,7 +11,7 @@ from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
 
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = ROOT / "08-writing" / "figures" / "main-v0.3"
+OUTPUT_DIR = ROOT / "08-writing" / "figures" / "main-v0.4"
 
 COLORS = {
     "m2": "#0F4D92",
@@ -24,6 +24,8 @@ COLORS = {
     "oracle": "#272727",
     "depth2": "#8BCF8B",
     "one_step": "#E9A6A1",
+    "afa_myopic": "#E69F00",
+    "afa_rollout": "#009E73",
     "public": "#DDEAF6",
     "hidden": "#F5DAD7",
     "state": "#DDF3DE",
@@ -138,7 +140,7 @@ def make_method_figure() -> None:
 
     boxes = [
         (0.03, "Partial CTI-to-local\nevidence alignment", COLORS["neutral"]),
-        (0.23, "Evidence-gap state\ncoverage | critical gaps\ngranularity | budget", COLORS["state"]),
+        (0.23, "Evidence-gap state\ncoverage\ncritical gaps\ngranularity | budget", COLORS["state"]),
         (0.46, "Cost-constrained\naction planner", COLORS["public"]),
         (0.65, "Acquisition-channel\nexecution", "#F7E7C6"),
         (0.84, "Support-limited\nresult or STOP", "#E8E0F0"),
@@ -243,6 +245,57 @@ def add_real_depth2_result(policy: pd.DataFrame, summary_path: Path) -> pd.DataF
         ]
     )
     return pd.concat([policy, row], ignore_index=True)
+
+
+def load_revision_figure_data() -> dict:
+    afa_path = (
+        ROOT
+        / "09-experiments"
+        / "results"
+        / "afa_voi_c07_c10_v0.1"
+        / "afa_voi_policy_summary.json"
+    )
+    sensitivity_root = ROOT / "09-experiments" / "results" / "m2_sensitivity_v0.1"
+    afa_summary = json.loads(afa_path.read_text(encoding="utf-8"))[
+        "overall_by_planner"
+    ]
+    afa = {
+        planner: {
+            "success": float(afa_summary[planner]["success_rate"]),
+            "mean_cost": float(afa_summary[planner]["mean_cost_to_target"]),
+        }
+        for planner in (
+            "oracle_optimal",
+            "project05_m2",
+            "afa_voi_myopic",
+            "afa_voi_rollout_h3",
+        )
+    }
+
+    weight_comparison = json.loads(
+        (sensitivity_root / "m2_weight_comparison.json").read_text(encoding="utf-8")
+    )
+    weight_groups: dict[tuple[float, float], int] = {}
+    for result in weight_comparison.values():
+        key = (
+            float(result["first_action_agreement_rate"]),
+            float(result["mean_cost_difference_vs_base"]),
+        )
+        weight_groups[key] = weight_groups.get(key, 0) + 1
+
+    dev = json.loads(
+        (sensitivity_root / "coverage_semantics_dev_summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    semantics = {
+        name: {
+            planner: float(dev[f"{name}_default"][planner]["success_rate"])
+            for planner in ("project05_m2", "oracle_optimal")
+        }
+        for name in ("OR", "AND")
+    }
+    return {"afa": afa, "weight_groups": weight_groups, "semantics": semantics}
 
 
 def make_results_figure() -> None:
@@ -404,10 +457,127 @@ def make_results_figure() -> None:
     save_figure(fig, "fig2_holdout_and_nonmyopic_results")
 
 
+def make_revision_figure() -> None:
+    data = load_revision_figure_data()
+    fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.55), constrained_layout=False)
+    fig.subplots_adjust(left=0.075, right=0.99, bottom=0.24, top=0.83, wspace=0.48)
+    ax_a, ax_b, ax_c = axes
+
+    planners = [
+        ("oracle_optimal", "Oracle", COLORS["oracle"]),
+        ("project05_m2", "M2", COLORS["m2"]),
+        ("afa_voi_myopic", "AFA-M", COLORS["afa_myopic"]),
+        ("afa_voi_rollout_h3", "AFA-H3", COLORS["afa_rollout"]),
+    ]
+    costs = [data["afa"][planner]["mean_cost"] for planner, _, _ in planners]
+    bars = ax_a.bar(
+        np.arange(len(planners)),
+        costs,
+        color=[color for _, _, color in planners],
+        width=0.72,
+        edgecolor="white",
+        linewidth=0.6,
+    )
+    for bar, value in zip(bars, costs):
+        ax_a.text(
+            bar.get_x() + bar.get_width() / 2,
+            value + 0.08,
+            f"{value:.2f}",
+            ha="center",
+            va="bottom",
+            fontsize=6.2,
+        )
+    ax_a.set_xticks(np.arange(len(planners)), [label for _, label, _ in planners])
+    ax_a.set_ylim(0, 5.55)
+    ax_a.set_ylabel("Mean cost on successful episodes")
+    ax_a.set_xlabel("All strategies: success = 1.00; n cases = 4")
+    ax_a.set_title("AFA adapters on C07-C10", loc="left", pad=7)
+
+    for (agreement, cost_delta), count in sorted(data["weight_groups"].items()):
+        ax_b.scatter(
+            agreement,
+            cost_delta,
+            s=42 + 8 * count,
+            color=COLORS["m2"],
+            alpha=0.78,
+            edgecolor="white",
+            linewidth=0.7,
+        )
+        ax_b.annotate(
+            f"{count} variants",
+            (agreement, cost_delta),
+            xytext=(5, 5),
+            textcoords="offset points",
+            fontsize=6.0,
+        )
+    ax_b.axhline(0, color="#9B9B9B", linewidth=0.8, linestyle="--")
+    ax_b.set_xlim(0.84, 1.025)
+    ax_b.set_ylim(-0.004, 0.032)
+    ax_b.set_xlabel("First-action agreement with M2")
+    ax_b.set_ylabel(r"Mean cost difference ($\Delta$)")
+    ax_b.set_title("One-weight sensitivity", loc="left", pad=7)
+    ax_b.text(
+        0.02,
+        0.91,
+        "16 preregistered ±25% variants",
+        transform=ax_b.transAxes,
+        fontsize=5.6,
+        color="#4D4D4D",
+        va="top",
+    )
+
+    methods = ["project05_m2", "oracle_optimal"]
+    method_labels = ["M2", "Oracle"]
+    x = np.arange(len(methods))
+    width = 0.34
+    for index, (semantics, color) in enumerate(
+        (("OR", COLORS["m2"]), ("AND", COLORS["afa_myopic"]))
+    ):
+        values = [data["semantics"][semantics][method] for method in methods]
+        offset = (-0.5 if index == 0 else 0.5) * width
+        bars = ax_c.bar(
+            x + offset,
+            values,
+            width,
+            label=semantics,
+            color=color,
+            edgecolor="white",
+            linewidth=0.6,
+        )
+        for bar, value in zip(bars, values):
+            ax_c.text(
+                bar.get_x() + bar.get_width() / 2,
+                value + 0.025,
+                f"{value:.2f}",
+                ha="center",
+                va="bottom",
+                fontsize=5.8,
+            )
+    ax_c.set_xticks(x, method_labels)
+    ax_c.set_ylim(0, 1.12)
+    ax_c.set_ylabel("Success rate")
+    ax_c.set_xlabel("Development only; holdout OR = AND")
+    ax_c.set_title("Coverage semantics (C01-C06)", loc="left", pad=7)
+    ax_c.legend(loc="lower right", ncol=2, handlelength=1.2)
+
+    for label, ax in zip(("a", "b", "c"), axes):
+        ax.text(
+            -0.18,
+            1.11,
+            label,
+            transform=ax.transAxes,
+            fontweight="bold",
+            fontsize=9,
+            va="top",
+        )
+    save_figure(fig, "fig3_afa_and_sensitivity")
+
+
 def main() -> None:
     configure_style()
     make_method_figure()
     make_results_figure()
+    make_revision_figure()
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 # Project05 模拟审稿报告 v0.1
 
+> **历史审稿快照。** 本文件只审阅论文 v0.3；当前 Reviewer 落实矩阵见 `reviewer-response-major-revision-v0.1-20260711.md`，修订后严谨性结论见 `paper-main-rigor-review-v0.2-20260711.md`。
+
 ## Review setup
 
 - Input scope：论文 v0.3 全文、两幅主图、Zotero 引文导出和仓库实验摘要。

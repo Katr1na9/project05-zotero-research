@@ -64,6 +64,16 @@ class PaperMainFigureTests(unittest.TestCase):
             summary.loc["project05_depth2_public", "mean_cost"], 4.5556, places=4
         )
 
+    def test_revision_figure_data_matches_afa_and_sensitivity_results(self):
+        data = MODULE.load_revision_figure_data()
+        self.assertAlmostEqual(data["afa"]["project05_m2"]["mean_cost"], 4.5333, places=4)
+        self.assertAlmostEqual(data["afa"]["afa_voi_myopic"]["mean_cost"], 4.9722, places=4)
+        self.assertAlmostEqual(data["afa"]["afa_voi_rollout_h3"]["success"], 1.0, places=4)
+        self.assertEqual(data["weight_groups"][(1.0, 0.0)], 13)
+        self.assertEqual(data["weight_groups"][(0.8778, 0.0222)], 3)
+        self.assertAlmostEqual(data["semantics"]["OR"]["project05_m2"], 0.8, places=4)
+        self.assertAlmostEqual(data["semantics"]["AND"]["project05_m2"], 0.4963, places=4)
+
 
 if __name__ == "__main__":
     unittest.main()

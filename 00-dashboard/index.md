@@ -4,6 +4,10 @@
 
 - [项目说明](../README.md)
 - [科研总看板](research-dashboard.md)
+- [当前权威文件索引](../08-writing/AUTHORITATIVE-DOCUMENTS-20260711.md)
+- [论文 v0.4 Major Revision](../08-writing/paper-main-draft-v0.4-major-revision-20260711.md)
+- [Reviewer 回复矩阵](../08-writing/reviewer-response-major-revision-v0.1-20260711.md)
+- [修订后严谨性审计](../08-writing/paper-main-rigor-review-v0.2-20260711.md)
 - [Zotero 文献管理 SOP](../01-sop/zotero-literature-management-sop.md)
 - [科研推进 SOP](../01-sop/research-workflow-sop.md)
 - [科研灵感池](../03-ideas/research-ideas.md)
@@ -14,7 +18,7 @@
 - [踩坑日志](../05-logs/pitfall-log.md)
 - [论文精读模板](../06-templates/paper-intensive-reading-template.md)
 - [选题评估矩阵](../06-templates/topic-evaluation-matrix.md)
-- [硕士论文大纲 v0](../08-writing/thesis-outline-v0.md)
+- [论文/专利叙事冻结 v0.2](../08-writing/paper-patent-narrative-freeze-v0.2-20260711.md)
 - [术语表](../08-writing/term-glossary.md)
 
 ## 论文笔记命名规范

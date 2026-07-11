@@ -1,5 +1,7 @@
 # Project05 论文主图契约 v0.1
 
+> **历史图表契约。** 当前三图契约为 `paper-main-figure-contract-v0.2.md`。
+
 日期：2026-07-11
 后端：Python / matplotlib（独占）
 

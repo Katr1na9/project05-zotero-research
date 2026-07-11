@@ -1,78 +1,90 @@
 # Project05 Research Dashboard
 
+更新：2026-07-11
+
+权威入口：[AUTHORITATIVE-DOCUMENTS-20260711.md](../08-writing/AUTHORITATIVE-DOCUMENTS-20260711.md)
+
 ## 当前定位
 
-Project05 当前主线已经从“证据不完整场景下的 APT 归因粒度门控 / 拒答解释”进一步收束为：
+> 不完整证据下、信息边界约束的 APT 调查控制框架。
 
-> 面向 APT 归因的对齐感知证据状态建模与主动取证规划。
+Project05 不直接提出新的攻击者分类器，也不把 M3a、XGBoost、AFA 或 DQN 写成主创新。项目把 CTI—本地证据部分对齐转化为可更新的证据缺口状态，在规划器不知道动作实际恢复内容时选择下一取证动作或 STOP，并用预算、通道反馈和可支撑结论粒度约束输出。
 
-**2026-07-10 技术主轴冻结**：默认规划器为 **M3a（action–gap compatibility）**；logistic M3b 仅作冻结对照（无稳定独立胜出）。贡献边界与结果总表见 [contribution-boundary-and-results-brief-v0.1.md](../08-writing/contribution-boundary-and-results-brief-v0.1.md)。
+当前论文题目：
 
-更具体地说，项目不再把“CTI-日志 / CTI-provenance 对齐算法”本身作为主创新，因为这一块已经被 POIROT、DeepHunter、MEGR-APT、ActMiner、CLIProv、APT-CGLP、ProHunter 等工作覆盖。Project05 的更安全位置是把这些对齐结果作为“证据状态”，进一步判断当前证据能支撑的归因粒度，并规划下一步最值得获取的证据。
+> 不完整证据下的 APT 调查控制：信息边界约束的证据缺口驱动取证
 
-## 当前主 RQ
+## 当前研究问题
 
-> 在证据不完整的 APT 归因场景中，如何以“CTI 侧攻击行为图与本地观测证据的对齐状态”为证据画像，估计各候选取证动作对归因粒度可提升性的期望增益，并在成本约束下规划取证动作序列，使系统通过“对齐-评估-补证-再对齐”闭环，以最小取证成本达到证据可支撑的最高归因粒度？
+1. 部分对齐能否被构造成可更新、可审计的调查状态，而不是静态缺失列表？
+2. 在公开意图与隐藏恢复集合隔离后，何种策略能以较低成本达到内部目标？
+3. STOP 能否区分达标、预算不足、结构不可达和过早放弃？
+4. 当前结论是否依赖 M2 权重、粒度阈值或 OR 覆盖语义？
 
-G1 通过版详见：[topic-rq-brief-v2.1-g1-final-20260706.md](../03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)
-
-## 当前技术路线
+## 技术路线
 
 ```mermaid
 flowchart LR
-  A["公开 CTI 报告 / ATT&CK / 历史情报"] --> B["CTI 侧攻击行为图"]
-  C["本地日志 / provenance / IOC / 样本 / 基础设施证据"] --> D["本地观测证据图"]
-  B --> E["对齐与缺口建模"]
-  D --> E
-  E --> F["对齐感知证据状态"]
-  F --> G["归因粒度可支撑性评估"]
-  G --> H{"是否达到目标粒度或预算终止?"}
-  H -- 是 --> I["粒度受控归因结论 + LLM 证据化解释"]
-  H -- 否 --> J["候选取证动作价值估计"]
-  J --> K["主动取证规划"]
-  K --> C
+  A["CTI 行为图"] --> C["部分对齐与 evidence claims"]
+  B["日志 / provenance / IOC / 样本"] --> C
+  C --> D["证据缺口状态"]
+  D --> E{"公开接口下选择动作或 STOP"}
+  E -->|"采集动作"| F["通道执行器读取隐藏恢复集合"]
+  F --> G["新增 claims / 零收益反馈 / 成本"]
+  G --> D
+  E -->|"STOP"| H["粒度受控结论或降级结果"]
 ```
 
-## 创新点边界
+信息边界：规划器只能读取公开意图、通道、成本、当前缺口和执行历史；`recoverable_claim_ids` 只对执行器与 Oracle 可见。
 
-保留空间：
+## 方法角色
 
-- 对齐状态不是终点，而是主动取证规划的状态输入。
-- 输出不是单一 actor label，而是“当前可支撑的最高归因粒度 + 下一步证据获取策略”。
-- 方法目标不是让 LLM 直接归因，而是让 LLM 参与证据语义规范化、缺口解释、动作说明和最终可审计表达。
-- AFA / POMDP 提供形式化基础：部分观测证据、取证动作、成本、停止动作、目标粒度收益。
-
-红线：
-
-- 不能把“多源证据融合 + LLM APT 归因解释”作为宽泛创新点。
-- 不能把“CTI 图与 provenance/local evidence 对齐”作为单独主创新。
-- 不能只产出“缺失证据 list”，否则贡献偏弱。
-- 不能写成泛化的“置信度不足 -> 让 LLM 拉更多数据 -> 循环调查”，这会撞 US12530469 的大范围思路。
-
-## 新增关键材料
-
-| 类别 | 文件 | 作用 |
+| 组件 | 当前角色 | 冻结判断 |
 |---|---|---|
-| 理论基座 | [2025-Aronsson-AFA-Survey.md](../02-literature-notes/2025-Aronsson-AFA-Survey.md) | Active Feature Acquisition / POMDP 形式化基础 |
-| 撞题红线 | [2025-Li-CLIProv.md](../02-literature-notes/2025-Li-CLIProv.md) | 日志到情报语义对齐 / provenance 分析红线 |
-| 撞题红线 | [2025-Qiu-APT-CGLP.md](../02-literature-notes/2025-Qiu-APT-CGLP.md) | provenance graph 与 CTI report 图语言预训练红线 |
-| 专利红线 | [2026-Varonis-US12530469-LLM-Alert-Investigation.md](../02-literature-notes/2026-Varonis-US12530469-LLM-Alert-Investigation.md) | LLM 多阶段告警调查循环的专利风险 |
-| 主线修正 | [deep-collision-scan-alignment-20260706.md](../04-progress/deep-collision-scan-alignment-20260706.md) | 说明为什么单独做对齐已经不安全 |
-| RQ v2.1 | [topic-rq-brief-v2.1-g1-final-20260706.md](../03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md) | G1 通过版研究问题定义 |
+| M2 | 透明部署策略 | 四案例所评估非 Oracle 策略内最佳折中，不是全局最优 |
+| M3a | action-gap 机制消融 | C10 有过早停止，成本优势不成立 |
+| XGBoost | 非线性监督对照 | 优于 Logistic 的部分指标，未超过 M2 |
+| AFA-VOI | 通用 AFA 的同接口领域适配 | 两种适配均达标但平均比 M2 多 0.4389 成本 |
+| Depth-2 | 冻结有限前瞻 | 真实四例未降成本，不升级 |
+| DP/DQN | 受控上界/关闭支线 | Gate A 通过、Gate B 不通过，不启动 DQN |
+| LLM | 待验证离线编译/解释接口 | 主实验未调用，不进入当前因果贡献 |
 
-## 当前 Gate 状态
+## 当前证据
+
+| 项目 | 结果 | 边界 |
+|---|---|---|
+| C07-C10 M2 | 180/180 内部达标，均成本 4.5333 | 只有 4 个独立案例、2 个主要家族 |
+| XGBoost | success 1.0，cost 4.8278 | 未超过 M2 |
+| AFA Myopic/Rollout-H3 | success 1.0，cost 4.9722 | 领域适配，不是官方 NOCTA/WinRegRL 复现 |
+| Depth-2 Public | success 1.0，cost 4.5556 | 未通过冻结升级门槛 |
+| M2 权重敏感性 | 16/16 变体保持 success 1.0 | 仅支持 ±25% 局部稳定 |
+| OR/AND | 开发多 claim 案例显著改变 success | 真实四例每节点单 claim，比较不可识别 |
+
+## Gate 状态
 
 | Gate | 状态 | 说明 |
 |---|---|---|
-| G1 RQ 清晰性 | 通过 | RQ v2.1；主线为证据状态 + 主动取证 |
-| G2 撞题扫描 | 进行中 | 对齐谱系与 WinRegRL 红线已记；仍需补中文专利侧、APTChaser/GAPT 正文 |
-| G3 创新强度 | 可写边界已收紧 | 主张表示+规划+停止，不主张可学习效用打赢规则 |
-| G4 专利权利要求 | 骨架更新 | [v0.3](../08-writing/patent-claims-draft-v0.3-20260710.md) 对齐 M3a；正式检索与措辞待补 |
-| G5 实验可执行性 | C07+C08+C09 完成 | C01–C06 + 通道可靠性 + STOP/M4；E5 THEIA、E5 ClearScope 与 OpTC 三条真留出均已冻结评估 |
+| RQ/贡献边界 | 通过 | 调查控制与信息边界，不再包装新归因器 |
+| 四案例工程闭环 | 通过 | 可执行、无 ceiling violation |
+| 新算法性能创新 | 不通过 | 当前复杂策略均未稳定超过 M2 |
+| 非短视结构存在性 | 通过 | 合成 Gate A |
+| DQN 工程必要性 | 不通过 | Gate B，DP 仍可接受 |
+| 人工粒度效度 | 未完成 | 双人盲标包为空，`awaiting_annotations` |
+| 外部泛化 | 未完成 | 仍需第三数据家族/更多 engagement |
+| 专利可正式提交 | 未完成 | 中文补检、权属、公开日和代理师审查待办 |
 
 ## 下一步
 
-1. ~~第三真留出 OpTC~~ **已完成（C09）**：真实 eCAR 窗口、事件级 UUID、冻结评估与 exact-hostname 复核均通过。
-2. **论文/专利叙事收口**：见 [论文/专利叙事冻结稿](../08-writing/paper-patent-narrative-freeze-v0.1-20260711.md)；以三条 holdout 的同向结果为边界，不主张 M3a 成本优于 M2，也不把 LLM 写成已验证的在线规划器。
-3. **专利 v0.3 后续**：完成中文专利补检与发明人/权属确认后，再进入正式权利要求措辞。
-4. **明确不做**：继续堆 logistic/GNN/RL，或为 C09 结果回调 M3a。
+1. 双人盲标 claim、公开意图和可支撑粒度，计算一致性与校准。
+2. 根据目标 venue 决定是否补官方 AFA 代码映射；当前领域适配必须保持边界措辞。
+3. 增加第三数据家族或更多独立 engagement，并优先加入多 claim corroboration。
+4. 论文以 [v0.4](../08-writing/paper-main-draft-v0.4-major-revision-20260711.md) 为母本；专利以 [v0.4](../08-writing/patent-main-draft-v0.4-20260711.md) 为母本。
+5. 不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
+
+## 红线
+
+- 180 个重复条件不得写成 180 个独立攻击样本。
+- 内部 G0-G3 success 不得写成 actor/campaign 归因准确率。
+- M2 不得写成全局最优；AFA 适配负结果不得外推整个 AFA 方法族。
+- LLM 不得在无独立编译实验时进入标题、摘要或核心贡献。
+- 旧 v0.1 文件仅是历史档案，不能覆盖当前权威索引。

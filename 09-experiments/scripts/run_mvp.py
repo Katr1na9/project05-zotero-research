@@ -185,10 +185,18 @@ def entropy_binary(p: float) -> float:
 
 
 def covered_node_ids(config: dict[str, Any], visible_ids: set[str]) -> set[str]:
+    semantics = str(config.get("node_coverage_semantics", "OR")).upper()
+    if semantics not in {"OR", "AND"}:
+        raise ValueError(f"Unsupported node coverage semantics: {semantics}")
     covered = set()
     for node in config["cti_nodes"]:
         required = set(node["required_claim_ids"])
-        if required & visible_ids:
+        is_covered = (
+            bool(required & visible_ids)
+            if semantics == "OR"
+            else bool(required) and required <= visible_ids
+        )
+        if is_covered:
             covered.add(node["node_id"])
     return covered
 
@@ -199,7 +207,12 @@ def or_covered_node_ids(
 ) -> set[str]:
     """CTI nodes covered under OR semantics by a claim set (e.g. recoverable ids)."""
 
-    return covered_node_ids(config, set(claim_ids))
+    visible = set(claim_ids)
+    return {
+        node["node_id"]
+        for node in config["cti_nodes"]
+        if set(node["required_claim_ids"]) & visible
+    }
 
 
 def intended_equals_recoverable_or(
@@ -232,6 +245,38 @@ def covered_edge_ids(config: dict[str, Any], covered_nodes: set[str]) -> set[str
     return covered
 
 
+def granularity_thresholds(config: dict[str, Any]) -> dict[str, float]:
+    configured = config.get("granularity_thresholds", {})
+    thresholds = {
+        "g3_node_coverage": float(configured.get("g3_node_coverage", 0.75)),
+        "g3_edge_coverage": float(configured.get("g3_edge_coverage", 0.60)),
+        "g2_node_coverage": float(configured.get("g2_node_coverage", 0.45)),
+        "g2_min_stages": float(configured.get("g2_min_stages", 2)),
+        "g1_node_coverage": float(configured.get("g1_node_coverage", 0.15)),
+    }
+    coverage_keys = (
+        "g3_node_coverage",
+        "g3_edge_coverage",
+        "g2_node_coverage",
+        "g1_node_coverage",
+    )
+    for key in coverage_keys:
+        if not 0.0 <= thresholds[key] <= 1.0:
+            raise ValueError(f"Granularity threshold {key} must be in [0, 1]")
+    if not (
+        thresholds["g3_node_coverage"]
+        >= thresholds["g2_node_coverage"]
+        >= thresholds["g1_node_coverage"]
+    ):
+        raise ValueError(
+            "Node coverage thresholds must satisfy G3 >= G2 >= G1"
+        )
+    min_stages = thresholds["g2_min_stages"]
+    if min_stages < 0 or not min_stages.is_integer():
+        raise ValueError("g2_min_stages must be a nonnegative integer")
+    return thresholds
+
+
 def supportable_granularity(
     config: dict[str, Any],
     visible_ids: set[str],
@@ -252,12 +297,20 @@ def supportable_granularity(
     critical_covered = sum(
         1 for node in critical_nodes if node["node_id"] in covered_nodes
     )
+    thresholds = granularity_thresholds(config)
 
-    if node_cov >= 0.75 and edge_cov >= 0.60 and critical_covered == len(critical_nodes):
+    if (
+        node_cov >= thresholds["g3_node_coverage"]
+        and edge_cov >= thresholds["g3_edge_coverage"]
+        and critical_covered == len(critical_nodes)
+    ):
         structural_granularity = "G3_campaign"
-    elif node_cov >= 0.45 and len(stages) >= 2:
+    elif (
+        node_cov >= thresholds["g2_node_coverage"]
+        and len(stages) >= int(thresholds["g2_min_stages"])
+    ):
         structural_granularity = "G2_tactic_intent"
-    elif node_cov >= 0.15:
+    elif node_cov >= thresholds["g1_node_coverage"]:
         structural_granularity = "G1_technique"
     else:
         structural_granularity = "G0_unknown"

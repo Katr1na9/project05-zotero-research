@@ -1,5 +1,7 @@
 # Project05 论文/专利叙事冻结稿 v0.1
 
+> **历史版本，已停止作为当前写作入口。** 本文件保留 C07-C09 阶段及后续人工补记；当前四案例、AFA/敏感性和信息边界主线见 `paper-patent-narrative-freeze-v0.2-20260711.md` 与 `AUTHORITATIVE-DOCUMENTS-20260711.md`。
+
 日期：2026-07-11
 状态：C07/C08/C09 后的写作边界；不是正式专利申请文件
 结构化依据：`patent-work/00-intake.json` 至 `patent-work/04-claim-strategy.json`
@@ -105,7 +107,7 @@
 
 ## 6. 下一写作动作
 
-1. 以 `thesis-outline-v1-20260711.md` 写问题定义和方法章节，不再沿用 RAG/KG 主线的 v0 大纲。
-2. 以 `fig-budget-efficiency-c07-c09` 和 `table-budget-efficiency-c07-c09.csv` 作为当前规划结果主图表，把 M4 部分可达失败放入限制/错误分析。
-3. 先实现 XGBoost action-value baseline 并与 Logistic/M2 比较；通过数据量与序贯收益 Gate 后再实现 DQN/Dueling DQN。LLM 编译支线暂缓。
+1. ~~以 `thesis-outline-v1-20260711.md` 写问题定义和方法章节~~ → 初稿见 `thesis-ch3-ch4-draft-v0.1-20260711.md`；待审改后补图 3-1/3-2/4-1/4-2。
+2. 以 `fig-budget-efficiency-c07-c09` 和 `table-budget-efficiency-c07-c09.csv` 作为当前规划结果主图表，起草第 5–6 章实验与结果，把 M4 部分可达失败放入限制/错误分析。
+3. XGBoost 已完成；DQN 仍待非短视诊断 Gate。LLM 编译支线暂缓。
 4. 专利进入正式措辞前，完成中文专利补检，并确认发明人、申请人、公开状态与贡献边界。

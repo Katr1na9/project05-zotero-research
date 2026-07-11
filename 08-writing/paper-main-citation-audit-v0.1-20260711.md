@@ -1,5 +1,7 @@
 # Project05 论文引文审计 v0.1
 
+> **历史审计。** 当前审计为 `paper-main-citation-audit-v0.2-20260711.md`，其中补入 AFA/NOCTA/WinRegRL 的使用边界。
+
 日期：2026-07-11
 Zotero collection：攻击溯源与意图感知
 导出：`paper-main-references-v0.3.bib`，88 entries

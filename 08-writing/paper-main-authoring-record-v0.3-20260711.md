@@ -1,5 +1,7 @@
 # Project05 论文 v0.3 写作记录
 
+> **历史记录。** 当前写作记录为 `paper-main-authoring-record-v0.4-20260711.md`。
+
 日期：2026-07-11
 流程：nature-writing → Zotero/citation audit → nature-figure → nature-polishing → reviewer/rigor audit
 

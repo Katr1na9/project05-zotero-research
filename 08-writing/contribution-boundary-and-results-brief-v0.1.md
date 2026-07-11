@@ -1,5 +1,7 @@
 # Project05 贡献边界与结果简报 v0.1
 
+> **历史版本，已停止作为当前主张依据。** 本文件记录 2026-07-10 的 M3a 阶段；其“技术主线 = M3a”、三案例范围和下一步安排均已被 `contribution-boundary-and-results-brief-v0.2-20260711.md` 取代。实验数字可作阶段档案引用，当前论文/专利叙事请从 `AUTHORITATIVE-DOCUMENTS-20260711.md` 进入。
+
 日期：2026-07-10（补丁：C07/C08/C09 三真留出 + intended≠OR 规范）
 状态：M4 压力测试后冻结版；**技术主线 = M3a**；C07 THEIA + C08 ClearScope + C09 OpTC 三条真留出已完成
 对应 RQ：[topic-rq-brief-v2.1-g1-final-20260706.md](../03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)

@@ -1,5 +1,7 @@
 # Project05 论文语义严谨性审计 v0.1
 
+> **历史审计。** 当前审计为 `paper-main-rigor-review-v0.2-20260711.md`。
+
 日期：2026-07-11
 说明：依据 ARA rigor reviewer 的六维量表对普通 manuscript 做适配审计；本项目不是已通过 Level 1 的标准 ARA，因此本文件不冒充正式 ARA Seal Level 2 报告。
 

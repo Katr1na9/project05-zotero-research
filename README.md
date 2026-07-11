@@ -4,18 +4,20 @@
 
 ## 当前主线
 
-截至 2026-07-06，全项目重扫后，当前推荐主线为：
+截至 2026-07-11，完成四案例、AFA/敏感性实验和 Reviewer major revision 后，当前主线为：
 
-> 面向 APT 归因的对齐感知证据状态建模与主动取证规划。
+> 不完整证据下、信息边界约束的 APT 调查控制。
 
-旧主线“证据不完整场景下的 APT 归因粒度门控、可拒答解释与缺失证据生成”已经被降级为模块，不再单独作为主创新。原因是它更像给已有归因系统增加保护层，贡献强度不足。
+项目不直接提出新的 actor attribution 分类器，也不把 M3a、XGBoost、AFA 或 DQN 写成新 SOTA。当前贡献是把部分对齐转化为可更新证据缺口状态，在规划器不可读取动作实际恢复集合的条件下完成采集、反馈、STOP 和结论粒度截断。
 
-新的主线把“CTI 侧攻击行为图与本地日志 / provenance / IOC / 样本证据的对齐结果”作为证据状态，进一步解决：
+该主线把“CTI 侧攻击行为图与本地日志 / provenance / IOC / 样本证据的对齐结果”作为证据状态，进一步解决：
 
-- 当前证据最多能支撑到 technique、intent、campaign、actor 哪一层归因粒度；
+- 当前证据最多能支撑到哪一层调查结论；
 - 哪些证据缺口阻止归因粒度继续提升；
 - 在成本约束下，下一步最值得获取哪类证据；
-- 何时停止取证并输出粒度受控的归因结论。
+- 何时停止取证并输出粒度受控的结论或降级原因。
+
+当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260711.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260711.md)。论文母本为：[paper-main-draft-v0.4-major-revision-20260711.md](08-writing/paper-main-draft-v0.4-major-revision-20260711.md)。
 
 当前 G1 通过版 RQ 见：[topic-rq-brief-v2.1-g1-final-20260706.md](03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)
 
@@ -47,10 +49,10 @@
 
 ## 当前下一步
 
-1. 已完成 `08-writing/experiment-plan-v0.1-20260707.md`、`08-writing/experiment-case-inventory-v0.1-20260708.md` 和 `09-experiments/data_schema/` 三个核心 schema。
-2. CLIProv、APT-CGLP、APT-ATT 已升级为全文精读；TAA-EPLMR 已完成新主线复核，继续保留 APTChaser、GAPT 正文获取待办。
-3. C01 小样例和最小模拟器已跑通；下一步构造 C02/C03，并扩展 mask 强度和统计汇总。
-4. 根据最小可行实验结果判断是否重写专利 `v0.3`，不要继续扩写旧的 `v0.2`。
+1. 完成双人盲标和粒度校准；当前模板仍为 `awaiting_annotations`，不得以模型标签代替人工结果。
+2. 根据目标 venue 决定是否补官方 AFA 实现；现有 Myopic/Rollout-H3 只是同接口领域适配。
+3. 增加第三数据家族或更多独立 engagement，优先引入多 claim 证据组合。
+4. 专利以 `patent-main-draft-v0.4-20260711.md` 为母本，完成中文补检、权属、公开日和代理师审查。
 
 ## 当前红线
 
@@ -64,6 +66,6 @@
 - 单独的 confidence score、information gap、hunting recommendation；
 - 单独的归因粒度门控、拒答解释、缺失证据 list。
 
-更安全的表述是：
+当前安全表述是：
 
-> 将 CTI-local evidence alignment 的输出建模为部分可观测证据状态，在归因粒度收益与取证成本约束下进行主动证据获取规划。
+> 将 CTI-local evidence alignment 的输出建模为受信息边界约束的证据缺口状态，在成本、通道反馈和可支撑结论粒度下执行可审计的调查控制。
