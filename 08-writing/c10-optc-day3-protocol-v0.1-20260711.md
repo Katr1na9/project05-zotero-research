@@ -1,7 +1,7 @@
 # C10 OpTC Day 3 参数锁定测试协议 v0.1
 
 日期：2026-07-11  
-状态：**Ground Truth 已锁定；唯一原始分片待下载**  
+状态：**已编译并完成参数锁定评估**
 源案例：`R07`  
 拟编译案例：`C10-darpa-optc-sysclient0351-0925`
 
@@ -67,3 +67,13 @@ python 09-experiments/scripts/stream_ecar_event_window.py `
 | 主要比较 | XGBoost vs Logistic；XGBoost vs M2；全部对照 Oracle 上界 |
 
 C10 可以加强或削弱“XGBoost 比 Logistic 更稳”的结论，但单个 C10 不能证明广泛泛化，也不能单独打开 DQN Gate。DQN 仍需独立的非短视诊断环境。
+
+## 6. 完成记录
+
+- [x] 官方文件大小与文件名核验
+- [x] SHA-256 登记：`D52C3FC...A32CC75`
+- [x] 精确 FQDN + 锁定窗口抽取：扫描 `27,832,841` 行，选中 `37,301` 行，坏 JSON/时间戳均为 0
+- [x] 编译 5/5 motifs：恶意升级落盘、执行、C2、远程线程迁移、良性上下文
+- [x] C10 冻结 MVP：M2 `45/45`；M3a `36/45`
+- [x] XGBoost v0.2：训练仍为 C01–C06；C10 `45/45`，均成本 `5.0444`
+- [x] 明确边界：C10 同属 OpTC，不作为第四独立来源家族

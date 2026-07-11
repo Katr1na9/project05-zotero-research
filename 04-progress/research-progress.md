@@ -1,12 +1,14 @@
 # Research Progress
 
-## 2026-07-11：XGBoost 基线完成，C10 Ground Truth 锁定
+## 2026-07-11：XGBoost 基线与 C10 参数锁定测试完成
 
 - 安装并固定 XGBoost 3.2.0；以 C01–C06 的 1,845 条 state-action rows 训练，以 C07–C09 的 720 条 rows 参数锁定测试。
 - XGBoost 策略 success `1.0000`、mean cost `4.7556`、regret `0.8667`：小幅优于 Logistic M3b（`0.9778/4.8561/0.9470`），但仍未超过 M2（`1.0000/4.5259/0.6370`）。因此 DQN Gate 仅部分通过。
 - 为增加新攻击链测试，先于正确事件分片读取锁定 R07/C10：OpTC Day 3 `Sysclient0351` 恶意 Notepad++ 升级与 Meterpreter 迁移，UTC 窗口 `2019-09-25T15:20Z–15:35Z`。
 - 本地 23Sep AIA-351-375 日期错误；24Sep AIA-201-225 的 Sysclient0203 数据只覆盖到 `09:55 EDT`，早于 `15:42 EDT` 红队事件，均不得替代 C10。
-- C10 唯一待下载文件：`ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz`（`1,610,345,177 bytes`；Drive file ID `1-yxi3k1Duc5Uuu_gbu1vjtdEU3FoDSIA`）。C10 是跨日同语料参数锁定测试，不冒充第四独立来源。
+- 接入 C10 官方分片（`1,610,345,177 bytes`；SHA-256 `D52C3FC...A32CC75`），扫描 `27,832,841` 行并按锁定窗口抽取 `37,301` 行，坏 JSON/时间戳均为 0；编译 5/5 个 event-backed motifs。
+- C10 冻结结果：Oracle/M2/XGBoost/Logistic 均 `45/45` 达标，均成本分别为 `4.0667/4.5556/5.0444/5.4444`；M3a 仅 `36/45` 达标并有 20% premature STOP。
+- C07–C10 总体：XGBoost success `1.0`、cost `4.8278`，优于 Logistic 的 `0.9833/5.0056`，但仍不及 M2 的 `1.0/4.5333`；DQN Gate 仍未完全通过。C10 是跨日同语料参数锁定测试，不冒充第四独立来源。
 
 ## 2026-07-11：C09 OpTC 第三真留出完成并复核
 

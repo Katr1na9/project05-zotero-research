@@ -1,0 +1,200 @@
+[
+  {
+    "source_type": "host_forensics",
+    "claim_type": "file_creation",
+    "subject": {
+      "entity_type": "process",
+      "value": "gup.exe"
+    },
+    "predicate": "created",
+    "object": {
+      "entity_type": "file",
+      "value": "C:\\Users\\bbateman\\AppData\\Local\\Temp\\f.exe"
+    },
+    "mapped_tactic": [
+      "initial_access"
+    ],
+    "mapped_technique": [
+      "T1195.002"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.96,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R07_campaign"
+    ],
+    "notes": "Notepad++ updater gup.exe creates the observed f.exe payload. The GT calls the downloaded binary update.exe; the event-backed path on Sysclient0351 is f.exe. matched_event_count=2; first_timestamp_utc=2019-09-25T15:22:10.717000Z; last_timestamp_utc=2019-09-25T15:22:10.718000Z; representative_event_ids=bf9db5c7-6b12-44ff-9f54-2aebd507a74b,4da27337-857b-4858-83e9-165780eea97e",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:initial_access",
+      "node:N01_malicious_upgrade_drop",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C10-EC-001",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R07_sysclient0351_ecar_window",
+      "record_id": "bf9db5c7-6b12-44ff-9f54-2aebd507a74b"
+    }
+  },
+  {
+    "source_type": "host_forensics",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "gup.exe"
+    },
+    "predicate": "spawned",
+    "object": {
+      "entity_type": "process",
+      "value": "f.exe (PID 1932)"
+    },
+    "mapped_tactic": [
+      "execution"
+    ],
+    "mapped_technique": [
+      "T1204.002"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R07_campaign"
+    ],
+    "notes": "Direct process creation links the Notepad++ updater to Temp f.exe PID 1932. matched_event_count=1; first_timestamp_utc=2019-09-25T15:22:16.132000Z; last_timestamp_utc=2019-09-25T15:22:16.132000Z; representative_event_ids=32e162c7-0ac5-403f-a7b4-a0b98964258f",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:execution",
+      "node:N02_payload_execution",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C10-EC-002",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R07_sysclient0351_ecar_window",
+      "record_id": "32e162c7-0ac5-403f-a7b4-a0b98964258f"
+    }
+  },
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "f.exe (PID 1932)"
+    },
+    "predicate": "connected_to",
+    "object": {
+      "entity_type": "endpoint",
+      "value": "53.192.68.50:8080"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "mapped_technique": [
+      "T1095"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R07_campaign"
+    ],
+    "notes": "The f.exe payload opens the GT reverse-TCP endpoint on port 8080; the literal Meterpreter label is not required for this flow-backed claim. matched_event_count=1; first_timestamp_utc=2019-09-25T15:22:16.653000Z; last_timestamp_utc=2019-09-25T15:22:16.653000Z; representative_event_ids=643ef266-a453-42af-af37-f45a02e4396f",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:command_and_control",
+      "node:N03_meterpreter_c2",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C10-EC-003",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R07_sysclient0351_ecar_window",
+      "record_id": "643ef266-a453-42af-af37-f45a02e4396f"
+    }
+  },
+  {
+    "source_type": "host_forensics",
+    "claim_type": "process_injection",
+    "subject": {
+      "entity_type": "process",
+      "value": "f.exe (PID 1932)"
+    },
+    "predicate": "remotely_created_thread_in",
+    "object": {
+      "entity_type": "process",
+      "value": "lwabeat.exe (PID 1256)"
+    },
+    "mapped_tactic": [
+      "defense_evasion"
+    ],
+    "mapped_technique": [
+      "T1055"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.98,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R07_campaign"
+    ],
+    "notes": "THREAD REMOTE_CREATE directly records src_pid 1932 targeting lwabeat pid 1256, matching the GT migration step. matched_event_count=1; first_timestamp_utc=2019-09-25T15:24:16.741000Z; last_timestamp_utc=2019-09-25T15:24:16.741000Z; representative_event_ids=789fe2c1-c59c-4ae6-933d-1bac24ff21e9",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:defense_evasion",
+      "node:N04_lwabeat_migration",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C10-EC-004",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R07_sysclient0351_ecar_window",
+      "record_id": "789fe2c1-c59c-4ae6-933d-1bac24ff21e9"
+    }
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "python.exe"
+    },
+    "predicate": "used_multicast",
+    "object": {
+      "entity_type": "endpoint",
+      "value": "225.0.0.1:5000"
+    },
+    "mapped_tactic": [
+      "benign_context"
+    ],
+    "mapped_technique": [],
+    "evidence_strength": "supporting",
+    "confidence": 0.7,
+    "observable_status": "visible",
+    "supports_hypotheses": [],
+    "notes": "Interleaved Python multicast traffic is retained as benign context and is not part of the malicious-upgrade graph. matched_event_count=899; first_timestamp_utc=2019-09-25T15:20:00.714000Z; last_timestamp_utc=2019-09-25T15:34:59.052000Z; representative_event_ids=59d0e5f6-299f-4d33-a1ec-9eaf3333411a,24f638f1-3b8a-4e55-bd4c-833d0587830e,7f36b994-971b-4aa0-9110-53aea3ecba7c,89431a26-1526-49e4-b577-b555c78d43ef,c99865b3-7928-4c2f-8180-b15c214ede63",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:benign_context",
+      "noise"
+    ],
+    "claim_id": "C10-EC-005",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R07_sysclient0351_ecar_window",
+      "record_id": "59d0e5f6-299f-4d33-a1ec-9eaf3333411a"
+    }
+  }
+]

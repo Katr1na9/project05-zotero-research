@@ -10,7 +10,7 @@
   "c10_intake": {
     "case_id": "R07",
     "compiled_case_id": "C10-darpa-optc-sysclient0351-0925",
-    "status": "ground_truth_locked_source_download_pending",
+    "status": "compiled_and_parameter_locked_evaluation_complete",
     "evaluation_role": "parameter_locked_cross_day_same_corpus_fourth_case",
     "protocol": "08-writing/c10-optc-day3-protocol-v0.1-20260711.md",
     "warning": "C10 is a new attack day and chain inside OpTC, not a fourth independent source family."
@@ -88,8 +88,9 @@
       "drive_folder_id": "1j97jgNd-xsDlcCuc0mbTP5v2uBUWtFXT",
       "drive_file_id": "1-yxi3k1Duc5Uuu_gbu1vjtdEU3FoDSIA",
       "raw_target": "raw/ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz",
-      "download_status": "required_for_c10_not_downloaded",
-      "expected_size_bytes": 1610345177,
+      "download_status": "available_local_verified",
+      "size_bytes": 1610345177,
+      "sha256": "D52C3FC3439DE53123FE199374F08A7D7B2AF8E9358727BF88B2A5325A32CC75",
       "host_range": "SysClient0351-SysClient0375",
       "required_utc_coverage": "2019-09-25T15:20:00Z/2019-09-25T15:35:00Z",
       "notes": [
@@ -117,6 +118,19 @@
       "artifact_id": "r06_extraction_summary",
       "path": "derived/R06_extraction_summary.json",
       "status": "generated"
+    },
+    {
+      "artifact_id": "r07_sysclient0351_window",
+      "path": "extracted/R07_sysclient0351_window.jsonl",
+      "status": "generated_local_only",
+      "rows_selected": 37301,
+      "sha256": "9BA08FE7E42D14C1984BA51D7ACA02400C848D42A07BE5B5C0C1EA2C426F3752",
+      "use": "Exact-host locked window feeding C10 motif compilation."
+    },
+    {
+      "artifact_id": "r07_extraction_summary",
+      "path": "derived/R07_extraction_summary.json",
+      "status": "generated"
     }
   ],
   "cases": [
@@ -131,13 +145,14 @@
       "compiled_case_id": "C10-darpa-optc-sysclient0351-0925",
       "source_id": "optc_ecar_25sept_aia_351_375_last",
       "ground_truth_file": "ground_truth/R07.json",
-      "status": "source_download_pending"
+      "status": "compiled_and_evaluated"
     }
   ],
   "notes": [
     "C09 is the third true holdout after C07/C08. M3a weights remain frozen.",
     "R06 locked to 2019-09-23 Day1 Plain PowerShell Empire on Sysclient0201 before event inspection.",
     "Do not retarget R06 to Day2 just because a 24Sep file exists.",
-    "R07/C10 was locked to 2019-09-25 Day3 Sysclient0351 before the correct 25Sept event file was inspected; all learned and rule parameters remain frozen."
+    "R07/C10 was locked to 2019-09-25 Day3 Sysclient0351 before the correct 25Sept event file was inspected; all learned and rule parameters remain frozen.",
+    "R07 compiled 5/5 motifs from 37,301 exact-host events; C10 XGBoost v0.2 evaluation used C01-C06 training unchanged."
   ]
 }

@@ -260,18 +260,24 @@ def run_xgboost_episode(
 def selected_case_dirs(
     examples_root: Path,
     real_cases_root: Path,
+    include_c10: bool = False,
 ) -> tuple[list[Path], list[Path]]:
     examples = run_mvp.discover_case_dirs(examples_root)
     real = run_mvp.discover_case_dirs(real_cases_root)
     train = examples + [
         path for path in real if path.name.startswith(("C04-", "C05-", "C06-"))
     ]
-    test = [
-        path for path in real if path.name.startswith(("C07-", "C08-", "C09-"))
-    ]
-    if len(train) != 6 or len(test) != 3:
+    test_prefixes = ("C07-", "C08-", "C09-", "C10-") if include_c10 else (
+        "C07-",
+        "C08-",
+        "C09-",
+    )
+    test = [path for path in real if path.name.startswith(test_prefixes)]
+    expected_test_cases = 4 if include_c10 else 3
+    if len(train) != 6 or len(test) != expected_test_cases:
         raise ValueError(
-            f"Expected 6 train and 3 test cases, found {len(train)} and {len(test)}"
+            f"Expected 6 train and {expected_test_cases} test cases, "
+            f"found {len(train)} and {len(test)}"
         )
     return train, test
 
@@ -401,8 +407,13 @@ def run_experiment(
     examples_root: Path,
     real_cases_root: Path,
     output_dir: Path,
+    include_c10: bool = False,
 ) -> dict[str, Any]:
-    train_dirs, test_dirs = selected_case_dirs(examples_root, real_cases_root)
+    train_dirs, test_dirs = selected_case_dirs(
+        examples_root,
+        real_cases_root,
+        include_c10=include_c10,
+    )
     train_rows = run_m3b.build_rows_for_case_dirs(train_dirs)
     test_rows = run_m3b.build_rows_for_case_dirs(test_dirs)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -442,7 +453,11 @@ def run_experiment(
         FROZEN_COST_PENALTY,
     )
     report = {
-        "experiment_id": "project05-xgboost-action-value-v0.1",
+        "experiment_id": (
+            "project05-xgboost-action-value-v0.2-c10"
+            if include_c10
+            else "project05-xgboost-action-value-v0.1"
+        ),
         "xgboost_version": xgb.__version__,
         "numpy_version": np.__version__,
         "train_case_ids": [
@@ -475,8 +490,18 @@ def main() -> None:
     parser.add_argument("--examples-root", type=Path, required=True)
     parser.add_argument("--real-cases-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--include-c10",
+        action="store_true",
+        help="Add parameter-locked C10 without changing C01-C06 training.",
+    )
     args = parser.parse_args()
-    report = run_experiment(args.examples_root, args.real_cases_root, args.output_dir)
+    report = run_experiment(
+        args.examples_root,
+        args.real_cases_root,
+        args.output_dir,
+        include_c10=args.include_c10,
+    )
     print(
         json.dumps(
             {

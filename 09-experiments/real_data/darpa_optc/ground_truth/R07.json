@@ -21,7 +21,7 @@
   "ground_truth_document": "optc_redteam_ground_truth",
   "ground_truth_section": "Day 3 Malicious Upgrade",
   "ground_truth_summary": "A vulnerable Notepad++ update on Sysclient0351 downloaded a malicious update.exe reverse-TCP Meterpreter payload. The payload connected to the attacker infrastructure, then migrated from PID 1932 (f.exe) to PID 1256 (lwabeat).",
-  "evidence_readiness": "ground_truth_locked_source_download_pending",
+  "evidence_readiness": "compiled_as_C10_event_backed_parameter_locked_test",
   "natural_incompleteness": true,
   "supportable_ceiling": "G3_campaign",
   "primary_host_focus": "Sysclient0351",
@@ -67,5 +67,5 @@
     "The local 24Sep AIA-201-225 archive covers Sysclient0203 only through 09:55 EDT, before its 15:42 EDT red-team event, and cannot be used for R07 or a Day2 substitute.",
     "R07 was selected and time-locked after XGBoost v0.1 parameters were frozen but before the correct 25Sept event file was inspected."
   ],
-  "notes": "C10 adds a new attack day and Meterpreter/malicious-upgrade chain within OpTC. It is a parameter-locked cross-day robustness case, not a fourth independent source family."
+  "notes": "C10 adds a new attack day and Meterpreter/malicious-upgrade chain within OpTC. It is a parameter-locked cross-day robustness case, not a fourth independent source family. The locked window compiled 5/5 event-backed motifs from 37,301 Sysclient0351 events."
 }

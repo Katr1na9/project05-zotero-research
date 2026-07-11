@@ -1,0 +1,152 @@
+[
+  {
+    "action_id": "C10-AA-001",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "action_type": "recover_network_summary",
+    "acquisition_channel": "network_telemetry",
+    "target": {
+      "target_type": "endpoint",
+      "target_value": "f.exe reverse TCP to 53.192.68.50:8080"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C10-EC-003"],
+    "intended_cti_node_ids": ["N03_meterpreter_c2", "N04_lwabeat_migration"],
+    "expected_evidence_types": ["network_summary"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.34,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.26
+    },
+    "status": "available",
+    "natural_language_request": "Recover reverse-TCP flow summaries and look for migration-adjacent activity around the same payload session.",
+    "notes": "Over-declared intent: the request spans C2 and migration, while this channel recovers only N03."
+  },
+  {
+    "action_id": "C10-AA-002",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "process",
+      "target_value": "f.exe C2 lineage"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": ["C10-EC-003"],
+    "intended_cti_node_ids": ["N03_meterpreter_c2", "N04_lwabeat_migration"],
+    "expected_evidence_types": ["network_summary", "host_forensics"],
+    "expected_stages": ["command_and_control"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.39,
+      "expected_over_attribution_risk_reduction": 0.39,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.26
+    },
+    "status": "available",
+    "natural_language_request": "Recover host-backed f.exe C2 lineage and inspect adjacent remote-thread activity.",
+    "notes": "Reliable host fallback for N03; intended scope also names N04 but recoverable coverage remains C2 only."
+  },
+  {
+    "action_id": "C10-AA-003",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "action_type": "ttp_local_probe",
+    "acquisition_channel": "host_probe",
+    "target": {
+      "target_type": "file",
+      "target_value": "Notepad++ updater drop of Temp\\f.exe"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C10-EC-001"],
+    "intended_cti_node_ids": ["N01_malicious_upgrade_drop", "N02_payload_execution"],
+    "expected_evidence_types": ["host_forensics"],
+    "expected_stages": ["initial_access"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.35,
+      "expected_over_attribution_risk_reduction": 0.32,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.24
+    },
+    "status": "available",
+    "natural_language_request": "Recover the updater-created payload file and determine whether it subsequently executed.",
+    "notes": "Over-declared intent covers the file drop and execution; this probe recovers N01 only."
+  },
+  {
+    "action_id": "C10-AA-004",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "process",
+      "target_value": "Temp\\f.exe PID 1932 creation"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C10-EC-002"],
+    "intended_cti_node_ids": ["N02_payload_execution", "N03_meterpreter_c2"],
+    "expected_evidence_types": ["host_forensics"],
+    "expected_stages": ["execution"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.35,
+      "expected_over_attribution_risk_reduction": 0.34,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.24
+    },
+    "status": "available",
+    "natural_language_request": "Recover f.exe process creation and place it beside any immediately following C2 activity.",
+    "notes": "Over-declared intent covers execution and C2; recoverable coverage is N02 only."
+  },
+  {
+    "action_id": "C10-AA-005",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "thread",
+      "target_value": "remote thread from f.exe PID 1932 to lwabeat PID 1256"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": ["C10-EC-004"],
+    "intended_cti_node_ids": ["N04_lwabeat_migration", "N03_meterpreter_c2"],
+    "expected_evidence_types": ["host_forensics"],
+    "expected_stages": ["defense_evasion"],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.4,
+      "expected_over_attribution_risk_reduction": 0.38,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.26
+    },
+    "status": "available",
+    "natural_language_request": "Recover the f.exe-to-lwabeat remote-thread migration and correlate it with the reverse-TCP session.",
+    "notes": "Over-declared intent covers migration and C2; recoverable coverage is N04 only."
+  },
+  {
+    "action_id": "C10-AA-006",
+    "case_id": "C10-darpa-optc-sysclient0351-0925",
+    "action_type": "human_review",
+    "acquisition_channel": "analyst",
+    "target": {
+      "target_type": "process",
+      "target_value": "python.exe multicast flow to 225.0.0.1:5000"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": ["C10-EC-005"],
+    "intended_cti_node_ids": [],
+    "expected_evidence_types": ["local_log"],
+    "expected_stages": ["benign_context"],
+    "expected_effects": {
+      "expected_granularity_gain": 0,
+      "expected_uncertainty_reduction": 0.1,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 1,
+      "expected_coverage_delta": 0
+    },
+    "status": "available",
+    "natural_language_request": "Review interleaved Python multicast activity that should not be treated as a malicious-upgrade chain gap.",
+    "notes": "Noise review with empty intended CTI nodes; the recoverable claim covers no attack-graph node."
+  }
+]

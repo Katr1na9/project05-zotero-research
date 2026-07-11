@@ -6,7 +6,8 @@ Compiled case: `../../real_cases/C09-darpa-optc-sysclient0201-0923/`
 Freeze-eval: `../../results/c09_holdout_m3a/`
 
 C10 protocol: `../../../08-writing/c10-optc-day3-protocol-v0.1-20260711.md`
-C10 status: Ground Truth locked; one 25Sept host shard pending.
+C10 compiled case: `../../real_cases/C10-darpa-optc-sysclient0351-0925/`
+C10 status: compiled and parameter-locked evaluation complete.
 
 ## Locked candidate (R06)
 
@@ -50,10 +51,18 @@ serve as C10.
 - Locked UTC window: `15:20Z–15:35Z`
 - Official path: `ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz`
 - Drive file ID: `1-yxi3k1Duc5Uuu_gbu1vjtdEU3FoDSIA`
-- Status: **not downloaded**
+- Source size: `1,610,345,177 bytes`
+- Source SHA-256: `D52C3FC3439DE53123FE199374F08A7D7B2AF8E9358727BF88B2A5325A32CC75`
+- Extracted window: **37,301** rows; SHA-256 `9BA08FE7...26F3752`
+- Compiled motifs: **5/5** (4 attack-chain claims + 1 benign context)
+- Status: **compiled and evaluated**
 
 C10 is a parameter-locked cross-day OpTC robustness case. It is not a fourth
 independent source family, and it must not be used to retune XGBoost or M3a.
+
+C10 event-backed chain: `gup.exe` creates `f.exe` → PID 1932 executes →
+`53.192.68.50:8080` reverse-TCP flow → remote thread into `lwabeat` PID 1256.
+The literal Meterpreter and DNS labels remain report-only gaps.
 
 ## Hard rules
 

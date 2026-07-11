@@ -15,6 +15,28 @@ SPEC.loader.exec_module(run_xgboost)
 
 
 class XGBoostModelTests(unittest.TestCase):
+    def test_c10_extension_is_opt_in(self):
+        experiment_dir = SCRIPT_DIR.parent
+        examples_root = experiment_dir / "examples"
+        real_cases_root = experiment_dir / "real_cases"
+
+        train, original_test = run_xgboost.selected_case_dirs(
+            examples_root,
+            real_cases_root,
+        )
+        extended_train, extended_test = run_xgboost.selected_case_dirs(
+            examples_root,
+            real_cases_root,
+            include_c10=True,
+        )
+
+        self.assertEqual(6, len(train))
+        self.assertEqual(train, extended_train)
+        self.assertEqual(3, len(original_test))
+        self.assertEqual(4, len(extended_test))
+        self.assertFalse(any(path.name.startswith("C10-") for path in original_test))
+        self.assertTrue(any(path.name.startswith("C10-") for path in extended_test))
+
     def test_frozen_parameters_are_stable(self):
         self.assertEqual(3, run_xgboost.FROZEN_PARAMS["max_depth"])
         self.assertEqual(0.05, run_xgboost.FROZEN_PARAMS["eta"])

@@ -1,0 +1,44 @@
+{
+  "source_format": "OpTC eCAR JSONL",
+  "inputs": [
+    "09-experiments/real_data/darpa_optc/raw/ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz"
+  ],
+  "input_sha256": [
+    "D52C3FC3439DE53123FE199374F08A7D7B2AF8E9358727BF88B2A5325A32CC75"
+  ],
+  "hostnames": [
+    "Sysclient0351.systemia.com"
+  ],
+  "hostname_match_mode": "exact",
+  "utc_window": {
+    "start": "2019-09-25T15:20:00Z",
+    "end": "2019-09-25T15:35:00Z"
+  },
+  "rows_scanned": 27832841,
+  "rows_selected": 37301,
+  "rows_bad_json": 0,
+  "rows_bad_timestamp": 0,
+  "selected_host_counts": {
+    "SysClient0351.systemia.com": 37301
+  },
+  "selected_object_counts": {
+    "PROCESS": 4001,
+    "THREAD": 2013,
+    "FLOW": 18095,
+    "REGISTRY": 239,
+    "TASK": 31,
+    "FILE": 8534,
+    "MODULE": 4378,
+    "USER_SESSION": 10
+  },
+  "first_selected_timestamp_utc": "2019-09-25T15:20:00.006000Z",
+  "last_selected_timestamp_utc": "2019-09-25T15:34:59.979000Z",
+  "output_path": "09-experiments/real_data/darpa_optc/extracted/R07_sysclient0351_window.jsonl",
+  "output_sha256": "9BA08FE7E42D14C1984BA51D7ACA02400C848D42A07BE5B5C0C1EA2C426F3752",
+  "scan_scope": "hostname_and_utc_window",
+  "notes": [
+    "Engineering extractor only; do not retune M3a from extraction stats.",
+    "Passworded AV-bypass zips use OPTC2019 unless --zip-password overrides.",
+    "cryptOPTC2019 files are rejected; use the password-zip twin or decrypt upstream."
+  ]
+}

@@ -30,7 +30,7 @@ class C10IntakeTests(unittest.TestCase):
             self.r07["utc_window"],
         )
         self.assertEqual(
-            "ground_truth_locked_source_download_pending",
+            "compiled_as_C10_event_backed_parameter_locked_test",
             self.r07["evidence_readiness"],
         )
         self.assertEqual(
@@ -53,8 +53,12 @@ class C10IntakeTests(unittest.TestCase):
             "AIA-351-375.ecar-last.json.gz",
             source["raw_target"],
         )
-        self.assertEqual("required_for_c10_not_downloaded", source["download_status"])
-        self.assertEqual(1610345177, source["expected_size_bytes"])
+        self.assertEqual("available_local_verified", source["download_status"])
+        self.assertEqual(1610345177, source["size_bytes"])
+        self.assertEqual(
+            "D52C3FC3439DE53123FE199374F08A7D7B2AF8E9358727BF88B2A5325A32CC75",
+            source["sha256"],
+        )
         self.assertEqual(
             "2019-09-25T15:20:00Z/2019-09-25T15:35:00Z",
             source["required_utc_coverage"],

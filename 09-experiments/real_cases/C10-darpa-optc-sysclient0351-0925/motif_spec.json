@@ -1,0 +1,128 @@
+{
+  "case_id": "C10-darpa-optc-sysclient0351-0925",
+  "artifact_id": "darpa_optc_R07_sysclient0351_ecar_window",
+  "motifs": [
+    {
+      "motif_id": "C10-EC-001",
+      "match": {
+        "object_in": ["FILE"],
+        "action_in": ["CREATE"],
+        "path_contains_any": ["\\Temp\\f.exe"],
+        "process_contains_any": ["Notepad++\\updater\\gup.exe"]
+      },
+      "claim": {
+        "source_type": "host_forensics",
+        "claim_type": "file_creation",
+        "subject": {"entity_type": "process", "value": "gup.exe"},
+        "predicate": "created",
+        "object": {"entity_type": "file", "value": "C:\\Users\\bbateman\\AppData\\Local\\Temp\\f.exe"},
+        "mapped_tactic": ["initial_access"],
+        "mapped_technique": ["T1195.002"],
+        "evidence_strength": "critical",
+        "confidence": 0.96,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R07_campaign"],
+        "notes": "Notepad++ updater gup.exe creates the observed f.exe payload. The GT calls the downloaded binary update.exe; the event-backed path on Sysclient0351 is f.exe.",
+        "tags": ["hideable", "real_ecar", "stage:initial_access", "node:N01_malicious_upgrade_drop", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C10-EC-002",
+      "match": {
+        "object_in": ["PROCESS"],
+        "action_in": ["CREATE"],
+        "process_contains_any": ["\\Temp\\f.exe"],
+        "property_contains_any": ["parent_image_path=\\Device\\HarddiskVolume1\\Program Files (x86)\\Notepad++\\updater\\gup.exe"]
+      },
+      "claim": {
+        "source_type": "host_forensics",
+        "claim_type": "process_execution",
+        "subject": {"entity_type": "process", "value": "gup.exe"},
+        "predicate": "spawned",
+        "object": {"entity_type": "process", "value": "f.exe (PID 1932)"},
+        "mapped_tactic": ["execution"],
+        "mapped_technique": ["T1204.002"],
+        "evidence_strength": "critical",
+        "confidence": 0.97,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R07_campaign"],
+        "notes": "Direct process creation links the Notepad++ updater to Temp f.exe PID 1932.",
+        "tags": ["hideable", "real_ecar", "stage:execution", "node:N02_payload_execution", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C10-EC-003",
+      "match": {
+        "object_in": ["FLOW"],
+        "action_in": ["START"],
+        "process_contains_any": ["\\Temp\\f.exe"],
+        "remote_ip_contains_any": ["53.192.68.50"],
+        "property_contains_any": ["dest_port=8080"]
+      },
+      "claim": {
+        "source_type": "network_summary",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "f.exe (PID 1932)"},
+        "predicate": "connected_to",
+        "object": {"entity_type": "endpoint", "value": "53.192.68.50:8080"},
+        "mapped_tactic": ["command_and_control"],
+        "mapped_technique": ["T1095"],
+        "evidence_strength": "critical",
+        "confidence": 0.97,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R07_campaign"],
+        "notes": "The f.exe payload opens the GT reverse-TCP endpoint on port 8080; the literal Meterpreter label is not required for this flow-backed claim.",
+        "tags": ["hideable", "real_ecar", "stage:command_and_control", "node:N03_meterpreter_c2", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C10-EC-004",
+      "match": {
+        "object_in": ["THREAD"],
+        "action_in": ["REMOTE_CREATE"],
+        "process_contains_any": ["\\Temp\\f.exe"],
+        "property_contains_any": ["tgt_pid=1256"]
+      },
+      "claim": {
+        "source_type": "host_forensics",
+        "claim_type": "process_injection",
+        "subject": {"entity_type": "process", "value": "f.exe (PID 1932)"},
+        "predicate": "remotely_created_thread_in",
+        "object": {"entity_type": "process", "value": "lwabeat.exe (PID 1256)"},
+        "mapped_tactic": ["defense_evasion"],
+        "mapped_technique": ["T1055"],
+        "evidence_strength": "critical",
+        "confidence": 0.98,
+        "observable_status": "visible",
+        "supports_hypotheses": ["R07_campaign"],
+        "notes": "THREAD REMOTE_CREATE directly records src_pid 1932 targeting lwabeat pid 1256, matching the GT migration step.",
+        "tags": ["hideable", "real_ecar", "stage:defense_evasion", "node:N04_lwabeat_migration", "critical", "discriminative", "unique"]
+      }
+    },
+    {
+      "motif_id": "C10-EC-005",
+      "match": {
+        "object_in": ["FLOW"],
+        "action_in": ["START"],
+        "process_contains_any": ["Python27\\python.exe"],
+        "remote_ip_contains_any": ["225.0.0.1"],
+        "property_contains_any": ["dest_port=5000"]
+      },
+      "claim": {
+        "source_type": "local_log",
+        "claim_type": "network_connection",
+        "subject": {"entity_type": "process", "value": "python.exe"},
+        "predicate": "used_multicast",
+        "object": {"entity_type": "endpoint", "value": "225.0.0.1:5000"},
+        "mapped_tactic": ["benign_context"],
+        "mapped_technique": [],
+        "evidence_strength": "supporting",
+        "confidence": 0.7,
+        "observable_status": "visible",
+        "supports_hypotheses": [],
+        "notes": "Interleaved Python multicast traffic is retained as benign context and is not part of the malicious-upgrade graph.",
+        "tags": ["hideable", "real_ecar", "stage:benign_context", "noise"]
+      }
+    }
+  ]
+}
