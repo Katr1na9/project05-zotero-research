@@ -7,6 +7,14 @@
   "official_index_url": "https://github.com/FiveDirections/OpTC-data",
   "official_drive_root": "https://drive.google.com/drive/folders/1n3kkS3KR31KUegn42yk3-e6JkZvf0Caa",
   "data_drive_note": "R06 uses official Drive path ecar/evaluation/23Sep19-red/AIA-201-225/. The afternoon attack window lives in AIA-201-225.ecar-last.json.gz (~2.22 GB), not the smaller morning shard.",
+  "c10_intake": {
+    "case_id": "R07",
+    "compiled_case_id": "C10-darpa-optc-sysclient0351-0925",
+    "status": "ground_truth_locked_source_download_pending",
+    "evaluation_role": "parameter_locked_cross_day_same_corpus_fourth_case",
+    "protocol": "08-writing/c10-optc-day3-protocol-v0.1-20260711.md",
+    "warning": "C10 is a new attack day and chain inside OpTC, not a fourth independent source family."
+  },
   "documents": [
     {
       "document_id": "optc_redteam_ground_truth",
@@ -72,6 +80,22 @@
         "Does not contain Sysclient0201/0402/0660/DC1 required by locked R06 Day1 campaign.",
         "Retained only as packaging probe / possible later Day3 Sysclient0351 material."
       ]
+    },
+    {
+      "source_id": "optc_ecar_25sept_aia_351_375_last",
+      "dataset_name": "OpTC eCAR 25Sept AIA-351-375 ecar-last",
+      "format": "eCAR JSON.gz",
+      "drive_folder_id": "1j97jgNd-xsDlcCuc0mbTP5v2uBUWtFXT",
+      "drive_file_id": "1-yxi3k1Duc5Uuu_gbu1vjtdEU3FoDSIA",
+      "raw_target": "raw/ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz",
+      "download_status": "required_for_c10_not_downloaded",
+      "expected_size_bytes": 1610345177,
+      "host_range": "SysClient0351-SysClient0375",
+      "required_utc_coverage": "2019-09-25T15:20:00Z/2019-09-25T15:35:00Z",
+      "notes": [
+        "Single official file required for locked R07/C10 Sysclient0351 Day3 Malicious Upgrade window.",
+        "Do not substitute the local 23Sep19 AIA-351-375 package."
+      ]
     }
   ],
   "derived_artifacts": [
@@ -101,11 +125,19 @@
       "compiled_case_id": "C09-darpa-optc-sysclient0201-0923",
       "source_id": "optc_ecar_23sep19_aia_201_225_last",
       "ground_truth_file": "ground_truth/R06.json"
+    },
+    {
+      "case_id": "R07",
+      "compiled_case_id": "C10-darpa-optc-sysclient0351-0925",
+      "source_id": "optc_ecar_25sept_aia_351_375_last",
+      "ground_truth_file": "ground_truth/R07.json",
+      "status": "source_download_pending"
     }
   ],
   "notes": [
     "C09 is the third true holdout after C07/C08. M3a weights remain frozen.",
     "R06 locked to 2019-09-23 Day1 Plain PowerShell Empire on Sysclient0201 before event inspection.",
-    "Do not retarget R06 to Day2 just because a 24Sep file exists."
+    "Do not retarget R06 to Day2 just because a 24Sep file exists.",
+    "R07/C10 was locked to 2019-09-25 Day3 Sysclient0351 before the correct 25Sept event file was inspected; all learned and rule parameters remain frozen."
   ]
 }

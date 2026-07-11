@@ -1,5 +1,13 @@
 # Research Progress
 
+## 2026-07-11：XGBoost 基线完成，C10 Ground Truth 锁定
+
+- 安装并固定 XGBoost 3.2.0；以 C01–C06 的 1,845 条 state-action rows 训练，以 C07–C09 的 720 条 rows 参数锁定测试。
+- XGBoost 策略 success `1.0000`、mean cost `4.7556`、regret `0.8667`：小幅优于 Logistic M3b（`0.9778/4.8561/0.9470`），但仍未超过 M2（`1.0000/4.5259/0.6370`）。因此 DQN Gate 仅部分通过。
+- 为增加新攻击链测试，先于正确事件分片读取锁定 R07/C10：OpTC Day 3 `Sysclient0351` 恶意 Notepad++ 升级与 Meterpreter 迁移，UTC 窗口 `2019-09-25T15:20Z–15:35Z`。
+- 本地 23Sep AIA-351-375 日期错误；24Sep AIA-201-225 的 Sysclient0203 数据只覆盖到 `09:55 EDT`，早于 `15:42 EDT` 红队事件，均不得替代 C10。
+- C10 唯一待下载文件：`ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz`（`1,610,345,177 bytes`；Drive file ID `1-yxi3k1Duc5Uuu_gbu1vjtdEU3FoDSIA`）。C10 是跨日同语料参数锁定测试，不冒充第四独立来源。
+
 ## 2026-07-11：C09 OpTC 第三真留出完成并复核
 
 - 接入官方 `23Sep19-red/AIA-201-225.ecar-last.json.gz`（2,217,842,713 bytes；SHA-256 `FAF181CB...BEE5FD7`），锁定 SysClient0201 Day1 Empire 窗口 `15:23Z–19:30Z`。

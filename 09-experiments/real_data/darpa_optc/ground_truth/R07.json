@@ -1,0 +1,71 @@
+{
+  "case_id": "R07",
+  "case_name": "OpTC Day3 Malicious Upgrade on Sysclient0351",
+  "development_only": false,
+  "holdout_role": "parameter_locked_cross_day_same_corpus_fourth_case",
+  "source_id": "optc_ecar_25sept_aia_351_375_last",
+  "platform": "Windows 10",
+  "target_host": "Sysclient0351",
+  "target_fqdn": "Sysclient0351.systemia.com",
+  "scenario_date": "2019-09-25",
+  "source_timezone": "America/New_York",
+  "timezone_note": "Ground-truth wall-clock times use EDT (-04:00); the UTC window is locked before the 25Sept eCAR file is inspected.",
+  "local_window": {
+    "start": "2019-09-25T11:20:00-04:00",
+    "end": "2019-09-25T11:35:00-04:00"
+  },
+  "utc_window": {
+    "start": "2019-09-25T15:20:00Z",
+    "end": "2019-09-25T15:35:00Z"
+  },
+  "ground_truth_document": "optc_redteam_ground_truth",
+  "ground_truth_section": "Day 3 Malicious Upgrade",
+  "ground_truth_summary": "A vulnerable Notepad++ update on Sysclient0351 downloaded a malicious update.exe reverse-TCP Meterpreter payload. The payload connected to the attacker infrastructure, then migrated from PID 1932 (f.exe) to PID 1256 (lwabeat).",
+  "evidence_readiness": "ground_truth_locked_source_download_pending",
+  "natural_incompleteness": true,
+  "supportable_ceiling": "G3_campaign",
+  "primary_host_focus": "Sysclient0351",
+  "attack_stages": [
+    {
+      "stage": "execution",
+      "status": "reported",
+      "summary": "The Notepad++ update path downloaded and executed malicious update.exe."
+    },
+    {
+      "stage": "command_and_control",
+      "status": "reported",
+      "summary": "The reverse-TCP Meterpreter payload connected to attacker infrastructure associated with 53.192.68.50:8080."
+    },
+    {
+      "stage": "defense_evasion_process_migration",
+      "status": "reported",
+      "summary": "Meterpreter migrated from PID 1932 (f.exe) to PID 1256 (lwabeat)."
+    }
+  ],
+  "gold_observables": [
+    "Sysclient0351",
+    "notepadplus-sourceforge.net",
+    "53.192.68.50",
+    "8080",
+    "update.exe",
+    "f.exe",
+    "PID 1932",
+    "lwabeat",
+    "PID 1256",
+    "Meterpreter"
+  ],
+  "required_ecar_subsets": [
+    {
+      "drive_relative_hint": "ecar/evaluation/25Sept/AIA-351-375/AIA-351-375.ecar-last.json.gz",
+      "drive_folder_id": "1j97jgNd-xsDlcCuc0mbTP5v2uBUWtFXT",
+      "drive_file_id": "1-yxi3k1Duc5Uuu_gbu1vjtdEU3FoDSIA",
+      "reason": "Official host batch and date containing the locked Sysclient0351 Day3 window."
+    }
+  ],
+  "data_quality_notes": [
+    "The local AIA-351-375 password ZIP is from 23Sep19, not 25Sept, and cannot be used for R07.",
+    "The local 24Sep AIA-201-225 archive covers Sysclient0203 only through 09:55 EDT, before its 15:42 EDT red-team event, and cannot be used for R07 or a Day2 substitute.",
+    "R07 was selected and time-locked after XGBoost v0.1 parameters were frozen but before the correct 25Sept event file was inspected."
+  ],
+  "notes": "C10 adds a new attack day and Meterpreter/malicious-upgrade chain within OpTC. It is a parameter-locked cross-day robustness case, not a fourth independent source family."
+}
