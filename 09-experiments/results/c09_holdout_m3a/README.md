@@ -11,6 +11,7 @@
 - 条件：3 种 mask 策略 × 3 个强度 × 5 个 seed = 每个规划器 45 次运行。
 - 对比：`oracle_optimal`、`project05_m2`、`project05_m3a_gap_compat`，以及既有基线/消融。
 - C09 是第三真留出（相对 C07/C08 的独立 engagement 家族：企业 Windows eCAR），不参与 M3a 调参。
+- 2026-07-11 以精确 FQDN `SysClient0201.systemia.com` 重抽取：仍为 753,973 行，输出 SHA-256 保持 `D2E2348C…97C9`，因此冻结评估输入未改变。
 
 ## 2. 主结果
 

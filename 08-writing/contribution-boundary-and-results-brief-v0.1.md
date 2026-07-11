@@ -185,4 +185,6 @@ STOP 的 break-even utility = 0
 | C07/C08/C09 paired regret | `08-writing/c07-c08-paired-regret-summary-v0.1-20260710.md` |
 | C09 OpTC 协议 | `08-writing/c09-optc-true-holdout-protocol-v0.1-20260710.md` |
 | C09 结果 | `09-experiments/results/c09_holdout_m3a/` |
+| 论文/专利叙事冻结 | `08-writing/paper-patent-narrative-freeze-v0.1-20260711.md` |
+| 当前论文大纲 | `08-writing/thesis-outline-v1-20260711.md` |
 | 本简报 | `08-writing/contribution-boundary-and-results-brief-v0.1.md` |

@@ -60,7 +60,7 @@
    - 信息边界测试仍通过（改 `recoverable_claim_ids` 不改变 M3a 选择）。
 6. **失败也要写**：若 M3a 在真留出上崩塌，主线需回到表示/动作空间假设，而不是偷偷调权。
 
-## 6. 本机现状与阻塞
+## 6. 真实留出完成状态
 
 | 项 | 状态 |
 |---|---|
@@ -68,7 +68,7 @@
 | E5 THEIA R04 原始数据 | 已接入本地 `theia_e5.dump`；哈希、manifest、ground truth、流式抽取摘要均已记录 |
 | C07 E5 THEIA | 已编译并评估：2019-05-15 14:48–15:07 EDT Firefox Drakon BinFmt-Elevate trace |
 | C08 E5 ClearScope | 已编译并评估：2019-05-15 15:38–16:19 EDT Appstarter Micro APT Elevate trace |
-| OpTC / 第三留出 | 尚未接入；用于检验 E5 双留出结论是否可外推 |
+| OpTC / 第三留出 | 已完成 C09：SysClient0201 Day1 Empire eCAR；冻结 M3a 后 45/45 达标，成本仍高于 M2 |
 | M3a 公式 | 已冻结于 `run_mvp.py` |
 
 ### C07 首轮结果（冻结后执行）
@@ -89,13 +89,13 @@
 
 结果见 `09-experiments/results/c08_holdout_m3a/README.md`。
 
-**下一步工程动作（不调 M3a 参数）**：
+**后续工程动作（不调 M3a 参数）**：
 
-1. 可选接入 OpTC 作为第三独立来源，复用冻结公式与当前编译规范。
-2. 对 M3a/M2 的 paired regret 做 C07+C08（+可选 C09）汇总。
-3. 扩展真实 trace 的自然缺口审计，不把 report-only observable 伪造成 event-level claim。
+1. ~~接入 OpTC 第三来源~~ 已完成 C09，并通过精确主机重抽取复核。
+2. ~~汇总 C07+C08+C09 paired regret~~ 已完成；三源均为 success 持平、M3a 成本高于 M2。
+3. 进入论文/专利叙事收口，继续保留自然缺口，不把 report-only observable 伪造成 event-level claim。
 
-## 7. 临时可做、但不替代 C07 的工作
+## 7. C07 阶段允许的并行工作（历史记录）
 
 - 为现有 C01–C06 增加噪声/误导动作，测 M3a 鲁棒性（开发集，只写附录）。
 - 专利 v0.3 权利要求按 M3a 骨架起草。

@@ -68,11 +68,11 @@ flowchart LR
 | G2 撞题扫描 | 进行中 | 对齐谱系与 WinRegRL 红线已记；仍需补中文专利侧、APTChaser/GAPT 正文 |
 | G3 创新强度 | 可写边界已收紧 | 主张表示+规划+停止，不主张可学习效用打赢规则 |
 | G4 专利权利要求 | 骨架更新 | [v0.3](../08-writing/patent-claims-draft-v0.3-20260710.md) 对齐 M3a；正式检索与措辞待补 |
-| G5 实验可执行性 | C07+C08 完成 | C01–C06 + 通道可靠性 + STOP/M4；E5 THEIA C07 + ClearScope C08 已跑；可选 OpTC 第三留出 |
+| G5 实验可执行性 | C07+C08+C09 完成 | C01–C06 + 通道可靠性 + STOP/M4；E5 THEIA、E5 ClearScope 与 OpTC 三条真留出均已冻结评估 |
 
 ## 下一步
 
-1. **第三真留出 OpTC（进行中）**：见 [C09 协议](../08-writing/c09-optc-true-holdout-protocol-v0.1-20260710.md)；先下 GT PDF 锁窗，再下 eCAR 子集；不调 M3a。
-2. ~~第二真留出 ClearScope~~ **已完成（C08）**。
-3. 专利 v0.3 / 撞题补完可后置（当前不急）。
-4. **明确不做**：继续堆 logistic/GNN/RL，或再做同构 decoy/离线压力。
+1. ~~第三真留出 OpTC~~ **已完成（C09）**：真实 eCAR 窗口、事件级 UUID、冻结评估与 exact-hostname 复核均通过。
+2. **论文/专利叙事收口**：见 [论文/专利叙事冻结稿](../08-writing/paper-patent-narrative-freeze-v0.1-20260711.md)；以三条 holdout 的同向结果为边界，不主张 M3a 成本优于 M2，也不把 LLM 写成已验证的在线规划器。
+3. **专利 v0.3 后续**：完成中文专利补检与发明人/权属确认后，再进入正式权利要求措辞。
+4. **明确不做**：继续堆 logistic/GNN/RL，或为 C09 结果回调 M3a。

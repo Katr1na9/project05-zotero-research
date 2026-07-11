@@ -1,0 +1,45 @@
+{
+  "analysis_id": "project05-disclosure-20260711",
+  "terminology_ledger": [
+    {"term": "evidence_gap_state", "canonical_zh": "证据缺口状态"},
+    {"term": "intended_cti_node_ids", "canonical_zh": "动作意图目标节点集合"},
+    {"term": "recoverable_claim_ids", "canonical_zh": "动作实际可恢复证据集合"},
+    {"term": "support_ceiling", "canonical_zh": "证据支持粒度上限"},
+    {"term": "action_gap_compatibility", "canonical_zh": "动作—缺口兼容性"},
+    {"term": "justified_degrade_stop", "canonical_zh": "合理降级停止"}
+  ],
+  "input_operation_output": {
+    "inputs": [
+      "CTI attack-behavior graph",
+      "local evidence claims",
+      "candidate actions with public intent, channel and cost",
+      "ordered attribution granularity levels",
+      "remaining budget"
+    ],
+    "operations": [
+      "construct and update evidence-gap state",
+      "score action-gap compatibility without hidden recovery outcomes",
+      "select and execute an action under budget",
+      "apply channel outcome and update supportable granularity",
+      "select STOP when target is reached or no positive/reachable action remains"
+    ],
+    "outputs": [
+      "next evidence-acquisition action",
+      "or current supportable attribution granularity with stop/degrade reason"
+    ]
+  },
+  "formula_inventory": [
+    {
+      "equation_id": "E001",
+      "role": "action-gap compatibility score",
+      "disposition": "retain in paper method; exact coefficients belong in embodiment or dependent claim, not necessarily the independent claim"
+    }
+  ],
+  "figure_inventory": [],
+  "implementation_gaps": [
+    "No independently evaluated LLM evidence-claim compiler",
+    "No calibrated learned utility model with holdout advantage",
+    "No claim-aligned main flowchart yet",
+    "Partial-reachability routing remains a negative result"
+  ]
+}

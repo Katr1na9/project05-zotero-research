@@ -1,5 +1,13 @@
 # Research Progress
 
+## 2026-07-11：C09 OpTC 第三真留出完成并复核
+
+- 接入官方 `23Sep19-red/AIA-201-225.ecar-last.json.gz`（2,217,842,713 bytes；SHA-256 `FAF181CB...BEE5FD7`），锁定 SysClient0201 Day1 Empire 窗口 `15:23Z–19:30Z`。
+- 从 34,146,068 条 eCAR 事件中抽取 753,973 条窗口事件，编译 5/5 个 motif；5 条 claim 的 16 个代表 UUID 均能回查原始窗口。
+- 冻结评估：Oracle/M2/M3a 均为 `45/45` 达标，平均成本分别为 `4.1333/4.7556/5.2444`；M3a regret `1.1111`，不支持成本优于 M2。
+- C07/C08/C09 三源同向：冻结管线可复现且无 ceiling violation，但 M3a 平均成本均高于 M2；平均额外 regret 为 `0.5481`。
+- 2026-07-11 以精确 FQDN 重新抽取 R06，行数与输出 SHA-256 均不变；新增 `test_c09_holdout.py` 固化来源、UUID、信息边界和结果回归。
+
 ## 2026-07-10：清理 C01–C06 intended≠OR 信息边界债务
 
 - 对 C01–C06 共 40 个泄漏动作做**过宽意图**重标（`intended = covered ∪ 邻接链节点`），并写入请求侧 notes；不改 `recoverable_claim_ids` 与 M3a 权重。
@@ -14,7 +22,7 @@
 - 新增 PGDMP 流式 catalog、事件窗口抽取和节点解析器：完整扫描 140,994,662 条事件，抽得 256,297 条窗口事件，解析 7,043/7,043 个节点哈希；`timestamp_rec` 存在 48,543 次逆序，禁止使用提前停止扫描。
 - Trace 直接验证 Firefox 与 `208.203.20.42:80` 通信、两次 `binfmt-0000` 执行、`sshd` 打开 `/var/log/sshdlog`，并保留 `load_helper.ko` / `read_scan.ko` 良性驱动活动；报告中的 `189.141.204.211:80` 与直接 injection event 不在该 schema/window 中，未伪造为 claim。
 - C07 编译 5/5 个带 event UUID 回指的 motif，并建立廉价不可靠网络动作与可靠主机回退。冻结 M3a 后，每个 planner 运行 45 个条件：M3a 与 M2 success 均为 1.0；**intended≠OR 合规重跑后** M3a/M2/Oracle 平均成本为 `4.9333/4.3111/3.6444`（合规前快照为 `4.3556/4.3111/3.6444`），无 ceiling violation。
-- M3a 网络通道离线后 16/16 次使用可靠回退，且不选择良性驱动审查动作；但其本例平均成本高于 M2，不主张成本优越。下一步是 OpTC 或第二异构 performer 的不调参复现。
+- M3a 网络通道离线后 16/16 次使用可靠回退，且不选择良性驱动审查动作；但其本例平均成本高于 M2，不主张成本优越。此处是 C07 完成时的阶段性记录；后续 C08/C09 已按冻结协议完成。
 - 同日补丁：按 `intended-cti-node-annotation-protocol-v0.1` 将 C07 动作改为过宽意图（intended≠OR(recoverable)），并重跑 holdout；C01–C06 仍在 CI allowlist。
 
 ## 2026-07-10：冻结 M3a 为主线，写出贡献边界
