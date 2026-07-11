@@ -74,6 +74,148 @@ class ExperimentMatrixTests(unittest.TestCase):
         self.assertTrue({"E4", "E5"} <= high)
 
 
+class PlannerInputIsolationTests(unittest.TestCase):
+    def test_public_action_view_excludes_execution_only_fields(self):
+        action = {
+            "action_id": "A1",
+            "case_id": "C99-boundary",
+            "action_type": "other",
+            "acquisition_channel": "host_forensics",
+            "target": {"target_type": "host", "target_value": "victim"},
+            "cost": 1,
+            "intended_cti_node_ids": ["N1"],
+            "recoverable_claim_ids": ["E-secret"],
+            "oracle_effects": {"actual_recovered_claim_ids": ["E-secret"]},
+            "notes": "Execution note revealing the answer key.",
+            "status": "available",
+        }
+
+        public = run_mvp.planner_action_view(action)
+
+        self.assertEqual("A1", public["action_id"])
+        self.assertEqual(["N1"], public["intended_cti_node_ids"])
+        self.assertNotIn("recoverable_claim_ids", public)
+        self.assertNotIn("oracle_effects", public)
+        self.assertNotIn("notes", public)
+
+    def test_public_state_view_removes_simulator_answers(self):
+        state = {
+            "case_id": "C99-boundary",
+            "step_index": 0,
+            "mask_strategy": "discriminative",
+            "mask_intensity": 0.6,
+            "random_seed": 11,
+            "run_id": "answer-bearing-run-id",
+            "visible_claim_ids": ["E-visible"],
+            "hidden_claim_ids": ["E-secret"],
+            "candidate_hypotheses": [
+                {
+                    "hypothesis_id": "unknown",
+                    "score": 0.5,
+                    "supporting_claim_ids": ["E-secret", "E-visible"],
+                    "contradicting_claim_ids": ["E-secret"],
+                }
+            ],
+            "alignment_quality": {
+                "conflict_claim_ids": ["E-secret", "E-visible"],
+                "unexplained_local_claim_ids": ["E-secret"],
+            },
+        }
+
+        public = run_mvp.planner_state_view(state)
+
+        self.assertNotIn("hidden_claim_ids", public)
+        self.assertNotIn("mask_strategy", public)
+        self.assertNotIn("mask_intensity", public)
+        self.assertNotIn("random_seed", public)
+        self.assertNotIn("run_id", public)
+        self.assertEqual(
+            ["E-visible"],
+            public["candidate_hypotheses"][0]["supporting_claim_ids"],
+        )
+        self.assertEqual(
+            ["E-visible"],
+            public["alignment_quality"]["conflict_claim_ids"],
+        )
+
+    def test_custom_selector_gets_public_view_but_executor_recovers_claim(self):
+        config = {
+            "case_id": "C99-boundary",
+            "target_granularity": "G1_technique",
+            "support_ceiling": "G1_technique",
+            "budget_total": 2,
+            "mask_strategies": ["random"],
+            "mask_intensities": [1.0],
+            "random_seeds": [11],
+            "cti_nodes": [
+                {
+                    "node_id": "N1",
+                    "stage": "execution",
+                    "required_claim_ids": ["E1"],
+                    "critical": True,
+                }
+            ],
+            "cti_edges": [],
+            "granularity_order": [
+                "G0_unknown",
+                "G1_technique",
+                "G2_tactic_intent",
+                "G3_campaign",
+                "G4_actor_cluster",
+                "G5_named_actor",
+            ],
+        }
+        claims = [
+            {
+                "claim_id": "E1",
+                "source_type": "local_log",
+                "tags": ["hideable", "unique"],
+            }
+        ]
+        actions = [
+            {
+                "action_id": "A1",
+                "case_id": "C99-boundary",
+                "action_type": "other",
+                "acquisition_channel": "host_forensics",
+                "target": {"target_type": "host", "target_value": "victim"},
+                "cost": 1,
+                "recoverable_claim_ids": ["E1"],
+                "intended_cti_node_ids": ["N1"],
+                "expected_evidence_types": ["local_log"],
+                "expected_stages": ["execution"],
+                "expected_effects": {"expected_granularity_gain": 1},
+                "status": "available",
+                "notes": "Only the executor may see this answer-key note.",
+            }
+        ]
+        observed_actions = []
+        observed_states = []
+
+        def selector(_config, public_state, public_actions):
+            observed_states.append(deepcopy(public_state))
+            observed_actions.extend(deepcopy(public_actions))
+            return public_actions[0]
+
+        result, trace = run_mvp.run_episode(
+            config,
+            claims,
+            actions,
+            "random",
+            1.0,
+            11,
+            "custom_public_selector",
+            action_selector=selector,
+        )
+
+        self.assertEqual(1, result["reached_target"])
+        self.assertEqual(["E1"], trace[-1]["recovered_claim_ids"])
+        self.assertNotIn("recoverable_claim_ids", observed_actions[0])
+        self.assertNotIn("notes", observed_actions[0])
+        self.assertNotIn("hidden_claim_ids", observed_states[0])
+        self.assertNotIn("random_seed", observed_states[0])
+
+
 class MultiCaseRunnerTests(unittest.TestCase):
     def write_case(self, root, folder_name, case_id, complete=True):
         case_dir = root / folder_name

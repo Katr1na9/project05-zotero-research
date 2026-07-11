@@ -50,6 +50,47 @@ CASE_FILENAMES = (
     "acquisition_actions.json",
 )
 STOP_ACTION_ID = "STOP"
+PLANNER_ACTION_FIELDS = frozenset(
+    {
+        "action_id",
+        "case_id",
+        "action_type",
+        "acquisition_channel",
+        "target",
+        "cost",
+        "cost_breakdown",
+        "preconditions",
+        "intended_cti_node_ids",
+        "expected_evidence_types",
+        "expected_stages",
+        "expected_effects",
+        "status",
+        "natural_language_request",
+    }
+)
+PLANNER_STATE_FIELDS = frozenset(
+    {
+        "case_id",
+        "step_index",
+        "visible_claim_ids",
+        "recovered_claim_ids",
+        "matched_cti_node_ids",
+        "unmatched_cti_node_ids",
+        "matched_cti_edge_ids",
+        "unmatched_cti_edge_ids",
+        "coverage",
+        "alignment_quality",
+        "candidate_hypotheses",
+        "discriminability",
+        "supportable_granularity",
+        "granularity_rationale",
+        "budget",
+        "actions_taken",
+        "action_feedback",
+        "remaining_action_ids",
+        "stop_recommendation",
+    }
+)
 
 
 def load_json(path: Path) -> Any:
@@ -562,6 +603,67 @@ def ensure_stop_action(
     return list(actions) + [make_stop_action(config["case_id"])]
 
 
+def planner_action_view(action: dict[str, Any]) -> dict[str, Any]:
+    """Return the allowlisted request-side fields visible to a planner.
+
+    Execution-only fields such as ``recoverable_claim_ids`` and free-form
+    implementation notes are deliberately absent. The executor resolves the
+    selected action id back to the full action object after planning.
+    """
+
+    return {
+        key: deepcopy(value)
+        for key, value in action.items()
+        if key in PLANNER_ACTION_FIELDS
+    }
+
+
+def planner_action_views(
+    actions: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    return [planner_action_view(action) for action in actions]
+
+
+def planner_state_view(state: dict[str, Any]) -> dict[str, Any]:
+    """Return the observable state supplied to non-oracle planners.
+
+    Simulator-only fields such as hidden claim ids, mask settings, random
+    seeds, and run ids are omitted. Claim references nested under public
+    hypotheses or alignment diagnostics are restricted to visible claims.
+    """
+
+    public = {
+        key: deepcopy(value)
+        for key, value in state.items()
+        if key in PLANNER_STATE_FIELDS
+    }
+    visible = set(public.get("visible_claim_ids", []))
+
+    alignment = public.get("alignment_quality")
+    if isinstance(alignment, dict):
+        for field in ("unexplained_local_claim_ids", "conflict_claim_ids"):
+            if field in alignment:
+                alignment[field] = [
+                    claim_id
+                    for claim_id in alignment[field]
+                    if claim_id in visible
+                ]
+
+    hypotheses = public.get("candidate_hypotheses")
+    if isinstance(hypotheses, list):
+        for hypothesis in hypotheses:
+            if not isinstance(hypothesis, dict):
+                continue
+            for field in ("supporting_claim_ids", "contradicting_claim_ids"):
+                if field in hypothesis:
+                    hypothesis[field] = [
+                        claim_id
+                        for claim_id in hypothesis[field]
+                        if claim_id in visible
+                    ]
+    return public
+
+
 def acquisition_channel(action: dict[str, Any]) -> str:
     explicit = action.get("acquisition_channel")
     if explicit:
@@ -972,6 +1074,9 @@ def select_action(
     actions_taken: list[str],
     seed: int,
 ) -> dict[str, Any] | None:
+    if planner != "oracle_optimal":
+        actions = planner_action_views(actions)
+        state = planner_state_view(state)
     candidates = available_actions(
         actions,
         actions_taken,
@@ -1137,22 +1242,44 @@ def run_episode(
         if planner == "full_evidence":
             break
 
+        planner_actions = (
+            actions
+            if planner == "oracle_optimal"
+            else planner_action_views(actions)
+        )
+        planner_state = (
+            state
+            if planner == "oracle_optimal"
+            else planner_state_view(state)
+        )
         if action_selector is None:
-            action = select_action(
+            selected_action = select_action(
                 planner,
                 config,
                 claims,
-                actions,
-                state,
+                planner_actions,
+                planner_state,
                 visible_ids,
                 hidden_ids if planner == "oracle_optimal" else set(),
                 actions_taken,
                 seed,
             )
         else:
-            action = action_selector(config, state, actions)
-        if action is None:
+            selected_action = action_selector(
+                config,
+                planner_state,
+                planner_actions,
+            )
+        if selected_action is None:
             break
+        selected_action_id = selected_action.get("action_id")
+        full_action = action_by_id(actions).get(selected_action_id)
+        if full_action is None:
+            raise ValueError(
+                "Planner selected an unknown action_id: "
+                f"{selected_action_id!r}"
+            )
+        action = full_action
 
         if is_stop_action(action):
             budget_used += float(action["cost"])

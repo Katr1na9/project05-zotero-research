@@ -18,6 +18,8 @@
 | 修订后严谨性审计 | `paper-main-rigor-review-v0.2-20260711.md` | 二线 Borderline / 顶会 Weak Reject；未完成人工效度不作包装 |
 | 专利主稿 | `patent-main-draft-v0.4-20260711.md` + `patent-package-v0.4/` | 权利要求链不因论文负结果改写 |
 | 专利一致性附录 | `patent-v0.4-review-alignment-addendum-20260711.md` | 说明第 9 项、LLM 和正式申请待办 |
+| 中国专利逐项补检 | `chinese-patent-claim-chart-v0.2-20260711.md` + `patent-claim-collision-matrix-v0.2-20260711.md` | 权利要求级技术比较；不是法律意见 |
+| FTR-002 改写候选 | `patent-ftr002-claim-amendment-options-v0.1-20260711.md` | 供代理师选择；尚未替换 v0.4 权利要求 |
 
 ## 2. 权威实验结果
 
@@ -40,4 +42,4 @@
 2. 增加第三数据家族或更多独立 engagement；重复 mask/seed 不得重计为独立攻击。
 3. 若主张真实归因能力，必须增加 actor/campaign 正确性或分析师效用终点；当前内部 success 不等于归因准确率。
 4. AFA 结果仅是同接口领域适配；正式投稿若要求严格外部复现，应补官方实现或等价公开代码的任务映射。
-5. 专利正式提交前完成中文补检、权属、公开日、发明人/申请人确认和代理师逐项审查。
+5. 专利正式提交前由代理师复核已完成的中国专利补检，确认 FTR-002 改写方案，并完成权属、公开日、发明人/申请人确认和逐项审查。
