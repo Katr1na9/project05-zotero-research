@@ -21,7 +21,8 @@ Q(s, a) = 当前证据状态 s 下，执行取证动作 a 的预期价值
 | B1 | Logistic Regression M3b | 验证 state-action 特征是否可学习 | 已完成；能学习但未形成稳定策略增益 |
 | B2 | **XGBoost** | 学习非线性 state-action value，检验 Logistic 欠拟合 | 已完成；小幅优于 Logistic，未超过 M2 |
 | B3 | Random Forest / MLP | XGBoost 的模型族对照 | 随 B2 评估 |
-| B4 | **DQN / Dueling DQN** | 学习多步、非短视、带 STOP 的序贯策略 | Gate 部分通过；待非短视诊断集和新环境 |
+| B3.5 | **Depth-2 / DP 诊断** | 区分非短视需求与 RL 需求 | 已完成；Gate A 通过、Gate B 不通过 |
+| B4 | **DQN / Dueling DQN** | 学习多步、非短视、带 STOP 的序贯策略 | 当前不批准；轻量规划仍可承受 |
 | 支线 | Qwen / SEvenLLM | 原始文本到 evidence claim 的可选编译器 | 暂停，不是主模型 |
 
 XGBoost、DQN 都不是“大语言模型”。XGBoost 是梯度提升树，DQN 是用神经网络逼近动作价值函数的强化学习方法。
@@ -61,7 +62,7 @@ AUROC、AP、Brier、校准曲线、top-1 action hit，以及真正重要的下�
 3. 增加独立攻击环境或可辩护的训练模拟器；不能把同一案例的 mask/seed 当作独立环境夸大数据量。
 4. reward、STOP、动作 mask 和离线评估协议全部预注册。
 
-若 Gate 不通过，DQN 只作方法对照，不作为论文核心。
+两级 Gate 实验已完成：非短视必要性通过，但 DQN 必要性不通过。Depth-2 在多步解锁上不足，DP 相对 Depth-2 的 success 优势为 `0.3448`；然而 DP 冷启动 p95 为 `83.9598 ms`、最大仅展开 `23,892` 状态，未达到 DQN 复杂度阈值。因此当前采用轻量非短视规划，DQN 不作为论文核心。
 
 ## 5. DQN 形式化
 
@@ -77,6 +78,7 @@ AUROC、AP、Brier、校准曲线、top-1 action hit，以及真正重要的下�
 
 - 当前规则主方法：M2。
 - 当前已经训练的 ML 模型：Logistic Regression M3b。
-- 下一步应实现的核心模型：XGBoost。
-- 后续序贯决策模型：DQN / Dueling DQN。
+- 当前学习模型：XGBoost 已完成；相对 Logistic 更稳，但未超过 M2。
+- 已批准的序贯增强：轻量 Depth-k / DP / beam planning。
+- 当前未批准模型：DQN / Dueling DQN。
 - 当前 LLM：没有；Qwen 仅为暂停的语义编译支线候选。
