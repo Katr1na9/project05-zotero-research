@@ -1,0 +1,35 @@
+{
+  "experiment_id": "project05-llm-compiler-pilot-v0.1",
+  "status": "optional_branch_postponed_until_planner_models_complete",
+  "models": [
+    {
+      "role": "base",
+      "model_id": "Qwen/Qwen1.5-7B-Chat",
+      "revision": "to_be_locked",
+      "quantization_bits": 4
+    },
+    {
+      "role": "cti_domain",
+      "model_id": "Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B",
+      "revision": "to_be_locked",
+      "quantization_bits": 4
+    }
+  ],
+  "generation": {
+    "temperature": 0.0,
+    "do_sample": false,
+    "max_new_tokens": 768,
+    "repetitions": 5
+  },
+  "schema": "../data_schema/evidence_claim.schema.json",
+  "pilot_data": "../results/llm_compiler_pilot/c07_c09_pilot.jsonl.gz",
+  "primary_metrics": [
+    "schema_valid_rate",
+    "claim_exact_match",
+    "field_accuracy",
+    "source_pointer_exact_match",
+    "unsupported_claim_rate",
+    "repeat_consistency"
+  ],
+  "downstream_planner": "project05_m2"
+}

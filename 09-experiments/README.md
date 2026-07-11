@@ -16,7 +16,7 @@
 
 细节与预登记见 `../04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md`。`results/` 已于 2026-07-10 按该机制重跑刷新。M4 通道离线正向压力见 `../04-progress/m4-channel-reliability-outage-stress-20260710.md`。显式 STOP/降级见 `../04-progress/m4-explicit-stop-degrade-20260710.md`。真正应停压力见 `../04-progress/m4-should-stop-stress-20260710.md`。部分可达选路压力（负/近负结果）见 `../04-progress/m4-partial-reachability-routing-stress-20260710.md`。
 
-**2026-07-11 主线冻结状态**：默认规划器为 M3a；M3b 仅作对照。C07 THEIA、C08 ClearScope 与 C09 OpTC 三条真留出均已完成；结果总表见 `../08-writing/contribution-boundary-and-results-brief-v0.1.md`，三源 paired regret 见 `../08-writing/c07-c08-paired-regret-summary-v0.1-20260710.md`。`intended≠OR` 标注规范已对 C01–C09 生效（allowlist 已清零）。
+**2026-07-11 主线冻结状态**：M2 是当前紧预算最佳规则部署基线；Logistic M3b 是已实现学习基线；XGBoost action-value 实验已完成，相对 Logistic 修复 C09 的 3 个失败条件，但总体成本仍高于 M2。DQN 尚未进入实现，需先补非短视诊断与新环境。C07 THEIA、C08 ClearScope 与 C09 OpTC 三条参数锁定测试均已完成；`intended≠OR` 标注规范已对 C01–C09 生效（allowlist 已清零）。详见 `../08-writing/xgboost-action-value-results-v0.1-20260711.md`。
 
 ## C06 独立留出验证（2026-07-10 重跑）
 
@@ -39,9 +39,13 @@
 - `examples/C01/evidence_claims.json`
 - `examples/C01/acquisition_actions.json`
 - `scripts/run_mvp.py`
+- `scripts/run_m3b.py`
+- `scripts/run_xgboost.py`
+- `requirements-ml.txt`
 - `results/c01_mvp_results.csv`
 - `results/c01_mvp_summary.json`
 - `results/c01_mvp_traces.json`
+- `results/xgboost_c01_c06_train_c07_c09_test/`
 
 ## 如何运行
 

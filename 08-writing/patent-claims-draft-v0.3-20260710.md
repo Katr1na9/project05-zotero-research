@@ -1,4 +1,4 @@
-# Project05 专利权利要求草稿 v0.3（对齐 M3a 主线）
+# Project05 专利权利要求草稿 v0.3（证据缺口闭环主线）
 
 日期：2026-07-10；2026-07-11 按 C07/C08/C09 结果复核
 状态：骨架稿；取代 v0.2 中“粒度门控 + 缺失证据清单”为主轴的表述；尚非正式权利要求
@@ -44,11 +44,12 @@
 |---|---|
 | 证据缺口状态 + 粒度 | 模拟器 `supportable_granularity` / critical gaps |
 | 公开意图节点 | `intended_cti_node_ids` + 信息边界测试 |
-| 兼容性规划 | `project05_m3a_gap_compat` |
+| 兼容性规划 | M2 为当前最佳实验实现；`project05_m3a_gap_compat` 仅为从属评分实施例 |
 | 通道声明≠实现 | P0-#1 channel reliability |
 | 停止/降级 | M4 STOP + should-stop 压力 |
 | 三条异构实施例 | C07 THEIA + C08 ClearScope + C09 OpTC；均达标且无 ceiling violation |
 | 成本效果边界 | 三条 holdout 上 M3a 均比 M2 更贵，不得写“降低平均取证成本” |
+| 紧预算效果边界 | 135 个配对条件中 M3a 对 M2 无净胜，不得把 M3a 写成优越性或必要技术效果 |
 
 ## 7. 下一步
 
