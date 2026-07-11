@@ -53,7 +53,7 @@
       "feature_id": "FTR-007",
       "feature": "Online LLM/GNN/RL utility prediction provides superior action planning",
       "support_state": "unsupported",
-      "source_ids": ["P002", "P004"],
+      "source_ids": ["P002", "P004", "P007", "P009"],
       "technical_effect": "not established",
       "destination": "exclude"
     },
@@ -61,9 +61,17 @@
       "feature_id": "FTR-008",
       "feature": "M3a reduces acquisition cost relative to M2",
       "support_state": "unsupported",
-      "source_ids": ["P004", "P005"],
-      "technical_effect": "contradicted by all three frozen holdouts",
+      "source_ids": ["P004", "P005", "P006", "P007"],
+      "technical_effect": "contradicted by C07-C10 and the C07-C09 tight-budget comparison",
       "destination": "explicitly exclude from paper and patent effect statements"
+    },
+    {
+      "feature_id": "FTR-009",
+      "feature": "Use finite-depth search or dynamic programming when actions have prerequisite or unlock relations",
+      "support_state": "explicit-controlled-environment-only",
+      "source_ids": ["P008", "P009", "C006"],
+      "technical_effect": "avoids systematic selection of high-immediate-yield distractors in the controlled prerequisite environment",
+      "destination": "dependent claim and embodiment; not an independent essential feature and not evidence for DQN necessity"
     }
   ]
 }

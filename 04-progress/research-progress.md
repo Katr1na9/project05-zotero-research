@@ -613,3 +613,13 @@
   - 不能再把“多源证据融合 + LLM 辅助 APT 归因解释”作为宽题直接推进。
   - 更稳的切口是：面向证据不完整场景的证据充分性感知、置信度校准、分层降级归因与可拒答机制。
   - 方法设计应以 `能不能归因到 actor` 为核心，而不是只追求输出一个 actor label。
+
+### 2026-07-11：Codex 接管论文/专利主线写作
+
+- 保留 Cursor 生成的 `paper-patent-narrative-freeze-v0.1-20260711.md` 和 `thesis-ch3-ch4-draft-v0.1-20260711.md` 作为历史素材，不再作为权威写作基线。
+- 完成 `08-writing/cursor-draft-audit-20260711.md`，纠正四项关键过时内容：缺少 C10、M3a 留出表现写强、XGBoost 仍停在 v0.1、DQN Gate 尚未更新。
+- 完成论文权威主稿 `08-writing/paper-main-draft-v0.2-20260711.md`：统一问题定义、方法、实验、结果、负结果、非短视 Gate、LLM/图谱边界和参考文献工作表。
+- 完成中国发明专利主稿 `08-writing/patent-main-draft-v0.4-20260711.md`：12 项权利要求、说明书、实施方式、摘要与提交红线。
+- 完成 `08-writing/patent-work/05-claim-evidence-map-v0.4.json`，并把 Stage 0-4 元数据更新到 C10、XGBoost v0.2 和非短视 Gate。
+- 当前冻结结论：M2 是部署锚点；XGBoost 优于 Logistic 但未超过 M2；M3a 在 C10 出现 20% 过早停止；Gate A 通过、Gate B 不通过，采用轻量非短视规划，不启动 DQN 主模型；LLM 仍是待独立验证的离线语义编译/解释接口。
+- 下一主线：绘制论文/专利方法图；把轻量非短视规划接入真实案例但保持为增强实验；建立 evidence claim 与公开意图的独立标注评测；确认发明人、权属和首次公开日期后再进入正式专利代理审稿。
