@@ -7,7 +7,7 @@
 ## 当前阶段
 
 - ARS workflow：`deep-research / socratic`
-- Stage：0 Inbox
+- Stage：1 preliminary collision complete；W1 amber
 - RQ：未冻结
 - 文献语料：尚未建立本线检索协议
 - 方法与实验：尚未启动
@@ -15,7 +15,7 @@
 
 ## 原始研究意图
 
-在 Project05 的威胁溯源、攻击归因和调查控制背景上，探索多模态证据是否能解决单一文本、日志或图结构无法充分支撑的调查问题。
+以 Project03 的 IPv4、IPv6、MPLS、GeoNetworking、SCION 五种协议/转发模式为主要实验起点，探索异构路径观测如何支持行为追溯与攻击意图候选感知。
 
 “多模态”必须被拆解为具体证据形态、具体任务和可测增益，不能把增加图像编码器或拼接特征本身当作创新。
 
@@ -25,6 +25,11 @@
 - [本线科研流程](01-sop/multimodal-research-workflow-v0.1.md)
 - [Idea Inbox](03-ideas/idea-inbox.md)
 - [RQ Scoping](03-ideas/rq-scoping.md)
+- [Project03 交接审计](04-progress/project03-handoff-audit-20260712.md)
+- [Project03 候选 Idea 池](03-ideas/project03-derived-idea-pool-v0.1.md)
+- [Project03 复用验证计划](09-experiments/project03-reuse-and-validation-plan-v0.1.md)
+- [Project03 idea 撞题扫描](02-literature-notes/collision-scan-project03-ideas-20260712.md)
+- [P05-L2 阅读队列](02-literature-notes/reading-queue.md)
 - [Research Progress](04-progress/research-progress.md)
 - [Material Passport](08-writing/MATERIAL-PASSPORT.md)
 - [Experiment Boundary](09-experiments/README.md)

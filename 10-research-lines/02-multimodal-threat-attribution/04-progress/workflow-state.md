@@ -6,10 +6,10 @@
 | Working name | Multimodal Threat Attribution |
 | ARS workflow | deep-research |
 | Mode | socratic |
-| Current stage | Stage 0 Inbox |
+| Current stage | Stage 1 preliminary collision complete |
 | Current gate | Workspace Gate passed; G1 pending |
-| RQ status | not formulated |
-| Search status | not started |
+| RQ status | W1 amber problem family; not frozen |
+| Search status | preliminary collision complete; P0 full-text review pending |
 | Experiment status | prohibited before G5 |
 | Human confirmation required | yes, after Socratic RQ convergence |
-| Last updated | 2026-07-12 |
+| Last updated | 2026-07-12; Project03 handoff audited |

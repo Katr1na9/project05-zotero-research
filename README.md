@@ -9,7 +9,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 | 研究线 | 核心内容 | 当前状态 |
 |---|---|---|
 | [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.4；C11 与盲标 v0.2 已完成工程准备 |
-| [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | 多模态威胁归因与安全调查，暂定 | ARS Stage 0；等待 Socratic RQ Scoping |
+| [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | IPv4/IPv6/MPLS/Geo/SCION 异构路径下的行为追溯与意图感知，暂定 | Stage 1；初筛完成，W1 amber，P0 精读待进行 |
 
 共享 SOP、单篇精读、模板和 Zotero 导出继续使用根目录的稳定路径，所有权规则见 [Shared Workspace](10-research-lines/00-shared-workspace/README.md)。
 
@@ -63,7 +63,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 
 ## 当前下一步
 
-1. P05-L2：完成 [Socratic RQ Scoping](10-research-lines/02-multimodal-threat-attribution/03-ideas/rq-scoping.md) 第一轮；G1 前不检索宽泛语料、不选模型、不写论文。
+1. P05-L2：按 [reading queue](10-research-lines/02-multimodal-threat-attribution/02-literature-notes/reading-queue.md) 精读 P0 五篇，验证 W1 能否区别于 SecTracer、Forensic Coverage、ID-INT 和 P4Prime。G1 前不选模型、不写论文。
 2. P05-L1：C07-C11 v0.2 双人盲标包仍为 `awaiting_annotations`。先恢复 C07-C10 的 19 条精确来源记录；意图与粒度任务可先行。
 3. P05-L1：C11 的 D1-D5 已完成；外部效度应优先增加自然发生或更接近运营现场的独立 engagement。
 4. P05-L1：根据目标 venue 决定是否补官方 AFA 实现；专利继续完成权属、公开日和代理师审查。

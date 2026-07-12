@@ -28,4 +28,6 @@
 
 ## 当前决策
 
-先完成 Socratic RQ Scoping，不生成候选题目、不选择模型、不开始实验。
+用户已把多模态范围收敛为 Project03 的 `IPv4 / IPv6 / MPLS / GeoNetworking / SCION` 五种网络协议/转发模式，并明确已有积累聚焦行为追溯与攻击意图感知。
+
+已从 Project03 提炼 [候选 idea 池 v0.1](project03-derived-idea-pool-v0.1.md)。当前不生成论文题目、不选择模型、不开始实验；先完成候选功能的最新撞题检索。
