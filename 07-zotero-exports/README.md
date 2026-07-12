@@ -1,6 +1,6 @@
-# Zotero Exports
+# Project05 Shared Zotero Exports
 
-这里存放 Zotero 导出、导入和同步相关文件。
+这里存放所有 Project05 研究线共享的 Zotero 导出、导入、同步和去重记录。各论文线可维护候选清单，但规范条目不得复制成多个漂移版本。
 
 可放入：
 
@@ -18,4 +18,3 @@
 `D:\Software\Codex\Workplace\workspace\threat_attribution_llm_literature`
 
 建议后续稳定后复制或迁移到本目录。
-

@@ -3,7 +3,12 @@
 ## 快速入口
 
 - [项目说明](../README.md)
-- [科研总看板](research-dashboard.md)
+- [Project05 研究线总入口](../10-research-lines/README.md)
+- [共享工作区](../10-research-lines/00-shared-workspace/README.md)
+- [P05-L1 既有论文线](../10-research-lines/01-incomplete-evidence-investigation-control/README.md)
+- [P05-L2 多模态论文线](../10-research-lines/02-multimodal-threat-attribution/README.md)
+- [P05-L2 Dashboard](../10-research-lines/02-multimodal-threat-attribution/00-dashboard/research-dashboard.md)
+- [P05-L1 科研看板](research-dashboard.md)
 - [当前权威文件索引](../08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)
 - [论文 v0.4 Major Revision](../08-writing/paper-main-draft-v0.4-major-revision-20260711.md)
 - [C11 OTRF 参数锁定结果](../08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md)

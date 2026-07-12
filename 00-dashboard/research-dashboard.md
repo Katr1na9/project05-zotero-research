@@ -1,6 +1,8 @@
-# Project05 Research Dashboard
+# P05-L1 Research Dashboard
 
 更新：2026-07-12
+
+研究线：P05-L1，不完整证据下、信息边界约束的 APT 调查控制。Project05 总入口见 [Research Lines](../10-research-lines/README.md)，多模态新论文线见 [P05-L2 Dashboard](../10-research-lines/02-multimodal-threat-attribution/00-dashboard/research-dashboard.md)。
 
 权威入口：[AUTHORITATIVE-DOCUMENTS-20260712.md](../08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)
 

@@ -2,7 +2,18 @@
 
 本目录用于集中管理 Project05 的 Zotero 文献、精读笔记、撞题扫描、研究想法、专利草稿和实验设计。
 
-## 当前主线
+## 研究线布局
+
+Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Research Lines](10-research-lines/README.md)。
+
+| 研究线 | 核心内容 | 当前状态 |
+|---|---|---|
+| [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.4；C11 与盲标 v0.2 已完成工程准备 |
+| [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | 多模态威胁归因与安全调查，暂定 | ARS Stage 0；等待 Socratic RQ Scoping |
+
+共享 SOP、单篇精读、模板和 Zotero 导出继续使用根目录的稳定路径，所有权规则见 [Shared Workspace](10-research-lines/00-shared-workspace/README.md)。
+
+## P05-L1 既有论文线
 
 截至 2026-07-12，已完成 C07-C10 四个主案例、AFA/敏感性实验、Reviewer major revision，以及 C11 第三种数据封装的参数锁定补充评估。当前主线为：
 
@@ -26,6 +37,8 @@
 ## 使用原则
 
 - 当前 workflow 见：[project05-skill-driven-workflow-v2.md](01-sop/project05-skill-driven-workflow-v2.md)
+- 多研究线治理见：[project05-multi-line-workspace-sop-v0.1.md](01-sop/project05-multi-line-workspace-sop-v0.1.md)
+- 研究线总入口见：[10-research-lines/README.md](10-research-lines/README.md)
 - Project05 学习路线见：[project05-ml-learning-roadmap.md](01-sop/project05-ml-learning-roadmap.md)
 - 项目总览和当前任务见：[research-dashboard.md](00-dashboard/research-dashboard.md)
 - 每篇论文使用：[paper-intensive-reading-template.md](06-templates/paper-intensive-reading-template.md)
@@ -46,15 +59,16 @@
 - `07-zotero-exports/`: Zotero/RIS/BibTeX/PDF 导入包。
 - `08-writing/`: 开题报告、综述、论文草稿、专利草稿、实验设计。
 - `09-experiments/`: 实验 schema、配置、脚本和后续小样例。
+- `10-research-lines/`: 共享资产治理、既有论文线入口和多模态新论文线。
 
 ## 当前下一步
 
-1. C07-C11 v0.2 双人盲标包已经冻结，共 27 个 claim、27 个公开意图和 60 个粒度状态，仍为 `awaiting_annotations`。先恢复 C07-C10 的 19 条精确来源记录或 hash 锚定 excerpt；意图与粒度任务可先行，任何任务均不得以模型标签代替人工结果。
-2. C11 的 D1-D5 已完成；结果见 [C11 结果简报](08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md)。下一步外部效度应优先增加自然发生或更接近运营现场的独立 engagement，而不是继续堆仿真 replay。
-3. 根据目标 venue 决定是否补官方 AFA 实现；现有 Myopic/Rollout-H3 只是同接口领域适配。
-4. 专利以 `patent-main-draft-v0.4-20260711.md` 为母本，完成中文补检、权属、公开日和代理师审查。
+1. P05-L2：完成 [Socratic RQ Scoping](10-research-lines/02-multimodal-threat-attribution/03-ideas/rq-scoping.md) 第一轮；G1 前不检索宽泛语料、不选模型、不写论文。
+2. P05-L1：C07-C11 v0.2 双人盲标包仍为 `awaiting_annotations`。先恢复 C07-C10 的 19 条精确来源记录；意图与粒度任务可先行。
+3. P05-L1：C11 的 D1-D5 已完成；外部效度应优先增加自然发生或更接近运营现场的独立 engagement。
+4. P05-L1：根据目标 venue 决定是否补官方 AFA 实现；专利继续完成权属、公开日和代理师审查。
 
-## 当前红线
+## P05-L1 当前红线
 
 以下方向不能再作为 Project05 的宽泛主创新：
 

@@ -27,6 +27,9 @@ __pycache__/
 # Large raw and derived telemetry are local-only for every real-data family.
 09-experiments/real_data/**/raw/
 09-experiments/real_data/**/extracted/
+# Apply the same boundary to every isolated research line.
+**/09-experiments/real_data/**/raw/
+**/09-experiments/real_data/**/extracted/
 # Local-only OpTC AV-download unpacking and non-R06 engineering probes.
 09-experiments/real_data/darpa_optc/docs/_errata_unzip/
 09-experiments/real_data/darpa_optc/derived/_dryrun_*
@@ -39,8 +42,11 @@ __pycache__/
 09-experiments/results/**/*_traces.json
 09-experiments/results/all_cases_traces.json
 09-experiments/results/**/all_cases_traces.json
+**/09-experiments/results/**/*_traces.json
+**/09-experiments/results/**/all_cases_traces.json
 # Blind annotation administrator mappings stay local until adjudication.
 09-experiments/annotation/**/admin/
+**/09-experiments/annotation/**/admin/
 .env
 .env.*
 

@@ -1,6 +1,6 @@
-# Literature Notes
+# Project05 Shared Literature Notes
 
-这里存放 Project05 的逐篇精读笔记、专利红线笔记和高风险相关工作记录。
+这里存放 Project05 所有研究线共享的逐篇精读笔记、专利红线笔记和高风险相关工作记录。它是单篇事实型精读的唯一来源；论文线特有的主题综合和撞题判断应写入各自 `02-literature-notes/`，不得复制本目录中的笔记。
 
 阅读要求：
 
