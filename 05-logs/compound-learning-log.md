@@ -1,5 +1,41 @@
 # 全局复利日志：科研版
 
+### 2026-07-12：人工效度的第一道门不是 kappa，而是来源可访问性
+
+- 触发：扩展 C07-C11 盲标包时发现，C07-C10 claim 虽保留精确 record UUID/event ID，但当前工作区没有对应原始记录；只有项目自己编写的 notes 和抽取摘要。
+- 决策：新增来源访问 Gate。原始记录或 hash 锚定 canonical excerpt 未提供前，不启动对应 Claim 支持度标注；intent/granularity 可独立先行。
+- 为什么有复利：
+  - 两名标注者对同一份项目 notes 高一致，不等于 claim 得到独立来源验证。
+  - `U_unassessable` 是标注者遇到真实不可访问时的标签，不是管理员明知缺源仍启动任务的免责工具。
+  - 以后每次从大数据编译 claim 时，都应同步保存最小可核验 excerpt、抽取规则与 hash，避免原始数据卸载后失去外部效度入口。
+- 下次如何复用：来源记录与 claim schema 同步冻结；先过 access Gate，再谈 IAA、裁决和 proxy calibration。
+- 关联文件：`08-writing/human-annotation-source-access-ledger-v0.1-20260712.md`、`09-experiments/annotation/c07_c11_v0.2/`。
+
+### 2026-07-12：预注册失败节点比补齐故事更有研究价值
+
+- 触发：C11 的预锁定 `3aka3.doc` 初始突破/C2 锚点在 Host 事件中 0 命中，但其余 4 个节点满足双 provider claim 门槛。
+- 决策：不替换节点、不放宽 AND、不下载 PCAP 救结果；保留 N01 自然缺口，并把目标与 ceiling 从 G3 降到 G2。
+- 为什么有复利：
+  - 这首次把“结论粒度截断”从设计口号变成了可回查的数据事实：缺失哪个关键节点、为何不能到 G3、最终为何停在 G2 都有证据链。
+  - 预注册同时阻止了后验挑锚点、后验改覆盖语义和为追求成功率而拼接不同 replay 窗口。
+  - 失败节点并未让案例失效，反而提供了比全节点完美命中更贴近不完整证据研究问题的压力条件。
+- 下次如何复用：
+  - 新案例先冻结来源、关键节点、最小证据家族、组合语义、降级规则和失败保留规则，再读取事件级内容。
+  - 把“自然缺口导致的可审计降级”单列为实验结果，不用模糊的 missing evidence 叙事替代。
+  - 不同 target/ceiling 的案例分别报告，禁止直接计算混合均值。
+- 关联文件：`08-writing/c11-otrf-apt29-day1-intake-protocol-v0.1-20260712.md`、`08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md`。
+
+### 2026-07-12：证据组合语义本身是实验变量
+
+- 触发：C11 每个已编译节点均有两条不同 provider claim，首次让真实来源案例中的 AND/OR 比较可识别。
+- 内容：M2 在两种语义下 success 均为 1.0，但 mean cost 从 AND 的 3.6667 降到 OR 的 1.0222；Oracle 同样从 3.0000 降到 1.0222。
+- 为什么有复利：
+  - OR 的低成本并非规划器能力提升，而是把“双来源 corroboration”降成“任一来源即可”。
+  - 以后比较方法前必须先冻结节点覆盖语义，否则 cost/success 差异可能只是证据定义变化。
+  - 多 claim 案例必须报告 claim independence 或 provider-family 区分，不能把同一事件字段拆成伪独立证据。
+- 下次如何复用：AND 作为主分析，OR 只做一字段敏感性；所有配对条件、target、ceiling、预算、seed 和代码保持不变。
+- 关联文件：`09-experiments/results/c11_holdout_v0.1/`、`09-experiments/results/c11_or_sensitivity_v0.1/`。
+
 ### 2026-07-10：M3a 主线冻结与贡献边界
 
 - 触发：部分可达选路压力下 M3a/M3b 均难赢 Oracle 选路，M3b 无独立优势。

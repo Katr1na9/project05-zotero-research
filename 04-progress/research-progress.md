@@ -1,5 +1,27 @@
 # Research Progress
 
+## 2026-07-12：C07-C11 双人盲标包 v0.2 冻结
+
+- 将旧 C07-C10 v0.1 包保留为历史，不覆盖其 blind ID；生成新的 `c07_c11_v0.2`，随机种子 `20260712`。
+- 新包覆盖 5 个案例、27 个 claims、27 个非 STOP 动作和 60 个分层粒度状态，共 114 个标注 item；A、B 与裁决 CSV 全部为空，状态为 `awaiting_annotations`。
+- 泛化 packet generator，并在 manifest 中固定三个公开 JSONL 与 C07-C11 case config/claims/actions 的 SHA-256；旧 C07-C10 范围仍可通过显式参数重建。
+- 新增后置 calibration analyzer：A/B 先独立标注并计算一致性，第三人只裁决分歧，管理员最后用隔离 key 聚合比较人工 intended/G0-G3 与工程代理；程序不输出 `recoverable_claim_ids` 或 item 映射。
+- 发现并冻结来源访问 Gate：C11 的 8 条记录可由本地 Host ZIP 精确回查；C07-C10 的 19 条原始记录当前不在工作区。项目 notes 不能冒充独立来源记录。
+- 当前可先启动公开意图和粒度任务；完整 Claim 任务需先恢复 C07-C10 原始记录或生成 hash 锚定 canonical excerpts。
+- 定向验证：annotation packet/agreement/calibration 共 14 项测试通过；114×3 个 A/B/裁决字段均为空，管理员 key 受 `.gitignore` 隔离。
+
+## 2026-07-12：C11 第三种数据封装与 AND/OR 敏感性闭环
+
+- 在读取事件内容前冻结 OTRF APT29 Day 1 的 R08/C11 接入协议、5 个关键节点、AND 多 claim 语义、G3 上限和失败保留规则；来源固定到 OTRF commit `d9d40ef123d2c87d5d3df28c96bcab4f0faccc87`。
+- 完成 D1/D2：Host ZIP 与 Zeek 文件的 Git blob、字节数和 SHA-256 均核验通过；Host 196,081 rows、Zeek 2,140 rows，均 0 malformed。两者时间窗不重叠，未拼接为同一事件链。
+- 完成 D3：5 个预锁定节点中 4 个满足双 provider claim 门槛，共编译 8 条 event-backed claims；`3aka3.doc` 锚点 0 命中，N01 作为自然缺口保留。
+- 因 N01 不可恢复，C11 的目标与 support ceiling 从预注册 G3 降为 `G2_tactic_intent`；这是可审计的正确降级，不是补数据后的调参结果。
+- 完成 D4：5 个动作均满足 `intended_cti_node_ids != OR(recoverable_claim_ids)`，规划器视图不含隐藏恢复集合。
+- 完成 D5：AND 主分析共 14 planners × 45 重复条件。M2 success `1.0000`、cost `3.6667`，Oracle cost `3.0000`；M2 不是 C11 上最低成本的非 Oracle 方法。
+- OR 单字段敏感性中，M2 success 仍为 `1.0000`，cost 降至 `1.0222`，相对 AND 为 `-2.6445`；说明证据组合语义会实质改变成本，AND 继续作为主分析。
+- 结论边界：C11 关闭的是第三种数据封装和多 claim 可识别性工程缺口。它是一个 APT29 仿真链，不是自然事件、未知 actor benchmark 或 45 个独立攻击。
+- 当前下一步：双人盲标仍为最高优先级；随后再考虑一个自然发生或更接近运营现场的独立 engagement。论文 v0.4 暂不改写，C11 预留为 v0.5 的独立外部效度/语义敏感性小节。
+
 ## 2026-07-11：Reviewer major revision、AFA 对照与代理敏感性完成
 
 - 论文主稿升级为 `paper-main-draft-v0.4-major-revision-20260711.md`，题目和全文从“新归因/新规划器”收束为“信息边界约束的调查控制框架”。

@@ -1,5 +1,7 @@
 # Project05 当前权威文件索引
 
+> 历史索引：当前状态与下一步请转至 `AUTHORITATIVE-DOCUMENTS-20260712.md`。本文件仅保留 2026-07-11 Reviewer major revision 后的阶段快照。
+
 日期：2026-07-11
 
 状态：Reviewer major revision 后冻结

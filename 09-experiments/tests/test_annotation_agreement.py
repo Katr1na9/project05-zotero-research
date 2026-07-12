@@ -1,5 +1,6 @@
 import csv
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -130,6 +131,33 @@ class AnnotationAgreementTests(unittest.TestCase):
     def test_invalid_reviewed_label_is_rejected(self):
         with self.assertRaises(ValueError):
             self.module.validate_label("claim", "not-a-label")
+
+    def test_unknown_intent_node_is_rejected_when_public_items_exist(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            public = {
+                "blind_id": "INT-001",
+                "candidate_nodes": [{"node_id": "N1"}],
+            }
+            (root / "public").mkdir(parents=True)
+            (root / "public" / "intent_items.jsonl").write_text(
+                json.dumps(public) + "\n",
+                encoding="utf-8",
+            )
+            rows = {
+                "INT-001": {
+                    "blind_id": "INT-001",
+                    "reviewed": "yes",
+                    "selected_node_ids_pipe": "N9",
+                }
+            }
+            with self.assertRaisesRegex(ValueError, "unknown nodes"):
+                self.module.validate_rows_against_public(
+                    root,
+                    "intent",
+                    "annotator_A",
+                    rows,
+                )
 
 
 if __name__ == "__main__":

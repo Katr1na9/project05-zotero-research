@@ -21,7 +21,7 @@ class EvidenceClaimSchemaVocabularyTests(unittest.TestCase):
             path
             for path in root.iterdir()
             if path.is_dir()
-            and path.name.startswith(("C07-", "C08-", "C09-", "C10-"))
+            and path.name.startswith(("C07-", "C08-", "C09-", "C10-", "C11-"))
         )
 
     def test_c07_c10_gold_claims_use_declared_schema_vocabulary(self):
@@ -38,6 +38,7 @@ class EvidenceClaimSchemaVocabularyTests(unittest.TestCase):
                 "C08-darpa-e5-clearscope-0515",
                 "C09-darpa-optc-sysclient0201-0923",
                 "C10-darpa-optc-sysclient0351-0925",
+                "C11-otrf-apt29-day1-scranton-nashua",
             ],
             [path.name for path in case_dirs],
         )

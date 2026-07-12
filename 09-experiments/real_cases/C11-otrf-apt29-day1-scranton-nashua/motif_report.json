@@ -1,0 +1,28 @@
+{
+  "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+  "source_case_id": "R08",
+  "compile_status": "compiled_event_backed_multiclaim_case",
+  "d3_multiclaim_gate": "PASS",
+  "passing_critical_nodes": 4,
+  "required_passing_critical_nodes": 3,
+  "selected_claim_count": 8,
+  "selected_provider_families": ["powershell", "security", "sysmon"],
+  "node_results": [
+    {"node_id": "N01_initial_breach_c2", "status": "natural_gap", "claim_ids": [], "reason": "Frozen 3aka3.doc anchor matched zero records."},
+    {"node_id": "N02_collection_first_exfil", "status": "compiled", "claim_ids": ["C11-EC-001", "C11-EC-002"], "provider_families": ["powershell", "sysmon"]},
+    {"node_id": "N03_uac_bypass_https_c2", "status": "compiled", "claim_ids": ["C11-EC-003", "C11-EC-004"], "provider_families": ["powershell", "security"]},
+    {"node_id": "N04_lateral_movement", "status": "compiled", "claim_ids": ["C11-EC-005", "C11-EC-006"], "provider_families": ["powershell", "security"]},
+    {"node_id": "N05_nashua_collection_exfil", "status": "compiled", "claim_ids": ["C11-EC-007", "C11-EC-008"], "provider_families": ["powershell", "sysmon"]}
+  ],
+  "support_decision": {
+    "preregistered_ceiling": "G3_campaign",
+    "compiled_target": "G2_tactic_intent",
+    "compiled_ceiling": "G2_tactic_intent",
+    "reason": "AND semantics plus the unrecoverable critical N01 prevent G3; the case is retained as a correct-downgrade test."
+  },
+  "source_boundaries": [
+    "All selected claims point to the fixed host archive and exact record locators.",
+    "The non-overlapping Zeek package contributes no event-level claim.",
+    "APT29 remains an emulation label and is not evaluated as actor attribution correctness."
+  ]
+}

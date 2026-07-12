@@ -1,0 +1,88 @@
+{
+  "case_id": "R08",
+  "compiled_case_id": "C11-otrf-apt29-day1-scranton-nashua",
+  "selection_rule": "Two event-backed claims from distinct provider families per passing critical node; records must match frozen anchors and hosts.",
+  "missing_nodes": [
+    {
+      "node_id": "N01_initial_breach_c2",
+      "reason": "The frozen 3aka3.doc anchor matched zero records. The node remains unsupported and is not replaced."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C11-EC-001",
+      "node_id": "N02_collection_first_exfil",
+      "anchor_id": "first_archive",
+      "term": "Draft.Zip",
+      "provider_family": "powershell",
+      "line_number": 1502,
+      "record_locator": "SCRANTON|Windows PowerShell|7485|800|line:1502"
+    },
+    {
+      "claim_id": "C11-EC-002",
+      "node_id": "N02_collection_first_exfil",
+      "anchor_id": "first_archive",
+      "term": "Draft.Zip",
+      "provider_family": "sysmon",
+      "line_number": 2462,
+      "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|347743|11|line:2462"
+    },
+    {
+      "claim_id": "C11-EC-003",
+      "node_id": "N03_uac_bypass_https_c2",
+      "anchor_id": "uac_registry",
+      "term": "Software\\Classes\\Folder\\shell\\open\\command",
+      "provider_family": "powershell",
+      "line_number": 5612,
+      "record_locator": "SCRANTON|Windows PowerShell|7586|800|line:5612"
+    },
+    {
+      "claim_id": "C11-EC-004",
+      "node_id": "N03_uac_bypass_https_c2",
+      "anchor_id": "uac_trigger",
+      "term": "sdclt.exe",
+      "provider_family": "security",
+      "line_number": 6083,
+      "record_locator": "SCRANTON|Security|70778|4688|line:6083"
+    },
+    {
+      "claim_id": "C11-EC-005",
+      "node_id": "N04_lateral_movement",
+      "anchor_id": "remote_discovery",
+      "term": "ComputerName NASHUA",
+      "provider_family": "powershell",
+      "line_number": 90494,
+      "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|12630|4104|line:90494"
+    },
+    {
+      "claim_id": "C11-EC-006",
+      "node_id": "N04_lateral_movement",
+      "anchor_id": "psexec_execution",
+      "term": "PsExec64.exe",
+      "provider_family": "security",
+      "line_number": 93824,
+      "record_locator": "SCRANTON|Security|81759|4688|line:93824"
+    },
+    {
+      "claim_id": "C11-EC-007",
+      "node_id": "N05_nashua_collection_exfil",
+      "anchor_id": "rar_utility",
+      "term": "Rar.exe",
+      "provider_family": "powershell",
+      "line_number": 105631,
+      "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1794|4104|line:105631"
+    },
+    {
+      "claim_id": "C11-EC-008",
+      "node_id": "N05_nashua_collection_exfil",
+      "anchor_id": "second_archive",
+      "term": "working.zip",
+      "provider_family": "sysmon",
+      "line_number": 105263,
+      "record_locator": "NASHUA|Microsoft-Windows-Sysmon/Operational|352962|11|line:105263"
+    }
+  ],
+  "selected_node_count": 4,
+  "selected_claim_count": 8,
+  "support_downgrade": "C11 target and ceiling are G2_tactic_intent because critical N01 is naturally unsupported under frozen AND semantics."
+}

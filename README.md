@@ -4,7 +4,7 @@
 
 ## 当前主线
 
-截至 2026-07-11，完成四案例、AFA/敏感性实验和 Reviewer major revision 后，当前主线为：
+截至 2026-07-12，已完成 C07-C10 四个主案例、AFA/敏感性实验、Reviewer major revision，以及 C11 第三种数据封装的参数锁定补充评估。当前主线为：
 
 > 不完整证据下、信息边界约束的 APT 调查控制。
 
@@ -17,7 +17,7 @@
 - 在成本约束下，下一步最值得获取哪类证据；
 - 何时停止取证并输出粒度受控的结论或降级原因。
 
-当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260711.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260711.md)。论文母本为：[paper-main-draft-v0.4-major-revision-20260711.md](08-writing/paper-main-draft-v0.4-major-revision-20260711.md)。
+当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260712.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)。论文母本仍为：[paper-main-draft-v0.4-major-revision-20260711.md](08-writing/paper-main-draft-v0.4-major-revision-20260711.md)。
 
 当前 G1 通过版 RQ 见：[topic-rq-brief-v2.1-g1-final-20260706.md](03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)
 
@@ -49,9 +49,9 @@
 
 ## 当前下一步
 
-1. 完成双人盲标和粒度校准；当前模板仍为 `awaiting_annotations`，不得以模型标签代替人工结果。
-2. 根据目标 venue 决定是否补官方 AFA 实现；现有 Myopic/Rollout-H3 只是同接口领域适配。
-3. 增加第三数据家族或更多独立 engagement，优先引入多 claim 证据组合。
+1. C07-C11 v0.2 双人盲标包已经冻结，共 27 个 claim、27 个公开意图和 60 个粒度状态，仍为 `awaiting_annotations`。先恢复 C07-C10 的 19 条精确来源记录或 hash 锚定 excerpt；意图与粒度任务可先行，任何任务均不得以模型标签代替人工结果。
+2. C11 的 D1-D5 已完成；结果见 [C11 结果简报](08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md)。下一步外部效度应优先增加自然发生或更接近运营现场的独立 engagement，而不是继续堆仿真 replay。
+3. 根据目标 venue 决定是否补官方 AFA 实现；现有 Myopic/Rollout-H3 只是同接口领域适配。
 4. 专利以 `patent-main-draft-v0.4-20260711.md` 为母本，完成中文补检、权属、公开日和代理师审查。
 
 ## 当前红线

@@ -1,0 +1,24 @@
+{
+  "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+  "source_case_id": "R08",
+  "source_artifact_id": "otrf_apt29_day1_host_events",
+  "source_member": "apt29_evals_day1_manual_2020-05-01225525.json",
+  "selection_source": "../../real_data/otrf_apt29/derived/R08_claim_selection.json",
+  "node_coverage_semantics": "AND",
+  "motifs": [
+    {"motif_id": "C11-M01", "claim_id": "C11-EC-001", "node_id": "N02_collection_first_exfil", "line_number": 1502, "record_id": "SCRANTON|Windows PowerShell|7485|800|line:1502", "anchor": "Draft.Zip", "provider_family": "powershell"},
+    {"motif_id": "C11-M02", "claim_id": "C11-EC-002", "node_id": "N02_collection_first_exfil", "line_number": 2462, "record_id": "SCRANTON|Microsoft-Windows-Sysmon/Operational|347743|11|line:2462", "anchor": "Draft.Zip", "provider_family": "sysmon"},
+    {"motif_id": "C11-M03", "claim_id": "C11-EC-003", "node_id": "N03_uac_bypass_https_c2", "line_number": 5612, "record_id": "SCRANTON|Windows PowerShell|7586|800|line:5612", "anchor": "Software\\Classes\\Folder\\shell\\open\\command", "provider_family": "powershell"},
+    {"motif_id": "C11-M04", "claim_id": "C11-EC-004", "node_id": "N03_uac_bypass_https_c2", "line_number": 6083, "record_id": "SCRANTON|Security|70778|4688|line:6083", "anchor": "sdclt.exe", "provider_family": "security"},
+    {"motif_id": "C11-M05", "claim_id": "C11-EC-005", "node_id": "N04_lateral_movement", "line_number": 90494, "record_id": "SCRANTON|Microsoft-Windows-PowerShell/Operational|12630|4104|line:90494", "anchor": "ComputerName NASHUA", "provider_family": "powershell"},
+    {"motif_id": "C11-M06", "claim_id": "C11-EC-006", "node_id": "N04_lateral_movement", "line_number": 93824, "record_id": "SCRANTON|Security|81759|4688|line:93824", "anchor": "PsExec64.exe", "provider_family": "security"},
+    {"motif_id": "C11-M07", "claim_id": "C11-EC-007", "node_id": "N05_nashua_collection_exfil", "line_number": 105631, "record_id": "NASHUA|Microsoft-Windows-PowerShell/Operational|1794|4104|line:105631", "anchor": "Rar.exe", "provider_family": "powershell"},
+    {"motif_id": "C11-M08", "claim_id": "C11-EC-008", "node_id": "N05_nashua_collection_exfil", "line_number": 105263, "record_id": "NASHUA|Microsoft-Windows-Sysmon/Operational|352962|11|line:105263", "anchor": "working.zip", "provider_family": "sysmon"}
+  ],
+  "natural_gap": {
+    "node_id": "N01_initial_breach_c2",
+    "frozen_anchor": "3aka3.doc",
+    "matched_records": 0,
+    "handling": "Keep uncovered and downgrade the compiled support ceiling to G2."
+  }
+}

@@ -1,0 +1,1621 @@
+{
+  "case_id": "R08",
+  "motif_spec_version": "0.1",
+  "inspection_scope": "frozen anchors and searchable fields only",
+  "parsed_rows": 196081,
+  "malformed_rows": 0,
+  "passing_critical_node_count": 4,
+  "required_passing_critical_node_count": 3,
+  "d3_multiclaim_gate": "PASS",
+  "nodes": [
+    {
+      "node_id": "N01_initial_breach_c2",
+      "critical": true,
+      "matched_record_count": 0,
+      "matched_anchor_ids": [],
+      "missing_anchor_ids": [
+        "initial_payload"
+      ],
+      "provider_family_counts": {},
+      "anchor_provider_family_counts": {},
+      "counted_provider_families": [],
+      "minimum_distinct_provider_families": 2,
+      "multiclaim_node_pass": false,
+      "representative_by_anchor_provider_family": [],
+      "representative_records": []
+    },
+    {
+      "node_id": "N02_collection_first_exfil",
+      "critical": true,
+      "matched_record_count": 44,
+      "matched_anchor_ids": [
+        "archive_command",
+        "first_archive"
+      ],
+      "missing_anchor_ids": [],
+      "provider_family_counts": {
+        "powershell": 41,
+        "security": 1,
+        "sysmon": 2
+      },
+      "anchor_provider_family_counts": {
+        "archive_command|powershell": 26,
+        "first_archive|powershell": 39,
+        "first_archive|security": 1,
+        "first_archive|sysmon": 2
+      },
+      "counted_provider_families": [
+        "powershell",
+        "security",
+        "sysmon"
+      ],
+      "minimum_distinct_provider_families": 2,
+      "multiclaim_node_pass": true,
+      "representative_by_anchor_provider_family": [
+        {
+          "anchor_provider_family": "archive_command|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Windows PowerShell|7485|800|line:1502",
+            "timestamp_utc": "2020-05-02T02:56:18.119Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Windows PowerShell",
+            "source_name": "PowerShell",
+            "event_id": 800,
+            "record_number": 7485,
+            "provider_family": "powershell",
+            "evidence_component": "event_800",
+            "matches": [
+              {
+                "anchor_id": "first_archive",
+                "term": "Draft.Zip",
+                "field": "Message",
+                "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force. Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber=21 User"
+              },
+              {
+                "anchor_id": "archive_command",
+                "term": "Compress-Archive",
+                "field": "Message",
+                "snippet": "r*,*vpn,*.jpg,*.txt,*.lnk -Recurse -ErrorAction SilentlyContinue | Select -ExpandProperty FullName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force. C"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "first_archive|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Windows PowerShell|7485|800|line:1502",
+            "timestamp_utc": "2020-05-02T02:56:18.119Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Windows PowerShell",
+            "source_name": "PowerShell",
+            "event_id": 800,
+            "record_number": 7485,
+            "provider_family": "powershell",
+            "evidence_component": "event_800",
+            "matches": [
+              {
+                "anchor_id": "first_archive",
+                "term": "Draft.Zip",
+                "field": "Message",
+                "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force. Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber=21 User"
+              },
+              {
+                "anchor_id": "archive_command",
+                "term": "Compress-Archive",
+                "field": "Message",
+                "snippet": "r*,*vpn,*.jpg,*.txt,*.lnk -Recurse -ErrorAction SilentlyContinue | Select -ExpandProperty FullName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force. C"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "first_archive|security",
+          "record": {
+            "record_locator": "SCRANTON|Security|73517|4688|line:48962",
+            "timestamp_utc": "2020-05-02T03:03:16.071Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Security",
+            "source_name": "Microsoft-Windows-Security-Auditing",
+            "event_id": 4688,
+            "record_number": 73517,
+            "provider_family": "security",
+            "evidence_component": "process_creation",
+            "matches": [
+              {
+                "anchor_id": "first_archive",
+                "term": "Draft.Zip",
+                "field": "Message",
+                "snippet": "ne: \"C:\\Program Files\\SysinternalsSuite\\sdelete64.exe\" /accepteula C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip Token Elevation Type indicates the type of token that was assigned to the new process in accorda"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "first_archive|sysmon",
+          "record": {
+            "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|347743|11|line:2462",
+            "timestamp_utc": "2020-05-02T02:56:20.426Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Microsoft-Windows-Sysmon/Operational",
+            "source_name": "Microsoft-Windows-Sysmon",
+            "event_id": 11,
+            "record_number": 347743,
+            "provider_family": "sysmon",
+            "evidence_component": "file_creation",
+            "matches": [
+              {
+                "anchor_id": "first_archive",
+                "term": "Draft.Zip",
+                "field": "Message",
+                "snippet": "ws\\System32\\WindowsPowerShell\\v1.0\\powershell.exe TargetFilename: C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip CreationUtcTime: 2020-05-02 02:56:18.032"
+              }
+            ]
+          }
+        }
+      ],
+      "representative_records": [
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7485|800|line:1502",
+          "timestamp_utc": "2020-05-02T02:56:18.119Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7485,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force. Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber=21 User"
+            },
+            {
+              "anchor_id": "archive_command",
+              "term": "Compress-Archive",
+              "field": "Message",
+              "snippet": "r*,*vpn,*.jpg,*.txt,*.lnk -Recurse -ErrorAction SilentlyContinue | Select -ExpandProperty FullName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force. C"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8328|4104|line:1559",
+          "timestamp_utc": "2020-05-02T02:56:18.140Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4104,
+          "record_number": 8328,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_script_block",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force ScriptBlock ID: 07c253ad-a7e6-4bc1-b789-f147e0506b84 Path:"
+            },
+            {
+              "anchor_id": "archive_command",
+              "term": "Compress-Archive",
+              "field": "Message",
+              "snippet": "r*,*vpn,*.jpg,*.txt,*.lnk -Recurse -ErrorAction SilentlyContinue | Select -ExpandProperty FullName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\Draft.Zip -Force Scr"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7494|800|line:1563",
+          "timestamp_utc": "2020-05-02T02:56:18.141Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7494,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "h\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"Draft.Zip\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7495|800|line:1566",
+          "timestamp_utc": "2020-05-02T02:56:18.143Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7495,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "est-Path\" ParameterBinding(Test-Path): name=\"LiteralPath\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip\" ParameterBinding(Test-Path): name=\"PathType\"; value=\"Leaf\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8339|4103|line:1585",
+          "timestamp_utc": "2020-05-02T02:56:18.152Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8339,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "h\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"Draft.Zip\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7497|800|line:1588",
+          "timestamp_utc": "2020-05-02T02:56:18.153Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7497,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "erBinding(Write-Progress): name=\"Status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip' creation is in progress...\" ParameterBinding(Write-Progress): name=\"PercentComplete\"; value=\"1\""
+            },
+            {
+              "anchor_id": "archive_command",
+              "term": "Compress-Archive",
+              "field": "Message",
+              "snippet": "cation(Write-Progress): \"Write-Progress\" ParameterBinding(Write-Progress): name=\"Activity\"; value=\"Compress-Archive\" ParameterBinding(Write-Progress): name=\"Status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppDat"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7498|800|line:1590",
+          "timestamp_utc": "2020-05-02T02:56:18.154Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7498,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "inding(ProgressBarHelper): name=\"status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip' creation is in progress...\" ParameterBinding(ProgressBarHelper): name=\"previousSegmentWeight\"; va"
+            },
+            {
+              "anchor_id": "archive_command",
+              "term": "Compress-Archive",
+              "field": "Message",
+              "snippet": "Pipeline execution details for command line: ProgressBarHelper \"Compress-Archive\" $progressBarStatus 0 100 100 1 . Context Information: DetailSequence=1 DetailTotal=1"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8340|4103|line:1593",
+          "timestamp_utc": "2020-05-02T02:56:18.154Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8340,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "est-Path\" ParameterBinding(Test-Path): name=\"LiteralPath\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip\" ParameterBinding(Test-Path): name=\"PathType\"; value=\"Leaf\" Context: Severity = Info"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8342|4103|line:1599",
+          "timestamp_utc": "2020-05-02T02:56:18.156Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8342,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "erBinding(Write-Progress): name=\"Status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip' creation is in progress...\" ParameterBinding(Write-Progress): name=\"PercentComplete\"; value=\"1\""
+            },
+            {
+              "anchor_id": "archive_command",
+              "term": "Compress-Archive",
+              "field": "Message",
+              "snippet": "cation(Write-Progress): \"Write-Progress\" ParameterBinding(Write-Progress): name=\"Activity\"; value=\"Compress-Archive\" ParameterBinding(Write-Progress): name=\"Status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppDat"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8343|4103|line:1600",
+          "timestamp_utc": "2020-05-02T02:56:18.156Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8343,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "inding(ProgressBarHelper): name=\"status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip' creation is in progress...\" ParameterBinding(ProgressBarHelper): name=\"previousSegmentWeight\"; va"
+            },
+            {
+              "anchor_id": "archive_command",
+              "term": "Compress-Archive",
+              "field": "Message",
+              "snippet": "ressBarHelper): \"ProgressBarHelper\" ParameterBinding(ProgressBarHelper): name=\"cmdletName\"; value=\"Compress-Archive\" ParameterBinding(ProgressBarHelper): name=\"status\"; value=\"The archive file 'C:\\Users\\pbeesly\\App"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7511|800|line:1628",
+          "timestamp_utc": "2020-05-02T02:56:18.165Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7511,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "est-Path\" ParameterBinding(Test-Path): name=\"LiteralPath\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip\" ParameterBinding(Test-Path): name=\"PathType\"; value=\"Leaf\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7515|800|line:1640",
+          "timestamp_utc": "2020-05-02T02:56:18.169Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7515,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "first_archive",
+              "term": "Draft.Zip",
+              "field": "Message",
+              "snippet": "Stream\" ParameterBinding(New-Object): name=\"ArgumentList\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip, Create\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N03_uac_bypass_https_c2",
+      "critical": true,
+      "matched_record_count": 159,
+      "matched_anchor_ids": [
+        "steganographic_payload",
+        "uac_registry",
+        "uac_trigger"
+      ],
+      "missing_anchor_ids": [],
+      "provider_family_counts": {
+        "powershell": 32,
+        "security": 12,
+        "sysmon": 115
+      },
+      "anchor_provider_family_counts": {
+        "steganographic_payload|powershell": 24,
+        "steganographic_payload|security": 1,
+        "steganographic_payload|sysmon": 8,
+        "uac_registry|powershell": 10,
+        "uac_trigger|security": 11,
+        "uac_trigger|sysmon": 107
+      },
+      "counted_provider_families": [
+        "powershell",
+        "security",
+        "sysmon"
+      ],
+      "minimum_distinct_provider_families": 2,
+      "multiclaim_node_pass": true,
+      "representative_by_anchor_provider_family": [
+        {
+          "anchor_provider_family": "steganographic_payload|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Windows PowerShell|7586|800|line:5612",
+            "timestamp_utc": "2020-05-02T02:58:19.583Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Windows PowerShell",
+            "source_name": "PowerShell",
+            "event_id": 800,
+            "record_number": 7586,
+            "provider_family": "powershell",
+            "evidence_component": "event_800",
+            "matches": [
+              {
+                "anchor_id": "steganographic_payload",
+                "term": "monkey.png",
+                "field": "Message",
+                "snippet": "ect;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640"
+              },
+              {
+                "anchor_id": "uac_registry",
+                "term": "Software\\Classes\\Folder\\shell\\open\\command",
+                "field": "Message",
+                "snippet": "Pipeline execution details for command line: Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"(Default)\". Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "steganographic_payload|security",
+          "record": {
+            "record_locator": "SCRANTON|Security|70870|4688|line:6487",
+            "timestamp_utc": "2020-05-02T02:58:44.904Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Security",
+            "source_name": "Microsoft-Windows-Security-Auditing",
+            "event_id": 4688,
+            "record_number": 70870,
+            "provider_family": "security",
+            "evidence_component": "process_creation",
+            "matches": [
+              {
+                "anchor_id": "steganographic_payload",
+                "term": "monkey.png",
+                "field": "Message",
+                "snippet": "ect;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "steganographic_payload|sysmon",
+          "record": {
+            "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|347840|11|line:3610",
+            "timestamp_utc": "2020-05-02T02:57:01.833Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Microsoft-Windows-Sysmon/Operational",
+            "source_name": "Microsoft-Windows-Sysmon",
+            "event_id": 11,
+            "record_number": 347840,
+            "provider_family": "sysmon",
+            "evidence_component": "file_creation",
+            "matches": [
+              {
+                "anchor_id": "steganographic_payload",
+                "term": "monkey.png",
+                "field": "Message",
+                "snippet": "Id: 8524 Image: C:\\ProgramData\\victim\\â€®cod.3aka3.scr TargetFilename: C:\\Users\\pbeesly\\Downloads\\monkey.png CreationUtcTime: 2020-05-02 02:57:00.933"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "uac_registry|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Windows PowerShell|7581|800|line:4638",
+            "timestamp_utc": "2020-05-02T02:57:19.199Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Windows PowerShell",
+            "source_name": "PowerShell",
+            "event_id": 800,
+            "record_number": 7581,
+            "provider_family": "powershell",
+            "evidence_component": "event_800",
+            "matches": [
+              {
+                "anchor_id": "uac_registry",
+                "term": "Software\\Classes\\Folder\\shell\\open\\command",
+                "field": "Message",
+                "snippet": "Get-ItemProperty): name=\"LiteralPath\"; value=\"Microsoft.PowerShell.Core\\Registry::HKEY_CURRENT_USER\\Software\\Classes\\Folder\\shell\\open\\command\" CommandInvocation(Select-Object): \"Select-Object\" ParameterBinding(Select-Object): name=\"Exclude"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "uac_trigger|security",
+          "record": {
+            "record_locator": "SCRANTON|Security|70778|4688|line:6083",
+            "timestamp_utc": "2020-05-02T02:58:43.786Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Security",
+            "source_name": "Microsoft-Windows-Security-Auditing",
+            "event_id": 4688,
+            "record_number": 70778,
+            "provider_family": "security",
+            "evidence_component": "process_creation",
+            "matches": [
+              {
+                "anchor_id": "uac_trigger",
+                "term": "sdclt.exe",
+                "field": "Message",
+                "snippet": "ID: 0x0 Process Information: New Process ID: 0x1518 New Process Name: C:\\Windows\\System32\\sdclt.exe Token Elevation Type: %%1938 Mandatory Label: S-1-16-8192 Creator Process ID: 0xd98 Creato"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "uac_trigger|sysmon",
+          "record": {
+            "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|348656|10|line:6001",
+            "timestamp_utc": "2020-05-02T02:58:43.757Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Microsoft-Windows-Sysmon/Operational",
+            "source_name": "Microsoft-Windows-Sysmon",
+            "event_id": 10,
+            "record_number": 348656,
+            "provider_family": "sysmon",
+            "evidence_component": "event_10",
+            "matches": [
+              {
+                "anchor_id": "uac_trigger",
+                "term": "sdclt.exe",
+                "field": "Message",
+                "snippet": "ID: {47ab858c-e1e2-5eac-b203-000000000400} TargetProcessId: 5400 TargetImage: C:\\windows\\system32\\sdclt.exe GrantedAccess: 0x1FFFFF CallTrace: C:\\windows\\SYSTEM32\\ntdll.dll+9c584|C:\\windows\\System32\\KERNEL"
+              }
+            ]
+          }
+        }
+      ],
+      "representative_records": [
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|347840|11|line:3610",
+          "timestamp_utc": "2020-05-02T02:57:01.833Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-Sysmon/Operational",
+          "source_name": "Microsoft-Windows-Sysmon",
+          "event_id": 11,
+          "record_number": 347840,
+          "provider_family": "sysmon",
+          "evidence_component": "file_creation",
+          "matches": [
+            {
+              "anchor_id": "steganographic_payload",
+              "term": "monkey.png",
+              "field": "Message",
+              "snippet": "Id: 8524 Image: C:\\ProgramData\\victim\\â€®cod.3aka3.scr TargetFilename: C:\\Users\\pbeesly\\Downloads\\monkey.png CreationUtcTime: 2020-05-02 02:57:00.933"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7581|800|line:4638",
+          "timestamp_utc": "2020-05-02T02:57:19.199Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7581,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "Get-ItemProperty): name=\"LiteralPath\"; value=\"Microsoft.PowerShell.Core\\Registry::HKEY_CURRENT_USER\\Software\\Classes\\Folder\\shell\\open\\command\" CommandInvocation(Select-Object): \"Select-Object\" ParameterBinding(Select-Object): name=\"Exclude"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7583|800|line:4640",
+          "timestamp_utc": "2020-05-02T02:57:19.199Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7583,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "efault): \"Out-Default\" ParameterBinding(Out-Default): name=\"InputObject\"; value=\"HKEY_CURRENT_USER\\Software\\Classes\\Folder\\shell\\open\\command\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8431|4103|line:4701",
+          "timestamp_utc": "2020-05-02T02:57:20.222Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8431,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "Get-ItemProperty): name=\"LiteralPath\"; value=\"Microsoft.PowerShell.Core\\Registry::HKEY_CURRENT_USER\\Software\\Classes\\Folder\\shell\\open\\command\" CommandInvocation(Select-Object): \"Select-Object\" ParameterBinding(Select-Object): name=\"Exclude"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8433|4103|line:4705",
+          "timestamp_utc": "2020-05-02T02:57:20.224Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8433,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "efault): \"Out-Default\" ParameterBinding(Out-Default): name=\"InputObject\"; value=\"HKEY_CURRENT_USER\\Software\\Classes\\Folder\\shell\\open\\command\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8437|4104|line:5519",
+          "timestamp_utc": "2020-05-02T02:58:10.519Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4104,
+          "record_number": 8437,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_script_block",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "Creating Scriptblock text (1 of 1): Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"(Default)\" ScriptBlock ID: 330c34d0-b773-42e0-b2f6-7b9d3802d5ce Path:"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7586|800|line:5612",
+          "timestamp_utc": "2020-05-02T02:58:19.583Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7586,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "steganographic_payload",
+              "term": "monkey.png",
+              "field": "Message",
+              "snippet": "ect;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640"
+            },
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "Pipeline execution details for command line: Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"(Default)\". Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8438|4103|line:5615",
+          "timestamp_utc": "2020-05-02T02:58:19.585Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8438,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "steganographic_payload",
+              "term": "monkey.png",
+              "field": "Message",
+              "snippet": "ect;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640"
+            },
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "et-ItemProperty): \"Set-ItemProperty\" ParameterBinding(Set-ItemProperty): name=\"Path\"; value=\"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" ParameterBinding(Set-ItemProperty): name=\"Name\"; value=\"(Default)\" ParameterBinding(Set-ItemProp"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|348643|13|line:5629",
+          "timestamp_utc": "2020-05-02T02:58:20.597Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-Sysmon/Operational",
+          "source_name": "Microsoft-Windows-Sysmon",
+          "event_id": 13,
+          "record_number": 348643,
+          "provider_family": "sysmon",
+          "evidence_component": "registry_value_set",
+          "matches": [
+            {
+              "anchor_id": "steganographic_payload",
+              "term": "monkey.png",
+              "field": "Message",
+              "snippet": "ect;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8443|4104|line:5713",
+          "timestamp_utc": "2020-05-02T02:58:29.637Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4104,
+          "record_number": 8443,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_script_block",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "Creating Scriptblock text (1 of 1): Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"DelegateExecute\" -Force ScriptBlock ID: d6e1e989-d0c3-4048-a6e7-490704ea5583 Path:"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|7590|800|line:5733",
+          "timestamp_utc": "2020-05-02T02:58:31.652Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 7590,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "Pipeline execution details for command line: Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"DelegateExecute\" -Force. Context Information: DetailSequence=1 DetailTotal=1 S"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|8444|4103|line:5748",
+          "timestamp_utc": "2020-05-02T02:58:32.663Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 8444,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "uac_registry",
+              "term": "Software\\Classes\\Folder\\shell\\open\\command",
+              "field": "Message",
+              "snippet": "et-ItemProperty): \"Set-ItemProperty\" ParameterBinding(Set-ItemProperty): name=\"Path\"; value=\"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" ParameterBinding(Set-ItemProperty): name=\"Name\"; value=\"DelegateExecute\" ParameterBinding(Set-It"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N04_lateral_movement",
+      "critical": true,
+      "matched_record_count": 383,
+      "matched_anchor_ids": [
+        "psexec_execution",
+        "remote_discovery",
+        "seaduke_stage"
+      ],
+      "missing_anchor_ids": [],
+      "provider_family_counts": {
+        "powershell": 20,
+        "security": 54,
+        "sysmon": 309
+      },
+      "anchor_provider_family_counts": {
+        "psexec_execution|powershell": 16,
+        "psexec_execution|security": 54,
+        "psexec_execution|sysmon": 309,
+        "remote_discovery|powershell": 3,
+        "seaduke_stage|powershell": 2
+      },
+      "counted_provider_families": [
+        "powershell",
+        "security",
+        "sysmon"
+      ],
+      "minimum_distinct_provider_families": 2,
+      "multiclaim_node_pass": true,
+      "representative_by_anchor_provider_family": [
+        {
+          "anchor_provider_family": "psexec_execution|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Windows PowerShell|8501|800|line:30824",
+            "timestamp_utc": "2020-05-02T03:00:30.539Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Windows PowerShell",
+            "source_name": "PowerShell",
+            "event_id": 800,
+            "record_number": 8501,
+            "provider_family": "powershell",
+            "evidence_component": "event_800",
+            "matches": [
+              {
+                "anchor_id": "psexec_execution",
+                "term": "PsExec64.exe",
+                "field": "Message",
+                "snippet": "\\Users\\pbeesly\\Downloads\\\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"SysinternalsSuite/PsExec64.exe\""
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "psexec_execution|security",
+          "record": {
+            "record_locator": "SCRANTON|Security|81759|4688|line:93824",
+            "timestamp_utc": "2020-05-02T03:11:20.078Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Security",
+            "source_name": "Microsoft-Windows-Security-Auditing",
+            "event_id": 4688,
+            "record_number": 81759,
+            "provider_family": "security",
+            "evidence_component": "process_creation",
+            "matches": [
+              {
+                "anchor_id": "psexec_execution",
+                "term": "PsExec64.exe",
+                "field": "Message",
+                "snippet": "rocess Information: New Process ID: 0xa6c New Process Name: C:\\Program Files\\SysinternalsSuite\\PsExec64.exe Token Elevation Type: %%1937 Mandatory Label: S-1-16-12288 Creator Process ID: 0xf0c Creat"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "psexec_execution|sysmon",
+          "record": {
+            "record_locator": "SCRANTON|Microsoft-Windows-Sysmon/Operational|360621|11|line:31045",
+            "timestamp_utc": "2020-05-02T03:00:30.617Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Microsoft-Windows-Sysmon/Operational",
+            "source_name": "Microsoft-Windows-Sysmon",
+            "event_id": 11,
+            "record_number": 360621,
+            "provider_family": "sysmon",
+            "evidence_component": "file_creation",
+            "matches": [
+              {
+                "anchor_id": "psexec_execution",
+                "term": "PsExec64.exe",
+                "field": "Message",
+                "snippet": "WindowsPowerShell\\v1.0\\powershell.exe TargetFilename: C:\\Users\\pbeesly\\Downloads\\SysinternalsSuite\\PsExec64.exe CreationUtcTime: 2020-05-02 03:00:29.736"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "remote_discovery|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|12630|4104|line:90494",
+            "timestamp_utc": "2020-05-02T03:09:24.808Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Microsoft-Windows-PowerShell/Operational",
+            "source_name": "Microsoft-Windows-PowerShell",
+            "event_id": 4104,
+            "record_number": 12630,
+            "provider_family": "powershell",
+            "evidence_component": "powershell_script_block",
+            "matches": [
+              {
+                "anchor_id": "remote_discovery",
+                "term": "ComputerName NASHUA",
+                "field": "Message",
+                "snippet": "Creating Scriptblock text (1 of 1): Invoke-Command -ComputerName NASHUA -ScriptBlock { Get-Process -IncludeUserName | Select-Object UserName,SessionId | Where-Object { $_."
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "seaduke_stage|powershell",
+          "record": {
+            "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|10614|4104|line:57801",
+            "timestamp_utc": "2020-05-02T03:05:46.288Z",
+            "hostname": "SCRANTON.dmevals.local",
+            "channel": "Microsoft-Windows-PowerShell/Operational",
+            "source_name": "Microsoft-Windows-PowerShell",
+            "event_id": 4104,
+            "record_number": 10614,
+            "provider_family": "powershell",
+            "evidence_component": "powershell_script_block",
+            "matches": [
+              {
+                "anchor_id": "seaduke_stage",
+                "term": "Invoke-SeaDukeStage",
+                "field": "Message",
+                "snippet": "roperty Path # $objItem = $objResult.Properties # $objItem.Values } } function Invoke-SeaDukeStage { [CmdletBinding()] Param( [Parameter(Position=0,Mandatory=$True)] $Co"
+              }
+            ]
+          }
+        }
+      ],
+      "representative_records": [
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|8501|800|line:30824",
+          "timestamp_utc": "2020-05-02T03:00:30.539Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 8501,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "\\Users\\pbeesly\\Downloads\\\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"SysinternalsSuite/PsExec64.exe\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|8502|800|line:30826",
+          "timestamp_utc": "2020-05-02T03:00:30.540Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 8502,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "ameterBinding(New-Object): name=\"ArgumentList\"; value=\"C:\\Users\\pbeesly\\Downloads\\SysinternalsSuite\\PsExec64.exe\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|8504|800|line:30829",
+          "timestamp_utc": "2020-05-02T03:00:30.542Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 8504,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "inding(Write-Verbose): name=\"Message\"; value=\"Created 'C:\\Users\\pbeesly\\Downloads\\SysinternalsSuite\\PsExec64.exe'.\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|8507|800|line:30834",
+          "timestamp_utc": "2020-05-02T03:00:30.542Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 8507,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "sly\\Downloads\\\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"__MACOSX/SysinternalsSuite/._PsExec64.exe\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|8508|800|line:30837",
+          "timestamp_utc": "2020-05-02T03:00:30.543Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 8508,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "ng(New-Object): name=\"ArgumentList\"; value=\"C:\\Users\\pbeesly\\Downloads\\__MACOSX\\SysinternalsSuite\\._PsExec64.exe\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|9353|4103|line:30840",
+          "timestamp_utc": "2020-05-02T03:00:30.544Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 9353,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "\\Users\\pbeesly\\Downloads\\\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"SysinternalsSuite/PsExec64.exe\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Windows PowerShell|8510|800|line:30841",
+          "timestamp_utc": "2020-05-02T03:00:30.544Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 8510,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "e-Verbose): name=\"Message\"; value=\"Created 'C:\\Users\\pbeesly\\Downloads\\__MACOSX\\SysinternalsSuite\\._PsExec64.exe'.\""
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|9354|4103|line:30842",
+          "timestamp_utc": "2020-05-02T03:00:30.545Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 9354,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "ameterBinding(New-Object): name=\"ArgumentList\"; value=\"C:\\Users\\pbeesly\\Downloads\\SysinternalsSuite\\PsExec64.exe\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|9356|4103|line:30846",
+          "timestamp_utc": "2020-05-02T03:00:30.547Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 9356,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "inding(Write-Verbose): name=\"Message\"; value=\"Created 'C:\\Users\\pbeesly\\Downloads\\SysinternalsSuite\\PsExec64.exe'.\" Context: Severity = Informational Host Name = ConsoleHost Host V"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|9359|4103|line:30851",
+          "timestamp_utc": "2020-05-02T03:00:30.548Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 9359,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "sly\\Downloads\\\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"__MACOSX/SysinternalsSuite/._PsExec64.exe\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|9360|4103|line:30853",
+          "timestamp_utc": "2020-05-02T03:00:30.549Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 9360,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "ng(New-Object): name=\"ArgumentList\"; value=\"C:\\Users\\pbeesly\\Downloads\\__MACOSX\\SysinternalsSuite\\._PsExec64.exe\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "SCRANTON|Microsoft-Windows-PowerShell/Operational|9362|4103|line:30857",
+          "timestamp_utc": "2020-05-02T03:00:30.550Z",
+          "hostname": "SCRANTON.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 9362,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "psexec_execution",
+              "term": "PsExec64.exe",
+              "field": "Message",
+              "snippet": "e-Verbose): name=\"Message\"; value=\"Created 'C:\\Users\\pbeesly\\Downloads\\__MACOSX\\SysinternalsSuite\\._PsExec64.exe'.\" Context: Severity = Informational Host Name = ConsoleHost Host V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N05_nashua_collection_exfil",
+      "critical": true,
+      "matched_record_count": 103,
+      "matched_anchor_ids": [
+        "rar_utility",
+        "second_archive"
+      ],
+      "missing_anchor_ids": [],
+      "provider_family_counts": {
+        "powershell": 39,
+        "security": 10,
+        "sysmon": 54
+      },
+      "anchor_provider_family_counts": {
+        "rar_utility|powershell": 1,
+        "rar_utility|security": 8,
+        "rar_utility|sysmon": 50,
+        "second_archive|powershell": 39,
+        "second_archive|security": 3,
+        "second_archive|sysmon": 6
+      },
+      "counted_provider_families": [
+        "powershell",
+        "security",
+        "sysmon"
+      ],
+      "minimum_distinct_provider_families": 2,
+      "multiclaim_node_pass": true,
+      "representative_by_anchor_provider_family": [
+        {
+          "anchor_provider_family": "rar_utility|powershell",
+          "record": {
+            "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1794|4104|line:105631",
+            "timestamp_utc": "2020-05-02T03:16:20.725Z",
+            "hostname": "NASHUA.dmevals.local",
+            "channel": "Microsoft-Windows-PowerShell/Operational",
+            "source_name": "Microsoft-Windows-PowerShell",
+            "event_id": 4104,
+            "record_number": 1794,
+            "provider_family": "powershell",
+            "evidence_component": "powershell_script_block",
+            "matches": [
+              {
+                "anchor_id": "rar_utility",
+                "term": "Rar.exe",
+                "field": "Message",
+                "snippet": "Creating Scriptblock text (1 of 1): .\\Rar.exe a -hpfGzq5yKw \"$env:USERPROFILE\\Desktop\\working.zip\" \"$env:APPDATA\\working.zip\" ScriptBlock ID:"
+              },
+              {
+                "anchor_id": "second_archive",
+                "term": "working.zip",
+                "field": "Message",
+                "snippet": "Creating Scriptblock text (1 of 1): .\\Rar.exe a -hpfGzq5yKw \"$env:USERPROFILE\\Desktop\\working.zip\" \"$env:APPDATA\\working.zip\" ScriptBlock ID: 458ef02d-d24a-4390-995a-a22b9d1e6f35 Path:"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "rar_utility|security",
+          "record": {
+            "record_locator": "NASHUA|Security|66753|4688|line:105648",
+            "timestamp_utc": "2020-05-02T03:16:20.731Z",
+            "hostname": "NASHUA.dmevals.local",
+            "channel": "Security",
+            "source_name": "Microsoft-Windows-Security-Auditing",
+            "event_id": 4688,
+            "record_number": 66753,
+            "provider_family": "security",
+            "evidence_component": "process_creation",
+            "matches": [
+              {
+                "anchor_id": "rar_utility",
+                "term": "Rar.exe",
+                "field": "Message",
+                "snippet": "Logon ID: 0x0 Process Information: New Process ID: 0xbc New Process Name: C:\\Windows\\Temp\\Rar.exe Token Elevation Type: %%1938 Mandatory Label: S-1-16-8192 Creator Process ID: 0x130c Creat"
+              },
+              {
+                "anchor_id": "second_archive",
+                "term": "working.zip",
+                "field": "Message",
+                "snippet": "rshell.exe Process Command Line: \"C:\\Windows\\Temp\\Rar.exe\" a -hpfGzq5yKw C:\\Users\\pbeesly\\Desktop\\working.zip C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip Token Elevation Type indicates the type of token th"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "rar_utility|sysmon",
+          "record": {
+            "record_locator": "NASHUA|Microsoft-Windows-Sysmon/Operational|351642|11|line:103101",
+            "timestamp_utc": "2020-05-02T03:15:32.790Z",
+            "hostname": "NASHUA.dmevals.local",
+            "channel": "Microsoft-Windows-Sysmon/Operational",
+            "source_name": "Microsoft-Windows-Sysmon",
+            "event_id": 11,
+            "record_number": 351642,
+            "provider_family": "sysmon",
+            "evidence_component": "file_creation",
+            "matches": [
+              {
+                "anchor_id": "rar_utility",
+                "term": "Rar.exe",
+                "field": "Message",
+                "snippet": "-000000000400} ProcessId: 2172 Image: C:\\Windows\\Temp\\python.exe TargetFilename: C:\\Windows\\Temp\\Rar.exe CreationUtcTime: 2020-05-02 03:15:31.530"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "second_archive|powershell",
+          "record": {
+            "record_locator": "NASHUA|Windows PowerShell|1183|800|line:104237",
+            "timestamp_utc": "2020-05-02T03:16:00.200Z",
+            "hostname": "NASHUA.dmevals.local",
+            "channel": "Windows PowerShell",
+            "source_name": "PowerShell",
+            "event_id": 800,
+            "record_number": 1183,
+            "provider_family": "powershell",
+            "evidence_component": "event_800",
+            "matches": [
+              {
+                "anchor_id": "second_archive",
+                "term": "working.zip",
+                "field": "Message",
+                "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\working.zip -Force. Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber=21 User"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "second_archive|security",
+          "record": {
+            "record_locator": "NASHUA|Security|66753|4688|line:105648",
+            "timestamp_utc": "2020-05-02T03:16:20.731Z",
+            "hostname": "NASHUA.dmevals.local",
+            "channel": "Security",
+            "source_name": "Microsoft-Windows-Security-Auditing",
+            "event_id": 4688,
+            "record_number": 66753,
+            "provider_family": "security",
+            "evidence_component": "process_creation",
+            "matches": [
+              {
+                "anchor_id": "rar_utility",
+                "term": "Rar.exe",
+                "field": "Message",
+                "snippet": "Logon ID: 0x0 Process Information: New Process ID: 0xbc New Process Name: C:\\Windows\\Temp\\Rar.exe Token Elevation Type: %%1938 Mandatory Label: S-1-16-8192 Creator Process ID: 0x130c Creat"
+              },
+              {
+                "anchor_id": "second_archive",
+                "term": "working.zip",
+                "field": "Message",
+                "snippet": "rshell.exe Process Command Line: \"C:\\Windows\\Temp\\Rar.exe\" a -hpfGzq5yKw C:\\Users\\pbeesly\\Desktop\\working.zip C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip Token Elevation Type indicates the type of token th"
+              }
+            ]
+          }
+        },
+        {
+          "anchor_provider_family": "second_archive|sysmon",
+          "record": {
+            "record_locator": "NASHUA|Microsoft-Windows-Sysmon/Operational|352962|11|line:105263",
+            "timestamp_utc": "2020-05-02T03:16:02.537Z",
+            "hostname": "NASHUA.dmevals.local",
+            "channel": "Microsoft-Windows-Sysmon/Operational",
+            "source_name": "Microsoft-Windows-Sysmon",
+            "event_id": 11,
+            "record_number": 352962,
+            "provider_family": "sysmon",
+            "evidence_component": "file_creation",
+            "matches": [
+              {
+                "anchor_id": "second_archive",
+                "term": "working.zip",
+                "field": "Message",
+                "snippet": "ws\\System32\\WindowsPowerShell\\v1.0\\powershell.exe TargetFilename: C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip CreationUtcTime: 2020-05-02 03:16:00.353"
+              }
+            ]
+          }
+        }
+      ],
+      "representative_records": [
+        {
+          "record_locator": "NASHUA|Microsoft-Windows-Sysmon/Operational|351642|11|line:103101",
+          "timestamp_utc": "2020-05-02T03:15:32.790Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Microsoft-Windows-Sysmon/Operational",
+          "source_name": "Microsoft-Windows-Sysmon",
+          "event_id": 11,
+          "record_number": 351642,
+          "provider_family": "sysmon",
+          "evidence_component": "file_creation",
+          "matches": [
+            {
+              "anchor_id": "rar_utility",
+              "term": "Rar.exe",
+              "field": "Message",
+              "snippet": "-000000000400} ProcessId: 2172 Image: C:\\Windows\\Temp\\python.exe TargetFilename: C:\\Windows\\Temp\\Rar.exe CreationUtcTime: 2020-05-02 03:15:31.530"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Windows PowerShell|1183|800|line:104237",
+          "timestamp_utc": "2020-05-02T03:16:00.200Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 1183,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\working.zip -Force. Context Information: DetailSequence=1 DetailTotal=1 SequenceNumber=21 User"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1716|4104|line:104255",
+          "timestamp_utc": "2020-05-02T03:16:00.205Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4104,
+          "record_number": 1716,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_script_block",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "lName; Compress-Archive -LiteralPath $files -CompressionLevel Optimal -DestinationPath $env:APPDATA\\working.zip -Force ScriptBlock ID: 4adf51bc-704e-4481-8e1f-d7af5cc7acaa Path:"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Windows PowerShell|1192|800|line:104300",
+          "timestamp_utc": "2020-05-02T03:16:00.221Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 1192,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "h\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"working.zip\""
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Windows PowerShell|1193|800|line:104302",
+          "timestamp_utc": "2020-05-02T03:16:00.222Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 1193,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "est-Path\" ParameterBinding(Test-Path): name=\"LiteralPath\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip\" ParameterBinding(Test-Path): name=\"PathType\"; value=\"Leaf\""
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Windows PowerShell|1195|800|line:104323",
+          "timestamp_utc": "2020-05-02T03:16:01.230Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 1195,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "erBinding(Write-Progress): name=\"Status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip' creation is in progress...\" ParameterBinding(Write-Progress): name=\"PercentComplete\"; value=\"1\""
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Windows PowerShell|1196|800|line:104324",
+          "timestamp_utc": "2020-05-02T03:16:01.230Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 1196,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "inding(ProgressBarHelper): name=\"status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip' creation is in progress...\" ParameterBinding(ProgressBarHelper): name=\"previousSegmentWeight\"; va"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1727|4103|line:104363",
+          "timestamp_utc": "2020-05-02T03:16:01.243Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 1727,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "h\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\" ParameterBinding(Join-Path): name=\"ChildPath\"; value=\"working.zip\" Context: Severity = Informational Host Name = ConsoleHost Host Ver"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1728|4103|line:104365",
+          "timestamp_utc": "2020-05-02T03:16:01.244Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 1728,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "est-Path\" ParameterBinding(Test-Path): name=\"LiteralPath\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip\" ParameterBinding(Test-Path): name=\"PathType\"; value=\"Leaf\" Context: Severity = Info"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1730|4103|line:104370",
+          "timestamp_utc": "2020-05-02T03:16:01.246Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 1730,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "erBinding(Write-Progress): name=\"Status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip' creation is in progress...\" ParameterBinding(Write-Progress): name=\"PercentComplete\"; value=\"1\""
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Microsoft-Windows-PowerShell/Operational|1731|4103|line:104372",
+          "timestamp_utc": "2020-05-02T03:16:01.246Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "source_name": "Microsoft-Windows-PowerShell",
+          "event_id": 4103,
+          "record_number": 1731,
+          "provider_family": "powershell",
+          "evidence_component": "powershell_module",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "inding(ProgressBarHelper): name=\"status\"; value=\"The archive file 'C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip' creation is in progress...\" ParameterBinding(ProgressBarHelper): name=\"previousSegmentWeight\"; va"
+            }
+          ]
+        },
+        {
+          "record_locator": "NASHUA|Windows PowerShell|1209|800|line:104373",
+          "timestamp_utc": "2020-05-02T03:16:01.246Z",
+          "hostname": "NASHUA.dmevals.local",
+          "channel": "Windows PowerShell",
+          "source_name": "PowerShell",
+          "event_id": 800,
+          "record_number": 1209,
+          "provider_family": "powershell",
+          "evidence_component": "event_800",
+          "matches": [
+            {
+              "anchor_id": "second_archive",
+              "term": "working.zip",
+              "field": "Message",
+              "snippet": "est-Path\" ParameterBinding(Test-Path): name=\"LiteralPath\"; value=\"C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip\" ParameterBinding(Test-Path): name=\"PathType\"; value=\"Leaf\""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

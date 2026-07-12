@@ -1,0 +1,187 @@
+[
+  {
+    "claim_id": "C11-EC-001",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "file_activity",
+    "subject": {"entity_type": "process", "value": "powershell.exe on SCRANTON"},
+    "predicate": "compressed_local_files_to",
+    "object": {"entity_type": "file", "value": "C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip"},
+    "time_window": {"start": "2020-05-02T02:56:18.119Z", "end": "2020-05-02T02:56:18.119Z"},
+    "mapped_tactic": ["collection"],
+    "mapped_technique": ["T1560.001"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 1502",
+      "record_id": "SCRANTON|Windows PowerShell|7485|800|line:1502"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:powershell", "stage:collection", "node:N02_collection_first_exfil", "critical", "discriminative", "unique"],
+    "notes": "PowerShell event 800 records the frozen Compress-Archive command that writes Draft.Zip. This supports collection behavior, not actor identity."
+  },
+  {
+    "claim_id": "C11-EC-002",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "file_activity",
+    "subject": {"entity_type": "process", "value": "powershell.exe on SCRANTON"},
+    "predicate": "created",
+    "object": {"entity_type": "file", "value": "C:\\Users\\pbeesly\\AppData\\Roaming\\Draft.Zip"},
+    "time_window": {"start": "2020-05-02T02:56:20.426Z", "end": "2020-05-02T02:56:20.426Z"},
+    "mapped_tactic": ["collection"],
+    "mapped_technique": ["T1560.001"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 2462",
+      "record_id": "SCRANTON|Microsoft-Windows-Sysmon/Operational|347743|11|line:2462"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:sysmon", "stage:collection", "node:N02_collection_first_exfil", "critical", "discriminative", "unique"],
+    "notes": "Sysmon event 11 independently records creation of Draft.Zip by powershell.exe."
+  },
+  {
+    "claim_id": "C11-EC-003",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "registry_modification",
+    "subject": {"entity_type": "process", "value": "powershell.exe on SCRANTON"},
+    "predicate": "set_registry_value_for",
+    "object": {"entity_type": "registry_key", "value": "HKCU\\Software\\Classes\\Folder\\shell\\open\\command"},
+    "time_window": {"start": "2020-05-02T02:58:19.583Z", "end": "2020-05-02T02:58:19.583Z"},
+    "mapped_tactic": ["privilege_escalation", "defense_evasion"],
+    "mapped_technique": ["T1548.002"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 5612",
+      "record_id": "SCRANTON|Windows PowerShell|7586|800|line:5612"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:powershell", "stage:privilege_escalation", "node:N03_uac_bypass_https_c2", "critical", "discriminative", "unique"],
+    "notes": "PowerShell event 800 explicitly records Set-ItemProperty for the frozen Folder shell open command path and monkey.png payload command."
+  },
+  {
+    "claim_id": "C11-EC-004",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "process_execution",
+    "subject": {"entity_type": "process", "value": "cmd.exe on SCRANTON"},
+    "predicate": "executed",
+    "object": {"entity_type": "process", "value": "C:\\Windows\\System32\\sdclt.exe"},
+    "time_window": {"start": "2020-05-02T02:58:43.786Z", "end": "2020-05-02T02:58:43.786Z"},
+    "mapped_tactic": ["privilege_escalation", "defense_evasion"],
+    "mapped_technique": ["T1548.002"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 6083",
+      "record_id": "SCRANTON|Security|70778|4688|line:6083"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:security", "stage:privilege_escalation", "node:N03_uac_bypass_https_c2", "critical", "discriminative", "unique"],
+    "notes": "Security event 4688 records cmd.exe creating sdclt.exe. The pair with C11-EC-003 supports the UAC-bypass behavior node."
+  },
+  {
+    "claim_id": "C11-EC-005",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "lateral_movement",
+    "subject": {"entity_type": "process", "value": "powershell.exe on SCRANTON"},
+    "predicate": "invoked_remote_command_on",
+    "object": {"entity_type": "host", "value": "NASHUA"},
+    "time_window": {"start": "2020-05-02T03:09:24.808Z", "end": "2020-05-02T03:09:24.808Z"},
+    "mapped_tactic": ["lateral_movement", "discovery"],
+    "mapped_technique": ["T1021.006"],
+    "evidence_strength": "critical",
+    "confidence": 0.98,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 90494",
+      "record_id": "SCRANTON|Microsoft-Windows-PowerShell/Operational|12630|4104|line:90494"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:powershell", "stage:lateral_movement", "node:N04_lateral_movement", "critical", "discriminative", "unique"],
+    "notes": "PowerShell event 4104 records Invoke-Command -ComputerName NASHUA. It supports remote command intent and execution, not a named actor conclusion."
+  },
+  {
+    "claim_id": "C11-EC-006",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "lateral_movement",
+    "subject": {"entity_type": "process", "value": "C:\\Program Files\\SysinternalsSuite\\PsExec64.exe"},
+    "predicate": "launched_remote_process_on",
+    "object": {"entity_type": "host", "value": "NASHUA"},
+    "time_window": {"start": "2020-05-02T03:11:20.078Z", "end": "2020-05-02T03:11:20.078Z"},
+    "mapped_tactic": ["lateral_movement", "execution"],
+    "mapped_technique": ["T1021.002", "T1569.002"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 93824",
+      "record_id": "SCRANTON|Security|81759|4688|line:93824"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:security", "stage:lateral_movement", "node:N04_lateral_movement", "critical", "discriminative", "unique"],
+    "notes": "Security event 4688 records PsExec64.exe targeting \\NASHUA and launching C:\\Windows\\Temp\\python.exe."
+  },
+  {
+    "claim_id": "C11-EC-007",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "file_activity",
+    "subject": {"entity_type": "process", "value": "powershell.exe on NASHUA"},
+    "predicate": "executed_archive_command_for",
+    "object": {"entity_type": "file", "value": "C:\\Users\\pbeesly\\Desktop\\working.zip"},
+    "time_window": {"start": "2020-05-02T03:16:20.725Z", "end": "2020-05-02T03:16:20.725Z"},
+    "mapped_tactic": ["collection"],
+    "mapped_technique": ["T1560.001"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 105631",
+      "record_id": "NASHUA|Microsoft-Windows-PowerShell/Operational|1794|4104|line:105631"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:powershell", "stage:collection_exfiltration", "node:N05_nashua_collection_exfil", "critical", "discriminative", "unique"],
+    "notes": "PowerShell event 4104 records Rar.exe packaging working.zip on NASHUA."
+  },
+  {
+    "claim_id": "C11-EC-008",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "source_type": "local_log",
+    "claim_type": "file_activity",
+    "subject": {"entity_type": "process", "value": "powershell.exe on NASHUA"},
+    "predicate": "created",
+    "object": {"entity_type": "file", "value": "C:\\Users\\pbeesly\\AppData\\Roaming\\working.zip"},
+    "time_window": {"start": "2020-05-02T03:16:02.537Z", "end": "2020-05-02T03:16:02.537Z"},
+    "mapped_tactic": ["collection"],
+    "mapped_technique": ["T1560.001"],
+    "evidence_strength": "critical",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "otrf_apt29_day1_host_events",
+      "location": "apt29_evals_day1_manual_2020-05-01225525.json line 105263",
+      "record_id": "NASHUA|Microsoft-Windows-Sysmon/Operational|352962|11|line:105263"
+    },
+    "supports_hypotheses": ["R08_campaign"],
+    "tags": ["hideable", "real_otrf", "emulated_apt29", "provider:sysmon", "stage:collection_exfiltration", "node:N05_nashua_collection_exfil", "critical", "discriminative", "unique"],
+    "notes": "Sysmon event 11 independently records powershell.exe creating working.zip on NASHUA."
+  }
+]
+

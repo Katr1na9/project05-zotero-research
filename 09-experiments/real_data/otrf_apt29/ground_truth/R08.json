@@ -1,0 +1,121 @@
+{
+  "case_id": "R08",
+  "case_name": "OTRF APT29 Day 1 SCRANTON to NASHUA emulation",
+  "development_only": false,
+  "holdout_role": "third_data_family_parameter_locked_multiclaim_candidate",
+  "source_id": "otrf_apt29_day1_host_events",
+  "platform": "Windows enterprise emulation",
+  "primary_host": "SCRANTON",
+  "secondary_hosts": [
+    "NASHUA"
+  ],
+  "scenario_date": "2020-04-29",
+  "source_timezone": "unverified_by_source",
+  "date_metadata_note": "The day1 README records 2020-04-29 while the parent APT29 README records 2020-05-01 for the host package. The conservative envelope below covers both and is not an exact attack-window claim.",
+  "utc_window": {
+    "start": "2020-04-29T00:00:00Z",
+    "end": "2020-05-03T00:00:00Z"
+  },
+  "window_semantics": "preinspection conservative ingestion envelope; do not narrow after reading events to improve motif recovery",
+  "ground_truth_document": "otrf_apt29_emulation_plan",
+  "ground_truth_section": "day1 worksheet, steps 1.A-10.B",
+  "ground_truth_summary": "The emulation starts with user execution on SCRANTON, establishes Pupy and Meterpreter command-and-control, collects and exfiltrates data, deploys a stealth toolkit with a UAC bypass, establishes persistence, steals credentials, moves laterally to NASHUA, and performs a second collection and exfiltration sequence.",
+  "evidence_readiness": "scenario_and_multiclaim_rules_locked_before_event_inspection",
+  "natural_incompleteness": true,
+  "incompleteness_status": "not_yet_measured",
+  "supportable_ceiling": "G3_campaign",
+  "node_coverage_semantics": "AND",
+  "critical_nodes": [
+    {
+      "node_id": "N01_initial_breach_c2",
+      "emulation_steps": [
+        "1.A",
+        "1.B"
+      ],
+      "required_evidence_families": [
+        "host_process_or_powershell",
+        "network_zeek_or_sysmon"
+      ]
+    },
+    {
+      "node_id": "N02_collection_first_exfil",
+      "emulation_steps": [
+        "2.A",
+        "2.B"
+      ],
+      "required_evidence_families": [
+        "host_powershell_or_file",
+        "network_zeek_or_sysmon"
+      ]
+    },
+    {
+      "node_id": "N03_uac_bypass_https_c2",
+      "emulation_steps": [
+        "3.A",
+        "3.B",
+        "3.C"
+      ],
+      "required_evidence_families": [
+        "host_registry_or_process",
+        "network_zeek_or_sysmon"
+      ]
+    },
+    {
+      "node_id": "N04_lateral_movement",
+      "emulation_steps": [
+        "8.A",
+        "8.B",
+        "8.C"
+      ],
+      "required_evidence_families": [
+        "host_powershell_winrm_or_psexec",
+        "network_zeek_or_target_host"
+      ]
+    },
+    {
+      "node_id": "N05_nashua_collection_exfil",
+      "emulation_steps": [
+        "9.A",
+        "9.B",
+        "9.C"
+      ],
+      "required_evidence_families": [
+        "host_powershell_or_file",
+        "network_zeek_or_sysmon"
+      ]
+    }
+  ],
+  "noncritical_steps": [
+    "4.A-7.B",
+    "10.A-10.B"
+  ],
+  "prelocked_observables": [
+    "SCRANTON",
+    "NASHUA",
+    "3aka3.doc",
+    "Draft.Zip",
+    "monkey.png",
+    "sdclt.exe",
+    "SysinternalsSuite",
+    "PsExec64.exe",
+    "Rar.exe",
+    "working.zip",
+    "port 1234",
+    "port 443",
+    "port 8443"
+  ],
+  "multiclaim_gate": {
+    "minimum_critical_nodes_with_two_families": 3,
+    "minimum_claims_per_covered_critical_node": 2,
+    "same_record_field_splitting_counts_as_multiple_claims": false,
+    "failure_rule": "Keep the node unsupported under AND; do not replace the frozen step after event inspection."
+  },
+  "actor_label_boundary": "APT29 is the emulated scenario label. It is not an unknown actor prediction target and cannot be scored as actor attribution correctness.",
+  "data_quality_notes": [
+    "Host and network sources are independently packaged but originate from the same emulation run.",
+    "The repository is suitable for cross-sensor corroboration, not for estimating prevalence in operational APT incidents.",
+    "No event count, event identifier, provider distribution, exact timestamp, or recovered motif is asserted before archive inspection."
+  ],
+  "notes": "Selected after all C07-C10 planner parameters were frozen. C11 may close the third-data-family engineering gap only after source and compilation Gates pass; it cannot by itself close human granularity validity or real-world attribution validity."
+}
+

@@ -1,0 +1,82 @@
+{
+  "case_id": "R08",
+  "acquired_at": "2026-07-12T02:45:00+08:00",
+  "source_commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+  "files": [
+    {
+      "source_id": "otrf_apt29_day1_host_events",
+      "path": "raw/apt29_evals_day1_manual.zip",
+      "size_bytes": 13944973,
+      "git_blob_sha1": "7352679a173ec0310f9d0ed587782545182dd394",
+      "sha256": "98A073140860560D70080ACE9142961BE4F64B4862BAE892D62D0F254D0FDBE5"
+    },
+    {
+      "source_id": "otrf_apt29_day1_combined_zeek",
+      "path": "raw/combined_zeek.log",
+      "size_bytes": 1243861,
+      "git_blob_sha1": "277c706a50a33affb4f2ee1458406cc17a6222e9",
+      "sha256": "2B3268DD04F54E0BC3D6B11FDEC85E821A0BE7B4754B71D7FD7C9595A7D235D1"
+    }
+  ],
+  "archive_inventory": {
+    "path": "derived/R08_archive_inventory.json",
+    "path_safety_pass": true,
+    "crc_pass": true,
+    "member_count": 1,
+    "member_name": "apt29_evals_day1_manual_2020-05-01225525.json",
+    "uncompressed_bytes": 385334029,
+    "aggregate_expansion_ratio": 27.6329
+  },
+  "structural_scan": {
+    "path": "derived/R08_source_structure_summary.json",
+    "scope": "host, provider, channel, EventID and time ranges only; no IOC or motif search",
+    "host_rows": 196081,
+    "host_malformed_rows": 0,
+    "expected_host_rows": {
+      "SCRANTON": 131119,
+      "NASHUA": 29056
+    },
+    "host_time_range_utc": {
+      "start": "2020-05-02T02:55:26.493000Z",
+      "end": "2020-05-02T03:28:20.170000Z"
+    },
+    "zeek_rows": 2140,
+    "zeek_malformed_rows": 0,
+    "zeek_time_range_utc": {
+      "start": "2020-04-30T00:06:38.899710Z",
+      "end": "2020-04-30T00:45:00.760719Z"
+    },
+    "host_zeek_time_overlap": false
+  },
+  "gate_status": {
+    "D1_source_integrity": "PASS",
+    "D2_package_parseability": "PASS",
+    "D3_multiclaim_identifiability": "PASS",
+    "D4_information_boundary": "PASS",
+    "D5_frozen_evaluation": "PASS"
+  },
+  "evaluation": {
+    "compiled_case": "C11-otrf-apt29-day1-scranton-nashua",
+    "primary_semantics": "AND",
+    "passing_critical_nodes": 4,
+    "required_passing_critical_nodes": 3,
+    "selected_event_backed_claims": 8,
+    "natural_gap_node": "N01_initial_breach_c2",
+    "compiled_target": "G2_tactic_intent",
+    "and_result_path": "../../results/c11_holdout_v0.1",
+    "or_sensitivity_path": "../../results/c11_or_sensitivity_v0.1",
+    "and_m2_success_rate": 1.0,
+    "and_m2_mean_cost_to_target": 3.6667,
+    "or_m2_success_rate": 1.0,
+    "or_m2_mean_cost_to_target": 1.0222,
+    "m2_or_minus_and_cost": -2.6445
+  },
+  "interpretation": [
+    "The host archive contains substantial SCRANTON and NASHUA coverage and all required Windows provider families for the frozen fallback route.",
+    "The bundled Zeek log and host archive do not overlap in time and must not be represented as event-level corroboration from one execution.",
+    "C11 passed the frozen multi-provider host corroboration Gate using PowerShell, Sysmon and Security. Zeek remains a scenario-level diagnostic source unless modeled as a separate replay.",
+    "The failed preregistered N01 anchor was retained as a natural gap, forcing an auditable G3-to-G2 downgrade.",
+    "The AND/OR sensitivity changed evidence cost materially; OR remains an optimistic sensitivity and does not replace the AND primary analysis."
+  ],
+  "forbidden_inference": "Do not merge host and Zeek records into a single event chain merely because both are labeled APT29 Day 1."
+}

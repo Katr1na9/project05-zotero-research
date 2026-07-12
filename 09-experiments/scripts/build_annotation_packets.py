@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Build deterministic blind annotation packets for Project05 C07-C10."""
+"""Build deterministic blind annotation packets for Project05 real cases."""
 
 from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import importlib.util
 import json
 import random
@@ -14,7 +15,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 MVP_PATH = Path(__file__).with_name("run_mvp.py")
-CASE_PREFIXES = ("C07", "C08", "C09", "C10")
+DEFAULT_CASE_PREFIXES = ("C07", "C08", "C09", "C10", "C11")
+DEFAULT_PACKET_VERSION = "c07_c11_v0.2"
+DEFAULT_SEED = 20260712
 
 
 def _load_mvp() -> Any:
@@ -29,9 +32,16 @@ def _load_mvp() -> Any:
 MVP = _load_mvp()
 
 
-def resolve_cases(cases_root: Path) -> list[Path]:
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest().upper()
+
+
+def resolve_cases(
+    cases_root: Path,
+    case_prefixes: tuple[str, ...] = DEFAULT_CASE_PREFIXES,
+) -> list[Path]:
     cases: list[Path] = []
-    for prefix in CASE_PREFIXES:
+    for prefix in case_prefixes:
         matches = sorted(
             path
             for path in cases_root.glob(f"{prefix}*")
@@ -222,7 +232,7 @@ def granularity_records(
 
 def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 
@@ -230,14 +240,24 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 def write_template(path: Path, blind_ids: list[str], fields: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["blind_id", *fields])
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["blind_id", *fields],
+            lineterminator="\n",
+        )
         writer.writeheader()
         for blind_id in blind_ids:
             writer.writerow({"blind_id": blind_id})
 
 
-def build_packets(cases_root: Path, output_dir: Path, seed: int = 20260711) -> dict[str, Any]:
-    case_dirs = resolve_cases(cases_root)
+def build_packets(
+    cases_root: Path,
+    output_dir: Path,
+    seed: int = DEFAULT_SEED,
+    case_prefixes: tuple[str, ...] = DEFAULT_CASE_PREFIXES,
+    packet_version: str = DEFAULT_PACKET_VERSION,
+) -> dict[str, Any]:
+    case_dirs = resolve_cases(cases_root, case_prefixes)
     rng = random.Random(seed)
     claim_items, claim_key = shuffled_blind_items(
         "claim", claim_records(case_dirs), rng
@@ -268,7 +288,7 @@ def build_packets(cases_root: Path, output_dir: Path, seed: int = 20260711) -> d
             ["reviewed", "granularity_label", "key_missing_evidence", "annotator_notes"],
         ),
     }
-    for annotator in ("annotator_A", "annotator_B"):
+    for annotator in ("annotator_A", "annotator_B", "adjudicator"):
         for filename, (items, fields) in templates.items():
             write_template(
                 output_dir / annotator / filename,
@@ -282,12 +302,41 @@ def build_packets(cases_root: Path, output_dir: Path, seed: int = 20260711) -> d
         "granularity": granularity_key,
     }
     MVP.write_json(output_dir / "admin" / "admin_key.json", admin_key)
+    public_hashes = {
+        filename: sha256(public_dir / filename)
+        for filename in (
+            "claim_items.jsonl",
+            "intent_items.jsonl",
+            "granularity_items.jsonl",
+        )
+    }
+    source_case_hashes = {
+        case_dir.name: {
+            filename: sha256(case_dir / filename)
+            for filename in MVP.CASE_FILENAMES
+        }
+        for case_dir in case_dirs
+    }
     summary = {
+        "packet_version": packet_version,
         "seed": seed,
+        "case_prefixes": list(case_prefixes),
         "independent_case_count": len(case_dirs),
         "claim_item_count": len(claim_items),
         "intent_item_count": len(intent_items),
         "granularity_item_count": len(granularity_items),
+        "annotation_item_total": (
+            len(claim_items) + len(intent_items) + len(granularity_items)
+        ),
+        "maximum_granularity_states_per_case": 12,
+        "public_file_sha256": public_hashes,
+        "source_case_file_sha256": source_case_hashes,
+        "source_access_gate": (
+            "Referenced raw record or a hash-anchored canonical excerpt must be "
+            "available before claim support is labeled; project notes are not "
+            "independent source evidence."
+        ),
+        "annotation_status": "awaiting_annotations",
         "human_labels_present": False,
     }
     MVP.write_json(output_dir / "packet_manifest.json", summary)
@@ -295,7 +344,9 @@ def build_packets(cases_root: Path, output_dir: Path, seed: int = 20260711) -> d
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build blind C07-C10 annotation packets.")
+    parser = argparse.ArgumentParser(
+        description="Build deterministic blind Project05 annotation packets."
+    )
     parser.add_argument(
         "--cases-root",
         type=Path,
@@ -304,11 +355,27 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=ROOT / "09-experiments" / "annotation" / "c07_c10_v0.1",
+        default=ROOT / "09-experiments" / "annotation" / DEFAULT_PACKET_VERSION,
     )
-    parser.add_argument("--seed", type=int, default=20260711)
+    parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
+    parser.add_argument(
+        "--case-prefixes",
+        nargs="+",
+        default=list(DEFAULT_CASE_PREFIXES),
+        help="Case directory prefixes to include, in the frozen source order.",
+    )
+    parser.add_argument(
+        "--packet-version",
+        default=DEFAULT_PACKET_VERSION,
+    )
     args = parser.parse_args()
-    summary = build_packets(args.cases_root, args.output_dir, args.seed)
+    summary = build_packets(
+        args.cases_root,
+        args.output_dir,
+        args.seed,
+        tuple(args.case_prefixes),
+        args.packet_version,
+    )
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
 

@@ -1,0 +1,154 @@
+{
+  "dataset_id": "otrf-security-datasets-apt29-day1-project05-c11",
+  "dataset_name": "OTRF Security-Datasets APT29 Day 1",
+  "phase": "compiled_and_parameter_locked_evaluation_complete",
+  "evaluation_role": "third_data_family_parameter_locked_multiclaim_case",
+  "development_only": false,
+  "official_repository": "https://github.com/OTRF/Security-Datasets",
+  "source_commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+  "license": {
+    "name": "MIT",
+    "url": "https://github.com/OTRF/Security-Datasets/blob/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/LICENSE"
+  },
+  "documents": [
+    {
+      "document_id": "otrf_apt29_emulation_plan",
+      "local_filename": "docs/apt29.xlsx",
+      "official_filename": "datasets/compound/apt29/emulationplans/apt29.xlsx",
+      "document_type": "APT29 ATT&CK emulation plan",
+      "size_bytes": 25051,
+      "sha256": "053E70C6BA95EAC481B370F8B1545EC3F1F00306C828634741A8C7399719C228",
+      "download_status": "available_local_verified",
+      "inspection_scope": "day1 worksheet inspected before any event archive"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "otrf_apt29_day1_host_events",
+      "dataset_name": "APT29 Evals Day 1 manual host events",
+      "format": "ZIP containing Windows event JSON",
+      "repository_path": "datasets/compound/apt29/day1/apt29_evals_day1_manual.zip",
+      "repository_blob_sha1": "7352679a173ec0310f9d0ed587782545182dd394",
+      "repository_size_bytes": 13944973,
+      "readme_reported_dataset_size": "367M",
+      "raw_target": "raw/apt29_evals_day1_manual.zip",
+      "download_status": "available_local_verified",
+      "sha256": "98A073140860560D70080ACE9142961BE4F64B4862BAE892D62D0F254D0FDBE5",
+      "event_inspection_status": "structural_scan_completed"
+    },
+    {
+      "source_id": "otrf_apt29_day1_combined_zeek",
+      "dataset_name": "APT29 Evals Day 1 combined Zeek log",
+      "format": "Zeek JSON lines",
+      "repository_path": "datasets/compound/apt29/day1/zeek/combined_zeek.log",
+      "repository_blob_sha1": "277c706a50a33affb4f2ee1458406cc17a6222e9",
+      "repository_size_bytes": 1243861,
+      "raw_target": "raw/combined_zeek.log",
+      "download_status": "available_local_verified",
+      "sha256": "2B3268DD04F54E0BC3D6B11FDEC85E821A0BE7B4754B71D7FD7C9595A7D235D1",
+      "event_inspection_status": "structural_scan_completed_no_time_overlap_with_host_archive"
+    },
+    {
+      "source_id": "otrf_apt29_day1_scranton_pcap",
+      "dataset_name": "APT29 Evals Day 1 SCRANTON PCAP",
+      "format": "password-protected ZIP; password documented as infected",
+      "repository_path": "datasets/compound/apt29/day1/pcaps/SCRANTON.zip",
+      "repository_blob_sha1": "70d2c1f34bc4088bbea351de0cf13ccfdc55020c",
+      "repository_size_bytes": 46631415,
+      "raw_target": "raw/pcaps/SCRANTON.zip",
+      "download_status": "optional_not_downloaded",
+      "use_gate": "only after a documented Zeek insufficiency"
+    },
+    {
+      "source_id": "otrf_apt29_day1_nashua_pcap",
+      "dataset_name": "APT29 Evals Day 1 NASHUA PCAP",
+      "format": "password-protected ZIP; password documented as infected",
+      "repository_path": "datasets/compound/apt29/day1/pcaps/NASHUA.zip",
+      "repository_blob_sha1": "5e77038b58cc89a730b1cbf19c8502663339736c",
+      "repository_size_bytes": 6955498,
+      "raw_target": "raw/pcaps/NASHUA.zip",
+      "download_status": "optional_not_downloaded",
+      "use_gate": "only after a documented Zeek insufficiency"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "R08",
+      "compiled_case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "source_id": "otrf_apt29_day1_host_events",
+      "auxiliary_source_ids": [
+        "otrf_apt29_day1_combined_zeek"
+      ],
+      "ground_truth_file": "ground_truth/R08.json",
+      "status": "compiled_and_parameter_locked_evaluation_complete"
+    }
+  ],
+  "preinspection_record": {
+    "frozen_at": "2026-07-12T02:36:02.1212550+08:00",
+    "event_archive_opened_after_freeze": true,
+    "zeek_log_opened_after_freeze": true,
+    "inspection_scope": "archive inventory and structural fields only; no IOC or motif search",
+    "source_selection_basis": "emulation plan, repository metadata, independent-family and multi-claim requirements",
+    "forbidden_adaptation": "No planner parameter, claim node, or critical step may be changed after event inspection to improve results."
+  },
+  "derived_artifacts": [
+    {
+      "artifact_id": "r08_preregistration_record",
+      "path": "derived/R08_preregistration_record.json",
+      "status": "generated_before_event_inspection"
+    },
+    {
+      "artifact_id": "r08_archive_inventory",
+      "path": "derived/R08_archive_inventory.json",
+      "status": "generated"
+    },
+    {
+      "artifact_id": "r08_source_structure_summary",
+      "path": "derived/R08_source_structure_summary.json",
+      "status": "generated",
+      "limitation": "The host and Zeek time ranges do not overlap; do not combine them as event-level corroboration."
+    },
+    {
+      "artifact_id": "r08_acquisition_summary",
+      "path": "derived/R08_acquisition_summary.json",
+      "status": "evaluation_complete"
+    },
+    {
+      "artifact_id": "r08_motif_preregistration_record",
+      "path": "derived/R08_motif_preregistration_record.json",
+      "status": "generated_before_motif_search"
+    },
+    {
+      "artifact_id": "r08_motif_probe",
+      "path": "derived/R08_motif_probe.json",
+      "status": "d3_pass_4_of_5_nodes"
+    },
+    {
+      "artifact_id": "r08_claim_selection",
+      "path": "derived/R08_claim_selection.json",
+      "status": "compiled_8_event_backed_claims"
+    }
+  ],
+  "evaluation_artifacts": [
+    {
+      "artifact_id": "c11_compiled_case",
+      "path": "../../real_cases/C11-otrf-apt29-day1-scranton-nashua",
+      "status": "frozen_and_semantics_g2"
+    },
+    {
+      "artifact_id": "c11_and_primary_results",
+      "path": "../../results/c11_holdout_v0.1",
+      "status": "complete"
+    },
+    {
+      "artifact_id": "c11_or_sensitivity_results",
+      "path": "../../results/c11_or_sensitivity_v0.1",
+      "status": "complete"
+    },
+    {
+      "artifact_id": "c11_result_brief",
+      "path": "../../../08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md",
+      "status": "verified"
+    }
+  ]
+}

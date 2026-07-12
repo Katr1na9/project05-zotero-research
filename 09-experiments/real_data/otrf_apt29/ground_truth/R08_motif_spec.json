@@ -1,0 +1,192 @@
+{
+  "case_id": "R08",
+  "spec_version": "0.1",
+  "frozen_at": "2026-07-12T02:43:18.2373264+08:00",
+  "source_basis": "OTRF APT29 emulation plan day1 worksheet and R08 preregistration only",
+  "event_motif_search_started_before_freeze": false,
+  "host_archive_member": "apt29_evals_day1_manual_2020-05-01225525.json",
+  "searchable_fields": [
+    "Message",
+    "Image",
+    "CommandLine",
+    "ParentImage",
+    "ParentCommandLine",
+    "TargetFilename",
+    "TargetObject",
+    "Details",
+    "ScriptBlockText",
+    "Payload",
+    "DestinationHostname",
+    "DestinationIp",
+    "DestinationPort",
+    "SourceIp",
+    "SourcePort",
+    "QueryName",
+    "ServiceName",
+    "ServiceFileName"
+  ],
+  "provider_family_policy": {
+    "families": [
+      "sysmon",
+      "security",
+      "powershell",
+      "wmi",
+      "system"
+    ],
+    "counting_rule": "Distinct provider families count toward corroboration. Multiple Sysmon event types remain one family.",
+    "excluded_family": "other"
+  },
+  "nodes": [
+    {
+      "node_id": "N01_initial_breach_c2",
+      "critical": true,
+      "emulation_steps": [
+        "1.A",
+        "1.B"
+      ],
+      "expected_hosts": [
+        "SCRANTON"
+      ],
+      "anchors": [
+        {
+          "anchor_id": "initial_payload",
+          "terms": [
+            "3aka3.doc"
+          ]
+        }
+      ],
+      "minimum_distinct_provider_families": 2
+    },
+    {
+      "node_id": "N02_collection_first_exfil",
+      "critical": true,
+      "emulation_steps": [
+        "2.A",
+        "2.B"
+      ],
+      "expected_hosts": [
+        "SCRANTON"
+      ],
+      "anchors": [
+        {
+          "anchor_id": "first_archive",
+          "terms": [
+            "Draft.Zip"
+          ]
+        },
+        {
+          "anchor_id": "archive_command",
+          "terms": [
+            "Compress-Archive"
+          ]
+        }
+      ],
+      "minimum_distinct_provider_families": 2
+    },
+    {
+      "node_id": "N03_uac_bypass_https_c2",
+      "critical": true,
+      "emulation_steps": [
+        "3.A",
+        "3.B",
+        "3.C"
+      ],
+      "expected_hosts": [
+        "SCRANTON"
+      ],
+      "anchors": [
+        {
+          "anchor_id": "steganographic_payload",
+          "terms": [
+            "monkey.png"
+          ]
+        },
+        {
+          "anchor_id": "uac_trigger",
+          "terms": [
+            "sdclt.exe"
+          ]
+        },
+        {
+          "anchor_id": "uac_registry",
+          "terms": [
+            "Software\\Classes\\Folder\\shell\\open\\command"
+          ]
+        }
+      ],
+      "minimum_distinct_provider_families": 2
+    },
+    {
+      "node_id": "N04_lateral_movement",
+      "critical": true,
+      "emulation_steps": [
+        "8.A",
+        "8.B",
+        "8.C"
+      ],
+      "expected_hosts": [
+        "SCRANTON",
+        "NASHUA"
+      ],
+      "anchors": [
+        {
+          "anchor_id": "remote_discovery",
+          "terms": [
+            "ComputerName NASHUA"
+          ]
+        },
+        {
+          "anchor_id": "seaduke_stage",
+          "terms": [
+            "Invoke-SeaDukeStage"
+          ]
+        },
+        {
+          "anchor_id": "psexec_execution",
+          "terms": [
+            "PsExec64.exe"
+          ]
+        }
+      ],
+      "minimum_distinct_provider_families": 2
+    },
+    {
+      "node_id": "N05_nashua_collection_exfil",
+      "critical": true,
+      "emulation_steps": [
+        "9.A",
+        "9.B",
+        "9.C"
+      ],
+      "expected_hosts": [
+        "NASHUA"
+      ],
+      "anchors": [
+        {
+          "anchor_id": "rar_utility",
+          "terms": [
+            "Rar.exe"
+          ]
+        },
+        {
+          "anchor_id": "second_archive",
+          "terms": [
+            "working.zip"
+          ]
+        }
+      ],
+      "minimum_distinct_provider_families": 2
+    }
+  ],
+  "gate": {
+    "minimum_passing_critical_nodes": 3,
+    "node_pass_requires_anchor_match": true,
+    "node_pass_requires_distinct_provider_families": true
+  },
+  "forbidden_adaptation": [
+    "Do not add an anchor because it appears frequently in the event archive.",
+    "Do not replace a failed critical node after scanning.",
+    "Do not count multiple event types from one provider family as cross-provider corroboration.",
+    "Do not use the non-overlapping Zeek log as event-level support for these host nodes."
+  ]
+}

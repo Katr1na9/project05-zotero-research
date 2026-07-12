@@ -1,8 +1,8 @@
 # Project05 Research Dashboard
 
-更新：2026-07-11
+更新：2026-07-12
 
-权威入口：[AUTHORITATIVE-DOCUMENTS-20260711.md](../08-writing/AUTHORITATIVE-DOCUMENTS-20260711.md)
+权威入口：[AUTHORITATIVE-DOCUMENTS-20260712.md](../08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)
 
 ## 当前定位
 
@@ -41,7 +41,7 @@ flowchart LR
 
 | 组件 | 当前角色 | 冻结判断 |
 |---|---|---|
-| M2 | 透明部署策略 | 四案例所评估非 Oracle 策略内最佳折中，不是全局最优 |
+| M2 | 透明部署策略 | C07-C10 所评估非 Oracle 策略内最佳折中；C11 成本并非最低，不是全局最优 |
 | M3a | action-gap 机制消融 | C10 有过早停止，成本优势不成立 |
 | XGBoost | 非线性监督对照 | 优于 Logistic 的部分指标，未超过 M2 |
 | AFA-VOI | 通用 AFA 的同接口领域适配 | 两种适配均达标但平均比 M2 多 0.4389 成本 |
@@ -58,7 +58,8 @@ flowchart LR
 | AFA Myopic/Rollout-H3 | success 1.0，cost 4.9722 | 领域适配，不是官方 NOCTA/WinRegRL 复现 |
 | Depth-2 Public | success 1.0，cost 4.5556 | 未通过冻结升级门槛 |
 | M2 权重敏感性 | 16/16 变体保持 success 1.0 | 仅支持 ±25% 局部稳定 |
-| OR/AND | 开发多 claim 案例显著改变 success | 真实四例每节点单 claim，比较不可识别 |
+| C11 OTRF AND | M2 success 1.0、cost 3.6667；Oracle cost 3.0000 | 单个 APT29 仿真链，目标/ceiling 为 G2；不与 C07-C10 G3 均值合并 |
+| OR/AND | C11 中 M2 cost 由 AND 3.6667 降至 OR 1.0222 | 仅改覆盖语义；OR 是乐观敏感性，AND 为预注册主分析 |
 
 ## Gate 状态
 
@@ -69,17 +70,17 @@ flowchart LR
 | 新算法性能创新 | 不通过 | 当前复杂策略均未稳定超过 M2 |
 | 非短视结构存在性 | 通过 | 合成 Gate A |
 | DQN 工程必要性 | 不通过 | Gate B，DP 仍可接受 |
-| 人工粒度效度 | 未完成 | 双人盲标包为空，`awaiting_annotations` |
-| 外部泛化 | 未完成 | 仍需第三数据家族/更多 engagement |
+| 人工粒度效度 | 未完成 | C07-C11 v0.2 共 114 个空白 item，`awaiting_annotations`；C07-C10 的 19 条 Claim 来源记录尚待恢复 |
+| 外部泛化 | 部分通过 | C11 D1-D5 完成，补入第三种数据封装和可识别多 claim；但只是单个仿真链，不替代自然运营场景 |
 | 专利可正式提交 | 未完成 | 中文补检、权属、公开日和代理师审查待办 |
 
 ## 下一步
 
-1. 双人盲标 claim、公开意图和可支撑粒度，计算一致性与校准。
-2. 根据目标 venue 决定是否补官方 AFA 代码映射；当前领域适配必须保持边界措辞。
-3. 增加第三数据家族或更多独立 engagement，并优先加入多 claim corroboration。
-4. 论文以 [v0.4](../08-writing/paper-main-draft-v0.4-major-revision-20260711.md) 为母本；专利以 [v0.4](../08-writing/patent-main-draft-v0.4-20260711.md) 为母本。
-5. 不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
+1. 先恢复 C07-C10 的 19 条精确来源记录或生成 hash 锚定 canonical excerpts；在此期间可先启动公开意图与粒度双人盲标。
+2. 两名标注者独立完成后，先计算 A/B 一致性，再由第三人裁决分歧，最后比较最终人工标签与 compiled intended/G0-G3 代理。
+3. 将 [C11 结果](../08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md) 作为论文 v0.5 的独立外部效度/语义敏感性小节；在盲标前不升级论文主张。
+4. 若资源允许，寻找一个自然发生或更接近运营现场的独立 engagement，补足 C11 的仿真边界。
+5. 根据目标 venue 决定是否补官方 AFA 代码映射；论文仍以 [v0.4](../08-writing/paper-main-draft-v0.4-major-revision-20260711.md) 为母本。不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
 
 ## 红线
 

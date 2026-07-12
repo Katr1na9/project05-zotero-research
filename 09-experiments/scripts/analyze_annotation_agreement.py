@@ -21,6 +21,11 @@ GRANULARITY_LABELS = [
     "G3_campaign",
 ]
 REVIEWED_VALUES = {"yes", "y", "true", "1"}
+PUBLIC_FILES = {
+    "claim": "claim_items.jsonl",
+    "intent": "intent_items.jsonl",
+    "granularity": "granularity_items.jsonl",
+}
 
 
 def rounded(value: float | None) -> float | None:
@@ -131,6 +136,48 @@ def read_rows(path: Path) -> dict[str, dict[str, str]]:
     return indexed
 
 
+def read_public_rows(path: Path) -> dict[str, dict[str, Any]]:
+    indexed: dict[str, dict[str, Any]] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        blind_id = str(row.get("blind_id", "")).strip()
+        if not blind_id or blind_id in indexed:
+            raise ValueError(
+                f"Missing or duplicate blind_id in {path}: {blind_id!r}"
+            )
+        indexed[blind_id] = row
+    return indexed
+
+
+def validate_rows_against_public(
+    annotation_dir: Path,
+    task: str,
+    role: str,
+    rows: dict[str, dict[str, str]],
+) -> None:
+    public_path = annotation_dir / "public" / PUBLIC_FILES[task]
+    if not public_path.is_file():
+        return
+    public = read_public_rows(public_path)
+    if set(rows) != set(public):
+        raise ValueError(f"{task}: {role} blind IDs do not match public items")
+    if task != "intent":
+        return
+    for blind_id, row in rows.items():
+        if row.get("reviewed", "").casefold() not in REVIEWED_VALUES:
+            continue
+        selected = parse_node_set(row.get("selected_node_ids_pipe", ""))
+        candidates = {
+            node["node_id"] for node in public[blind_id]["candidate_nodes"]
+        }
+        unknown = selected - candidates
+        if unknown:
+            raise ValueError(
+                f"{task}: {role} selected unknown nodes for {blind_id}: "
+                f"{sorted(unknown)}"
+            )
+
+
 def paired_reviewed(
     left: dict[str, dict[str, str]], right: dict[str, dict[str, str]]
 ) -> list[tuple[dict[str, str], dict[str, str]]]:
@@ -231,6 +278,12 @@ def analyze_annotation_dir(annotation_dir: Path) -> dict[str, Any]:
     for task, filename in filenames.items():
         left = read_rows(annotation_dir / "annotator_A" / filename)
         right = read_rows(annotation_dir / "annotator_B" / filename)
+        validate_rows_against_public(
+            annotation_dir, task, "annotator_A", left
+        )
+        validate_rows_against_public(
+            annotation_dir, task, "annotator_B", right
+        )
         total_ids = len(set(left) | set(right))
         task_data[task] = (paired_reviewed(left, right), total_ids)
 
@@ -271,9 +324,8 @@ def main() -> None:
     args = parser.parse_args()
     result = analyze_annotation_dir(args.annotation_dir)
     output = args.output or args.annotation_dir / "agreement_results.json"
-    output.write_text(
-        json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
 
