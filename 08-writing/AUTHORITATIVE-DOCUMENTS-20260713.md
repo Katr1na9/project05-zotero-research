@@ -2,7 +2,7 @@
 
 日期：2026-07-13
 
-状态：论文 v0.7 为唯一母本；C12 运营数据压力与外部 AFA 映射已经分层并入正文
+状态：论文 v0.7 为唯一母本；专利 v0.5 已同步 C11/C12、来源核验与外部 AFA/MDP 边界
 
 ## 1. 唯一写作入口
 
@@ -16,9 +16,9 @@
 | 引文审计 | `paper-main-citation-audit-v0.2-20260711.md` | 新增 AFA 近邻的直接支撑边界 |
 | Reviewer 回复 | `reviewer-response-major-revision-v0.3-20260713.md` | 已记录 C12 两级 Gate、外部源码审计和仍未关闭的人工/终点门槛 |
 | 修订后严谨性审计 | `paper-main-rigor-review-v0.5-20260713.md` | 已纳入 C12 与外部 AFA 边界；二线 Borderline / 顶会 Weak Reject |
-| 专利主稿 | `patent-main-draft-v0.4-20260711.md` + `patent-package-v0.4/` | 权利要求链不因论文负结果改写 |
-| 专利一致性附录 | `patent-v0.4-review-alignment-addendum-20260711.md` | 说明第 9 项、LLM 和正式申请待办 |
-| 中国专利逐项补检 | `chinese-patent-claim-chart-v0.2-20260711.md` + `patent-claim-collision-matrix-v0.2-20260711.md` | 权利要求级技术比较；不是法律意见 |
+| 专利主稿 | `patent-main-draft-v0.5-20260713.md` + `patent-package-v0.5/` | 12 项权利要求与 v0.4 一致；说明书同步 C11/C12 和来源 Gate |
+| 专利一致性附录 | `patent-v0.5-paper-v0.7-alignment-addendum-20260713.md` | 说明论文增量、权项冻结、FTR-010 和正式申请待办 |
+| 中国专利逐项补检 | `chinese-patent-claim-chart-v0.2-20260711.md` + `patent-claim-collision-matrix-v0.3-20260713.md` | 加入 AFA/MDP 与 C11/C12 边界；仍不是法律意见 |
 | FTR-002 改写候选 | `patent-ftr002-claim-amendment-options-v0.1-20260711.md` | 供代理师选择；尚未替换 v0.4 权利要求 |
 
 ## 2. 权威实验结果
@@ -58,6 +58,7 @@
 8. C11 的协议与结果同批提交，只称内部冻结记录；N02/N05 claims 只证明 collection，不证明网络 exfiltration。
 9. C12 是 1 个生产 SOC 多 stream incident 的 G1 压力；45 个条件是重复测量，GraphML 为厂商投影，`Disrupted` 不等于独立 actor truth。
 10. 外部 AFA 源码与动作映射已完成，但 AFABench/AACO/WinRegRL 与 Project05 的状态、端点和转移语义不等价；当前不允许“官方同任务复现”表述。
+11. 专利 v0.5 只把 C12 两级来源 Gate 写为可选实施例；FTR-010 在完成中国专利补检和代理师审查前不得升级为独立必要特征。
 
 ## 4. 历史文件处理规则
 
@@ -69,4 +70,4 @@
 2. C12 已提供一个更接近运营现场的独立 incident，但仍需更多组织/incident 或分析师效用端点才能主张外部泛化；重复 mask/seed 不得重计为独立攻击。
 3. 若主张真实归因能力，必须增加 actor/campaign 正确性或分析师效用终点；当前内部 success 不等于归因准确率。
 4. AFA 源码/任务映射已完成；正式投稿若要求数值复现，必须先冻结 endpoint contract，并将跨任务复现或 adapter 与主结果分表。
-5. 专利正式提交前由代理师复核中国专利补检，确认 FTR-002 改写方案，并完成权属、公开日、发明人/申请人确认和逐项审查。
+5. 专利正式提交前由代理师复核中国专利补检，确认 FTR-002 改写方案、权利要求 9 和 FTR-010 的处理，并完成权属、公开日、发明人/申请人确认和逐项审查。

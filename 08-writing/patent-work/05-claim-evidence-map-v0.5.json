@@ -1,0 +1,149 @@
+{
+  "document": "08-writing/patent-main-draft-v0.5-20260713.md",
+  "jurisdiction": "CN",
+  "status": "full-draft-pending-inventorship-ownership-disclosure-review",
+  "updated": "2026-07-13",
+  "core_concept": "Convert partial CTI-to-local-evidence alignment into an evidence-gap state, select a cost-constrained acquisition action using public action intent without reading hidden recovery outcomes, update after channel execution, and limit attribution output by supportable granularity.",
+  "claim_map": [
+    {
+      "claim": 1,
+      "type": "independent-method",
+      "features": ["FTR-001", "FTR-002", "FTR-003", "FTR-004", "FTR-005"],
+      "sources": [
+        "03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md",
+        "09-experiments/scripts/run_mvp.py",
+        "08-writing/intended-cti-node-annotation-protocol-v0.1-20260710.md",
+        "04-progress/m4-explicit-stop-degrade-20260710.md",
+        "08-writing/paper-main-draft-v0.7-c12-operational-stress-20260713.md",
+        "08-writing/c12-natural-operational-engagement-results-v0.1-20260713.md"
+      ]
+    },
+    {
+      "claim": 2,
+      "type": "dependent",
+      "feature": "OR node coverage and edge coverage",
+      "sources": ["09-experiments/scripts/run_mvp.py", "08-writing/c11-frozen-policy-transfer-results-v0.1-20260713.md"]
+    },
+    {
+      "claim": 3,
+      "type": "dependent",
+      "feature": "supportable granularity and support ceiling",
+      "sources": ["09-experiments/scripts/run_mvp.py", "09-experiments/data_schema/alignment_state.schema.json", "08-writing/c11-frozen-policy-transfer-results-v0.1-20260713.md", "08-writing/c12-natural-operational-engagement-results-v0.1-20260713.md"]
+    },
+    {
+      "claim": 4,
+      "type": "dependent",
+      "feature": "public intent versus hidden recovery information-boundary check",
+      "sources": [
+        "09-experiments/scripts/run_mvp.py",
+        "08-writing/intended-cti-node-annotation-protocol-v0.1-20260710.md",
+        "04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md",
+        "08-writing/c12-natural-operational-engagement-results-v0.1-20260713.md"
+      ]
+    },
+    {
+      "claim": 5,
+      "type": "dependent",
+      "feature": "M2 public-state rule scoring",
+      "sources": ["09-experiments/scripts/run_mvp.py", "08-writing/c07-c09-budget-efficiency-results-v0.1-20260711.md"]
+    },
+    {
+      "claim": 6,
+      "type": "dependent",
+      "feature": "M3a action-gap compatibility scoring",
+      "sources": ["09-experiments/scripts/run_mvp.py", "04-progress/m3a-action-gap-compatibility-experiment-20260710.md"]
+    },
+    {
+      "claim": 7,
+      "type": "dependent",
+      "feature": "channel execution and zero-yield feedback",
+      "sources": ["09-experiments/scripts/run_mvp.py", "04-progress/m4-channel-reliability-outage-stress-20260710.md", "08-writing/c11-frozen-policy-transfer-results-v0.1-20260713.md", "08-writing/c12-natural-operational-engagement-results-v0.1-20260713.md"]
+    },
+    {
+      "claim": 8,
+      "type": "dependent",
+      "feature": "explicit stop, justified degradation and premature-stop semantics",
+      "sources": [
+        "09-experiments/scripts/run_mvp.py",
+        "04-progress/m4-explicit-stop-degrade-20260710.md",
+        "04-progress/m4-should-stop-stress-20260710.md",
+        "04-progress/m4-partial-reachability-routing-stress-20260710.md",
+        "08-writing/c11-frozen-policy-transfer-results-v0.1-20260713.md",
+        "08-writing/c12-natural-operational-engagement-results-v0.1-20260713.md"
+      ]
+    },
+    {
+      "claim": 9,
+      "type": "dependent",
+      "feature": "finite-depth or dynamic-programming planning over action prerequisites",
+      "sources": [
+        "09-experiments/scripts/run_nonmyopic_gate.py",
+        "08-writing/nonmyopic-dqn-gate-protocol-v0.1-20260711.md",
+        "08-writing/nonmyopic-dqn-gate-results-v0.1-20260711.md"
+      ],
+      "effect_limit": "The evidence supports structural nonmyopic necessity in controlled environments. C11 does not provide stable cost benefit and C12 only matches the oracle cost in one G1 case; neither establishes real-world prevalence or DQN necessity."
+    },
+    {
+      "claim": 10,
+      "type": "independent-system",
+      "features": ["FTR-001", "FTR-002", "FTR-003", "FTR-004", "FTR-005"],
+      "sources": ["09-experiments/scripts/run_mvp.py", "09-experiments/data_schema"]
+    },
+    {
+      "claim": 11,
+      "type": "device",
+      "feature": "processor-memory implementation of claims 1-9",
+      "sources": ["09-experiments/scripts/run_mvp.py", "09-experiments/scripts/run_nonmyopic_gate.py"]
+    },
+    {
+      "claim": 12,
+      "type": "computer-readable-medium",
+      "feature": "stored program implementing claims 1-9",
+      "sources": ["09-experiments/scripts/run_mvp.py", "09-experiments/scripts/run_nonmyopic_gate.py"]
+    }
+  ],
+  "excluded_or_limited": [
+    {
+      "topic": "LLM semantic compiler",
+      "status": "description-only-optional-interface",
+      "reason": "No independent compiler accuracy, provenance fidelity or downstream-effect experiment has been completed."
+    },
+    {
+      "topic": "DQN or learned-policy superiority",
+      "status": "excluded",
+      "reason": "Gate B failed; complete DP remains tractable at the current scale."
+    },
+    {
+      "topic": "universal cost reduction",
+      "status": "excluded",
+      "reason": "M3a costs more than M2 on C07-C10, while C11 and C12 show policy-order reversals across source conditions; no implementation has a universal cost effect."
+    },
+    {
+      "topic": "specific DARPA or OpTC identifiers",
+      "status": "embodiment-only",
+      "reason": "Dataset names, hosts, IPs and benchmark values are validation details, not essential technical features."
+    },
+    {
+      "topic": "active feature acquisition or MDP planning as such",
+      "status": "prior-art-boundary-not-core-claim",
+      "reason": "AFABench, AACO, NOCTA and WinRegRL establish adjacent acquisition and planning interfaces; the asserted combination is the source-traceable security-evidence loop with public/hidden isolation, execution feedback and support-limited output."
+    },
+    {
+      "topic": "two-stage source gate",
+      "status": "optional-embodiment-pending-review",
+      "reason": "C12 supports implementation in one natural operational case, but a new dependent claim requires additional prior-art search and patent-agent review."
+    },
+    {
+      "topic": "vendor ATT&CK labels, graph edges or disposition fields as actor truth",
+      "status": "excluded",
+      "reason": "These fields are derived context projections unless independently traced to raw events and human-validated ground truth."
+    }
+  ],
+  "mandatory_human_review": [
+    "inventor contribution allocation",
+    "applicant and ownership",
+    "first public disclosure date and repository visibility",
+    "CN prior-art search and claim collision review",
+    "patent-agent review for support, clarity, unity and eligibility"
+  ]
+}

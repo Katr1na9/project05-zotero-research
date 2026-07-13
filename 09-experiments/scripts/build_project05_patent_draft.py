@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import re
 from pathlib import Path
@@ -9,9 +10,11 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 WRITING = ROOT / "08-writing"
 PATENT_WORK = WRITING / "patent-work"
-PATENT_MD = WRITING / "patent-main-draft-v0.4-20260711.md"
-CLAIMS_TXT = PATENT_WORK / "06-claims-v0.4.txt"
-OUTPUT = PATENT_WORK / "07-structured-draft-v0.4.json"
+DEFAULT_PATENT_MD = WRITING / "patent-main-draft-v0.4-20260711.md"
+DEFAULT_CLAIMS_TXT = PATENT_WORK / "06-claims-v0.4.txt"
+DEFAULT_SOURCE_MAP = PATENT_WORK / "01-source-map.json"
+DEFAULT_EVIDENCE_LEDGER = PATENT_WORK / "03-evidence-ledger.json"
+DEFAULT_OUTPUT = PATENT_WORK / "07-structured-draft-v0.4.json"
 
 
 def section(text: str, start: str, end: str | None) -> str:
@@ -28,17 +31,17 @@ def paragraphs(text: str) -> list[str]:
     ]
 
 
-def load_claims() -> list[dict[str, Any]]:
+def load_claims(claims_path: Path) -> list[dict[str, Any]]:
     claims = []
-    for line in CLAIMS_TXT.read_text(encoding="utf-8-sig").splitlines():
+    for line in claims_path.read_text(encoding="utf-8-sig").splitlines():
         match = re.match(r"^(\d+)\.\s+(.*)$", line.strip())
         if match:
             claims.append({"number": int(match.group(1)), "text": match.group(2)})
     return claims
 
 
-def source_map() -> list[dict[str, str]]:
-    raw = json.loads((PATENT_WORK / "01-source-map.json").read_text(encoding="utf-8"))
+def source_map(source_map_path: Path) -> list[dict[str, str]]:
+    raw = json.loads(source_map_path.read_text(encoding="utf-8"))
     records = []
     for item in raw["sources"]:
         records.append(
@@ -53,8 +56,8 @@ def source_map() -> list[dict[str, str]]:
     return records
 
 
-def evidence_ledger() -> list[dict[str, Any]]:
-    raw = json.loads((PATENT_WORK / "03-evidence-ledger.json").read_text(encoding="utf-8"))
+def evidence_ledger(evidence_ledger_path: Path) -> list[dict[str, Any]]:
+    raw = json.loads(evidence_ledger_path.read_text(encoding="utf-8"))
     entries = []
     for index, item in enumerate(raw["features"], start=1):
         status = item["support_state"]
@@ -205,8 +208,20 @@ def figures() -> list[dict[str, Any]]:
     ]
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Build a structured Project05 patent draft.")
+    parser.add_argument("--patent-md", type=Path, default=DEFAULT_PATENT_MD)
+    parser.add_argument("--claims-txt", type=Path, default=DEFAULT_CLAIMS_TXT)
+    parser.add_argument("--source-map", type=Path, default=DEFAULT_SOURCE_MAP)
+    parser.add_argument("--evidence-ledger", type=Path, default=DEFAULT_EVIDENCE_LEDGER)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--source-label", default="Project05 mixed project and paper-main-draft-v0.3")
+    return parser.parse_args()
+
+
 def main() -> None:
-    text = PATENT_MD.read_text(encoding="utf-8")
+    args = parse_args()
+    text = args.patent_md.read_text(encoding="utf-8")
     title = re.search(r"^#\s+(.+)$", text, flags=re.MULTILINE).group(1)
     technical_field = paragraphs(section(text, "### 1. 技术领域", "### 2. 背景技术"))
     background = paragraphs(section(text, "### 2. 背景技术", "### 3. 发明内容"))
@@ -229,7 +244,7 @@ def main() -> None:
         "schema_version": "2.0",
         "title": title,
         "metadata": {
-            "source": "Project05 mixed project and paper-main-draft-v0.3",
+            "source": args.source_label,
             "target": "中国发明专利",
             "draft_status": "供发明人及专利代理师复核",
         },
@@ -238,7 +253,7 @@ def main() -> None:
             "formula_count_in_source": 1,
             "contains_methodology_figures": True,
         },
-        "source_map": source_map(),
+        "source_map": source_map(args.source_map),
         "terminology_ledger": [
             {"concept": "evidence gap state", "canonical_zh": "证据缺口状态", "source_terms": ["alignment state"], "forbidden_aliases": []},
             {"concept": "public action intent", "canonical_zh": "公开意图目标", "source_terms": ["intended_cti_node_ids"], "forbidden_aliases": []},
@@ -263,8 +278,8 @@ def main() -> None:
             "technical_means": "构建证据缺口状态，隔离公开意图与隐藏执行结果，按预算选择并执行取证动作，基于反馈更新状态并显式停止或降级。",
             "technical_effect": "将部分对齐结果转化为可执行采集控制闭环，减少规划阶段隐藏结果泄漏并约束证据不足时的越级归因。",
         },
-        "evidence_ledger": evidence_ledger(),
-        "claims": load_claims(),
+        "evidence_ledger": evidence_ledger(args.evidence_ledger),
+        "claims": load_claims(args.claims_txt),
         "claim_feature_map": claim_feature_map(),
         "figures": figures(),
         "specification": {
@@ -294,23 +309,24 @@ def main() -> None:
         },
         "abstract": abstract,
         "audit": {
-            "support_findings": ["独立方法权利要求的必要特征均映射到F001-F005。", "非短视规划仅作为从属权利要求和受控实施例。"],
-            "consistency_findings": ["LLM、DQN、XGBoost及具体数据集均未进入独立权利要求。", "未把降低平均取证成本写成必然技术效果。"],
+            "support_findings": ["独立方法权利要求的必要特征均映射到F001-F005。", "非短视规划仅作为从属权利要求和受控实施例。", "两级来源核验为单个自然运营案例支持的可选实施例，未写入必要特征。"],
+            "consistency_findings": ["LLM、DQN、XGBoost、AFA/MDP方法名称及具体数据集均未进入独立权利要求。", "未把降低平均取证成本或单一策略优越性写成必然技术效果。"],
         },
         "quality_assessment": {
             "status": "incomplete-draft",
             "scores": {
-                "evidence_support": {"score": 4, "evidence": "12项权利要求均映射到证据台账和源文件。"},
+                "evidence_support": {"score": 4, "evidence": "12项权利要求均映射到证据台账和源文件；F010仅作为可选实施例。"},
                 "claim_architecture": {"score": 4, "evidence": "方法独权、系统独权及从属回退层次完整。"},
                 "terminology_consistency": {"score": 4, "evidence": "证据缺口状态、公开意图目标、实际恢复集合和支持上限已锁定。"},
-                "enablement_detail": {"score": 4, "evidence": "说明书包含数据对象、状态构建、信息边界、评分、通道、停止及非短视实施例。"},
+                "enablement_detail": {"score": 4, "evidence": "说明书包含数据对象、状态构建、信息边界、评分、通道、停止、非短视及来源核验实施例。"},
                 "technical_effect_reasoning": {"score": 4, "evidence": "技术效果限定为机器可执行闭环、信息隔离和粒度约束。"},
                 "formula_coverage": {"score": 4, "evidence": "M3a评分公式、符号和技术作用均结构化收录。"},
                 "figure_alignment": {"score": 4, "evidence": "五幅附图覆盖独权流程、信息边界、状态更新、停止闭环和从属非短视实施例。"},
             },
         },
     }
-    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 if __name__ == "__main__":
