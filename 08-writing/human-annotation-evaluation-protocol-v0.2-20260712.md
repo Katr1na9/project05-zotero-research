@@ -1,6 +1,7 @@
 # Claim、公开意图与可支撑粒度人工标注协议 v0.2
 
 日期：2026-07-12
+来源 Gate 更新：2026-07-13，27/27 canonical excerpts 已在当前工作站生成
 状态：标注前冻结；尚无人工标签
 案例范围：C07-C11
 
@@ -43,11 +44,11 @@ Claim 任务开始前，每个 source pointer 必须满足以下二选一：
 
 项目 `notes`、motif report 和 claim 编译说明只是待审对象的上下文，不能替代独立来源记录。若标注者实际无法读取所指记录，必须标为 `U_unassessable` 和 `source_pointer_valid=unassessable`；但管理员已知来源不可用时，不应故意启动 Claim 任务来制造大量 U 标签。
 
-当前来源状态见 `human-annotation-source-access-ledger-v0.1-20260712.md`：C11 的 8 条记录本地可回查；C07-C10 的 19 条精确原始记录当前不在本地工作区。因此：
+当前来源状态见 `human-annotation-source-access-ledger-v0.2-20260713.md`：C07-C11 的 27 条 claims 均已有 hash 锚定的本地 canonical excerpt。因此：
 
-- 公开意图和粒度任务已具备启动条件；
-- Claim 任务仍需先补 C07-C10 原始记录或 canonical excerpts；
-- 未通过来源 Gate 前，不得声称 27 条 claims 已获得人工验证。
+- 公开意图、粒度和 Claim 三类任务均已具备技术启动条件；
+- Claim 标注者必须同时获得公开 item 与管理员本地提供的 source excerpt；
+- 来源 Gate 关闭不等于已完成标注，不得声称 27 条 claims 已获得人工验证。
 
 ## 5. Codebook
 
@@ -132,5 +133,7 @@ python 09-experiments/scripts/analyze_annotation_calibration.py 09-experiments/a
 - agreement analyzer：`09-experiments/scripts/analyze_annotation_agreement.py`
 - adjudication/calibration analyzer：`09-experiments/scripts/analyze_annotation_calibration.py`
 - 盲标包：`09-experiments/annotation/c07_c11_v0.2/`
-- 来源台账：`08-writing/human-annotation-source-access-ledger-v0.1-20260712.md`
+- 来源摘录构建器：`09-experiments/scripts/build_claim_source_excerpts.py`
+- 来源摘录哈希包：`09-experiments/annotation/source_excerpts/c07_c11_v0.1/`
+- 来源台账：`08-writing/human-annotation-source-access-ledger-v0.2-20260713.md`
 - 结果模板：`08-writing/human-annotation-evaluation-results-template-v0.2-20260712.md`

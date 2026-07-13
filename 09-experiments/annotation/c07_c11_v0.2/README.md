@@ -18,9 +18,10 @@
 
 - 公开意图任务：可开始。
 - 粒度任务：可开始。
-- Claim 任务：暂不完整启动。C11 的 8 条记录可本地回查，但 C07-C10 的 19 条精确原始记录尚未恢复；详见[来源访问台账](../../../08-writing/human-annotation-source-access-ledger-v0.1-20260712.md)。
+- Claim 任务：技术条件已具备。27/27 条 canonical excerpts 已在当前工作站生成；详见[来源访问台账](../../../08-writing/human-annotation-source-access-ledger-v0.2-20260713.md)和[来源摘录包](../source_excerpts/c07_c11_v0.1/README.md)。
+- A/B 分发：两个本地隔离 ZIP 已生成，哈希见[分发清单](../distribution/c07_c11_v0.2_distribution_v0.1/bundle_manifest.json)。
 
-项目 notes 不是独立来源证据。不得要求标注者仅凭 notes 把 C07-C10 claims 标为 direct/partial/unsupported。
+项目 notes 不是独立来源证据。管理员必须把本地 source excerpt 与公开 Claim item 一并提供；Gate 关闭不等于已有人工标签。
 
 ## 执行顺序
 

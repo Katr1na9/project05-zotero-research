@@ -1,5 +1,18 @@
 # Research Progress
 
+## 2026-07-13：C07-C11 Claim 来源 Gate 关闭
+
+- 确认 C07/C08 PIDSMaker event/node 窗口、C09/C10 OpTC eCAR 窗口和 C11 OTRF Host ZIP 均已在当前工作站可用；旧台账的“19 条待恢复”状态已滞后。
+- 新增确定性构建器 `build_claim_source_excerpts.py`，按盲标包公开 `source_pointer` 精确抽取 C07-C11 共 27 条 canonical excerpts。
+- PIDSMaker 摘录保留 event edge 与 src/dst 解析节点；OpTC/OTRF 保留命中的原始 JSON event；四个抽取窗口、两个节点表和 C11 ZIP 哈希全部复核通过。
+- 本地 payload 为 27/27 一一映射，SHA-256 `DF060783831ACF1D961938C5FC4BD208A3AA50C64C7BE38DA33F71128FD7A402`；Git 只提交构建器、哈希清单和来源说明。
+- 因攻击命令文本触发 Windows 防护，磁盘 payload 改用可逆 UTF-8 hex；`excerpt_sha256` 对解码后原始 payload 计算，查看器只向终端按需解码，未关闭系统防护。
+- 来源 Gate 状态升级为 `ready_local_canonical_excerpts`；双人标签仍为零，盲标包继续保持 `awaiting_annotations`。
+- 生成 A/B 两个确定性隔离 ZIP；包内只有各自空白 CSV、公开 items、canonical excerpts、codebook 和单条查看器，不含 admin key、对方目录、论文结果或 `recoverable_claim_ids`。
+- A/B ZIP SHA-256 分别为 `7DB4DDA24C2BFFA02BA3607837934AD079D44F739BA8246291C736C8A14A9B2E` 与 `18251E9677A4D74DECDA6FDAA77F7038707BB742468704F2A7ADF2FDEF0881CE`；ZIP 本体保持本地，Git 只提交分发清单。
+- 新增来源摘录、分发隔离和论文状态一致性测试；全项目回归 `265/265` 通过。
+- 下一步从“恢复来源”切换为“确认两名独立标注者并启动 Claim、公开意图和粒度三任务盲标”。
+
 ## 2026-07-13：C11 独立复核并并入论文 v0.5
 
 - 同步远端 C11 增量，明确多模态 P05-L2 不进入本轮论文修改。

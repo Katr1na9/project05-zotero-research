@@ -21,7 +21,7 @@ C11 的主要价值是把同一调查控制接口迁移到第三种 Windows JSON
 | D3 Scope calibration | 5 | C11 被限定为单个 APT29 emulation、第三封装和 G2 压力，不并入 G3 聚合 |
 | D4 Argument coherence | 4 | 问题、信息边界、策略比较、负结果和结论一致；人工效度尚未闭环 |
 | D5 Exploration integrity | 5 | M3a、学习、AFA、Depth-2、Gate B 和 C11 中 M2 非最低成本均原样保留 |
-| D6 Methodological rigor | 3 | 257 项回归、固定源回指、哈希复现和多类基线较完整；仍缺双人标签、真实任务终点和官方 AFA 复现 |
+| D6 Methodological rigor | 3 | 265 项回归、固定源回指、哈希复现和多类基线较完整；仍缺双人标签、真实任务终点和官方 AFA 复现 |
 
 ## C11 新增的有效证据
 
@@ -65,4 +65,4 @@ C11 v0.1 只运行 `run_mvp.py` 的内置策略/消融，XGBoost、AFA-VOI 和 D
 
 - **可支持的稿型**：以信息边界、可审计调查控制、透明策略局部价值和完整负结果为核心的安全系统/应用方法论文。
 - **不可支持的稿型**：新的 actor attribution SOTA、跨域最优规划器、真实多传感器融合或 LLM 增益论文。
-- **下一项最高收益工作**：恢复 C07-C10 精确来源记录并完成双人盲标、IAA 与粒度校准；随后再增加自然 engagement 或分析师效用终点。
+- **下一项最高收益工作**：27/27 来源摘录已经恢复；现在直接完成双人盲标、IAA 与粒度校准，随后再增加自然 engagement 或分析师效用终点。

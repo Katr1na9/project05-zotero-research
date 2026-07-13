@@ -64,7 +64,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 ## 当前下一步
 
 1. P05-L2：按 [reading queue](10-research-lines/02-multimodal-threat-attribution/02-literature-notes/reading-queue.md) 精读 P0 五篇，验证 W1 能否区别于 SecTracer、Forensic Coverage、ID-INT 和 P4Prime。G1 前不选模型、不写论文。
-2. P05-L1：C07-C11 v0.2 双人盲标包仍为 `awaiting_annotations`。先恢复 C07-C10 的 19 条精确来源记录；意图与粒度任务可先行。
+2. P05-L1：C07-C11 v0.2 双人盲标包仍为 `awaiting_annotations`。27/27 Claim 来源摘录已就绪，下一步是确认两名独立标注者并启动三任务盲标。
 3. P05-L1：C11 的 D1-D5 已完成；外部效度应优先增加自然发生或更接近运营现场的独立 engagement。
 4. P05-L1：根据目标 venue 决定是否补官方 AFA 实现；专利继续完成权属、公开日和代理师审查。
 

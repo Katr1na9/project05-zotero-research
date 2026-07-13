@@ -12,6 +12,14 @@ PAPER = (
 )
 AUTHORITY = ROOT / "08-writing" / "AUTHORITATIVE-DOCUMENTS-20260713.md"
 RIGOR_REVIEW = ROOT / "08-writing" / "paper-main-rigor-review-v0.3-20260713.md"
+SOURCE_EXCERPT_MANIFEST = (
+    ROOT
+    / "09-experiments"
+    / "annotation"
+    / "source_excerpts"
+    / "c07_c11_v0.1"
+    / "source_excerpt_manifest.json"
+)
 CASE_DIR = (
     ROOT
     / "09-experiments"
@@ -127,6 +135,20 @@ class PaperV05ConsistencyTests(unittest.TestCase):
         )
         self.assertIn(
             f"共 {manifest['annotation_item_total']} 个 item",
+            self.paper,
+        )
+
+    def test_claim_source_gate_is_closed_without_inventing_human_labels(self):
+        source_manifest = load_json(SOURCE_EXCERPT_MANIFEST)
+        self.assertEqual(27, source_manifest["excerpt_count"])
+        self.assertEqual(
+            "ready_local_canonical_excerpts",
+            source_manifest["source_gate_status"],
+        )
+        self.assertFalse(source_manifest["human_labels_present"])
+        self.assertIn(
+            "27 条 Claim 来源已在当前工作站按冻结 pointer 生成 hash 锚定 "
+            "canonical excerpts",
             self.paper,
         )
 

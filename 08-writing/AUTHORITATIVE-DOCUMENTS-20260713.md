@@ -37,7 +37,9 @@
 | C11 增量复核 | `c11-increment-audit-v0.1-20260713.md` | 原始回指、冻结结果、语义边界与 v0.5 整合决定 |
 | 双人盲标协议 | `human-annotation-evaluation-protocol-v0.2-20260712.md` | C07-C11、114 个 item；先一致性、后裁决、再对工程代理校准 |
 | 双人盲标包 | `../09-experiments/annotation/c07_c11_v0.2/` | A/B 与裁决模板均为空，状态必须保持 `awaiting_annotations`，不得生成或代填人工结果 |
-| Claim 来源访问台账 | `human-annotation-source-access-ledger-v0.1-20260712.md` | C11 8 条可回查；C07-C10 19 条精确记录待恢复，完整 Claim 标注尚未启动 |
+| Claim 来源摘录包 | `../09-experiments/annotation/source_excerpts/c07_c11_v0.1/` | 27/27 canonical excerpts 已在当前工作站生成；Git 只保存构建器与哈希清单 |
+| A/B 本地分发包 | `../09-experiments/annotation/distribution/c07_c11_v0.2_distribution_v0.1/` | 两个隔离 ZIP 已生成；不含 admin key、对方 CSV、规划结果或人工标签 |
+| Claim 来源访问台账 | `human-annotation-source-access-ledger-v0.2-20260713.md` | 来源 Gate 已关闭；人工标签仍为零，尚未启动 A/B 标注 |
 
 ## 3. 当前冻结判断
 
@@ -56,7 +58,7 @@
 
 ## 5. 当前未完成门槛
 
-1. 先恢复 C07-C10 的 19 条精确来源记录或 hash 锚定 excerpts；随后由两名独立标注者完成 claim、公开意图和粒度盲标，并报告一致性、裁决及代理校准结果。
+1. 由两名独立标注者完成 claim、公开意图和粒度盲标，并报告一致性、裁决及代理校准结果；27/27 来源摘录已经就绪，不再以恢复数据作为前置待办。
 2. 若要进一步加强外部效度，增加自然发生或更接近运营现场的独立 engagement；重复 mask/seed 或同一仿真 replay 不得重计为独立攻击。
 3. 若主张真实归因能力，必须增加 actor/campaign 正确性或分析师效用终点；当前内部 success 不等于归因准确率。
 4. AFA 结果仅是同接口领域适配；正式投稿若要求严格外部复现，应补官方实现或等价公开代码的任务映射。
