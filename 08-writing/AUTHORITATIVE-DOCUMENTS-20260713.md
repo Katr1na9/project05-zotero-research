@@ -16,8 +16,8 @@
 | 引文审计 | `paper-main-citation-audit-v0.2-20260711.md` | 新增 AFA 近邻的直接支撑边界 |
 | Reviewer 回复 | `reviewer-response-major-revision-v0.4-20260713.md` | 已记录人工首轮未过门槛、待裁决与粒度来源异常 |
 | 修订后严谨性审计 | `paper-main-rigor-review-v0.6-20260713.md` | 人工负结果提高诚实性但未关闭构念效度；二线 Borderline / 顶会 Weak Reject |
-| 专利主稿 | `patent-main-draft-v0.5-20260713.md` + `patent-package-v0.5/` | 12 项权利要求与 v0.4 一致；说明书同步 C11/C12 和来源 Gate |
-| 专利一致性附录 | `patent-v0.5-paper-v0.7-alignment-addendum-20260713.md` | 说明论文增量、权项冻结、FTR-010 和正式申请待办 |
+| 专利主稿 | `patent-main-draft-v0.6-method-only-20260713.md` + `patent-package-v0.6-method-only/` | 当前唯一专利母本；仅保留 1 项独立方法权利要求和 8 项从属方法权利要求 |
+| 专利范围纠正说明 | `patent-v0.6-method-only-scope-correction-20260713.md` | 已删除系统、设备及存储介质权利要求，v0.5 降为历史稿 |
 | 中国专利逐项补检 | `chinese-patent-claim-chart-v0.2-20260711.md` + `patent-claim-collision-matrix-v0.3-20260713.md` | 加入 AFA/MDP 与 C11/C12 边界；仍不是法律意见 |
 | FTR-002 改写候选 | `patent-ftr002-claim-amendment-options-v0.1-20260711.md` | 供代理师选择；尚未替换 v0.4 权利要求 |
 
@@ -59,7 +59,7 @@
 8. C11 的协议与结果同批提交，只称内部冻结记录；N02/N05 claims 只证明 collection，不证明网络 exfiltration。
 9. C12 是 1 个生产 SOC 多 stream incident 的 G1 压力；45 个条件是重复测量，GraphML 为厂商投影，`Disrupted` 不等于独立 actor truth。
 10. 外部 AFA 源码与动作映射已完成，但 AFABench/AACO/WinRegRL 与 Project05 的状态、端点和转移语义不等价；当前不允许“官方同任务复现”表述。
-11. 专利 v0.5 只把 C12 两级来源 Gate 写为可选实施例；FTR-010 在完成中国专利补检和代理师审查前不得升级为独立必要特征。
+11. 专利 v0.6 仅保护方法；系统、设备及存储介质权利要求已删除。C12 两级来源 Gate 仍是可选实施例，FTR-010 在完成中国专利补检和代理师审查前不得升级为独立必要特征。
 12. C07-C11 A/B 首轮已完成，但 Claim weighted kappa=-0.1455、Intent Jaccard=0.3673/F1=0.4878，均未过预注册门槛；第三人裁决不会改变首轮 IAA。
 13. 粒度 A/B 源文件 SHA-256 完全相同；确认独立完成或重新标注前，不得把程序得到的 1.0000 写成独立双盲一致性。
 

@@ -77,7 +77,7 @@ def evidence_ledger(evidence_ledger_path: Path) -> list[dict[str, Any]]:
     return entries
 
 
-def claim_feature_map() -> list[dict[str, Any]]:
+def claim_feature_map(claim_numbers: set[int]) -> list[dict[str, Any]]:
     mapping = {
         1: ["F001", "F002", "F003", "F004", "F005"],
         2: ["F001"],
@@ -100,6 +100,7 @@ def claim_feature_map() -> list[dict[str, Any]]:
             "specification_locations": ["发明内容", "具体实施方式"],
         }
         for number, ids in mapping.items()
+        if number in claim_numbers
     ]
 
 
@@ -222,6 +223,9 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     text = args.patent_md.read_text(encoding="utf-8")
+    claims = load_claims(args.claims_txt)
+    claim_numbers = {claim["number"] for claim in claims}
+    method_only = claim_numbers == set(range(1, 10))
     title = re.search(r"^#\s+(.+)$", text, flags=re.MULTILINE).group(1)
     technical_field = paragraphs(section(text, "### 1. 技术领域", "### 2. 背景技术"))
     background = paragraphs(section(text, "### 2. 背景技术", "### 3. 发明内容"))
@@ -279,8 +283,8 @@ def main() -> None:
             "technical_effect": "将部分对齐结果转化为可执行采集控制闭环，减少规划阶段隐藏结果泄漏并约束证据不足时的越级归因。",
         },
         "evidence_ledger": evidence_ledger(args.evidence_ledger),
-        "claims": load_claims(args.claims_txt),
-        "claim_feature_map": claim_feature_map(),
+        "claims": claims,
+        "claim_feature_map": claim_feature_map(claim_numbers),
         "figures": figures(),
         "specification": {
             "technical_field": technical_field,
@@ -310,13 +314,13 @@ def main() -> None:
         "abstract": abstract,
         "audit": {
             "support_findings": ["独立方法权利要求的必要特征均映射到F001-F005。", "非短视规划仅作为从属权利要求和受控实施例。", "两级来源核验为单个自然运营案例支持的可选实施例，未写入必要特征。"],
-            "consistency_findings": ["LLM、DQN、XGBoost、AFA/MDP方法名称及具体数据集均未进入独立权利要求。", "未把降低平均取证成本或单一策略优越性写成必然技术效果。"],
+            "consistency_findings": ["LLM、DQN、XGBoost、AFA/MDP方法名称及具体数据集均未进入独立权利要求。", "未把降低平均取证成本或单一策略优越性写成必然技术效果。", "当前草稿仅保留方法权利要求。" if method_only else "当前草稿包含方法与平行权利要求类别。"],
         },
         "quality_assessment": {
             "status": "incomplete-draft",
             "scores": {
-                "evidence_support": {"score": 4, "evidence": "12项权利要求均映射到证据台账和源文件；F010仅作为可选实施例。"},
-                "claim_architecture": {"score": 4, "evidence": "方法独权、系统独权及从属回退层次完整。"},
+                "evidence_support": {"score": 4, "evidence": f"{len(claims)}项权利要求均映射到证据台账和源文件；F010仅作为可选实施例。"},
+                "claim_architecture": {"score": 4, "evidence": "方法独立权利要求及八项从属回退层次完整。" if method_only else "方法独权、系统独权及从属回退层次完整。"},
                 "terminology_consistency": {"score": 4, "evidence": "证据缺口状态、公开意图目标、实际恢复集合和支持上限已锁定。"},
                 "enablement_detail": {"score": 4, "evidence": "说明书包含数据对象、状态构建、信息边界、评分、通道、停止、非短视及来源核验实施例。"},
                 "technical_effect_reasoning": {"score": 4, "evidence": "技术效果限定为机器可执行闭环、信息隔离和粒度约束。"},

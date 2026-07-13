@@ -1,0 +1,87 @@
+{
+  "analysis_id": "project05-method-only-disclosure-20260713",
+  "features": [
+    {
+      "feature_id": "FTR-001",
+      "feature": "Construct an updatable evidence-gap state from CTI/local-evidence alignment",
+      "support_state": "explicit",
+      "source_ids": ["P001", "P002", "P010", "P011", "P012", "C001"],
+      "technical_effect": "provides a machine-operable state for subsequent evidence acquisition",
+      "destination": "independent claim and paper core"
+    },
+    {
+      "feature_id": "FTR-002",
+      "feature": "Separate public action-intent nodes from hidden realized recoverable evidence",
+      "support_state": "explicit",
+      "source_ids": ["P003", "P010", "P012", "C002", "C007"],
+      "technical_effect": "prevents the planner from reading the environment answer key",
+      "destination": "independent claim and information-boundary experiment"
+    },
+    {
+      "feature_id": "FTR-003",
+      "feature": "Select an action by evidence-gap compatibility and cost under a remaining budget",
+      "support_state": "explicit",
+      "source_ids": ["E001", "C001", "P002", "P010", "P011", "P012"],
+      "technical_effect": "converts current evidence gaps into an executable acquisition decision",
+      "destination": "independent claim; formula details in dependent claim/embodiment"
+    },
+    {
+      "feature_id": "FTR-004",
+      "feature": "Apply acquisition-channel outcome and execution feedback before updating evidence state",
+      "support_state": "explicit",
+      "source_ids": ["C003", "P002", "P005", "P010", "P011", "P012"],
+      "technical_effect": "represents unreliable telemetry and reliable fallback without pre-exposing outcomes",
+      "destination": "independent or dependent claim"
+    },
+    {
+      "feature_id": "FTR-005",
+      "feature": "Output a support-limited granularity or explicit STOP/degrade result",
+      "support_state": "explicit",
+      "source_ids": ["C003", "P002", "P010", "P011", "P012"],
+      "technical_effect": "prevents unsupported granularity escalation and terminates futile acquisition",
+      "destination": "independent claim and paper core"
+    },
+    {
+      "feature_id": "FTR-006",
+      "feature": "Use an LLM to compile heterogeneous inputs into schema-constrained evidence claims",
+      "support_state": "needs-confirmation",
+      "source_ids": ["P001"],
+      "technical_effect": "potentially normalizes heterogeneous evidence semantics",
+      "destination": "inventor question or future experiment; exclude from formal independent claim"
+    },
+    {
+      "feature_id": "FTR-007",
+      "feature": "Online LLM/GNN/RL utility prediction provides superior action planning",
+      "support_state": "unsupported",
+      "source_ids": ["P002", "P004", "P007", "P009", "P011", "P012"],
+      "technical_effect": "not established",
+      "destination": "exclude; C11 and C12 show case-dependent ranking rather than stable learned-policy superiority"
+    },
+    {
+      "feature_id": "FTR-008",
+      "feature": "M3a reduces acquisition cost relative to M2",
+      "support_state": "unsupported",
+      "source_ids": ["P004", "P005", "P006", "P007", "P011", "P012"],
+      "technical_effect": "contradicted by C07-C10; C11 and C12 further show that policy ordering changes with source and support ceiling",
+      "destination": "explicitly exclude from paper and patent effect statements"
+    },
+    {
+      "feature_id": "FTR-009",
+      "feature": "Use finite-depth search or dynamic programming when actions have prerequisite or unlock relations",
+      "support_state": "explicit",
+      "support_scope": "controlled-environment-only",
+      "source_ids": ["P008", "P009", "P010", "P011", "P012", "C006"],
+      "technical_effect": "avoids systematic selection of high-immediate-yield distractors in the controlled prerequisite environment",
+      "destination": "dependent claim and embodiment; real C11/C12 evidence is case-specific and does not establish DQN necessity"
+    },
+    {
+      "feature_id": "FTR-010",
+      "feature": "Validate source metadata and event pointers, and separate raw event observations from vendor-derived context projections before compiling evidence claims",
+      "support_state": "explicit",
+      "support_scope": "single-natural-operational-case",
+      "source_ids": ["P010", "P012", "C007"],
+      "technical_effect": "preserves traceability and prevents correlation projections or automated labels from being treated as independent event truth",
+      "destination": "optional embodiment and possible dependent-claim candidate pending prior-art search and patent-agent review"
+    }
+  ]
+}

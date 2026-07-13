@@ -67,11 +67,11 @@ class PatentV05ConsistencyTests(unittest.TestCase):
         ):
             self.assertIn(required, self.main)
 
-    def test_authority_points_to_v05(self):
+    def test_v05_artifacts_remain_as_history(self):
         authority = AUTHORITY.read_text(encoding="utf-8")
-        self.assertIn("patent-main-draft-v0.5-20260713.md", authority)
-        self.assertIn("patent-package-v0.5/", authority)
-        self.assertIn("patent-claim-collision-matrix-v0.3-20260713.md", authority)
+        self.assertTrue((WRITING / "patent-main-draft-v0.5-20260713.md").exists())
+        self.assertTrue((WRITING / "patent-package-v0.5").exists())
+        self.assertIn("v0.5 降为历史稿", authority)
 
     def test_validation_report_passed(self):
         report = (WORK / "08-validation-report-v0.5.txt").read_text(encoding="utf-8")
