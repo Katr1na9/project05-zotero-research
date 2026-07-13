@@ -1,10 +1,10 @@
 # P05-L1 Research Dashboard
 
-更新：2026-07-12
+更新：2026-07-13
 
 研究线：P05-L1，不完整证据下、信息边界约束的 APT 调查控制。Project05 总入口见 [Research Lines](../10-research-lines/README.md)，多模态新论文线见 [P05-L2 Dashboard](../10-research-lines/02-multimodal-threat-attribution/00-dashboard/research-dashboard.md)。
 
-权威入口：[AUTHORITATIVE-DOCUMENTS-20260712.md](../08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)
+权威入口：[AUTHORITATIVE-DOCUMENTS-20260713.md](../08-writing/AUTHORITATIVE-DOCUMENTS-20260713.md)
 
 ## 当前定位
 
@@ -61,7 +61,7 @@ flowchart LR
 | Depth-2 Public | success 1.0，cost 4.5556 | 未通过冻结升级门槛 |
 | M2 权重敏感性 | 16/16 变体保持 success 1.0 | 仅支持 ±25% 局部稳定 |
 | C11 OTRF AND | M2 success 1.0、cost 3.6667；Oracle cost 3.0000 | 单个 APT29 仿真链，目标/ceiling 为 G2；不与 C07-C10 G3 均值合并 |
-| OR/AND | C11 中 M2 cost 由 AND 3.6667 降至 OR 1.0222 | 仅改覆盖语义；OR 是乐观敏感性，AND 为预注册主分析 |
+| OR/AND | C11 中 M2 cost 由 AND 3.6667 降至 OR 1.0222 | 仅改覆盖语义；OR 是乐观敏感性，AND 为内部冻结主分析 |
 
 ## Gate 状态
 
@@ -80,9 +80,9 @@ flowchart LR
 
 1. 先恢复 C07-C10 的 19 条精确来源记录或生成 hash 锚定 canonical excerpts；在此期间可先启动公开意图与粒度双人盲标。
 2. 两名标注者独立完成后，先计算 A/B 一致性，再由第三人裁决分歧，最后比较最终人工标签与 compiled intended/G0-G3 代理。
-3. 将 [C11 结果](../08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md) 作为论文 v0.5 的独立外部效度/语义敏感性小节；在盲标前不升级论文主张。
+3. 以 [论文 v0.5](../08-writing/paper-main-draft-v0.5-c11-external-validity-20260713.md) 为唯一母本；C11 已独立进入外部效度/语义敏感性小节，在盲标前不再升级归因主张。
 4. 若资源允许，寻找一个自然发生或更接近运营现场的独立 engagement，补足 C11 的仿真边界。
-5. 根据目标 venue 决定是否补官方 AFA 代码映射；论文仍以 [v0.4](../08-writing/paper-main-draft-v0.4-major-revision-20260711.md) 为母本。不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
+5. 根据目标 venue 决定是否补官方 AFA 代码映射。不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
 
 ## 红线
 

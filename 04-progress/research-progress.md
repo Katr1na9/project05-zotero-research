@@ -1,5 +1,16 @@
 # Research Progress
 
+## 2026-07-13：C11 独立复核并并入论文 v0.5
+
+- 同步远端 C11 增量，明确多模态 P05-L2 不进入本轮论文修改。
+- 从 OTRF 固定 commit 重新下载 13,944,973-byte 主机归档；SHA-256 与 manifest 一致，8 条 C11 claim 的行号、RecordNumber 和冻结锚点全部回查通过。
+- 当前代码重跑 C11 AND 主结果，summary SHA-256 与冻结输出一致；M2 success `1.0000`、cost `3.6667`，Coverage/M1 cost `3.2444`。
+- 修复 C07-C11 标注包 manifest 的 LF 行尾哈希漂移；相同 seed 与 case 顺序重建后，114 个公开 item 和空白模板不变，生成器一致性测试恢复通过。
+- 科学表述收紧：C11 只称事件读取前“内部冻结记录”，不冒充第三方 preregistration；多 claim 是同一主机归档内多 Windows provider，不冒充独立传感器；N02/N05 只证明 collection，不证明网络 exfiltration。
+- 新建论文 `paper-main-draft-v0.5-c11-external-validity-20260713.md`。C11 作为独立 G2 外部效度压力进入结果，不与 C07-C10 G3 主均值混算。
+- v0.5 的增量结论：M2 仍是 C07-C10 的透明部署锚点，但不是 C11 最低成本规则；AND→OR 使 M2 cost 从 `3.6667` 降至 `1.0222`，证明证据组合语义实质影响内部成本。
+- 新增 v0.5 一致性测试，锁定 C11 数字、统计单位、方法覆盖边界、114-item 标注状态和 planner action/state allowlist。
+
 ## 2026-07-12：C07-C11 双人盲标包 v0.2 冻结
 
 - 将旧 C07-C10 v0.1 包保留为历史，不覆盖其 blind ID；生成新的 `c07_c11_v0.2`，随机种子 `20260712`。
@@ -12,15 +23,15 @@
 
 ## 2026-07-12：C11 第三种数据封装与 AND/OR 敏感性闭环
 
-- 在读取事件内容前冻结 OTRF APT29 Day 1 的 R08/C11 接入协议、5 个关键节点、AND 多 claim 语义、G3 上限和失败保留规则；来源固定到 OTRF commit `d9d40ef123d2c87d5d3df28c96bcab4f0faccc87`。
+- 按内部记录，在读取事件内容前冻结 OTRF APT29 Day 1 的 R08/C11 接入协议、5 个关键节点、AND 多 claim 语义、G3 上限和失败保留规则；来源固定到 OTRF commit `d9d40ef123d2c87d5d3df28c96bcab4f0faccc87`。该记录与结果同批提交，不构成外部可验证 preregistration。
 - 完成 D1/D2：Host ZIP 与 Zeek 文件的 Git blob、字节数和 SHA-256 均核验通过；Host 196,081 rows、Zeek 2,140 rows，均 0 malformed。两者时间窗不重叠，未拼接为同一事件链。
 - 完成 D3：5 个预锁定节点中 4 个满足双 provider claim 门槛，共编译 8 条 event-backed claims；`3aka3.doc` 锚点 0 命中，N01 作为自然缺口保留。
-- 因 N01 不可恢复，C11 的目标与 support ceiling 从预注册 G3 降为 `G2_tactic_intent`；这是可审计的正确降级，不是补数据后的调参结果。
+- 因 N01 不可恢复，C11 的目标与 support ceiling 从内部冻结的初始 G3 降为 `G2_tactic_intent`；这是可审计的正确降级，不是补数据后的调参结果。
 - 完成 D4：5 个动作均满足 `intended_cti_node_ids != OR(recoverable_claim_ids)`，规划器视图不含隐藏恢复集合。
 - 完成 D5：AND 主分析共 14 planners × 45 重复条件。M2 success `1.0000`、cost `3.6667`，Oracle cost `3.0000`；M2 不是 C11 上最低成本的非 Oracle 方法。
 - OR 单字段敏感性中，M2 success 仍为 `1.0000`，cost 降至 `1.0222`，相对 AND 为 `-2.6445`；说明证据组合语义会实质改变成本，AND 继续作为主分析。
 - 结论边界：C11 关闭的是第三种数据封装和多 claim 可识别性工程缺口。它是一个 APT29 仿真链，不是自然事件、未知 actor benchmark 或 45 个独立攻击。
-- 当前下一步：双人盲标仍为最高优先级；随后再考虑一个自然发生或更接近运营现场的独立 engagement。论文 v0.4 暂不改写，C11 预留为 v0.5 的独立外部效度/语义敏感性小节。
+- 当前下一步：双人盲标仍为最高优先级；随后再考虑一个自然发生或更接近运营现场的独立 engagement。C11 已于 2026-07-13 并入论文 v0.5 的独立外部效度/语义敏感性小节。
 
 ## 2026-07-11：Reviewer major revision、AFA 对照与代理敏感性完成
 

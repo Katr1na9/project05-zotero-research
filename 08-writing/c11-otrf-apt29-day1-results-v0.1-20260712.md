@@ -1,7 +1,7 @@
 # C11 OTRF APT29 Day 1 结果简报 v0.1
 
 日期：2026-07-12
-状态：D1-D5 完成；结果冻结
+状态：D1-D5 完成；结果冻结；2026-07-13 完成独立复核与表述收紧
 主协议：`c11-otrf-apt29-day1-intake-protocol-v0.1-20260712.md`
 
 ## Material Passport
@@ -22,9 +22,9 @@ OTRF APT29 Day 1 成功提供了第三种数据封装和真实可识别的多 cl
 |---|---|---|
 | D1 来源完整性 | PASS | 固定提交、字节数、Git blob hash、SHA-256 全部匹配 |
 | D2 封装可解析 | PASS | ZIP CRC/路径安全通过；196,081 host rows 与 2,140 Zeek rows，0 malformed |
-| D3 多 claim 可识别 | PASS | 5 个预锁定关键节点中 4 个各有至少 2 个 provider family；门槛为 3 个 |
+| D3 多 claim 可识别 | PASS | 5 个预锁定关键节点中 4 个各有至少 2 个 Windows provider family；门槛为 3 个，但不是独立传感器 Gate |
 | D4 信息边界 | PASS | 5 个动作均 `intended != OR(recoverable)`；planner view 不含恢复集合 |
-| D5 冻结评估 | PASS | 旧规划器代码与参数未改；AND 主分析和单字段 OR 敏感性均完成 |
+| D5 冻结评估 | PASS | `run_mvp.py` 的内置策略/消融未调参；AND 主分析和单字段 OR 敏感性均完成。XGBoost、AFA-VOI 与 Depth-2 未在 C11 上运行 |
 
 ## 3. 数据与编译事实
 
@@ -33,7 +33,8 @@ OTRF APT29 Day 1 成功提供了第三种数据封装和真实可识别的多 cl
 - Host 时间：`2020-05-02T02:55:26Z-03:28:20Z`。
 - Zeek 时间：`2020-04-30T00:06:38Z-00:45:00Z`；与 Host 无重叠，不进入事件级 claim。
 - 预锁定 `3aka3.doc` 锚点命中 0 条，N01 不替换。
-- N02-N05 共选择 8 条 event-backed claims，分别由 PowerShell+Sysmon 或 PowerShell+Security 组成。
+- N02-N05 共选择 8 条 event-backed claims，分别由 PowerShell+Sysmon 或 PowerShell+Security 组成；它们是同一主机归档内的多 provider 证据，不是 Host+Network 独立传感器证据。
+- N02 与 N05 的 claim 对只支持压缩/归档文件创建，不单独证明节点名称中的网络外传成分。
 - AND 下全证据仍缺 N01，因此编译目标与 ceiling 从 G3 降为 `G2_tactic_intent`。
 
 ## 4. AND 主结果
@@ -85,3 +86,7 @@ C11 不支持“冻结 M2 跨所有家族仍是最低成本方法”。它支持
 1. 当前最高优先级仍是两名独立标注者完成盲标；C11 不替代人工粒度效度。
 2. 若面向更高 venue，再增加一个自然发生或更接近运营现场的独立 engagement，而不是继续增加仿真 replay。
 3. 将 C11 作为论文 v0.5 的独立外部效度/语义敏感性小节，不与四个 G3 主案例混合汇总。
+
+## 8. 冻结声明边界
+
+事件读取前的协议、ground-truth slice 与 motif spec 均有内部时间戳和 SHA-256 记录，但这些记录与结果在同一 Git 提交中首次公开。它们证明当前文件自记录时间后的字节一致性，不能向外部读者独立证明事件读取与冻结的先后关系。论文据此使用“内部冻结记录”或“预先指定”，不使用未经限定的第三方 preregistration 表述。

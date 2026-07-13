@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-- 论文母本：v0.4 major revision；
+- 论文母本：v0.5 C11 external-validity revision；
 - 实验：C07-C10 主案例，C11 第三数据封装补充案例；
 - 人工效度：C07-C11 双人盲标 v0.2 已冻结，仍为 `awaiting_annotations`；
 - 当前最高优先级：恢复 C07-C10 的来源记录并推进人工标注；
@@ -14,9 +14,9 @@
 
 ## 权威入口
 
-- [当前权威文件索引](../../08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)
+- [当前权威文件索引](../../08-writing/AUTHORITATIVE-DOCUMENTS-20260713.md)
 - [研究 Dashboard](../../00-dashboard/research-dashboard.md)
-- [论文 v0.4](../../08-writing/paper-main-draft-v0.4-major-revision-20260711.md)
+- [论文 v0.5](../../08-writing/paper-main-draft-v0.5-c11-external-validity-20260713.md)
 - [C11 结果](../../08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md)
 - [双人盲标协议 v0.2](../../08-writing/human-annotation-evaluation-protocol-v0.2-20260712.md)
 

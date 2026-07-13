@@ -8,14 +8,14 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 
 | 研究线 | 核心内容 | 当前状态 |
 |---|---|---|
-| [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.4；C11 与盲标 v0.2 已完成工程准备 |
+| [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.5；C11 已作为独立外部效度压力并入 |
 | [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | IPv4/IPv6/MPLS/Geo/SCION 异构路径下的行为追溯与意图感知，暂定 | Stage 1；初筛完成，W1 amber，P0 精读待进行 |
 
 共享 SOP、单篇精读、模板和 Zotero 导出继续使用根目录的稳定路径，所有权规则见 [Shared Workspace](10-research-lines/00-shared-workspace/README.md)。
 
 ## P05-L1 既有论文线
 
-截至 2026-07-12，已完成 C07-C10 四个主案例、AFA/敏感性实验、Reviewer major revision，以及 C11 第三种数据封装的参数锁定补充评估。当前主线为：
+截至 2026-07-13，已完成 C07-C10 四个 G3 主案例、AFA/敏感性实验、Reviewer major revision，以及 C11 第三种数据封装的独立 G2 外部效度评估。当前主线为：
 
 > 不完整证据下、信息边界约束的 APT 调查控制。
 
@@ -28,7 +28,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 - 在成本约束下，下一步最值得获取哪类证据；
 - 何时停止取证并输出粒度受控的结论或降级原因。
 
-当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260712.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260712.md)。论文母本仍为：[paper-main-draft-v0.4-major-revision-20260711.md](08-writing/paper-main-draft-v0.4-major-revision-20260711.md)。
+当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260713.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260713.md)。论文母本为：[paper-main-draft-v0.5-c11-external-validity-20260713.md](08-writing/paper-main-draft-v0.5-c11-external-validity-20260713.md)。
 
 当前 G1 通过版 RQ 见：[topic-rq-brief-v2.1-g1-final-20260706.md](03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)
 
