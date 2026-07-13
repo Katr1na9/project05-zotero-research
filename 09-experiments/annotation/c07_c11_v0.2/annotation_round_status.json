@@ -1,0 +1,55 @@
+{
+  "round": "c07_c11_v0.2_round1",
+  "status": "awaiting_third_adjudication_and_granularity_provenance_confirmation",
+  "first_round_completeness": {
+    "claim": "27/27 paired reviewed",
+    "intent": "27/27 paired reviewed",
+    "granularity": "60/60 paired reviewed",
+    "total": "114/114 paired reviewed"
+  },
+  "input_normalization": {
+    "count": 12,
+    "policy": "Mechanical CSV/label repairs only; source files were not overwritten.",
+    "audit_file": "annotation_intake_manifest.json"
+  },
+  "agreement": {
+    "claim": {
+      "raw_agreement_rate": 0.7407,
+      "quadratic_weighted_kappa": -0.1455,
+      "disagreement_items": 7,
+      "preregistered_threshold_passed": false
+    },
+    "intent": {
+      "exact_match_rate": 0.0741,
+      "mean_jaccard": 0.3673,
+      "micro_f1": 0.4878,
+      "disagreement_items": 25,
+      "preregistered_threshold_passed": false
+    },
+    "granularity": {
+      "raw_agreement_rate": 1.0,
+      "quadratic_weighted_kappa": 1.0,
+      "disagreement_items": 0,
+      "reporting_status": "withheld_pending_independent-completion_confirmation"
+    }
+  },
+  "adjudication": {
+    "status": "awaiting_third_adjudicator",
+    "claim_items": 7,
+    "intent_items": 25,
+    "granularity_items": 0,
+    "bundle": "../distribution/c07_c11_v0.2_adjudication_v0.1/"
+  },
+  "calibration": {
+    "status": "awaiting_adjudication",
+    "calibrated_human_items": 0
+  },
+  "provenance_flags": [
+    {
+      "task": "granularity",
+      "flag": "annotator_source_files_are_byte_identical",
+      "sha256": "5375BB2916AF81B27981F3740DD53EBB12006C53BE55F3E84E24E1EF8DC172FB",
+      "required_action": "Confirm independent completion or repeat the granularity task independently before reporting it as double-blind evidence."
+    }
+  ]
+}

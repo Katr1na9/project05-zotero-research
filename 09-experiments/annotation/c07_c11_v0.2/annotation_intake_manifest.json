@@ -1,0 +1,157 @@
+{
+  "round": "c07_c11_v0.2_round1",
+  "status": "imported_pending_agreement_and_adjudication",
+  "source_files": {
+    "annotator_A": {
+      "claim_annotations.csv": {
+        "sha256": "96F5414DA480B8D05395302845A12C41909787F0340137787B59D5108901B311",
+        "rows": 27,
+        "normalized_sha256": "44B560198060E45413D13DCC7221B229007563BCDBCAB5F42CCC03AF49240061"
+      },
+      "intent_annotations.csv": {
+        "sha256": "2EE5259CF0ADBFCFE1792EDE98EABDABA0F9CC9923D7085D509DB09A13B13B4E",
+        "rows": 27,
+        "normalized_sha256": "72FD11D80B52121E81DB367D420753BB3FD6B9CADF172D630927361A7BE0E7CF"
+      },
+      "granularity_annotations.csv": {
+        "sha256": "5375BB2916AF81B27981F3740DD53EBB12006C53BE55F3E84E24E1EF8DC172FB",
+        "rows": 60,
+        "normalized_sha256": "5E613E203546BFCCBCD0A912F6845B599389722061313B1010C90EA794485E50"
+      }
+    },
+    "annotator_B": {
+      "claim_annotations.csv": {
+        "sha256": "0640E1828BE14EF82CD83CE7905AC8A5F7A15D7F420A60D127A6C8DBA6BEC4EF",
+        "rows": 27,
+        "normalized_sha256": "DBB270AFB162CA9EC10B333D6E3A827CD9CED2124D1004D516E28FB1695311B8"
+      },
+      "intent_annotations.csv": {
+        "sha256": "6E55F0152DD4A656139C1E072D4A049A6271308D78CC229878ACEEE2EF131A71",
+        "rows": 27,
+        "normalized_sha256": "93FA2B43677CDCAB033082225E3F8681FFBD654A722840B241D3F3755BB7F148"
+      },
+      "granularity_annotations.csv": {
+        "sha256": "5375BB2916AF81B27981F3740DD53EBB12006C53BE55F3E84E24E1EF8DC172FB",
+        "rows": 60,
+        "normalized_sha256": "5E613E203546BFCCBCD0A912F6845B599389722061313B1010C90EA794485E50"
+      }
+    }
+  },
+  "normalizations": [
+    {
+      "role": "annotator_A",
+      "task": "claim",
+      "blind_id": "CLM-008",
+      "field": "annotator_notes",
+      "from": "6 CSV fields",
+      "to": "5 CSV fields",
+      "reason": "Unquoted commas were joined back into the final free-text field."
+    },
+    {
+      "role": "annotator_A",
+      "task": "claim",
+      "blind_id": "CLM-018",
+      "field": "support_label",
+      "from": "2_directl",
+      "to": "2_direct",
+      "reason": "Unambiguous one-character suffix typo outside the frozen codebook."
+    },
+    {
+      "role": "annotator_A",
+      "task": "claim",
+      "blind_id": "CLM-019",
+      "field": "support_label",
+      "from": "2_directl",
+      "to": "2_direct",
+      "reason": "Unambiguous one-character suffix typo outside the frozen codebook."
+    },
+    {
+      "role": "annotator_A",
+      "task": "claim",
+      "blind_id": "CLM-020",
+      "field": "support_label",
+      "from": "2_directl",
+      "to": "2_direct",
+      "reason": "Unambiguous one-character suffix typo outside the frozen codebook."
+    },
+    {
+      "role": "annotator_A",
+      "task": "claim",
+      "blind_id": "CLM-021",
+      "field": "support_label",
+      "from": "2_directl",
+      "to": "2_direct",
+      "reason": "Unambiguous one-character suffix typo outside the frozen codebook."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-006",
+      "field": "annotator_notes",
+      "from": "5 CSV fields",
+      "to": "4 CSV fields",
+      "reason": "Unquoted commas were joined back into the final free-text field."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-008",
+      "field": "CSV field boundary",
+      "from": "3 CSV fields",
+      "to": "yes,N05_nashua_collection_exfil,<preserved note>",
+      "reason": "The missing delimiter was recovered from a unique frozen candidate-node prefix."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-011",
+      "field": "CSV field boundary",
+      "from": "3 CSV fields",
+      "to": "yes,N05_nashua_collection_exfil,<preserved note>",
+      "reason": "The missing delimiter was recovered from a unique frozen candidate-node prefix."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-015",
+      "field": "CSV field boundary",
+      "from": "3 CSV fields",
+      "to": "yes,N01_firefox_c2,<preserved note>",
+      "reason": "The missing delimiter was recovered from a unique frozen candidate-node prefix."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-017",
+      "field": "annotator_notes",
+      "from": "5 CSV fields",
+      "to": "4 CSV fields",
+      "reason": "Unquoted commas were joined back into the final free-text field."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-018",
+      "field": "CSV field boundary",
+      "from": "3 CSV fields",
+      "to": "yes,N01_malicious_upgrade_drop,<preserved note>",
+      "reason": "The missing delimiter was recovered from a unique frozen candidate-node prefix."
+    },
+    {
+      "role": "annotator_A",
+      "task": "intent",
+      "blind_id": "INT-027",
+      "field": "CSV field boundary",
+      "from": "3 CSV fields",
+      "to": "yes,N01_empire_c2,<preserved note>",
+      "reason": "The missing delimiter was recovered from a unique frozen candidate-node prefix."
+    }
+  ],
+  "provenance_flags": [
+    {
+      "task": "granularity",
+      "flag": "annotator_source_files_are_byte_identical",
+      "interpretation": "Agreement can be computed, but independent completion must be confirmed before this task is reported as independent double-blind evidence."
+    }
+  ]
+}

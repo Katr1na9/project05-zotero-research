@@ -1,28 +1,28 @@
-﻿blind_id,reviewed,support_label,source_pointer_valid,annotator_notes
-CLM-001,,,,
-CLM-002,,,,
-CLM-003,,,,
-CLM-004,,,,
-CLM-005,,,,
-CLM-006,,,,
-CLM-007,,,,
-CLM-008,,,,
-CLM-009,,,,
-CLM-010,,,,
-CLM-011,,,,
-CLM-012,,,,
-CLM-013,,,,
-CLM-014,,,,
-CLM-015,,,,
-CLM-016,,,,
-CLM-017,,,,
-CLM-018,,,,
-CLM-019,,,,
-CLM-020,,,,
-CLM-021,,,,
-CLM-022,,,,
-CLM-023,,,,
-CLM-024,,,,
-CLM-025,,,,
-CLM-026,,,,
-CLM-027,,,,
+blind_id,reviewed,support_label,source_pointer_valid,annotator_notes
+CLM-001,yes,1_partial,yes,核心事件 Firefox+RECVFROM+208.203.20.42:80 能对上；command_and_control/T1071 为条目映射未在记录直接出现属于额外的映射部分
+CLM-002,yes,1_partial,yes,记录上的核心网络流是可以对应上的，但是谓语和上下文解释都有一定的越界
+CLM-003,yes,1_partial,yes,核心工作流可以定位到，但是T1068这些信息属于额外条目的映射，包括notes也不能充当证据
+CLM-004,yes,1_partial,yes,核心工作流存在但是notes和ATT&CK语义映射都算是额外的映射
+CLM-005,yes,1_partial,yes,核心工作流存在但是和ATT&CK/UAC的语义映射都算是额外的映射
+CLM-006,yes,1_partial,yes,核心工作流存在但是notes和ATT&CK语义映射都算是额外的映射
+CLM-007,yes,1_partial,yes,原有的主体行为客体都是有的，但是ATT&CK仍然是额外映射射
+CLM-008,yes,1_partial,yes,"客体 NASHUA 和 Invoke-Command 在脚本文本里很直接,记录主要来自于powershell算是越界"
+CLM-009,yes,1_partial,yes,claim产生了额外的映射
+CLM-010,yes,1_partial,yes,产生了额外映射command_and_control、T1095
+CLM-011,yes,1_partial,yes,产生了额外映射collection、T1113，notes也不能作为证据
+CLM-012,yes,1_partial,yes,产生了额外映射进程名 lwabeat.exe 字符串、defense_evasion、T1055
+CLM-013,yes,1_partial,yes,产生了额外映射defense_evasion、T1055、injection / shellcode，notes也不能作为证据
+CLM-014,yes,1_partial,yes,产生了额外映射字段名/值 privilege_escalation、已提权 / root，
+CLM-015,yes,1_partial,yes,产生了额外映射initial_access、T1195.002、update.exe
+CLM-016,yes,1_partial,yes,产生了额外映射lateral_movement、execution、T1021.002、T1569.002
+CLM-017,yes,1_partial,yes,产生了额外映射HKCU、 privilege_escalation、T1548.002、UAC bypass
+CLM-018,yes,2_direct,yes,我认为可以这样判断
+CLM-019,yes,2_direct,yes,我认为可以这样判断
+CLM-020,yes,2_direct,yes,我认为可以这样判断，note可以不做证据的情况下证据依旧充分
+CLM-021,yes,2_direct,yes,我认为可以这样判断，note可以不做证据的情况下证据依旧充分
+CLM-022,yes,1_partial,yes,产生了额外映射privilege_escalation、defense_evasion、T1548.002
+CLM-023,yes,1_partial,yes,产生了额外映射collection、T1560.001，还有powershell.exe主要是来源于 PowerShell 日志通道
+CLM-024,yes,1_partial,yes,产生了额外映射command_and_control、T1071
+CLM-025,yes,1_partial,yes,产生了额外映射lateral_movement、T1047
+CLM-026,yes,1_partial,yes,产生了额外映射ran_elevate_driver_setup 的操作名（记录是 EVENT_READ），notes不能作为证据
+CLM-027,yes,1_partial,yes,没有完整路径 /home/admin/read_scan.ko，notes不能作为证据

@@ -38,12 +38,12 @@ class PaperV07ConsistencyTests(unittest.TestCase):
             RESULTS / "external_afa_baseline_audit_v0.1" / "audit.json"
         )
 
-    def test_authority_points_to_v07_package(self):
+    def test_v07_package_is_preserved_as_history(self):
         for path in (PAPER, AUTHORING, REVIEWER_RESPONSE, RIGOR_REVIEW):
             with self.subTest(path=path.name):
-                self.assertIn(path.name, self.authority)
-        self.assertIn("唯一论文母本", self.authority)
-        self.assertIn("论文 v0.7 为唯一母本", self.authority)
+                self.assertTrue(path.is_file())
+        self.assertNotIn(PAPER.name, self.authority)
+        self.assertIn("论文 v0.8 为唯一母本", self.authority)
 
     def test_c12_remains_a_separate_single_incident_g1_stress(self):
         self.assertIn("C12 始终作为单独的 G1 运营数据压力", self.paper)
