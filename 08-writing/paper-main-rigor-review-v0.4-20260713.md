@@ -1,16 +1,14 @@
-# Project05 论文语义严谨性审计 v0.3
-
-> **历史审计。** 当前权威审计为 `paper-main-rigor-review-v0.4-20260713.md`。
+# Project05 论文语义严谨性审计 v0.4
 
 日期：2026-07-13
 
-对象：`paper-main-draft-v0.5-c11-external-validity-20260713.md`、C07-C10 主结果、C11 OTRF AND/OR 结果、信息边界回归测试与 C07-C11 标注包
+对象：`paper-main-draft-v0.6-c11-policy-transfer-20260713.md`、C07-C10 主结果、C11 OTRF AND/OR 与冻结策略迁移结果、信息边界回归测试及 C07-C11 标注包
 
 ## 总评
 
 综合评分：**4.3/5，二线安全/系统或应用方法 venue 为 Borderline；Top 安全 venue 仍为 Weak Reject。**
 
-C11 的主要价值是把同一调查控制接口迁移到第三种 Windows JSONL/多 provider 封装，并用固定锚点未命中形成可审计的 G3→G2 自然降级。它还给出了 C07-C10 中不可识别的 AND/OR 真实敏感性，并反证 M2 跨场景最低成本。它没有补足人工粒度效度、真实 actor/campaign 正确性或独立自然攻击样本，因此不能据此升级为跨域泛化或归因性能贡献。
+C11 的主要价值是把同一调查控制接口迁移到第三种 Windows JSONL/多 provider 封装，并用固定锚点未命中形成可审计的 G3→G2 自然降级。新增冻结迁移补齐了 Logistic、XGBoost、AFA-VOI 和 Depth-2：学习器与一步 AFA 在 C11 降低 M2 成本，而 Depth-2 产生一次退化，进一步反证固定策略排序可跨场景保持。它仍未补足人工粒度效度、真实 actor/campaign 正确性或独立自然攻击样本，因此不能据此升级为跨域泛化或归因性能贡献。
 
 本评分评价的是稿件内部的语义严谨性，不等同于 venue 接收概率。稿件对负结果和边界的处理已经成熟，但核心构念效度与外部任务终点仍决定投稿上限。
 
@@ -22,7 +20,7 @@ C11 的主要价值是把同一调查控制接口迁移到第三种 Windows JSON
 | D2 Falsifiability | 5 | RQ1-RQ4、策略升级门槛、C11 失败保留和 OR/AND 反事实均可证伪 |
 | D3 Scope calibration | 5 | C11 被限定为单个 APT29 emulation、第三封装和 G2 压力，不并入 G3 聚合 |
 | D4 Argument coherence | 4 | 问题、信息边界、策略比较、负结果和结论一致；人工效度尚未闭环 |
-| D5 Exploration integrity | 5 | M3a、学习、AFA、Depth-2、Gate B 和 C11 中 M2 非最低成本均原样保留 |
+| D5 Exploration integrity | 5 | C07-C10 负结果、C11 学习器正向迁移、Depth-2 退化与 M2 非最低成本均原样保留 |
 | D6 Methodological rigor | 3 | 265 项回归、固定源回指、哈希复现和多类基线较完整；仍缺双人标签、真实任务终点和官方 AFA 复现 |
 
 ## C11 新增的有效证据
@@ -32,6 +30,8 @@ C11 的主要价值是把同一调查控制接口迁移到第三种 Windows JSON
 3. **语义敏感性**：在 claims、动作、mask、seed、目标和预算不变时，仅把 AND 改为 OR，M2 成本从 3.6667 降至 1.0222。
 4. **策略外推反例**：Coverage/M1 在 C11 的平均成本 3.2444，低于 M2 的 3.6667，因而 M2 只能称 C07-C10 的透明部署锚点。
 5. **来源可复核性**：固定 OTRF commit、ZIP 字节数和 SHA-256，8 条 claim 的行号、RecordNumber 与锚点测试通过；重跑摘要哈希与冻结结果一致。
+6. **冻结策略排序反转**：XGBoost/Logistic 在 C11 的成本为 3.0667，AFA-VOI Myopic 为 3.5556，均低于 M2 的 3.6667；Depth-2 success 为 0.9778。三个 XGBoost 模型哈希与 C07-C10 主评估一致，C11 未进入训练。
+7. **离线—序贯指标分离**：Logistic 的离线 AP 高于 XGBoost，但两者序贯成本相同，反证 action-level 分类指标可替代闭环策略效用。
 
 ## 仍然成立的 Major 风险
 
@@ -47,9 +47,9 @@ C11 增加的是一个 APT29 emulation 链和第三种遥测封装，不是自�
 
 多 claim 来自同一主机归档内不同 Windows provider family，不是独立传感器 corroboration；Host 与 Zeek 时间窗不重叠。N02/N05 只证明 collection/archiving，不能单独证明网络 exfiltration。
 
-### Major 4：比较范围仍不完整
+### Major 4：C11 排序反转仍是单案例证据
 
-C11 v0.1 只运行 `run_mvp.py` 的内置策略/消融，XGBoost、AFA-VOI 和 Depth-2 尚未进入 C11。AFA-VOI 仍是同接口领域适配，不是 NOCTA 或 WinRegRL 官方实现。
+C11 已补齐冻结策略族，但只有一个 AND 多 Claim/G2 仿真链。XGBoost/Logistic 的成本优势不能据此写成稳定跨域改进；AFA-VOI 仍是同接口领域适配，不是 NOCTA 或 WinRegRL 官方实现。
 
 ### Major 5：真实任务终点缺失
 
@@ -62,6 +62,7 @@ C11 v0.1 只运行 `run_mvp.py` 的内置策略/消融，XGBoost、AFA-VOI 和 D
 3. M2 只称 C07-C10 的透明部署锚点，不称跨场景最佳、全局最优或 SOTA。
 4. C11 只支持 G2 调查链、封装迁移和覆盖语义压力，不支持未知 actor 预测或 campaign 正确性。
 5. LLM 未进入主实验，不能作为实验增益来源或标题核心模块。
+6. C11 中 XGBoost/Logistic 的结果只称冻结迁移反例，不称跨域泛化或新主模型。
 
 ## 最终审稿姿态
 

@@ -1,6 +1,4 @@
-# Project05 论文主图/表契约 v0.3
-
-> **历史图表契约。** 当前权威版本为 `paper-main-figure-contract-v0.4-20260713.md`。
+# Project05 论文主图/表契约 v0.4
 
 日期：2026-07-13
 
@@ -28,13 +26,14 @@
 - c：C01-C06 多 claim 开发案例 OR/AND success；明确标注真实 C07-C10 的 OR/AND 不可识别。
 - 红线：不得把领域适配标成 NOCTA/WinRegRL 官方复现；不得把开发 OR/AND 差异外推为真实攻击结果。
 
-## Table C11：第三封装与 AND/OR 敏感性
+## Table C11：第三封装、冻结策略迁移与 AND/OR 敏感性
 
 - C11 作为独立 G2 外部效度压力，不加入 Figure 2/3 的 C07-C10 聚合均值。
-- 主表报告 AND 下 Oracle、Coverage、M1、M3a、M2、Random 的 success、成功条件成本、regret、premature STOP 和 ceiling violation。
+- 主表报告 AND 下 Oracle、XGBoost、Logistic、Coverage、M1、AFA-VOI Myopic、M3a、M2、AFA-VOI Rollout-H3 和 Depth-2 的 success、成功条件成本、regret、premature STOP 和 ceiling violation。
 - 正文报告 M2 AND cost `3.6667`、OR cost `1.0222`；不把差异解释为算法改善。
 - 明确 45 条是一个 APT29 emulation 链的重复条件；多 claim 来自同一主机归档的不同 Windows provider。
-- XGBoost、AFA-VOI 与 Depth-2 未在 C11 v0.1 上运行，不出现在该表。
+- 表注说明 XGBoost/Logistic 只由 C01-C06 训练且模型哈希未变；C11 未参与训练或调参。
+- 配对结果在正文报告，不给 45 个重复条件绘制伪置信区间。
 
 ## 视觉与复现规范
 
@@ -42,5 +41,5 @@
 - M2 深蓝、XGBoost 青色、AFA 绿色系、M3a 暗红、Oracle 深灰；不使用彩虹色。
 - 输出 SVG、PNG、PDF 与 600 dpi TIFF；图中文字可编辑。
 - 生成入口：`09-experiments/scripts/make_paper_main_figures.py`。
-- 源数据：紧预算 CSV、XGBoost 汇总、非短视 Gate/轨迹接入 JSON、AFA 汇总、敏感性汇总。
+- 源数据：紧预算 CSV、XGBoost 汇总、非短视 Gate/轨迹接入 JSON、AFA 汇总、敏感性汇总，以及 `results/c11_extended_policies_v0.1/` 的统一审计摘要。
 - 自动测试验证输入维度、关键数值和输出文件；人工 QA 验证无遮挡、标签含义与统计单位。

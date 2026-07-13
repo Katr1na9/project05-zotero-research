@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run public-information AFA value-of-information baselines on C07-C10.
+"""Run public-information AFA value-of-information baselines on selected cases.
 
 These are task adapters for the generic AFA objective family, not official
 implementations of NOCTA or WinRegRL. They deliberately use no hidden claim or
@@ -23,6 +23,7 @@ MYOPIC = "afa_voi_myopic"
 ROLLOUT = "afa_voi_rollout_h3"
 ROLLOUT_HORIZON = 3
 PLANNERS = ("project05_m2", MYOPIC, ROLLOUT, "oracle_optimal")
+DEFAULT_CASE_PREFIXES = ("C07", "C08", "C09", "C10")
 
 
 def _load_mvp() -> Any:
@@ -191,9 +192,16 @@ def select_afa_voi(
     )
 
 
-def resolve_case_dirs(cases_root: Path) -> list[Path]:
+def resolve_case_dirs(
+    cases_root: Path,
+    case_prefixes: tuple[str, ...] = DEFAULT_CASE_PREFIXES,
+) -> list[Path]:
+    if not case_prefixes:
+        raise ValueError("At least one case prefix is required")
+    if len(set(case_prefixes)) != len(case_prefixes):
+        raise ValueError(f"Duplicate case prefixes: {case_prefixes}")
     resolved = []
-    for prefix in ("C07", "C08", "C09", "C10"):
+    for prefix in case_prefixes:
         matches = sorted(
             path
             for path in cases_root.glob(f"{prefix}*")
@@ -291,7 +299,9 @@ def write_gzip_json(path: Path, data: Any) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run frozen AFA-VOI adapters on C07-C10.")
+    parser = argparse.ArgumentParser(
+        description="Run frozen AFA-VOI adapters on selected real cases."
+    )
     parser.add_argument(
         "--cases-root",
         type=Path,
@@ -302,8 +312,25 @@ def main() -> None:
         type=Path,
         default=ROOT / "09-experiments" / "results" / "afa_voi_c07_c10_v0.1",
     )
+    parser.add_argument(
+        "--case-prefixes",
+        nargs="+",
+        default=list(DEFAULT_CASE_PREFIXES),
+        help="Case directory prefixes; defaults to C07 C08 C09 C10.",
+    )
+    parser.add_argument(
+        "--experiment-id",
+    )
     args = parser.parse_args()
-    rows, traces = execute_cases(resolve_case_dirs(args.cases_root))
+    case_prefixes = tuple(args.case_prefixes)
+    experiment_id = args.experiment_id or (
+        "project05-afa-voi-c07-c10-v0.1"
+        if case_prefixes == DEFAULT_CASE_PREFIXES
+        else "project05-afa-voi-"
+        + "-".join(prefix.casefold() for prefix in case_prefixes)
+        + "-frozen-transfer-v0.1"
+    )
+    rows, traces = execute_cases(resolve_case_dirs(args.cases_root, case_prefixes))
     args.output_dir.mkdir(parents=True, exist_ok=True)
     MVP.write_csv(args.output_dir / "afa_voi_policy_results.csv", rows)
     MVP.write_json(
@@ -312,6 +339,29 @@ def main() -> None:
     )
     MVP.write_json(
         args.output_dir / "afa_voi_paired_vs_m2.json", paired_against_m2(rows)
+    )
+    MVP.write_json(
+        args.output_dir / "evaluation_manifest.json",
+        {
+            "experiment_id": experiment_id,
+            "case_prefixes": list(case_prefixes),
+            "case_ids": sorted({row["case_id"] for row in rows}),
+            "independent_case_count": len({row["case_id"] for row in rows}),
+            "repeated_condition_count": len(
+                {
+                    (
+                        row["case_id"],
+                        row["mask_strategy"],
+                        row["mask_intensity"],
+                        row["seed"],
+                    )
+                    for row in rows
+                }
+            ),
+            "planners": list(PLANNERS),
+            "frozen_parameters": {"rollout_horizon": ROLLOUT_HORIZON},
+            "information_boundary": "public_intent_and_channel_priors_only",
+        },
     )
     write_gzip_json(args.output_dir / "afa_voi_policy_traces.json.gz", traces)
     print(f"Wrote frozen AFA-VOI evaluation to {args.output_dir}")

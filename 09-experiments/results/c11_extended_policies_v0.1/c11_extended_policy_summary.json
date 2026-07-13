@@ -1,0 +1,258 @@
+{
+  "experiment_id": "project05-c11-extended-frozen-policy-transfer-v0.1",
+  "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+  "design": {
+    "independent_attack_chain_count": 1,
+    "repeated_condition_count_per_planner": 45,
+    "target_granularity": "G2_tactic_intent",
+    "node_coverage_semantics": "AND",
+    "aggregation_rule": "C11 remains separate from C07-C10 G3 means"
+  },
+  "training_isolation": {
+    "train_case_ids": [
+      "C01-linux-provenance",
+      "C02-freebsd-provenance",
+      "C03-windows-host",
+      "C04-darpa-e3-fivedirections",
+      "C05-darpa-e3-cadets",
+      "C06-darpa-e3-cadets-0412"
+    ],
+    "test_case_ids": [
+      "C11-otrf-apt29-day1-scranton-nashua"
+    ],
+    "c11_used_for_training": false,
+    "model_hash_checks": {
+      "label_resolves_critical_gap_node": {
+        "reference_sha256": "6C6CFB96AF0253271ADC2EBE29E17141D008E0E5E6D36000677B56F650A4C5FE",
+        "c11_transfer_sha256": "6C6CFB96AF0253271ADC2EBE29E17141D008E0E5E6D36000677B56F650A4C5FE",
+        "identical": true
+      },
+      "label_yield_positive": {
+        "reference_sha256": "5E9A4BEFF61ADE854905298DC4BAD1A5ABB5FF02136952F73D0E24941360F312",
+        "c11_transfer_sha256": "5E9A4BEFF61ADE854905298DC4BAD1A5ABB5FF02136952F73D0E24941360F312",
+        "identical": true
+      },
+      "label_reaches_target_after_action": {
+        "reference_sha256": "B887E3B0B6CD9EFE73332C37560DB865DEAA499F74B3822C05AD63C955B83731",
+        "c11_transfer_sha256": "B887E3B0B6CD9EFE73332C37560DB865DEAA499F74B3822C05AD63C955B83731",
+        "identical": true
+      }
+    }
+  },
+  "shared_baseline_row_checks": {
+    "xgboost_run": {
+      "coverage_greedy": true,
+      "project05_m2": true,
+      "project05_m3a_gap_compat": true,
+      "oracle_optimal": true
+    },
+    "afa_run": {
+      "project05_m2": true,
+      "oracle_optimal": true
+    },
+    "depth2_run": {
+      "project05_m2": true,
+      "oracle_optimal": true
+    }
+  },
+  "planner_results": [
+    {
+      "planner": "oracle_optimal",
+      "family": "reference",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.0,
+      "mean_cost_regret_vs_oracle": 0.0,
+      "mean_zero_yield_actions": null,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "coverage_greedy",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.2444,
+      "mean_cost_regret_vs_oracle": 0.2444,
+      "mean_zero_yield_actions": null,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m1",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.2444,
+      "mean_cost_regret_vs_oracle": 0.2444,
+      "mean_zero_yield_actions": null,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m2",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.6667,
+      "mean_cost_regret_vs_oracle": 0.6667,
+      "mean_zero_yield_actions": null,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m3a_gap_compat",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.5556,
+      "mean_cost_regret_vs_oracle": 0.5556,
+      "mean_zero_yield_actions": null,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m3b_policy",
+      "family": "logistic_transfer",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.0667,
+      "mean_cost_regret_vs_oracle": 0.0667,
+      "mean_zero_yield_actions": 0.0222,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_xgboost_policy",
+      "family": "xgboost_transfer",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.0667,
+      "mean_cost_regret_vs_oracle": 0.0667,
+      "mean_zero_yield_actions": 0.0222,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "afa_voi_myopic",
+      "family": "afa_adapter",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.5556,
+      "mean_cost_regret_vs_oracle": 0.5556,
+      "mean_zero_yield_actions": 0.2,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "afa_voi_rollout_h3",
+      "family": "afa_adapter",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 3.6889,
+      "mean_cost_regret_vs_oracle": 0.6889,
+      "mean_zero_yield_actions": 0.2444,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_depth2_public",
+      "family": "public_lookahead",
+      "repeated_run_count": 45,
+      "success_rate": 0.9778,
+      "mean_cost_to_target": 4.9091,
+      "mean_cost_regret_vs_oracle": 1.9318,
+      "mean_zero_yield_actions": 0.4444,
+      "premature_stop_rate": 0.0222,
+      "ceiling_violation_rate": 0.0
+    }
+  ],
+  "paired_against_m2": {
+    "project05_m3b_policy": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 10,
+      "cost_ties_vs_m2": 34,
+      "cost_losses_vs_m2": 1,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.6
+    },
+    "project05_xgboost_policy": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 10,
+      "cost_ties_vs_m2": 34,
+      "cost_losses_vs_m2": 1,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.6
+    },
+    "afa_voi_myopic": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 8,
+      "cost_ties_vs_m2": 35,
+      "cost_losses_vs_m2": 2,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.1111
+    },
+    "afa_voi_rollout_h3": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 8,
+      "cost_ties_vs_m2": 33,
+      "cost_losses_vs_m2": 4,
+      "mean_cost_difference_vs_m2_on_joint_success": 0.0222
+    },
+    "project05_depth2_public": {
+      "paired_condition_count": 45,
+      "joint_success_count": 44,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 1,
+      "cost_wins_vs_m2": 1,
+      "cost_ties_vs_m2": 29,
+      "cost_losses_vs_m2": 14,
+      "mean_cost_difference_vs_m2_on_joint_success": 1.3182
+    }
+  },
+  "xgboost_offline_primary_label_test": {
+    "xgboost": {
+      "rows": 225,
+      "positive_rate": 0.1688888888888889,
+      "accuracy_at_0_5": 0.5066666666666667,
+      "brier_score": 0.3544484518676693,
+      "auroc": 0.8302842668167746,
+      "average_precision": 0.39521225705453666,
+      "top1_label_hit_rate": 0.4222222222222222
+    },
+    "logistic": {
+      "rows": 225,
+      "positive_rate": 0.1688888888888889,
+      "accuracy_at_0_5": 0.5644444444444444,
+      "brier_score": 0.38097089302019693,
+      "auroc": 0.8357022234731213,
+      "average_precision": 0.6322479660219283,
+      "top1_label_hit_rate": 0.4222222222222222
+    }
+  },
+  "claim_boundary": [
+    "C11 is one emulated attack chain with 45 repeated conditions.",
+    "Sequential transfer results do not establish cross-scene superiority.",
+    "Offline classification and sequential policy utility are reported separately.",
+    "No result is actor or campaign attribution accuracy."
+  ],
+  "source_sha256": {
+    "09-experiments\\results\\c11_holdout_v0.1\\c11-otrf-apt29-day1-scranton-nashua_mvp_results.csv": "6D268A6D1B71FFCE43A288EFBB0021B11B2B34BFA5378DF3995B94F8BE8121FD",
+    "09-experiments\\results\\c11_holdout_v0.1\\c11-otrf-apt29-day1-scranton-nashua_mvp_summary.json": "847ACF87A3BDCC5C0A8515E4B91421E8C3B4250A318AFF42541218C57CF1AD8B",
+    "09-experiments\\results\\c11_extended_policies_v0.1\\xgboost\\xgboost_experiment_summary.json": "906C715C048BB3702B4B4ECEBD3CA6D95B12BC30ADE63F2A435A2BF31DC395F5",
+    "09-experiments\\results\\c11_extended_policies_v0.1\\xgboost\\xgboost_policy_results.csv": "034B94E9A26A1EFD1CE26C8D76A0C0F03ECC6D9000493F2EF29F9395DDEF6EBD",
+    "09-experiments\\results\\c11_extended_policies_v0.1\\afa_voi\\afa_voi_policy_summary.json": "F4D69CA6C964B2853C07F578430335FCA241F93B86D03AAB2C86E173CB436314",
+    "09-experiments\\results\\c11_extended_policies_v0.1\\afa_voi\\afa_voi_policy_results.csv": "C0C60AC91A84FA320888231D5B8BAAE540E6FC8240512DA17956B015D5798F5D",
+    "09-experiments\\results\\c11_extended_policies_v0.1\\depth2\\nonmyopic_policy_summary.json": "CF82B97AD395777B8B99CF25BE2940D55D9B80BFB30824AB1DEB8CBD1F7D0B10",
+    "09-experiments\\results\\c11_extended_policies_v0.1\\depth2\\nonmyopic_policy_results.csv": "3F97E93CFDBA21B1FCCF93DCDECA6844DDFEA5A9397EE41A268EEB884E937893"
+  }
+}

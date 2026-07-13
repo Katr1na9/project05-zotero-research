@@ -6,8 +6,8 @@
 
 ## 当前状态
 
-- 论文母本：v0.5 C11 external-validity revision；
-- 实验：C07-C10 主案例，C11 第三数据封装补充案例；
+- 论文母本：v0.6 C11 policy-transfer revision；
+- 实验：C07-C10 四个 G3 主案例；C11 为独立 G2 第三封装、AND/OR 与冻结策略迁移案例；
 - 人工效度：C07-C11 双人盲标 v0.2 已冻结，仍为 `awaiting_annotations`；
 - 当前最高优先级：确认两名独立标注者并启动 C07-C11 三任务盲标；27/27 Claim 来源摘录已就绪；
 - LLM/Agent：非当前因果主贡献。
@@ -16,8 +16,9 @@
 
 - [当前权威文件索引](../../08-writing/AUTHORITATIVE-DOCUMENTS-20260713.md)
 - [研究 Dashboard](../../00-dashboard/research-dashboard.md)
-- [论文 v0.5](../../08-writing/paper-main-draft-v0.5-c11-external-validity-20260713.md)
+- [论文 v0.6](../../08-writing/paper-main-draft-v0.6-c11-policy-transfer-20260713.md)
 - [C11 结果](../../08-writing/c11-otrf-apt29-day1-results-v0.1-20260712.md)
+- [C11 冻结策略迁移结果](../../08-writing/c11-frozen-policy-transfer-results-v0.1-20260713.md)
 - [双人盲标协议 v0.2](../../08-writing/human-annotation-evaluation-protocol-v0.2-20260712.md)
 
 完整路径归属见 [`AUTHORITATIVE-MAP.md`](AUTHORITATIVE-MAP.md)。

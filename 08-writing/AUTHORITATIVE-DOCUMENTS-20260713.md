@@ -2,20 +2,20 @@
 
 日期：2026-07-13
 
-状态：论文 v0.5 已吸收 C11 外部效度增量
+状态：论文 v0.6 已吸收 C11 冻结策略迁移与排序反转增量
 
 ## 1. 唯一写作入口
 
 | 用途 | 当前权威文件 | 说明 |
 |---|---|---|
-| 论文主稿 | `paper-main-draft-v0.5-c11-external-validity-20260713.md` | 唯一论文母本；C11 独立进入外部效度小节，不与 G3 主均值混算 |
-| 论文写作记录 | `paper-main-authoring-record-v0.5-20260713.md` | 一句话论点、术语、主张—证据和未完成项 |
+| 论文主稿 | `paper-main-draft-v0.6-c11-policy-transfer-20260713.md` | 唯一论文母本；C11 冻结策略迁移单独报告，不与 G3 主均值混算 |
+| 论文写作记录 | `paper-main-authoring-record-v0.6-20260713.md` | 一句话论点、术语、主张—证据和未完成项 |
 | 贡献边界 | `contribution-boundary-and-results-brief-v0.2-20260711.md` | 任何摘要、答辩、论文和专利说明均应服从此文件 |
 | 论文/专利共同叙事 | `paper-patent-narrative-freeze-v0.2-20260711.md` | 统一技术核心及两类成果的不同表达 |
-| 论文主图/表契约 | `paper-main-figure-contract-v0.3-20260713.md` | 图 1—3 保持，新增 C11 独立表格红线 |
+| 论文主图/表契约 | `paper-main-figure-contract-v0.4-20260713.md` | 图 1—3 保持，C11 表纳入冻结策略迁移 |
 | 引文审计 | `paper-main-citation-audit-v0.2-20260711.md` | 新增 AFA 近邻的直接支撑边界 |
-| Reviewer 回复 | `reviewer-response-major-revision-v0.1-20260711.md` | 逐条记录已处理、部分处理和未处理事项 |
-| 修订后严谨性审计 | `paper-main-rigor-review-v0.3-20260713.md` | 已纳入 C11；二线 Borderline / 顶会 Weak Reject，未完成人工效度不作包装 |
+| Reviewer 回复 | `reviewer-response-major-revision-v0.2-20260713.md` | 已记录 C11 策略族补齐和仍未关闭的人工/外部效度门槛 |
+| 修订后严谨性审计 | `paper-main-rigor-review-v0.4-20260713.md` | 已纳入 C11 排序反转；二线 Borderline / 顶会 Weak Reject |
 | 专利主稿 | `patent-main-draft-v0.4-20260711.md` + `patent-package-v0.4/` | 权利要求链不因论文负结果改写 |
 | 专利一致性附录 | `patent-v0.4-review-alignment-addendum-20260711.md` | 说明第 9 项、LLM 和正式申请待办 |
 | 中国专利逐项补检 | `chinese-patent-claim-chart-v0.2-20260711.md` + `patent-claim-collision-matrix-v0.2-20260711.md` | 权利要求级技术比较；不是法律意见 |
@@ -35,6 +35,8 @@
 | C11 OR 敏感性 | `../09-experiments/results/c11_or_sensitivity_v0.1/` | 仅改 AND→OR 后，M2 cost 降至 1.0222；证明覆盖语义会实质改变成本 |
 | C11 结果简报 | `c11-otrf-apt29-day1-results-v0.1-20260712.md` | C11 是第三种数据封装与单个仿真链，不是未知 actor 归因 benchmark |
 | C11 增量复核 | `c11-increment-audit-v0.1-20260713.md` | 原始回指、冻结结果、语义边界与 v0.5 整合决定 |
+| C11 冻结策略迁移 | `../09-experiments/results/c11_extended_policies_v0.1/` | XGBoost/Logistic cost 3.0667，AFA-Myopic 3.5556，Depth-2 success 0.9778；单案例排序反转 |
+| C11 策略迁移简报 | `c11-frozen-policy-transfer-results-v0.1-20260713.md` | 冻结约束、配对结果、离线—序贯指标分离及写作红线 |
 | 双人盲标协议 | `human-annotation-evaluation-protocol-v0.2-20260712.md` | C07-C11、114 个 item；先一致性、后裁决、再对工程代理校准 |
 | 双人盲标包 | `../09-experiments/annotation/c07_c11_v0.2/` | A/B 与裁决模板均为空，状态必须保持 `awaiting_annotations`，不得生成或代填人工结果 |
 | Claim 来源摘录包 | `../09-experiments/annotation/source_excerpts/c07_c11_v0.1/` | 27/27 canonical excerpts 已在当前工作站生成；Git 只保存构建器与哈希清单 |
@@ -47,14 +49,14 @@
 2. C11 关闭了“第三种数据封装”和“真实可识别多 provider claim”两个工程缺口，但只增加一个 APT29 仿真链，不能声称广泛外部泛化。
 3. C11 的 Host 与 Zeek 时间窗不重叠；Zeek 不构成事件级 corroboration。
 4. 预锁定 N01 无事件支持并被原样保留；由此得到的 G3→G2 降级是可审计结果，不是数据清洗失败。
-5. M2 在 C07-C10 上是冻结对照内最佳折中，在 C11 上不是最低成本；不得写成全局最优或新 SOTA。
+5. M2 在 C07-C10 上是冻结对照内最佳折中；C11 中 XGBoost/Logistic 和 AFA-Myopic 成本更低，Depth-2 发生一次退化。任何排序都不得写成全局最优或新 SOTA。
 6. C11 的 45 个 mask/intensity/seed 条件是重复测量，不是 45 个独立攻击。
 7. LLM/agent 仍只保留为待独立验证的离线编译或解释接口，不进入当前因果贡献。
 8. C11 的协议与结果同批提交，只称内部冻结记录；N02/N05 claims 只证明 collection，不证明网络 exfiltration。
 
 ## 4. 历史文件处理规则
 
-`AUTHORITATIVE-DOCUMENTS-20260711.md`、早期 contribution brief、C07-C09 协议和早期 M3a 结果均保留为研究过程档案，不删除、不改写其阶段性事实，但不得继续承担当前状态索引或下一步计划的功能。
+`AUTHORITATIVE-DOCUMENTS-20260711.md`、论文 v0.5、早期 contribution brief、C07-C09 协议和早期 M3a 结果均保留为研究过程档案，不删除、不改写其阶段性事实，但不得继续承担当前状态索引或下一步计划的功能。
 
 ## 5. 当前未完成门槛
 

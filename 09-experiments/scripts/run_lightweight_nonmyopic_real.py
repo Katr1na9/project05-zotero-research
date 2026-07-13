@@ -24,6 +24,7 @@ PLANNER = "project05_depth2_public"
 DISCOUNT = 0.8
 FAILURE_COST_WEIGHT = 1.0
 BASELINES = ("project05_m2", PLANNER, "oracle_optimal")
+DEFAULT_CASE_PREFIXES = ("C07", "C08", "C09", "C10")
 
 
 def _load_mvp() -> Any:
@@ -235,9 +236,16 @@ def write_traces(path: Path, traces: list[dict[str, Any]]) -> None:
     path.write_bytes(gzip.compress(payload, compresslevel=9, mtime=0))
 
 
-def resolve_case_dirs(cases_root: Path) -> list[Path]:
+def resolve_case_dirs(
+    cases_root: Path,
+    case_prefixes: tuple[str, ...] = DEFAULT_CASE_PREFIXES,
+) -> list[Path]:
+    if not case_prefixes:
+        raise ValueError("At least one case prefix is required")
+    if len(set(case_prefixes)) != len(case_prefixes):
+        raise ValueError(f"Duplicate case prefixes: {case_prefixes}")
     resolved: list[Path] = []
-    for case_id in ("C07", "C08", "C09", "C10"):
+    for case_id in case_prefixes:
         matches = sorted(
             path
             for path in cases_root.glob(f"{case_id}*")
@@ -255,7 +263,7 @@ def resolve_case_dirs(cases_root: Path) -> list[Path]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run the frozen public depth-2 planner on C07-C10."
+        description="Run the frozen public depth-2 planner on selected real cases."
     )
     parser.add_argument(
         "--cases-root",
@@ -267,9 +275,26 @@ def main() -> None:
         type=Path,
         default=ROOT / "09-experiments" / "results" / "nonmyopic_real_v0.1",
     )
+    parser.add_argument(
+        "--case-prefixes",
+        nargs="+",
+        default=list(DEFAULT_CASE_PREFIXES),
+        help="Case directory prefixes; defaults to C07 C08 C09 C10.",
+    )
+    parser.add_argument(
+        "--experiment-id",
+    )
     args = parser.parse_args()
 
-    case_dirs = resolve_case_dirs(args.cases_root)
+    case_prefixes = tuple(args.case_prefixes)
+    experiment_id = args.experiment_id or (
+        "project05-depth2-public-c07-c10-v0.1"
+        if case_prefixes == DEFAULT_CASE_PREFIXES
+        else "project05-depth2-public-"
+        + "-".join(prefix.casefold() for prefix in case_prefixes)
+        + "-frozen-transfer-v0.1"
+    )
+    case_dirs = resolve_case_dirs(args.cases_root, case_prefixes)
 
     rows, traces = execute_cases(case_dirs)
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -281,6 +306,32 @@ def main() -> None:
     MVP.write_json(
         args.output_dir / "nonmyopic_paired_summary.json",
         paired_summary(rows),
+    )
+    MVP.write_json(
+        args.output_dir / "evaluation_manifest.json",
+        {
+            "experiment_id": experiment_id,
+            "case_prefixes": list(case_prefixes),
+            "case_ids": sorted({row["case_id"] for row in rows}),
+            "independent_case_count": len({row["case_id"] for row in rows}),
+            "repeated_condition_count": len(
+                {
+                    (
+                        row["case_id"],
+                        row["mask_strategy"],
+                        row["mask_intensity"],
+                        row["seed"],
+                    )
+                    for row in rows
+                }
+            ),
+            "planners": list(BASELINES),
+            "frozen_parameters": {
+                "discount": DISCOUNT,
+                "failure_cost_weight": FAILURE_COST_WEIGHT,
+            },
+            "information_boundary": "public_surrogate_state_and_channel_priors_only",
+        },
     )
     write_traces(args.output_dir / "nonmyopic_policy_traces.json.gz", traces)
     print(f"Wrote frozen evaluation to {args.output_dir}")

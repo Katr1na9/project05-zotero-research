@@ -45,9 +45,9 @@ flowchart LR
 |---|---|---|
 | M2 | 透明部署策略 | C07-C10 所评估非 Oracle 策略内最佳折中；C11 成本并非最低，不是全局最优 |
 | M3a | action-gap 机制消融 | C10 有过早停止，成本优势不成立 |
-| XGBoost | 非线性监督对照 | 优于 Logistic 的部分指标，未超过 M2 |
-| AFA-VOI | 通用 AFA 的同接口领域适配 | 两种适配均达标但平均比 M2 多 0.4389 成本 |
-| Depth-2 | 冻结有限前瞻 | 真实四例未降成本，不升级 |
+| XGBoost | 非线性监督对照 | C07-C10 未超过 M2；C11 冻结迁移低 0.6000 成本，不外推为跨域优势 |
+| AFA-VOI | 通用 AFA 的同接口领域适配 | C07-C10 平均比 M2 多 0.4389；C11 Myopic 少 0.1111、Rollout-H3 多 0.0222 |
+| Depth-2 | 冻结有限前瞻 | C07-C10 未降成本；C11 出现一次成功退化，不升级 |
 | DP/DQN | 受控上界/关闭支线 | Gate A 通过、Gate B 不通过，不启动 DQN |
 | LLM | 待验证离线编译/解释接口 | 主实验未调用，不进入当前因果贡献 |
 
@@ -61,6 +61,7 @@ flowchart LR
 | Depth-2 Public | success 1.0，cost 4.5556 | 未通过冻结升级门槛 |
 | M2 权重敏感性 | 16/16 变体保持 success 1.0 | 仅支持 ±25% 局部稳定 |
 | C11 OTRF AND | M2 success 1.0、cost 3.6667；Oracle cost 3.0000 | 单个 APT29 仿真链，目标/ceiling 为 G2；不与 C07-C10 G3 均值合并 |
+| C11 冻结策略迁移 | XGBoost/Logistic cost 3.0667；AFA Myopic 3.5556；Depth-2 success 0.9778 | 单案例排序反转；XGBoost 仍只由 C01-C06 训练且模型哈希未变 |
 | OR/AND | C11 中 M2 cost 由 AND 3.6667 降至 OR 1.0222 | 仅改覆盖语义；OR 是乐观敏感性，AND 为内部冻结主分析 |
 
 ## Gate 状态
@@ -69,7 +70,7 @@ flowchart LR
 |---|---|---|
 | RQ/贡献边界 | 通过 | 调查控制与信息边界，不再包装新归因器 |
 | 四案例工程闭环 | 通过 | 可执行、无 ceiling violation |
-| 新算法性能创新 | 不通过 | 当前复杂策略均未稳定超过 M2 |
+| 新算法性能创新 | 不通过 | C07-C10 与 C11 的策略排序反转，未形成跨案例稳定赢家 |
 | 非短视结构存在性 | 通过 | 合成 Gate A |
 | DQN 工程必要性 | 不通过 | Gate B，DP 仍可接受 |
 | 人工粒度效度 | 未完成 | C07-C11 v0.2 共 114 个空白 item，`awaiting_annotations`；27/27 Claim 来源摘录已就绪 |
@@ -80,7 +81,7 @@ flowchart LR
 
 1. 确认两名独立标注者并分发 A/B 包；Claim 任务同时提供本地 canonical excerpts，公开意图和粒度任务按原盲法执行。
 2. 两名标注者独立完成后，先计算 A/B 一致性，再由第三人裁决分歧，最后比较最终人工标签与 compiled intended/G0-G3 代理。
-3. 以 [论文 v0.5](../08-writing/paper-main-draft-v0.5-c11-external-validity-20260713.md) 为唯一母本；C11 已独立进入外部效度/语义敏感性小节，在盲标前不再升级归因主张。
+3. 以 [论文 v0.6](../08-writing/paper-main-draft-v0.6-c11-policy-transfer-20260713.md) 为唯一母本；C11 已独立进入外部效度、冻结策略迁移和语义敏感性小节，在盲标前不再升级归因主张。
 4. 若资源允许，寻找一个自然发生或更接近运营现场的独立 engagement，补足 C11 的仿真边界。
 5. 根据目标 venue 决定是否补官方 AFA 代码映射。不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
 

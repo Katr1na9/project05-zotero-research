@@ -1,5 +1,16 @@
 # Research Progress
 
+## 2026-07-13：C11 全策略冻结迁移与论文 v0.6 收口
+
+- 为 XGBoost、AFA-VOI 和公开 Depth-2 增加显式测试案例选择与实验 ID，默认入口保持原 C07-C10 行为；重复案例前缀会被拒绝，避免同一案例被静默重复计数。
+- 在不修改 C11 claims、动作、覆盖语义、mask、seed 和预算的条件下完成 45 个配对条件的全策略冻结迁移。XGBoost 训练集仍严格为 C01-C06，测试集仅为 C11；三个模型 SHA-256 与 C07-C10 主评估完全一致。
+- C11 中 Oracle cost `3.0000`；XGBoost/Logistic 均为 `3.0667`，Coverage/M1 为 `3.2444`，AFA Myopic 和 M3a 为 `3.5556`，M2 为 `3.6667`，Rollout-H3 为 `3.6889`。Depth-2 success `0.9778`，发生一次成功退化。
+- 相对 M2，XGBoost/Logistic 为 10 胜、34 平、1 负，平均少 `0.6000` 成本；AFA Myopic 平均少 `0.1111`；Rollout-H3 平均多 `0.0222`。该结果只作为单案例策略排序反转，不表述为跨域模型优势。
+- XGBoost 主标签离线 AP `0.3952`，低于 Logistic 的 `0.6322`，但二者序贯成本相同；据此明确区分离线分类质量与闭环调查效用。
+- 扩展运行中的 M2、Oracle 等共享基线与原 C11 结果逐行一致；汇总器同时校验训练/测试隔离、模型哈希和源文件哈希。
+- 论文母本升级为 `paper-main-draft-v0.6-c11-policy-transfer-20260713.md`，权威索引、Reviewer 回复、严谨性审计、图表契约、根入口与研究线 Dashboard 同步更新。
+- 全项目回归 `273/273` 通过。当前科学门槛仍是双人盲标与外部任务终点；C11 策略补齐不替代人工粒度效度或自然运营 engagement。
+
 ## 2026-07-13：C07-C11 Claim 来源 Gate 关闭
 
 - 确认 C07/C08 PIDSMaker event/node 窗口、C09/C10 OpTC eCAR 窗口和 C11 OTRF Host ZIP 均已在当前工作站可用；旧台账的“19 条待恢复”状态已滞后。

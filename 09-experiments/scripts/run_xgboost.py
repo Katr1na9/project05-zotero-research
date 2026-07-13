@@ -49,6 +49,8 @@ FROZEN_PARAMS: dict[str, Any] = {
 }
 FROZEN_BOOST_ROUNDS = 150
 FROZEN_COST_PENALTY = 0.1
+DEFAULT_TEST_PREFIXES = ("C07-", "C08-", "C09-")
+C07_C10_TEST_PREFIXES = (*DEFAULT_TEST_PREFIXES, "C10-")
 
 
 def matrix(
@@ -261,23 +263,30 @@ def selected_case_dirs(
     examples_root: Path,
     real_cases_root: Path,
     include_c10: bool = False,
+    test_prefixes: tuple[str, ...] | None = None,
 ) -> tuple[list[Path], list[Path]]:
+    if include_c10 and test_prefixes is not None:
+        raise ValueError("--include-c10 and explicit test_prefixes are mutually exclusive")
     examples = run_mvp.discover_case_dirs(examples_root)
     real = run_mvp.discover_case_dirs(real_cases_root)
     train = examples + [
         path for path in real if path.name.startswith(("C04-", "C05-", "C06-"))
     ]
-    test_prefixes = ("C07-", "C08-", "C09-", "C10-") if include_c10 else (
-        "C07-",
-        "C08-",
-        "C09-",
+    selected_prefixes = (
+        C07_C10_TEST_PREFIXES
+        if include_c10
+        else tuple(test_prefixes or DEFAULT_TEST_PREFIXES)
     )
-    test = [path for path in real if path.name.startswith(test_prefixes)]
-    expected_test_cases = 4 if include_c10 else 3
+    if not selected_prefixes:
+        raise ValueError("At least one test case prefix is required")
+    if len(set(selected_prefixes)) != len(selected_prefixes):
+        raise ValueError(f"Duplicate test case prefixes: {selected_prefixes}")
+    test = [path for path in real if path.name.startswith(selected_prefixes)]
+    expected_test_cases = len(selected_prefixes)
     if len(train) != 6 or len(test) != expected_test_cases:
         raise ValueError(
             f"Expected 6 train and {expected_test_cases} test cases, "
-            f"found {len(train)} and {len(test)}"
+            f"found {len(train)} and {len(test)} for prefixes {selected_prefixes}"
         )
     return train, test
 
@@ -408,11 +417,14 @@ def run_experiment(
     real_cases_root: Path,
     output_dir: Path,
     include_c10: bool = False,
+    test_prefixes: tuple[str, ...] | None = None,
+    experiment_id: str | None = None,
 ) -> dict[str, Any]:
     train_dirs, test_dirs = selected_case_dirs(
         examples_root,
         real_cases_root,
         include_c10=include_c10,
+        test_prefixes=test_prefixes,
     )
     train_rows = run_m3b.build_rows_for_case_dirs(train_dirs)
     test_rows = run_m3b.build_rows_for_case_dirs(test_dirs)
@@ -452,12 +464,16 @@ def run_experiment(
         primary_logistic,
         FROZEN_COST_PENALTY,
     )
+    if experiment_id is None:
+        if include_c10:
+            experiment_id = "project05-xgboost-action-value-v0.2-c10"
+        elif test_prefixes is not None:
+            suffix = "-".join(prefix.rstrip("-").casefold() for prefix in test_prefixes)
+            experiment_id = f"project05-xgboost-{suffix}-frozen-transfer-v0.1"
+        else:
+            experiment_id = "project05-xgboost-action-value-v0.1"
     report = {
-        "experiment_id": (
-            "project05-xgboost-action-value-v0.2-c10"
-            if include_c10
-            else "project05-xgboost-action-value-v0.1"
-        ),
+        "experiment_id": experiment_id,
         "xgboost_version": xgb.__version__,
         "numpy_version": np.__version__,
         "train_case_ids": [
@@ -495,12 +511,26 @@ def main() -> None:
         action="store_true",
         help="Add parameter-locked C10 without changing C01-C06 training.",
     )
+    parser.add_argument(
+        "--test-prefixes",
+        nargs="+",
+        help=(
+            "Explicit real-case directory prefixes to evaluate while retaining "
+            "C01-C06 training; mutually exclusive with --include-c10."
+        ),
+    )
+    parser.add_argument(
+        "--experiment-id",
+        help="Explicit frozen-transfer experiment identifier for the output report.",
+    )
     args = parser.parse_args()
     report = run_experiment(
         args.examples_root,
         args.real_cases_root,
         args.output_dir,
         include_c10=args.include_c10,
+        test_prefixes=tuple(args.test_prefixes) if args.test_prefixes else None,
+        experiment_id=args.experiment_id,
     )
     print(
         json.dumps(

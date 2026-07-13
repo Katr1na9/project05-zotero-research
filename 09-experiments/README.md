@@ -16,7 +16,7 @@
 
 细节与预登记见 `../04-progress/p0-1-break-feature-leak-channel-reliability-20260710.md`。`results/` 已于 2026-07-10 按该机制重跑刷新。M4 通道离线正向压力见 `../04-progress/m4-channel-reliability-outage-stress-20260710.md`。显式 STOP/降级见 `../04-progress/m4-explicit-stop-degrade-20260710.md`。真正应停压力见 `../04-progress/m4-should-stop-stress-20260710.md`。部分可达选路压力（负/近负结果）见 `../04-progress/m4-partial-reachability-routing-stress-20260710.md`。
 
-**2026-07-11 主线冻结状态**：M2 是当前紧预算最佳规则部署基线；Logistic M3b 是已实现学习基线；XGBoost action-value 实验已完成，相对 Logistic 修复 C09 的 3 个失败条件，但总体成本仍高于 M2。DQN 尚未进入实现，需先补非短视诊断与新环境。C07 THEIA、C08 ClearScope 与 C09 OpTC 三条参数锁定测试均已完成；`intended≠OR` 标注规范已对 C01–C09 生效（allowlist 已清零）。详见 `../08-writing/xgboost-action-value-results-v0.1-20260711.md`。
+**2026-07-13 当前状态**：C07-C10 四个 G3 主案例中，M2 仍是当前冻结对照内的透明部署锚点；非短视 Gate A 通过而 Gate B 未通过，真实 Depth-2 未达到升级门槛，DQN 因而不进入当前主线。C11 作为独立的 OTRF APT29 G2 压力案例，已补齐 Logistic、XGBoost、AFA-VOI 与 Depth-2 的冻结迁移：XGBoost/Logistic 的平均成功成本为 `3.0667`，低于 M2 的 `3.6667`，而 Depth-2 出现一次成功退化。该排序反转只证明策略收益依赖案例结构与覆盖语义，不构成跨域优势。结果见 `results/c11_extended_policies_v0.1/`，论文口径见 `../08-writing/paper-main-draft-v0.6-c11-policy-transfer-20260713.md`。
 
 ## C06 独立留出验证（2026-07-10 重跑）
 
@@ -41,11 +41,17 @@
 - `scripts/run_mvp.py`
 - `scripts/run_m3b.py`
 - `scripts/run_xgboost.py`
+- `scripts/run_afa_voi_baselines.py`
+- `scripts/run_lightweight_nonmyopic_real.py`
+- `scripts/summarize_c11_extended_policies.py`
 - `requirements-ml.txt`
 - `results/c01_mvp_results.csv`
 - `results/c01_mvp_summary.json`
 - `results/c01_mvp_traces.json`
-- `results/xgboost_c01_c06_train_c07_c09_test/`
+- `results/xgboost_c01_c06_train_c07_c10_test/`
+- `results/c11_holdout_v0.1/`
+- `results/c11_or_sensitivity_v0.1/`
+- `results/c11_extended_policies_v0.1/`
 
 ## 如何运行
 
