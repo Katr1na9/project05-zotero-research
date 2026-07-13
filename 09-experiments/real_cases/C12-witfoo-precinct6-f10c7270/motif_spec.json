@@ -1,0 +1,60 @@
+{
+  "case_id": "C12-witfoo-precinct6-f10c7270",
+  "source_case_id": "f10c7270-1228-11ed-99ed-adca11e4059c",
+  "source_artifact_id": "witfoo_incident_leads_f10c7270-1228-11ed-99ed-adca11e4059c",
+  "source_member": "graph/incidents.jsonl",
+  "selection_source": "../../real_data/witfoo_precinct6/c12_case_compile_lock_v0.1.json",
+  "node_coverage_semantics": "AND",
+  "motifs": [
+    {
+      "motif_id": "C12-M01",
+      "claim_id": "C12-EC-001",
+      "node_id": "N01_perimeter_activity",
+      "record_index_1based": 11888,
+      "record_id": "aggregate:ASA Firewall:117",
+      "anchor": "117 ASA Firewall leads",
+      "provider_family": "asa_firewall"
+    },
+    {
+      "motif_id": "C12-M02",
+      "claim_id": "C12-EC-002",
+      "node_id": "N01_perimeter_activity",
+      "record_index_1based": 11888,
+      "record_id": "b2c01d12-1228-11ed-b35f-bb1ba816609f",
+      "anchor": "structured destination port 445",
+      "provider_family": "asa_firewall"
+    },
+    {
+      "motif_id": "C12-M03",
+      "claim_id": "C12-EC-003",
+      "node_id": "N02_privileged_identity_activity",
+      "record_index_1based": 11888,
+      "record_id": "5426bc99-1228-11ed-b60e-d3f4a4ef2379",
+      "anchor": "Windows Event 4672",
+      "provider_family": "windows_ad"
+    },
+    {
+      "motif_id": "C12-M04",
+      "claim_id": "C12-EC-004",
+      "node_id": "N02_privileged_identity_activity",
+      "record_index_1based": 11888,
+      "record_id": "5426e3e3-1228-11ed-b60e-d3f4a4ef2379",
+      "anchor": "Windows Event 4672",
+      "provider_family": "windows_ad"
+    },
+    {
+      "motif_id": "C12-M05",
+      "claim_id": "C12-EC-005",
+      "node_id": "N03_cross_channel_context",
+      "record_index_1based": 11888,
+      "record_id": "f10c7270-1228-11ed-99ed-adca11e4059c",
+      "anchor": "49 INCIDENT_LINK edges",
+      "provider_family": "precinct_projection"
+    }
+  ],
+  "natural_gap": {
+    "node_id": "N04_actor_campaign_attribution",
+    "matched_records": 0,
+    "handling": "Keep uncovered and cap the case at G1."
+  }
+}

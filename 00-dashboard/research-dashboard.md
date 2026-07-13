@@ -63,6 +63,8 @@ flowchart LR
 | C11 OTRF AND | M2 success 1.0、cost 3.6667；Oracle cost 3.0000 | 单个 APT29 仿真链，目标/ceiling 为 G2；不与 C07-C10 G3 均值合并 |
 | C11 冻结策略迁移 | XGBoost/Logistic cost 3.0667；AFA Myopic 3.5556；Depth-2 success 0.9778 | 单案例排序反转；XGBoost 仍只由 C01-C06 训练且模型哈希未变 |
 | OR/AND | C11 中 M2 cost 由 AND 3.6667 降至 OR 1.0222 | 仅改覆盖语义；OR 是乐观敏感性，AND 为内部冻结主分析 |
+| 外部 AFA 源码/接口审计 | AFABench、WinRegRL、AACO 冻结 commit 通过；C07-C12 动作族 5/5 映射 | 状态/端点/转移不等价，禁止称官方同任务复现 |
+| C12 生产 SOC 压力 | 13,119→5→2；Depth-2/Oracle cost 0.8889，XGBoost/Logistic/Rollout-H3 0.9778，M2 1.4222 | 单 incident、G1 ceiling、无 actor truth；不并入既有均值 |
 
 ## Gate 状态
 
@@ -74,21 +76,24 @@ flowchart LR
 | 非短视结构存在性 | 通过 | 合成 Gate A |
 | DQN 工程必要性 | 不通过 | Gate B，DP 仍可接受 |
 | 人工粒度效度 | 未完成 | C07-C11 v0.2 共 114 个空白 item，`awaiting_annotations`；27/27 Claim 来源摘录已就绪 |
-| 外部泛化 | 部分通过 | C11 D1-D5 完成，补入第三种数据封装和可识别多 claim；但只是单个仿真链，不替代自然运营场景 |
+| 外部泛化 | 部分通过 | C11 为仿真链；C12 新增 1 个生产 SOC 多 stream G1 压力，但无独立 actor/campaign truth |
+| 正式外部 AFA | 映射通过、数值未完成 | 源码与动作族审计完成；同任务声明被 Gate 拒绝，endpoint contract 待冻结 |
 | 专利可正式提交 | 未完成 | 中文补检、权属、公开日和代理师审查待办 |
 
 ## 下一步
 
 1. 确认两名独立标注者并分发 A/B 包；Claim 任务同时提供本地 canonical excerpts，公开意图和粒度任务按原盲法执行。
 2. 两名标注者独立完成后，先计算 A/B 一致性，再由第三人裁决分歧，最后比较最终人工标签与 compiled intended/G0-G3 代理。
-3. 以 [论文 v0.6](../08-writing/paper-main-draft-v0.6-c11-policy-transfer-20260713.md) 为唯一母本；C11 已独立进入外部效度、冻结策略迁移和语义敏感性小节，在盲标前不再升级归因主张。
-4. 若资源允许，寻找一个自然发生或更接近运营现场的独立 engagement，补足 C11 的仿真边界。
-5. 根据目标 venue 决定是否补官方 AFA 代码映射。不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
+3. 以 [论文 v0.7](../08-writing/paper-main-draft-v0.7-c12-operational-stress-20260713.md) 为唯一母本；C11 G2、C12 G1 与外部 AFA 映射均已分层入正文，在盲标前不再升级归因主张。
+4. C12 已完成正文独立压力与扩展策略冻结迁移；下一步优先补第二个独立运营 incident 或分析师效用终点，不把重复条件重计为样本。
+5. 若目标 venue 坚持外部 AFA 数值，先冻结静态 endpoint contract，再选择“跨任务复现”或“显式 adapter”路径；不得把任务转换隐藏掉。
+6. 不再堆 DQN、LLM agent、GNN 或新的内部模型，除非新的可证伪 Gate 先通过。
 
 ## 红线
 
 - 180 个重复条件不得写成 180 个独立攻击样本。
 - 内部 G0-G3 success 不得写成 actor/campaign 归因准确率。
 - M2 不得写成全局最优；AFA 适配负结果不得外推整个 AFA 方法族。
+- C12 的 45 个重复条件不得写成 45 个生产攻击；`Disrupted` 和厂商相关图不得写成独立 actor truth。
 - LLM 不得在无独立编译实验时进入标题、摘要或核心贡献。
 - 旧 v0.1 文件仅是历史档案，不能覆盖当前权威索引。

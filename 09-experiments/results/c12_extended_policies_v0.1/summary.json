@@ -1,0 +1,216 @@
+{
+  "summary_id": "project05-c12-frozen-policy-transfer-v0.1",
+  "case_id": "C12-witfoo-precinct6-f10c7270",
+  "design": {
+    "independent_incident_count": 1,
+    "repeated_condition_count": 45,
+    "target_granularity": "G1_technique",
+    "aggregation_rule": "C12 remains separate from C07-C10 and C11 means"
+  },
+  "integrity": {
+    "xgboost_train_case_ids": [
+      "C01-linux-provenance",
+      "C02-freebsd-provenance",
+      "C03-windows-host",
+      "C04-darpa-e3-fivedirections",
+      "C05-darpa-e3-cadets",
+      "C06-darpa-e3-cadets-0412"
+    ],
+    "xgboost_test_case_ids": [
+      "C12-witfoo-precinct6-f10c7270"
+    ],
+    "model_hash_checks": {
+      "label_resolves_critical_gap_node": {
+        "reference_sha256": "6C6CFB96AF0253271ADC2EBE29E17141D008E0E5E6D36000677B56F650A4C5FE",
+        "c12_transfer_sha256": "6C6CFB96AF0253271ADC2EBE29E17141D008E0E5E6D36000677B56F650A4C5FE",
+        "identical": true
+      },
+      "label_yield_positive": {
+        "reference_sha256": "5E9A4BEFF61ADE854905298DC4BAD1A5ABB5FF02136952F73D0E24941360F312",
+        "c12_transfer_sha256": "5E9A4BEFF61ADE854905298DC4BAD1A5ABB5FF02136952F73D0E24941360F312",
+        "identical": true
+      },
+      "label_reaches_target_after_action": {
+        "reference_sha256": "B887E3B0B6CD9EFE73332C37560DB865DEAA499F74B3822C05AD63C955B83731",
+        "c12_transfer_sha256": "B887E3B0B6CD9EFE73332C37560DB865DEAA499F74B3822C05AD63C955B83731",
+        "identical": true
+      }
+    },
+    "shared_reference_row_checks": {
+      "xgboost_run": {
+        "coverage_greedy": true,
+        "project05_m2": true,
+        "project05_m3a_gap_compat": true,
+        "oracle_optimal": true
+      },
+      "afa_run": {
+        "project05_m2": true,
+        "oracle_optimal": true
+      },
+      "depth2_run": {
+        "project05_m2": true,
+        "oracle_optimal": true
+      }
+    }
+  },
+  "planner_results": [
+    {
+      "planner": "oracle_optimal",
+      "family": "reference",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.8889,
+      "mean_cost_regret_vs_oracle": 0.0,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_depth2_public",
+      "family": "public_lookahead",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.8889,
+      "mean_cost_regret_vs_oracle": 0.0,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "afa_voi_rollout_h3",
+      "family": "afa_adapter",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.9778,
+      "mean_cost_regret_vs_oracle": 0.0889,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "coverage_greedy",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.9778,
+      "mean_cost_regret_vs_oracle": 0.0889,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m3a_gap_compat",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.9778,
+      "mean_cost_regret_vs_oracle": 0.0889,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m3b_policy",
+      "family": "logistic_transfer",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.9778,
+      "mean_cost_regret_vs_oracle": 0.0889,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_xgboost_policy",
+      "family": "xgboost_transfer",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 0.9778,
+      "mean_cost_regret_vs_oracle": 0.0889,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "project05_m2",
+      "family": "transparent_rule",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 1.4222,
+      "mean_cost_regret_vs_oracle": 0.5333,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    },
+    {
+      "planner": "afa_voi_myopic",
+      "family": "afa_adapter",
+      "repeated_run_count": 45,
+      "success_rate": 1.0,
+      "mean_cost_to_target": 1.5111,
+      "mean_cost_regret_vs_oracle": 0.6222,
+      "correct_stop_rate": 1.0,
+      "premature_stop_rate": 0.0,
+      "ceiling_violation_rate": 0.0
+    }
+  ],
+  "paired_vs_m2": {
+    "project05_m3b_policy": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 12,
+      "cost_ties_vs_m2": 29,
+      "cost_losses_vs_m2": 4,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.4444
+    },
+    "project05_xgboost_policy": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 10,
+      "cost_ties_vs_m2": 35,
+      "cost_losses_vs_m2": 0,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.4444
+    },
+    "afa_voi_myopic": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 0,
+      "cost_ties_vs_m2": 43,
+      "cost_losses_vs_m2": 2,
+      "mean_cost_difference_vs_m2_on_joint_success": 0.0889
+    },
+    "afa_voi_rollout_h3": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 12,
+      "cost_ties_vs_m2": 29,
+      "cost_losses_vs_m2": 4,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.4444
+    },
+    "project05_depth2_public": {
+      "paired_condition_count": 45,
+      "joint_success_count": 45,
+      "success_repairs_vs_m2": 0,
+      "success_regressions_vs_m2": 0,
+      "cost_wins_vs_m2": 12,
+      "cost_ties_vs_m2": 33,
+      "cost_losses_vs_m2": 0,
+      "mean_cost_difference_vs_m2_on_joint_success": -0.5333
+    }
+  },
+  "interpretation": [
+    "All deterministic policies reach the internal G1 target; the case does not create a success-rate win.",
+    "Depth-2 matches the oracle cost on this single case, while AFA Myopic is more expensive than M2.",
+    "The ranking reversal is descriptive evidence of case dependence, not a general algorithm claim.",
+    "One incident with 45 repeated conditions is not 45 independent attacks.",
+    "No actor or campaign correctness endpoint is available."
+  ]
+}

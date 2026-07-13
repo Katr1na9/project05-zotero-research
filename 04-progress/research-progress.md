@@ -1,5 +1,19 @@
 # Research Progress
 
+## 2026-07-13：正式外部 AFA 映射与 C12 生产 SOC 压力闭环
+
+- 冻结并源码审计 AFABench、WinRegRL、AACO 与 NOCTA：3 个可得仓库 commit 全部匹配，WinRegRL ZIP 哈希匹配；C07-C12 当前 5 类动作全部映射到 WinRegRL 最近动作族。
+- 明确 `direct_same_task_claim_allowed=false`：AFABench/AACO 的静态 feature reveal、WinRegRL 的专家转移 Windows 取证 MDP 与 Project05 的随机证据 bundle、粒度状态和 `intended != recoverable` 信息边界不等价。现有 AFA-VOI 继续称领域适配，不冒充官方复现。
+- 接入 WitFoo Precinct6 生产 SOC 数据 revision `1c0be6c...`。全量扫描 13,119 个 incident，源文件记录数与 SHA-256 通过；冻结元数据 Gate 后保留 5 条候选。
+- 对 5 个候选逐条回取 GraphML 与 embedded leads。全部 GraphML 仅含 `INCIDENT_LINK` 厂商投影；事件源 Gate 进一步发现 3 条“产品标签多源、实际 stream 单源”，仅 2/5 具备至少两个独立原始 stream 通道。
+- 冻结主候选 `f10c7270-1228-11ed-99ed-adca11e4059c`：117 条 ASA Firewall leads + 2 条 Windows AD leads，119/119 源指针完整。保留时间戳和清洗实体不一致红线，不建立跨通道因果顺序。
+- 编译 C12：5 claims、4 actions、AND 语义，`N04_actor_campaign_attribution` 自然缺口；target/support ceiling 均为 G1，厂商 ATT&CK/`Data Theft` 标签不进入 gold claims。
+- 首次冻结 MVP：确定性策略 success 均为 1.0；Coverage/CMI/M3a cost `0.9778`，M2 `1.4222`，Oracle `0.8889`。C12 再次产生策略排序反转，只支持 G1 正确降级与接口迁移，不支持 actor attribution 能力。
+- 冻结扩展迁移：Depth-2 cost `0.8889` 与 Oracle 持平；AFA Rollout-H3、XGBoost、Logistic 均为 `0.9778`；AFA Myopic `1.5111`。XGBoost 仍仅训练 C01-C06，三个模型哈希与 C07-C10 主评估一致。
+- 新增外部源码审计、C12 两级筛选、Range 定位、事件回指、确定性编译和 19 项定向边界测试。C12 始终作为 1 个 incident 的 45 个重复条件，不与 C07-C10 或 C11 合并。
+- 论文母本升级为 `paper-main-draft-v0.7-c12-operational-stress-20260713.md`：新增 RQ5、外部方法 Gate、C12 独立结果表、讨论与九项局限；同步建立 v0.7 作者记录、Reviewer 回复 v0.3 和严谨性审计 v0.5。
+- 全项目回归 `302/302` 通过；新增一致性合同锁定 C12 结果表、两级 Gate、单 incident 统计单位、厂商投影边界和外部同任务声明禁区。
+
 ## 2026-07-13：C11 全策略冻结迁移与论文 v0.6 收口
 
 - 为 XGBoost、AFA-VOI 和公开 Depth-2 增加显式测试案例选择与实验 ID，默认入口保持原 C07-C10 行为；重复案例前缀会被拒绝，避免同一案例被静默重复计数。

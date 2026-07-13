@@ -1,0 +1,228 @@
+[
+  {
+    "claim_id": "C12-EC-001",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "ip",
+      "value": "47 sanitized source IPs"
+    },
+    "predicate": "generated_blocked_connection_attempts_to",
+    "object": {
+      "entity_type": "ip",
+      "value": "10 sanitized destination IPs across 67 ports"
+    },
+    "time_window": {
+      "start": "2022-08-02T05:59:45Z",
+      "end": "2022-08-02T06:06:44Z"
+    },
+    "mapped_tactic": [],
+    "mapped_technique": [],
+    "evidence_strength": "strong",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "witfoo_incident_leads_f10c7270-1228-11ed-99ed-adca11e4059c",
+      "location": "graph/incidents.jsonl record 11888; ASA Firewall leads (n=117)",
+      "record_id": "aggregate:ASA Firewall:117",
+      "hash": "B76F16C8C7D4649BDF23313254F7C1D698895A015DC144FD2E3C006106A64A21"
+    },
+    "supports_hypotheses": [
+      "C12_multichannel_security_incident"
+    ],
+    "tags": [
+      "hideable",
+      "real_witfoo",
+      "production_soc",
+      "analyst_disrupted",
+      "provider:asa_firewall",
+      "stage:network_observation",
+      "node:N01_perimeter_activity",
+      "node:N03_cross_channel_context",
+      "critical",
+      "discriminative",
+      "aggregate"
+    ],
+    "notes": "Observed aggregate only: 117 blocked leads from 47 structured source IPs to 10 structured destination IPs over 67 ports; protocol counts={'6': 111, '17': 6}. This does not establish one actor or malicious intent."
+  },
+  {
+    "claim_id": "C12-EC-002",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "source_type": "local_log",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "ip",
+      "value": "100.64.16.102"
+    },
+    "predicate": "attempted_blocked_tcp_connection_to_port_445_on",
+    "object": {
+      "entity_type": "ip",
+      "value": "10.55.52.223"
+    },
+    "time_window": {
+      "start": "2022-08-02T06:02:32Z",
+      "end": "2022-08-02T06:02:32Z"
+    },
+    "mapped_tactic": [],
+    "mapped_technique": [],
+    "evidence_strength": "supporting",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "witfoo_incident_leads_f10c7270-1228-11ed-99ed-adca11e4059c",
+      "location": "graph/incidents.jsonl record 11888; leads.b2c01d12-1228-11ed-b35f-bb1ba816609f",
+      "record_id": "b2c01d12-1228-11ed-b35f-bb1ba816609f",
+      "hash": "3063F0EDDADF889AFEB96BE3977B2BBA902960776BB16D056F8CC60228501CD7"
+    },
+    "supports_hypotheses": [
+      "C12_multichannel_security_incident"
+    ],
+    "tags": [
+      "hideable",
+      "real_witfoo",
+      "production_soc",
+      "provider:asa_firewall",
+      "stage:network_observation",
+      "node:N01_perimeter_activity",
+      "critical",
+      "discriminative",
+      "representative"
+    ],
+    "notes": "Structured ASA fields record a blocked TCP connection to destination port 445. Sanitized structured fields and embedded message entities are intentionally not joined."
+  },
+  {
+    "claim_id": "C12-EC-003",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "source_type": "local_log",
+    "claim_type": "credential_activity",
+    "subject": {
+      "entity_type": "user",
+      "value": "SYSTEM"
+    },
+    "predicate": "received_windows_event_4672_special_privileges_on",
+    "object": {
+      "entity_type": "host",
+      "value": "10.109.195.54"
+    },
+    "time_window": {
+      "start": "2022-08-02T05:59:53Z",
+      "end": "2022-08-02T05:59:53Z"
+    },
+    "mapped_tactic": [],
+    "mapped_technique": [],
+    "evidence_strength": "strong",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "witfoo_incident_leads_f10c7270-1228-11ed-99ed-adca11e4059c",
+      "location": "graph/incidents.jsonl record 11888; leads.5426bc99-1228-11ed-b60e-d3f4a4ef2379",
+      "record_id": "5426bc99-1228-11ed-b60e-d3f4a4ef2379",
+      "hash": "C214C8F8E7D51E8CD99FF35E1E9D7FF4101DA39E62689DFAA24A1A092EE6E825"
+    },
+    "supports_hypotheses": [
+      "C12_multichannel_security_incident"
+    ],
+    "tags": [
+      "hideable",
+      "real_witfoo",
+      "production_soc",
+      "provider:windows_ad",
+      "stage:credential_observation",
+      "node:N02_privileged_identity_activity",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "notes": "Windows Security Event 4672 records special privileges for SYSTEM. The event is an observation, not proof of adversarial privilege escalation."
+  },
+  {
+    "claim_id": "C12-EC-004",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "source_type": "local_log",
+    "claim_type": "credential_activity",
+    "subject": {
+      "entity_type": "user",
+      "value": "SYSTEM"
+    },
+    "predicate": "received_windows_event_4672_special_privileges_on",
+    "object": {
+      "entity_type": "host",
+      "value": "10.190.96.179"
+    },
+    "time_window": {
+      "start": "2022-08-02T05:59:53Z",
+      "end": "2022-08-02T05:59:53Z"
+    },
+    "mapped_tactic": [],
+    "mapped_technique": [],
+    "evidence_strength": "strong",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "witfoo_incident_leads_f10c7270-1228-11ed-99ed-adca11e4059c",
+      "location": "graph/incidents.jsonl record 11888; leads.5426e3e3-1228-11ed-b60e-d3f4a4ef2379",
+      "record_id": "5426e3e3-1228-11ed-b60e-d3f4a4ef2379",
+      "hash": "1E6ED2813E1113EE9965A46657E2840FAA1EDC05C2140330023BE6631C715EE5"
+    },
+    "supports_hypotheses": [
+      "C12_multichannel_security_incident"
+    ],
+    "tags": [
+      "hideable",
+      "real_witfoo",
+      "production_soc",
+      "provider:windows_ad",
+      "stage:credential_observation",
+      "node:N02_privileged_identity_activity",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "notes": "Windows Security Event 4672 records special privileges for SYSTEM. The event is an observation, not proof of adversarial privilege escalation."
+  },
+  {
+    "claim_id": "C12-EC-005",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "source_type": "provenance_graph",
+    "claim_type": "other",
+    "subject": {
+      "entity_type": "report",
+      "value": "f10c7270-1228-11ed-99ed-adca11e4059c"
+    },
+    "predicate": "vendor_correlated_as_single_incident_across",
+    "object": {
+      "entity_type": "report",
+      "value": "ASA Firewall and Windows Active Directory"
+    },
+    "time_window": {
+      "start": "2022-08-02T05:59:45Z",
+      "end": "2022-08-02T06:06:44Z"
+    },
+    "mapped_tactic": [],
+    "mapped_technique": [],
+    "evidence_strength": "context",
+    "confidence": 0.8,
+    "observable_status": "visible",
+    "source_pointer": {
+      "artifact_id": "witfoo_incident_graphml_f10c7270-1228-11ed-99ed-adca11e4059c",
+      "location": "graph/incidents_graphml/f/f10c7270-1228-11ed-99ed-adca11e4059c.graphml",
+      "record_id": "f10c7270-1228-11ed-99ed-adca11e4059c",
+      "hash": "ABC343D5D2CED9A839445DF73ED66F1C812F6F4C0C4CF08D0FE7CB9A8EC9AD44"
+    },
+    "supports_hypotheses": [
+      "C12_multichannel_security_incident"
+    ],
+    "tags": [
+      "hideable",
+      "real_witfoo",
+      "production_soc",
+      "provider:precinct_projection",
+      "stage:cross_channel_correlation",
+      "node:N03_cross_channel_context",
+      "context_only",
+      "vendor_oracle"
+    ],
+    "notes": "All 49 GraphML edges are INCIDENT_LINK projections. This claim records vendor correlation context and is not independent provenance or ground truth."
+  }
+]

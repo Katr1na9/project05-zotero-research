@@ -1,0 +1,122 @@
+{
+  "schema_version": "project05.c12_intake_lock.v1",
+  "freeze_date": "2026-07-13",
+  "dataset": {
+    "dataset_id": "witfoo/precinct6-cybersecurity",
+    "revision": "1c0be6c03713af68eb9badc404297a63546bf2b4",
+    "attack_reports_path": "graph/attack_reports.jsonl",
+    "attack_reports_sha256": "DC6946F50B62E6B3DFC9400EB28F388B374D7DCADA0C436C283AB719A0DE2866",
+    "expected_record_count": 13119,
+    "license": "Apache-2.0"
+  },
+  "unit_of_analysis": "one_incident_id",
+  "product_taxonomy": {
+    "ASA Firewall": {
+      "family": "cisco_asa_firewall",
+      "channel": "network_perimeter"
+    },
+    "AWS VPC Security": {
+      "family": "aws_vpc_security",
+      "channel": "cloud_network"
+    },
+    "Cisco Meraki Firewall": {
+      "family": "cisco_meraki_firewall",
+      "channel": "network_perimeter"
+    },
+    "FireEye Endpoint Security (HX Series)": {
+      "family": "fireeye_hx",
+      "channel": "endpoint"
+    },
+    "Meraki": {
+      "family": "cisco_meraki_firewall",
+      "channel": "network_perimeter"
+    },
+    "PAN NGFW": {
+      "family": "palo_alto_ngfw",
+      "channel": "network_perimeter"
+    },
+    "Precinct": {
+      "family": "witfoo_precinct",
+      "channel": "correlation_platform"
+    },
+    "ProofPoint Protect": {
+      "family": "proofpoint_protect",
+      "channel": "email_security"
+    },
+    "Stealthwatch": {
+      "family": "cisco_stealthwatch",
+      "channel": "network_detection"
+    },
+    "Umbrella": {
+      "family": "cisco_umbrella",
+      "channel": "dns_security"
+    },
+    "Windows Active Directory": {
+      "family": "windows_active_directory",
+      "channel": "identity"
+    }
+  },
+  "stream_taxonomy": {
+    "OpenDNS Detection": {
+      "family": "cisco_umbrella_opendns",
+      "channel": "dns_security"
+    },
+    "cisco_asa": {
+      "family": "cisco_asa_syslog",
+      "channel": "network_perimeter"
+    },
+    "meraki": {
+      "family": "cisco_meraki_stream",
+      "channel": "network_perimeter"
+    },
+    "microsoft-windows-security-auditing": {
+      "family": "windows_security_audit",
+      "channel": "identity"
+    }
+  },
+  "inclusion": {
+    "allowed_dispositions": [
+      "Disrupted",
+      "Resolved"
+    ],
+    "allowed_disposition_categories": [
+      "confirmed-malicious"
+    ],
+    "require_all_product_labels_mapped": true,
+    "minimum_distinct_product_families": 2,
+    "minimum_distinct_sensor_channels": 2,
+    "minimum_node_count": 5,
+    "minimum_edge_count": 5,
+    "top_k": 10
+  },
+  "ranking": {
+    "base_confirmed_malicious": 100.0,
+    "per_distinct_sensor_channel": 10.0,
+    "sensor_channel_cap": 4,
+    "per_distinct_product_family": 3.0,
+    "product_family_cap": 4,
+    "per_node": 0.5,
+    "node_cap": 30,
+    "per_edge": 0.25,
+    "edge_cap": 60,
+    "per_lead": 0.1,
+    "lead_cap": 100,
+    "lifecycle_stage_bonus": {
+      "complete-mission": 10.0,
+      "move-laterally": 7.5,
+      "maintain-persistence": 5.0
+    },
+    "excluded_from_ranking": [
+      "attack_tactics",
+      "attack_techniques",
+      "report_text"
+    ]
+  },
+  "claim_boundaries": [
+    "Production origin does not make vendor correlation an independent ground truth.",
+    "Disrupted or Resolved plus confirmed-malicious is an analyst-confirmation filter, not actor-attribution truth.",
+    "Vendor-inferred ATT&CK mappings are descriptors only and are excluded from eligibility and ranking.",
+    "Distinct incident IDs are not assumed to be statistically independent organizations.",
+    "A metadata-selected incident must pass event-level source-pointer and recoverability review before C12 evaluation."
+  ]
+}

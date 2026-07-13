@@ -1,0 +1,347 @@
+{
+  "screen_id": "project05-c12-witfoo-operational-screen-v0.1",
+  "protocol_lock_sha256": "AA72AAC2B3E27055864CD908DE481EEAE8CE32126C0DBC265AB7E9702042A752",
+  "source": {
+    "dataset_id": "witfoo/precinct6-cybersecurity",
+    "revision": "1c0be6c03713af68eb9badc404297a63546bf2b4",
+    "attack_reports_source": "https://huggingface.co/datasets/witfoo/precinct6-cybersecurity/resolve/1c0be6c03713af68eb9badc404297a63546bf2b4/graph/attack_reports.jsonl",
+    "scanned_raw_sha256": "DC6946F50B62E6B3DFC9400EB28F388B374D7DCADA0C436C283AB719A0DE2866",
+    "scan_complete": true
+  },
+  "gates": {
+    "source_integrity": {
+      "pass": true,
+      "expected_records": 13119,
+      "observed_records": 13119,
+      "expected_sha256": "DC6946F50B62E6B3DFC9400EB28F388B374D7DCADA0C436C283AB719A0DE2866",
+      "observed_sha256": "DC6946F50B62E6B3DFC9400EB28F388B374D7DCADA0C436C283AB719A0DE2866"
+    },
+    "product_taxonomy": {
+      "pass": true,
+      "unmapped_product_labels": {}
+    },
+    "event_level_source_review": {
+      "pass": false,
+      "status": "pending_graph_download_and_recoverability_audit"
+    }
+  },
+  "unit_of_analysis": "one_incident_id",
+  "screening_rules": {
+    "allowed_dispositions": [
+      "Disrupted",
+      "Resolved"
+    ],
+    "allowed_disposition_categories": [
+      "confirmed-malicious"
+    ],
+    "require_all_product_labels_mapped": true,
+    "minimum_distinct_product_families": 2,
+    "minimum_distinct_sensor_channels": 2,
+    "minimum_node_count": 5,
+    "minimum_edge_count": 5,
+    "top_k": 10
+  },
+  "ranking_rules": {
+    "base_confirmed_malicious": 100.0,
+    "per_distinct_sensor_channel": 10.0,
+    "sensor_channel_cap": 4,
+    "per_distinct_product_family": 3.0,
+    "product_family_cap": 4,
+    "per_node": 0.5,
+    "node_cap": 30,
+    "per_edge": 0.25,
+    "edge_cap": 60,
+    "per_lead": 0.1,
+    "lead_cap": 100,
+    "lifecycle_stage_bonus": {
+      "complete-mission": 10.0,
+      "move-laterally": 7.5,
+      "maintain-persistence": 5.0
+    },
+    "excluded_from_ranking": [
+      "attack_tactics",
+      "attack_techniques",
+      "report_text"
+    ]
+  },
+  "counts": {
+    "records_scanned": 13119,
+    "eligible_before_top_k": 5,
+    "selected": 5,
+    "rejections": {
+      "insufficient_nodes": 11,
+      "insufficient_product_families": 7063,
+      "not_confirmed_malicious": 6040
+    },
+    "raw_product_labels": {
+      "ASA Firewall": 10183,
+      "AWS VPC Security": 105,
+      "Cisco Meraki Firewall": 5,
+      "FireEye Endpoint Security (HX Series)": 3,
+      "Meraki": 2051,
+      "PAN NGFW": 723,
+      "Precinct": 5,
+      "ProofPoint Protect": 3,
+      "Stealthwatch": 53,
+      "Umbrella": 11,
+      "Windows Active Directory": 3
+    }
+  },
+  "candidates": [
+    {
+      "incident_id": "f10c7270-1228-11ed-99ed-adca11e4059c",
+      "source_record_index_1based": 11888,
+      "score": 169.25,
+      "disposition": "Disrupted",
+      "disposition_category": "confirmed-malicious",
+      "report_source": "template",
+      "mo_name": "Data Theft",
+      "suspicion_score": 0.9208984375,
+      "lifecycle_stage": "complete-mission",
+      "products_observed": [
+        "ASA Firewall",
+        "Windows Active Directory"
+      ],
+      "product_families": [
+        "cisco_asa_firewall",
+        "windows_active_directory"
+      ],
+      "sensor_channels": [
+        "identity",
+        "network_perimeter"
+      ],
+      "attack_tactics": [
+        "TA0001",
+        "TA0002",
+        "TA0009",
+        "TA0010"
+      ],
+      "attack_techniques": [
+        "T1041",
+        "T1190",
+        "T1567"
+      ],
+      "set_role_names": [
+        "Exploiting Host",
+        "Exploiting Target",
+        "Suspicious User"
+      ],
+      "matched_rules": [
+        "ASA Deny",
+        "Special privileges assigned to new ORG-0063"
+      ],
+      "lead_count": 119,
+      "node_count": 22,
+      "edge_count": 49,
+      "first_observed_at": 1659419985,
+      "last_observed_at": 1659420404,
+      "graph_path": "graph/incidents_graphml/f/f10c7270-1228-11ed-99ed-adca11e4059c.graphml"
+    },
+    {
+      "incident_id": "33cf81e0-463d-11ed-9048-e52ef683aaf1",
+      "source_record_index_1based": 10842,
+      "score": 166.0,
+      "disposition": "Disrupted",
+      "disposition_category": "confirmed-malicious",
+      "report_source": "template",
+      "mo_name": "Data Theft",
+      "suspicion_score": 0.980224609375,
+      "lifecycle_stage": "complete-mission",
+      "products_observed": [
+        "Meraki",
+        "Umbrella"
+      ],
+      "product_families": [
+        "cisco_meraki_firewall",
+        "cisco_umbrella"
+      ],
+      "sensor_channels": [
+        "dns_security",
+        "network_perimeter"
+      ],
+      "attack_tactics": [
+        "TA0001",
+        "TA0002",
+        "TA0009",
+        "TA0010"
+      ],
+      "attack_techniques": [
+        "T1041",
+        "T1190",
+        "T1567"
+      ],
+      "set_role_names": [
+        "Exploiting Host",
+        "Exploiting Target",
+        "Suspicious User"
+      ],
+      "matched_rules": [
+        "Blocked Action",
+        "Meraki Deny Alarm",
+        "Umbrella Alarm"
+      ],
+      "lead_count": 90,
+      "node_count": 22,
+      "edge_count": 40,
+      "first_observed_at": 1659654627,
+      "last_observed_at": 1665146501,
+      "graph_path": "graph/incidents_graphml/3/33cf81e0-463d-11ed-9048-e52ef683aaf1.graphml"
+    },
+    {
+      "incident_id": "2e4068e0-0b6c-11ed-bc4c-114b5035f7dd",
+      "source_record_index_1based": 9745,
+      "score": 164.0,
+      "disposition": "Disrupted",
+      "disposition_category": "confirmed-malicious",
+      "report_source": "template",
+      "mo_name": "Data Theft",
+      "suspicion_score": 0.9634375,
+      "lifecycle_stage": "complete-mission",
+      "products_observed": [
+        "Meraki",
+        "Umbrella"
+      ],
+      "product_families": [
+        "cisco_meraki_firewall",
+        "cisco_umbrella"
+      ],
+      "sensor_channels": [
+        "dns_security",
+        "network_perimeter"
+      ],
+      "attack_tactics": [
+        "TA0001",
+        "TA0002",
+        "TA0009",
+        "TA0010"
+      ],
+      "attack_techniques": [
+        "T1041",
+        "T1190",
+        "T1567"
+      ],
+      "set_role_names": [
+        "Exploiting Host",
+        "Exploiting Target"
+      ],
+      "matched_rules": [
+        "Blocked Action",
+        "Meraki Deny Alarm"
+      ],
+      "lead_count": 80,
+      "node_count": 20,
+      "edge_count": 40,
+      "first_observed_at": 1658650546,
+      "last_observed_at": 1658679772,
+      "graph_path": "graph/incidents_graphml/2/2e4068e0-0b6c-11ed-bc4c-114b5035f7dd.graphml"
+    },
+    {
+      "incident_id": "306f2fc0-0b6c-11ed-bc4c-114b5035f7dd",
+      "source_record_index_1based": 9750,
+      "score": 150.25,
+      "disposition": "Disrupted",
+      "disposition_category": "confirmed-malicious",
+      "report_source": "template",
+      "mo_name": "Data Theft",
+      "suspicion_score": 0.9208984375,
+      "lifecycle_stage": "complete-mission",
+      "products_observed": [
+        "Meraki",
+        "Umbrella"
+      ],
+      "product_families": [
+        "cisco_meraki_firewall",
+        "cisco_umbrella"
+      ],
+      "sensor_channels": [
+        "dns_security",
+        "network_perimeter"
+      ],
+      "attack_tactics": [
+        "TA0001",
+        "TA0002",
+        "TA0009",
+        "TA0010"
+      ],
+      "attack_techniques": [
+        "T1041",
+        "T1190",
+        "T1567"
+      ],
+      "set_role_names": [
+        "Exploiting Host",
+        "Exploiting Target"
+      ],
+      "matched_rules": [
+        "Blocked Action",
+        "Meraki Deny Alarm"
+      ],
+      "lead_count": 40,
+      "node_count": 11,
+      "edge_count": 19,
+      "first_observed_at": 1658648827,
+      "last_observed_at": 1658680025,
+      "graph_path": "graph/incidents_graphml/3/306f2fc0-0b6c-11ed-bc4c-114b5035f7dd.graphml"
+    },
+    {
+      "incident_id": "3390a1e0-02ef-11ee-800b-d36f3c94df97",
+      "source_record_index_1based": 9737,
+      "score": 141.3,
+      "disposition": "Disrupted",
+      "disposition_category": "confirmed-malicious",
+      "report_source": "template",
+      "mo_name": "Data Theft",
+      "suspicion_score": 0.89453125,
+      "lifecycle_stage": "complete-mission",
+      "products_observed": [
+        "Meraki",
+        "Stealthwatch"
+      ],
+      "product_families": [
+        "cisco_meraki_firewall",
+        "cisco_stealthwatch"
+      ],
+      "sensor_channels": [
+        "network_detection",
+        "network_perimeter"
+      ],
+      "attack_tactics": [
+        "TA0001",
+        "TA0002",
+        "TA0009",
+        "TA0010"
+      ],
+      "attack_techniques": [
+        "T1041",
+        "T1190",
+        "T1567"
+      ],
+      "set_role_names": [
+        "Exploiting Host",
+        "Exploiting Target"
+      ],
+      "matched_rules": [
+        "Blocked Action",
+        "Stealthwatch High Concern Index Alarm"
+      ],
+      "lead_count": 8,
+      "node_count": 5,
+      "edge_count": 8,
+      "first_observed_at": 1685807537,
+      "last_observed_at": 1685893949,
+      "graph_path": "graph/incidents_graphml/3/3390a1e0-02ef-11ee-800b-d36f3c94df97.graphml"
+    }
+  ],
+  "claim_boundary": [
+    "Production origin does not make vendor correlation an independent ground truth.",
+    "Disrupted or Resolved plus confirmed-malicious is an analyst-confirmation filter, not actor-attribution truth.",
+    "Vendor-inferred ATT&CK mappings are descriptors only and are excluded from eligibility and ranking.",
+    "Distinct incident IDs are not assumed to be statistically independent organizations.",
+    "A metadata-selected incident must pass event-level source-pointer and recoverability review before C12 evaluation."
+  ],
+  "decision": {
+    "status": "metadata_gate_passed_event_gate_pending",
+    "paper_result_claim_allowed": false,
+    "next_step": "download_and_audit_ranked_graphs_before_freezing_one_C12_engagement"
+  }
+}

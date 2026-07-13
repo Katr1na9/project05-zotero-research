@@ -1,0 +1,68 @@
+{
+  "case_id": "C12-witfoo-precinct6-f10c7270",
+  "source_case_id": "f10c7270-1228-11ed-99ed-adca11e4059c",
+  "compile_status": "compiled_event_backed_operational_stress_case",
+  "event_source_gate": "PASS",
+  "selected_claim_count": 5,
+  "selected_provider_families": [
+    "asa_firewall",
+    "precinct_projection",
+    "windows_ad"
+  ],
+  "node_results": [
+    {
+      "node_id": "N01_perimeter_activity",
+      "status": "compiled",
+      "claim_ids": [
+        "C12-EC-001",
+        "C12-EC-002"
+      ],
+      "provider_families": [
+        "asa_firewall"
+      ]
+    },
+    {
+      "node_id": "N02_privileged_identity_activity",
+      "status": "compiled",
+      "claim_ids": [
+        "C12-EC-003",
+        "C12-EC-004"
+      ],
+      "provider_families": [
+        "windows_ad"
+      ]
+    },
+    {
+      "node_id": "N03_cross_channel_context",
+      "status": "compiled_context_only",
+      "claim_ids": [
+        "C12-EC-001",
+        "C12-EC-003",
+        "C12-EC-005"
+      ],
+      "provider_families": [
+        "asa_firewall",
+        "windows_ad",
+        "precinct_projection"
+      ]
+    },
+    {
+      "node_id": "N04_actor_campaign_attribution",
+      "status": "natural_gap",
+      "claim_ids": [],
+      "reason": "No actor label or independent campaign truth."
+    }
+  ],
+  "support_decision": {
+    "compiled_target": "G1_technique",
+    "compiled_ceiling": "G1_technique",
+    "reason": "Raw observations support behavior-level investigation only; actor and campaign conclusions remain unsupported."
+  },
+  "source_boundaries": [
+    "ATT&CK mappings supplied by the vendor are excluded from gold claim construction.",
+    "Structured artifact fields and embedded message text contain sanitization mismatches; they are not entity-joined.",
+    "Vendor observed_at and embedded event clocks are inconsistent; no cross-channel causal order is claimed.",
+    "GraphML edges are INCIDENT_LINK projections and count only as vendor-correlation context.",
+    "Disrupted is an analyst-confirmation filter, not independent actor-attribution ground truth."
+  ]
+}

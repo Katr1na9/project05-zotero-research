@@ -1,0 +1,68 @@
+{
+  "audit_id": "project05-external-afa-source-and-interface-audit-v0.1",
+  "lock_file": "09-experiments\\external_baselines\\external_baseline_lock_v0.1.json",
+  "source_checks": [
+    {
+      "baseline_id": "afabench-kdd2026",
+      "expected_commit": "8ebf5e9f0287a7dac09218e1c3c9684b546faddb",
+      "local_checkout_present": true,
+      "commit_matches": true,
+      "archive_matches": null,
+      "actual_commit": "8ebf5e9f0287a7dac09218e1c3c9684b546faddb"
+    },
+    {
+      "baseline_id": "winregrl-scirep2026",
+      "expected_commit": "d3db7643b39eb9e3af666d5ed0c257250f27adef",
+      "local_checkout_present": true,
+      "commit_matches": true,
+      "archive_matches": true,
+      "actual_commit": "d3db7643b39eb9e3af666d5ed0c257250f27adef",
+      "actual_archive_sha256": "5B701C83C8740FEEE3FBE133A6224BEF9AB1CA0B808728C9E2B2AB09D815BC98"
+    },
+    {
+      "baseline_id": "aaco-icml2024",
+      "expected_commit": "3b2316661651699d11e904e9c5911c175e8b2fdc",
+      "local_checkout_present": true,
+      "commit_matches": true,
+      "archive_matches": null,
+      "actual_commit": "3b2316661651699d11e904e9c5911c175e8b2fdc"
+    },
+    {
+      "baseline_id": "nocta-2025",
+      "expected_commit": null,
+      "local_checkout_present": false,
+      "commit_matches": null,
+      "archive_matches": null
+    }
+  ],
+  "source_gate": {
+    "checked_source_count": 3,
+    "pass": true
+  },
+  "project05_action_inventory": {
+    "extend_log_window": 2,
+    "human_review": 5,
+    "query_host_subgraph": 14,
+    "recover_network_summary": 5,
+    "ttp_local_probe": 5
+  },
+  "winregrl_action_family_mapping": {
+    "extend_log_window": "ingest",
+    "human_review": "validate",
+    "query_host_subgraph": "correlate",
+    "recover_network_summary": "parse_device",
+    "ttp_local_probe": "correlate"
+  },
+  "action_family_gate": {
+    "mapped_action_type_count": 5,
+    "total_action_type_count": 5,
+    "unmapped_action_types": [],
+    "pass": true
+  },
+  "comparability_decision": {
+    "external_framework": "afabench-kdd2026",
+    "operational_nearest_neighbor": "winregrl-scirep2026",
+    "direct_same_task_claim_allowed": false,
+    "next_gate": "define_a_static_external_endpoint_or_report_cross_task_reproduction_separately"
+  }
+}

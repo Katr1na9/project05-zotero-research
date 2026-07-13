@@ -64,11 +64,11 @@ class PaperV06ConsistencyTests(unittest.TestCase):
             row["planner"]: row for row in cls.extended["planner_results"]
         }
 
-    def test_authority_points_to_v06(self):
+    def test_v06_remains_an_archived_historical_snapshot(self):
         authority = AUTHORITY.read_text(encoding="utf-8")
-        self.assertIn(PAPER.name, authority)
-        self.assertIn("唯一论文母本", authority)
-        self.assertIn(RIGOR_REVIEW.name, authority)
+        self.assertIn("**稿件状态**：v0.6", self.paper)
+        self.assertIn("论文 v0.6 及更早稿", authority)
+        self.assertIn("研究过程档案", authority)
 
     def test_authority_uses_internal_freeze_wording(self):
         authority = AUTHORITY.read_text(encoding="utf-8")

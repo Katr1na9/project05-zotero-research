@@ -8,14 +8,14 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 
 | 研究线 | 核心内容 | 当前状态 |
 |---|---|---|
-| [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.6；C11 已完成独立 G2 压力与冻结策略迁移 |
+| [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.7；C11 G2、C12 生产 SOC G1 与外部 AFA 映射已入正文 |
 | [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | IPv4/IPv6/MPLS/Geo/SCION 异构路径下的行为追溯与意图感知，暂定 | Stage 1；初筛完成，W1 amber，P0 精读待进行 |
 
 共享 SOP、单篇精读、模板和 Zotero 导出继续使用根目录的稳定路径，所有权规则见 [Shared Workspace](10-research-lines/00-shared-workspace/README.md)。
 
 ## P05-L1 既有论文线
 
-截至 2026-07-13，已完成 C07-C10 四个 G3 主案例、AFA/敏感性实验、Reviewer major revision，以及 C11 第三种数据封装上的独立 G2 压力、AND/OR 敏感性和全策略冻结迁移。当前主线为：
+截至 2026-07-13，已完成 C07-C10 四个 G3 主案例、AFA/敏感性实验、Reviewer major revision、C11 独立 G2 压力与全策略冻结迁移，以及 C12 生产 SOC 多 stream G1 外部压力。当前主线为：
 
 > 不完整证据下、信息边界约束的 APT 调查控制。
 
@@ -28,7 +28,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 - 在成本约束下，下一步最值得获取哪类证据；
 - 何时停止取证并输出粒度受控的结论或降级原因。
 
-当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260713.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260713.md)。论文母本为：[paper-main-draft-v0.6-c11-policy-transfer-20260713.md](08-writing/paper-main-draft-v0.6-c11-policy-transfer-20260713.md)。
+当前权威文档和实验入口见：[AUTHORITATIVE-DOCUMENTS-20260713.md](08-writing/AUTHORITATIVE-DOCUMENTS-20260713.md)。论文母本为：[paper-main-draft-v0.7-c12-operational-stress-20260713.md](08-writing/paper-main-draft-v0.7-c12-operational-stress-20260713.md)。
 
 当前 G1 通过版 RQ 见：[topic-rq-brief-v2.1-g1-final-20260706.md](03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md)
 
@@ -65,8 +65,9 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 
 1. P05-L2：按 [reading queue](10-research-lines/02-multimodal-threat-attribution/02-literature-notes/reading-queue.md) 精读 P0 五篇，验证 W1 能否区别于 SecTracer、Forensic Coverage、ID-INT 和 P4Prime。G1 前不选模型、不写论文。
 2. P05-L1：C07-C11 v0.2 双人盲标包仍为 `awaiting_annotations`。27/27 Claim 来源摘录已就绪，下一步是确认两名独立标注者并启动三任务盲标。
-3. P05-L1：C11 的 D1-D5 已完成；外部效度应优先增加自然发生或更接近运营现场的独立 engagement。
-4. P05-L1：根据目标 venue 决定是否补官方 AFA 实现；专利继续完成权属、公开日和代理师审查。
+3. P05-L1：C12 已作为正文独立 G1 外部压力；下一步扩第二个独立运营 incident 或分析师效用终点，继续禁止把 `Disrupted` 写成 actor/campaign 真值。
+4. P05-L1：外部 AFA 源码与接口映射已完成；下一步先冻结 endpoint contract，再决定是否运行跨任务复现或显式 adapter。
+5. P05-L1：专利继续完成权属、公开日和代理师审查。
 
 ## P05-L1 当前红线
 
