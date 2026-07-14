@@ -1,0 +1,989 @@
+{
+  "schema_version": "2.0",
+  "title": "一种面向不完整安全证据的归因取证动作规划方法",
+  "metadata": {
+    "source": "Project05 method-only patent v0.7 and paper-main-draft-v0.8",
+    "target": "中国发明专利",
+    "draft_status": "供发明人及专利代理师复核"
+  },
+  "source_analysis": {
+    "contains_core_formulas": true,
+    "formula_count_in_source": 1,
+    "contains_methodology_figures": true
+  },
+  "source_map": [
+    {
+      "id": "P001",
+      "type": "research_problem",
+      "locator": "03-ideas/topic-rq-brief-v2.1-g1-final-20260706.md；research question, contribution boundary, LLM role and Gate decisions",
+      "summary": "problem definition and scope",
+      "confidence": "high"
+    },
+    {
+      "id": "P002",
+      "type": "method_and_results_brief",
+      "locator": "08-writing/contribution-boundary-and-results-brief-v0.1.md；sections 1-6",
+      "summary": "frozen method, formula, results, positive and negative claims",
+      "confidence": "medium"
+    },
+    {
+      "id": "P003",
+      "type": "annotation_protocol",
+      "locator": "08-writing/intended-cti-node-annotation-protocol-v0.1-20260710.md；intended versus recoverable constraints",
+      "summary": "public/hidden information boundary",
+      "confidence": "high"
+    },
+    {
+      "id": "P004",
+      "type": "experiment_summary",
+      "locator": "08-writing/c07-c08-paired-regret-summary-v0.1-20260710.md；C07+C08+C09 paired table",
+      "summary": "frozen holdout evidence",
+      "confidence": "high"
+    },
+    {
+      "id": "P005",
+      "type": "experiment_report",
+      "locator": "09-experiments/results/c09_holdout_m3a/README.md；sections 1-6",
+      "summary": "OpTC event-backed implementation and limitations",
+      "confidence": "high"
+    },
+    {
+      "id": "P006",
+      "type": "experiment_protocol",
+      "locator": "08-writing/c10-optc-day3-protocol-v0.1-20260711.md；sections 1-6",
+      "summary": "fourth parameter-locked case, auditable extraction and M3a premature-stop boundary",
+      "confidence": "high"
+    },
+    {
+      "id": "P007",
+      "type": "experiment_report",
+      "locator": "08-writing/xgboost-action-value-c10-results-v0.2-20260711.md；C07-C10 classification and sequential results",
+      "summary": "learned-planner boundary and negative cost-superiority evidence",
+      "confidence": "high"
+    },
+    {
+      "id": "P008",
+      "type": "experiment_protocol",
+      "locator": "08-writing/nonmyopic-dqn-gate-protocol-v0.1-20260711.md；Gate A and Gate B criteria",
+      "summary": "pre-registered nonmyopic and DQN necessity conditions",
+      "confidence": "high"
+    },
+    {
+      "id": "P009",
+      "type": "experiment_report",
+      "locator": "08-writing/nonmyopic-dqn-gate-results-v0.1-20260711.md；192-environment result and decision",
+      "summary": "support for lightweight nonmyopic dependent embodiment and DQN exclusion",
+      "confidence": "high"
+    },
+    {
+      "id": "P010",
+      "type": "paper_main_draft",
+      "locator": "08-writing/paper-main-draft-v0.7-c12-operational-stress-20260713.md；method, C07-C12 experiments, external AFA task-boundary audit and limitations",
+      "summary": "current paper authority for method and evidence boundaries",
+      "confidence": "high"
+    },
+    {
+      "id": "P011",
+      "type": "experiment_report",
+      "locator": "08-writing/c11-frozen-policy-transfer-results-v0.1-20260713.md；C11 OTRF transfer, OR sensitivity and frozen-policy results",
+      "summary": "G2 transfer embodiment and coverage-semantics sensitivity",
+      "confidence": "high"
+    },
+    {
+      "id": "P012",
+      "type": "experiment_report",
+      "locator": "08-writing/c12-natural-operational-engagement-results-v0.1-20260713.md；two-stage source gate, event-backed C12 case and policy comparison",
+      "summary": "G1 natural operational source embodiment and source-role boundary",
+      "confidence": "high"
+    },
+    {
+      "id": "P013",
+      "type": "prior_art_task_mapping",
+      "locator": "08-writing/external-afa-baseline-mapping-protocol-v0.1-20260713.md；AFABench, AACO, NOCTA and WinRegRL interface audit",
+      "summary": "prior-art task-boundary statement; not evidence of patentability",
+      "confidence": "high"
+    },
+    {
+      "id": "E001",
+      "type": "equation",
+      "locator": "08-writing/contribution-boundary-and-results-brief-v0.1.md；section 2.3",
+      "summary": "action-gap compatibility operation",
+      "confidence": "high"
+    },
+    {
+      "id": "C001",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/run_mvp.py；m3a_gap_compat_score, around line 751",
+      "summary": "planner implementation",
+      "confidence": "high"
+    },
+    {
+      "id": "C002",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/run_mvp.py；intended_equals_recoverable_or, around line 205",
+      "summary": "information-boundary enforcement",
+      "confidence": "high"
+    },
+    {
+      "id": "C003",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/run_mvp.py；ensure_stop_action and channel primitives, around lines 503-575",
+      "summary": "STOP, channel gating and realized feedback",
+      "confidence": "high"
+    },
+    {
+      "id": "C004",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/stream_ecar_event_window.py; 09-experiments/scripts/compile_ecar_motifs.py；exact-host extraction and motif compilation",
+      "summary": "auditable OpTC embodiment",
+      "confidence": "high"
+    },
+    {
+      "id": "C005",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/run_xgboost.py；public state-action features, training and sequential evaluation",
+      "summary": "optional learned-score embodiment",
+      "confidence": "high"
+    },
+    {
+      "id": "C006",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/run_nonmyopic_gate.py；prerequisite environments, depth-2 and dynamic-programming planners",
+      "summary": "nonmyopic dependent embodiment",
+      "confidence": "high"
+    },
+    {
+      "id": "C007",
+      "type": "source_code",
+      "locator": "09-experiments/scripts/screen_witfoo_c12_candidates.py; 09-experiments/scripts/audit_witfoo_c12_event_sources.py; 09-experiments/scripts/compile_witfoo_c12_case.py；metadata screening, event-source validation and source-traceable C12 compilation",
+      "summary": "optional two-stage source validation embodiment",
+      "confidence": "high"
+    }
+  ],
+  "terminology_ledger": [
+    {
+      "concept": "evidence gap state",
+      "canonical_zh": "证据缺口状态",
+      "source_terms": [
+        "alignment state"
+      ],
+      "forbidden_aliases": []
+    },
+    {
+      "concept": "public action intent",
+      "canonical_zh": "公开意图目标",
+      "source_terms": [
+        "intended_cti_node_ids"
+      ],
+      "forbidden_aliases": []
+    },
+    {
+      "concept": "hidden recovery",
+      "canonical_zh": "实际恢复的安全证据集合",
+      "source_terms": [
+        "recoverable_claim_ids"
+      ],
+      "forbidden_aliases": []
+    },
+    {
+      "concept": "support ceiling",
+      "canonical_zh": "证据支持上限",
+      "source_terms": [
+        "support_ceiling"
+      ],
+      "forbidden_aliases": []
+    },
+    {
+      "concept": "stop action",
+      "canonical_zh": "停止动作",
+      "source_terms": [
+        "STOP"
+      ],
+      "forbidden_aliases": []
+    }
+  ],
+  "formula_inventory": [
+    {
+      "source_id": "E001",
+      "source_number": "M3a score",
+      "technical_role": "根据关键缺口命中、一般缺口命中、意图精确率、召回率及动作成本计算缺口兼容性评价值",
+      "disposition": "specification-equation-1"
+    }
+  ],
+  "figure_inventory": [
+    {
+      "source_id": "P001",
+      "source_number": "Project05 main flow",
+      "type": "methodology",
+      "disposition": "redraw-as-figures-1-to-5"
+    }
+  ],
+  "abstract_figure_number": 1,
+  "assumptions": [
+    "目标法域为中国",
+    "发明人、申请人、权属及首次公开日期待确认",
+    "LLM 编译器不作为当前独立权利要求必要特征"
+  ],
+  "invention_concept": {
+    "technical_problem": "部分对齐、通道不可靠和预算受限时，如何在不读取隐藏恢复结果的条件下自动选择后续取证动作并限制归因输出粒度。",
+    "technical_means": "构建证据缺口状态，隔离公开意图与隐藏执行结果，按预算选择并执行取证动作，基于反馈更新状态并显式停止或降级。",
+    "technical_effect": "将部分对齐结果转化为可执行采集控制闭环，减少规划阶段隐藏结果泄漏并约束证据不足时的越级归因。"
+  },
+  "evidence_ledger": [
+    {
+      "id": "F001",
+      "feature": "Construct an updatable evidence-gap state from CTI/local-evidence alignment",
+      "source_ids": [
+        "P001",
+        "P002",
+        "P010",
+        "P011",
+        "P012",
+        "C001"
+      ],
+      "source_location": "P001；P002；P010；P011；P012；C001",
+      "technical_role": "independent claim and paper core",
+      "effect": "provides a machine-operable state for subsequent evidence acquisition",
+      "support_status": "explicit"
+    },
+    {
+      "id": "F002",
+      "feature": "Separate public action-intent nodes from hidden realized recoverable evidence",
+      "source_ids": [
+        "P003",
+        "P010",
+        "P012",
+        "C002",
+        "C007"
+      ],
+      "source_location": "P003；P010；P012；C002；C007",
+      "technical_role": "independent claim and information-boundary experiment",
+      "effect": "prevents the planner from reading the environment answer key",
+      "support_status": "explicit"
+    },
+    {
+      "id": "F003",
+      "feature": "Select an action by evidence-gap compatibility and cost under a remaining budget",
+      "source_ids": [
+        "E001",
+        "C001",
+        "P002",
+        "P010",
+        "P011",
+        "P012"
+      ],
+      "source_location": "E001；C001；P002；P010；P011；P012",
+      "technical_role": "independent claim; formula details in dependent claim/embodiment",
+      "effect": "converts current evidence gaps into an executable acquisition decision",
+      "support_status": "explicit"
+    },
+    {
+      "id": "F004",
+      "feature": "Apply acquisition-channel outcome and execution feedback before updating evidence state",
+      "source_ids": [
+        "C003",
+        "P002",
+        "P005",
+        "P010",
+        "P011",
+        "P012"
+      ],
+      "source_location": "C003；P002；P005；P010；P011；P012",
+      "technical_role": "independent or dependent claim",
+      "effect": "represents unreliable telemetry and reliable fallback without pre-exposing outcomes",
+      "support_status": "explicit"
+    },
+    {
+      "id": "F005",
+      "feature": "Output a support-limited granularity or explicit STOP/degrade result",
+      "source_ids": [
+        "C003",
+        "P002",
+        "P010",
+        "P011",
+        "P012"
+      ],
+      "source_location": "C003；P002；P010；P011；P012",
+      "technical_role": "independent claim and paper core",
+      "effect": "prevents unsupported granularity escalation and terminates futile acquisition",
+      "support_status": "explicit"
+    },
+    {
+      "id": "F006",
+      "feature": "Use an LLM to compile heterogeneous inputs into schema-constrained evidence claims",
+      "source_ids": [
+        "P001"
+      ],
+      "source_location": "P001",
+      "technical_role": "inventor question or future experiment; exclude from formal independent claim",
+      "effect": "potentially normalizes heterogeneous evidence semantics",
+      "support_status": "needs-confirmation"
+    },
+    {
+      "id": "F007",
+      "feature": "Online LLM/GNN/RL utility prediction provides superior action planning",
+      "source_ids": [
+        "P002",
+        "P004",
+        "P007",
+        "P009",
+        "P011",
+        "P012"
+      ],
+      "source_location": "P002；P004；P007；P009；P011；P012",
+      "technical_role": "exclude; C11 and C12 show case-dependent ranking rather than stable learned-policy superiority",
+      "effect": "not established",
+      "support_status": "unsupported"
+    },
+    {
+      "id": "F008",
+      "feature": "M3a reduces acquisition cost relative to M2",
+      "source_ids": [
+        "P004",
+        "P005",
+        "P006",
+        "P007",
+        "P011",
+        "P012"
+      ],
+      "source_location": "P004；P005；P006；P007；P011；P012",
+      "technical_role": "explicitly exclude from paper and patent effect statements",
+      "effect": "contradicted by C07-C10; C11 and C12 further show that policy ordering changes with source and support ceiling",
+      "support_status": "unsupported"
+    },
+    {
+      "id": "F009",
+      "feature": "Use finite-depth search or dynamic programming when actions have prerequisite or unlock relations",
+      "source_ids": [
+        "P008",
+        "P009",
+        "P010",
+        "P011",
+        "P012",
+        "C006"
+      ],
+      "source_location": "P008；P009；P010；P011；P012；C006",
+      "technical_role": "dependent claim and embodiment; real C11/C12 evidence is case-specific and does not establish DQN necessity",
+      "effect": "avoids systematic selection of high-immediate-yield distractors in the controlled prerequisite environment",
+      "support_status": "explicit"
+    },
+    {
+      "id": "F010",
+      "feature": "Validate source metadata and event pointers, and separate raw event observations from vendor-derived context projections before compiling evidence claims",
+      "source_ids": [
+        "P010",
+        "P012",
+        "C007"
+      ],
+      "source_location": "P010；P012；C007",
+      "technical_role": "optional embodiment and possible dependent-claim candidate pending prior-art search and patent-agent review",
+      "effect": "preserves traceability and prevents correlation projections or automated labels from being treated as independent event truth",
+      "support_status": "explicit"
+    }
+  ],
+  "claims": [
+    {
+      "number": 1,
+      "text": "一种面向不完整安全证据的归因取证动作规划方法，其特征在于，由计算设备执行，包括： 获取攻击行为图以及与所述攻击行为图部分对齐的本地安全证据声明集合，所述攻击行为图包括行为节点和行为节点之间的关联边，所述本地安全证据声明包括能够回指至原始安全事件的来源标识； 根据所述本地安全证据声明与所述行为节点的关联关系，确定已覆盖行为节点、未匹配行为节点和未匹配关键行为节点，并构建证据缺口状态，所述证据缺口状态至少包括所述已覆盖行为节点、所述未匹配行为节点、所述未匹配关键行为节点、当前可支撑归因粒度、剩余取证预算以及已执行取证动作的反馈信息； 获取候选取证动作集合，其中，各候选取证动作包括公开意图目标、采集通道标识和动作成本，所述公开意图目标用于指示候选取证动作拟补充的行为节点，且所述公开意图目标独立于候选取证动作执行后实际恢复的安全证据集合进行确定； 在不读取所述实际恢复的安全证据集合的情况下，根据所述证据缺口状态、所述公开意图目标、所述动作成本和所述剩余取证预算，从所述候选取证动作集合中确定目标取证动作或停止动作； 在确定所述目标取证动作的情况下，输出与所述目标取证动作对应的采集控制指令，根据所述采集通道的执行结果获得新增安全证据声明，并利用所述新增安全证据声明更新所述证据缺口状态和所述当前可支撑归因粒度；以及 重复确定目标取证动作和更新证据缺口状态，直至所述当前可支撑归因粒度达到目标归因粒度、所述剩余取证预算不满足继续采集条件、所述目标归因粒度被确定为不可达或者确定所述停止动作，并输出不高于所述当前可支撑归因粒度的归因结果或降级结果。"
+    },
+    {
+      "number": 2,
+      "text": "根据权利要求1所述的方法，其特征在于，确定已覆盖行为节点包括：针对任一行为节点，在与该行为节点关联的至少一个必需安全证据声明已存在于当前可见安全证据声明集合时，将该行为节点确定为已覆盖行为节点；确定已覆盖关联边包括：在关联边两端的行为节点均已覆盖且满足所述关联边的关系约束时，将所述关联边确定为已覆盖关联边。"
+    },
+    {
+      "number": 3,
+      "text": "根据权利要求1所述的方法，其特征在于，所述当前可支撑归因粒度由节点覆盖率、关联边覆盖率、攻击阶段覆盖数量和关键行为节点覆盖状态共同确定，并由预设的证据支持上限进行截断，以使输出的归因结果不超过所述证据支持上限。"
+    },
+    {
+      "number": 4,
+      "text": "根据权利要求1所述的方法，其特征在于，在候选取证动作写入所述候选取证动作集合之前，对所述公开意图目标执行信息边界校验；除停止动作和不指向攻击行为节点的审查动作之外，当所述公开意图目标与所述实际恢复的安全证据集合所覆盖的行为节点集合完全相同时，拒绝该候选取证动作或者重新确定所述公开意图目标。"
+    },
+    {
+      "number": 5,
+      "text": "根据权利要求1所述的方法，其特征在于，确定目标取证动作包括：针对各候选取证动作，根据预期归因粒度增量、预期不确定性降低量、预期过度归因风险降低量、攻击阶段缺口、证据类型缺口、与已执行取证动作的重叠度、同类取证动作的历史无新增证据比例以及动作成本中的至少两项计算动作评价值，并选择满足剩余取证预算约束的候选取证动作。"
+    },
+    {
+      "number": 6,
+      "text": "根据权利要求1所述的方法，其特征在于，确定目标取证动作包括：确定候选取证动作的公开意图目标与所述未匹配行为节点的交集；根据所述交集中的未匹配关键行为节点数量、所述交集中的未匹配行为节点数量、所述公开意图目标相对于未匹配行为节点的精确率和召回率以及动作成本计算缺口兼容性评价值，并根据所述缺口兼容性评价值选择所述目标取证动作。"
+    },
+    {
+      "number": 7,
+      "text": "根据权利要求1所述的方法，其特征在于，所述采集通道包括主机溯源通道、主机日志通道、网络遥测通道、文件取证通道和内存取证通道中的至少一种；在采集通道不可用或未恢复新增安全证据声明时，将无新增证据反馈写入所述证据缺口状态，以调整后续候选取证动作的评价值。"
+    },
+    {
+      "number": 8,
+      "text": "根据权利要求1所述的方法，其特征在于，确定所述停止动作包括以下至少一种情形：当前可支撑归因粒度已达到目标归因粒度；剩余取证预算小于全部可执行非停止动作的动作成本；根据当前可执行动作和采集通道状态确定目标归因粒度不可达；或者全部可执行非停止动作的评价值均不高于停止动作的评价值；其中，在目标归因粒度不可达时输出当前可支撑归因粒度及至少一个未匹配关键行为节点作为降级原因。"
+    },
+    {
+      "number": 9,
+      "text": "根据权利要求1所述的方法，其特征在于，当候选取证动作之间具有先决条件或解锁关系时，建立以证据缺口状态为状态节点、以候选取证动作为转移边的有限状态搜索空间，并基于至少两步的累计达标概率、累计动作成本或二者的组合确定目标取证动作。"
+    }
+  ],
+  "claim_feature_map": [
+    {
+      "claim_number": 1,
+      "feature": "F001；F002；F003；F004；F005",
+      "evidence_ids": [
+        "F001",
+        "F002",
+        "F003",
+        "F004",
+        "F005"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 2,
+      "feature": "F001",
+      "evidence_ids": [
+        "F001"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 3,
+      "feature": "F001；F005",
+      "evidence_ids": [
+        "F001",
+        "F005"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 4,
+      "feature": "F002",
+      "evidence_ids": [
+        "F002"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 5,
+      "feature": "F003",
+      "evidence_ids": [
+        "F003"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 6,
+      "feature": "F003",
+      "evidence_ids": [
+        "F003"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 7,
+      "feature": "F004",
+      "evidence_ids": [
+        "F004"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 8,
+      "feature": "F005",
+      "evidence_ids": [
+        "F005"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    },
+    {
+      "claim_number": 9,
+      "feature": "F009",
+      "evidence_ids": [
+        "F009"
+      ],
+      "specification_locations": [
+        "发明内容",
+        "具体实施方式"
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "number": 1,
+      "title": "归因取证动作规划方法流程图",
+      "type": "flowchart",
+      "orientation": "vertical",
+      "claim_number": 1,
+      "complete_claim_flow": true,
+      "source_ids": [
+        "P001",
+        "C001",
+        "C003"
+      ],
+      "nodes": [
+        {
+          "id": "S1",
+          "label": "S1：获取攻击行为图及本地安全证据声明"
+        },
+        {
+          "id": "S2",
+          "label": "S2：构建证据缺口状态"
+        },
+        {
+          "id": "S3",
+          "label": "S3：获取具有公开意图、通道和成本的候选动作"
+        },
+        {
+          "id": "S4",
+          "label": "S4：确定目标取证动作或停止动作"
+        },
+        {
+          "id": "S5",
+          "label": "S5：执行动作并更新状态与可支撑粒度"
+        },
+        {
+          "id": "S6",
+          "label": "S6：输出粒度受控归因结果或降级结果"
+        }
+      ],
+      "edges": [
+        {
+          "from": "S1",
+          "to": "S2",
+          "label": ""
+        },
+        {
+          "from": "S2",
+          "to": "S3",
+          "label": ""
+        },
+        {
+          "from": "S3",
+          "to": "S4",
+          "label": ""
+        },
+        {
+          "from": "S4",
+          "to": "S5",
+          "label": "目标取证动作"
+        },
+        {
+          "from": "S5",
+          "to": "S2",
+          "label": "新增证据及反馈"
+        },
+        {
+          "from": "S4",
+          "to": "S6",
+          "label": "停止动作"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "公开动作信息与隐藏执行信息隔离示意图",
+      "type": "methodology",
+      "orientation": "horizontal",
+      "source_ids": [
+        "P003",
+        "C002"
+      ],
+      "nodes": [
+        {
+          "id": "public",
+          "label": "公开意图目标、采集通道及动作成本"
+        },
+        {
+          "id": "planner",
+          "label": "规划模块"
+        },
+        {
+          "id": "executor",
+          "label": "通道执行模块"
+        },
+        {
+          "id": "hidden",
+          "label": "实际恢复的安全证据集合"
+        }
+      ],
+      "edges": [
+        {
+          "from": "public",
+          "to": "planner",
+          "label": "可见"
+        },
+        {
+          "from": "planner",
+          "to": "executor",
+          "label": "采集控制指令"
+        },
+        {
+          "from": "hidden",
+          "to": "executor",
+          "label": "仅执行时访问"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "证据缺口状态组成及更新示意图",
+      "type": "methodology",
+      "orientation": "horizontal",
+      "source_ids": [
+        "C001"
+      ],
+      "nodes": [
+        {
+          "id": "claims",
+          "label": "当前可见安全证据声明"
+        },
+        {
+          "id": "state",
+          "label": "覆盖节点、关键缺口、预算及动作反馈"
+        },
+        {
+          "id": "granularity",
+          "label": "当前可支撑归因粒度"
+        }
+      ],
+      "edges": [
+        {
+          "from": "claims",
+          "to": "state",
+          "label": "覆盖计算"
+        },
+        {
+          "from": "state",
+          "to": "granularity",
+          "label": "粒度判定及上限截断"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "取证动作执行与停止降级闭环示意图",
+      "type": "flowchart",
+      "orientation": "horizontal",
+      "source_ids": [
+        "C003",
+        "P005",
+        "P006"
+      ],
+      "nodes": [
+        {
+          "id": "input",
+          "label": "当前证据缺口状态及剩余预算"
+        },
+        {
+          "id": "select",
+          "label": "选择目标取证动作"
+        },
+        {
+          "id": "execute",
+          "label": "执行采集通道"
+        },
+        {
+          "id": "update",
+          "label": "更新状态及剩余预算"
+        },
+        {
+          "id": "stop",
+          "label": "输出当前可支撑归因粒度及停止原因"
+        }
+      ],
+      "edges": [
+        {
+          "from": "input",
+          "to": "select",
+          "label": "开始"
+        },
+        {
+          "from": "select",
+          "to": "execute",
+          "label": "继续采集"
+        },
+        {
+          "from": "execute",
+          "to": "update",
+          "label": "新增证据或零收益"
+        },
+        {
+          "from": "update",
+          "to": "select",
+          "label": "未结束"
+        },
+        {
+          "from": "select",
+          "to": "stop",
+          "label": "目标达成、预算不足或不可达"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "具有先决依赖的多步取证动作规划示意图",
+      "type": "methodology",
+      "orientation": "horizontal",
+      "source_ids": [
+        "P008",
+        "P009",
+        "C006"
+      ],
+      "nodes": [
+        {
+          "id": "state0",
+          "label": "当前证据缺口状态"
+        },
+        {
+          "id": "unlock",
+          "label": "低即时收益解锁动作"
+        },
+        {
+          "id": "critical",
+          "label": "后续关键取证动作"
+        },
+        {
+          "id": "target",
+          "label": "达到目标归因粒度"
+        },
+        {
+          "id": "decoy",
+          "label": "高即时收益诱饵动作"
+        }
+      ],
+      "edges": [
+        {
+          "from": "state0",
+          "to": "unlock",
+          "label": "多步路径"
+        },
+        {
+          "from": "unlock",
+          "to": "critical",
+          "label": "解锁"
+        },
+        {
+          "from": "critical",
+          "to": "target",
+          "label": "达标"
+        },
+        {
+          "from": "state0",
+          "to": "decoy",
+          "label": "短视路径"
+        }
+      ]
+    }
+  ],
+  "specification": {
+    "technical_field": [
+      "本发明涉及网络安全、计算机取证和安全数据处理技术领域，尤其涉及一种在安全证据不完整、证据采集通道可能失效且取证预算受限的条件下，根据攻击行为图与本地安全证据的部分对齐结果规划后续取证动作，并控制归因输出粒度的方法。"
+    ],
+    "background": [
+      "在网络攻击调查中，威胁情报报告、攻击知识图谱或攻击行为模板通常描述多个攻击阶段和行为关系。本地环境能够获取的主机日志、网络流量、进程事件、文件事件、注册表事件或溯源图记录则可能只覆盖其中一部分。造成证据缺失的原因包括日志保留周期不足、采集代理未部署、网络遥测不可用、取证窗口选取不完整以及数据源之间的标识不一致。",
+      "部分现有方案侧重从威胁情报文本抽取攻击行为、构建攻击图、将攻击行为与本地审计记录对齐，或者根据已有特征输出攻击者类别。上述方案在完成部分对齐后，通常直接输出匹配结果、归因候选或缺失项，未必能够自动确定下一项证据采集操作。另一些序贯获取方案会使用动作声明的目标或期望收益进行排序；若动作声明由动作实际可恢复内容反向生成，则规划器可能在执行前间接获得隐藏结果，导致线上部署时无法复现离线效果。",
+      "主动特征获取、代价敏感序贯观测和基于马尔可夫决策过程的数字取证动作选择，能够在特征预算或有限动作空间内选择后续观测。此类已知技术本身不作为本发明的发明点。其常见任务接口包括从完全观测训练样本中隐藏并逐步揭示静态特征，或者在预先定义的专家状态转移模型中选择取证动作；这与安全证据采集通道可能失败、动作执行结果在规划前不可见、原始事件与派生关联结果需要分别核验的场景并不完全相同。本发明关注的是可回指来源的安全证据声明、公开动作意图与隐藏恢复结果的信息隔离、执行反馈更新以及证据支持上限共同构成的计算机调查闭环。",
+      "此外，在采集通道不可用或预算不足时，持续执行取证动作会产生无新增证据的资源消耗；直接给出高粒度归因又可能超过当前证据的支持能力。因此，需要一种计算机实现的方法，把部分对齐结果转换为可更新的机器状态，在不读取动作实际恢复结果的条件下选择取证动作，并在执行后根据真实反馈更新状态，同时对归因输出粒度和停止条件进行约束。"
+    ],
+    "invention_content": {
+      "problem": [
+        "本发明至少解决以下技术问题：",
+        "其一，部分对齐结果仅表示“已经匹配了什么”，难以直接驱动下一证据采集操作；其二，候选动作的声明目标与动作实际恢复结果缺乏信息隔离，可能造成规划阶段的信息泄漏；其三，采集通道失效和预算受限时缺少统一的状态更新、回退与停止机制；其四，当前证据不足时缺少对归因输出粒度的机器可执行约束。"
+      ],
+      "solution": [
+        "本发明以攻击行为图和可回指原始事件的本地安全证据声明为输入。首先，根据证据声明与行为节点的关联关系计算节点覆盖、边覆盖、关键缺口、阶段覆盖和当前可支撑归因粒度，形成证据缺口状态。其次，维护具有公开意图目标、采集通道和成本的候选取证动作；公开意图目标在不读取动作实际恢复集合的情况下确定。然后，根据当前缺口、预算、动作成本、历史执行反馈和可选的多步依赖关系确定目标取证动作或停止动作。动作执行后，该方法将实际采集得到的证据编译为带来源指针的安全证据声明，更新状态并重新计算可支撑归因粒度。该过程持续至达到目标粒度、预算不足、目标不可达或选择停止。"
+      ],
+      "beneficial_effects": [
+        "与仅输出匹配结果或缺失列表的处理方式相比，本发明至少具有以下技术效果：",
+        "1. 将部分对齐结果转换为可更新的证据缺口状态，使计算设备能够输出具体采集控制指令而非仅输出描述性缺失项。 2. 通过公开意图目标与实际恢复集合的隔离，减少动作排序阶段对执行结果的提前泄漏，使离线模拟与部署信息条件保持一致。 3. 通过采集通道反馈更新和显式停止动作，能够区分目标达成、预算耗尽、通道失败和目标不可达等状态。 4. 通过可支撑归因粒度和证据支持上限，约束处理过程不输出超过当前证据支持能力的归因结果。 5. 在具有动作先决关系的场景中，可通过有限深度搜索或动态规划避免仅依据即时收益选择不能完成目标的动作。",
+        "本说明书不将“降低所有场景的平均取证成本”作为必然技术效果；不同动作评价实现可以具有不同成本表现。"
+      ]
+    },
+    "figure_descriptions": [
+      "图1为本发明方法的总体流程图。",
+      "图2为公开动作信息与隐藏执行信息的隔离示意图。",
+      "图3为证据缺口状态的组成及更新关系图。",
+      "图4为候选动作选择、通道执行、状态更新和停止/降级的闭环示意图。",
+      "图5为具有先决条件或解锁关系时的多步动作规划示意图。"
+    ],
+    "equations": [
+      {
+        "number": 1,
+        "source_location": "run_mvp.py m3a_gap_compat_score",
+        "source_ids": [
+          "E001",
+          "C001"
+        ],
+        "expression": "Q(a,s) = (8n_k + 3n_g + 2p + r - 0.5c) / c",
+        "latex": "Q(a,s)=\\frac{8n_k+3n_g+2p+r-0.5c}{c}",
+        "symbols": [
+          {
+            "symbol": "n_k",
+            "meaning": "命中的关键缺口数量"
+          },
+          {
+            "symbol": "n_g",
+            "meaning": "命中的全部缺口数量"
+          },
+          {
+            "symbol": "p",
+            "meaning": "公开意图相对于当前缺口的精确率"
+          },
+          {
+            "symbol": "r",
+            "meaning": "公开意图相对于当前缺口的召回率"
+          },
+          {
+            "symbol": "c",
+            "meaning": "候选取证动作的动作成本"
+          }
+        ],
+        "technical_role": "计算候选取证动作与当前证据缺口的成本归一化兼容性评价值",
+        "description": "其中，n_k表示命中的关键缺口数量，n_g表示命中的全部缺口数量，p和r分别表示意图精确率和召回率，c表示动作成本。"
+      }
+    ],
+    "embodiments": [
+      {
+        "heading": "5.1 数据对象",
+        "paragraphs": [
+          "攻击行为图可由威胁情报报告、攻击知识库或人工分析结果生成。图中每个行为节点包括节点标识、行为类型、攻击阶段、是否关键以及与证据声明类型的关联规则；关联边可表示先后、因果、数据流、控制流或攻击阶段依赖。",
+          "安全证据声明是对原始安全事件的规范化表示，包括声明标识、声明类型、主体、客体、动作、时间、来源通道和来源指针。来源指针可以是事件 UUID、日志行号、文件偏移、主机遥测主键或原始文件哈希与记录序号的组合。安全证据声明与行为节点之间可以是一对一、一对多或多对一关系。",
+          "在一个可选实施例中，证据接入模块还记录来源角色。来源角色至少区分原始事件观测和派生上下文投影。由安全产品自动生成的事件关联边、ATT&CK 标签、事件处置状态或聚合关系可作为候选上下文，但在未回指并核验对应原始事件前，不自动作为独立事实声明或攻击者实体真值。由不同来源得到的主体、客体、时间或行为标识不一致时，系统保留冲突标记并阻止未经核验的因果拼接。",
+          "候选取证动作至少包括动作标识、公开意图目标、采集通道标识、动作成本和采集请求。公开意图目标描述“该动作计划补充哪些行为节点”，实际恢复集合描述“在当前通道实现下执行后真正获得哪些证据声明”。前者供规划器使用，后者仅在执行模块和评价模块中可见。"
+        ]
+      },
+      {
+        "heading": "5.2 证据缺口状态构建",
+        "paragraphs": [
+          "对于任一行为节点，只要其关联的至少一个必需证据声明已经可见，即按照 OR 语义将该节点标记为覆盖。对于需要组合证据的场景，也可以把节点拆分为多个子节点或者将覆盖规则配置为 AND/阈值规则，但相应规则应在案例编译前固定。",
+          "状态构建模块计算节点覆盖率、边覆盖率、未匹配节点、未匹配关键节点、已覆盖阶段和已覆盖证据类型。一个可选实施例将可支撑粒度设置为四级：当节点覆盖率不低于 0.75、边覆盖率不低于 0.60且全部关键节点覆盖时为活动或 campaign 级；当节点覆盖率不低于 0.45 且至少两个阶段覆盖时为 tactic-intent 级；当节点覆盖率不低于 0.15 时为 technique 级；否则为未知级。随后用“support_ceiling”字段对所述粒度进行截断。上述阈值是实施例而非对保护范围的限定。"
+        ]
+      },
+      {
+        "heading": "5.3 信息边界校验",
+        "paragraphs": [
+          "在动作编译阶段，意图标注模块只能访问攻击行为图、调查问题、采集通道能力和动作自然语言描述，不能访问实际恢复集合。该方法进一步计算实际恢复集合所覆盖的行为节点。除 STOP 和空意图审查动作外，若公开意图目标与所述覆盖集合完全相同，则标记为信息边界冲突，并拒绝动作进入正式评估或要求重新标注意图。",
+          "该校验不要求公开意图目标必然错误。合法意图可以比实际恢复范围更宽，因为动作可能希望获取多个节点但只恢复其中一部分；也可以更窄，因为实际数据中可能附带恢复非目标证据。采集通道离线时，实际恢复集合还可以为空。通过上述设计，规划器不能把公开意图直接当作确定收益。"
+        ]
+      },
+      {
+        "heading": "5.4 动作评价与选择",
+        "paragraphs": [
+          "在第一种实施方式中，规则规划器根据预期粒度增量、不确定性下降、过度归因风险下降、阶段缺口、证据类型缺口、重复动作重叠、历史零收益比例和相对预算成本计算动作评价值。评价值高且成本不超过剩余预算的动作优先执行。",
+          "在第二种实施方式中，该方法计算公开意图目标与当前未匹配节点的交集，对交集中的关键缺口和一般缺口分别赋权，并结合意图精确率、召回率和成本得到缺口兼容性评价值。一个可选计算式为：",
+          "\\[ Q(a,s)=\\frac{8n_k+3n_g+2p+r-0.5c}{c}, \\]",
+          "其中，(n_k) 为命中的关键缺口数，(n_g) 为命中的全部缺口数，(p) 和 (r) 分别为意图相对于当前缺口的精确率和召回率，(c) 为动作成本。该计算式仅为从属实施例，不构成独立权利要求的必要限制。",
+          "在第三种实施方式中，该方法使用由开发案例训练的分类模型或回归模型预测动作评价值。模型输入仅包括公开状态-动作特征，不包括实际恢复集合、Oracle 最短路径或未来通道实现。模型类型可以是线性模型或树模型。模型输出仍通过预算、粒度和 STOP 规则进行约束。"
+        ]
+      },
+      {
+        "heading": "5.5 通道执行与反馈更新",
+        "paragraphs": [
+          "目标取证动作被转换为采集控制指令，例如扩展日志时间窗、读取指定主机的溯源子图、查询网络会话、采集文件元数据或审查噪声进程。通道执行模块返回原始记录或失败状态。证据接入模块将返回记录编译为新的安全证据声明，并保留来源指针。",
+          "若动作没有返回新证据，该方法记录动作类型、通道、目标和零收益结果。后续动作评价可以降低同类动作的优先级或选择其他通道。若动作返回新证据，则合并可见声明集合，重新计算节点/边覆盖、关键缺口和可支撑粒度，并扣减动作成本。"
+        ]
+      },
+      {
+        "heading": "5.6 停止与降级",
+        "paragraphs": [
+          "STOP 是动作集合中的零成本动作。该方法可在以下情形停止：已达到目标粒度；剩余预算不足；所有非停止动作评价值不高于 STOP；或基于当前动作与通道状态判断目标不可达。停止时输出当前可支撑粒度、已覆盖关键节点、未匹配关键节点、预算状态和停止原因。",
+          "当目标不可达时，该方法输出降级结果。例如，当前证据只支持 tactic-intent 级而不支持 campaign 级，则输出 tactic-intent 级结果，不输出 campaign 级实体。若 Oracle 或可达性搜索显示仍存在预算内路径却选择 STOP，则该停止在测试阶段记为过早停止，用于调整动作评价实现，但不改变粒度上限。"
+        ]
+      },
+      {
+        "heading": "5.7 非短视规划实施例",
+        "paragraphs": [
+          "当某一取证动作本身即时收益较低，但能够解锁后续关键取证动作时，单步评价可能选择高即时收益诱饵。该方法可为动作维护“prerequisite”“unlocks”或等效依赖字段，将证据缺口状态和剩余预算离散化，并执行深度不小于2的搜索、动态规划或束搜索。路径评价至少考虑达到目标粒度的概率与累计成本。",
+          "在一个可控验证实施例中，192 个独立参数环境包含不同解锁深度、预算、诱饵数量和链路可靠性。一步增益/成本策略未达到目标，冻结规则策略成功率为 0.0948，深度2搜索为 0.3708，完整动态规划为 0.7156。该结果仅用于说明多步依赖的存在性和本实施例可执行，不用于主张真实攻击中此类状态的发生率，也不要求使用 DQN 或其他强化学习模型。"
+        ]
+      },
+      {
+        "heading": "5.8 真实安全事件实施例",
+        "paragraphs": [
+          "在第一组参数锁定的主机与网络攻击链中，该方法从 Linux、Android 和 Windows 遥测编译攻击行为节点、证据声明和候选动作，并保持自然缺失证据。每一动作的公开意图与实际恢复集合分开标注，模型参数在测试案例接入前冻结。四个测试案例均以活动或 campaign 级为目标上限，规则规划器和树模型均可在预算内达到预设粒度，但不同规划器的平均成功成本不同；节点级缺口兼容性实现还在其中一条 Windows 攻击链上出现过早停止。",
+          "在第二个迁移压力实施例中，该方法接入公开的 Windows 攻击仿真日志。由于冻结锚点在该来源中缺失，该方法将证据支持上限从活动级降至 tactic-intent 级，而不是把缺失锚点推断为已经存在。冻结树模型和线性模型的平均成功成本均为 3.0667，规则规划器为 3.6667；深度2规划的成功率为 0.9778。将节点覆盖规则从冻结 OR 语义改为 AND 语义时，同一规则规划器的平均成功成本由 3.6667 变为 1.0222，说明覆盖语义必须在案例编译前固定，且跨语义结果不能直接解释为规划器的普遍优劣。",
+          "在第三个自然运营来源压力实施例中，该方法从 13119 份候选事件报告中，经来源核验获得 5 个元数据候选和 2 个具有有效事件来源的候选，并选择其中一个含 117 条网络安全设备事件和 2 条 Windows 目录服务线索的事件作为主案例。该案例缺少经核验的攻击者真值，支持上限固定为 technique 级。所有被测实现均在 45 次重复中达到该上限且未发生越级输出；不同实现的平均成功成本位于 0.8889 至 1.5111 之间，其排序与前述测试案例并不一致。",
+          "上述分层实施例分别用于验证高粒度闭环执行、来源迁移时的粒度降级和自然运营来源下的证据核验，不对三组案例计算混合平均值，也不据此主张任一具体规划器在所有场景中普遍降低成本。它们共同说明证据缺口状态、执行反馈和粒度上限能够在不同证据条件下工作，同时说明具体评分公式、树模型和深度搜索均不是独立权利要求的必要技术特征。"
+        ]
+      },
+      {
+        "heading": "5.9 多源证据来源核验实施例",
+        "paragraphs": [
+          "在接入多源安全事件时，该方法可先执行元数据核验，再执行事件来源核验。元数据核验检查报告或事件集合是否包含来源产品、采集时间、事件类型和数据位置；事件来源核验检查来源指针是否完整、指向的数据是否存在，以及数据流或产品类型是否与声明类型相符。只有通过事件来源核验的原始记录才被编译为可见安全证据声明。",
+          "安全产品给出的事件关联图、自动标签和处置状态可作为派生上下文投影保留。该方法不因投影中出现攻击阶段、技术标签或“已处置”等字段，就将其自动转换为攻击者实体真值；投影边也不替代由原始事件支持的时间、控制流或因果关系。若元数据、来源指针或事件内容互相冲突，该方法记录核验失败原因，并可把补充来源或人工审查作为新的候选取证动作。",
+          "前述自然运营来源压力实施例采用该两级核验过程，将 13119 份候选报告缩减为 5 个元数据候选和 2 个事件来源有效候选。该过程用于展示来源可追溯性和派生投影隔离的可实施方式，是可选实施例而非权利要求1的必要限定；是否将其形成新的从属权利要求，需在补充现有技术检索和代理师审查后决定。"
+        ]
+      },
+      {
+        "heading": "5.10 可选语义编译接口",
+        "paragraphs": [
+          "安全证据声明可以由规则解析器、人工标注器或受结构约束的语义模型生成。无论采用何种生成方式，均需通过 schema 校验、来源指针校验和不受支持声明检查。当前主权利要求不限定使用大语言模型，也不把大语言模型的输出直接作为归因结论；因此替换语义编译实现不影响本发明的证据缺口状态和动作规划闭环。"
+        ]
+      }
+    ]
+  },
+  "abstract": "本发明公开一种归因取证动作规划方法。该方法获取攻击行为图及与其部分对齐的本地安全证据声明，确定已覆盖节点、未匹配节点和关键缺口，构建包括可支撑归因粒度、剩余预算和动作反馈的证据缺口状态；获取具有公开意图目标、采集通道和成本的候选取证动作，所述公开意图目标独立于动作实际恢复的安全证据集合；在不读取所述实际恢复集合的情况下确定目标取证动作或停止动作；执行动作后更新证据缺口状态和可支撑归因粒度，直至达到目标粒度、预算不足、目标不可达或停止，并输出粒度受控的归因结果或降级结果。本发明将部分对齐结果转换为证据采集控制闭环，并约束规划阶段的信息泄漏和证据不足时的越级归因。",
+  "audit": {
+    "support_findings": [
+      "独立方法权利要求的必要特征均映射到F001-F005。",
+      "非短视规划仅作为从属权利要求和受控实施例。",
+      "两级来源核验为单个自然运营案例支持的可选实施例，未写入必要特征。"
+    ],
+    "consistency_findings": [
+      "LLM、DQN、XGBoost、AFA/MDP方法名称及具体数据集均未进入独立权利要求。",
+      "未把降低平均取证成本或单一策略优越性写成必然技术效果。",
+      "当前草稿仅保留方法权利要求。"
+    ]
+  },
+  "quality_assessment": {
+    "status": "incomplete-draft",
+    "scores": {
+      "evidence_support": {
+        "score": 4,
+        "evidence": "9项权利要求均映射到证据台账和源文件；F010仅作为可选实施例。"
+      },
+      "claim_architecture": {
+        "score": 4,
+        "evidence": "方法独立权利要求及八项从属回退层次完整。"
+      },
+      "terminology_consistency": {
+        "score": 4,
+        "evidence": "证据缺口状态、公开意图目标、实际恢复集合和支持上限已锁定。"
+      },
+      "enablement_detail": {
+        "score": 4,
+        "evidence": "说明书包含数据对象、状态构建、信息边界、评分、通道、停止、非短视及来源核验实施例。"
+      },
+      "technical_effect_reasoning": {
+        "score": 4,
+        "evidence": "技术效果限定为机器可执行闭环、信息隔离和粒度约束。"
+      },
+      "formula_coverage": {
+        "score": 4,
+        "evidence": "M3a评分公式、符号和技术作用均结构化收录。"
+      },
+      "figure_alignment": {
+        "score": 4,
+        "evidence": "五幅附图覆盖独权流程、信息边界、状态更新、停止闭环和从属非短视实施例。"
+      }
+    }
+  }
+}

@@ -50,11 +50,10 @@ class PatentV06MethodOnlyTests(unittest.TestCase):
         self.assertIn("当前草稿仅保留方法权利要求", findings)
         self.assertIn("方法独立权利要求及八项从属", architecture)
 
-    def test_authority_points_to_v06(self):
+    def test_v06_scope_correction_is_preserved_as_history(self):
         authority = AUTHORITY.read_text(encoding="utf-8")
-        self.assertIn("patent-main-draft-v0.6-method-only-20260713.md", authority)
-        self.assertIn("patent-package-v0.6-method-only/", authority)
-        self.assertIn("系统、设备及存储介质权利要求已删除", authority)
+        self.assertIn("patent-v0.6-method-only-scope-correction-20260713.md", authority)
+        self.assertIn("已删除系统、设备及存储介质权利要求", authority)
 
     def test_validation_report_passed(self):
         report = (WORK / "08-validation-report-v0.6.txt").read_text(encoding="utf-8")
