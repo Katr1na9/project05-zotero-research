@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 EXPERIMENT_ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = EXPERIMENT_ROOT / "scripts" / "build_llm_evaluation_packets.py"
 
 
@@ -127,6 +128,83 @@ class PacketIdentityTests(unittest.TestCase):
                 encoding="utf-8",
             ) as handle:
                 self.assertEqual(public, json.loads(handle.readline()))
+
+
+class PacketSourceAdapterTests(unittest.TestCase):
+    def test_development_and_test_counts_are_frozen(self):
+        with tempfile.TemporaryDirectory() as temp:
+            dev = builder.build_split(
+                REPOSITORY_ROOT,
+                "development",
+                Path(temp) / "development",
+            )
+            test = builder.build_split(
+                REPOSITORY_ROOT,
+                "test",
+                Path(temp) / "test",
+            )
+
+            self.assertEqual({"positive": 26, "null": 26}, dev["packet_counts"])
+            self.assertEqual({"positive": 32, "null": 32}, test["packet_counts"])
+            self.assertEqual(6, test["case_count"])
+
+    def test_positive_packet_has_no_target_marker_and_private_allows_multiple_gold(self):
+        public, private = builder.build_case_fixture_with_two_distractors()
+
+        self.assertNotIn("target", json.dumps(public).casefold())
+        self.assertGreaterEqual(len(public["records"]), 3)
+        self.assertGreaterEqual(len(private["acceptable_observations"]), 1)
+
+    def test_repeated_build_is_byte_identical(self):
+        with tempfile.TemporaryDirectory() as temp:
+            first = Path(temp) / "first"
+            second = Path(temp) / "second"
+            builder.build_split(REPOSITORY_ROOT, "test", first)
+            builder.build_split(REPOSITORY_ROOT, "test", second)
+
+            self.assertEqual(
+                (first / "public" / "input_manifest.json").read_bytes(),
+                (second / "public" / "input_manifest.json").read_bytes(),
+            )
+            self.assertEqual(
+                (first / "public" / "context_packets.jsonl.gz").read_bytes(),
+                (second / "public" / "context_packets.jsonl.gz").read_bytes(),
+            )
+
+    def test_witfoo_aggregate_constituents_are_flagged_for_human_audit(self):
+        case_dir = (
+            REPOSITORY_ROOT
+            / "09-experiments"
+            / "real_cases"
+            / "C12-witfoo-precinct6-f10c7270"
+        )
+        claims = json.loads(
+            (case_dir / "evidence_claims.json").read_text(encoding="utf-8")
+        )
+        records, _ = builder.load_case_records(REPOSITORY_ROOT, case_dir)
+        claimed_record_ids = {
+            claim["source_pointer"]["record_id"] for claim in claims
+        }
+        null_pool = [
+            record
+            for record in records
+            if record["source_pointer"]["record_id"] not in claimed_record_ids
+        ]
+        aggregate_contributors = [
+            record
+            for record in null_pool
+            if (
+                record["source_payload"].get("lead", {}).get("product", {}).get("name")
+                == "ASA Firewall"
+            )
+        ]
+
+        self.assertGreater(len(aggregate_contributors), 0)
+        for record in aggregate_contributors:
+            self.assertIn(
+                "constituent_of_aggregate_observation",
+                builder.null_review_flags(record),
+            )
 
 
 if __name__ == "__main__":
