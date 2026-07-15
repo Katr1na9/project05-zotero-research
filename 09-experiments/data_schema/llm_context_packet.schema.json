@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/llm_context_packet.schema.json",
+  "title": "Project05 public LLM context packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "case_id",
+    "split",
+    "packet_role",
+    "support_ceiling",
+    "records"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "pattern": "^REQ-[A-F0-9]{24}$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^C(0[4-9]|1[0-2])-.+$"
+    },
+    "split": {
+      "type": "string",
+      "enum": ["development", "test", "atomic-pilot"]
+    },
+    "packet_role": {
+      "type": "string",
+      "enum": ["positive", "null", "atomic-pilot"]
+    },
+    "support_ceiling": {
+      "type": "string",
+      "enum": [
+        "G0_unknown",
+        "G1_technique",
+        "G2_tactic_intent",
+        "G3_campaign"
+      ]
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/record"}
+    }
+  },
+  "$defs": {
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "record_id"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "record_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packet_record_id",
+        "source_type",
+        "source_pointer",
+        "record_sha256",
+        "source_payload"
+      ],
+      "properties": {
+        "packet_record_id": {
+          "type": "string",
+          "pattern": "^REC-[A-F0-9]{24}$"
+        },
+        "source_type": {"type": "string", "minLength": 1},
+        "source_pointer": {"$ref": "#/$defs/pointer"},
+        "record_sha256": {
+          "type": "string",
+          "pattern": "^[A-F0-9]{64}$"
+        },
+        "source_payload": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/llm_compiler_result.schema.json",
+  "title": "Project05 LLM compiler first-pass result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "condition_id",
+    "attempt_index",
+    "status",
+    "candidate_claims",
+    "telemetry"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "pattern": "^REQ-[A-F0-9]{24}$"
+    },
+    "condition_id": {
+      "type": "string",
+      "enum": ["rule_compiler", "general_compiler", "security_compiler"]
+    },
+    "attempt_index": {"type": "integer", "minimum": 0},
+    "status": {
+      "type": "string",
+      "enum": ["completed", "abstain", "invalid", "error"]
+    },
+    "candidate_claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/observation"}
+    },
+    "telemetry": {"$ref": "#/$defs/telemetry"}
+  },
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_type", "value"],
+      "properties": {
+        "entity_type": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "record_id"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "record_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_claim_id",
+        "source_type",
+        "subject",
+        "predicate",
+        "object",
+        "source_pointer"
+      ],
+      "properties": {
+        "candidate_claim_id": {
+          "type": "string",
+          "pattern": "^CC-[A-F0-9]{24}$"
+        },
+        "source_type": {"type": "string", "minLength": 1},
+        "subject": {"$ref": "#/$defs/entity"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/entity"},
+        "source_pointer": {"$ref": "#/$defs/pointer"}
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "latency_ms",
+        "peak_vram_mb",
+        "input_tokens",
+        "output_tokens",
+        "error_code"
+      ],
+      "properties": {
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "peak_vram_mb": {"type": ["number", "null"], "minimum": 0},
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "error_code": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

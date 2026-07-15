@@ -1,0 +1,97 @@
+{
+  "contract_version": "project05-llm-compiler-contract-v0.2",
+  "status": "frozen_pre_model",
+  "authorized_scope": {
+    "primary_research_questions": ["RQ1", "RQ5"],
+    "secondary_diagnostics": ["RQ2_contamination", "refusal", "four_bit_limit"],
+    "forbidden_phases": ["Phase 2", "Phase 3", "selector", "online_planner"]
+  },
+  "identity": {
+    "public": ["request_id", "candidate_claim_id"],
+    "private": ["gold_claim_id", "canonical_claim_id"],
+    "request_pattern": "^REQ-[A-F0-9]{24}$",
+    "candidate_pattern": "^CC-[A-F0-9]{24}$",
+    "gold_pattern": "^GOLD-[A-F0-9]{24}$"
+  },
+  "admission": {
+    "maximum_gold_level": "G0",
+    "checks": [
+      "schema",
+      "candidate_id",
+      "pointer_membership",
+      "record_sha256",
+      "literal_entity"
+    ],
+    "forbidden_inputs": [
+      "private_gold",
+      "gold_claim_id",
+      "canonical_claim_id",
+      "g1_match_result"
+    ]
+  },
+  "g1": {
+    "authorized_readers": ["score_llm_phase1.py"],
+    "match_policy": "any_acceptable_gold",
+    "normalization": [
+      "unicode_nfkc",
+      "strip",
+      "collapse_whitespace",
+      "casefold"
+    ],
+    "match_fields": [
+      "source_type",
+      "subject.entity_type",
+      "subject.value",
+      "predicate",
+      "object.entity_type",
+      "object.value",
+      "source_pointer.artifact_id",
+      "source_pointer.record_id"
+    ],
+    "allowed_claim": "agreement_with_frozen_project05_observation_gold",
+    "forbidden_claims": [
+      "human_consensus_truth",
+      "general_apt_attribution_accuracy",
+      "human_validated_hallucination_reduction"
+    ]
+  },
+  "structured_stage_2": {
+    "raw_packet_visible": false,
+    "rejected_claims_visible": false,
+    "private_gold_visible": false,
+    "allowed_inputs": [
+      "admitted_claims",
+      "explicit_gaps",
+      "support_ceiling"
+    ]
+  },
+  "primary_metrics": ["GPS", "UCR"],
+  "without_g2_names": [
+    "project_gold_packet_agreement",
+    "ceiling_violation_rate",
+    "invalid_pointer_rate"
+  ],
+  "g2_gate": {
+    "packet_count": 24,
+    "outputs_per_packet": 4,
+    "items_per_annotator": 96,
+    "minimum_kappa": 0.7,
+    "maximum_unassessable_rate": 0.2
+  },
+  "claim_gates": {
+    "llm_over_rule": {
+      "minimum_case_macro_gps_delta": 0.05,
+      "minimum_noninferior_cases": 4,
+      "case_count": 6,
+      "unsupported_rate_must_not_increase": true,
+      "invalid_pointer_rate_must_not_increase": true,
+      "refusal_only_win_forbidden": true
+    },
+    "structured_over_direct": {
+      "minimum_case_macro_ucr_reduction": 0.05,
+      "minimum_favorable_cases": 4,
+      "case_count": 6,
+      "maximum_positive_coverage_drop": 0.05
+    }
+  }
+}

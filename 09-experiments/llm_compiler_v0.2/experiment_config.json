@@ -1,0 +1,117 @@
+{
+  "experiment_id": "project05-llm-compiler-phase1-v0.2",
+  "status": "pre_model_infrastructure",
+  "authorized_scope": ["RQ1", "RQ5"],
+  "splits": {
+    "development": {
+      "case_prefixes": ["C04", "C05", "C06"],
+      "positive_packets": 26,
+      "null_packets": 26
+    },
+    "test": {
+      "case_prefixes": ["C07", "C08", "C09", "C10", "C11", "C12"],
+      "positive_packets": 32,
+      "null_packets": 32
+    }
+  },
+  "seeds": {
+    "packet": 2026071501,
+    "null": 2026071502,
+    "g2": 2026071503,
+    "repeat": 2026071504
+  },
+  "models": {
+    "general": {
+      "model_id": "Qwen/Qwen1.5-7B-Chat",
+      "quantization_bits": 4,
+      "lock_status": "unresolved_pre_authorization"
+    },
+    "security": {
+      "model_id": "Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B",
+      "quantization_bits": 4,
+      "lock_status": "unresolved_pre_authorization"
+    }
+  },
+  "conditions": {
+    "rule_compiler": {
+      "mode": "compiler",
+      "backend": "rule",
+      "model_role": null,
+      "generation": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 768
+      }
+    },
+    "general_compiler": {
+      "mode": "compiler",
+      "backend": "model",
+      "model_role": "general",
+      "generation": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 768
+      }
+    },
+    "security_compiler": {
+      "mode": "compiler",
+      "backend": "model",
+      "model_role": "security",
+      "generation": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 768
+      }
+    },
+    "general_structured": {
+      "mode": "structured",
+      "backend": "model",
+      "model_role": "general",
+      "generation": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 768
+      }
+    },
+    "general_direct": {
+      "mode": "direct",
+      "backend": "model",
+      "model_role": "general",
+      "generation": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 768
+      }
+    }
+  },
+  "repeat_panel": {
+    "enabled": true,
+    "diagnostic_only": true,
+    "packet_count": 12,
+    "additional_attempt_indices": [1, 2, 3, 4],
+    "conditions": [
+      "general_compiler",
+      "security_compiler",
+      "general_structured",
+      "general_direct"
+    ]
+  },
+  "call_budget": {
+    "first_pass": 256,
+    "repeat_diagnostic": 192,
+    "maximum_formal": 448,
+    "maximum_gpu_hours": 24,
+    "maximum_model_cache_gb": 30
+  },
+  "rule_baseline": {
+    "status": "unfrozen",
+    "development_only": true,
+    "must_precede_any_llm_output": true,
+    "requires_frozen_development_null_audit": true
+  },
+  "runtime": {
+    "dependency_install_authorized": false,
+    "model_download_authorized": false,
+    "formal_inference_authorized": false
+  }
+}

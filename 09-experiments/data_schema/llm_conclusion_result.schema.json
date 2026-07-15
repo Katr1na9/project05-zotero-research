@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/llm_conclusion_result.schema.json",
+  "title": "Project05 structured or direct conclusion result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "condition_id",
+    "attempt_index",
+    "status",
+    "observation_claims",
+    "highest_supported_granularity",
+    "path_summary",
+    "actor",
+    "campaign",
+    "missing_evidence",
+    "abstain",
+    "citations"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "pattern": "^REQ-[A-F0-9]{24}$"
+    },
+    "condition_id": {
+      "type": "string",
+      "enum": ["general_structured", "general_direct"]
+    },
+    "attempt_index": {"type": "integer", "minimum": 0},
+    "status": {
+      "type": "string",
+      "enum": ["completed", "abstain", "invalid", "error"]
+    },
+    "observation_claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/observation"}
+    },
+    "highest_supported_granularity": {
+      "type": "string",
+      "enum": [
+        "G0_unknown",
+        "G1_technique",
+        "G2_tactic_intent",
+        "G3_campaign"
+      ]
+    },
+    "path_summary": {"type": ["string", "null"]},
+    "actor": {"type": ["string", "null"]},
+    "campaign": {"type": ["string", "null"]},
+    "missing_evidence": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "abstain": {"type": "boolean"},
+    "citations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/pointer"}
+    }
+  },
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_type", "value"],
+      "properties": {
+        "entity_type": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "record_id"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "record_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_claim_id",
+        "source_type",
+        "subject",
+        "predicate",
+        "object",
+        "source_pointer"
+      ],
+      "properties": {
+        "candidate_claim_id": {
+          "type": "string",
+          "pattern": "^CC-[A-F0-9]{24}$"
+        },
+        "source_type": {"type": "string", "minLength": 1},
+        "subject": {"$ref": "#/$defs/entity"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/entity"},
+        "source_pointer": {"$ref": "#/$defs/pointer"}
+      }
+    }
+  }
+}
