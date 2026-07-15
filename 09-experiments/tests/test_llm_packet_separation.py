@@ -1,3 +1,4 @@
+import csv
 import gzip
 import importlib.util
 import json
@@ -205,6 +206,116 @@ class PacketSourceAdapterTests(unittest.TestCase):
                 "constituent_of_aggregate_observation",
                 builder.null_review_flags(record),
             )
+
+
+class NullConstructionAuditTests(unittest.TestCase):
+    def make_null_bundle(self, output):
+        records = [source_record()]
+        public, private = builder.build_packet_pair(
+            case_id="C07-evaluation-case",
+            split="test",
+            packet_role="null",
+            support_ceiling="G3_campaign",
+            records=records,
+            acceptable_observations=[],
+        )
+        private["status"] = "pending_human_construction_audit"
+        private["construction_metadata"] = {"review_flags": []}
+        builder.write_bundle(
+            output,
+            public_rows=[public],
+            private_rows=[private],
+            public_catalog={"catalog_version": "test-v1", "artifacts": []},
+            metadata={"split": "test", "status": "draft", "formal_ready": False},
+        )
+        return public, private
+
+    def fill_audit(self, path, author_id="author-1", reviewer_id="reviewer-1"):
+        with path.open("r", encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        for row in rows:
+            row["author_no_acceptable_observation"] = "yes"
+            row["author_id"] = author_id
+            row["reviewer_no_acceptable_observation"] = "yes" if reviewer_id else ""
+            row["reviewer_id"] = reviewer_id
+        with path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=builder.NULL_AUDIT_FIELDS)
+            writer.writeheader()
+            writer.writerows(rows)
+
+    def test_null_audit_has_no_model_output_or_g2_labels(self):
+        fields = set(builder.NULL_AUDIT_FIELDS)
+
+        self.assertEqual(
+            {
+                "request_id",
+                "author_no_acceptable_observation",
+                "author_id",
+                "reviewer_no_acceptable_observation",
+                "reviewer_id",
+                "notes",
+            },
+            fields,
+        )
+        self.assertNotIn("supported", fields)
+        self.assertNotIn("condition_id", fields)
+
+    def test_pending_or_single_person_null_audit_cannot_freeze(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            bundle = root / "bundle"
+            _, private = self.make_null_bundle(bundle)
+            audit = root / "audit.csv"
+            builder.write_null_construction_audit([private], audit)
+            self.fill_audit(audit, reviewer_id="")
+
+            with self.assertRaisesRegex(ValueError, "two independent confirmations"):
+                builder.freeze_packet_bundle(bundle, audit)
+
+    def test_null_audit_requires_exact_request_id_coverage(self):
+        with tempfile.TemporaryDirectory() as temp:
+            audit = Path(temp) / "audit.csv"
+            with audit.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=builder.NULL_AUDIT_FIELDS)
+                writer.writeheader()
+
+            with self.assertRaisesRegex(ValueError, "request-ID coverage"):
+                builder.validate_null_construction_audit(
+                    audit,
+                    {"REQ-" + "A" * 24},
+                )
+
+    def test_two_person_audit_updates_private_manifest_only(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            bundle = root / "bundle"
+            public, private = self.make_null_bundle(bundle)
+            audit = root / "audit.csv"
+            builder.write_null_construction_audit([private], audit)
+            self.fill_audit(audit)
+            public_before = (bundle / "public" / "input_manifest.json").read_bytes()
+
+            result = builder.freeze_packet_bundle(bundle, audit)
+
+            self.assertEqual("frozen", result["status"])
+            self.assertEqual(
+                public_before,
+                (bundle / "public" / "input_manifest.json").read_bytes(),
+            )
+            private_manifest = json.loads(
+                (bundle / "private" / "gold_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(
+                1,
+                private_manifest["null_construction_audit"]["confirmed_count"],
+            )
+            public_bytes = b"".join(
+                path.read_bytes() for path in (bundle / "public").iterdir()
+            )
+            self.assertNotIn(b"author-1", public_bytes)
+            self.assertNotIn(b"reviewer-1", public_bytes)
 
 
 if __name__ == "__main__":

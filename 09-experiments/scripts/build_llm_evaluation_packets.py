@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import gzip
 import hashlib
 import json
@@ -27,6 +28,14 @@ FORBIDDEN_PUBLIC_KEYS = {
 
 PACKET_SEED = 2026071501
 NULL_SEED = 2026071502
+NULL_AUDIT_FIELDS = (
+    "request_id",
+    "author_no_acceptable_observation",
+    "author_id",
+    "reviewer_no_acceptable_observation",
+    "reviewer_id",
+    "notes",
+)
 PUBLIC_CASE_SUFFIX = "evaluation-case"
 CASE_LAYOUT = {
     "C04": ("development", "e3", "R01"),
@@ -911,6 +920,146 @@ def write_jsonl_gz(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     path.write_bytes(gzip.compress(payload, mtime=0))
 
 
+def read_jsonl_gz(path: Path) -> list[dict[str, Any]]:
+    with gzip.open(path, "rt", encoding="utf-8") as handle:
+        return [json.loads(line) for line in handle if line.strip()]
+
+
+def audit_csv_path(output_path: Path) -> Path:
+    if output_path.suffix.casefold() == ".csv":
+        return output_path
+    return output_path / "null-construction-audit.csv"
+
+
+def write_null_construction_audit(
+    packet_rows: Iterable[dict[str, Any]],
+    output_path: Path,
+) -> dict[str, Any]:
+    path = audit_csv_path(output_path)
+    if path.exists():
+        raise ValueError(f"refusing to overwrite null audit template: {path}")
+    rows = []
+    for packet in packet_rows:
+        if packet.get("packet_role") != "null":
+            continue
+        flags = sorted(
+            set(
+                (packet.get("construction_metadata") or {}).get(
+                    "review_flags", []
+                )
+            )
+        )
+        rows.append(
+            {
+                "request_id": str(packet["request_id"]),
+                "author_no_acceptable_observation": "",
+                "author_id": "",
+                "reviewer_no_acceptable_observation": "",
+                "reviewer_id": "",
+                "notes": ";".join(f"review_flag:{flag}" for flag in flags),
+            }
+        )
+    rows.sort(key=lambda item: item["request_id"])
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=NULL_AUDIT_FIELDS,
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return {
+        "status": "pending_human_construction_audit",
+        "path": str(path),
+        "row_count": len(rows),
+        "sha256": sha256_file(path),
+    }
+
+
+def validate_null_construction_audit(
+    audit_csv: Path,
+    expected_request_ids: set[str],
+) -> dict[str, Any]:
+    with audit_csv.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if tuple(reader.fieldnames or ()) != NULL_AUDIT_FIELDS:
+            raise ValueError("null audit fields do not match the frozen contract")
+        rows = list(reader)
+
+    request_ids = [str(row.get("request_id") or "") for row in rows]
+    if len(set(request_ids)) != len(request_ids):
+        raise ValueError("duplicate request IDs in null construction audit")
+    if set(request_ids) != set(expected_request_ids):
+        raise ValueError("null audit request-ID coverage is not exact")
+
+    for row in rows:
+        author_yes = str(
+            row.get("author_no_acceptable_observation") or ""
+        ).strip().casefold()
+        reviewer_yes = str(
+            row.get("reviewer_no_acceptable_observation") or ""
+        ).strip().casefold()
+        author_id = str(row.get("author_id") or "").strip()
+        reviewer_id = str(row.get("reviewer_id") or "").strip()
+        if (
+            author_yes != "yes"
+            or reviewer_yes != "yes"
+            or not author_id
+            or not reviewer_id
+            or author_id == reviewer_id
+        ):
+            raise ValueError(
+                "null construction audit requires two independent confirmations"
+            )
+        notes = str(row.get("notes") or "").casefold()
+        if "source_access_failure" in notes:
+            raise ValueError("null construction audit records a source access failure")
+
+    return {
+        "status": "passed",
+        "confirmed_count": len(rows),
+        "audit_sha256": sha256_file(audit_csv),
+    }
+
+
+def freeze_packet_bundle(
+    bundle_dir: Path,
+    audit_csv: Path,
+) -> dict[str, Any]:
+    private_dir = bundle_dir / "private"
+    gold_path = private_dir / "observation_gold.jsonl.gz"
+    gold_manifest_path = private_dir / "gold_manifest.json"
+    private_rows = read_jsonl_gz(gold_path)
+    null_rows = [row for row in private_rows if row.get("packet_role") == "null"]
+    expected_request_ids = {str(row["request_id"]) for row in null_rows}
+    if not expected_request_ids:
+        raise ValueError("bundle contains no null packets to audit")
+    if any(
+        row.get("status") != "pending_human_construction_audit"
+        for row in null_rows
+    ):
+        raise ValueError("null packet is not pending construction audit")
+
+    result = validate_null_construction_audit(audit_csv, expected_request_ids)
+    manifest = load_json(gold_manifest_path)
+    manifest["null_construction_audit"] = {
+        "status": "frozen",
+        "audit_sha256": result["audit_sha256"],
+        "confirmed_count": result["confirmed_count"],
+        "decision_counts": {
+            "author_yes": result["confirmed_count"],
+            "reviewer_yes": result["confirmed_count"],
+        },
+    }
+    write_json(gold_manifest_path, manifest)
+    return {
+        "status": "frozen",
+        "confirmed_count": result["confirmed_count"],
+        "audit_sha256": result["audit_sha256"],
+    }
+
+
 def private_identifiers(private_rows: Iterable[dict[str, Any]]) -> set[str]:
     identifiers: set[str] = set()
     for row in private_rows:
@@ -1105,14 +1254,34 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--root", type=Path, default=Path("."))
     parser.add_argument("--split", choices=("development", "test"), required=True)
-    parser.add_argument("--output", type=Path, required=True)
+    action = parser.add_mutually_exclusive_group(required=True)
+    action.add_argument("--output", type=Path)
+    action.add_argument("--prepare-null-audit", type=Path)
     parser.add_argument("--draft", action="store_true")
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    if not args.draft:
-        raise SystemExit("Task 3 only authorizes --draft packet generation")
-    result = build_split(args.root.resolve(), args.split, args.output)
+    root = args.root.resolve()
+    if args.prepare_null_audit is not None:
+        if args.draft:
+            raise SystemExit("--draft cannot be combined with --prepare-null-audit")
+        private_rows = read_jsonl_gz(
+            root
+            / "09-experiments"
+            / "llm_compiler_v0.2"
+            / "generated"
+            / args.split
+            / "private"
+            / "observation_gold.jsonl.gz"
+        )
+        result = write_null_construction_audit(
+            private_rows,
+            args.prepare_null_audit,
+        )
+    else:
+        if not args.draft:
+            raise SystemExit("packet generation requires --draft")
+        result = build_split(root, args.split, args.output)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
