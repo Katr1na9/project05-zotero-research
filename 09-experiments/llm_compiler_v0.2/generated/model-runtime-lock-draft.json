@@ -1,0 +1,245 @@
+{
+  "authorization": {
+    "atomic_pilot_authorized": false,
+    "model_weight_download_authorized": false,
+    "revision_and_license_resolution_authorized": true,
+    "runtime_install_authorized": true
+  },
+  "budget_gate": {
+    "combined_repository_bytes": 46344648600,
+    "combined_repository_gib": 43.16181745380163,
+    "combined_weight_bytes": 46328035904,
+    "limit_bytes": 30000000000,
+    "limit_label": "30 GB model/cache maximum",
+    "minimum_overage_bytes": 16344648600,
+    "ratio_to_limit": 1.54482162,
+    "status": "failed",
+    "why_minimum": "Hub file metadata excludes possible cache bookkeeping and download overhead."
+  },
+  "created_at": "2026-07-15T19:46:52.6085700+08:00",
+  "environment": {
+    "cache": {
+      "huggingface_home": ".cache-llm-phase1/huggingface",
+      "status": "writable_smoke_passed",
+      "tracked_by_git": false
+    },
+    "git": {
+      "branch": "codex/llm-apt-phase1",
+      "commit": "f1248bd571af75f9a443301b9d5336b902d20b4f"
+    },
+    "gpu_probe": {
+      "compute_capability": "7.5",
+      "driver_version": "591.86",
+      "name": "NVIDIA GeForce RTX 2080 Ti",
+      "nvidia_smi_reported_cuda": "13.1",
+      "torch_cuda_build": "12.1",
+      "total_vram_bytes": 11810832384,
+      "total_vram_mib": 11264
+    },
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": {
+      "version": "3.11.15",
+      "virtual_environment": ".venv-llm-phase1"
+    },
+    "resolved_packages": {
+      "accelerate": "0.31.0",
+      "attrs": "26.1.0",
+      "bitsandbytes": "0.43.1",
+      "certifi": "2026.6.17",
+      "charset-normalizer": "3.4.9",
+      "colorama": "0.4.6",
+      "filelock": "3.29.7",
+      "fsspec": "2026.6.0",
+      "huggingface-hub": "0.23.4",
+      "idna": "3.18",
+      "intel-openmp": "2021.4.0",
+      "jinja2": "3.1.6",
+      "jsonschema": "4.22.0",
+      "jsonschema-specifications": "2025.9.1",
+      "markupsafe": "3.0.3",
+      "mkl": "2021.4.0",
+      "mpmath": "1.3.0",
+      "networkx": "3.6.1",
+      "numpy": "1.26.4",
+      "packaging": "26.2",
+      "pip": "24.0",
+      "psutil": "7.2.2",
+      "pyyaml": "6.0.3",
+      "referencing": "0.37.0",
+      "regex": "2026.7.10",
+      "requests": "2.34.2",
+      "rpds-py": "2026.6.3",
+      "safetensors": "0.4.3",
+      "sentencepiece": "0.2.0",
+      "setuptools": "79.0.1",
+      "sympy": "1.14.0",
+      "tbb": "2021.13.1",
+      "tokenizers": "0.19.1",
+      "torch": "2.3.1+cu121",
+      "tqdm": "4.68.4",
+      "transformers": "4.41.2",
+      "typing-extensions": "4.16.0",
+      "urllib3": "2.7.0"
+    },
+    "runtime_gates": {
+      "cuda_available": true,
+      "hardware_matches_plan": true,
+      "nf4_mae": 0.028228759765625,
+      "nf4_quantize_dequantize": "passed",
+      "numpy_bridge": "passed",
+      "status": "passed"
+    },
+    "torch_source": "https://download.pytorch.org/whl/cu121/torch-2.3.1%2Bcu121-cp311-cp311-win_amd64.whl",
+    "transitive_compatibility_decision": {
+      "decision": "pin_numpy_1_x",
+      "reason": "The unconstrained resolver selected NumPy 2.4.6, but torch 2.3.1 emitted its compiled-against-NumPy-1.x incompatibility warning.",
+      "replacement": "numpy==1.26.4"
+    }
+  },
+  "models": [
+    {
+      "config": {
+        "architectures": [
+          "Qwen2ForCausalLM"
+        ],
+        "immutable_url": "https://huggingface.co/Qwen/Qwen1.5-7B-Chat/blob/5f4f5e69ac7f1d508f8369e977de208b4803444b/config.json",
+        "model_type": "qwen2",
+        "sha256": "91ace34e99fd4e68f047c432fe50077143cddeed701e797d675b6f95525c1ff0",
+        "torch_dtype": "bfloat16"
+      },
+      "disabled": false,
+      "gated": false,
+      "license": {
+        "evidence": "repository LICENSE plus model-card metadata",
+        "file_sha256": "7c7b8e244f6aa1ac8c32b74f56d42c41a0364dd2dabed8d9c6030a862e805b54",
+        "immutable_url": "https://huggingface.co/Qwen/Qwen1.5-7B-Chat/blob/5f4f5e69ac7f1d508f8369e977de208b4803444b/LICENSE",
+        "metadata_license": "other",
+        "metadata_license_name": "tongyi-qianwen",
+        "review_status": "pending_user_review"
+      },
+      "model_card": {
+        "immutable_url": "https://huggingface.co/Qwen/Qwen1.5-7B-Chat/blob/5f4f5e69ac7f1d508f8369e977de208b4803444b/README.md",
+        "sha256": "3ce13889d7b435c18840fe3910c7029407a7cf0cb6349878ac830b18c9385397"
+      },
+      "model_id": "Qwen/Qwen1.5-7B-Chat",
+      "private": false,
+      "requested_revision": "main",
+      "resolved_commit": "5f4f5e69ac7f1d508f8369e977de208b4803444b",
+      "repository_bytes": 15454216802,
+      "weight_bytes": 15442693552,
+      "weight_files": [
+        {
+          "bytes": 3988014264,
+          "lfs_sha256": "9e8f7873d7c4c74b8883db207a08bf8a783ec8c26da6b3d660a0929048ce6422",
+          "path": "model-00001-of-00004.safetensors"
+        },
+        {
+          "bytes": 3957749080,
+          "lfs_sha256": "e573fdaf3eba785c4b31b8858288f762f3541f09d75b53dfb1ae4d8ee5011d65",
+          "path": "model-00002-of-00004.safetensors"
+        },
+        {
+          "bytes": 3957749112,
+          "lfs_sha256": "1d7cd36508251baa069a894f6ee98da5929e8b0788ff9c9faa7934ad102f845a",
+          "path": "model-00003-of-00004.safetensors"
+        },
+        {
+          "bytes": 3539181096,
+          "lfs_sha256": "189e7a297229937ec93912c940ef05019738c56ff0720c811fd083f5dd400dce",
+          "path": "model-00004-of-00004.safetensors"
+        }
+      ]
+    },
+    {
+      "config": {
+        "architectures": [
+          "Qwen2ForCausalLM"
+        ],
+        "immutable_url": "https://huggingface.co/Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B/blob/c3c06e1bd4ff38dddc0cd46961216da20db3f089/config.json",
+        "model_type": "qwen2",
+        "sha256": "c65099f677d1165e1be34875c5bd3525b7175b2d488abf17805c93eacc5ec7ea",
+        "torch_dtype": "float32"
+      },
+      "disabled": false,
+      "gated": false,
+      "license": {
+        "evidence": "model-card YAML metadata only; repository has no LICENSE file",
+        "immutable_url": "https://huggingface.co/Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B/blob/c3c06e1bd4ff38dddc0cd46961216da20db3f089/README.md",
+        "metadata_license": "mit",
+        "model_card_bytes": 24,
+        "model_card_sha256": "d8d7a46d41a1a37fe4f0a5f637bf55c649310185329127d8a2204632e480be17",
+        "review_status": "pending_user_review"
+      },
+      "model_card": {
+        "content_summary": "YAML front matter containing only license: mit",
+        "immutable_url": "https://huggingface.co/Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B/blob/c3c06e1bd4ff38dddc0cd46961216da20db3f089/README.md",
+        "sha256": "d8d7a46d41a1a37fe4f0a5f637bf55c649310185329127d8a2204632e480be17"
+      },
+      "model_id": "Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B",
+      "private": false,
+      "requested_revision": "main",
+      "resolved_commit": "c3c06e1bd4ff38dddc0cd46961216da20db3f089",
+      "repository_bytes": 30890431798,
+      "weight_bytes": 30885342352,
+      "weight_files": [
+        {
+          "bytes": 4985196896,
+          "lfs_sha256": "f6d12678e14468d76de26ea624a107c0434b007e6a3f183b0e87421691ed5da4",
+          "path": "model-00001-of-00007.safetensors"
+        },
+        {
+          "bytes": 4991754664,
+          "lfs_sha256": "cd2c9b2af41f4c691817755ad4f99efec2de10c86d1571debd2810e5cf4072a7",
+          "path": "model-00002-of-00007.safetensors"
+        },
+        {
+          "bytes": 4924612760,
+          "lfs_sha256": "fdb93cbc82601ca0e07616aef48b21f0cc03ee241473e185dd2e69931ca4dbdc",
+          "path": "model-00003-of-00007.safetensors"
+        },
+        {
+          "bytes": 4857503792,
+          "lfs_sha256": "27c2d8f92634fc47ea82a707563d7664a75e6c9b80908a7a6dcd80d5e04ded64",
+          "path": "model-00004-of-00007.safetensors"
+        },
+        {
+          "bytes": 4857503792,
+          "lfs_sha256": "af22b7026422add7e5eed68d1bded8993261e8888e3e552634ff29038f4d8aaa",
+          "path": "model-00005-of-00007.safetensors"
+        },
+        {
+          "bytes": 3779450896,
+          "lfs_sha256": "4cb60c9ee9803e2545ffe7f8db27e8b1ae3af66817f55967c45cfe6db542c7bc",
+          "path": "model-00006-of-00007.safetensors"
+        },
+        {
+          "bytes": 2489319552,
+          "lfs_sha256": "883cab3452cca2591646b91fa0fccc10809aca448ebe620b6e2aaebb071cb538",
+          "path": "model-00007-of-00007.safetensors"
+        }
+      ]
+    }
+  ],
+  "next_gate": {
+    "hard_stop_reasons": [
+      "The user has not reviewed and approved the two resolved commits and license evidence.",
+      "The two immutable repositories exceed the preregistered 30 GB model/cache budget before cache overhead."
+    ],
+    "next_allowed_action": "review revisions, licenses, and a written disk-budget/model amendment",
+    "prohibited_until_reviewed_amendment": [
+      "snapshot_download",
+      "any model weight file download",
+      "atomic pilot",
+      "formal model output",
+      "Phase 2 or Phase 3"
+    ],
+    "status": "hard_stop_before_weight_download"
+  },
+  "provenance_status": {
+    "local_weight_hash_verified": false,
+    "model_output_exists": false,
+    "snapshot_download_called": false,
+    "weight_download_started": false
+  },
+  "schema_version": "llm-model-runtime-lock-draft-v0.2"
+}

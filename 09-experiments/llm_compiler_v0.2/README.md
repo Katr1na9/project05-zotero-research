@@ -4,7 +4,7 @@
 
 本目录只承载 Paper B 的 Phase 1：来源约束的 observation compiler，以及同一通用模型下的 structured/direct 对照。授权范围为 RQ1 与 RQ5；RQ3 端到端传导、RQ4 selector、Phase 2/3、强化学习、微调和多模态均未授权。
 
-截至 2026-07-15，dependency-free 基础设施、public/private ID 隔离、真实来源 context-packet 草案、G0 admission、Rule 实现、G1 多 gold scorer、stub backend、四组 prompts、structured 七段哈希链与 prompt/config lock 已实现。尚无任何模型输出，也未安装或下载 `jsonschema`、PyTorch、Transformers、Accelerate、bitsandbytes 或模型权重。
+截至 2026-07-15，dependency-free 基础设施、public/private ID 隔离、真实来源 context-packet 草案、G0 admission、Rule 实现、G1 多 gold scorer、stub backend、四组 prompts、structured 七段哈希链与 prompt/config lock 已实现。隔离环境 `.venv-llm-phase1` 已按授权安装 Python 3.11、PyTorch/Transformers/Accelerate/bitsandbytes 等锁定运行时，CUDA、NumPy 桥接与真实 NF4 量化烟测均通过。尚无任何模型输出，也没有下载模型权重。
 
 双人 null 构造审计与 Rule development snapshot 已完成：
 
@@ -29,7 +29,7 @@
 
 1. development/test null 构造审计与 private manifest 冻结已完成。
 2. development-only Rule snapshot 已冻结；不得查看任何 LLM 输出后再调规则。
-3. readiness 已给出 `ready_to_request_model_authorization=true`；下一步必须由用户另行授权依赖安装与模型 revision 解析，不能把 readiness 视作自动授权。
+3. 用户已另行授权依赖安装与 model revision/许可解析；结果记录在 `generated/model-runtime-lock-draft.json`。该授权不包含模型权重下载或 atomic pilot。
 4. Gates 9.1–9.3 未全部通过前，Paper B 标题、摘要和核心贡献不得写入正向 LLM 效果声明；Paper A 继续保持调查控制/参数治理叙事，不得混写本支线未出结果。
 5. 若 G2 的 κ `<0.70` 或 unassessable `>20%`，论文形态预注册为 `negative_evaluation_or_interface_pilot`；不得使用“减少幻觉”“降低无支撑断言”等人类验证措辞，也不得用 Phase 2/3 事后救场。
 
@@ -47,6 +47,6 @@
 
 readiness 证据拒绝覆盖已有文件。需要重新生成时，应在新审计状态下写入新的审阅路径或经明确审阅后归档旧证据，不得原地改写 JSON。
 
-## HARD STOP A
+## HARD STOP B
 
-在用户对新的 readiness 报告作出单独授权之前，禁止安装推理依赖、解析或下载模型 revision/权重、运行 atomic pilot、生成正式模型输出，或启动 Phase 2/3。本文档及所有结果均保持 Markdown/JSON；不生成 DOCX、PPT 或 PDF。
+已解析的不可变 revisions 为 Qwen `5f4f5e69ac7f1d508f8369e977de208b4803444b` 与 SEVENLLM `c3c06e1bd4ff38dddc0cd46961216da20db3f089`。Hub 文件元数据显示两仓库合计至少 46,344,648,600 bytes（43.16 GiB），在缓存开销之前已经超过预注册的 30 GB 模型/缓存上限；同时两套 revision 与许可证据尚待用户审阅。因此 `snapshot_download`、任何权重文件下载、atomic pilot、正式模型输出与 Phase 2/3 均继续禁止。若继续，必须先形成经审阅的磁盘预算/模型修订，不得静默替换模型或扩大预算。本文档及所有结果均保持 Markdown/JSON；不生成 DOCX、PPT 或 PDF。
