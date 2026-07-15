@@ -4,13 +4,17 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import importlib.util
 import inspect
 import json
 import random
 import re
+import subprocess
+import sys
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -47,6 +51,29 @@ STAGE_HASH_CHAIN_KEYS = (
     "final_result_sha256",
 )
 SHA256_PATTERN = re.compile(r"^[A-F0-9]{64}$")
+REQUIRED_READINESS_CHECKS = (
+    "targeted_tests",
+    "public_private_scan",
+    "prompt_config_lock",
+    "test_bundle_shape",
+    "dependency_isolation",
+    "no_model_output",
+    "forbidden_file_diff",
+)
+TARGET_TEST_MODULES = (
+    "09-experiments.tests.test_llm_packet_separation",
+    "09-experiments.tests.test_llm_phase1_contract",
+    "09-experiments.tests.test_llm_phase1_validation",
+    "09-experiments.tests.test_llm_phase1_scoring",
+    "09-experiments.tests.test_llm_compiler_pilot",
+)
+FORBIDDEN_INFERENCE_PACKAGES = (
+    "torch",
+    "transformers",
+    "accelerate",
+    "bitsandbytes",
+    "jsonschema",
+)
 
 
 def load_sibling(name: str, filename: str):
@@ -587,6 +614,365 @@ def freeze_prompt_config_lock(
     return lock
 
 
+def validate_prompt_config_lock(
+    lock_path: Path,
+    config_path: Path = CONFIG_PATH,
+    contract_path: Path = CONTRACT_PATH,
+) -> list[str]:
+    lock = load_json(Path(lock_path))
+    errors = []
+    expected_prompts = {
+        name: sha256_file(PROMPT_DIR / name) for name in PROMPT_FILES
+    }
+    expected_schemas = {
+        name: sha256_file(SCHEMA_DIR / name) for name in SCHEMA_FILES
+    }
+    if lock.get("prompt_sha256") != expected_prompts:
+        errors.append("prompt_hash_mismatch")
+    if lock.get("schema_sha256") != expected_schemas:
+        errors.append("schema_hash_mismatch")
+    if lock.get("config_file_sha256") != sha256_file(Path(config_path)):
+        errors.append("config_hash_mismatch")
+    if lock.get("contract_sha256") != sha256_file(Path(contract_path)):
+        errors.append("contract_hash_mismatch")
+    lock_body = {key: value for key, value in lock.items() if key != "lock_sha256"}
+    if lock.get("lock_sha256") != sha256_value(lock_body):
+        errors.append("lock_hash_mismatch")
+    if lock.get("status") != "frozen_pre_model":
+        errors.append("lock_status_invalid")
+    return sorted(errors)
+
+
+def scan_packet_bundle(bundle_dir: Path) -> list[str]:
+    bundle_dir = Path(bundle_dir)
+    public_dir = bundle_dir / "public"
+    private_dir = bundle_dir / "private"
+    errors = []
+    try:
+        public_rows = read_jsonl_gz(public_dir / "context_packets.jsonl.gz")
+        private_rows = read_jsonl_gz(private_dir / "observation_gold.jsonl.gz")
+        catalog = load_json(public_dir / "public_cti_catalog.json")
+        input_manifest = load_json(public_dir / "input_manifest.json")
+        for row in public_rows:
+            _BUILDER.assert_public_safe(row)
+        _BUILDER.assert_public_safe(catalog)
+        decoded_public = b"\n".join(
+            [canonical_json(row) for row in public_rows]
+            + [canonical_json(catalog), canonical_json(input_manifest)]
+        )
+        if any(
+            identifier.encode("utf-8") in decoded_public
+            for identifier in _BUILDER.private_identifiers(private_rows)
+        ):
+            errors.append("private_identifier_in_public_bytes")
+    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError):
+        errors.append("packet_bundle_unreadable_or_unsafe")
+    return sorted(set(errors))
+
+
+def assemble_pre_model_readiness(
+    checks: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    failed_required = [
+        name
+        for name in REQUIRED_READINESS_CHECKS
+        if (checks.get(name) or {}).get("status") != "passed"
+    ]
+    gate_blockers = [
+        name
+        for name in ("null_construction_audit", "rule_baseline_snapshot")
+        if (checks.get(name) or {}).get("status") != "passed"
+    ]
+    blockers = failed_required + gate_blockers
+    ready = not blockers
+    if failed_required:
+        status = "blocked_pre_model_checks"
+    elif gate_blockers:
+        status = "blocked_pending_human_gates"
+    else:
+        status = "ready_to_request_model_authorization"
+    return {
+        "report_version": "project05-llm-phase1-pre-model-readiness-v0.2",
+        "status": status,
+        "ready_to_request_model_authorization": ready,
+        "hard_stop": "A",
+        "checks": checks,
+        "blockers": blockers,
+    }
+
+
+def run_targeted_pre_model_tests() -> dict[str, Any]:
+    command = [sys.executable, "-m", "unittest", *TARGET_TEST_MODULES, "-v"]
+    completed = subprocess.run(
+        command,
+        cwd=EXPERIMENT_ROOT.parent,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    output = (completed.stdout or "") + (completed.stderr or "")
+    matches = re.findall(r"Ran (\d+) tests?", output)
+    return {
+        "status": "passed" if completed.returncode == 0 else "failed",
+        "modules": list(TARGET_TEST_MODULES),
+        "old_pilot_included": TARGET_TEST_MODULES[-1],
+        "returncode": completed.returncode,
+        "test_count": int(matches[-1]) if matches else None,
+        "output_sha256": sha256_text(output),
+    }
+
+
+def inspect_test_bundle_shape() -> dict[str, Any]:
+    manifest_path = (
+        EXPERIMENT_ROOT
+        / "llm_compiler_v0.2"
+        / "generated"
+        / "test"
+        / "public"
+        / "input_manifest.json"
+    )
+    try:
+        manifest = load_json(manifest_path)
+        file_hashes_match = all(
+            (manifest_path.parent / filename).exists()
+            and sha256_file(manifest_path.parent / filename) == expected_hash
+            for filename, expected_hash in (manifest.get("files") or {}).items()
+        )
+        expected = (
+            manifest.get("packet_count") == 64
+            and manifest.get("case_count") == 6
+            and manifest.get("packet_counts") == {"positive": 32, "null": 32}
+            and manifest.get("split") == "test"
+            and len(manifest.get("files") or {}) == 2
+            and file_hashes_match
+        )
+    except (OSError, ValueError, json.JSONDecodeError):
+        manifest = {}
+        file_hashes_match = False
+        expected = False
+    return {
+        "status": "passed" if expected else "failed",
+        "packet_count": manifest.get("packet_count"),
+        "case_count": manifest.get("case_count"),
+        "packet_counts": manifest.get("packet_counts"),
+        "declared_file_hashes_match": file_hashes_match,
+        "formal_ready": bool(manifest.get("formal_ready")),
+    }
+
+
+def inspect_null_construction_audits() -> dict[str, Any]:
+    audit_dir = (
+        EXPERIMENT_ROOT
+        / "llm_compiler_v0.2"
+        / "generated"
+        / "null-construction-audit"
+    )
+    expected_counts = {"development": 26, "test": 32}
+    summaries = {}
+    all_frozen = True
+    malformed = False
+    for split, expected_count in expected_counts.items():
+        path = audit_dir / f"{split}.csv"
+        try:
+            with path.open("r", encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+        except OSError:
+            rows = []
+            malformed = True
+        completed = 0
+        for row in rows:
+            author = str(row.get("author_id") or "").strip()
+            reviewer = str(row.get("reviewer_id") or "").strip()
+            decisions_are_yes = (
+                str(row.get("author_no_acceptable_observation") or "").casefold()
+                == "yes"
+                and str(
+                    row.get("reviewer_no_acceptable_observation") or ""
+                ).casefold()
+                == "yes"
+            )
+            if decisions_are_yes and author and reviewer and author != reviewer:
+                completed += 1
+        split_frozen = len(rows) == expected_count and completed == expected_count
+        all_frozen = all_frozen and split_frozen
+        malformed = malformed or len(rows) != expected_count
+        summaries[split] = {
+            "expected_rows": expected_count,
+            "actual_rows": len(rows),
+            "two_person_confirmed_rows": completed,
+        }
+    if malformed:
+        status = "failed"
+    elif all_frozen:
+        status = "passed"
+    else:
+        status = "pending_human"
+    return {"status": status, "splits": summaries}
+
+
+def inspect_rule_snapshot() -> dict[str, Any]:
+    snapshot_path = (
+        EXPERIMENT_ROOT
+        / "llm_compiler_v0.2"
+        / "generated"
+        / "frozen"
+        / "rule-baseline-development.json"
+    )
+    if not snapshot_path.exists():
+        return {
+            "status": "missing",
+            "reason": "development null audit must freeze before Rule snapshot",
+        }
+    try:
+        require_rule_snapshot_unchanged(
+            snapshot_path,
+            CONFIG_PATH,
+            CONTRACT_PATH,
+        )
+    except (OSError, KeyError, TypeError, ValueError) as error:
+        return {"status": "failed", "reason": str(error)}
+    return {
+        "status": "passed",
+        "snapshot_sha256": sha256_file(snapshot_path),
+    }
+
+
+def inspect_dependency_isolation() -> dict[str, Any]:
+    installed = [
+        name
+        for name in FORBIDDEN_INFERENCE_PACKAGES
+        if importlib.util.find_spec(name) is not None
+    ]
+    loaded = [
+        name
+        for name in FORBIDDEN_INFERENCE_PACKAGES
+        if name in sys.modules
+    ]
+    local_cache_paths = [
+        EXPERIMENT_ROOT.parent / ".venv-llm-phase1",
+        EXPERIMENT_ROOT / "llm_compiler_v0.2" / "models",
+        EXPERIMENT_ROOT / "llm_compiler_v0.2" / "generated" / "models",
+    ]
+    present_cache_paths = [
+        str(path.relative_to(EXPERIMENT_ROOT.parent))
+        for path in local_cache_paths
+        if path.exists()
+    ]
+    runtime = load_json(CONFIG_PATH).get("runtime") or {}
+    runtime_closed = not any(bool(value) for value in runtime.values())
+    passed = not installed and not loaded and not present_cache_paths and runtime_closed
+    return {
+        "status": "passed" if passed else "failed",
+        "packages_checked": list(FORBIDDEN_INFERENCE_PACKAGES),
+        "installed": installed,
+        "loaded": loaded,
+        "local_model_or_venv_paths": present_cache_paths,
+        "runtime_authorizations_all_false": runtime_closed,
+    }
+
+
+def inspect_forbidden_file_diff() -> dict[str, Any]:
+    pathspecs = (
+        "09-experiments/scripts/run_mvp.py",
+        "09-experiments/real_cases",
+        "08-writing/paper-main*",
+        "08-writing/patent*",
+    )
+    command = ["git", "diff", "--name-only", "--", *pathspecs]
+    completed = subprocess.run(
+        command,
+        cwd=EXPERIMENT_ROOT.parent,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    changed = [line for line in completed.stdout.splitlines() if line.strip()]
+    return {
+        "status": (
+            "passed" if completed.returncode == 0 and not changed else "failed"
+        ),
+        "changed_files": changed,
+    }
+
+
+def find_model_output_files(generated_root: Path) -> list[str]:
+    generated_root = Path(generated_root)
+    files = []
+    for directory_name in ("runs", "g2-audit"):
+        directory = generated_root / directory_name
+        if directory.exists():
+            files.extend(
+                path.relative_to(generated_root).as_posix()
+                for path in directory.rglob("*")
+                if path.is_file()
+            )
+    return sorted(files)
+
+
+def generate_pre_model_readiness(output_path: Path) -> dict[str, Any]:
+    output_path = Path(output_path)
+    if output_path.exists():
+        raise ValueError(f"refusing to overwrite readiness evidence: {output_path}")
+    generated_root = EXPERIMENT_ROOT / "llm_compiler_v0.2" / "generated"
+    bundle_errors = {
+        split: scan_packet_bundle(generated_root / split)
+        for split in ("development", "test")
+    }
+    prompt_errors = validate_prompt_config_lock(
+        generated_root / "frozen" / "prompt-config-lock.json"
+    )
+    model_output_files = find_model_output_files(generated_root)
+    checks = {
+        "targeted_tests": run_targeted_pre_model_tests(),
+        "public_private_scan": {
+            "status": (
+                "passed" if not any(bundle_errors.values()) else "failed"
+            ),
+            "errors": bundle_errors,
+        },
+        "prompt_config_lock": {
+            "status": "passed" if not prompt_errors else "failed",
+            "errors": prompt_errors,
+        },
+        "test_bundle_shape": inspect_test_bundle_shape(),
+        "dependency_isolation": inspect_dependency_isolation(),
+        "no_model_output": {
+            "status": "passed" if not model_output_files else "failed",
+            "files": model_output_files,
+        },
+        "forbidden_file_diff": inspect_forbidden_file_diff(),
+        "null_construction_audit": inspect_null_construction_audits(),
+        "rule_baseline_snapshot": inspect_rule_snapshot(),
+    }
+    report = assemble_pre_model_readiness(checks)
+    report.update(
+        {
+            "generated_at_utc": datetime.now(timezone.utc)
+            .replace(microsecond=0)
+            .isoformat(),
+            "authorized_scope": ["RQ1", "RQ5"],
+            "paper_a_isolated": True,
+            "model_output_exists": bool(model_output_files),
+            "model_output_files": model_output_files,
+            "implementation_sha256": {
+                "run_llm_phase1.py": sha256_file(RUNNER_PATH),
+                "test_llm_phase1_validation.py": sha256_file(
+                    EXPERIMENT_ROOT / "tests" / "test_llm_phase1_validation.py"
+                ),
+            },
+            "phase2_authorized": False,
+            "phase3_authorized": False,
+            "g2_failure_paper_form": "negative_evaluation_or_interface_pilot",
+        }
+    )
+    write_json(output_path, report)
+    return report
+
+
 def first_string(*values: Any) -> str | None:
     for value in values:
         if isinstance(value, str) and value.strip():
@@ -962,6 +1348,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--freeze-rule-snapshot", type=Path)
     parser.add_argument("--rule-run", type=Path)
     parser.add_argument("--freeze-prompt-config-lock", type=Path)
+    parser.add_argument("--pre-model-readiness", type=Path)
     return parser.parse_args()
 
 
@@ -970,6 +1357,10 @@ if __name__ == "__main__":
     if args.freeze_prompt_config_lock:
         frozen = freeze_prompt_config_lock(args.freeze_prompt_config_lock)
         print(json.dumps(frozen, ensure_ascii=False, sort_keys=True))
+        raise SystemExit(0)
+    if args.pre_model_readiness:
+        readiness = generate_pre_model_readiness(args.pre_model_readiness)
+        print(json.dumps(readiness, ensure_ascii=False, sort_keys=True))
         raise SystemExit(0)
     raise SystemExit(
         "Formal Rule execution is blocked until the development null audit is frozen; "

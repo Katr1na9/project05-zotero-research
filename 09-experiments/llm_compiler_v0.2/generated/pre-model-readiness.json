@@ -1,0 +1,104 @@
+{
+  "authorized_scope": [
+    "RQ1",
+    "RQ5"
+  ],
+  "blockers": [
+    "null_construction_audit",
+    "rule_baseline_snapshot"
+  ],
+  "checks": {
+    "dependency_isolation": {
+      "installed": [],
+      "loaded": [],
+      "local_model_or_venv_paths": [],
+      "packages_checked": [
+        "torch",
+        "transformers",
+        "accelerate",
+        "bitsandbytes",
+        "jsonschema"
+      ],
+      "runtime_authorizations_all_false": true,
+      "status": "passed"
+    },
+    "forbidden_file_diff": {
+      "changed_files": [],
+      "status": "passed"
+    },
+    "no_model_output": {
+      "files": [],
+      "status": "passed"
+    },
+    "null_construction_audit": {
+      "splits": {
+        "development": {
+          "actual_rows": 26,
+          "expected_rows": 26,
+          "two_person_confirmed_rows": 0
+        },
+        "test": {
+          "actual_rows": 32,
+          "expected_rows": 32,
+          "two_person_confirmed_rows": 0
+        }
+      },
+      "status": "pending_human"
+    },
+    "prompt_config_lock": {
+      "errors": [],
+      "status": "passed"
+    },
+    "public_private_scan": {
+      "errors": {
+        "development": [],
+        "test": []
+      },
+      "status": "passed"
+    },
+    "rule_baseline_snapshot": {
+      "reason": "development null audit must freeze before Rule snapshot",
+      "status": "missing"
+    },
+    "targeted_tests": {
+      "modules": [
+        "09-experiments.tests.test_llm_packet_separation",
+        "09-experiments.tests.test_llm_phase1_contract",
+        "09-experiments.tests.test_llm_phase1_validation",
+        "09-experiments.tests.test_llm_phase1_scoring",
+        "09-experiments.tests.test_llm_compiler_pilot"
+      ],
+      "old_pilot_included": "09-experiments.tests.test_llm_compiler_pilot",
+      "output_sha256": "F78087B1569613C6122FD27CCC0C23720BC75B9A6BD4C36DBFD160315576363A",
+      "returncode": 0,
+      "status": "passed",
+      "test_count": 55
+    },
+    "test_bundle_shape": {
+      "case_count": 6,
+      "declared_file_hashes_match": true,
+      "formal_ready": false,
+      "packet_count": 64,
+      "packet_counts": {
+        "null": 32,
+        "positive": 32
+      },
+      "status": "passed"
+    }
+  },
+  "g2_failure_paper_form": "negative_evaluation_or_interface_pilot",
+  "generated_at_utc": "2026-07-15T06:53:20+00:00",
+  "hard_stop": "A",
+  "implementation_sha256": {
+    "run_llm_phase1.py": "E7651F37EE304AE5E346DB97EE8DC707C40DD4A6EB4E8A036AFADABB778EEB5E",
+    "test_llm_phase1_validation.py": "D07B906FDE77FCB692DD29D16EFE5B396F3074FF708CA16EC4D31B0A0EE32240"
+  },
+  "model_output_exists": false,
+  "model_output_files": [],
+  "paper_a_isolated": true,
+  "phase2_authorized": false,
+  "phase3_authorized": false,
+  "ready_to_request_model_authorization": false,
+  "report_version": "project05-llm-phase1-pre-model-readiness-v0.2",
+  "status": "blocked_pending_human_gates"
+}

@@ -501,5 +501,99 @@ class StubAndHashChainTests(unittest.TestCase):
         )
 
 
+class PreModelReadinessTests(unittest.TestCase):
+    def test_model_output_scan_is_evidence_based(self):
+        with tempfile.TemporaryDirectory() as temp:
+            generated = Path(temp)
+            self.assertEqual([], runner.find_model_output_files(generated))
+
+            output = generated / "runs" / "phase1-test" / "raw.json"
+            output.parent.mkdir(parents=True)
+            output.write_text("{}", encoding="utf-8")
+
+            self.assertEqual(
+                ["runs/phase1-test/raw.json"],
+                runner.find_model_output_files(generated),
+            )
+
+    def test_public_private_scan_detects_private_identifier_collision(self):
+        with tempfile.TemporaryDirectory() as temp:
+            bundle_dir = Path(temp) / "bundle"
+            candidate, packet = fixture_valid_candidate_and_packet()
+            observation = {
+                key: value
+                for key, value in candidate.items()
+                if key != "candidate_claim_id"
+            }
+            observation["canonical_claim_id"] = "C07-EC-001"
+            public, private = builder.build_packet_pair(
+                case_id="C07-test-case",
+                split="test",
+                packet_role="positive",
+                support_ceiling="G2_tactic_intent",
+                records=packet["records"],
+                acceptable_observations=[observation],
+            )
+            builder.write_bundle(
+                bundle_dir,
+                public_rows=[public],
+                private_rows=[private],
+                public_catalog={"catalog_version": "test-v1", "artifacts": []},
+                metadata={"split": "test", "status": "draft"},
+            )
+            self.assertEqual([], runner.scan_packet_bundle(bundle_dir))
+
+            private_rows = builder.read_jsonl_gz(
+                bundle_dir / "private" / "observation_gold.jsonl.gz"
+            )
+            private_id = private_rows[0]["acceptable_observations"][0][
+                "gold_claim_id"
+            ]
+            (bundle_dir / "public" / "public_cti_catalog.json").write_text(
+                json.dumps({"leak": private_id}),
+                encoding="utf-8",
+            )
+
+            self.assertEqual(
+                ["private_identifier_in_public_bytes"],
+                runner.scan_packet_bundle(bundle_dir),
+            )
+
+    def test_prompt_config_lock_revalidates_and_detects_drift(self):
+        with tempfile.TemporaryDirectory() as temp:
+            lock_path = Path(temp) / "prompt-config-lock.json"
+            runner.freeze_prompt_config_lock(lock_path)
+            self.assertEqual([], runner.validate_prompt_config_lock(lock_path))
+
+            changed = json.loads(lock_path.read_text(encoding="utf-8"))
+            prompt_name = sorted(changed["prompt_sha256"])[0]
+            changed["prompt_sha256"][prompt_name] = "0" * 64
+            builder.write_json(lock_path, changed)
+
+            self.assertIn(
+                "prompt_hash_mismatch",
+                runner.validate_prompt_config_lock(lock_path),
+            )
+
+    def test_pending_human_audit_and_rule_snapshot_block_authorization(self):
+        checks = {
+            name: {"status": "passed"}
+            for name in runner.REQUIRED_READINESS_CHECKS
+        }
+        checks["null_construction_audit"] = {
+            "status": "pending_human",
+        }
+        checks["rule_baseline_snapshot"] = {"status": "missing"}
+
+        report = runner.assemble_pre_model_readiness(checks)
+
+        self.assertEqual("blocked_pending_human_gates", report["status"])
+        self.assertFalse(report["ready_to_request_model_authorization"])
+        self.assertEqual(
+            ["null_construction_audit", "rule_baseline_snapshot"],
+            report["blockers"],
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
