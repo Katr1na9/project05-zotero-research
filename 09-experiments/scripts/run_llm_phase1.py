@@ -8,6 +8,8 @@ import hashlib
 import importlib.util
 import inspect
 import json
+import random
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable
@@ -16,11 +18,35 @@ from typing import Any, Iterable
 SCRIPT_DIR = Path(__file__).resolve().parent
 EXPERIMENT_ROOT = SCRIPT_DIR.parent
 CONFIG_PATH = EXPERIMENT_ROOT / "llm_compiler_v0.2" / "experiment_config.json"
+PROMPT_DIR = EXPERIMENT_ROOT / "llm_compiler_v0.2" / "prompts"
+SCHEMA_DIR = EXPERIMENT_ROOT / "data_schema"
 CONTRACT_PATH = (
     EXPERIMENT_ROOT / "governance" / "contracts" / "llm-compiler-contract-v0.2.json"
 )
 RUNNER_PATH = Path(__file__).resolve()
 RULE_IMPLEMENTATION_VERSION = "project05-rule-compiler-v0.2"
+PROMPT_FILES = (
+    "compiler-system-v0.2.txt",
+    "compiler-user-v0.2.txt",
+    "structured-system-v0.2.txt",
+    "direct-system-v0.2.txt",
+)
+SCHEMA_FILES = (
+    "llm_context_packet.schema.json",
+    "llm_compiler_result.schema.json",
+    "llm_conclusion_result.schema.json",
+    "llm_run_manifest.schema.json",
+)
+STAGE_HASH_CHAIN_KEYS = (
+    "stage1_prompt_sha256",
+    "stage1_raw_sha256",
+    "admission_sha256",
+    "stage2_input_sha256",
+    "stage2_prompt_sha256",
+    "stage2_raw_sha256",
+    "final_result_sha256",
+)
+SHA256_PATTERN = re.compile(r"^[A-F0-9]{64}$")
 
 
 def load_sibling(name: str, filename: str):
@@ -62,6 +88,503 @@ def sha256_file(path: Path) -> str:
 
 def sha256_value(value: Any) -> str:
     return hashlib.sha256(canonical_json(value)).hexdigest().upper()
+
+
+def sha256_text(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest().upper()
+
+
+def read_prompt(filename: str) -> str:
+    return (PROMPT_DIR / filename).read_text(encoding="utf-8")
+
+
+class InferenceBackend:
+    """Small backend boundary that keeps model imports out of pre-model code."""
+
+    backend_id = "abstract_inference_backend"
+
+    def generate(
+        self,
+        messages: list[dict[str, str]],
+        generation_config: dict[str, Any],
+    ) -> tuple[str, dict[str, Any]]:
+        raise NotImplementedError
+
+
+class StubBackend(InferenceBackend):
+    """Deterministic, dependency-free backend used only for contract tests."""
+
+    backend_id = "deterministic_stub_v0.2"
+
+    def __init__(self, responses: Iterable[Any] | None = None):
+        self._responses = list(responses or [])
+
+    def generate(
+        self,
+        messages: list[dict[str, str]],
+        generation_config: dict[str, Any],
+    ) -> tuple[str, dict[str, Any]]:
+        del generation_config
+        request = json.loads(messages[-1]["content"])
+        if self._responses:
+            payload = self._responses.pop(0)
+            text = (
+                payload
+                if isinstance(payload, str)
+                else json.dumps(payload, ensure_ascii=False, sort_keys=True)
+            )
+        else:
+            stage = request.get("stage")
+            if stage == "compiler":
+                payload = {"status": "abstain", "candidate_claims": []}
+            else:
+                stage_input = request.get("stage2_input") or {}
+                gaps = list(stage_input.get("explicit_gaps") or [])
+                payload = {
+                    "status": "abstain",
+                    "observation_claims": [],
+                    "highest_supported_granularity": "G0_unknown",
+                    "path_summary": None,
+                    "actor": None,
+                    "campaign": None,
+                    "missing_evidence": gaps or ["no_supported_observation"],
+                    "abstain": True,
+                    "citations": [],
+                }
+            text = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+        telemetry = {
+            "latency_ms": 0.0,
+            "peak_vram_mb": 0,
+            "input_tokens": None,
+            "output_tokens": None,
+            "error_code": None,
+        }
+        return text, telemetry
+
+
+def generation_for(
+    condition_id: str,
+    config_path: Path = CONFIG_PATH,
+) -> dict[str, Any]:
+    config = load_json(config_path)
+    try:
+        return dict(config["conditions"][condition_id]["generation"])
+    except KeyError as error:
+        raise ValueError(f"unknown condition: {condition_id}") from error
+
+
+def compiler_messages(
+    packet: dict[str, Any],
+    condition_id: str,
+    attempt_index: int,
+) -> list[dict[str, str]]:
+    request = {
+        "stage": "compiler",
+        "protocol": read_prompt("compiler-user-v0.2.txt"),
+        "condition_id": condition_id,
+        "attempt_index": int(attempt_index),
+        "packet": packet,
+    }
+    return [
+        {"role": "system", "content": read_prompt("compiler-system-v0.2.txt")},
+        {
+            "role": "user",
+            "content": canonical_json(request).decode("utf-8"),
+        },
+    ]
+
+
+def conclusion_messages(
+    stage: str,
+    payload: dict[str, Any],
+    attempt_index: int,
+) -> list[dict[str, str]]:
+    if stage == "structured":
+        prompt_name = "structured-system-v0.2.txt"
+        request = {
+            "stage": stage,
+            "attempt_index": int(attempt_index),
+            "stage2_input": payload,
+        }
+    elif stage == "direct":
+        prompt_name = "direct-system-v0.2.txt"
+        request = {
+            "stage": stage,
+            "attempt_index": int(attempt_index),
+            "packet": payload,
+        }
+    else:
+        raise ValueError(f"unsupported conclusion stage: {stage}")
+    return [
+        {"role": "system", "content": read_prompt(prompt_name)},
+        {
+            "role": "user",
+            "content": canonical_json(request).decode("utf-8"),
+        },
+    ]
+
+
+def normalize_telemetry(
+    telemetry: Any,
+    error_code: str | None = None,
+) -> dict[str, Any]:
+    source = telemetry if isinstance(telemetry, dict) else {}
+    return {
+        "latency_ms": source.get("latency_ms"),
+        "peak_vram_mb": source.get("peak_vram_mb"),
+        "input_tokens": source.get("input_tokens"),
+        "output_tokens": source.get("output_tokens"),
+        "error_code": error_code if error_code is not None else source.get("error_code"),
+    }
+
+
+def parse_json_object(raw_text: str) -> tuple[dict[str, Any] | None, str | None]:
+    try:
+        payload = json.loads(raw_text)
+    except (json.JSONDecodeError, TypeError):
+        return None, "json_parse_error"
+    if not isinstance(payload, dict):
+        return None, "json_root_not_object"
+    return payload, None
+
+
+def bind_missing_candidate_ids(
+    claims: Any,
+    request_id: str,
+    condition_id: str,
+    attempt_index: int,
+) -> Any:
+    if not isinstance(claims, list):
+        return claims
+    bound = []
+    for output_index, claim in enumerate(claims):
+        if isinstance(claim, dict):
+            claim = dict(claim)
+            claim.setdefault(
+                "candidate_claim_id",
+                derive_candidate_claim_id(
+                    request_id,
+                    condition_id,
+                    attempt_index,
+                    output_index,
+                ),
+            )
+        bound.append(claim)
+    return bound
+
+
+def compiler_result_from_raw(
+    packet: dict[str, Any],
+    condition_id: str,
+    attempt_index: int,
+    raw_text: str,
+    telemetry: dict[str, Any],
+) -> dict[str, Any]:
+    payload, error_code = parse_json_object(raw_text)
+    if payload is None:
+        return {
+            "request_id": packet["request_id"],
+            "condition_id": condition_id,
+            "attempt_index": int(attempt_index),
+            "status": "invalid",
+            "candidate_claims": [],
+            "telemetry": normalize_telemetry(telemetry, error_code),
+        }
+    claims = bind_missing_candidate_ids(
+        payload.get("candidate_claims"),
+        packet["request_id"],
+        condition_id,
+        int(attempt_index),
+    )
+    if not isinstance(claims, list):
+        return {
+            "request_id": packet["request_id"],
+            "condition_id": condition_id,
+            "attempt_index": int(attempt_index),
+            "status": "invalid",
+            "candidate_claims": [],
+            "telemetry": normalize_telemetry(
+                telemetry, "candidate_claims_not_array"
+            ),
+        }
+    status = payload.get("status")
+    if status not in {"completed", "abstain", "invalid", "error"}:
+        status = "completed" if claims else "abstain"
+    return {
+        "request_id": packet["request_id"],
+        "condition_id": condition_id,
+        "attempt_index": int(attempt_index),
+        "status": status,
+        "candidate_claims": claims,
+        "telemetry": normalize_telemetry(telemetry),
+    }
+
+
+def conclusion_result_from_raw(
+    packet: dict[str, Any],
+    condition_id: str,
+    attempt_index: int,
+    raw_text: str,
+) -> dict[str, Any]:
+    payload, error_code = parse_json_object(raw_text)
+    if payload is None:
+        payload = {
+            "status": "invalid",
+            "observation_claims": [],
+            "highest_supported_granularity": "G0_unknown",
+            "path_summary": None,
+            "actor": None,
+            "campaign": None,
+            "missing_evidence": [str(error_code)],
+            "abstain": True,
+            "citations": [],
+        }
+    observations = bind_missing_candidate_ids(
+        payload.get("observation_claims", []),
+        packet["request_id"],
+        condition_id,
+        int(attempt_index),
+    )
+    if not isinstance(observations, list):
+        observations = []
+        payload["status"] = "invalid"
+        payload["missing_evidence"] = ["observation_claims_not_array"]
+        payload["abstain"] = True
+    return {
+        "request_id": packet["request_id"],
+        "condition_id": condition_id,
+        "attempt_index": int(attempt_index),
+        "status": payload.get("status", "completed"),
+        "observation_claims": observations,
+        "highest_supported_granularity": payload.get(
+            "highest_supported_granularity", "G0_unknown"
+        ),
+        "path_summary": payload.get("path_summary"),
+        "actor": payload.get("actor"),
+        "campaign": payload.get("campaign"),
+        "missing_evidence": list(payload.get("missing_evidence") or []),
+        "abstain": bool(payload.get("abstain", not observations)),
+        "citations": list(payload.get("citations") or []),
+    }
+
+
+def stage_chain(**values: Any) -> dict[str, Any]:
+    return {key: values.get(key) for key in STAGE_HASH_CHAIN_KEYS}
+
+
+def run_compiler(
+    packet: dict[str, Any],
+    condition_id: str,
+    backend: InferenceBackend,
+    attempt_index: int,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    if condition_id not in {"general_compiler", "security_compiler"}:
+        raise ValueError("run_compiler requires a model compiler condition")
+    messages = compiler_messages(packet, condition_id, attempt_index)
+    raw_text, telemetry = backend.generate(
+        messages,
+        generation_for(condition_id),
+    )
+    result = compiler_result_from_raw(
+        packet,
+        condition_id,
+        attempt_index,
+        raw_text,
+        telemetry,
+    )
+    result_sha256 = sha256_value(result)
+    chain = stage_chain(
+        stage1_prompt_sha256=sha256_value(messages),
+        stage1_raw_sha256=sha256_text(raw_text),
+        final_result_sha256=result_sha256,
+    )
+    manifest = {
+        "condition_id": condition_id,
+        "attempt_index": int(attempt_index),
+        "backend_id": backend.backend_id,
+        "stage_hash_chain": chain,
+        "result_sha256": result_sha256,
+        "status": "failed" if result["status"] in {"invalid", "error"} else "completed",
+    }
+    return result, manifest
+
+
+def run_structured(
+    packet: dict[str, Any],
+    backend: InferenceBackend,
+    attempt_index: int,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    compiler_result, compiler_manifest = run_compiler(
+        packet,
+        "general_compiler",
+        backend,
+        attempt_index,
+    )
+    admission = _VALIDATOR.admit_candidates(compiler_result, packet)
+    stage2_input = _VALIDATOR.build_structured_stage2_input(
+        admission,
+        packet["support_ceiling"],
+    )
+    messages = conclusion_messages("structured", stage2_input, attempt_index)
+    raw_text, _ = backend.generate(
+        messages,
+        generation_for("general_structured"),
+    )
+    result = conclusion_result_from_raw(
+        packet,
+        "general_structured",
+        attempt_index,
+        raw_text,
+    )
+    result_sha256 = sha256_value(result)
+    chain = stage_chain(
+        stage1_prompt_sha256=compiler_manifest["stage_hash_chain"][
+            "stage1_prompt_sha256"
+        ],
+        stage1_raw_sha256=compiler_manifest["stage_hash_chain"][
+            "stage1_raw_sha256"
+        ],
+        admission_sha256=sha256_value(admission),
+        stage2_input_sha256=sha256_value(stage2_input),
+        stage2_prompt_sha256=sha256_value(messages),
+        stage2_raw_sha256=sha256_text(raw_text),
+        final_result_sha256=result_sha256,
+    )
+    manifest = {
+        "condition_id": "general_structured",
+        "attempt_index": int(attempt_index),
+        "backend_id": backend.backend_id,
+        "stage_hash_chain": chain,
+        "result_sha256": result_sha256,
+        "status": "failed" if result["status"] in {"invalid", "error"} else "completed",
+    }
+    return result, manifest
+
+
+def run_direct(
+    packet: dict[str, Any],
+    backend: InferenceBackend,
+    attempt_index: int,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    messages = conclusion_messages("direct", packet, attempt_index)
+    raw_text, _ = backend.generate(
+        messages,
+        generation_for("general_direct"),
+    )
+    result = conclusion_result_from_raw(
+        packet,
+        "general_direct",
+        attempt_index,
+        raw_text,
+    )
+    result_sha256 = sha256_value(result)
+    chain = stage_chain(
+        stage1_prompt_sha256=sha256_value(messages),
+        stage1_raw_sha256=sha256_text(raw_text),
+        final_result_sha256=result_sha256,
+    )
+    manifest = {
+        "condition_id": "general_direct",
+        "attempt_index": int(attempt_index),
+        "backend_id": backend.backend_id,
+        "stage_hash_chain": chain,
+        "result_sha256": result_sha256,
+        "status": "failed" if result["status"] in {"invalid", "error"} else "completed",
+    }
+    return result, manifest
+
+
+def hash_chain_complete(manifest: dict[str, Any]) -> bool:
+    chain = manifest.get("stage_hash_chain")
+    if not isinstance(chain, dict) or list(chain) != list(STAGE_HASH_CHAIN_KEYS):
+        return False
+    if not all(
+        isinstance(chain.get(key), str) and SHA256_PATTERN.fullmatch(chain[key])
+        for key in STAGE_HASH_CHAIN_KEYS
+    ):
+        return False
+    return chain["final_result_sha256"] == manifest.get("result_sha256")
+
+
+def select_repeat_panel(
+    rows: Iterable[dict[str, Any]],
+    seed: int,
+) -> list[dict[str, Any]]:
+    groups: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for row in rows:
+        case_prefix = str(row.get("case_id") or "").split("-", 1)[0]
+        role = str(row.get("packet_role") or "")
+        if case_prefix and role in {"positive", "null"}:
+            groups.setdefault((case_prefix, role), []).append(row)
+    cases = sorted({case for case, _ in groups})
+    if len(cases) != 6:
+        raise ValueError("repeat panel requires exactly six test cases")
+    rng = random.Random(int(seed))
+    panel = []
+    for case in cases:
+        for role in ("positive", "null"):
+            candidates = sorted(
+                groups.get((case, role), []),
+                key=lambda row: str(row.get("request_id") or ""),
+            )
+            if not candidates:
+                raise ValueError(f"repeat panel missing {case}/{role}")
+            panel.append(dict(candidates[rng.randrange(len(candidates))]))
+    return panel
+
+
+def calculate_call_budget(config: dict[str, Any]) -> dict[str, int]:
+    test = config["splits"]["test"]
+    packet_count = int(test["positive_packets"]) + int(test["null_packets"])
+    first_pass = packet_count * 4
+    repeat = (
+        int(config["repeat_panel"]["packet_count"])
+        * len(config["repeat_panel"]["conditions"])
+        * len(config["repeat_panel"]["additional_attempt_indices"])
+    )
+    maximum = first_pass + repeat
+    declared = config["call_budget"]
+    expected = {
+        "first_pass": first_pass,
+        "repeat_diagnostic": repeat,
+        "maximum_formal": maximum,
+    }
+    mismatches = [
+        key for key, value in expected.items() if int(declared.get(key, -1)) != value
+    ]
+    if mismatches:
+        raise ValueError(f"call budget mismatch: {mismatches}")
+    return {
+        "first_pass": first_pass,
+        "repeat_diagnostic": repeat,
+        "maximum": maximum,
+    }
+
+
+def freeze_prompt_config_lock(
+    output_path: Path,
+    config_path: Path = CONFIG_PATH,
+    contract_path: Path = CONTRACT_PATH,
+) -> dict[str, Any]:
+    output_path = Path(output_path)
+    if output_path.exists():
+        raise ValueError(f"refusing to overwrite prompt/config lock: {output_path}")
+    prompt_hashes = {
+        name: sha256_file(PROMPT_DIR / name) for name in PROMPT_FILES
+    }
+    schema_hashes = {
+        name: sha256_file(SCHEMA_DIR / name) for name in SCHEMA_FILES
+    }
+    lock = {
+        "status": "frozen_pre_model",
+        "prompt_sha256": prompt_hashes,
+        "schema_sha256": schema_hashes,
+        "config_file_sha256": sha256_file(Path(config_path)),
+        "contract_sha256": sha256_file(Path(contract_path)),
+    }
+    lock["lock_sha256"] = sha256_value(lock)
+    write_json(output_path, lock)
+    return lock
 
 
 def first_string(*values: Any) -> str | None:
@@ -409,7 +932,8 @@ def run_condition(
     backend,
     attempt_index=0,
 ):
-    del config
+    if condition_id not in config.get("conditions", {}):
+        raise ValueError(f"unknown condition: {condition_id}")
     if condition_id == "rule_compiler" and backend == "rule":
         result = rule_compile(packet)
         result["attempt_index"] = int(attempt_index)
@@ -418,6 +942,13 @@ def run_condition(
             "attempt_index": int(attempt_index),
             "result_sha256": sha256_value(result),
         }
+    if isinstance(backend, StubBackend):
+        if condition_id in {"general_compiler", "security_compiler"}:
+            return run_compiler(packet, condition_id, backend, attempt_index)
+        if condition_id == "general_structured":
+            return run_structured(packet, backend, attempt_index)
+        if condition_id == "general_direct":
+            return run_direct(packet, backend, attempt_index)
     raise ValueError("model backends remain unauthorized before the Rule snapshot Gate")
 
 
@@ -430,11 +961,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--freeze-rule-snapshot", type=Path)
     parser.add_argument("--rule-run", type=Path)
+    parser.add_argument("--freeze-prompt-config-lock", type=Path)
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
+    if args.freeze_prompt_config_lock:
+        frozen = freeze_prompt_config_lock(args.freeze_prompt_config_lock)
+        print(json.dumps(frozen, ensure_ascii=False, sort_keys=True))
+        raise SystemExit(0)
     raise SystemExit(
         "Formal Rule execution is blocked until the development null audit is frozen; "
         "use the tested module interfaces after that Gate."

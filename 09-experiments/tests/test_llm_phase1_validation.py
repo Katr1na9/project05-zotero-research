@@ -1,6 +1,7 @@
 import importlib.util
 import inspect
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -333,6 +334,171 @@ class RuleBaselineTests(unittest.TestCase):
 
         self.assertEqual("abstain", result["status"])
         self.assertEqual([], result["candidate_claims"])
+
+
+class StubAndHashChainTests(unittest.TestCase):
+    def test_direct_and_structured_share_model_and_generation_config(self):
+        config = json.loads(CONFIG.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            config["conditions"]["general_direct"]["model_role"],
+            config["conditions"]["general_structured"]["model_role"],
+        )
+        self.assertEqual(
+            config["conditions"]["general_direct"]["generation"],
+            config["conditions"]["general_structured"]["generation"],
+        )
+
+    def test_structured_repeat_hash_binds_both_stages(self):
+        _, packet = fixture_valid_candidate_and_packet()
+        result, manifest = runner.run_structured(
+            packet,
+            runner.StubBackend(),
+            attempt_index=3,
+        )
+
+        self.assertEqual("general_structured", result["condition_id"])
+        self.assertEqual(
+            [
+                "stage1_prompt_sha256",
+                "stage1_raw_sha256",
+                "admission_sha256",
+                "stage2_input_sha256",
+                "stage2_prompt_sha256",
+                "stage2_raw_sha256",
+                "final_result_sha256",
+            ],
+            list(manifest["stage_hash_chain"]),
+        )
+        self.assertTrue(runner.hash_chain_complete(manifest))
+
+    def test_stub_backend_does_not_import_model_packages(self):
+        _, packet = fixture_valid_candidate_and_packet()
+        before = set(sys.modules)
+
+        runner.run_compiler(
+            packet,
+            "general_compiler",
+            runner.StubBackend(),
+            attempt_index=0,
+        )
+
+        loaded = set(sys.modules) - before
+        self.assertFalse({"torch", "transformers", "bitsandbytes"} & loaded)
+
+    def test_invalid_stub_json_is_preserved_as_invalid_first_pass(self):
+        _, packet = fixture_valid_candidate_and_packet()
+
+        result, manifest = runner.run_compiler(
+            packet,
+            "general_compiler",
+            runner.StubBackend(responses=["not-json"]),
+            attempt_index=0,
+        )
+
+        self.assertEqual("invalid", result["status"])
+        self.assertEqual("json_parse_error", result["telemetry"]["error_code"])
+        self.assertEqual(runner.sha256_value(result), manifest["result_sha256"])
+
+    def test_stub_compiler_exercises_admitted_and_rejected_candidates(self):
+        candidate, packet = fixture_valid_candidate_and_packet()
+        rejected = json.loads(json.dumps(candidate))
+        rejected["candidate_claim_id"] = builder.derive_candidate_claim_id(
+            packet["request_id"], "general_compiler", 0, 1
+        )
+        rejected["object"]["value"] = "not-visible"
+
+        result, _ = runner.run_compiler(
+            packet,
+            "general_compiler",
+            runner.StubBackend(
+                responses=[
+                    {
+                        "status": "completed",
+                        "candidate_claims": [candidate, rejected],
+                    }
+                ]
+            ),
+            attempt_index=0,
+        )
+        admission = validator.admit_candidates(result, packet)
+
+        self.assertEqual(1, len(admission["admitted_claims"]))
+        self.assertEqual(1, len(admission["rejected"]))
+
+    def test_direct_stub_returns_a_complete_abstaining_conclusion(self):
+        _, packet = fixture_valid_candidate_and_packet()
+
+        result, manifest = runner.run_direct(
+            packet,
+            runner.StubBackend(),
+            attempt_index=0,
+        )
+
+        self.assertEqual("general_direct", result["condition_id"])
+        self.assertEqual("abstain", result["status"])
+        self.assertTrue(result["abstain"])
+        self.assertEqual([], result["observation_claims"])
+        self.assertEqual(runner.sha256_value(result), manifest["result_sha256"])
+
+    def test_run_condition_dispatches_all_stub_modes(self):
+        _, packet = fixture_valid_candidate_and_packet()
+        config = json.loads(CONFIG.read_text(encoding="utf-8"))
+
+        for condition_id in (
+            "general_compiler",
+            "security_compiler",
+            "general_structured",
+            "general_direct",
+        ):
+            with self.subTest(condition=condition_id):
+                result, manifest = runner.run_condition(
+                    config,
+                    packet,
+                    condition_id,
+                    runner.StubBackend(),
+                    attempt_index=2,
+                )
+                self.assertEqual(condition_id, result["condition_id"])
+                self.assertEqual(condition_id, manifest["condition_id"])
+
+    def test_prompt_lock_hashes_all_prompts_contract_config_and_schemas(self):
+        with tempfile.TemporaryDirectory() as temp:
+            lock = runner.freeze_prompt_config_lock(Path(temp) / "lock.json")
+
+        self.assertEqual(4, len(lock["prompt_sha256"]))
+        self.assertEqual(4, len(lock["schema_sha256"]))
+        self.assertRegex(lock["config_file_sha256"], r"^[A-F0-9]{64}$")
+        self.assertRegex(lock["contract_sha256"], r"^[A-F0-9]{64}$")
+
+    def test_repeat_panel_and_call_arithmetic_are_exact(self):
+        rows = []
+        counter = 0
+        for case in ("C07", "C08", "C09", "C10", "C11", "C12"):
+            for role in ("positive", "null"):
+                for _ in range(2):
+                    rows.append(
+                        {
+                            "request_id": f"REQ-{counter:024X}",
+                            "case_id": f"{case}-evaluation-case",
+                            "packet_role": role,
+                        }
+                    )
+                    counter += 1
+
+        panel = runner.select_repeat_panel(rows, seed=2026071504)
+        budget = runner.calculate_call_budget(
+            json.loads(CONFIG.read_text(encoding="utf-8"))
+        )
+
+        self.assertEqual(12, len(panel))
+        for case in ("C07", "C08", "C09", "C10", "C11", "C12"):
+            selected = [row for row in panel if row["case_id"].startswith(case)]
+            self.assertEqual({"positive", "null"}, {row["packet_role"] for row in selected})
+        self.assertEqual(
+            {"first_pass": 256, "repeat_diagnostic": 192, "maximum": 448},
+            budget,
+        )
 
 
 if __name__ == "__main__":
