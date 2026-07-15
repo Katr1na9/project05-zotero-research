@@ -30,4 +30,12 @@
 
 用户已把多模态范围收敛为 Project03 的 `IPv4 / IPv6 / MPLS / GeoNetworking / SCION` 五种网络协议/转发模式，并明确已有积累聚焦行为追溯与攻击意图感知。
 
-已从 Project03 提炼 [候选 idea 池 v0.1](project03-derived-idea-pool-v0.1.md)。当前不生成论文题目、不选择模型、不开始实验；先完成候选功能的最新撞题检索。
+已从 Project03 提炼 [候选 idea 池 v0.1](project03-derived-idea-pool-v0.1.md)。该段记录是 2026-07-12 的历史入口，已被 2026-07-15 的功能级撞题结论取代。
+
+## 2026-07-15：二次检索后的候选出口
+
+- 宽泛 `traffic + logs + graph + LLM/Agent` 已被淘汰。
+- 最强残余是 calibrated multi-candidate traffic-log observation relation。
+- 已形成 [3 个候选题与可行性矩阵](candidate-thesis-topics-and-feasibility-v0.1-20260715.md)。
+- 推荐“A 叙事 + B 核心 + C 可选”，但尚未得到用户批准。
+- 当前禁止：下载数据、选择模型、启动实验、把候选题写成已确定题目。

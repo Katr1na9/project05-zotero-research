@@ -96,6 +96,14 @@
 - `2025-Cai-APT-ATT-High-Risk-Related.md`: 已从高风险占位升级为正文精读，确认异构 CTI 表示 + CTGAN + stacking actor classification 已被覆盖，但未覆盖证据充分性和主动取证规划。
 - `2025-Xiao-TAA-EPLMR.md`: 已完成新主线复核，确认 evidence path + LLM CoT + explanation + confidence + incomplete/noisy IOC 鲁棒归因已被覆盖，但未覆盖归因粒度门控、主动取证规划和对齐-补证闭环。
 
+## 2026-07-15 P05-L2 流量-日志双线增量
+
+- 新增 57 份单篇精读或访问边界笔记，统一采用 15 段模板；全文、扩展索引、摘要级、撤回和 appendix-read 状态不得混写。
+- 覆盖 direct PCAP/traffic LLM、traffic+log、evidence/provenance graph、cross-source relation、uncertainty/calibration、attack-chain/intent 和 agent appendix 七类近邻。
+- 单篇事实笔记保存在本目录；C01-C61/F01-F06 的规范 ID、链接、访问级别与纳入理由见 [P05-L2 corpus v0.3](../10-research-lines/02-multimodal-threat-attribution/02-literature-notes/collision-corpus-v0.3-20260713.md)。
+- 功能占位与撞题结论见 [functional collision matrix v0.2](../10-research-lines/02-multimodal-threat-attribution/02-literature-notes/functional-collision-matrix-v0.2-20260713.md)，不得用单篇笔记替代矩阵判断。
+- 二次检索后最强残余是 campaign-disjoint、可校准的多候选 packet-log observation relation；宽泛“PCAP + logs + graph + LLM”已被直接近邻和历史 prior art 覆盖。
+
 ## 仍需补全文
 
 - [ ] `APTChaser`: 当前只有 Springer 摘要和元数据，正文仍需获取。

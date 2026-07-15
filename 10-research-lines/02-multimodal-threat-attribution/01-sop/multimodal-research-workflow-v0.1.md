@@ -4,6 +4,8 @@
 
 本流程继承 Project05 的 Gate、Zotero、精读、复利日志和可复现原则，并按 academic-research-suite 从宽 idea 推进到论文。
 
+执行状态（2026-07-15）：用户授权先完成 Project03 审计、全量纳入精读和二次撞题检索，再提交候选题人工选择。当前 Stage 2/3 已完成，G2 通过、G3 条件通过；G1 仍等待用户从候选 A/B/C 中冻结单一 RQ。此顺序是本轮明确授权的 scope-reset 流程，不允许据此跳过用户决策后所需的 FINER/G1。
+
 ## Stage 0: Inbox
 
 输入：原始 idea、潜在模态、已有论文线可复用资产。

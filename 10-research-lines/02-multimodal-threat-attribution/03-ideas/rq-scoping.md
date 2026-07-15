@@ -1,22 +1,26 @@
 # P05-L2 RQ Scoping
 
-状态：第一轮范围澄清已由用户与 Project03 证据部分完成；等待候选撞题检索后收敛。
+状态：2026-07-15 二次检索和综合已完成；3 个候选 RQ 已形成，等待用户人工选择，RQ 仍未冻结。
 
 ## 第一轮：Clarification
 
-1. 具体失败场景：controller 配置、数据集声明和数据面真实封装可能不一致，单点/单字段无法可靠追溯行为经过的异构路径。
-2. 现实可获得模态：IPv4、IPv6、MPLS、GeoNetworking、SCION；但 SCION 当前只有 intended label，wire evidence 待补。
-3. 用户已有任务积累：行为追溯与攻击意图候选感知，不把心理动机或完整攻击链当作已知真值。
-4. 当前方法失败：filename-first modality、attack-type-first stage、未校准 intent Top-1、逐跳证据未进入统一表示。
-5. 实验边界：优先复用 Project03/CENI 可控重放与多点抓包，不把工程演示记录直接当 benchmark。
+1. 用户已有任务积累：流量侧从 PCAP 和上游检测结果形成威胁观察，查询知识图谱，定位行为/攻击模式并给出溯源、阶段和意图候选。
+2. 日志侧积累：已为 HFish 数据定义事件标准化、行为图节点/边和阶段/战术候选路线，但当前仓库未实现抽取与建图脚本。
+3. 当前实现缺口：`ThreatObservation` 尚未成为所有样本统一的一等实体；恶意样本仍主要存为 `threat + attack_stage`。
+4. 当前建图缺口：现有代码能导出背景知识子图和构造展示图，但尚未从流量与日志联合构造持久化事件级证据图。
+5. 当前语义缺口：`CanPrecede` 和关键词命中只能提供候选先验，不能证明该攻击链在当前事件中真实发生。
+6. 当前可信缺口：上游 attack label/technique 可能同时进入输入和评价，存在泄漏与自证风险。
+7. 多模态边界：流量与日志是优先双源；packet bytes、header/session、flow、model output、graph evidence 是流量侧内部视图；五种协议模式先作为环境变量。
+8. 工程边界：CENI controller、网元和代理部署不作为论文贡献。
 
-## 第二轮：待检索后回答
+## 第二轮：检索后的回答
 
-1. I1“模态声明一致性 + 逐跳行为追溯”是否已有同功能方法？
-2. I3“模态/上下文条件化的 stage-intent 校准”中，协议模态是否提供可证明的独立信息？
-3. I2“跨协议行为不变表示”与 protocol-agnostic IDS/domain generalization 的差异能否成立？
-4. 哪个问题可获得不依赖规则自证的 ground truth？
-5. 选择一个主输出后，其余模块如何降为输入、评价或扩展，而不是堆成大框架？
+1. PCAP agents、traffic-language、network-enhanced provenance、CTI graph matching 和 LLM/agent investigation 均已被直接工作覆盖。
+2. 宽泛统一事件图只是工程贡献；可检验问题必须落到 packet-log candidate relation、calibration、conflict state 和 downstream graph/chain gain。
+3. ATT&CK tactic、event intent、goal intent 和 actor motive 必须分开；高层 intent 只能作为有独立标注协议的次要终点。
+4. 最清晰 ground truth 是 record-level relation 与 chain edge，而非 actor/goal intent；ProvICS/AIT v2 可支持 pilot annotation。
+5. 通过 traffic-only/log-only/equal-budget/deterministic-join/oracle-link ablation、missing/conflict corruption 和 risk-coverage 证明增益。
+6. Candidate B 是最稳健硕士核心；Candidate A 保留 LLM+tracing 叙事，Candidate C 是高风险扩展。
 
 ## 后续层
 
@@ -25,14 +29,6 @@
 - Layer 4：替代观点，比较多模态与更强单模态/检索方法；
 - Layer 5：意义与风险，明确论文价值、误用风险和失败后仍有价值的结论。
 
-## G1 输出占位
+## G1 候选出口
 
-用户确认后再生成：
-
-- 单一 Primary RQ；
-- 2-3 个 Sub-RQ；
-- FINER 评分；
-- in-scope / out-of-scope；
-- methodology type；
-- theoretical framework；
-- 5-10 个检索关键词。
+候选题、权重可行性矩阵、方法/实验蓝图和 kill criteria 已写入 [candidate-thesis-topics-and-feasibility-v0.1-20260715.md](candidate-thesis-topics-and-feasibility-v0.1-20260715.md)。用户选择后再冻结单一 Primary RQ、Sub-RQ、FINER、in/out scope 和最终检索关键词。

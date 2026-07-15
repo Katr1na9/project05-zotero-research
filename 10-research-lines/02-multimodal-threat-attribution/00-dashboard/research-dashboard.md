@@ -1,52 +1,53 @@
 # P05-L2 Research Dashboard
 
-更新：2026-07-12
+更新：2026-07-15
 
 ## 当前状态
 
 | 项目 | 状态 |
 |---|---|
-| Working name | Multimodal Threat Attribution |
-| ARS mode | deep-research / socratic |
-| Current stage | Stage 1 preliminary collision complete; W1 amber |
-| RQ Brief | 未生成 |
-| FINER | 未评分 |
-| Novelty search | 初筛完成；I1/I2/I3 宽版本撞题，G2 未通过 |
-| Data feasibility | 已发现可控五模态实验链；本地数据与运行代码快照不完整 |
-| Method/experiment | 禁止提前启动 |
-| Material Passport | 已建立，内容为空 |
+| Working name | Traffic-Log Evidence Graph + LLM Threat Tracing |
+| ARS mode | deep-research / synthesis complete |
+| Current stage | Stage 3 complete; user topic selection pending |
+| Literature freeze | 2026-07-13 |
+| Corpus | C01-C61/F01-F06；全文/受限状态已分层 |
+| G2 Search | passed |
+| G3 White Space | conditional pass; R2 strongest |
+| RQ Brief | 3 candidates prepared, not frozen |
+| Data feasibility | ProvICS primary, AIT v2 external; pilot/license gates pending |
+| Zotero sync | 20 new items in target collection; 12 stored PDFs verified; 8 metadata-only |
+| Method/experiment | blueprint only; implementation prohibited before user approval |
 
-## 当前唯一安全表述
+## 当前最安全表述
 
-> 面向 IPv4、IPv6、MPLS、GeoNetworking 与 SCION 异构路径，探索配置、声明和实际数据面观测之间的一致性证据如何约束攻击行为追溯与意图候选感知；具体 RQ 仍需撞题检索和用户确认。
+> 面向独立构建且保留原始锚点的流量与日志观测子图，将 packet-log 关联建模为 campaign-disjoint、可校准的多候选关系任务，研究关系不确定性如何影响攻击链重构及证据约束 LLM 的解释与拒答。
 
-## Project03 交接状态
+## Project03 复用边界
 
-- 已核验工程主链、理论边界、五模态验收流程、stage/intent 代码和 2026-06 开发记录。
-- 已建立 [交接审计](../04-progress/project03-handoff-audit-20260712.md)、[候选 idea 池](../03-ideas/project03-derived-idea-pool-v0.1.md) 与 [复用验证计划](../09-experiments/project03-reuse-and-validation-plan-v0.1.md)。
-- [初步撞题扫描](../02-literature-notes/collision-scan-project03-ideas-20260712.md) 已完成：I1/I2/I3 宽版本均淘汰或降级。
-- 当前唯一保留的是 `amber` W1：协议 transformation 下行为证据的保真/丢失/冲突及其对 stage/TTP/intent supportability 的约束。
-- 当前没有把 W1 标记为论文创新。
+- 复用：PCAP 解析、ThreatObservation 生成、图查询与溯源定位思想。
+- 补建：统一 TrafficObservation、LogObservation、raw anchors、跨源关系状态和独立日志子图。
+- 不复用：CENI controller/网元部署、为平台兼容做的隧道/代理妥协、attack-type 规则真值。
+- IPv4/IPv6/MPLS/Geo/SCION：作为协议/环境分层；只有数据真实存在时才进入鲁棒性实验。
 
 ## Gate 状态
 
-| Gate | 状态 | 通过条件 |
+| Gate | 状态 | 证据/通过条件 |
 |---|---|---|
-| Workspace Gate | 通过 | 独立 00-09 工作区、共享边界和日志已建立 |
-| G1 RQ | 未开始 | 单一可回答问题；明确输入、输出、数据、指标和排除范围 |
-| G2 Search | 未开始 | 完成当前成果与撞题检索，来源可验证 |
-| G3 White Space | 未开始 | 多模态贡献未被既有工作完整覆盖 |
-| G4 Method | 未开始 | 方法模块与失败条件可证伪 |
-| G5 Experiment | 未开始 | 数据、baseline、指标和计算资源可执行 |
+| Workspace | 通过 | 独立 00-09 工作区及共享边界存在 |
+| G1 RQ | 待用户 | 从 A/B/C 中选择并冻结一个 Primary RQ |
+| G2 Search | 通过 | v0.3 语料、二次检索、引文 sweep、访问分层 |
+| G3 White Space | 条件通过 | R2 直接等价未发现；禁止 universal first claim |
+| G4 Method | 仅蓝图 | 用户确认后细化 schema/model/failure criteria |
+| G5 Experiment | 未通过 | license、pilot annotation agreement、campaign split 尚未完成 |
 
-## 尚未决定的问题
+## 三个候选
 
-1. I1、I3 或 I2 中，哪个在最新成果中仍存在功能级白空间？
-2. Project03 能否恢复五模态严格配对数据，尤其是 MPLS 和真实 SCION wire evidence？
-3. 主要输出应收敛到逐跳行为追溯、阶段/TTP 候选，还是二者中的一个？
-4. intent ground truth 从哪里获得，避免继续用 attack type 规则自证？
-5. 多模态增益能否超越更可靠的单模态观测与协议归一化 baseline？
+1. A：source-preserving 双源事件证据图 + evidence-constrained LLM chain reasoning。
+2. B：calibrated traffic-log relation learning + uncertainty propagation。
+3. C：可信 LLM 攻击链解释 + 高层意图感知。
 
-## 下一步
+推荐：A 作为叙事，B 作为必做核心，C 作为可选扩展。详见 [候选题矩阵](../03-ideas/candidate-thesis-topics-and-feasibility-v0.1-20260715.md)。
 
-按 [reading queue](../02-literature-notes/reading-queue.md) 精读 P0 五篇直接近邻。只有 W1 在 P0 精读后仍能与 SecTracer、Forensic Coverage、ID-INT 和 P4Prime 形成可操作差异，才生成 RQ Summary 交由用户选择。
+## 当前唯一下一步
+
+由用户人工选择候选题或批准推荐层级。确认前不下载数据、不实现模型、不写论文正文。

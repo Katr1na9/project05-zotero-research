@@ -1,6 +1,8 @@
 # Project03-Derived Idea Pool v0.1
 
-日期：2026-07-12  
+> Historical snapshot. Superseded for active scoping on 2026-07-13: controller/path-consistency and protocol-transformation W1 are not the user's intended paper line. The active reusable core is PCAP observation construction, graph alignment/query, and evidence-constrained trace/stage/intent reasoning.
+
+日期：2026-07-12
 状态：候选池；未做 2026-07-12 撞题检索；不得写成论文贡献。
 
 ## 评价规则
