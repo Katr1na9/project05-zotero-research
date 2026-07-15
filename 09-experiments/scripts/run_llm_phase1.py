@@ -93,6 +93,10 @@ _VALIDATOR = load_sibling(
     "project05_llm_validator_for_runner",
     "validate_llm_phase1_output.py",
 )
+_SCORER = load_sibling(
+    "project05_llm_scorer_for_runner",
+    "score_llm_phase1.py",
+)
 
 canonical_json = _BUILDER.canonical_json
 derive_candidate_claim_id = _BUILDER.derive_candidate_claim_id
@@ -762,6 +766,36 @@ def inspect_test_bundle_shape() -> dict[str, Any]:
     }
 
 
+def null_audit_split_frozen(
+    rows: list[dict[str, Any]],
+    private_manifest: dict[str, Any],
+    expected_count: int,
+    audit_sha256: str,
+) -> bool:
+    completed = 0
+    for row in rows:
+        author = str(row.get("author_id") or "").strip()
+        reviewer = str(row.get("reviewer_id") or "").strip()
+        decisions_are_yes = (
+            str(row.get("author_no_acceptable_observation") or "").casefold()
+            == "yes"
+            and str(
+                row.get("reviewer_no_acceptable_observation") or ""
+            ).casefold()
+            == "yes"
+        )
+        if decisions_are_yes and author and reviewer and author != reviewer:
+            completed += 1
+    frozen = private_manifest.get("null_construction_audit") or {}
+    return (
+        len(rows) == expected_count
+        and completed == expected_count
+        and frozen.get("status") == "frozen"
+        and frozen.get("audit_sha256") == audit_sha256
+        and int(frozen.get("confirmed_count") or 0) == expected_count
+    )
+
+
 def inspect_null_construction_audits() -> dict[str, Any]:
     audit_dir = (
         EXPERIMENT_ROOT
@@ -773,13 +807,20 @@ def inspect_null_construction_audits() -> dict[str, Any]:
     summaries = {}
     all_frozen = True
     malformed = False
+    all_human_complete = True
     for split, expected_count in expected_counts.items():
         path = audit_dir / f"{split}.csv"
         try:
             with path.open("r", encoding="utf-8", newline="") as handle:
                 rows = list(csv.DictReader(handle))
+            private_manifest = load_json(
+                audit_dir.parent / split / "private" / "gold_manifest.json"
+            )
+            audit_sha256 = sha256_file(path)
         except OSError:
             rows = []
+            private_manifest = {}
+            audit_sha256 = ""
             malformed = True
         completed = 0
         for row in rows:
@@ -795,18 +836,29 @@ def inspect_null_construction_audits() -> dict[str, Any]:
             )
             if decisions_are_yes and author and reviewer and author != reviewer:
                 completed += 1
-        split_frozen = len(rows) == expected_count and completed == expected_count
+        human_complete = len(rows) == expected_count and completed == expected_count
+        split_frozen = null_audit_split_frozen(
+            rows,
+            private_manifest,
+            expected_count,
+            audit_sha256,
+        )
         all_frozen = all_frozen and split_frozen
+        all_human_complete = all_human_complete and human_complete
         malformed = malformed or len(rows) != expected_count
         summaries[split] = {
             "expected_rows": expected_count,
             "actual_rows": len(rows),
             "two_person_confirmed_rows": completed,
+            "manifest_frozen": split_frozen,
+            "audit_sha256": audit_sha256 or None,
         }
     if malformed:
         status = "failed"
     elif all_frozen:
         status = "passed"
+    elif all_human_complete:
+        status = "pending_freeze"
     else:
         status = "pending_human"
     return {"status": status, "splits": summaries}
@@ -905,11 +957,17 @@ def find_model_output_files(generated_root: Path) -> list[str]:
     for directory_name in ("runs", "g2-audit"):
         directory = generated_root / directory_name
         if directory.exists():
-            files.extend(
-                path.relative_to(generated_root).as_posix()
-                for path in directory.rglob("*")
-                if path.is_file()
-            )
+            for path in directory.rglob("*"):
+                if not path.is_file():
+                    continue
+                relative = path.relative_to(generated_root)
+                if (
+                    directory_name == "runs"
+                    and len(relative.parts) > 1
+                    and relative.parts[1].startswith("rule-development")
+                ):
+                    continue
+                files.append(relative.as_posix())
     return sorted(files)
 
 
@@ -977,7 +1035,23 @@ def first_string(*values: Any) -> str | None:
     for value in values:
         if isinstance(value, str) and value.strip():
             return value.strip()
+        if isinstance(value, dict):
+            nested = first_string(value.get("string"), value.get("value"))
+            if nested:
+                return nested
     return None
+
+
+def process_from_command_line(value: Any) -> str | None:
+    command_line = first_string(value)
+    if not command_line:
+        return None
+    text = command_line.strip()
+    if text.startswith('"'):
+        closing = text.find('"', 1)
+        if closing > 1:
+            return text[1:closing]
+    return text.split(None, 1)[0] if text else None
 
 
 def entity_type_for(value: str, hint: str = "") -> str:
@@ -1017,16 +1091,28 @@ def node_entity(node: Any, role: str) -> dict[str, str] | None:
         if isinstance(base.get("properties"), dict)
         else {}
     ) or {}
+    raw_properties = (
+        (raw.get("properties") or {}).get("map")
+        if isinstance(raw.get("properties"), dict)
+        else {}
+    ) or {}
     node_type = str(node.get("node_type") or raw.get("type") or role)
+    if role == "process":
+        process = process_from_command_line(raw.get("cmdLine"))
+        if process:
+            return entity(process, "process")
     candidates = (
         (node.get("path"), "path"),
         (node.get("cmd"), "command"),
         (node.get("src_addr"), "ip"),
         (node.get("dst_addr"), "ip"),
-        (raw.get("cmdLine"), "command"),
         (raw.get("path"), "path"),
         (raw.get("name"), node_type),
         (raw.get("remoteAddress"), "ip"),
+        (raw_properties.get("exec"), "process"),
+        (raw_properties.get("path"), "path"),
+        (raw_properties.get("partial_path"), "path"),
+        (raw_properties.get("address"), "ip"),
         (base.get("path"), "path"),
         (base.get("filename"), "file"),
         (base_properties.get("path"), "path"),
@@ -1068,18 +1154,29 @@ def payload_entities(
         )
     resolved = payload.get("resolved_nodes")
     if isinstance(resolved, dict):
-        return (
-            node_entity(resolved.get("subject_uuid"), "process"),
-            node_entity(
-                resolved.get("predicate_object_uuid")
-                or resolved.get("predicate_object_2_uuid"),
-                "object",
-            ),
+        subject = node_entity(resolved.get("subject_uuid"), "process")
+        object_value = node_entity(
+            resolved.get("predicate_object_uuid")
+            or resolved.get("predicate_object_2_uuid"),
+            "object",
         )
+        if subject and object_value:
+            return subject, object_value
+    else:
+        subject = None
+        object_value = None
 
     event = payload.get("event") if isinstance(payload.get("event"), dict) else payload
+    raw = event.get("raw") if isinstance(event.get("raw"), dict) else {}
+    raw_properties = (
+        (raw.get("properties") or {}).get("map")
+        if isinstance(raw.get("properties"), dict)
+        else {}
+    ) or {}
     properties = event.get("properties") if isinstance(event.get("properties"), dict) else {}
     subject_fields = (
+        (raw_properties.get("exec"), "process"),
+        (process_from_command_line(raw_properties.get("cmdLine")), "process"),
         (event.get("process"), "process"),
         (properties.get("image_path"), "process"),
         (properties.get("command_line"), "command"),
@@ -1089,6 +1186,10 @@ def payload_entities(
         (event.get("Computer"), "host"),
     )
     object_fields = (
+        (raw.get("predicateObjectPath"), "path"),
+        (raw_properties.get("partial_path"), "path"),
+        (raw_properties.get("path"), "path"),
+        (raw_properties.get("address"), "ip"),
         (event.get("path"), "path"),
         (properties.get("file_path"), "file"),
         (properties.get("path"), "path"),
@@ -1098,7 +1199,7 @@ def payload_entities(
         (event.get("NewProcessName"), "process"),
         (event.get("ScriptBlockText"), "command"),
     )
-    subject = next(
+    subject = subject or next(
         (
             result
             for value, hint in subject_fields
@@ -1106,7 +1207,7 @@ def payload_entities(
         ),
         None,
     )
-    object_value = next(
+    object_value = object_value or next(
         (
             result
             for value, hint in object_fields
@@ -1184,6 +1285,8 @@ def rule_compile(packet: dict[str, Any]) -> dict[str, Any]:
 
 
 RULE_FINGERPRINT_FUNCTIONS = (
+    first_string,
+    process_from_command_line,
     resembles_ip,
     entity_type_for,
     entity,
@@ -1207,6 +1310,122 @@ def as_value(value_or_path: Any) -> Any:
     if isinstance(value_or_path, Path):
         return load_json(value_or_path)
     return value_or_path
+
+
+def compiler_result_schema_valid(
+    result: dict[str, Any],
+    packet: dict[str, Any],
+) -> bool:
+    required = {
+        "request_id",
+        "condition_id",
+        "attempt_index",
+        "status",
+        "candidate_claims",
+        "telemetry",
+    }
+    if set(result) != required:
+        return False
+    if result.get("request_id") != packet.get("request_id"):
+        return False
+    if result.get("condition_id") != "rule_compiler":
+        return False
+    if result.get("attempt_index") != 0:
+        return False
+    if result.get("status") not in {"completed", "abstain"}:
+        return False
+    candidates = result.get("candidate_claims")
+    if not isinstance(candidates, list):
+        return False
+    return not any(
+        _VALIDATOR.validate_candidate(
+            candidate,
+            packet,
+            "rule_compiler",
+            0,
+            output_index,
+        )
+        for output_index, candidate in enumerate(candidates)
+    )
+
+
+def run_rule_development_bundle(
+    bundle_dir: Path,
+    output_dir: Path,
+) -> dict[str, Any]:
+    bundle_dir = Path(bundle_dir)
+    output_dir = Path(output_dir)
+    if output_dir.exists() and any(output_dir.iterdir()):
+        raise ValueError(f"refusing to overwrite non-empty Rule run: {output_dir}")
+
+    public_manifest_path = bundle_dir / "public" / "input_manifest.json"
+    private_manifest_path = bundle_dir / "private" / "gold_manifest.json"
+    public_manifest = load_json(public_manifest_path)
+    private_manifest = load_json(private_manifest_path)
+    if public_manifest.get("split") != "development":
+        raise ValueError("Rule baseline may run on development split only")
+    audit = private_manifest.get("null_construction_audit") or {}
+    if audit.get("status") != "frozen":
+        raise ValueError("development null construction audit is not frozen")
+    if private_manifest.get("public_input_manifest_sha256") != sha256_file(
+        public_manifest_path
+    ):
+        raise ValueError("public/private development manifest hash mismatch")
+
+    public_rows = read_jsonl_gz(
+        bundle_dir / "public" / "context_packets.jsonl.gz"
+    )
+    private_rows = read_jsonl_gz(
+        bundle_dir / "private" / "observation_gold.jsonl.gz"
+    )
+    if [row.get("request_id") for row in public_rows] != [
+        row.get("request_id") for row in private_rows
+    ]:
+        raise ValueError("public/private Rule input ordering mismatch")
+
+    rows = []
+    for packet, private_gold in zip(public_rows, private_rows):
+        result = rule_compile(packet)
+        admission = _VALIDATOR.admit_candidates(result, packet)
+        scoring_packet = dict(packet)
+        scoring_packet["compiler_status"] = result["status"]
+        score = _SCORER.score_project_gold_packet(
+            scoring_packet,
+            admission["admitted_claims"],
+            private_gold,
+        )
+        rows.append(
+            {
+                "request_id": packet["request_id"],
+                "case_id": packet["case_id"],
+                "packet_role": packet["packet_role"],
+                "schema_valid": compiler_result_schema_valid(result, packet),
+                "project_gold_packet_agreement": score[
+                    "project_gold_packet_agreement"
+                ],
+                "score": score,
+                "admission": admission,
+                "result": result,
+            }
+        )
+
+    run_manifest = {
+        "status": "completed_pre_model_rule_run",
+        "split": "development",
+        "packet_count": len(rows),
+        "positive_count": sum(row["packet_role"] == "positive" for row in rows),
+        "null_count": sum(row["packet_role"] == "null" for row in rows),
+        "agreement_count": sum(
+            row["project_gold_packet_agreement"] == 1.0 for row in rows
+        ),
+        "input_manifest_sha256": sha256_file(public_manifest_path),
+        "null_construction_audit": dict(audit),
+        "rule_implementation_sha256": rule_implementation_sha256(CONFIG_PATH),
+        "rule_results_sha256": sha256_value(rows),
+    }
+    write_json(output_dir / "rule_results.json", rows)
+    write_json(output_dir / "run_manifest.json", run_manifest)
+    return run_manifest
 
 
 def freeze_rule_snapshot(
@@ -1245,7 +1464,11 @@ def freeze_rule_snapshot(
     strength_pass = positive_claiming > 0 and null_claiming < len(nulls)
     distribution = Counter(str(value) for value in claim_counts)
     snapshot = {
-        "status": "frozen_before_any_llm_output",
+        "status": (
+            "frozen_before_any_llm_output"
+            if strength_pass
+            else "failed_before_any_llm_output"
+        ),
         "split": "development",
         "packet_count": len(rows),
         "positive_count": len(positives),
@@ -1293,6 +1516,8 @@ def require_rule_snapshot_unchanged(
     if not snapshot_path.exists():
         raise ValueError("rule baseline snapshot is missing")
     snapshot = load_json(snapshot_path)
+    if snapshot.get("baseline_strength_gate") != "passed":
+        raise ValueError("rule baseline strength gate is not passed")
     expected = {
         "config_sha256": sha256_file(config_path),
         "contract_sha256": sha256_file(contract_path),
@@ -1362,7 +1587,32 @@ if __name__ == "__main__":
         readiness = generate_pre_model_readiness(args.pre_model_readiness)
         print(json.dumps(readiness, ensure_ascii=False, sort_keys=True))
         raise SystemExit(0)
+    if args.freeze_rule_snapshot:
+        if args.rule_run is None:
+            raise SystemExit("--freeze-rule-snapshot requires --rule-run")
+        snapshot = freeze_rule_snapshot(
+            args.config,
+            CONTRACT_PATH,
+            args.rule_run / "run_manifest.json",
+            args.rule_run / "rule_results.json",
+            args.freeze_rule_snapshot,
+        )
+        print(json.dumps(snapshot, ensure_ascii=False, sort_keys=True))
+        raise SystemExit(0)
+    if args.condition == "rule_compiler" and args.backend == "rule":
+        if args.split != "development" or args.output is None:
+            raise SystemExit(
+                "formal Rule run requires --split development and --output"
+            )
+        bundle_dir = (
+            EXPERIMENT_ROOT
+            / "llm_compiler_v0.2"
+            / "generated"
+            / "development"
+        )
+        run = run_rule_development_bundle(bundle_dir, args.output)
+        print(json.dumps(run, ensure_ascii=False, sort_keys=True))
+        raise SystemExit(0)
     raise SystemExit(
-        "Formal Rule execution is blocked until the development null audit is frozen; "
-        "use the tested module interfaces after that Gate."
+        "No authorized pre-model action selected; model backends remain blocked."
     )

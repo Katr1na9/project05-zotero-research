@@ -335,6 +335,193 @@ class RuleBaselineTests(unittest.TestCase):
         self.assertEqual("abstain", result["status"])
         self.assertEqual([], result["candidate_claims"])
 
+    def test_rule_compiler_parses_typed_cdm_command_and_network_endpoint(self):
+        payload = {
+            "event": {"event_type": "EVENT_CONNECT", "raw": {}},
+            "resolved_nodes": {
+                "subject_uuid": {
+                    "raw": {
+                        "cmdLine": {
+                            "string": '"C:\\Program Files\\Mozilla Firefox\\firefox.exe" -headless'
+                        }
+                    }
+                },
+                "predicate_object_uuid": {
+                    "raw": {"remoteAddress": "156.78.147.114"}
+                },
+            },
+        }
+        record = builder.make_packet_record(
+            "network_summary",
+            {"artifact_id": "SRC-C04-01", "record_id": "network-1"},
+            payload,
+        )
+        packet = {
+            "request_id": "REQ-" + "A" * 24,
+            "case_id": "C04-evaluation-case",
+            "split": "development",
+            "packet_role": "positive",
+            "support_ceiling": "G1_technique",
+            "records": [record],
+        }
+
+        result = runner.rule_compile(packet)
+
+        self.assertEqual("completed", result["status"])
+        claim = result["candidate_claims"][0]
+        self.assertEqual(
+            {"entity_type": "process", "value": "C:\\Program Files\\Mozilla Firefox\\firefox.exe"},
+            claim["subject"],
+        )
+        self.assertEqual("connected_to", claim["predicate"])
+        self.assertEqual(
+            {"entity_type": "ip", "value": "156.78.147.114"},
+            claim["object"],
+        )
+
+    def test_rule_compiler_falls_back_to_visible_event_raw_properties(self):
+        payload = {
+            "event": {
+                "event_type": "EVENT_WRITE",
+                "raw": {
+                    "properties": {
+                        "map": {
+                            "exec": "/usr/bin/python3",
+                            "partial_path": "/tmp/archive.zip",
+                        }
+                    }
+                },
+            },
+            "resolved_nodes": {},
+        }
+        record = builder.make_packet_record(
+            "provenance_graph",
+            {"artifact_id": "SRC-C04-01", "record_id": "file-1"},
+            payload,
+        )
+        packet = {
+            "request_id": "REQ-" + "A" * 24,
+            "case_id": "C04-evaluation-case",
+            "split": "development",
+            "packet_role": "positive",
+            "support_ceiling": "G1_technique",
+            "records": [record],
+        }
+
+        result = runner.rule_compile(packet)
+
+        self.assertEqual("completed", result["status"])
+        claim = result["candidate_claims"][0]
+        self.assertEqual(
+            {"entity_type": "process", "value": "/usr/bin/python3"},
+            claim["subject"],
+        )
+        self.assertEqual(
+            {"entity_type": "file", "value": "/tmp/archive.zip"},
+            claim["object"],
+        )
+
+    def test_failed_rule_strength_snapshot_never_unlocks_model_backend(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest, rows = self.fixture_development_manifest_and_results()
+            for row in rows:
+                row["result"] = {"status": "abstain", "candidate_claims": []}
+                row["project_gold_packet_agreement"] = 0.0
+            snapshot = root / "failed-rule-snapshot.json"
+
+            with self.assertRaisesRegex(ValueError, "strength gate failed"):
+                runner.freeze_rule_snapshot(
+                    CONFIG,
+                    CONTRACT,
+                    manifest,
+                    rows,
+                    snapshot,
+                )
+            with self.assertRaisesRegex(ValueError, "strength gate"):
+                runner.preflight_llm_backend(snapshot, CONFIG, CONTRACT)
+
+            frozen = json.loads(snapshot.read_text(encoding="utf-8"))
+            self.assertEqual("failed_before_any_llm_output", frozen["status"])
+
+    def test_frozen_audit_enables_reproducible_rule_run_and_snapshot(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            bundle = root / "development"
+            positive_record = builder.make_packet_record(
+                "local_log",
+                {"artifact_id": "SRC-C04-01", "record_id": "positive-1"},
+                {
+                    "operation": "EVENT_WRITE",
+                    "process": "powershell.exe",
+                    "path": "C:\\Temp\\A.zip",
+                },
+            )
+            positive_observation = {
+                "canonical_claim_id": "C04-EC-001",
+                "source_type": "local_log",
+                "subject": {"entity_type": "process", "value": "powershell.exe"},
+                "predicate": "wrote",
+                "object": {"entity_type": "file", "value": "C:\\Temp\\A.zip"},
+                "source_pointer": dict(positive_record["source_pointer"]),
+            }
+            positive = builder.build_packet_pair(
+                case_id="C04-evaluation-case",
+                split="development",
+                packet_role="positive",
+                support_ceiling="G1_technique",
+                records=[positive_record],
+                acceptable_observations=[positive_observation],
+            )
+            null_record = builder.make_packet_record(
+                "local_log",
+                {"artifact_id": "SRC-C04-01", "record_id": "null-1"},
+                {
+                    "operation": "UNMAPPED_EVENT",
+                    "process": "cmd.exe",
+                    "path": "C:\\Temp\\B.txt",
+                },
+            )
+            null = builder.build_packet_pair(
+                case_id="C04-evaluation-case",
+                split="development",
+                packet_role="null",
+                support_ceiling="G1_technique",
+                records=[null_record],
+                acceptable_observations=[],
+            )
+            builder.write_bundle(
+                bundle,
+                public_rows=[positive[0], null[0]],
+                private_rows=[positive[1], null[1]],
+                public_catalog={"catalog_version": "test-v1", "artifacts": []},
+                metadata={"split": "development", "status": "draft"},
+            )
+            gold_manifest_path = bundle / "private" / "gold_manifest.json"
+            gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
+            gold_manifest["null_construction_audit"] = {
+                "status": "frozen",
+                "audit_sha256": "A" * 64,
+                "confirmed_count": 1,
+            }
+            builder.write_json(gold_manifest_path, gold_manifest)
+
+            run_dir = root / "rule-development"
+            run = runner.run_rule_development_bundle(bundle, run_dir)
+            snapshot_path = root / "rule-baseline-development.json"
+            snapshot = runner.freeze_rule_snapshot(
+                CONFIG,
+                CONTRACT,
+                run_dir / "run_manifest.json",
+                run_dir / "rule_results.json",
+                snapshot_path,
+            )
+
+            self.assertEqual(2, run["packet_count"])
+            self.assertEqual(2, run["agreement_count"])
+            self.assertEqual("passed", snapshot["baseline_strength_gate"])
+            self.assertEqual(2, snapshot["packet_count"])
+
 
 class StubAndHashChainTests(unittest.TestCase):
     def test_direct_and_structured_share_model_and_generation_config(self):
@@ -502,9 +689,41 @@ class StubAndHashChainTests(unittest.TestCase):
 
 
 class PreModelReadinessTests(unittest.TestCase):
+    def test_readiness_requires_csv_and_frozen_manifest_hash_to_match(self):
+        rows = [
+            {
+                "request_id": "REQ-" + "A" * 24,
+                "author_no_acceptable_observation": "yes",
+                "author_id": "reviewer-a",
+                "reviewer_no_acceptable_observation": "yes",
+                "reviewer_id": "reviewer-b",
+                "notes": "",
+            }
+        ]
+        manifest = {
+            "null_construction_audit": {
+                "status": "frozen",
+                "audit_sha256": "A" * 64,
+                "confirmed_count": 1,
+            }
+        }
+
+        self.assertTrue(
+            runner.null_audit_split_frozen(rows, manifest, 1, "A" * 64)
+        )
+        manifest["null_construction_audit"]["audit_sha256"] = "B" * 64
+        self.assertFalse(
+            runner.null_audit_split_frozen(rows, manifest, 1, "A" * 64)
+        )
+
     def test_model_output_scan_is_evidence_based(self):
         with tempfile.TemporaryDirectory() as temp:
             generated = Path(temp)
+            self.assertEqual([], runner.find_model_output_files(generated))
+
+            rule_output = generated / "runs" / "rule-development" / "rule_results.json"
+            rule_output.parent.mkdir(parents=True)
+            rule_output.write_text("[]", encoding="utf-8")
             self.assertEqual([], runner.find_model_output_files(generated))
 
             output = generated / "runs" / "phase1-test" / "raw.json"

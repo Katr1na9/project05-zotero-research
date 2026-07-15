@@ -1,0 +1,105 @@
+{
+  "authorized_scope": [
+    "RQ1",
+    "RQ5"
+  ],
+  "blockers": [],
+  "checks": {
+    "dependency_isolation": {
+      "installed": [],
+      "loaded": [],
+      "local_model_or_venv_paths": [],
+      "packages_checked": [
+        "torch",
+        "transformers",
+        "accelerate",
+        "bitsandbytes",
+        "jsonschema"
+      ],
+      "runtime_authorizations_all_false": true,
+      "status": "passed"
+    },
+    "forbidden_file_diff": {
+      "changed_files": [],
+      "status": "passed"
+    },
+    "no_model_output": {
+      "files": [],
+      "status": "passed"
+    },
+    "null_construction_audit": {
+      "splits": {
+        "development": {
+          "actual_rows": 26,
+          "audit_sha256": "8D8649384C0829DB5C33D6817D48DC1F1B3E85608ECAAD16E0903682A2EBBD53",
+          "expected_rows": 26,
+          "manifest_frozen": true,
+          "two_person_confirmed_rows": 26
+        },
+        "test": {
+          "actual_rows": 32,
+          "audit_sha256": "6DD8D97B87FCDC73824DA1A2991FD6F64232CD538A3B00D1BAF7D343D0C2E5ED",
+          "expected_rows": 32,
+          "manifest_frozen": true,
+          "two_person_confirmed_rows": 32
+        }
+      },
+      "status": "passed"
+    },
+    "prompt_config_lock": {
+      "errors": [],
+      "status": "passed"
+    },
+    "public_private_scan": {
+      "errors": {
+        "development": [],
+        "test": []
+      },
+      "status": "passed"
+    },
+    "rule_baseline_snapshot": {
+      "snapshot_sha256": "FF69476EC63DA5D89D332085B9D9CCBF314FDBA9383FFBDFB0E88FFD8BE0F6D1",
+      "status": "passed"
+    },
+    "targeted_tests": {
+      "modules": [
+        "09-experiments.tests.test_llm_packet_separation",
+        "09-experiments.tests.test_llm_phase1_contract",
+        "09-experiments.tests.test_llm_phase1_validation",
+        "09-experiments.tests.test_llm_phase1_scoring",
+        "09-experiments.tests.test_llm_compiler_pilot"
+      ],
+      "old_pilot_included": "09-experiments.tests.test_llm_compiler_pilot",
+      "output_sha256": "BD56C920F8F21AEEBA4B9E31DB1B3C7359F4556795AAE2C1808F617846CADDCD",
+      "returncode": 0,
+      "status": "passed",
+      "test_count": 60
+    },
+    "test_bundle_shape": {
+      "case_count": 6,
+      "declared_file_hashes_match": true,
+      "formal_ready": false,
+      "packet_count": 64,
+      "packet_counts": {
+        "null": 32,
+        "positive": 32
+      },
+      "status": "passed"
+    }
+  },
+  "g2_failure_paper_form": "negative_evaluation_or_interface_pilot",
+  "generated_at_utc": "2026-07-15T09:10:11+00:00",
+  "hard_stop": "A",
+  "implementation_sha256": {
+    "run_llm_phase1.py": "7254C257867E8CC4788766CF3DBD73753958D81F677CF5FE8315866F8C3F9671",
+    "test_llm_phase1_validation.py": "64221F0FE1204E0BD7862701870CECF44F14FD0C5AA7021836BB8ED46C66B40C"
+  },
+  "model_output_exists": false,
+  "model_output_files": [],
+  "paper_a_isolated": true,
+  "phase2_authorized": false,
+  "phase3_authorized": false,
+  "ready_to_request_model_authorization": true,
+  "report_version": "project05-llm-phase1-pre-model-readiness-v0.2",
+  "status": "ready_to_request_model_authorization"
+}

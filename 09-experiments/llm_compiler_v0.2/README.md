@@ -6,13 +6,13 @@
 
 截至 2026-07-15，dependency-free 基础设施、public/private ID 隔离、真实来源 context-packet 草案、G0 admission、Rule 实现、G1 多 gold scorer、stub backend、四组 prompts、structured 七段哈希链与 prompt/config lock 已实现。尚无任何模型输出，也未安装或下载 `jsonschema`、PyTorch、Transformers、Accelerate、bitsandbytes 或模型权重。
 
-当前 readiness 状态为 `blocked_pending_human_gates`，不得申请模型授权：
+双人 null 构造审计与 Rule development snapshot 已完成：
 
-- development null 构造审计：26 行，双人确认 0 行；
-- test null 构造审计：32 行，双人确认 0 行；
-- Rule development snapshot：缺失。它必须在双人审计冻结后、任何 LLM 输出之前生成，且后续 config、contract 或 Rule 指纹漂移都将拒跑。
+- development null 构造审计：26/26 双人确认，SHA-256 `8D8649384C0829DB5C33D6817D48DC1F1B3E85608ECAAD16E0903682A2EBBD53`；
+- test null 构造审计：32/32 双人确认，SHA-256 `6DD8D97B87FCDC73824DA1A2991FD6F64232CD538A3B00D1BAF7D343D0C2E5ED`；
+- Rule snapshot：`baseline_strength_gate=passed`，52 个 development packets，schema-valid rate 1.0，abstain rate 0.2308，project-gold agreement 0.2692。Rule 对 26/26 positive 产生 claim，12/26 null abstain；该偏弱分布已冻结，禁止在看到 LLM 输出后增强。
 
-权威机器证据见 `generated/pre-model-readiness.json`。其中 55 项定向测试通过，test bundle 为 64 packets / 6 cases，public/private 扫描无泄漏，prompt/config lock 有效，推理依赖与本地模型缓存均不存在，禁改文件差异为空。
+审计前的历史证据保留在 `generated/pre-model-readiness.json`。当前权威机器证据为 `generated/pre-model-readiness-post-audit.json`：60 项定向测试通过，test bundle 为 64 packets / 6 cases，public/private 扫描无泄漏，prompt/config lock 与 Rule snapshot 有效，推理依赖、本地模型缓存及模型输出均不存在，禁改文件差异为空。当前状态为 `ready_to_request_model_authorization`，但这不是模型授权本身。
 
 ## 数据与边界
 
@@ -27,9 +27,9 @@
 
 ## Gate 与声明纪律
 
-1. 先由两名不同审阅者完成 development/test null 构造审计；两者均为 `yes` 且覆盖完全后才能冻结 bundles。
-2. 仅使用 development bundle 运行并冻结 Rule snapshot；不得查看任何 LLM 输出后再调规则。
-3. 重新生成 readiness；只有所有检查通过并明确给出 `ready_to_request_model_authorization=true`，才可另行申请依赖与模型权重授权。
+1. development/test null 构造审计与 private manifest 冻结已完成。
+2. development-only Rule snapshot 已冻结；不得查看任何 LLM 输出后再调规则。
+3. readiness 已给出 `ready_to_request_model_authorization=true`；下一步必须由用户另行授权依赖安装与模型 revision 解析，不能把 readiness 视作自动授权。
 4. Gates 9.1–9.3 未全部通过前，Paper B 标题、摘要和核心贡献不得写入正向 LLM 效果声明；Paper A 继续保持调查控制/参数治理叙事，不得混写本支线未出结果。
 5. 若 G2 的 κ `<0.70` 或 unassessable `>20%`，论文形态预注册为 `negative_evaluation_or_interface_pilot`；不得使用“减少幻觉”“降低无支撑断言”等人类验证措辞，也不得用 Phase 2/3 事后救场。
 
@@ -42,7 +42,7 @@
 
 & 'C:\Users\35393\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m py_compile 09-experiments\scripts\build_llm_evaluation_packets.py 09-experiments\scripts\run_llm_phase1.py 09-experiments\scripts\validate_llm_phase1_output.py 09-experiments\scripts\score_llm_phase1.py
 
-& 'C:\Users\35393\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' 09-experiments\scripts\run_llm_phase1.py --pre-model-readiness 09-experiments\llm_compiler_v0.2\generated\pre-model-readiness.json
+& 'C:\Users\35393\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' 09-experiments\scripts\run_llm_phase1.py --pre-model-readiness 09-experiments\llm_compiler_v0.2\generated\pre-model-readiness-post-audit.json
 ```
 
 readiness 证据拒绝覆盖已有文件。需要重新生成时，应在新审计状态下写入新的审阅路径或经明确审阅后归档旧证据，不得原地改写 JSON。
