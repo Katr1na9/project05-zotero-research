@@ -111,6 +111,7 @@
       "gated": false,
       "license": {
         "evidence": "repository LICENSE plus model-card metadata",
+        "effective_license_status": "repository_custom_license_present_pending_review",
         "file_sha256": "7c7b8e244f6aa1ac8c32b74f56d42c41a0364dd2dabed8d9c6030a862e805b54",
         "immutable_url": "https://huggingface.co/Qwen/Qwen1.5-7B-Chat/blob/5f4f5e69ac7f1d508f8369e977de208b4803444b/LICENSE",
         "metadata_license": "other",
@@ -164,6 +165,7 @@
       "gated": false,
       "license": {
         "evidence": "model-card YAML metadata only; repository has no LICENSE file",
+        "effective_license_status": "unresolved_due_missing_license_text_and_base_model_terms",
         "immutable_url": "https://huggingface.co/Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B/blob/c3c06e1bd4ff38dddc0cd46961216da20db3f089/README.md",
         "metadata_license": "mit",
         "model_card_bytes": 24,
@@ -223,8 +225,13 @@
   "next_gate": {
     "hard_stop_reasons": [
       "The user has not reviewed and approved the two resolved commits and license evidence.",
+      "The SEVENLLM repository declares MIT only in a 24-byte model-card header, provides no LICENSE text, and does not resolve inherited Qwen base-model terms.",
       "The two immutable repositories exceed the preregistered 30 GB model/cache budget before cache overhead."
     ],
+    "license_gate": {
+      "status": "failed_pending_review",
+      "unresolved_model": "Multilingual-Multimodal-NLP/SEVENLLM-Qwen1.5-7B"
+    },
     "next_allowed_action": "review revisions, licenses, and a written disk-budget/model amendment",
     "prohibited_until_reviewed_amendment": [
       "snapshot_download",

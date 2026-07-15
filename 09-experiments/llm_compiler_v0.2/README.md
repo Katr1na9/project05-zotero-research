@@ -49,4 +49,4 @@ readiness 证据拒绝覆盖已有文件。需要重新生成时，应在新审�
 
 ## HARD STOP B
 
-已解析的不可变 revisions 为 Qwen `5f4f5e69ac7f1d508f8369e977de208b4803444b` 与 SEVENLLM `c3c06e1bd4ff38dddc0cd46961216da20db3f089`。Hub 文件元数据显示两仓库合计至少 46,344,648,600 bytes（43.16 GiB），在缓存开销之前已经超过预注册的 30 GB 模型/缓存上限；同时两套 revision 与许可证据尚待用户审阅。因此 `snapshot_download`、任何权重文件下载、atomic pilot、正式模型输出与 Phase 2/3 均继续禁止。若继续，必须先形成经审阅的磁盘预算/模型修订，不得静默替换模型或扩大预算。本文档及所有结果均保持 Markdown/JSON；不生成 DOCX、PPT 或 PDF。
+已解析的不可变 revisions 为 Qwen `5f4f5e69ac7f1d508f8369e977de208b4803444b` 与 SEVENLLM `c3c06e1bd4ff38dddc0cd46961216da20db3f089`。Hub 文件元数据显示两仓库合计至少 46,344,648,600 bytes（43.16 GiB），在缓存开销之前已经超过预注册的 30 GB 模型/缓存上限。Qwen 仓库提供自定义 Tongyi Qianwen License；SEVENLLM 仅在 24-byte model-card YAML 中声明 `license: mit`，没有 LICENSE 正文，也未说明 Qwen 基座条款如何继承，因此有效许可继续标为 unresolved。两套 revision、许可与预算均尚待用户审阅。因此 `snapshot_download`、任何权重文件下载、atomic pilot、正式模型输出与 Phase 2/3 均继续禁止。若继续，必须先形成经审阅的磁盘预算/模型与许可修订，不得静默替换模型、推定许可或扩大预算。本文档及所有结果均保持 Markdown/JSON；不生成 DOCX、PPT 或 PDF。
