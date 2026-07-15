@@ -1,0 +1,129 @@
+{
+  "experiment_id": "project05-afa-endpoint-contract-smoke-c11-c12-v0.1",
+  "case_prefixes": [
+    "C11",
+    "C12"
+  ],
+  "case_ids": [
+    "C11-otrf-apt29-day1-scranton-nashua",
+    "C12-witfoo-precinct6-f10c7270"
+  ],
+  "independent_case_count": 2,
+  "repeated_condition_count": 90,
+  "planners": [
+    "project05_m2",
+    "afa_voi_myopic",
+    "afa_voi_rollout_h3",
+    "oracle_optimal"
+  ],
+  "frozen_parameters": {
+    "rollout_horizon": 3
+  },
+  "information_boundary": "public_intent_and_channel_priors_only",
+  "endpoint_contract": {
+    "contract_id": "project05-afa-endpoint-contract-v0.1",
+    "version": "0.1.0",
+    "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9",
+    "runtime_allowlist_enforced": true
+  },
+  "case_endpoint_metadata": {
+    "C11-otrf-apt29-day1-scranton-nashua": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C11-otrf-apt29-day1-scranton-nashua-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "501ed9e290543d12437522fadeef65946438a4d245f29de10e32fa2f51b684b2",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C11-otrf-apt29-day1-scranton-nashua-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "d455f9aacae884c4d37b3c8f04361ede7805cab5404402d1f11948345f6db498",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G2_tactic_intent"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 8,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    },
+    "C12-witfoo-precinct6-f10c7270": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C12-witfoo-precinct6-f10c7270-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "8520a136adb57447be00d428c08e385462798f0b0e19802601210d243694b3e7",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C12-witfoo-precinct6-f10c7270-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "e4e98de6a2df436e48a01fa1a9fa5e62d21c4a7cffd7f819360022117b9e7f2b",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G1_technique"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 5,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    }
+  }
+}

@@ -43,7 +43,15 @@ def read_rows(path: Path) -> list[dict[str, str]]:
 
 
 def success_rate(rows: list[dict[str, str]]) -> float:
+    if not rows:
+        return 0.0
     return sum(int(row["reached_target"]) for row in rows) / len(rows)
+
+
+def _rate(rows: list[dict[str, str]], field: str) -> float:
+    if not rows:
+        return 0.0
+    return sum(int(row[field]) for row in rows) / len(rows)
 
 
 def write_table(path: Path, rows: list[dict[str, str]]) -> None:
@@ -78,8 +86,8 @@ def write_table(path: Path, rows: list[dict[str, str]]) -> None:
                         "budget_offset": offset,
                         "condition_count": len(group),
                         "success_rate": f"{success_rate(group):.4f}",
-                        "premature_stop_rate": f"{sum(int(row['premature_stop']) for row in group) / len(group):.4f}",
-                        "ceiling_violation_rate": f"{sum(int(row['ceiling_violation']) for row in group) / len(group):.4f}",
+                        "premature_stop_rate": f"{_rate(group, 'premature_stop'):.4f}",
+                        "ceiling_violation_rate": f"{_rate(group, 'ceiling_violation'):.4f}",
                     }
                 )
 

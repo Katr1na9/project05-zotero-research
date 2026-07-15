@@ -1,0 +1,47 @@
+\section{Introduction}
+\label{intro}
+% In many real-world scenarios, \textit{acquiring information is itself a decision}. 
+In many real-world scenarios, \textit{the inference-time acquisition of information is a critical decision}. For example, in clinical settings (a driving application for this work), diagnostic decisions often rely on sequentially gathering information such as lab tests or imaging. Each type of data acquisition comes at a cost of time, financial expense, or risk to the patient. In contrast, standard supervised machine learning pipelines typically assume that \emph{all} features are freely available at inference.
+
+In this work, we focus on \emph{longitudinal} Active Feature Acquisition (LAFA) \citep{saar2009active, kossen2022active}, where, during inference, a model is responsible for (i) sequentially deciding \emph{which features} to acquire and at \emph{what time}, balancing their utility against acquisition costs, and (ii) \emph{making predictions} with the partially observed features it has chosen to acquire.  In this setting, leveraging the temporal context is crucial for both selecting valuable feature acquisitions and making accurate predictions.
+Fig.~\ref{fig:AFA_example} illustrates an example of LAFA by an autonomous agent in a clinical scenario. At the current visit, the agent 
+% (1) reviews previously collected data alongside any measurement acquired at the current visit, (2) predicts the patient's status (label) at the current visit, and (3) recommends a date for future visit when more information is required for assessment and the tests to perform at that visit (accounting for acquisition costs).
+(1) reviews previously collected data alongside any measurement acquired at the current visit, (2) predicts the patient's current status $\hat{y}_t$, and (3) decides when to schedule the next visit and which tests to acquire then (accounting for measurements' acquisition costs). Practical constraints such as time, cost, and resource limitations necessitate a judicious selection. 
+%Between acquisition timepoints, the agent refines its predicted status using the data acquired so far.
+Between visits, the agent continues to forecast the disease progression utilizing the previous acquisitions. 
+% Because the agent cannot revisit earlier time points, 
+% missed acquisitions in the past have become inaccessible. 
+
+% % In particular, we focus on a \emph{longitudinal} setting where features may originate from diverse sources and data types, and long temporal contexts may be crucial for both selecting valuable acquisitions and making accurate predictions. 
+% Fig.~\ref{fig:AFA_example} illustrates an example of longitudinal AFA methods driven by an autonomous agent operating in a clinical scenario. At the current visit, the agent \todo{[JO] tweak para, this is a critical description that should 100 percent match with our setting, and doesn't quite atm} (1) reviews previously collected data alongside any measurement acquired at the current visit, (2) predicts the patient's current status, and (3) recommends a future follow-up plan by specifying both the visit interval (e.g., 3 or 6 months) and the tests to perform at the visit, while accounting for acquisition costs. Although in principle a comprehensive set of tests could be performed, practical constraints such as time, cost, and resource limitations necessitate a more selective approach. Between visits, the agent projects the patient's trajectory to future time points, using the data acquired so far and the proposed time interval.
+% % Between visits, the agent continues to forecast the disease progression based on the time elapsed. 
+% Because the agent cannot revisit earlier time points, it must carefully decide whether to acquire information now or defer it, risking that missed acquisitions become permanently inaccessible. 
+% % defer or perform tests at each time step to avoid missing potentially important acquisitions. 
+
+
+\begin{figure}
+    \centering
+    
+    % \includegraphics[width=0.82\linewidth,height=0.245\textheight, trim=0cm 0cm 0cm 0cm, 
+    \includegraphics[width=1\linewidth,height=0.20\textheight, trim=0cm 0cm 0cm 0cm, 
+clip]{figures/AFA_v4.pdf}
+    \caption{Illustration of clinical longitudinal AFA. At the current visit, an autonomous agent reviews previously collected and newly acquired data, predicts the patient's current status, and recommends a subset of examinations for a determined future timepoint. This process repeats until the agent recommends no further acquisition.}
+    \label{fig:AFA_example}
+\end{figure}
+% Challenges in AFA
+
+This longitudinal AFA setting presents several challenges, including: deciding which features to acquire at each visit, facilitating early predictions for timely interventions, and accounting for temporal settings where missed acquisitions at earlier time points are permanently inaccessible. Although previous work has explored various approaches for longitudinal AFA, some methods~\citep{kossen2022active} make a single prediction across all time points, neglecting dynamic predictions, which are critical in clinical settings to detect deterioration early and adjust treatment plans \citep{qin2024risk}. Furthermore, recent reinforcement learning (RL)-based methods~\citep{qin2024risk,nguyen2024active} can be difficult to optimize in practice, while greedy strategies~\citep{gadgil2023estimating} risk suboptimal decisions because they focus on short-term gain and may skip early measurements that later prove critical but cannot be reacquired. This motivates non-greedy methods that are practical to train and deploy. \looseness=-1
+% \todo{be clear about what's new about NOCTA when compared to prior methods}
+
+\textbf{Contributions}\quad We propose \texttt{\OurMethod} (\textbf{N}on-Greedy \textbf{O}bjective \textbf{C}ost-\textbf{T}radeoff \textbf{A}cquisition), a non-greedy framework for longitudinal AFA that explicitly plans over future acquisitions without training an RL policy. \uline{First}, we introduce NOCT, the longitudinal objective underlying \texttt{NOCTA} that balances prediction accuracy against the cost of acquiring features. \uline{Second}, we develop two practical estimators for scoring candidate acquisition plans under NOCT: (1) \texttt{NOCT-Contrastive}, an embedding-based estimator that learns a representation for scoring candidate plans from partial observations, trained with a contrastive objective, and (2) \texttt{NOCT-Amortized}, a neural estimator that directly predicts the NOCT value of a candidate plan from the current available information. \uline{Third}, we present the \texttt{\OurMethod} planning algorithm that uses these estimators to select acquisitions at inference time. \uline{Fourth}, we provide theoretical analyses
+that support NOCT and our planning strategies. 
+%: the NOCT objective yields a lower bound on the optimal longitudinal AFA Markov Decision Process value (Theorem~\ref{thm:lowerbound}), and replanning is never worse than committing to an earlier plan (Proposition~\ref{prop:replanning}). 
+\uline{Fifth}, across synthetic and real-world medical datasets, we show that \texttt{\OurMethod} achieves consistent improvements over state-of-the-art (SOTA) baselines. \looseness=-1 %while requiring lower acquisition cost.
+
+
+% \textbf{Contributions.} In this work, we propose \texttt{\OurMethod}, \textbf{N}on-Greedy \textbf{O}bjective \textbf{C}ost-\textbf{T}radeoff \textbf{A}cquisition, a {non-greedy} method that explicitly addresses longitudinal AFA challenges without training an RL policy, while maintaining an effective acquisition strategy. \uline{First}, we introduce a novel longitudinal objective (NOCT) that balances prediction accuracy against the cost of acquiring features. \uline{Second}, we develop two complementary estimators within the \texttt{\OurMethod} framework: (1) \texttt{NOCT-Contrastive}, an embedding estimator that learn an utility representation, and (2) \texttt{NOCT-Armotized}, which directly predicts the objective value of a candidate plan with neural network. Third, we propose the NOCTA algorithm to deploy in practice. last, we evaluate our method on both synthetic and real-world medical datasets, demonstrating \texttt{\OurMethod} consistently outperforms state-of-the-art baselines while achieving a lower acquisition cost.
+% a non-parametric approach that leverages nearest neighbors to guide the acquisition (\texttt{\OurMethod-NP}), and (2) a parametric approach that directly estimates the utility of future acquisitions (\texttt{\OurMethod-P}). \uline{Third}, we evaluate our method on both synthetic and real-world medical datasets, demonstrating \texttt{\OurMethod} consistently outperforms state-of-the-art baselines while achieving a lower acquisition cost.
+
+
+
+

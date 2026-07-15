@@ -1,0 +1,189 @@
+{
+  "experiment_id": "project05-xgboost-c07-c12-runtime-allowlist-v0.3",
+  "train_case_ids": [
+    "C01-linux-provenance",
+    "C02-freebsd-provenance",
+    "C03-windows-host",
+    "C04-darpa-e3-fivedirections",
+    "C05-darpa-e3-cadets",
+    "C06-darpa-e3-cadets-0412"
+  ],
+  "test_case_ids": [
+    "C07-darpa-e5-theia-0515",
+    "C08-darpa-e5-clearscope-0515",
+    "C09-darpa-optc-sysclient0201-0923",
+    "C10-darpa-optc-sysclient0351-0925",
+    "C11-otrf-apt29-day1-scranton-nashua",
+    "C12-witfoo-precinct6-f10c7270"
+  ],
+  "independent_test_case_count": 6,
+  "training_test_overlap": [],
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "repeated": "mask_strategy_x_mask_intensity_x_seed",
+    "pseudoreplication_forbidden": true
+  },
+  "feature_contract": {
+    "columns": [
+      "cost",
+      "budget_remaining",
+      "cti_node_coverage",
+      "cti_edge_coverage",
+      "critical_gap_count",
+      "intended_node_count",
+      "intended_gap_overlap_count",
+      "intended_critical_gap_overlap_count",
+      "intended_gap_precision",
+      "intended_gap_recall",
+      "channel_prior_reliability",
+      "expected_granularity_gain",
+      "expected_uncertainty_reduction",
+      "expected_over_attribution_risk_reduction",
+      "expected_conflict_resolution",
+      "expected_coverage_delta"
+    ],
+    "hidden_outcome_fields_excluded": true,
+    "target_case_outcome_prior_excluded": true
+  },
+  "cost_regime": "legacy",
+  "cost_profile_identity_by_case": {
+    "C07-darpa-e5-theia-0515": {
+      "profile_id": "C07-darpa-e5-theia-0515-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "c3df2b2818412e9c0b5e6e769b9f24e06e289cd7df018a7e255d4b947569b19c",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C08-darpa-e5-clearscope-0515": {
+      "profile_id": "C08-darpa-e5-clearscope-0515-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "5de2a70bdc7f4b3cc336e04276a8ea7f1dfe2a7a104b6d6eb33a1c18a78ce5be",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C09-darpa-optc-sysclient0201-0923": {
+      "profile_id": "C09-darpa-optc-sysclient0201-0923-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "01bb5501322b413491147cd467a952b3b0a395a8e00783d8e5c21f3eff2acea2",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C10-darpa-optc-sysclient0351-0925": {
+      "profile_id": "C10-darpa-optc-sysclient0351-0925-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "99272f5de4971178650315ca97fdcd157fd11dde3eb31137d3b57ea1453cd133",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C11-otrf-apt29-day1-scranton-nashua": {
+      "profile_id": "C11-otrf-apt29-day1-scranton-nashua-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "501ed9e290543d12437522fadeef65946438a4d245f29de10e32fa2f51b684b2",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C12-witfoo-precinct6-f10c7270": {
+      "profile_id": "C12-witfoo-precinct6-f10c7270-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "8520a136adb57447be00d428c08e385462798f0b0e19802601210d243694b3e7",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    }
+  },
+  "training_cost_profile_identity_by_case": {
+    "C01-linux-provenance": {
+      "profile_id": "C01-linux-provenance-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "5a08f9688b5e172dd3cc6a41c575a8c64a80605d0f2f1301c105b80c1e8473ff",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C02-freebsd-provenance": {
+      "profile_id": "C02-freebsd-provenance-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "fbb7dde5a32517c8ab4250f3e0275e6471b1f605e79c6cbbe8513e9ff10cf013",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C03-windows-host": {
+      "profile_id": "C03-windows-host-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "67c4cb2b2dd957707f31404d5297dab0b0f25c2947f9ea95fba23da03a5059e1",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C04-darpa-e3-fivedirections": {
+      "profile_id": "C04-darpa-e3-fivedirections-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "7b44c5e5263fafc4d6509989cd7364b1a92866e0be26ebfa532d03e3aaa0f67d",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C05-darpa-e3-cadets": {
+      "profile_id": "C05-darpa-e3-cadets-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "507d2add9ef6f06ba7ea1404ff1e17b6a8e3653afc415d56b3b0ea8f0004ec71",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    },
+    "C06-darpa-e3-cadets-0412": {
+      "profile_id": "C06-darpa-e3-cadets-0412-embedded-legacy-cost",
+      "version": "1.0.0",
+      "sha256": "dd29ba1ddf0d59f73e83b1d3909e04bb35cf5427067a419ed426c8ae49de0b9d",
+      "provenance": "case_embedded_legacy_exogenous_cost"
+    }
+  },
+  "endpoint_boundary": {
+    "contract_id": "project05-depth2-ml-runtime-contract-v0.1",
+    "version": "0.1.0",
+    "sha256": "6e8c297e8cdac18b6f5349e6878c567aa524411e37b66187da30409da704c053",
+    "runtime_allowlist_enforced": true,
+    "hidden_recovery_invariance_tested": true,
+    "runtime_labels_visible": false,
+    "realized_outcomes_visible": false
+  },
+  "input_sha256": {
+    "09-experiments/examples/C01/case_config.json": "91c32d585064893e04483f6aa11cdb714a7629814d0c615d0924c1abb3b02379",
+    "09-experiments/examples/C01/evidence_claims.json": "6404c3b06cd8c87bacd0a6f9d958be717b078fc691c5a31102abd9e9ed99a63d",
+    "09-experiments/examples/C01/acquisition_actions.json": "7d24ed16f8ca73b98f1151b7eda80422451a010d12a1b75751e12b046fe03179",
+    "09-experiments/examples/C02/case_config.json": "0f71f4cebead50648c49086b3e2f3ff8b59bc3d239761e3e1cbb637ae226bdba",
+    "09-experiments/examples/C02/evidence_claims.json": "ddfc628ce84151705e0f480308813f0a790505e664956b2057c682341d86d44a",
+    "09-experiments/examples/C02/acquisition_actions.json": "f8d833d0294844618022856897523dcf1a14d8ac0f72a487c5f5e0174fd84a77",
+    "09-experiments/examples/C03/case_config.json": "2e7071a57e8ccca7ab36a4c35318ff9a48ef3ce074b90b1e1e7232f88b8726be",
+    "09-experiments/examples/C03/evidence_claims.json": "7e070fbce730bb55c3f8255a19b44687a64c7531d63a8182f0fd8f41fb1eee08",
+    "09-experiments/examples/C03/acquisition_actions.json": "dfca78abea7f98a4a14cb57bc81dc64a498b59d4b77d265f39cf2c05a4dabd95",
+    "09-experiments/real_cases/C04-darpa-e3-fivedirections/case_config.json": "fe966d934011f8457ec8fee73c0f4d7c032c1d53aedf8058ed4f4c3a26f29741",
+    "09-experiments/real_cases/C04-darpa-e3-fivedirections/evidence_claims.json": "f18e9ade58ff740e53e639bad1786bcf6f262b6165e9fe70dc4845ffff6418a8",
+    "09-experiments/real_cases/C04-darpa-e3-fivedirections/acquisition_actions.json": "86c1052ea02521022953ed4d4deb7f017ae3e1bd7fceda04e99ad10d30aeac6e",
+    "09-experiments/real_cases/C05-darpa-e3-cadets/case_config.json": "7fcd3980da16edcba7af454be90f61a8835fda2e4a9f26a37cf9ff33cd29e1d0",
+    "09-experiments/real_cases/C05-darpa-e3-cadets/evidence_claims.json": "d55b3d9733c0ef3b31c88287cfeb2a1bb91b59e0a6927109a6a7c85abb443da7",
+    "09-experiments/real_cases/C05-darpa-e3-cadets/acquisition_actions.json": "349610a27f7178b5ee974e17cdf1c3b6d6e26d384df6906559f412ef75b0c0b0",
+    "09-experiments/real_cases/C06-darpa-e3-cadets-0412/case_config.json": "db6c026ced83576935ef591c3f1e6675b6950547018108097082174b6383eb42",
+    "09-experiments/real_cases/C06-darpa-e3-cadets-0412/evidence_claims.json": "b98b5a5f19d2fc552b733bd5bbaae7d1768c731ec7702c313b5744205c472f30",
+    "09-experiments/real_cases/C06-darpa-e3-cadets-0412/acquisition_actions.json": "fd9dee760980f102487a726485fa60f9f405f05b6d29ec545a7bb9ad063e25ca",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/case_config.json": "3109531bb0566dfc7e70a3e101d347bb4125250e2c3a298a05b12bf1de56bbac",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/evidence_claims.json": "f4e3002d59572fc045cfe578d301604210f40aca315ae969b67d5feb64ce534b",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/acquisition_actions.json": "1112039b03b0d02b7cda4afd3714a04974c4e8fce74f797b01016c96e7d8f93d",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/case_config.json": "91d578968041fca5e90b7efb74caf9e3e4d7966c9ec0baf5565c4217d82492bd",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/evidence_claims.json": "ebaa3eeb961389af3b2b3749289ee690d87c4e1365c32eddcb9f3a3023fee3bb",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/acquisition_actions.json": "c8c89d0f6a7c42b15ac6468757133bf2bb6115029daf67ad17dbd852a8f3bd28",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/case_config.json": "621acf6e37e92048025a2979ebcd7541eb86ca6803d601b23a205b3e741e2199",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/evidence_claims.json": "ea6fc0cb7017dbd40ddcdc1afb10614272500d2fac9256f157ea2b8d79013592",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/acquisition_actions.json": "666edeecba095aa051aeea7cb512f827af3ceb0d3f27e97c8d466e3571484762",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/case_config.json": "3eee6bd1fc279a62797aa5169aa99f0c707c60317bc792cd3f8917634bc3b95b",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/evidence_claims.json": "a4db589cc7ed2786b2040c1bc3d6b898af395504001fbfc5f6b8e19502488669",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/acquisition_actions.json": "434502bb49d56af466a0f74ceb8d2d3ccf7000c9b02ce7ac302fc421af9cb505",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/case_config.json": "9a7a2da88e044cbd916738f218cbf21d4f72bba0690d8d4508a7ea0fcf62d71d",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/evidence_claims.json": "f97e35f90ec8189bc8d4dae0299aab91df6b9a8a376e5f3b4604e335c80d4644",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/acquisition_actions.json": "b6374b82ec11d8b3cb412b0431356cb3e7d630a11656856513ccf9d8febb612d",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/case_config.json": "49dbe6d28bfed311f3613c34f4e22fba42fb1add5a496e33e67c27fe7e9393fd",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/evidence_claims.json": "449808e95a6a13e838e106b134af8901735497bebc25269c955762d6b8b4516c",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/acquisition_actions.json": "1c5096996dcace7a58ecd7be4211cbe366479b6a267285c90c5298ebe7eec595"
+  },
+  "output_sha256": {
+    "xgboost_experiment_summary.json": "f2dd51c1d28eca5e376859dece338ed6ffaa39799baa939be939129d57248c61",
+    "xgboost_label_reaches_target_after_action.json": "b887e3b0b6cd9efe73332c37560db865deaa499f74b3822c05ad63c955b83731",
+    "xgboost_label_resolves_critical_gap_node.json": "6c6cfb96af0253271adc2ebe29e17141d008e0e5e6d36000677b56f650a4c5fe",
+    "xgboost_label_yield_positive.json": "5e9a4beff61ade854905298dc4bad1a5abb5ff02136952f73d0e24941360f312",
+    "xgboost_policy_results.csv": "67e5a75366d0a16ffbe034c0b5873da5eb449fa89eda2edfa9fadacaccf6f086",
+    "xgboost_policy_traces.json.gz": "d6ebb48e316708a4a60454f17bf1f2bde2011ddd5d69e7ebc29c26a366291e97",
+    "xgboost_test_predictions.csv": "18c9346926ca5192b1255889803bd5b894efaa6c1a63b99234a8f17dd9b86899"
+  },
+  "runner_sha256": "6dfa5d1768b00d2ac9590c1204688b32a664f139e61de7936dfe8f7b0f9f76af",
+  "run_m3b_sha256": "81c27b6c8bd7fe2520af07a180c8aaff72b8360ae92f854db4536f6e7c957df0",
+  "run_mvp_sha256": "a7ebcf2739b7cd708011db378d0f18af3eb970c6236813be7f8258d5394a952e",
+  "endpoint_adapter_sha256": "0cf267ce5747bef89eae7ff5cb7a79dbb9f91167baeb82a54c5220f004257288",
+  "external_actor_accuracy": null,
+  "all_experiments_complete": false,
+  "paper_or_patent_gate": "closed_until_human_and_operational_gates_are_satisfied",
+  "paper_or_patent_updated": false
+}

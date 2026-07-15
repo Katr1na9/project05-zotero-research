@@ -1,0 +1,128 @@
+{
+  "$schema": "../../data_schema/planner_runtime_contract.schema.json",
+  "contract_id": "project05-depth2-ml-runtime-contract-v0.1",
+  "version": "0.1.0",
+  "status": "frozen_for_new_runs",
+  "created_utc": "2026-07-14T08:00:00Z",
+  "scope": {
+    "planner_families": [
+      "project05_depth2_public",
+      "project05_xgboost_policy",
+      "project05_logistic_policy"
+    ],
+    "official_external_implementation_claimed": false
+  },
+  "planner_visibility": {
+    "config": {
+      "top_level_fields": ["case_id", "budget_total", "cti_nodes", "channel_reliability"],
+      "nested_fields": {
+        "cti_nodes": ["node_id", "stage", "critical"]
+      }
+    },
+    "state": {
+      "top_level_fields": [
+        "case_id",
+        "step_index",
+        "matched_cti_node_ids",
+        "unmatched_cti_node_ids",
+        "matched_cti_edge_ids",
+        "unmatched_cti_edge_ids",
+        "coverage",
+        "budget",
+        "actions_taken",
+        "action_feedback",
+        "remaining_action_ids"
+      ],
+      "nested_fields": {
+        "coverage": [
+          "cti_node_coverage",
+          "cti_edge_coverage",
+          "critical_gap_count",
+          "stage_coverage",
+          "evidence_type_coverage"
+        ],
+        "budget": ["budget_total", "budget_used", "budget_remaining"],
+        "action_feedback": ["action_id", "action_type", "recovered_count"]
+      }
+    },
+    "action": {
+      "top_level_fields": [
+        "action_id",
+        "case_id",
+        "action_type",
+        "acquisition_channel",
+        "target",
+        "cost",
+        "intended_cti_node_ids",
+        "expected_evidence_types",
+        "expected_stages",
+        "expected_effects",
+        "status",
+        "natural_language_request"
+      ],
+      "nested_fields": {
+        "target": ["target_type", "target_value"],
+        "expected_effects": [
+          "expected_granularity_gain",
+          "expected_uncertainty_reduction",
+          "expected_over_attribution_risk_reduction",
+          "expected_conflict_resolution",
+          "expected_coverage_delta"
+        ]
+      }
+    },
+    "recursive_forbidden_keys": [
+      "recoverable_claim_ids",
+      "hidden_claim_ids",
+      "recovered_claim_ids",
+      "required_claim_ids",
+      "mask_strategy",
+      "mask_intensity",
+      "random_seed",
+      "run_id",
+      "channel_up",
+      "realized_recovery",
+      "oracle",
+      "oracle_path",
+      "actual_recovered_claims",
+      "target_case_outcome_prior",
+      "label",
+      "labels"
+    ]
+  },
+  "ml_feature_contract": {
+    "columns": [
+      "cost",
+      "budget_remaining",
+      "cti_node_coverage",
+      "cti_edge_coverage",
+      "critical_gap_count",
+      "intended_node_count",
+      "intended_gap_overlap_count",
+      "intended_critical_gap_overlap_count",
+      "intended_gap_precision",
+      "intended_gap_recall",
+      "channel_prior_reliability",
+      "expected_granularity_gain",
+      "expected_uncertainty_reduction",
+      "expected_over_attribution_risk_reduction",
+      "expected_conflict_resolution",
+      "expected_coverage_delta"
+    ],
+    "labels_runtime_visible": false,
+    "feature_source": "allowlisted_public_config_state_action_only"
+  },
+  "leakage_controls": {
+    "runtime_allowlist_required": true,
+    "recoverable_outcomes_visible": false,
+    "mask_membership_visible": false,
+    "realized_channel_state_visible_before_action": false,
+    "target_case_labels_visible": false,
+    "selector_invariance_tests_required": true
+  },
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "repeated": "mask_strategy_x_mask_intensity_x_seed",
+    "pseudoreplication_forbidden": true
+  }
+}

@@ -70,6 +70,32 @@ def compact_claim(claim: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def sanitize_claim_view(
+    view: dict[str, Any],
+    *,
+    drop_code_labels: bool,
+) -> dict[str, Any]:
+    """Redact ground-truth / compiler tells from a public claim view.
+
+    Opt-in for future annotation rounds (see ``build_packets(sanitize=True)``).
+    The frozen c07_c11_v0.2 packets are generated with ``sanitize=False`` and
+    are intentionally left unchanged.
+
+    - ``notes`` is compiler provenance that leaks ground-truth references
+      ("GT ...", "TA5.1 report ..."), internal claim ids and event metadata,
+      so it is dropped from every public task.
+    - For the granularity task, the tactic/technique code labels encode the
+      attribution answer and must not be shown to granularity annotators.
+    """
+
+    sanitized = dict(view)
+    sanitized["notes"] = ""
+    if drop_code_labels:
+        sanitized["mapped_tactic"] = []
+        sanitized["mapped_technique"] = []
+    return sanitized
+
+
 def public_nodes(config: dict[str, Any]) -> list[dict[str, Any]]:
     return [
         {
@@ -107,13 +133,18 @@ def shuffled_blind_items(
     return public, key
 
 
-def claim_records(case_dirs: list[Path]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
+def claim_records(
+    case_dirs: list[Path], sanitize: bool = False
+) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     records = []
     for case_dir in case_dirs:
         for claim in MVP.load_json(case_dir / "evidence_claims.json"):
+            view = compact_claim(claim)
+            if sanitize:
+                view = sanitize_claim_view(view, drop_code_labels=False)
             records.append(
                 (
-                    {"task": "claim_support", **compact_claim(claim)},
+                    {"task": "claim_support", **view},
                     {
                         "case_id": claim["case_id"],
                         "claim_id": claim["claim_id"],
@@ -188,7 +219,7 @@ def sampled_visible_sets(
 
 
 def granularity_records(
-    case_dirs: list[Path], rng: random.Random
+    case_dirs: list[Path], rng: random.Random, sanitize: bool = False
 ) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     records = []
     for case_dir in case_dirs:
@@ -198,14 +229,20 @@ def granularity_records(
         for visible, granularity, condition in sampled_visible_sets(
             config, claims, rng
         ):
+            visible_claims = [
+                compact_claim(claim_map[claim_id])
+                for claim_id in sorted(visible)
+            ]
+            if sanitize:
+                visible_claims = [
+                    sanitize_claim_view(view, drop_code_labels=True)
+                    for view in visible_claims
+                ]
             records.append(
                 (
                     {
                         "task": "granularity_judgment",
-                        "visible_claims": [
-                            compact_claim(claim_map[claim_id])
-                            for claim_id in sorted(visible)
-                        ],
+                        "visible_claims": visible_claims,
                         "cti_nodes": public_nodes(config),
                         "cti_edges": public_edges(config),
                         "allowed_labels": [
@@ -256,17 +293,18 @@ def build_packets(
     seed: int = DEFAULT_SEED,
     case_prefixes: tuple[str, ...] = DEFAULT_CASE_PREFIXES,
     packet_version: str = DEFAULT_PACKET_VERSION,
+    sanitize: bool = False,
 ) -> dict[str, Any]:
     case_dirs = resolve_cases(cases_root, case_prefixes)
     rng = random.Random(seed)
     claim_items, claim_key = shuffled_blind_items(
-        "claim", claim_records(case_dirs), rng
+        "claim", claim_records(case_dirs, sanitize), rng
     )
     intent_items, intent_key = shuffled_blind_items(
         "intent", intent_records(case_dirs), rng
     )
     granularity_items, granularity_key = shuffled_blind_items(
-        "granularity", granularity_records(case_dirs, rng), rng
+        "granularity", granularity_records(case_dirs, rng, sanitize), rng
     )
 
     public_dir = output_dir / "public"
@@ -339,6 +377,10 @@ def build_packets(
         "annotation_status": "awaiting_annotations",
         "human_labels_present": False,
     }
+    if sanitize:
+        # Only recorded for sanitized (future-round) packets so the frozen
+        # c07_c11_v0.2 manifest stays byte-identical.
+        summary["public_views_sanitized"] = True
     MVP.write_json(output_dir / "packet_manifest.json", summary)
     return summary
 
@@ -368,6 +410,15 @@ def main() -> None:
         "--packet-version",
         default=DEFAULT_PACKET_VERSION,
     )
+    parser.add_argument(
+        "--sanitize",
+        action="store_true",
+        help=(
+            "Redact ground-truth tells (compiler notes; granularity code "
+            "labels) from public items. Use for future rounds only; the "
+            "frozen c07_c11_v0.2 packets were built without it."
+        ),
+    )
     args = parser.parse_args()
     summary = build_packets(
         args.cases_root,
@@ -375,6 +426,7 @@ def main() -> None:
         args.seed,
         tuple(args.case_prefixes),
         args.packet_version,
+        args.sanitize,
     )
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 

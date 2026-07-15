@@ -1,0 +1,226 @@
+{
+  "document": "08-writing/patent-main-draft-v0.9-parameter-governance-20260715.md",
+  "jurisdiction": "CN",
+  "status": "method-only-parameter-governance-draft-for-inventor-and-cn-patent-agent-review",
+  "updated": "2026-07-15",
+  "core_concept": "Convert partial behavior-graph-to-local-evidence alignment into an evidence-gap state; select a cost-constrained acquisition action through an allowlisted public planner view without reading hidden recovery outcomes; update after channel execution; and limit the output by supportable investigation granularity.",
+  "source_id_extensions": [
+    {
+      "source_id": "P014",
+      "type": "methodological_governance",
+      "path": "08-writing/methodological-parameter-governance-v0.1-20260714.md",
+      "use": "W1/W2/W6/W7 governance boundaries"
+    },
+    {
+      "source_id": "P015",
+      "type": "cost_standard",
+      "path": "08-writing/cost-assignment-standard-v0.1-20260714.md",
+      "use": "cost decomposition, profile arms, measurement and freeze boundaries"
+    },
+    {
+      "source_id": "P016",
+      "type": "completion_audit",
+      "path": "09-experiments/results/nonhuman_completion_audit_v0.1/completion_manifest.json",
+      "use": "formal output validation, statistical unit and open external gates"
+    },
+    {
+      "source_id": "P017",
+      "type": "parameter_governance_results",
+      "path": "09-experiments/results/parameter_governance_v0.1/",
+      "use": "threshold, corroboration, alpha and legacy/uniform comparisons"
+    },
+    {
+      "source_id": "P018",
+      "type": "prior_sensitivity_results",
+      "path": "09-experiments/results/parameter_governance_w6_v0.2/; 09-experiments/results/policy_prior_sensitivity_audit_v0.2/",
+      "use": "planner-belief versus execution-reliability separation"
+    },
+    {
+      "source_id": "E002",
+      "type": "coverage_relation",
+      "path": "08-writing/patent-main-draft-v0.9-parameter-governance-20260715.md",
+      "locator": "section 5.2",
+      "use": "k-of-n source-group coverage"
+    },
+    {
+      "source_id": "E003",
+      "type": "cost_profile_gate",
+      "path": "08-writing/cost-assignment-standard-v0.1-20260714.md; 09-experiments/scripts/validate_cost_profile.py",
+      "use": "versioned cost generation and frozen-profile validation"
+    },
+    {
+      "source_id": "C008",
+      "type": "source_code",
+      "path": "09-experiments/scripts/run_mvp.py",
+      "use": "legacy, uniform, rubric and measured cost-profile injection"
+    },
+    {
+      "source_id": "C009",
+      "type": "source_code",
+      "path": "09-experiments/scripts/build_cost_profile_drafts.py; 09-experiments/scripts/validate_cost_profile.py",
+      "use": "cost-profile build, coverage, freeze and draft rejection"
+    },
+    {
+      "source_id": "C010",
+      "type": "source_code_and_contract",
+      "path": "09-experiments/scripts/planner_runtime_adapter.py; 09-experiments/governance/contracts/planner-runtime-contract-v0.1.json",
+      "use": "recursive planner allowlist and forbidden fields"
+    },
+    {
+      "source_id": "C011",
+      "type": "source_code",
+      "path": "09-experiments/scripts/build_corroboration_profile.py",
+      "use": "versioned k-of-n corroboration profiles"
+    },
+    {
+      "source_id": "C012",
+      "type": "source_code",
+      "path": "09-experiments/scripts/audit_policy_prior_sensitivity.py",
+      "use": "paired prior sensitivity with execution profile held fixed"
+    }
+  ],
+  "feature_extensions": [
+    {
+      "feature_id": "FTR-011",
+      "feature": "Versioned k-of-n corroboration over independent source groups",
+      "support_state": "explicit",
+      "source_ids": ["P014", "P017", "E002", "C011"],
+      "destination": "dependent claim 2"
+    },
+    {
+      "feature_id": "FTR-012",
+      "feature": "Recursive runtime allowlist and delayed access to the complete action object",
+      "support_state": "explicit",
+      "source_ids": ["P016", "C010"],
+      "destination": "dependent claim 4"
+    },
+    {
+      "feature_id": "FTR-013",
+      "feature": "Versioned cost profile with frozen status, exact action coverage, digest validation and empty-output gate",
+      "support_state": "explicit",
+      "source_ids": ["P015", "P016", "P017", "E003", "C008", "C009"],
+      "destination": "dependent claim 5"
+    },
+    {
+      "feature_id": "FTR-014",
+      "feature": "Alternative legacy, uniform, rubric and measured cost-generation procedures without outcome-based imputation",
+      "support_state": "partially-explicit-open-data-gates",
+      "source_ids": ["P015", "P016", "P017", "C008", "C009"],
+      "support_limit": "Legacy and uniform formal runs are complete; rubric ratings and operational measurements remain open.",
+      "destination": "dependent claim 6 and embodiment"
+    },
+    {
+      "feature_id": "FTR-015",
+      "feature": "Separate planner channel-belief priors from executor reliability",
+      "support_state": "explicit",
+      "source_ids": ["P014", "P018", "C012"],
+      "destination": "dependent claim 7"
+    }
+  ],
+  "claim_map": [
+    {
+      "claim": 1,
+      "type": "independent-method",
+      "features": ["FTR-001", "FTR-002", "FTR-003", "FTR-004", "FTR-005"],
+      "source_ids": ["P001", "P002", "P003", "P010", "P011", "P012", "E001", "C001", "C002", "C003", "C010"]
+    },
+    {
+      "claim": 2,
+      "type": "dependent-method",
+      "features": ["FTR-011"],
+      "source_ids": ["P014", "P017", "E002", "C011"]
+    },
+    {
+      "claim": 3,
+      "type": "dependent-method",
+      "features": ["FTR-005"],
+      "source_ids": ["P010", "P011", "P012", "C001"]
+    },
+    {
+      "claim": 4,
+      "type": "dependent-method",
+      "features": ["FTR-002", "FTR-012"],
+      "source_ids": ["P003", "P016", "C002", "C010"]
+    },
+    {
+      "claim": 5,
+      "type": "dependent-method",
+      "features": ["FTR-013"],
+      "source_ids": ["P015", "P016", "P017", "E003", "C008", "C009"]
+    },
+    {
+      "claim": 6,
+      "type": "dependent-method",
+      "features": ["FTR-014"],
+      "source_ids": ["P015", "P016", "P017", "C008", "C009"],
+      "effect_limit": "Do not claim completed rubric agreement or completed operational measurement."
+    },
+    {
+      "claim": 7,
+      "type": "dependent-method",
+      "features": ["FTR-015"],
+      "source_ids": ["P014", "P018", "C012"]
+    },
+    {
+      "claim": 8,
+      "type": "dependent-method",
+      "features": ["FTR-010"],
+      "source_ids": ["P010", "P012", "C007"],
+      "support_limit": "One natural operational incident; prior-art and CN patent-agent review required."
+    },
+    {
+      "claim": 9,
+      "type": "dependent-method",
+      "features": ["FTR-004"],
+      "source_ids": ["P002", "P010", "P011", "P012", "C003"]
+    },
+    {
+      "claim": 10,
+      "type": "dependent-method",
+      "features": ["FTR-005"],
+      "source_ids": ["P002", "P010", "P011", "P012", "C003"]
+    },
+    {
+      "claim": 11,
+      "type": "dependent-method",
+      "features": ["FTR-009"],
+      "source_ids": ["P008", "P009", "P010", "P011", "P012", "C006"],
+      "effect_limit": "Controlled-environment support only; no claim of real-world prevalence or DQN necessity."
+    }
+  ],
+  "excluded_or_limited": [
+    {
+      "topic": "system_device_medium_claims",
+      "status": "excluded",
+      "reason": "The authorized protection scope remains method-only."
+    },
+    {
+      "topic": "specific_model_or_dataset_in_independent_claim",
+      "status": "excluded",
+      "reason": "LLM, DQN, XGBoost and named datasets are not essential technical features."
+    },
+    {
+      "topic": "universal_planner_cost_reduction",
+      "status": "excluded",
+      "reason": "Planner ordering changes across legacy/uniform costs, cases and prior profiles."
+    },
+    {
+      "topic": "completed_human_or_measured_gates",
+      "status": "excluded",
+      "reason": "Round 2, 360 rubric components and 72 operational action measurements remain open."
+    },
+    {
+      "topic": "actor_accuracy",
+      "status": "not-identifiable",
+      "reason": "No accepted actor/campaign or analyst-utility ground truth is currently available."
+    }
+  ],
+  "mandatory_human_review": [
+    "inventor contribution allocation",
+    "applicant and ownership",
+    "first public disclosure date and repository visibility",
+    "CN prior-art and claim-collision search",
+    "patent-agent review of FTR-002, FTR-010, FTR-011 and cost-profile dependent claims",
+    "support, clarity, unity and eligibility review"
+  ]
+}

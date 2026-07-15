@@ -87,14 +87,16 @@ def audit(lock_path: Path, clone_root: Path | None) -> dict[str, Any]:
     checked_sources = [
         item for item in source_checks if item["local_checkout_present"]
     ]
-    sources_pass = all(
+    # A source-verification gate must not pass vacuously when nothing was checked
+    # (e.g. --clone-root omitted): verifying zero sources is not a pass.
+    sources_pass = bool(checked_sources) and all(
         item["commit_matches"] is True
         and item["archive_matches"] is not False
         for item in checked_sources
     )
     return {
         "audit_id": "project05-external-afa-source-and-interface-audit-v0.1",
-        "lock_file": str(lock_path.relative_to(ROOT)),
+        "lock_file": lock_path.relative_to(ROOT).as_posix(),
         "source_checks": source_checks,
         "source_gate": {
             "checked_source_count": len(checked_sources),

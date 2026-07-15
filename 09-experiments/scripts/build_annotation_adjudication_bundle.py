@@ -114,9 +114,9 @@ def write_task_files(
     return {
         "item_count": len(blind_ids),
         "blind_ids": blind_ids,
-        "public_file": str(public_output.relative_to(output_dir)),
+        "public_file": public_output.relative_to(output_dir).as_posix(),
         "public_sha256": sha256(public_output),
-        "annotation_file": str(annotation_output.relative_to(output_dir)),
+        "annotation_file": annotation_output.relative_to(output_dir).as_posix(),
         "annotation_sha256": sha256(annotation_output),
     }
 

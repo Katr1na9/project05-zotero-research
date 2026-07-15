@@ -1,0 +1,124 @@
+{
+  "governance_id": "project05-method-parameter-governance-v0.2",
+  "version": "0.2.0",
+  "status": "locked_for_new_governance_runs",
+  "created_utc": "2026-07-14T08:00:00Z",
+  "supersedes_for_new_runs": "project05-method-parameter-governance-v0.1",
+  "correction": {
+    "issue": "The v0.1 W6 channel-prior arm changed the execution channel reliability and planner belief together.",
+    "resolution": "Channel-prior multipliers now affect planner belief only while the execution environment remains frozen to each case configuration.",
+    "v0.1_results_mutated": false
+  },
+  "scope_case_prefixes": [
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12"
+  ],
+  "prospective_boundary": {
+    "legacy_results_already_known": true,
+    "claim": "This is a prospective lock for corrected new parameter-governance arms, not a preregistration preceding the legacy experiments.",
+    "frozen_inputs_may_be_overwritten": false,
+    "paper_or_patent_updates_allowed": false
+  },
+  "threshold_grid": {
+    "g3_node_coverage": [
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8
+    ],
+    "g3_edge_coverage": [
+      0.5,
+      0.55,
+      0.6,
+      0.65
+    ],
+    "g2_min_stages": [
+      2,
+      3
+    ],
+    "held_constant": {
+      "g2_node_coverage": 0.45,
+      "g1_node_coverage": 0.15
+    }
+  },
+  "corroboration_scan": {
+    "semantics": "K_OF_N",
+    "units": [
+      "claim",
+      "source_group"
+    ],
+    "k_values": [
+      1,
+      2,
+      3
+    ],
+    "interpretation": {
+      "claim": "Counts required claims; does not imply source independence.",
+      "source_group": "Counts explicit provider/source-family groups from the frozen mapping profile."
+    }
+  },
+  "m2_alpha_scan": {
+    "cost_coefficients": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "legacy_default": 0.75,
+    "all_other_m2_coefficients_held_constant": true
+  },
+  "expert_prior_sensitivity": {
+    "expected_effect_multipliers": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "channel_reliability_multipliers": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "clip_channel_reliability_to": [
+      0.0,
+      1.0
+    ],
+    "channel_prior_scope": "planner_belief_only",
+    "execution_channel_reliability_source": "frozen_case_config",
+    "environment_realization_held_constant_across_prior_variants": true,
+    "builtin_planner_boundary": "Built-in run_mvp planners do not consume channel priors; channel-prior effects require the AFA or depth-2 policy runners."
+  },
+  "cost_regimes": [
+    "legacy",
+    "uniform",
+    "rubric",
+    "measured"
+  ],
+  "formal_cost_run_gate": {
+    "rubric_requires_two_independent_ratings": true,
+    "rubric_requires_agreement_report": true,
+    "measured_requires_action_level_operational_measurements": true,
+    "draft_profile_may_run": false
+  },
+  "randomization": {
+    "case_condition_seeds": "inherit_case_config",
+    "cost_packet_A_seed": 20260714,
+    "cost_packet_B_seed": 20260715,
+    "round2_design_seed": 20260714,
+    "round2_packet_A_seed": 20260715,
+    "round2_packet_B_seed": 20260716,
+    "round2_seed_schedule_note": "The earlier singular round2_packet_seed field was disambiguated before any Round 2 human annotation or outcome existed; design/control assignment and the two distribution orders use separate locked seeds."
+  },
+  "statistical_unit": {
+    "independent_unit": "case_or_attack_chain",
+    "repeated_unit": "mask_strategy_x_mask_intensity_x_channel_seed",
+    "repeated_conditions_must_not_be_counted_as_independent_attacks": true
+  }
+}

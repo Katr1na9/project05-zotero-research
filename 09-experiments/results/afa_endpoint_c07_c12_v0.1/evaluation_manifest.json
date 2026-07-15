@@ -1,0 +1,381 @@
+{
+  "experiment_id": "project05-afa-endpoint-c07-c12-v0.1",
+  "case_prefixes": [
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12"
+  ],
+  "case_ids": [
+    "C07-darpa-e5-theia-0515",
+    "C08-darpa-e5-clearscope-0515",
+    "C09-darpa-optc-sysclient0201-0923",
+    "C10-darpa-optc-sysclient0351-0925",
+    "C11-otrf-apt29-day1-scranton-nashua",
+    "C12-witfoo-precinct6-f10c7270"
+  ],
+  "independent_case_count": 6,
+  "repeated_condition_count": 270,
+  "planners": [
+    "project05_m2",
+    "afa_voi_myopic",
+    "afa_voi_rollout_h3",
+    "oracle_optimal"
+  ],
+  "frozen_parameters": {
+    "rollout_horizon": 3
+  },
+  "information_boundary": "public_intent_and_channel_priors_only",
+  "channel_prior_intervention": {
+    "multiplier": 1.0,
+    "scope": "planner_belief_only",
+    "execution_reliability_source": "frozen_case_config",
+    "execution_profile_held_constant": true,
+    "consumed_by_planners": [
+      "afa_voi_myopic",
+      "afa_voi_rollout_h3"
+    ]
+  },
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "repeated": "mask_strategy_x_mask_intensity_x_seed",
+    "pseudoreplication_forbidden": true
+  },
+  "endpoint_contract": {
+    "contract_id": "project05-afa-endpoint-contract-v0.1",
+    "version": "0.1.0",
+    "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9",
+    "runtime_allowlist_enforced": true
+  },
+  "case_endpoint_metadata": {
+    "C07-darpa-e5-theia-0515": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C07-darpa-e5-theia-0515-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "c3df2b2818412e9c0b5e6e769b9f24e06e289cd7df018a7e255d4b947569b19c",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C07-darpa-e5-theia-0515-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "69bd8dd2add18cf0e78f4aa14bbc4943c784de11b1d6c15dabbf20f12ba6ab71",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G3_campaign"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 5,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    },
+    "C08-darpa-e5-clearscope-0515": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C08-darpa-e5-clearscope-0515-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "5de2a70bdc7f4b3cc336e04276a8ea7f1dfe2a7a104b6d6eb33a1c18a78ce5be",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C08-darpa-e5-clearscope-0515-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "69bd8dd2add18cf0e78f4aa14bbc4943c784de11b1d6c15dabbf20f12ba6ab71",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G3_campaign"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 4,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    },
+    "C09-darpa-optc-sysclient0201-0923": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C09-darpa-optc-sysclient0201-0923-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "01bb5501322b413491147cd467a952b3b0a395a8e00783d8e5c21f3eff2acea2",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C09-darpa-optc-sysclient0201-0923-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "69bd8dd2add18cf0e78f4aa14bbc4943c784de11b1d6c15dabbf20f12ba6ab71",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G3_campaign"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 5,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    },
+    "C10-darpa-optc-sysclient0351-0925": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C10-darpa-optc-sysclient0351-0925-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "99272f5de4971178650315ca97fdcd157fd11dde3eb31137d3b57ea1453cd133",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C10-darpa-optc-sysclient0351-0925-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "69bd8dd2add18cf0e78f4aa14bbc4943c784de11b1d6c15dabbf20f12ba6ab71",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G3_campaign"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 5,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    },
+    "C11-otrf-apt29-day1-scranton-nashua": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C11-otrf-apt29-day1-scranton-nashua-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "501ed9e290543d12437522fadeef65946438a4d245f29de10e32fa2f51b684b2",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C11-otrf-apt29-day1-scranton-nashua-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "d455f9aacae884c4d37b3c8f04361ede7805cab5404402d1f11948345f6db498",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G2_tactic_intent"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 8,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    },
+    "C12-witfoo-precinct6-f10c7270": {
+      "endpoint_contract": {
+        "contract_id": "project05-afa-endpoint-contract-v0.1",
+        "version": "0.1.0",
+        "sha256": "054e34467142a190602506489d298b2375f0007f447298d06e7c34e4ed5b70b9"
+      },
+      "profile_identity": {
+        "cost": {
+          "profile_id": "C12-witfoo-precinct6-f10c7270-embedded-legacy-cost",
+          "version": "1.0.0",
+          "sha256": "8520a136adb57447be00d428c08e385462798f0b0e19802601210d243694b3e7",
+          "provenance": "case_embedded_legacy_exogenous_cost"
+        },
+        "prior": {
+          "profile_id": "C12-witfoo-precinct6-f10c7270-embedded-channel-prior",
+          "version": "1.0.0",
+          "sha256": "e4e98de6a2df436e48a01fa1a9fa5e62d21c4a7cffd7f819360022117b9e7f2b",
+          "provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived"
+        }
+      },
+      "missingness": {
+        "native_missing": {
+          "representation": "not_materialized_as_claim_ids",
+          "enumerated_claim_count": null,
+          "support_ceiling": "G1_technique"
+        },
+        "experimentally_masked": {
+          "eligible_hideable_claim_count": 5,
+          "mask_strategies": [
+            "random",
+            "stage",
+            "discriminative"
+          ],
+          "mask_intensities": [
+            0.2,
+            0.4,
+            0.6
+          ],
+          "seeds": [
+            11,
+            23,
+            37,
+            41,
+            53
+          ],
+          "membership_visible_to_planner": false
+        }
+      }
+    }
+  },
+  "input_sha256": {
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/case_config.json": "3109531bb0566dfc7e70a3e101d347bb4125250e2c3a298a05b12bf1de56bbac",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/evidence_claims.json": "f4e3002d59572fc045cfe578d301604210f40aca315ae969b67d5feb64ce534b",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/acquisition_actions.json": "1112039b03b0d02b7cda4afd3714a04974c4e8fce74f797b01016c96e7d8f93d",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/case_config.json": "91d578968041fca5e90b7efb74caf9e3e4d7966c9ec0baf5565c4217d82492bd",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/evidence_claims.json": "ebaa3eeb961389af3b2b3749289ee690d87c4e1365c32eddcb9f3a3023fee3bb",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/acquisition_actions.json": "c8c89d0f6a7c42b15ac6468757133bf2bb6115029daf67ad17dbd852a8f3bd28",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/case_config.json": "621acf6e37e92048025a2979ebcd7541eb86ca6803d601b23a205b3e741e2199",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/evidence_claims.json": "ea6fc0cb7017dbd40ddcdc1afb10614272500d2fac9256f157ea2b8d79013592",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/acquisition_actions.json": "666edeecba095aa051aeea7cb512f827af3ceb0d3f27e97c8d466e3571484762",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/case_config.json": "3eee6bd1fc279a62797aa5169aa99f0c707c60317bc792cd3f8917634bc3b95b",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/evidence_claims.json": "a4db589cc7ed2786b2040c1bc3d6b898af395504001fbfc5f6b8e19502488669",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/acquisition_actions.json": "434502bb49d56af466a0f74ceb8d2d3ccf7000c9b02ce7ac302fc421af9cb505",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/case_config.json": "9a7a2da88e044cbd916738f218cbf21d4f72bba0690d8d4508a7ea0fcf62d71d",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/evidence_claims.json": "f97e35f90ec8189bc8d4dae0299aab91df6b9a8a376e5f3b4604e335c80d4644",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/acquisition_actions.json": "b6374b82ec11d8b3cb412b0431356cb3e7d630a11656856513ccf9d8febb612d",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/case_config.json": "49dbe6d28bfed311f3613c34f4e22fba42fb1add5a496e33e67c27fe7e9393fd",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/evidence_claims.json": "449808e95a6a13e838e106b134af8901735497bebc25269c955762d6b8b4516c",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/acquisition_actions.json": "1c5096996dcace7a58ecd7be4211cbe366479b6a267285c90c5298ebe7eec595"
+  },
+  "output_sha256": {
+    "afa_voi_paired_vs_m2.json": "ea8e12f9199984f33ed73e803dc02e76c93ee5fafc6351c81cc0ea3f209d3a0c",
+    "afa_voi_policy_results.csv": "5818bcb52e3c5d6305b6f5c205312c3872f711cac8707ea1026401180140f22f",
+    "afa_voi_policy_summary.json": "82bb3b7c8fb214dfad2bc3eb4a6cd35701bd33bb739c3d899d62589d6079e0d5",
+    "afa_voi_policy_traces.json.gz": "77e0586848703a8f7dfac97e43ced78d54f69ec17cc235d87c5170a6e038ccf3"
+  },
+  "run_mvp_sha256": "ecb6708031749ea5f4b35c4bbb919797d8d23f2e75f28ca2c07db265dbcfb6bf",
+  "endpoint_adapter_sha256": "672cf7fdecdd081a41c9e3e620fb64ffffd64a737bb089aebd8749ae4c530b53",
+  "runner_sha256": "507fa5a41f85d2ab04a70e3e7510589df416c3626a969e26e0f4222f34d67f4a",
+  "official_external_implementation_claimed": false,
+  "all_experiments_complete": false,
+  "paper_or_patent_gate": "closed_until_human_and_operational_gates_are_satisfied",
+  "paper_or_patent_updated": false
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/operational_cost_measurement_batch.schema.json",
+  "title": "Project05 operational acquisition-cost measurement batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "version", "created_utc", "records", "source_files"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/measurement"}
+    },
+    "source_files": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/sourceFile"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "record_count"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "record_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measurement_id",
+        "case_id",
+        "action_id",
+        "attempt_id",
+        "started_utc",
+        "ended_utc",
+        "analyst_seconds",
+        "bytes_scanned",
+        "host_count",
+        "retention_window_days",
+        "authorization",
+        "execution_status",
+        "collector",
+        "source_system",
+        "source_file",
+        "source_file_sha256",
+        "record_sha256"
+      ],
+      "properties": {
+        "measurement_id": {"type": "string", "minLength": 1},
+        "case_id": {"type": "string", "minLength": 1},
+        "action_id": {"type": "string", "minLength": 1},
+        "attempt_id": {"type": "string", "minLength": 1},
+        "started_utc": {"type": "string", "format": "date-time"},
+        "ended_utc": {"type": "string", "format": "date-time"},
+        "analyst_seconds": {"type": "number", "minimum": 0},
+        "bytes_scanned": {"type": "integer", "minimum": 0},
+        "host_count": {"type": "integer", "minimum": 0},
+        "retention_window_days": {"type": "number", "minimum": 0},
+        "authorization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required", "boundary", "approval_reference"],
+          "properties": {
+            "required": {"type": "boolean"},
+            "boundary": {
+              "enum": ["none", "host", "tenant", "organization", "external"]
+            },
+            "approval_reference": {"type": ["string", "null"]}
+          }
+        },
+        "execution_status": {
+          "enum": ["completed", "partial", "failed", "cancelled"]
+        },
+        "collector": {"type": "string", "minLength": 1},
+        "source_system": {"type": "string", "minLength": 1},
+        "source_file": {"type": "string", "minLength": 1},
+        "source_file_sha256": {"$ref": "#/$defs/sha256"},
+        "record_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

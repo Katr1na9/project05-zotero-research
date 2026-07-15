@@ -121,9 +121,11 @@ def require_all_records(
 def write_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.suffix == ".gz":
-        with gzip.open(path, "wt", encoding="utf-8") as handle:
-            for row in rows:
-                handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+        payload = "".join(
+            json.dumps(row, ensure_ascii=False) + "\n" for row in rows
+        ).encode("utf-8")
+        # mtime=0 keeps the gzip bytes reproducible across runs.
+        path.write_bytes(gzip.compress(payload, mtime=0))
         return
     with path.open("w", encoding="utf-8") as handle:
         for row in rows:

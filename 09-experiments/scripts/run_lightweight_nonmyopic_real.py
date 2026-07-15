@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import hashlib
 import importlib.util
 import json
 from copy import deepcopy
@@ -20,6 +21,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 MVP_PATH = Path(__file__).with_name("run_mvp.py")
+ENDPOINT_ADAPTER_PATH = Path(__file__).with_name("planner_runtime_adapter.py")
 PLANNER = "project05_depth2_public"
 DISCOUNT = 0.8
 FAILURE_COST_WEIGHT = 1.0
@@ -39,10 +41,70 @@ def _load_mvp() -> Any:
 MVP = _load_mvp()
 
 
+def _load_endpoint_adapter() -> Any:
+    spec = importlib.util.spec_from_file_location(
+        "project05_depth2_runtime_adapter", ENDPOINT_ADAPTER_PATH
+    )
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load runtime adapter from {ENDPOINT_ADAPTER_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+ENDPOINT = _load_endpoint_adapter()
+ENDPOINT_CONTRACT = ENDPOINT.load_contract()
+
+
+def canonical_sha256(value: Any) -> str:
+    payload = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def channel_prior(config: dict[str, Any], action: dict[str, Any]) -> float:
     channel = MVP.acquisition_channel(action)
     reliability = config.get("channel_reliability", {}).get(channel, 1.0)
     return min(1.0, max(0.0, float(reliability)))
+
+
+def planner_config_for_channel_prior(
+    execution_config: dict[str, Any], multiplier: float
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    value = float(multiplier)
+    if value < 0.0:
+        raise ValueError("channel-prior multiplier must be nonnegative")
+    execution_profile = {
+        str(channel): float(reliability)
+        for channel, reliability in (
+            execution_config.get("channel_reliability", {}) or {}
+        ).items()
+    }
+    planner_profile = {
+        channel: round(min(1.0, max(0.0, reliability * value)), 12)
+        for channel, reliability in execution_profile.items()
+    }
+    planner_config = deepcopy(execution_config)
+    planner_config["channel_reliability"] = planner_profile
+    return planner_config, {
+        "channel_prior_multiplier": value,
+        "channel_prior_scope": "planner_belief_only",
+        "execution_channel_profile_sha256": canonical_sha256(execution_profile),
+        "planner_channel_prior_sha256": canonical_sha256(planner_profile),
+        "execution_channel_profile_held_constant": 1,
+    }
 
 
 def public_surrogate_state(
@@ -130,6 +192,15 @@ def select_depth2_public(
 ) -> dict[str, Any] | None:
     """Select using only action declarations, public state, and channel priors."""
 
+    endpoint_view = ENDPOINT.build_runtime_view(
+        config,
+        state,
+        actions,
+        ENDPOINT_CONTRACT,
+    )
+    config = endpoint_view["config"]
+    state = endpoint_view["state"]
+    actions = endpoint_view["actions"]
     candidates = MVP.available_actions(
         actions,
         state.get("actions_taken", []),
@@ -148,16 +219,36 @@ def select_depth2_public(
     )
 
 
-def execute_cases(case_dirs: list[Path]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def execute_cases(
+    case_dirs: list[Path],
+    channel_prior_multiplier: float = 1.0,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     traces: list[dict[str, Any]] = []
     for case_dir in case_dirs:
         config = MVP.load_json(case_dir / "case_config.json")
         claims = MVP.load_json(case_dir / "evidence_claims.json")
         actions = MVP.load_json(case_dir / "acquisition_actions.json")
+        actions, cost_metadata = MVP.apply_cost_regime(
+            actions,
+            config["case_id"],
+            cost_regime,
+            cost_profile,
+        )
+        planner_config, prior_metadata = planner_config_for_channel_prior(
+            config, channel_prior_multiplier
+        )
         for strategy, intensity, seed in MVP.experiment_conditions(config):
             for planner in BASELINES:
-                selector = select_depth2_public if planner == PLANNER else None
+                selector = None
+                if planner == PLANNER:
+                    selector = (
+                        lambda cfg, st, acts, pc=planner_config: select_depth2_public(
+                            pc, st, acts
+                        )
+                    )
                 result, trace = MVP.run_episode(
                     config,
                     claims,
@@ -167,6 +258,12 @@ def execute_cases(case_dirs: list[Path]) -> tuple[list[dict[str, Any]], list[dic
                     seed,
                     planner,
                     action_selector=selector,
+                )
+                result.update(prior_metadata)
+                if cost_metadata is not None:
+                    result.update(cost_metadata)
+                result["channel_prior_consumed_by_planner"] = int(
+                    planner == PLANNER
                 )
                 rows.append(result)
                 traces.append(
@@ -230,6 +327,90 @@ def paired_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def evaluation_manifest(
+    case_dirs: list[Path],
+    rows: list[dict[str, Any]],
+    experiment_id: str,
+    channel_prior_multiplier: float,
+    output_hashes: dict[str, str],
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "experiment_id": experiment_id,
+        "case_prefixes": [path.name.split("-", 1)[0] for path in case_dirs],
+        "case_ids": sorted({row["case_id"] for row in rows}),
+        "independent_case_count": len({row["case_id"] for row in rows}),
+        "repeated_condition_count": len(
+            {
+                (
+                    row["case_id"],
+                    row["mask_strategy"],
+                    row["mask_intensity"],
+                    row["seed"],
+                )
+                for row in rows
+            }
+        ),
+        "planners": list(BASELINES),
+        "frozen_parameters": {
+            "discount": DISCOUNT,
+            "failure_cost_weight": FAILURE_COST_WEIGHT,
+        },
+        "information_boundary": "public_surrogate_state_and_channel_priors_only",
+        "channel_prior_intervention": {
+            "multiplier": float(channel_prior_multiplier),
+            "scope": "planner_belief_only",
+            "execution_reliability_source": "frozen_case_config",
+            "execution_profile_held_constant": True,
+            "consumed_by_planners": [PLANNER],
+        },
+        "statistical_unit": ENDPOINT_CONTRACT["document"]["statistical_unit"],
+        "cost_regime": cost_regime,
+        "cost_profile_identity_by_case": cost_profile_identities(
+            case_dirs, cost_regime, cost_profile
+        ),
+        "endpoint_boundary": {
+            **ENDPOINT.contract_metadata(ENDPOINT_CONTRACT),
+            "hidden_outcome_invariance_tested": True,
+            "declared_expected_effects_visible": True,
+            "realized_outcomes_visible": False,
+        },
+        "input_sha256": {
+            (case_dir / filename).resolve().relative_to(ROOT).as_posix(): sha256_file(
+                (case_dir / filename).resolve()
+            )
+            for case_dir in case_dirs
+            for filename in MVP.CASE_FILENAMES
+        },
+        "output_sha256": dict(sorted(output_hashes.items())),
+        "run_mvp_sha256": sha256_file(MVP_PATH),
+        "endpoint_adapter_sha256": sha256_file(ENDPOINT_ADAPTER_PATH),
+        "runner_sha256": sha256_file(Path(__file__)),
+        "all_experiments_complete": False,
+        "paper_or_patent_gate": "closed_until_human_and_operational_gates_are_satisfied",
+        "paper_or_patent_updated": False,
+    }
+
+
+def cost_profile_identities(
+    case_dirs: list[Path],
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> dict[str, dict[str, str]]:
+    identities: dict[str, dict[str, str]] = {}
+    for case_dir in case_dirs:
+        config = MVP.load_json(case_dir / "case_config.json")
+        actions = MVP.load_json(case_dir / "acquisition_actions.json")
+        actions, metadata = MVP.apply_cost_regime(
+            actions, config["case_id"], cost_regime, cost_profile
+        )
+        identities[config["case_id"]] = MVP.cost_profile_identity(
+            actions, config["case_id"], cost_regime, metadata
+        )
+    return identities
+
+
 def write_traces(path: Path, traces: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(traces, ensure_ascii=False).encode("utf-8")
@@ -284,7 +465,43 @@ def main() -> None:
     parser.add_argument(
         "--experiment-id",
     )
+    parser.add_argument(
+        "--channel-prior-multiplier",
+        type=float,
+        default=1.0,
+        help=(
+            "Planner-belief multiplier only; execution channel reliability "
+            "remains frozen to each case config."
+        ),
+    )
+    parser.add_argument(
+        "--cost-regime",
+        choices=MVP.COST_REGIMES,
+        default="legacy",
+        help="Embedded legacy, built-in uniform, or frozen rubric/measured costs.",
+    )
+    parser.add_argument(
+        "--cost-profile",
+        type=Path,
+        help="Frozen profile required for rubric/measured cost regimes.",
+    )
     args = parser.parse_args()
+    if args.cost_regime in {"rubric", "measured"} and args.cost_profile is None:
+        parser.error(f"--cost-profile is required for --cost-regime {args.cost_regime}")
+    if args.cost_regime in {"legacy", "uniform"} and args.cost_profile is not None:
+        parser.error(f"--cost-profile is not valid for --cost-regime {args.cost_regime}")
+    cost_profile = (
+        MVP.load_cost_profile(args.cost_profile)
+        if args.cost_profile is not None
+        else None
+    )
+    if args.output_dir.exists() and (
+        not args.output_dir.is_dir() or any(args.output_dir.iterdir())
+    ):
+        parser.error(
+            "Depth-2 governance runs require a new or empty --output-dir; "
+            "existing/frozen results are never overwritten"
+        )
 
     case_prefixes = tuple(args.case_prefixes)
     experiment_id = args.experiment_id or (
@@ -296,44 +513,44 @@ def main() -> None:
     )
     case_dirs = resolve_case_dirs(args.cases_root, case_prefixes)
 
-    rows, traces = execute_cases(case_dirs)
+    rows, traces = execute_cases(
+        case_dirs,
+        channel_prior_multiplier=args.channel_prior_multiplier,
+        cost_regime=args.cost_regime,
+        cost_profile=cost_profile,
+    )
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    MVP.write_csv(args.output_dir / "nonmyopic_policy_results.csv", rows)
+    results_path = args.output_dir / "nonmyopic_policy_results.csv"
+    summary_path = args.output_dir / "nonmyopic_policy_summary.json"
+    paired_path = args.output_dir / "nonmyopic_paired_summary.json"
+    traces_path = args.output_dir / "nonmyopic_policy_traces.json.gz"
+    manifest_path = args.output_dir / "evaluation_manifest.json"
+    MVP.write_csv(results_path, rows)
     MVP.write_json(
-        args.output_dir / "nonmyopic_policy_summary.json",
+        summary_path,
         MVP.summarize_stratified(rows),
     )
     MVP.write_json(
-        args.output_dir / "nonmyopic_paired_summary.json",
+        paired_path,
         paired_summary(rows),
     )
+    write_traces(traces_path, traces)
+    output_hashes = {
+        path.name: sha256_file(path)
+        for path in (results_path, summary_path, paired_path, traces_path)
+    }
     MVP.write_json(
-        args.output_dir / "evaluation_manifest.json",
-        {
-            "experiment_id": experiment_id,
-            "case_prefixes": list(case_prefixes),
-            "case_ids": sorted({row["case_id"] for row in rows}),
-            "independent_case_count": len({row["case_id"] for row in rows}),
-            "repeated_condition_count": len(
-                {
-                    (
-                        row["case_id"],
-                        row["mask_strategy"],
-                        row["mask_intensity"],
-                        row["seed"],
-                    )
-                    for row in rows
-                }
-            ),
-            "planners": list(BASELINES),
-            "frozen_parameters": {
-                "discount": DISCOUNT,
-                "failure_cost_weight": FAILURE_COST_WEIGHT,
-            },
-            "information_boundary": "public_surrogate_state_and_channel_priors_only",
-        },
+        manifest_path,
+        evaluation_manifest(
+            case_dirs,
+            rows,
+            experiment_id,
+            args.channel_prior_multiplier,
+            output_hashes,
+            args.cost_regime,
+            cost_profile,
+        ),
     )
-    write_traces(args.output_dir / "nonmyopic_policy_traces.json.gz", traces)
     print(f"Wrote frozen evaluation to {args.output_dir}")
 
 

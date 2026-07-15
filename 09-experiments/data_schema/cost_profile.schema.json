@@ -1,0 +1,499 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/cost_profile.schema.json",
+  "title": "Project05 acquisition-cost profile",
+  "description": "Versioned, non-destructive cost assignments for uniform/rubric/measured robustness runs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "version",
+    "status",
+    "regime",
+    "created_utc",
+    "standard_ref",
+    "scope",
+    "scoring",
+    "actions"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "frozen",
+        "retired"
+      ]
+    },
+    "regime": {
+      "type": "string",
+      "enum": [
+        "rubric",
+        "measured"
+      ]
+    },
+    "created_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "standard_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_ids"
+      ],
+      "properties": {
+        "case_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^C[0-9]{2}.*$"
+          }
+        }
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "unit"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "weighted_sum_scaled_round",
+            "precomputed_continuous"
+          ]
+        },
+        "weights": {
+          "$ref": "#/$defs/componentWeights"
+        },
+        "scale": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "rounding": {
+          "type": "string",
+          "enum": [
+            "half_up",
+            "none"
+          ]
+        },
+        "minimum_cost": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "maximum_cost": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formula": {
+          "type": "string"
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/actionCostEntry"
+      }
+    }
+  },
+  "$defs": {
+    "componentWeights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "E",
+        "V",
+        "D",
+        "A",
+        "R"
+      ],
+      "properties": {
+        "E": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "V": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "D": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "A": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "R": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "draftComponentScores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "E",
+        "V",
+        "D",
+        "A",
+        "R"
+      ],
+      "properties": {
+        "E": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 3
+        },
+        "V": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 3
+        },
+        "D": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 3
+        },
+        "A": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 3
+        },
+        "R": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 3
+        }
+      }
+    },
+    "finalComponentScores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "E",
+        "V",
+        "D",
+        "A",
+        "R"
+      ],
+      "properties": {
+        "E": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "V": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "D": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "A": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "R": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        }
+      }
+    },
+    "nullableNonnegativeNumber": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "measurementEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_events_scanned",
+        "recoverable_matched_event_count",
+        "observed_window_seconds",
+        "bytes_scanned",
+        "retention_window_days",
+        "host_count",
+        "limitations"
+      ],
+      "properties": {
+        "case_events_scanned": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "recoverable_matched_event_count": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "observed_window_seconds": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "bytes_scanned": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "retention_window_days": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "host_count": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "actionCostEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "action_id",
+        "legacy_cost",
+        "components",
+        "measured_cost",
+        "measurement_evidence",
+        "rating_status"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^C[0-9]{2}.*$"
+        },
+        "action_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "legacy_cost": {
+          "type": "number",
+          "minimum": 0
+        },
+        "components": {
+          "$ref": "#/$defs/draftComponentScores"
+        },
+        "measured_cost": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "measurement_evidence": {
+          "$ref": "#/$defs/measurementEvidence"
+        },
+        "rating_status": {
+          "type": "string",
+          "enum": [
+            "pending_independent_rating",
+            "rated_pending_agreement",
+            "adjudicated",
+            "not_applicable"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "regime": {
+            "const": "rubric"
+          }
+        },
+        "required": [
+          "regime"
+        ]
+      },
+      "then": {
+        "properties": {
+          "scoring": {
+            "properties": {
+              "method": {
+                "const": "weighted_sum_scaled_round"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "regime": {
+            "const": "measured"
+          }
+        },
+        "required": [
+          "regime"
+        ]
+      },
+      "then": {
+        "properties": {
+          "scoring": {
+            "properties": {
+              "method": {
+                "const": "precomputed_continuous"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "frozen"
+          },
+          "regime": {
+            "const": "rubric"
+          }
+        },
+        "required": [
+          "status",
+          "regime"
+        ]
+      },
+      "then": {
+        "properties": {
+          "scoring": {
+            "required": [
+              "weights",
+              "scale",
+              "rounding",
+              "minimum_cost",
+              "maximum_cost"
+            ],
+            "properties": {
+              "rounding": {
+                "const": "half_up"
+              }
+            }
+          },
+          "actions": {
+            "items": {
+              "properties": {
+                "components": {
+                  "$ref": "#/$defs/finalComponentScores"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "frozen"
+          },
+          "regime": {
+            "const": "measured"
+          }
+        },
+        "required": [
+          "status",
+          "regime"
+        ]
+      },
+      "then": {
+        "properties": {
+          "actions": {
+            "items": {
+              "properties": {
+                "measured_cost": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

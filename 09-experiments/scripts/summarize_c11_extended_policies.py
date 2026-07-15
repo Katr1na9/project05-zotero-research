@@ -47,6 +47,8 @@ def write_json(path: Path, value: Any) -> None:
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        raise ValueError(f"Refusing to write an empty CSV: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
@@ -94,8 +96,10 @@ def paired_against_m2(
     wins = ties = losses = repairs = regressions = joint_success = 0
     differences: list[float] = []
     for planners in grouped.values():
-        m2 = planners["project05_m2"]
-        candidate = planners[candidate_planner]
+        m2 = planners.get("project05_m2")
+        candidate = planners.get(candidate_planner)
+        if m2 is None or candidate is None:
+            continue
         m2_success = int(m2["reached_target"])
         candidate_success = int(candidate["reached_target"])
         repairs += int(candidate_success == 1 and m2_success == 0)

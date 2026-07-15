@@ -1,5 +1,12 @@
 # Research Progress
 
+## 2026-07-13：MAGIC 全文精读与官方代码审计
+
+- 完成 USENIX Security 2024 论文 MAGIC 的正文、附录和官方 `main` 分支关键实现复核，形成 `02-literature-notes/2024-Jia-MAGIC.md`。
+- 定位冻结为 provenance 日志侧上游异常候选生成器：输出批级/实体级 anomaly score，不做 actor attribution、ATT&CK 映射、证据补采、STOP、结论粒度门控或 Agent 决策。
+- 代码审计发现批级表示模型看过全部良性图、实体训练图使用恶意 ID 做 oracle cleaning、Trace 存在特殊正负类时间构造、测试标签参与 operating point 选择，以及 KNN/层数/检测嵌入等论文代码差异。AUC 仅按当前基准作排序证据，F1/FPR 不直接解释为无标签部署性能。
+- 官方预处理图继续维持“不作为 Project05 主数据”的决定；已将规范父记录 `SV57VQLV` 与 PDF 附件 `WMMURBGH` 导入 Zotero 合集“攻击溯源与意图感知”。
+
 ## 2026-07-13：正式外部 AFA 映射与 C12 生产 SOC 压力闭环
 
 - 冻结并源码审计 AFABench、WinRegRL、AACO 与 NOCTA：3 个可得仓库 commit 全部匹配，WinRegRL ZIP 哈希匹配；C07-C12 当前 5 类动作全部映射到 WinRegRL 最近动作族。

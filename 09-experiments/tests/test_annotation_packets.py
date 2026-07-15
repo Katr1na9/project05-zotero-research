@@ -1,6 +1,7 @@
 import csv
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -133,6 +134,48 @@ class AnnotationPacketTests(unittest.TestCase):
                         digest,
                         self.module.sha256(CASES_ROOT / case_name / filename),
                     )
+
+    def test_sanitized_public_views_drop_ground_truth_tells(self):
+        # Future-round opt-in path: notes and granularity code labels are
+        # redacted so annotators cannot read the ground-truth answer.
+        leak_patterns = [
+            re.compile(r"\bGT\b"),
+            re.compile(r"TA5\.1", re.IGNORECASE),
+            re.compile(r"ground[ _-]?truth", re.IGNORECASE),
+            re.compile(r"C\d\d-EC-\d+"),
+            re.compile(r"matched_event_count", re.IGNORECASE),
+            re.compile(r"representative_event_uuids", re.IGNORECASE),
+        ]
+        with tempfile.TemporaryDirectory() as output:
+            root = Path(output)
+            summary = self.module.build_packets(CASES_ROOT, root, sanitize=True)
+            self.assertTrue(summary["public_views_sanitized"])
+
+            claims = read_jsonl(root / "public" / "claim_items.jsonl")
+            states = read_jsonl(root / "public" / "granularity_items.jsonl")
+            self.assertEqual(len(claims), 27)
+            self.assertEqual(len(states), 60)
+
+            for item in claims:
+                self.assertEqual(item["notes"], "")
+            for item in states:
+                for view in item["visible_claims"]:
+                    self.assertEqual(view["notes"], "")
+                    self.assertEqual(view["mapped_tactic"], [])
+                    self.assertEqual(view["mapped_technique"], [])
+
+            for filename in ("claim_items.jsonl", "granularity_items.jsonl"):
+                blob = (root / "public" / filename).read_text(encoding="utf-8")
+                for pattern in leak_patterns:
+                    self.assertIsNone(
+                        pattern.search(blob),
+                        f"{pattern.pattern} leaked into sanitized {filename}",
+                    )
+
+    def test_default_build_is_not_sanitized(self):
+        with tempfile.TemporaryDirectory() as output:
+            summary = self.module.build_packets(CASES_ROOT, Path(output))
+            self.assertNotIn("public_views_sanitized", summary)
 
     def test_committed_packet_matches_the_frozen_generator(self):
         if not FROZEN_PACKET.is_dir():

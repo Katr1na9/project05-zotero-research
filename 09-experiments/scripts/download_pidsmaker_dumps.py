@@ -16,6 +16,8 @@ DATASETS = {
 }
 TOKEN_ENV = "PIDSMaker_GOOGLE_ACCESS_TOKEN"
 API_URL = "https://www.googleapis.com/drive/v3/files/{file_id}?alt=media"
+# Guard against a hung connection blocking the download indefinitely.
+DOWNLOAD_TIMEOUT_SECONDS = 300
 
 
 def resolve_access_token() -> str:
@@ -55,7 +57,7 @@ def download_dataset(
     request = build_request(dataset, target, access_token)
     resume_offset = target.stat().st_size if target.exists() else 0
 
-    with urllib.request.urlopen(request) as response:
+    with urllib.request.urlopen(request, timeout=DOWNLOAD_TIMEOUT_SECONDS) as response:
         is_partial = getattr(response, "status", None) == 206
         mode = "ab" if resume_offset and is_partial else "wb"
         with target.open(mode) as handle:

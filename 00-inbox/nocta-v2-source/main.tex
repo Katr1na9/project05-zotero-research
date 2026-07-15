@@ -1,0 +1,163 @@
+%%%%%%%% ICML 2026 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2026} with \usepackage[nohyperref]{icml2026} above.
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath} 
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{soul}  
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+% \usepackage{algorithmic}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{paracol}   
+\usepackage{booktabs}
+% Attempt to make hyperref and algorithmic work together better:
+% \newcommand{\theHalgorithm}{\arabic{algorithm}}
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\newcommand{\OurMethod}{NOCTA}
+% Use the following line for the initial blind version submitted for review:
+% \usepackage{icml2026}
+
+% For preprint, use
+\usepackage[preprint]{icml2026}
+
+% If accepted, instead use the following line for the camera-ready submission:
+% \usepackage[accepted]{icml2026}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{\OurMethod: Non-Greedy Objective Cost-Tradeoff Acquisition for Longitudinal Data}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{\OurMethod: Non-Greedy Objective Cost-Tradeoff \\ Acquisition for Longitudinal Data}
+
+  % It is OKAY to include author information, even for blind submissions: the
+  % style file will automatically remove it for you unless you've provided
+  % the [accepted] option to the icml2026 package.
+
+  % List of affiliations: The first argument should be a (short) identifier you
+  % will use later to specify author affiliations Academic affiliations
+  % should list Department, University, City, Region, Country Industry
+  % affiliations should list Company, City, Region, Country
+
+  % You can specify symbols, otherwise they are numbered in order. Ideally, you
+  % should not use this facility. Affiliations will be numbered in order of
+  % appearance and this is the preferred way.
+  \icmlsetsymbol{equal}{*}
+
+  \begin{icmlauthorlist}
+    \icmlauthor{Dzung Dinh}{equal,unc}
+    \icmlauthor{Boqi Chen}{equal,unc}
+    \icmlauthor{Yunni Qu}{unc}
+    \icmlauthor{Marc Niethammer}{ucsd}
+    \icmlauthor{Junier Oliva}{unc}
+    %\icmlauthor{}{sch}
+    %\icmlauthor{}{sch}
+  \end{icmlauthorlist}
+
+  \icmlaffiliation{unc}{Department of Computer Science, UNC Chapel Hill}
+  \icmlaffiliation{ucsd}{Department of Computer Science and Engineering,
+University of California San Diego}
+  % \icmlaffiliation{sch}{School of ZZZ, Institute of WWW, Location, Country}
+
+  \icmlcorrespondingauthor{Dzung Dinh}{ddinh@cs.unc.edu}
+  % \icmlcorrespondingauthor{Firstname2 Lastname2}{first2.last2@www.uk}
+
+  % You may provide any keywords that you find helpful for describing your
+  % paper; these are used to populate the "keywords" metadata in the PDF but
+  % will not be shown in the document
+  \icmlkeywords{Machine Learning, ICML}
+
+  \vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column listing the
+% affiliations and the copyright notice. The command takes one argument, which
+% is text to display at the start of the footnote. The \icmlEqualContribution
+% command is standard text for equal contribution. Remove it (just {}) if you
+% do not need this facility.
+
+
+% Use ONE of the following lines. DO NOT remove the command.
+% If you have no special notice, KEEP empty braces:
+% \printAffiliationsAndNotice{}  % no special notice (required even if empty)
+% Or, if applicable, use the standard equal contribution text:
+\printAffiliationsAndNotice{\icmlEqualContribution}
+
+\begin{abstract}
+% In many critical applications, resource constraints prevent observing all features at test time, motivating selective information acquisition for the predictions. For example, in healthcare, patient data spans diverse features ranging from lab tests to imaging studies, each may carry different information and must be acquired at a cost of time, money, or risk to the patient. Moreover, temporal prediction tasks, where both instance features and labels evolve over time, introduce additional complexity in deciding when or what information is important. 
+
+In many critical domains, features are not freely available at inference time: each measurement may come with a cost of time, money, and risk. Longitudinal prediction further complicates this setting because both features and labels evolve over time, and missing measurements at earlier timepoints may become permanently unavailable. We propose \texttt{\OurMethod}, a \textbf{N}on-Greedy \textbf{O}bjective \textbf{C}ost-\textbf{T}radeoff \textbf{A}cquisition framework that sequentially acquires the most informative features at inference time while accounting for both temporal dynamics and acquisition cost. \texttt{\OurMethod} is driven by a novel objective, NOCT, which evaluates a candidate set of future feature-time acquisitions by its expected predictive loss together with its acquisition cost. Since NOCT depends on unobserved future trajectories at inference time, we develop \emph{two complementary} estimators: (i) \texttt{NOCT-Contrastive}, which learns an embedding of partial observations utilizing the induced distribution over future acquisitions, and (ii) \texttt{NOCT-Amortized}, which directly predicts NOCT for candidate plans with a neural network. Experiments on synthetic and real-world medical datasets demonstrate that both \texttt{\OurMethod} estimators outperform existing baselines, achieving higher accuracy at lower acquisition costs.
+% than state-of-the-art baselines.
+
+% We first introduce a cohesive estimation target for our \texttt{\OurMethod} setting, and then develop \emph{two complementary} estimators: 1) a \emph{non-parametric method} based on nearest neighbors to guide acquisitions (\texttt{\OurMethod-NP}), and 2) a \emph{parametric method} that directly predicts the utility of potential acquisitions (\texttt{\OurMethod-P}). Experiments on synthetic and real-world medical datasets demonstrate that both \texttt{\OurMethod} variants outperform existing baselines, achieving higher accuracy at lower acquisition costs.
+
+
+
+\end{abstract}
+\input{sections/1_intro}
+\input{sections/2_related_works}
+\input{sections/3_method}
+\input{sections/4_experiments}
+% \input{sections/5_ablations}
+\input{sections/6_conclusion}
+
+% \bibliographystyle{unsrtnat}   
+% \bibliography{bibliography}
+\bibliography{bibliography}
+\bibliographystyle{plainnat}
+\input{sections/7_appendix}
+
+\end{document}

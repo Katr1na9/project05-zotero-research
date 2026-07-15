@@ -27,6 +27,8 @@ def load_script(name: str) -> Any:
 
 run_m3b = load_script("run_m3b")
 run_mvp = run_m3b.run_mvp
+runtime_adapter = load_script("planner_runtime_adapter")
+RUNTIME_CONTRACT = runtime_adapter.load_contract()
 FEATURE_COLUMNS = run_m3b.FEATURE_COLUMNS
 LABEL_COLUMNS = [
     "label_resolves_critical_gap_node",
@@ -184,7 +186,14 @@ def xgboost_action_score(
 ) -> tuple[float, float]:
     if run_mvp.is_stop_action(action):
         return 0.0, 0.0
-    features = run_m3b.feature_row(config, state, action)
+    features = runtime_adapter.build_ml_feature_row(
+        config,
+        state,
+        action,
+        run_m3b.feature_row,
+        FEATURE_COLUMNS,
+        RUNTIME_CONTRACT,
+    )
     probability = predict_probability(model, features)
     utility = probability - cost_penalty * float(action["cost"])
     return utility, probability
@@ -197,6 +206,12 @@ def select_xgboost_action(
     model: dict[str, Any],
     cost_penalty: float,
 ) -> dict[str, Any] | None:
+    view = runtime_adapter.build_runtime_view(
+        config, state, actions, RUNTIME_CONTRACT
+    )
+    config = view["config"]
+    state = view["state"]
+    actions = view["actions"]
     candidates = run_mvp.available_actions(
         actions,
         state.get("actions_taken", []),
@@ -208,6 +223,59 @@ def select_xgboost_action(
         candidates,
         key=lambda action: (
             *xgboost_action_score(config, state, action, model, cost_penalty),
+            int(run_mvp.is_stop_action(action)),
+            -float(action["cost"]),
+            action["action_id"],
+        ),
+    )
+
+
+def logistic_action_score(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    action: dict[str, Any],
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> tuple[float, float]:
+    if run_mvp.is_stop_action(action):
+        return 0.0, 0.0
+    features = runtime_adapter.build_ml_feature_row(
+        config,
+        state,
+        action,
+        run_m3b.feature_row,
+        FEATURE_COLUMNS,
+        RUNTIME_CONTRACT,
+    )
+    probability = run_m3b.predict_probability(model, features)
+    utility = probability - cost_penalty * float(action["cost"])
+    return utility, probability
+
+
+def select_logistic_action(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    actions: list[dict[str, Any]],
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> dict[str, Any] | None:
+    view = runtime_adapter.build_runtime_view(
+        config, state, actions, RUNTIME_CONTRACT
+    )
+    config = view["config"]
+    state = view["state"]
+    actions = view["actions"]
+    candidates = run_mvp.available_actions(
+        actions,
+        state.get("actions_taken", []),
+        state["budget"]["budget_remaining"],
+    )
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda action: (
+            *logistic_action_score(config, state, action, model, cost_penalty),
             int(run_mvp.is_stop_action(action)),
             -float(action["cost"]),
             action["action_id"],
@@ -259,6 +327,35 @@ def run_xgboost_episode(
     return result, trace
 
 
+def run_logistic_episode(
+    config: dict[str, Any],
+    claims: list[dict[str, Any]],
+    actions: list[dict[str, Any]],
+    mask_strategy: str,
+    mask_intensity: float,
+    seed: int,
+    model: dict[str, Any],
+    cost_penalty: float,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    actions = run_mvp.ensure_stop_action(config, actions)
+    return run_mvp.run_episode(
+        config,
+        claims,
+        actions,
+        mask_strategy,
+        mask_intensity,
+        seed,
+        "project05_m3b_policy",
+        action_selector=lambda episode_config, state, episode_actions: select_logistic_action(
+            episode_config,
+            state,
+            episode_actions,
+            model,
+            cost_penalty,
+        ),
+    )
+
+
 def selected_case_dirs(
     examples_root: Path,
     real_cases_root: Path,
@@ -293,15 +390,48 @@ def selected_case_dirs(
 
 def load_cases(
     case_dirs: list[Path],
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
 ) -> list[tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]]:
-    return [
-        (
-            run_m3b.load_json(case_dir / "case_config.json"),
-            run_m3b.load_json(case_dir / "evidence_claims.json"),
-            run_m3b.load_json(case_dir / "acquisition_actions.json"),
+    cases = []
+    for case_dir in case_dirs:
+        config = run_m3b.load_json(case_dir / "case_config.json")
+        claims = run_m3b.load_json(case_dir / "evidence_claims.json")
+        actions = run_m3b.load_json(case_dir / "acquisition_actions.json")
+        actions, _ = run_mvp.apply_cost_regime(
+            actions, config["case_id"], cost_regime, cost_profile
         )
-        for case_dir in case_dirs
-    ]
+        cases.append((config, claims, actions))
+    return cases
+
+
+def build_rows_for_cost_regime(
+    case_dirs: list[Path],
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for config, claims, actions in load_cases(case_dirs, cost_regime, cost_profile):
+        rows.extend(run_m3b.build_case_rows(config, claims, actions))
+    return rows
+
+
+def cost_profile_identities(
+    case_dirs: list[Path],
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> dict[str, dict[str, str]]:
+    identities: dict[str, dict[str, str]] = {}
+    for case_dir in case_dirs:
+        config = run_m3b.load_json(case_dir / "case_config.json")
+        actions = run_m3b.load_json(case_dir / "acquisition_actions.json")
+        actions, metadata = run_mvp.apply_cost_regime(
+            actions, config["case_id"], cost_regime, cost_profile
+        )
+        identities[config["case_id"]] = run_mvp.cost_profile_identity(
+            actions, config["case_id"], cost_regime, metadata
+        )
+    return identities
 
 
 def evaluate_policy(
@@ -309,6 +439,8 @@ def evaluate_policy(
     xgboost_model: dict[str, Any],
     logistic_model: dict[str, Any],
     cost_penalty: float,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     traces: list[dict[str, Any]] = []
@@ -319,6 +451,12 @@ def evaluate_policy(
         "oracle_optimal",
     ]
     for config, claims, actions in cases:
+        _, cost_metadata = run_mvp.apply_cost_regime(
+            actions,
+            config["case_id"],
+            cost_regime,
+            cost_profile,
+        )
         for strategy, intensity, seed in run_mvp.experiment_conditions(config):
             xgb_row, xgb_trace = run_xgboost_episode(
                 config,
@@ -330,6 +468,8 @@ def evaluate_policy(
                 xgboost_model,
                 cost_penalty,
             )
+            if cost_metadata is not None:
+                xgb_row.update(cost_metadata)
             rows.append(xgb_row)
             traces.append(
                 {
@@ -344,7 +484,7 @@ def evaluate_policy(
                     "trace": xgb_trace,
                 }
             )
-            logistic_row, _ = run_m3b.run_model_episode(
+            logistic_row, _ = run_logistic_episode(
                 config,
                 claims,
                 actions,
@@ -354,6 +494,8 @@ def evaluate_policy(
                 logistic_model,
                 cost_penalty,
             )
+            if cost_metadata is not None:
+                logistic_row.update(cost_metadata)
             rows.append(logistic_row)
             for planner in baseline_planners:
                 row, _ = run_mvp.run_episode(
@@ -365,6 +507,8 @@ def evaluate_policy(
                     seed,
                     planner,
                 )
+                if cost_metadata is not None:
+                    row.update(cost_metadata)
                 rows.append(row)
     return run_mvp.add_oracle_relative_metrics(rows), traces
 
@@ -400,8 +544,9 @@ def write_json(path: Path, value: Any) -> None:
 
 def write_json_gzip(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with gzip.open(path, "wt", encoding="utf-8") as handle:
-        json.dump(value, handle, ensure_ascii=False)
+    payload = json.dumps(value, ensure_ascii=False).encode("utf-8")
+    # mtime=0 keeps the gzip bytes reproducible across runs.
+    path.write_bytes(gzip.compress(payload, mtime=0))
 
 
 def sha256(path: Path) -> str:
@@ -412,6 +557,85 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def require_empty_output(path: Path) -> None:
+    if path.exists() and (not path.is_dir() or any(path.iterdir())):
+        raise FileExistsError(
+            f"XGBoost output must be new or empty; refusing to overwrite {path}"
+        )
+    path.mkdir(parents=True, exist_ok=True)
+
+
+def embedded_cost_profiles(case_dirs: list[Path]) -> dict[str, dict[str, str]]:
+    return cost_profile_identities(case_dirs, "legacy")
+
+
+def evaluation_manifest(
+    train_dirs: list[Path],
+    test_dirs: list[Path],
+    experiment_id: str,
+    output_hashes: dict[str, str],
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    train_ids = [
+        run_m3b.load_json(path / "case_config.json")["case_id"]
+        for path in train_dirs
+    ]
+    test_ids = [
+        run_m3b.load_json(path / "case_config.json")["case_id"]
+        for path in test_dirs
+    ]
+    if set(train_ids) & set(test_ids):
+        raise ValueError("XGBoost training and test cases must be disjoint")
+    all_dirs = train_dirs + test_dirs
+    return {
+        "experiment_id": experiment_id,
+        "train_case_ids": train_ids,
+        "test_case_ids": test_ids,
+        "independent_test_case_count": len(test_ids),
+        "training_test_overlap": [],
+        "statistical_unit": RUNTIME_CONTRACT["document"]["statistical_unit"],
+        "feature_contract": {
+            "columns": list(FEATURE_COLUMNS),
+            "hidden_outcome_fields_excluded": True,
+            "target_case_outcome_prior_excluded": True,
+        },
+        "cost_regime": cost_regime,
+        "cost_profile_identity_by_case": cost_profile_identities(
+            test_dirs, cost_regime, cost_profile
+        ),
+        "training_cost_profile_identity_by_case": cost_profile_identities(
+            train_dirs, cost_regime, cost_profile
+        ),
+        "endpoint_boundary": {
+            **runtime_adapter.contract_metadata(RUNTIME_CONTRACT),
+            "hidden_recovery_invariance_tested": True,
+            "runtime_labels_visible": False,
+            "realized_outcomes_visible": False,
+        },
+        "input_sha256": {
+            (case_dir / filename).resolve().relative_to(
+                Path(__file__).resolve().parents[2]
+            ).as_posix(): sha256(
+                (case_dir / filename).resolve()
+            )
+            for case_dir in all_dirs
+            for filename in run_mvp.CASE_FILENAMES
+        },
+        "output_sha256": dict(sorted(output_hashes.items())),
+        "runner_sha256": sha256(Path(__file__)),
+        "run_m3b_sha256": sha256(Path(__file__).with_name("run_m3b.py")),
+        "run_mvp_sha256": sha256(Path(__file__).with_name("run_mvp.py")),
+        "endpoint_adapter_sha256": sha256(
+            Path(__file__).with_name("planner_runtime_adapter.py")
+        ),
+        "external_actor_accuracy": None,
+        "all_experiments_complete": False,
+        "paper_or_patent_gate": "closed_until_human_and_operational_gates_are_satisfied",
+        "paper_or_patent_updated": False,
+    }
+
+
 def run_experiment(
     examples_root: Path,
     real_cases_root: Path,
@@ -419,6 +643,8 @@ def run_experiment(
     include_c10: bool = False,
     test_prefixes: tuple[str, ...] | None = None,
     experiment_id: str | None = None,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     train_dirs, test_dirs = selected_case_dirs(
         examples_root,
@@ -426,9 +652,9 @@ def run_experiment(
         include_c10=include_c10,
         test_prefixes=test_prefixes,
     )
-    train_rows = run_m3b.build_rows_for_case_dirs(train_dirs)
-    test_rows = run_m3b.build_rows_for_case_dirs(test_dirs)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    require_empty_output(output_dir)
+    train_rows = build_rows_for_cost_regime(train_dirs, cost_regime, cost_profile)
+    test_rows = build_rows_for_cost_regime(test_dirs, cost_regime, cost_profile)
 
     models: dict[str, dict[str, Any]] = {}
     classification: dict[str, Any] = {}
@@ -459,10 +685,12 @@ def run_experiment(
         PRIMARY_LABEL,
     )
     policy_rows, policy_traces = evaluate_policy(
-        load_cases(test_dirs),
+        load_cases(test_dirs, cost_regime, cost_profile),
         primary_model,
         primary_logistic,
         FROZEN_COST_PENALTY,
+        cost_regime,
+        cost_profile,
     )
     if experiment_id is None:
         if include_c10:
@@ -489,13 +717,35 @@ def run_experiment(
         "feature_columns": FEATURE_COLUMNS,
         "primary_label": PRIMARY_LABEL,
         "cost_penalty": FROZEN_COST_PENALTY,
+        "cost_regime": cost_regime,
         "classification": classification,
         "policy_summary": run_mvp.summarize_stratified(policy_rows),
     }
-    write_csv(output_dir / "xgboost_test_predictions.csv", add_predictions(primary_model, test_rows))
-    write_csv(output_dir / "xgboost_policy_results.csv", policy_rows)
-    write_json_gzip(output_dir / "xgboost_policy_traces.json.gz", policy_traces)
-    write_json(output_dir / "xgboost_experiment_summary.json", report)
+    predictions_path = output_dir / "xgboost_test_predictions.csv"
+    policy_path = output_dir / "xgboost_policy_results.csv"
+    traces_path = output_dir / "xgboost_policy_traces.json.gz"
+    summary_path = output_dir / "xgboost_experiment_summary.json"
+    manifest_path = output_dir / "evaluation_manifest.json"
+    write_csv(predictions_path, add_predictions(primary_model, test_rows))
+    write_csv(policy_path, policy_rows)
+    write_json_gzip(traces_path, policy_traces)
+    write_json(summary_path, report)
+    output_hashes = {
+        path.name: sha256(path)
+        for path in sorted(output_dir.iterdir())
+        if path.is_file() and path != manifest_path
+    }
+    write_json(
+        manifest_path,
+        evaluation_manifest(
+            train_dirs,
+            test_dirs,
+            experiment_id,
+            output_hashes,
+            cost_regime,
+            cost_profile,
+        ),
+    )
     return report
 
 
@@ -523,7 +773,27 @@ def main() -> None:
         "--experiment-id",
         help="Explicit frozen-transfer experiment identifier for the output report.",
     )
+    parser.add_argument(
+        "--cost-regime",
+        choices=run_mvp.COST_REGIMES,
+        default="legacy",
+        help="Embedded legacy, built-in uniform, or frozen rubric/measured costs.",
+    )
+    parser.add_argument(
+        "--cost-profile",
+        type=Path,
+        help="Frozen profile required for rubric/measured cost regimes.",
+    )
     args = parser.parse_args()
+    if args.cost_regime in {"rubric", "measured"} and args.cost_profile is None:
+        parser.error(f"--cost-profile is required for --cost-regime {args.cost_regime}")
+    if args.cost_regime in {"legacy", "uniform"} and args.cost_profile is not None:
+        parser.error(f"--cost-profile is not valid for --cost-regime {args.cost_regime}")
+    cost_profile = (
+        run_mvp.load_cost_profile(args.cost_profile)
+        if args.cost_profile is not None
+        else None
+    )
     report = run_experiment(
         args.examples_root,
         args.real_cases_root,
@@ -531,6 +801,8 @@ def main() -> None:
         include_c10=args.include_c10,
         test_prefixes=tuple(args.test_prefixes) if args.test_prefixes else None,
         experiment_id=args.experiment_id,
+        cost_regime=args.cost_regime,
+        cost_profile=cost_profile,
     )
     print(
         json.dumps(

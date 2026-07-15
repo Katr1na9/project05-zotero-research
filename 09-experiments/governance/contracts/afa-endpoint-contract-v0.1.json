@@ -1,0 +1,157 @@
+{
+  "$schema": "../../data_schema/afa_endpoint_contract.schema.json",
+  "contract_id": "project05-afa-endpoint-contract-v0.1",
+  "version": "0.1.0",
+  "status": "frozen_for_new_runs",
+  "created_utc": "2026-07-14T02:15:00Z",
+  "scope": {
+    "endpoint_family": "domain_adapted_active_feature_acquisition",
+    "official_external_implementation_claimed": false
+  },
+  "missingness": {
+    "native_missing": {
+      "definition": "Evidence absent from the compiled case universe because the source did not record, retain, expose, or contain it; it is not assigned a hidden claim id and is not recoverable by the simulator.",
+      "represented_as_hidden_claim_ids": false,
+      "eligible_for_simulated_recovery": false,
+      "planner_membership_visible": false
+    },
+    "experimentally_masked": {
+      "definition": "A seeded subset of existing hideable claims withheld only for evaluation; membership is evaluator-only and an acquisition may recover it through the execution model.",
+      "represented_as_hidden_claim_ids": true,
+      "eligible_for_simulated_recovery": true,
+      "planner_membership_visible": false
+    }
+  },
+  "planner_visibility": {
+    "config": {
+      "top_level_fields": [
+        "case_id",
+        "budget_total",
+        "granularity_order",
+        "support_ceiling",
+        "granularity_thresholds",
+        "cti_nodes",
+        "cti_edges",
+        "channel_reliability"
+      ],
+      "nested_fields": {
+        "granularity_thresholds": [
+          "g3_node_coverage",
+          "g3_edge_coverage",
+          "g2_node_coverage",
+          "g2_min_stages",
+          "g1_node_coverage"
+        ],
+        "cti_nodes": ["node_id", "stage", "critical"],
+        "cti_edges": ["edge_id", "source", "target"]
+      }
+    },
+    "state": {
+      "top_level_fields": [
+        "case_id",
+        "step_index",
+        "visible_claim_ids",
+        "recovered_claim_ids",
+        "matched_cti_node_ids",
+        "unmatched_cti_node_ids",
+        "matched_cti_edge_ids",
+        "unmatched_cti_edge_ids",
+        "coverage",
+        "discriminability",
+        "supportable_granularity",
+        "budget",
+        "actions_taken",
+        "action_feedback",
+        "remaining_action_ids"
+      ],
+      "nested_fields": {
+        "budget": ["budget_total", "budget_used", "budget_remaining"],
+        "action_feedback": ["action_id", "action_type", "recovered_count"]
+      }
+    },
+    "action": {
+      "top_level_fields": [
+        "action_id",
+        "case_id",
+        "action_type",
+        "acquisition_channel",
+        "target",
+        "cost",
+        "intended_cti_node_ids",
+        "expected_evidence_types",
+        "expected_stages",
+        "status",
+        "natural_language_request"
+      ],
+      "nested_fields": {
+        "target": ["target_type", "target_value"]
+      }
+    },
+    "recursive_forbidden_keys": [
+      "recoverable_claim_ids",
+      "hidden_claim_ids",
+      "required_claim_ids",
+      "expected_effects",
+      "mask_strategy",
+      "mask_intensity",
+      "random_seed",
+      "run_id",
+      "channel_up",
+      "realized_recovery",
+      "computed_granularity",
+      "oracle",
+      "target_case_outcome_prior"
+    ]
+  },
+  "stop_action": {
+    "action_id": "STOP",
+    "always_public": true,
+    "cost": 0,
+    "recovers_evidence": false,
+    "terminates_episode": true,
+    "tie_break": "prefer_stop_when_net_value_ties"
+  },
+  "channel_failure": {
+    "prior_visible": true,
+    "realized_state_visible_before_action": false,
+    "down_channel_consumes_cost": true,
+    "down_channel_observation": "empty_recovery",
+    "planner_feedback": "action_id_action_type_recovered_count_only",
+    "evaluator_only_fields": ["channel_up", "recovered_claim_ids", "seed"],
+    "shared_realization_key": "case_id_channel_seed"
+  },
+  "profile_identity": {
+    "cost": {
+      "identity_required": true,
+      "default_provenance": "case_embedded_legacy_exogenous_cost",
+      "allowed_provenance": [
+        "case_embedded_legacy_exogenous_cost",
+        "uniform_frozen_exogenous_cost",
+        "rubric_frozen_independent_ratings",
+        "measured_frozen_operational_cost"
+      ]
+    },
+    "prior": {
+      "identity_required": true,
+      "default_provenance": "legacy_expert_channel_prior_not_target_case_outcome_derived",
+      "allowed_provenance": [
+        "legacy_expert_channel_prior_not_target_case_outcome_derived",
+        "development_only_cross_case_profile",
+        "externally_frozen_prior"
+      ]
+    },
+    "required_fields": ["profile_id", "version", "sha256", "provenance"]
+  },
+  "leakage_controls": {
+    "runtime_allowlist_required": true,
+    "node_level_required_claim_ids_visible": false,
+    "recoverable_outcomes_visible": false,
+    "target_case_outcome_derived_priors_allowed": false,
+    "selector_invariance_tests_required": true
+  },
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "repeated": "mask_strategy_x_mask_intensity_x_seed",
+    "pseudoreplication_forbidden": true
+  }
+}

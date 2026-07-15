@@ -81,10 +81,105 @@ class LightweightNonmyopicTests(unittest.TestCase):
         changed = copy.deepcopy(actions)
         changed[0]["recoverable_claim_ids"] = ["completely-different"]
         changed[1]["recoverable_claim_ids"] = []
+        changed[0]["realized_recovery"] = ["forced-secret"]
+        changed[1]["oracle_path"] = ["B"]
 
         first = module.select_depth2_public(config, base_state(), actions)
         second = module.select_depth2_public(config, base_state(), changed)
         self.assertEqual(first["action_id"], second["action_id"])
+
+    def test_planner_channel_prior_override_keeps_execution_profile_fixed(self):
+        module = self.require_module()
+        execution = {"channel_reliability": {"host": 0.8}}
+
+        planner_config, metadata = module.planner_config_for_channel_prior(
+            execution, 0.75
+        )
+
+        self.assertEqual({"host": 0.8}, execution["channel_reliability"])
+        self.assertEqual({"host": 0.6}, planner_config["channel_reliability"])
+        self.assertEqual("planner_belief_only", metadata["channel_prior_scope"])
+        self.assertEqual(1, metadata["execution_channel_profile_held_constant"])
+        self.assertNotEqual(
+            metadata["execution_channel_profile_sha256"],
+            metadata["planner_channel_prior_sha256"],
+        )
+
+    def test_execute_cases_marks_only_depth2_as_channel_prior_consumer(self):
+        module = self.require_module()
+        case = next(
+            (ROOT / "09-experiments" / "real_cases").glob("C12-*")
+        )
+
+        rows, _ = module.execute_cases(
+            [case], channel_prior_multiplier=0.75
+        )
+
+        self.assertEqual(135, len(rows))
+        consumed = {
+            planner: {
+                int(row["channel_prior_consumed_by_planner"])
+                for row in rows
+                if row["planner"] == planner
+            }
+            for planner in module.BASELINES
+        }
+        self.assertEqual({0}, consumed["project05_m2"])
+        self.assertEqual({1}, consumed[module.PLANNER])
+        self.assertEqual({0}, consumed["oracle_optimal"])
+        self.assertEqual(
+            {"planner_belief_only"},
+            {row["channel_prior_scope"] for row in rows},
+        )
+        self.assertEqual(
+            {1},
+            {int(row["execution_channel_profile_held_constant"]) for row in rows},
+        )
+
+    def test_manifest_records_depth2_boundary_and_closed_writing_gate(self):
+        module = self.require_module()
+        case = next(
+            (ROOT / "09-experiments" / "real_cases").glob("C12-*")
+        )
+        case_id = MVP.load_json(case / "case_config.json")["case_id"]
+        rows = [
+            {
+                "case_id": case_id,
+                "mask_strategy": "random",
+                "mask_intensity": 0.2,
+                "seed": 11,
+            }
+        ]
+        manifest = module.evaluation_manifest(
+            [case],
+            rows,
+            "test-depth2-manifest",
+            channel_prior_multiplier=0.75,
+            output_hashes={"results.csv": "a" * 64},
+        )
+
+        self.assertEqual("case_or_attack_chain", manifest["statistical_unit"]["independent"])
+        self.assertTrue(manifest["statistical_unit"]["pseudoreplication_forbidden"])
+        self.assertEqual(0.75, manifest["channel_prior_intervention"]["multiplier"])
+        self.assertEqual([module.PLANNER], manifest["channel_prior_intervention"]["consumed_by_planners"])
+        self.assertTrue(manifest["endpoint_boundary"]["runtime_allowlist_enforced"])
+        self.assertEqual(64, len(manifest["endpoint_boundary"]["sha256"]))
+        self.assertFalse(manifest["endpoint_boundary"]["realized_outcomes_visible"])
+        self.assertTrue(manifest["endpoint_boundary"]["hidden_outcome_invariance_tested"])
+        self.assertEqual({"results.csv": "a" * 64}, manifest["output_sha256"])
+        self.assertEqual("legacy", manifest["cost_regime"])
+        self.assertEqual(1, len(manifest["cost_profile_identity_by_case"]))
+        self.assertFalse(manifest["all_experiments_complete"])
+        self.assertFalse(manifest["paper_or_patent_updated"])
+
+    def test_uniform_costs_are_applied_and_identified(self):
+        module = self.require_module()
+        case = next((ROOT / "09-experiments" / "real_cases").glob("C12-*"))
+        rows, _ = module.execute_cases([case], cost_regime="uniform")
+        self.assertEqual({"uniform"}, {row["cost_regime"] for row in rows})
+        identities = module.cost_profile_identities([case], "uniform")
+        identity = next(iter(identities.values()))
+        self.assertEqual("uniform_frozen_exogenous_cost", identity["provenance"])
 
     def test_depth2_can_prefer_reliable_diverse_step_over_myopic_choice(self):
         module = self.require_module()

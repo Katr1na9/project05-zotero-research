@@ -216,11 +216,16 @@ def aggregate_policy_results(path: Path) -> pd.DataFrame:
     for planner, group in data.groupby("planner"):
         success = float(group["reached_target"].mean())
         successful = group[group["reached_target"] == 1]
+        mean_cost = (
+            float(successful["cost_to_target"].mean())
+            if len(successful)
+            else float("nan")
+        )
         rows.append(
             {
                 "planner": planner,
                 "success": success,
-                "mean_cost": float(successful["cost_to_target"].mean()),
+                "mean_cost": mean_cost,
                 "zero_yield": float(group["zero_yield_actions"].mean()),
                 "episodes": int(len(group)),
                 "cases": int(group["case_id"].nunique()),

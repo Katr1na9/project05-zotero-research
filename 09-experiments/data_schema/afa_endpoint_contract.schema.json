@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/afa_endpoint_contract.schema.json",
+  "title": "Project05 AFA endpoint and information-boundary contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contract_id",
+    "version",
+    "status",
+    "created_utc",
+    "scope",
+    "missingness",
+    "planner_visibility",
+    "stop_action",
+    "channel_failure",
+    "profile_identity",
+    "leakage_controls",
+    "statistical_unit"
+  ],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "contract_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "status": {"const": "frozen_for_new_runs"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoint_family", "official_external_implementation_claimed"],
+      "properties": {
+        "endpoint_family": {"const": "domain_adapted_active_feature_acquisition"},
+        "official_external_implementation_claimed": {"const": false}
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["native_missing", "experimentally_masked"],
+      "properties": {
+        "native_missing": {"$ref": "#/$defs/missingnessClass"},
+        "experimentally_masked": {"$ref": "#/$defs/missingnessClass"}
+      }
+    },
+    "planner_visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["config", "state", "action", "recursive_forbidden_keys"],
+      "properties": {
+        "config": {"$ref": "#/$defs/visibilitySpec"},
+        "state": {"$ref": "#/$defs/visibilitySpec"},
+        "action": {"$ref": "#/$defs/visibilitySpec"},
+        "recursive_forbidden_keys": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "stop_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "always_public",
+        "cost",
+        "recovers_evidence",
+        "terminates_episode",
+        "tie_break"
+      ],
+      "properties": {
+        "action_id": {"const": "STOP"},
+        "always_public": {"const": true},
+        "cost": {"const": 0},
+        "recovers_evidence": {"const": false},
+        "terminates_episode": {"const": true},
+        "tie_break": {"const": "prefer_stop_when_net_value_ties"}
+      }
+    },
+    "channel_failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prior_visible",
+        "realized_state_visible_before_action",
+        "down_channel_consumes_cost",
+        "down_channel_observation",
+        "planner_feedback",
+        "evaluator_only_fields",
+        "shared_realization_key"
+      ],
+      "properties": {
+        "prior_visible": {"const": true},
+        "realized_state_visible_before_action": {"const": false},
+        "down_channel_consumes_cost": {"const": true},
+        "down_channel_observation": {"const": "empty_recovery"},
+        "planner_feedback": {"const": "action_id_action_type_recovered_count_only"},
+        "evaluator_only_fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        },
+        "shared_realization_key": {"const": "case_id_channel_seed"}
+      }
+    },
+    "profile_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cost", "prior", "required_fields"],
+      "properties": {
+        "cost": {"$ref": "#/$defs/profileRequirement"},
+        "prior": {"$ref": "#/$defs/profileRequirement"},
+        "required_fields": {
+          "type": "array",
+          "const": ["profile_id", "version", "sha256", "provenance"]
+        }
+      }
+    },
+    "leakage_controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_allowlist_required",
+        "node_level_required_claim_ids_visible",
+        "recoverable_outcomes_visible",
+        "target_case_outcome_derived_priors_allowed",
+        "selector_invariance_tests_required"
+      ],
+      "properties": {
+        "runtime_allowlist_required": {"const": true},
+        "node_level_required_claim_ids_visible": {"const": false},
+        "recoverable_outcomes_visible": {"const": false},
+        "target_case_outcome_derived_priors_allowed": {"const": false},
+        "selector_invariance_tests_required": {"const": true}
+      }
+    },
+    "statistical_unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent", "repeated", "pseudoreplication_forbidden"],
+      "properties": {
+        "independent": {"const": "case_or_attack_chain"},
+        "repeated": {"const": "mask_strategy_x_mask_intensity_x_seed"},
+        "pseudoreplication_forbidden": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "missingnessClass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "definition",
+        "represented_as_hidden_claim_ids",
+        "eligible_for_simulated_recovery",
+        "planner_membership_visible"
+      ],
+      "properties": {
+        "definition": {"type": "string", "minLength": 1},
+        "represented_as_hidden_claim_ids": {"type": "boolean"},
+        "eligible_for_simulated_recovery": {"type": "boolean"},
+        "planner_membership_visible": {"const": false}
+      }
+    },
+    "visibilitySpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["top_level_fields"],
+      "properties": {
+        "top_level_fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "nested_fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "profileRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity_required", "default_provenance", "allowed_provenance"],
+      "properties": {
+        "identity_required": {"const": true},
+        "default_provenance": {"type": "string", "minLength": 1},
+        "allowed_provenance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

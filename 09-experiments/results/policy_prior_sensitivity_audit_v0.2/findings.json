@@ -1,0 +1,269 @@
+{
+  "audit_id": "project05-policy-prior-sensitivity-audit-v0.2",
+  "source_anchors": {
+    "AFA_x0.75_manifest_sha256": "66bf380ce274881945077f734fcb0e9054dfdcba805c7726fd7b9fc8a67e04db",
+    "AFA_x1.00_manifest_sha256": "f2dd51046ae1e6ac145a18eae55ff1f7132a72d98750b40b12e6ba85e72f5108",
+    "AFA_x1.25_manifest_sha256": "9e38a0007fc5a8c22a0c2599ada71873c1ded7a7d5d19592f09e14e9e63968b6",
+    "Depth2_x0.75_manifest_sha256": "bf565e696800ce47d35268da91abf4e3cd55069bc18755a6a40deb828bafb459",
+    "Depth2_x1.00_manifest_sha256": "ef816d20b807fb3348fd98b2d1a82e2dd882d7a5d71f4be3b3f877b089510679",
+    "Depth2_x1.25_manifest_sha256": "05c36e86f8cec30929bf203ddb74f0beef25ba4b472824cf9d3cefeaba85bf6c"
+  },
+  "statistical_boundary": {
+    "independent_unit": "case_or_attack_chain",
+    "independent_case_count": 6,
+    "repeated_unit": "mask_strategy_x_mask_intensity_x_seed",
+    "repeated_conditions_must_not_be_counted_as_independent_attacks": true,
+    "inferential_statistics": "not_reported"
+  },
+  "AFA": {
+    "independent_case_count": 6,
+    "repeated_condition_count": 270,
+    "analysis_unit": "case_or_attack_chain",
+    "execution_profile_invariant_across_prior_arms": true,
+    "runtime_allowlist_enforced": true,
+    "hidden_outcome_invariance_tested": true,
+    "x0.75": {
+      "project05_m2": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "afa_voi_myopic": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 268,
+        "success_losses": 2,
+        "success_gains": 0,
+        "outcome_difference_count": 14,
+        "action_sequence_changes": 14,
+        "cases_with_outcome_difference": [
+          "C09-darpa-optc-sysclient0201-0923",
+          "C12-witfoo-precinct6-f10c7270"
+        ],
+        "cases_with_success_flip": [
+          "C09-darpa-optc-sysclient0201-0923"
+        ],
+        "success_flip_conditions": [
+          {
+            "direction": "loss",
+            "case_id": "C09-darpa-optc-sysclient0201-0923",
+            "mask_strategy": "random",
+            "mask_intensity": "0.6",
+            "seed": "23",
+            "baseline_actions": "C09-AA-004|C09-AA-005|C09-AA-002",
+            "candidate_actions": "C09-AA-004|STOP"
+          },
+          {
+            "direction": "loss",
+            "case_id": "C09-darpa-optc-sysclient0201-0923",
+            "mask_strategy": "random",
+            "mask_intensity": "0.6",
+            "seed": "41",
+            "baseline_actions": "C09-AA-004|C09-AA-005|C09-AA-002",
+            "candidate_actions": "C09-AA-004|STOP"
+          }
+        ]
+      },
+      "afa_voi_rollout_h3": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 75,
+        "action_sequence_changes": 75,
+        "cases_with_outcome_difference": [
+          "C07-darpa-e5-theia-0515",
+          "C08-darpa-e5-clearscope-0515",
+          "C09-darpa-optc-sysclient0201-0923",
+          "C11-otrf-apt29-day1-scranton-nashua"
+        ],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "oracle_optimal": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      }
+    },
+    "x1.25": {
+      "project05_m2": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "afa_voi_myopic": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "afa_voi_rollout_h3": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "oracle_optimal": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      }
+    }
+  },
+  "Depth2": {
+    "independent_case_count": 6,
+    "repeated_condition_count": 270,
+    "analysis_unit": "case_or_attack_chain",
+    "execution_profile_invariant_across_prior_arms": true,
+    "runtime_allowlist_enforced": true,
+    "hidden_outcome_invariance_tested": true,
+    "x0.75": {
+      "project05_m2": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "project05_depth2_public": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 269,
+        "candidate_success_count": 269,
+        "success_losses": 1,
+        "success_gains": 1,
+        "outcome_difference_count": 52,
+        "action_sequence_changes": 52,
+        "cases_with_outcome_difference": [
+          "C07-darpa-e5-theia-0515",
+          "C08-darpa-e5-clearscope-0515",
+          "C09-darpa-optc-sysclient0201-0923",
+          "C10-darpa-optc-sysclient0351-0925",
+          "C11-otrf-apt29-day1-scranton-nashua"
+        ],
+        "cases_with_success_flip": [
+          "C11-otrf-apt29-day1-scranton-nashua"
+        ],
+        "success_flip_conditions": [
+          {
+            "direction": "loss",
+            "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+            "mask_strategy": "random",
+            "mask_intensity": "0.6",
+            "seed": "41",
+            "baseline_actions": "C11-AA-004|C11-AA-002|C11-AA-003",
+            "candidate_actions": "C11-AA-002|C11-AA-005|C11-AA-001|C11-AA-004|STOP"
+          },
+          {
+            "direction": "gain",
+            "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+            "mask_strategy": "random",
+            "mask_intensity": "0.6",
+            "seed": "11",
+            "baseline_actions": "C11-AA-005|C11-AA-004|C11-AA-002|C11-AA-001|STOP",
+            "candidate_actions": "C11-AA-005|C11-AA-001|C11-AA-003"
+          }
+        ]
+      },
+      "oracle_optimal": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      }
+    },
+    "x1.25": {
+      "project05_m2": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "project05_depth2_public": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 269,
+        "candidate_success_count": 269,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      },
+      "oracle_optimal": {
+        "paired_repeated_condition_count": 270,
+        "baseline_success_count": 270,
+        "candidate_success_count": 270,
+        "success_losses": 0,
+        "success_gains": 0,
+        "outcome_difference_count": 0,
+        "action_sequence_changes": 0,
+        "cases_with_outcome_difference": [],
+        "cases_with_success_flip": [],
+        "success_flip_conditions": []
+      }
+    }
+  },
+  "all_experiments_complete": false,
+  "paper_or_patent_gate": "closed_until_human_and_operational_gates_are_satisfied",
+  "paper_or_patent_updated": false
+}

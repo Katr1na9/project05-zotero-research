@@ -29,6 +29,7 @@
 - [x] `2024-HG-CTA-Heterogeneous-Graph-Cyber-Threat-Attribution.md`
 - [x] `2024-Huang-Cascade-APT-Campaign-Attribution-Logs.md`
 - [x] `2024-Huang-SAGA-Synthetic-Audit-Log-Generation-APT.md`
+- [x] `2024-Jia-MAGIC.md`
 - [x] `2024-Ji-SEvenLLM.md`
 - [x] `2024-Rani-TTPXHunter.md`
 - [x] `2024-Saha-ADAPT-it.md`

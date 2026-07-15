@@ -2,138 +2,325 @@
 
 ## 1. 基本信息
 
-- 英文题名：NOCTA: Non-Greedy Objective Cost-Tradeoff Acquisition for Longitudinal Data
+- 英文题名：*NOCTA: Non-Greedy Objective Cost-Tradeoff Acquisition for Longitudinal Data*
 - 中文译名：NOCTA：面向纵向数据的非贪心目标-成本权衡采集方法
-- 作者：Dzung Dinh, Boqi Chen, Yunni Qu, Marc Niethammer, Junier Oliva
-- 年份：2025/2026 revision
-- Venue：arXiv preprint
-- DOI / arXiv / URL：https://arxiv.org/abs/2507.12412
-- Zotero key：待补
-- 阅读日期：2026-07-07
-- 阅读优先级：重点读
-- 所属主题：Active Feature Acquisition / Cost-aware planning / Longitudinal decision
-- 阅读状态：arXiv 正文级精读；作为 Project05 主动取证规划理论支撑
+- 作者（arXiv v2）：Dzung Dinh, Boqi Chen, Yunni Qu, Marc Niethammer, Junier Oliva
+- arXiv：2507.12412
+- DOI：10.48550/arXiv.2507.12412
+- 初次提交：2025-07-16
+- 当前精读版本：arXiv v2，2026-02-09 修订，20 页
+- 当前发表状态：预印本；OpenReview 中对应 ICLR 2026 投稿已撤回。arXiv v2 源码采用 ICML 2026 模板，但不能据此认定已被 ICML 接收。
+- 官方页面：<https://arxiv.org/abs/2507.12412>
+- OpenReview：<https://openreview.net/forum?id=yK2ELO31lT>
+- 代码状态：论文写明“正式发表后公开”；截至 2026-07-14 未核验到官方公开实现。
+- Zotero：已有 RIS 导入候选记录；本次因 Zotero 桌面端未运行，未能核对父条目 key 和附件状态。
+- 初读日期：2026-07-07
+- 全文复核：2026-07-14
+- 阅读状态：arXiv v2 PDF、LaTeX 源码与附录逐节复核
+- Project05 定位：外部 AFA 理论近邻；不是本项目 AFA-VOI adapter 的官方实现
 
-## 2. 一句话总结
+## 2. 一句话结论
 
-NOCTA 研究的是推理时特征并非免费可得的场景：系统要在部分观测、时间约束和采集成本下选择未来要采集的特征。它提出非贪心 NOCT 目标和两个估计器，为 Project05 的“下一步取什么证据”提供直接理论参照。
+NOCTA 把纵向主动特征获取写成“未来累计预测损失 + 固定采集成本”的非贪心计划选择问题：先评价一个未来 feature-time 计划，只执行其中最早的一步，得到新观测后重新规划；空计划就是停止。
 
-## 3. 研究问题
+它对 Project05 最重要的启发不是某个神经网络结构，而是三件事：**计划级效用、显式 STOP、执行后重规划**。它与 Project05 的关键差异则是：NOCTA 默认成本已知、动作成功后特征可得，并使用监督预测损失作为终点；Project05 还要处理动作失败、`intended != recoverable`、来源可追溯性和可支撑归因粒度。
 
-- 许多关键领域中，特征获取有时间、金钱、风险成本。
-- 纵向数据中，早期测量一旦错过可能永远不可补。
-- 贪心 acquisition 容易只看当前边际收益，忽略特征组合、未来影响和采集时机。
+## 3. 对“成本是不是人工标注”的直接回答
 
-## 4. 核心贡献
+### 3.1 最短答案
 
-1. 聚焦 Longitudinal Active Feature Acquisition：在推理时决定采集哪些 feature、何时采集、何时停止。
-2. 提出 NOCT objective，用预期预测损失和 acquisition cost 共同评价未来采集计划。
-3. 提出 NOCT-Contrastive：用对比学习表示部分观测与未来采集效用。
-4. 提出 NOCT-Amortized：用神经网络直接预测 candidate plan 的 NOCT 值，提升推理效率。
+**成本是人工设定的，但不是逐样本人工标注。**
 
-## 5. 方法框架
+作者给每一类特征指定一个固定相对成本 `c^m`，再用超参数 `alpha` 控制“预测损失与成本”的权衡。论文没有报告真实价格、采集耗时、患者风险测量、专家小组标注或标注一致性。
 
-### 输入
+同时，NOCTA 的效用学习又确实依赖监督标签 `y_t`：训练时使用完整纵向训练轨迹中的未来特征和未来标签，自动计算候选计划的 plug-in NOCT 值。因此：
 
-- 当前部分观测特征。
-- 可采集的 feature-time candidates。
-- acquisition cost。
-- 预测任务目标。
+| 对象 | 是否人工提供 | 是否逐样本标注 | 是否由模型学习 | 实际来源 |
+|---|---:|---:|---:|---|
+| 特征成本 `c^m` | 是 | 否 | 否 | 作者按模态/工作量指定；ADNI 继承前作设定 |
+| 成本权衡 `alpha` | 是 | 否 | 否 | 在验证/实验中按数据集扫参，用于生成成本-性能曲线 |
+| 结果标签 `y_t` | 是，来自数据集 | 是 | 否 | 临床诊断或由临床量表离散化得到的监督标签 |
+| 候选计划价值 | 否 | 否 | 是/估计 | 由完整训练轨迹、标签、预测器和成本公式自动构造 |
+| “下一步该采什么”动作标签 | 否 | 否 | 间接学习 | 对候选计划求目标最小值，不由专家逐状态标动作 |
 
-### 输出
+所以更准确的术语是：
 
-- 下一步或未来一组采集计划。
-- 终止或继续采集的决策。
-- 最终预测。
+> NOCTA 是“**人工指定成本模型 + 监督结果标签 + 自动生成计划效用目标**”，不是“专家人工标注采集策略”。
 
-### 关键模块
+### 3.2 论文中的具体成本数值
 
-| 模块 | 作用 | 对 Project05 的意义 |
-|---|---|---|
-| NOCT objective | 统一评价预测收益与采集成本 | 可改写为“归因粒度收益 - 取证成本” |
-| NOCT-Contrastive | 学习部分观测下未来采集效用表示 | 可借鉴为 evidence-state embedding |
-| NOCT-Amortized | 快速预测候选计划价值 | 可作为 Project05 planner MVP 的实现形态 |
-| Adaptive stopping | 当额外采集不值成本时停止 | 对应归因粒度门控 / 拒答 / 降级输出 |
+来源：arXiv v2 附录“Cost of Features”，PDF p.16；源码 `sections/7_appendix.tex:461-467`。
 
-### 方法流程
+| 数据集 | 特征 | 成本 | 论文给出的理由 | 证据强度 |
+|---|---|---:|---|---|
+| Synthetic | digit | 1.0 | 两类特征均随机生成，因此等价处理 | 纯实验设定 |
+| Synthetic | counter | 1.0 | 同上 | 纯实验设定 |
+| ADNI | FDG（PET） | 1.0 | PET 比 MRI 更昂贵；沿用 Qin et al. | 相对领域常识 + 前作设定 |
+| ADNI | AV45（PET） | 1.0 | 同上 | 相对领域常识 + 前作设定 |
+| ADNI | Hippocampus（MRI） | 0.5 | MRI 相对便宜 | 相对领域常识 + 前作设定 |
+| ADNI | Entorhinal（MRI） | 0.5 | 同上 | 相对领域常识 + 前作设定 |
+| OAI | age / sex / race 等 | 0.3 | “minimum effort” | 作者经验赋值 |
+| OAI | blood pressure / BMI | 0.5 | 所需努力略高 | 作者经验赋值 |
+| OAI | minimum JSW | 1.0 | 影像测量 | 作者经验赋值 |
+| OAI | 其他位置 JSW | 0.8 | 影像测量 | 作者经验赋值 |
 
-```text
-partial observations
-  -> enumerate/sample candidate acquisition plans
-  -> estimate NOCT value
-  -> choose plan/action with best objective-cost tradeoff
-  -> acquire feature or stop
-  -> prediction
+这些数字是**归一化的相对代价**，不是美元、分钟、检查风险概率或资源占用量。论文也没有证明 `1.0` 相比 `0.5` 恰好代表两倍真实成本。
+
+### 3.3 成本在算法里如何进入
+
+每个未来计划 `v` 是若干 `(feature m, time t')` 对的集合，其成本为：
+
+```math
+C(v)=\sum_{(m,t')\in v} c^m
 ```
 
-## 6. 数据集与实验
+NOCT 目标为：
 
-- 数据：synthetic benchmark，ADNI，WOMAC，KLG 等医疗纵向数据。
-- Baseline：AFA / active sensing / RL / greedy acquisition 相关方法，如 ASAC、RAS、DIME、DiFA 等。
-- 指标：accuracy、AP、ROC、average acquisition cost。
-- 结论：NOCTA 在多个任务中以更低采集成本达到更好或可比预测性能；非贪心策略更能处理早期测量价值和未来组合收益。
+```math
+NOCT(x_o,o,v)
+= E[ell(x_o union x_v, y, t) | x_o]
+  + alpha * sum_{(m,t') in v} c^m
+```
 
-## 7. 关键知识点
+其中：
 
-### 概念
+- `ell` 是从当前时刻之后到终点的累计交叉熵损失；
+- `c^m` 是特征类型的固定成本，正文默认跨时间不变；
+- `alpha` 是应用相关的成本权衡系数；
+- 同一特征在多个时刻被计划采集时，每个 feature-time 对都会重复计费；
+- 论文脚注称可扩展到 `c^{m,t}`，但实验没有这样做。
 
-- Active Feature Acquisition：推理阶段特征有成本，需要主动选择。
-- Longitudinal AFA：采集决策带时间维度，错过早期时间点可能不可逆。
-- Non-greedy planning：不是只选当前最有信息量的特征，而是评估未来计划。
+这是一种**已知、确定、可加、动作无失败**的成本模型。它没有表示共享启动成本、批量折扣、权限等待、跨组织审批、采集失败、证据污染风险或成本不确定性。
 
-### 术语翻译
+### 3.4 一个容易忽略的实现细节
 
-| 英文 | 建议译法 | 备注 |
+方法正文把 NOCT-Amortized 写成直接预测完整 NOCT 值；但附录实现说明，为稳定训练，网络实际上只预测相对预测收益 `Delta_pl`，已知成本项 `alpha * C(v)` 在候选计划排序时显式加回。
+
+这说明：**模型并没有学习“成本是多少”**。成本是外生输入，模型学习的是计划可能带来的预测损失下降。
+
+## 4. 研究问题与形式化
+
+### 4.1 场景
+
+数据由 `N` 个纵向实例构成，每个实例有 `L` 个时间点、`M` 个可能付费获取的特征，每个时间点有分类标签 `y_{i,t}`。过去错过的 feature-time 测量不能回头补取。
+
+状态写为：
+
+```math
+s_t = (x_o, o, t)
+```
+
+- `x_o`：当前已经观测到的特征值；
+- `o`：已经获取的 feature-time 位置；
+- `t`：当前时间。
+
+动作可以选择未来某个时间点的一组特征，也可以选择空动作终止。MDP 奖励是负的累计交叉熵，再减去加权采集成本。
+
+### 4.2 为什么不能只做贪心
+
+纵向场景里，当前看似收益低的早期测量可能：
+
+1. 对多个后续预测持续有用；
+2. 与后续测量组合后才有价值；
+3. 一旦错过就永久不可恢复。
+
+因此 NOCTA 不是只比较下一项特征，而是比较多个未来 feature-time 对组成的计划。
+
+## 5. NOCTA 的完整工作流
+
+```text
+当前部分观测 (x_o, o, t)
+  -> 生成/抽样未来候选计划 v
+  -> 用 NOCT-Contrastive 或 NOCT-Amortized 估计每个计划的 NOCT
+  -> 选择 NOCT 最小的计划 u
+  -> 若 u 为空：STOP，并用当前信息预测余下时间点
+  -> 若 u 非空：只执行 u 中最早时间点的采集
+  -> 获得新特征值，更新状态
+  -> 重新生成并评价计划
+```
+
+关键点是：它虽然评估整段未来计划，但**不一次性锁死整段计划**，只执行最近一步后重规划。
+
+## 6. 两个 NOCT 估计器
+
+### 6.1 训练阶段的 plug-in 目标
+
+在训练实例上，完整未来特征 `x_v` 和标签 `y` 可见，因此可以直接计算：
+
+```math
+NOCT_pl(x_{i,o},o,v)
+= ell(x_{i,o} union x_{i,v}, y_i, t)
+  + alpha * C(v)
+```
+
+这一步把“哪个计划好”从专家动作标注改成了自动生成的监督信号。
+
+### 6.2 NOCT-Contrastive
+
+1. 对每个训练状态评价候选计划并取前 `r` 个计划；
+2. 统计这些优质计划中各未来 feature-time 对出现的频率，构成未来候选分布 `zeta`；
+3. 用两个状态的 `zeta` 之间的 Jensen-Shannon divergence 定义相似度；
+4. 训练嵌入网络，使未来采集偏好相似的状态靠近；
+5. 测试时检索相似训练轨迹，平均其 plug-in NOCT 值来评价候选计划。
+
+优点是可追溯到相似训练病例；缺点是推理成本随训练集规模上升，并严重依赖训练轨迹覆盖。
+
+### 6.3 NOCT-Amortized
+
+输入为当前部分观测、候选计划 mask 和时间，MLP 输出计划效用估计。训练时用 plug-in 目标做 MSE，并与预测器联合微调。
+
+实际实现中，网络预测的是相对预测收益，固定成本在排序时加回。它推理更快，但把训练分布中的计划价值压缩到一个回归器中，分布外状态可能失真。
+
+## 7. 监督标签到底在哪里发挥作用
+
+NOCTA 不是无监督方法。
+
+1. 预测器用每个时间点的临床标签做交叉熵训练。
+2. 训练期 plug-in NOCT 用未来标签计算计划的累计预测损失。
+3. Contrastive 的“相似采集偏好”来自这些带标签计划值。
+4. Amortized 的回归目标也由这些带标签计划值生成。
+
+数据集标签包括：
+
+- ADNI：认知正常、轻度认知障碍和阿尔茨海默病等临床诊断类别；
+- OAI KLG：将 KLG 0 与 1 合并后的分级任务；
+- OAI WOMAC：按 `<5` 与 `>=5` 离散为无痛/疼痛；
+- Synthetic：由 digit/counter 规则自动生成。
+
+作者在局限中明确承认，真实临床数据的标签质量差会降低方法表现。
+
+## 8. 数据集与实验设计
+
+| 数据集 | 规模 | 时间点 | 特征 | 任务 |
+|---|---:|---:|---:|---|
+| Synthetic | 8,000 | 10 | 2 | 累积规则分类 |
+| ADNI | 1,002 patients | 12 visits | 4 biomarkers | 认知状态预测 |
+| OAI | 4,796 patients/knees | 7 visits | 27 | KLG 与 WOMAC |
+
+主要对照包括 ASAC、RAS、AS、DIME 和 DiFA。DIME、DiFA 是作者自行扩展到纵向设定，并非原方法现成的纵向官方实现。
+
+实验要点：
+
+- 每次推理均匀抽样 1,000 个候选计划，而非穷举；
+- 结果报告 5 次独立运行；
+- 通过扫 `alpha`、其他方法的成本系数或预算，画性能-平均成本曲线；
+- 缺失处理只明确覆盖 MCAR：排除不可用特征，并用随机输入 dropout 训练；
+- 作者报告 NOCT-Contrastive 在给定成本下总体最好，NOCT-Amortized 次之或相当；
+- 获取轨迹显示 NOCTA 更倾向于较早采集，并在预期收益不足以覆盖成本时于不同时间点停止。
+
+## 9. 理论结果该如何理解
+
+论文给出两个主要性质：
+
+1. `-NOCT` 是最优纵向 AFA MDP 值的下界。
+2. 在 NOCT 目标下，每次获取后重新规划不差于继续执行旧计划剩余部分。
+
+需要限制解读：
+
+- 下界说明最优 MDP 至少能做到计划策略的水平，不等于 NOCTA 等于最优 MDP；
+- 定理针对真实 NOCT 目标，而实际系统使用近邻或神经网络估计、有限候选抽样；
+- 重规划优势依赖候选空间包含旧计划剩余部分及目标评价正确；
+- 它不能证明作者指定的成本代表真实临床资源，也不能证明在网络取证场景中有效。
+
+## 10. 论文的优点
+
+1. 把“现在采什么”和“以后何时采”统一进 feature-time 计划。
+2. 空计划自然形成 STOP，而不是额外训练一个停止分类器。
+3. 计划后只执行最近一步，再依据真实观测重规划，适合动态场景。
+4. 避免直接训练复杂 RL policy，同时保留非短视计划视角。
+5. 明确区分训练时可计算的 plug-in 价值和推理时必须估计的价值。
+
+## 11. 关键局限与审读意见
+
+### 11.1 成本模型较弱
+
+- 成本是作者指定的相对权重，没有真实计量或专家一致性验证；
+- 固定、确定、可加，不随患者、时间、资源拥塞或失败改变；
+- `alpha` 取值按数据集分别扫参，性能-成本前沿会受该选择影响；
+- 没有对成本向量本身做充分的来源、区间和扰动稳健性论证。
+
+因此，这篇论文可以证明“把外生成本放进非贪心目标是合理的”，但不能证明“手工成本就是可部署成本”。
+
+### 11.2 训练信息条件较强
+
+训练时需要足够完整的未来轨迹和未来标签来构造反事实计划价值。安全调查中往往恰恰缺少“如果当时执行另一项取证动作会得到什么”的完整反事实数据。
+
+### 11.3 动作执行语义过于理想
+
+选择可用特征后，模型按该特征值可获得来评价。它没有 Project05 的通道失败、权限失败、数据留存过期、返回空结果和同一动作返回 evidence bundle 等语义。
+
+### 11.4 结果终点不同
+
+NOCTA 优化交叉熵和分类性能；Project05 需要优化可支撑结论粒度、来源覆盖、证据组合语义和停止的正当性。二者不能只换名词后直接等价。
+
+### 11.5 复现与发表状态
+
+当前是撤回过 ICLR 2026 投稿的 arXiv 预印本，尚未核验到官方代码。Project05 不应把现有 AFA-VOI Myopic/Rollout-H3 结果写成 NOCTA 官方复现或对 NOCTA 的证伪。
+
+## 12. 与 Project05 的严格映射
+
+| NOCTA | Project05 | 能否直接照搬 |
 |---|---|---|
-| active feature acquisition | 主动特征获取 | Project05 对应主动取证 |
-| acquisition cost | 获取成本 / 取证成本 | 可含时间、权限、风险 |
-| candidate acquisition plan | 候选采集计划 | 对应 evidence action sequence |
+| 部分特征 `x_o` | 已获得且可回指来源的 evidence claims | 需改造 |
+| feature-time pair | 调查动作/通道/时间窗口 | 需改造 |
+| 固定 `c^m` | 查询、分析、权限、风险、时效等成本 | 不可直接照搬 |
+| 交叉熵下降 | 可支撑粒度提升、缺口收缩、来源充分性 | 不可直接照搬 |
+| 获取后特征可见 | 动作可能失败或只恢复部分 evidence bundle | NOCTA 未覆盖 |
+| 空计划 STOP | 停止并输出当前可支撑粒度 | 可借鉴 |
+| 执行最近一步后重规划 | 获取反馈后更新缺口状态 | 可借鉴 |
+| 完整训练轨迹生成计划价值 | 稀疏真实 trace + 模拟/规则/人工校准 | 需额外机制 |
 
-## 8. 优点
+Project05 的真正增量不能写成“我们也做成本敏感采集”，因为 NOCTA/AFA 已覆盖这一宽泛问题。应写在以下组合边界：
 
-- 给 Project05 的主动取证规划提供现成形式化思路。
-- 强调非贪心计划，适合 APT 调查中“先取哪类证据会影响后续判断”的问题。
-- 有 adaptive stopping，可映射到“证据不够时不强行归因”。
+1. 来源可追溯的安全证据状态；
+2. 公开动作意图与隐藏实际可恢复内容隔离；
+3. 可能失败的通道执行与反馈更新；
+4. 由证据支持上限控制的归因粒度与 STOP；
+5. 面向真实运营成本来源与敏感性的审计协议。
 
-## 9. 局限
+## 13. 对 Project05 成本建模的具体结论
 
-- 领域是医疗/纵向预测，不是网络安全。
-- 特征空间通常比 APT 取证动作规整；Project05 的 action 包含日志查询、样本分析、CTI 检索、网络侧证据等异构动作。
-- 预测目标是固定标签，不是归因粒度提升和证据链完整性。
+NOCTA 的做法可作为**最低限度先例**：AFA 论文允许把成本作为外生已知量输入。但 Project05 若继续只用直觉整数，会面临同样甚至更严重的有效性问题。
 
-## 10. 对我选题的启发
+建议继续执行 `08-writing/cost-assignment-standard-v0.1-20260714.md` 中的三层方案：
 
-- Project05 可以把“补证”明确写成 AFA 在安全归因场景中的实例化。
-- 创新点不是凭空发明 planner，而是把 AFA 迁移到“对齐状态证据 + 归因粒度收益 + 异构取证成本”。
-- NOCTA 支持我们反驳“只是生成缺失证据 list”：真正目标应是 cost-aware next evidence action planning，而不是列清单。
+1. 能从数据或系统日志测量的成本，直接测量，如事件量、扫描字节、查询耗时、主机跨度；
+2. 难以测量的努力、权限和侵入性，使用带锚点的双人独立评分，并报告一致性；
+3. 同时报告 uniform、rubric、measured 三种成本口径和扰动敏感性，而不是声称存在唯一正确成本向量。
 
-## 11. 可转化的研究问题
+NOCTA 没做这一步，恰好说明 Project05 可以在**成本可审计性**上比该近邻更扎实；但这应作为实验效度与部署协议贡献，不能夸大成全新的 AFA 理论。
 
-1. 如何定义 APT 归因任务中的 acquisition cost？
-2. 如何把“从 G1 到 G2/G3 粒度的提升”写成 acquisition reward？
-3. 在证据会随时间丢失或日志保留窗口有限时，如何引入 longitudinal constraint？
+## 14. 撞题与基线判断
 
-## 12. 和其他论文的关系
+- 撞题程度：中高。它已经覆盖“部分观测下按成本选择未来信息、允许 STOP、进行非贪心规划”的宽泛问题。
+- 未覆盖：安全证据来源、动作失败、公开/隐藏信息隔离、evidence bundle、归因粒度截断。
+- 基线价值：高，适合作为 Related Work 和方法边界的核心近邻。
+- 官方复现可行性：当前偏低，缺代码且任务接口差异大。
+- 论文中允许的表述：NOCTA motivates plan-level cost-aware acquisition and adaptive stopping.
+- 禁止的表述：本文 AFA-VOI adapter 复现或击败了 NOCTA。
 
-| 相关论文 | 关系 |
-|---|---|
-| AFA Survey | NOCTA 是 AFA 最新非贪心代表之一 |
-| D3QN Malware | 安全侧顺序特征选择先例，但更偏扁平特征分类 |
-| Project05 | NOCTA 是主动取证规划的理论借鉴，不是撞题 |
+## 15. 来源锚点
 
-## 13. 论文写作可引用句式
+| 锚点 | 内容 | PDF / 源码位置 |
+|---|---|---|
+| S01 | 状态、动作、MDP 奖励与成本权衡 `alpha` | PDF pp.2-3；`sections/3_method.tex:26-45` |
+| S02 | NOCT 目标与累计交叉熵 | PDF p.3；`sections/3_method.tex:48-86` |
+| S03 | STOP、只执行最近一步与动态重规划 | PDF pp.3-4；`sections/3_method.tex:115-146` |
+| S04 | Contrastive plug-in 目标和近邻估计 | PDF pp.4-5；`sections/3_method.tex:243-289` |
+| S05 | Amortized 训练依赖未来特征和标签 | PDF p.5；`sections/3_method.tex:291-325` |
+| S06 | 数据集、缺失假设、1,000 个候选计划、5 次运行 | PDF pp.6-7；`sections/4_experiments.tex:4-110` |
+| S07 | 有限时域与标签质量局限 | PDF p.11；`sections/7_appendix.tex:22-24` |
+| S08 | 具体成本数值 | PDF p.16；`sections/7_appendix.tex:461-467` |
+| S09 | Amortized 实际只学预测收益，成本显式加回 | PDF p.17；`sections/7_appendix.tex:496-512` |
 
-- Active evidence acquisition can be viewed as a cost-sensitive inference-time acquisition problem, where the value of an action depends on how much it improves the supportable attribution granularity under partial observations.
+## 16. 最终评价
 
-## 14. 我的批注与疑问
-
-- 这篇非常重要，因为它把“下一步取什么证据”从业务直觉变成优化问题。
-- Project05 不能直接照搬医疗纵向设定，而要把 action space 和 reward 改成安全可解释版本。
-
-## 15. 结论评级
-
-- 相关性评分：4/5
-- 方法可借鉴性：5/5
-- 实验可复现性：4/5
-- 作为硕士论文基础价值：5/5
+- 与 Project05 的相关性：5/5
+- 对非短视计划与 STOP 的借鉴价值：5/5
+- 成本定义的现实可信度：2/5
+- 训练监督与数据依赖透明度：4/5
+- 当前可复现性：2.5/5
+- 撞题风险：中高，但尚未覆盖 Project05 的安全信息边界
 - 是否进入核心文献：是
+
+**最终判断：**NOCTA 不是成本标注范式的权威答案，而是“给定外生成本后如何做纵向非贪心采集”的代表方法。对 Project05，最该借的是计划级目标、STOP 和反馈后重规划；最不能照搬的是固定手工成本、确定性特征揭示和完整未来监督轨迹假设。

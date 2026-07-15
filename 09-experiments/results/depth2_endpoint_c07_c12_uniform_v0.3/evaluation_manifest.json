@@ -1,0 +1,125 @@
+{
+  "experiment_id": "project05-depth2-c07-c12-uniform-cost-runtime-allowlist-v0.3",
+  "case_prefixes": [
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12"
+  ],
+  "case_ids": [
+    "C07-darpa-e5-theia-0515",
+    "C08-darpa-e5-clearscope-0515",
+    "C09-darpa-optc-sysclient0201-0923",
+    "C10-darpa-optc-sysclient0351-0925",
+    "C11-otrf-apt29-day1-scranton-nashua",
+    "C12-witfoo-precinct6-f10c7270"
+  ],
+  "independent_case_count": 6,
+  "repeated_condition_count": 270,
+  "planners": [
+    "project05_m2",
+    "project05_depth2_public",
+    "oracle_optimal"
+  ],
+  "frozen_parameters": {
+    "discount": 0.8,
+    "failure_cost_weight": 1.0
+  },
+  "information_boundary": "public_surrogate_state_and_channel_priors_only",
+  "channel_prior_intervention": {
+    "multiplier": 1.0,
+    "scope": "planner_belief_only",
+    "execution_reliability_source": "frozen_case_config",
+    "execution_profile_held_constant": true,
+    "consumed_by_planners": [
+      "project05_depth2_public"
+    ]
+  },
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "repeated": "mask_strategy_x_mask_intensity_x_seed",
+    "pseudoreplication_forbidden": true
+  },
+  "cost_regime": "uniform",
+  "cost_profile_identity_by_case": {
+    "C07-darpa-e5-theia-0515": {
+      "profile_id": "project05-uniform-cost-v1",
+      "version": "1.0.0",
+      "sha256": "f4c2555b511a9226c339047cfcffb5a9a2f10387ee59c845b157add413896b4e",
+      "provenance": "uniform_frozen_exogenous_cost"
+    },
+    "C08-darpa-e5-clearscope-0515": {
+      "profile_id": "project05-uniform-cost-v1",
+      "version": "1.0.0",
+      "sha256": "f4c2555b511a9226c339047cfcffb5a9a2f10387ee59c845b157add413896b4e",
+      "provenance": "uniform_frozen_exogenous_cost"
+    },
+    "C09-darpa-optc-sysclient0201-0923": {
+      "profile_id": "project05-uniform-cost-v1",
+      "version": "1.0.0",
+      "sha256": "f4c2555b511a9226c339047cfcffb5a9a2f10387ee59c845b157add413896b4e",
+      "provenance": "uniform_frozen_exogenous_cost"
+    },
+    "C10-darpa-optc-sysclient0351-0925": {
+      "profile_id": "project05-uniform-cost-v1",
+      "version": "1.0.0",
+      "sha256": "f4c2555b511a9226c339047cfcffb5a9a2f10387ee59c845b157add413896b4e",
+      "provenance": "uniform_frozen_exogenous_cost"
+    },
+    "C11-otrf-apt29-day1-scranton-nashua": {
+      "profile_id": "project05-uniform-cost-v1",
+      "version": "1.0.0",
+      "sha256": "f4c2555b511a9226c339047cfcffb5a9a2f10387ee59c845b157add413896b4e",
+      "provenance": "uniform_frozen_exogenous_cost"
+    },
+    "C12-witfoo-precinct6-f10c7270": {
+      "profile_id": "project05-uniform-cost-v1",
+      "version": "1.0.0",
+      "sha256": "f4c2555b511a9226c339047cfcffb5a9a2f10387ee59c845b157add413896b4e",
+      "provenance": "uniform_frozen_exogenous_cost"
+    }
+  },
+  "endpoint_boundary": {
+    "contract_id": "project05-depth2-ml-runtime-contract-v0.1",
+    "version": "0.1.0",
+    "sha256": "6e8c297e8cdac18b6f5349e6878c567aa524411e37b66187da30409da704c053",
+    "runtime_allowlist_enforced": true,
+    "hidden_outcome_invariance_tested": true,
+    "declared_expected_effects_visible": true,
+    "realized_outcomes_visible": false
+  },
+  "input_sha256": {
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/case_config.json": "3109531bb0566dfc7e70a3e101d347bb4125250e2c3a298a05b12bf1de56bbac",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/evidence_claims.json": "f4e3002d59572fc045cfe578d301604210f40aca315ae969b67d5feb64ce534b",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/acquisition_actions.json": "1112039b03b0d02b7cda4afd3714a04974c4e8fce74f797b01016c96e7d8f93d",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/case_config.json": "91d578968041fca5e90b7efb74caf9e3e4d7966c9ec0baf5565c4217d82492bd",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/evidence_claims.json": "ebaa3eeb961389af3b2b3749289ee690d87c4e1365c32eddcb9f3a3023fee3bb",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/acquisition_actions.json": "c8c89d0f6a7c42b15ac6468757133bf2bb6115029daf67ad17dbd852a8f3bd28",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/case_config.json": "621acf6e37e92048025a2979ebcd7541eb86ca6803d601b23a205b3e741e2199",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/evidence_claims.json": "ea6fc0cb7017dbd40ddcdc1afb10614272500d2fac9256f157ea2b8d79013592",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/acquisition_actions.json": "666edeecba095aa051aeea7cb512f827af3ceb0d3f27e97c8d466e3571484762",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/case_config.json": "3eee6bd1fc279a62797aa5169aa99f0c707c60317bc792cd3f8917634bc3b95b",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/evidence_claims.json": "a4db589cc7ed2786b2040c1bc3d6b898af395504001fbfc5f6b8e19502488669",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/acquisition_actions.json": "434502bb49d56af466a0f74ceb8d2d3ccf7000c9b02ce7ac302fc421af9cb505",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/case_config.json": "9a7a2da88e044cbd916738f218cbf21d4f72bba0690d8d4508a7ea0fcf62d71d",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/evidence_claims.json": "f97e35f90ec8189bc8d4dae0299aab91df6b9a8a376e5f3b4604e335c80d4644",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/acquisition_actions.json": "b6374b82ec11d8b3cb412b0431356cb3e7d630a11656856513ccf9d8febb612d",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/case_config.json": "49dbe6d28bfed311f3613c34f4e22fba42fb1add5a496e33e67c27fe7e9393fd",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/evidence_claims.json": "449808e95a6a13e838e106b134af8901735497bebc25269c955762d6b8b4516c",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/acquisition_actions.json": "1c5096996dcace7a58ecd7be4211cbe366479b6a267285c90c5298ebe7eec595"
+  },
+  "output_sha256": {
+    "nonmyopic_paired_summary.json": "73be0e4fbedcd3e5f90134d545a5addc995d156416b225e1e46f03be60c3227d",
+    "nonmyopic_policy_results.csv": "188836411f597b49070461887f27ee430701d23eba123585fb19d20f392579dc",
+    "nonmyopic_policy_summary.json": "862a4c30ed91bad81e725ad7e125d2491d0bb347c7c7bf0a4a571b0d574efa56",
+    "nonmyopic_policy_traces.json.gz": "c561f9df8a562b5a64afbb3cd05ff2c01bb81a504176d558b09bf43671c2342f"
+  },
+  "run_mvp_sha256": "a7ebcf2739b7cd708011db378d0f18af3eb970c6236813be7f8258d5394a952e",
+  "endpoint_adapter_sha256": "0cf267ce5747bef89eae7ff5cb7a79dbb9f91167baeb82a54c5220f004257288",
+  "runner_sha256": "ebfa0d9f36e12ec0a9acf2bd7e40e38678c751b5f37bd0e13dc5defdecc0798e",
+  "all_experiments_complete": false,
+  "paper_or_patent_gate": "closed_until_human_and_operational_gates_are_satisfied",
+  "paper_or_patent_updated": false
+}

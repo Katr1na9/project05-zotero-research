@@ -1,0 +1,32 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+% In this work, we proposed \texttt{\OurMethod}, a non-greedy longitudinal active feature acquisition framework. 
+% We introduced a cohesive estimation target for \texttt{\OurMethod} with two complementary solution strategies.
+% On both synthetic and real-world medical datasets, \texttt{\OurMethod} outperforms other baseline methods while achieving lower overall acquisition cost. While our non-parametric approach provides consistently strong performance, the parametric approach provides comparable performance with more lightweight inference. Either approach can be validated against held-out data or ensembles if one seeks a single policy. 
+
+In this work, we proposed \texttt{\OurMethod}, a non-greedy longitudinal active feature acquisition framework that directly trades off acquisition cost and predictive performance under temporal dynamics. Central to \texttt{\OurMethod} is the NOCT objective, which provides a unified target for evaluating future acquisition plans from partial observations, together with two complementary estimators: \texttt{NOCT-Contrastive} and \texttt{NOCT-Amortized}. Experiments on synthetic benchmarks and real-world medical datasets demonstrate that \texttt{\OurMethod} consistently outperforms baseline methods while achieving lower overall acquisition cost. While the \texttt{NOCT-Contrastive} estimator offers strong and robust performance, the \texttt{NOCT-Amortized} estimator attains comparable results with fast amortized inference. 
+In practice, both variants support model selection via validation (or ensembling) to obtain a single deployed policy.
+
+% In this work, we proposed \texttt{\OurMethod}, a non-greedy longitudinal active feature acquisition framework designed to directly balance acquisition cost with prediction accuracy. We introduced a cohesive estimation target for our \texttt{\OurMethod} framework with two complementary solution strategies.
+% Results on both synthetic and real-world medical datasets show that \texttt{\OurMethod} outperforms other baseline methods while achieving lower overall acquisition cost. While our non-parametric approach provides consistently strong performance, the parametric approach provides comparable performance with more lightweight (non-neighbor based) inference. Either \texttt{\OurMethod-P} or \texttt{\OurMethod-NP} can be easily validated against held-out data or ensembles if one seeks a single policy.
+
+% In the future, we plan to further explore LAFA on medical multimodal applications. 
+% One potential extension involves using the LAFA-NP to prune the action space by identifying and excluding less informative actions and training LAFA-P on top of this reduced set of candidate actions. This allows LAFA-P to focus on more informative actions during training, potentially improving the accuracy.
+
+%This will allow our approach to be more useful for real-world scenarios. 
+%Additionally, we aim to integrate both non-parametric and parametric approaches into a unified framework. 
+
+\input{sections/acknowledgement}
+
+
+\section*{Impact Statement}
+In this paper, we introduce a non-greedy active feature acquisition framework, \texttt{\OurMethod}, which could aid the decision-making process in real-world applications such as healthcare. Specifically, \texttt{\OurMethod} could provide a more efficient and cost-effective diagnosis by selectively acquiring essential medical examinations, thus minimizing patient burden (e.g., time and costs) through personalized and timely intervention. However, as in any ML system, using \texttt{\OurMethod} should involve thorough/robust evaluations and supervision by medical professionals to prevent any potential negative impact.
+
+% \section{Acknowledgment}
+% This research was, in part, funded by the National Institutes of Health (NIH) under awards 1OT2OD038045-01, NIAMS 1R01AR082684, 1R01AA02687901A1, and 1OT2OD032581-02-321, and was partially funded by the National Science Foundation (NSF) under grants IIS2133595 and DMS2324394. The views and conclusions contained in this document are those of the authors and should not be interpreted as representing official policies, either expressed or implied, of the NIH and NSF.
+
+
+
+
+

@@ -1,0 +1,762 @@
+{
+  "$schema": "../../data_schema/action_prior_profile.schema.json",
+  "profile_id": "project05-action-priors-development-derived-v0.1",
+  "version": "0.1.0",
+  "status": "frozen_development_derived",
+  "created_utc": "2026-07-13T16:00:00Z",
+  "training_scope": {
+    "case_ids": [
+      "C01-linux-provenance",
+      "C02-freebsd-provenance",
+      "C03-windows-host",
+      "C04-darpa-e3-fivedirections",
+      "C05-darpa-e3-cadets",
+      "C06-darpa-e3-cadets-0412"
+    ]
+  },
+  "application_scope": {
+    "case_ids": [
+      "C07-darpa-e5-theia-0515",
+      "C08-darpa-e5-clearscope-0515",
+      "C09-darpa-optc-sysclient0201-0923",
+      "C10-darpa-optc-sysclient0351-0925",
+      "C11-otrf-apt29-day1-scranton-nashua",
+      "C12-witfoo-precinct6-f10c7270"
+    ]
+  },
+  "leakage_boundary": "Only C01-C06 recoverable outcomes are used to estimate action-type means. No C07-C12 recoverable outcomes or planner results enter this profile. Means are conditional on successful reveal and are static proxies, not calibrated utilities.",
+  "training_summary": {
+    "cti_report_lookup": {
+      "observation_count": 45,
+      "mean_granularity_gain": 0.466667,
+      "mean_coverage_delta": 0.155556
+    },
+    "extend_log_window": {
+      "observation_count": 270,
+      "mean_granularity_gain": 0.155556,
+      "mean_coverage_delta": 0.062011
+    },
+    "human_review": {
+      "observation_count": 135,
+      "mean_granularity_gain": 0.044444,
+      "mean_coverage_delta": 0.018166
+    },
+    "ioc_enrichment": {
+      "observation_count": 135,
+      "mean_granularity_gain": 0.148148,
+      "mean_coverage_delta": 0.05
+    },
+    "malware_analysis": {
+      "observation_count": 90,
+      "mean_granularity_gain": 0.022222,
+      "mean_coverage_delta": 0.02037
+    },
+    "query_host_subgraph": {
+      "observation_count": 540,
+      "mean_granularity_gain": 0.172222,
+      "mean_coverage_delta": 0.10172
+    },
+    "recover_network_summary": {
+      "observation_count": 360,
+      "mean_granularity_gain": 0.213889,
+      "mean_coverage_delta": 0.084676
+    },
+    "ttp_local_probe": {
+      "observation_count": 270,
+      "mean_granularity_gain": 0.103704,
+      "mean_coverage_delta": 0.068316
+    }
+  },
+  "actions": [
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-001",
+      "action_type": "recover_network_summary",
+      "expected_effects": {
+        "expected_granularity_gain": 0.213889,
+        "expected_uncertainty_reduction": 0.32,
+        "expected_over_attribution_risk_reduction": 0.35,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.084676
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-002",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.38,
+        "expected_over_attribution_risk_reduction": 0.38,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-003",
+      "action_type": "ttp_local_probe",
+      "expected_effects": {
+        "expected_granularity_gain": 0.103704,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.31,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.068316
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-004",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.36,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-005",
+      "action_type": "human_review",
+      "expected_effects": {
+        "expected_granularity_gain": 0.044444,
+        "expected_uncertainty_reduction": 0.1,
+        "expected_over_attribution_risk_reduction": 0.2,
+        "expected_conflict_resolution": 1.0,
+        "expected_coverage_delta": 0.018166
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-001",
+      "action_type": "recover_network_summary",
+      "expected_effects": {
+        "expected_granularity_gain": 0.213889,
+        "expected_uncertainty_reduction": 0.32,
+        "expected_over_attribution_risk_reduction": 0.35,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.084676
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-002",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.38,
+        "expected_over_attribution_risk_reduction": 0.38,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-003",
+      "action_type": "ttp_local_probe",
+      "expected_effects": {
+        "expected_granularity_gain": 0.103704,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.31,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.068316
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-004",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.36,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-005",
+      "action_type": "human_review",
+      "expected_effects": {
+        "expected_granularity_gain": 0.044444,
+        "expected_uncertainty_reduction": 0.1,
+        "expected_over_attribution_risk_reduction": 0.2,
+        "expected_conflict_resolution": 1.0,
+        "expected_coverage_delta": 0.018166
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-001",
+      "action_type": "recover_network_summary",
+      "expected_effects": {
+        "expected_granularity_gain": 0.213889,
+        "expected_uncertainty_reduction": 0.32,
+        "expected_over_attribution_risk_reduction": 0.35,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.084676
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-002",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.38,
+        "expected_over_attribution_risk_reduction": 0.38,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-003",
+      "action_type": "ttp_local_probe",
+      "expected_effects": {
+        "expected_granularity_gain": 0.103704,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.31,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.068316
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-004",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.36,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-005",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.36,
+        "expected_over_attribution_risk_reduction": 0.34,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-006",
+      "action_type": "human_review",
+      "expected_effects": {
+        "expected_granularity_gain": 0.044444,
+        "expected_uncertainty_reduction": 0.1,
+        "expected_over_attribution_risk_reduction": 0.2,
+        "expected_conflict_resolution": 1.0,
+        "expected_coverage_delta": 0.018166
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-001",
+      "action_type": "recover_network_summary",
+      "expected_effects": {
+        "expected_granularity_gain": 0.213889,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.35,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.084676
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-002",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.39,
+        "expected_over_attribution_risk_reduction": 0.39,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-003",
+      "action_type": "ttp_local_probe",
+      "expected_effects": {
+        "expected_granularity_gain": 0.103704,
+        "expected_uncertainty_reduction": 0.35,
+        "expected_over_attribution_risk_reduction": 0.32,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.068316
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-004",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.35,
+        "expected_over_attribution_risk_reduction": 0.34,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-005",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.4,
+        "expected_over_attribution_risk_reduction": 0.38,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-006",
+      "action_type": "human_review",
+      "expected_effects": {
+        "expected_granularity_gain": 0.044444,
+        "expected_uncertainty_reduction": 0.1,
+        "expected_over_attribution_risk_reduction": 0.2,
+        "expected_conflict_resolution": 1.0,
+        "expected_coverage_delta": 0.018166
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-001",
+      "action_type": "extend_log_window",
+      "expected_effects": {
+        "expected_granularity_gain": 0.155556,
+        "expected_uncertainty_reduction": 0.35,
+        "expected_over_attribution_risk_reduction": 0.3,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.062011
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-002",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.22,
+        "expected_over_attribution_risk_reduction": 0.2,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-003",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.32,
+        "expected_over_attribution_risk_reduction": 0.3,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-004",
+      "action_type": "extend_log_window",
+      "expected_effects": {
+        "expected_granularity_gain": 0.155556,
+        "expected_uncertainty_reduction": 0.26,
+        "expected_over_attribution_risk_reduction": 0.24,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.062011
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-005",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.24,
+        "expected_over_attribution_risk_reduction": 0.22,
+        "expected_conflict_resolution": 0.0,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-001",
+      "action_type": "recover_network_summary",
+      "expected_effects": {
+        "expected_granularity_gain": 0.213889,
+        "expected_uncertainty_reduction": 0.3,
+        "expected_over_attribution_risk_reduction": 0.25,
+        "expected_conflict_resolution": 0.05,
+        "expected_coverage_delta": 0.084676
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-002",
+      "action_type": "ttp_local_probe",
+      "expected_effects": {
+        "expected_granularity_gain": 0.103704,
+        "expected_uncertainty_reduction": 0.16,
+        "expected_over_attribution_risk_reduction": 0.14,
+        "expected_conflict_resolution": 0.02,
+        "expected_coverage_delta": 0.068316
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-003",
+      "action_type": "query_host_subgraph",
+      "expected_effects": {
+        "expected_granularity_gain": 0.172222,
+        "expected_uncertainty_reduction": 0.34,
+        "expected_over_attribution_risk_reduction": 0.32,
+        "expected_conflict_resolution": 0.08,
+        "expected_coverage_delta": 0.10172
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-004",
+      "action_type": "human_review",
+      "expected_effects": {
+        "expected_granularity_gain": 0.044444,
+        "expected_uncertainty_reduction": 0.1,
+        "expected_over_attribution_risk_reduction": 0.18,
+        "expected_conflict_resolution": 0.12,
+        "expected_coverage_delta": 0.018166
+      },
+      "provenance": {
+        "expected_granularity_gain": "development_measured_by_action_type",
+        "expected_uncertainty_reduction": "legacy_expert_prior",
+        "expected_over_attribution_risk_reduction": "legacy_expert_prior",
+        "expected_conflict_resolution": "legacy_expert_prior",
+        "expected_coverage_delta": "development_measured_by_action_type"
+      }
+    }
+  ],
+  "case_channel_priors": [
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "channel_reliability": {
+        "network_telemetry": 0.5,
+        "host_forensics": 1.0,
+        "host_probe": 1.0,
+        "analyst": 1.0
+      },
+      "provenance": "legacy_expert_prior_not_empirically_calibrated"
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "channel_reliability": {
+        "network_telemetry": 0.5,
+        "host_forensics": 1.0,
+        "host_probe": 1.0,
+        "analyst": 1.0
+      },
+      "provenance": "legacy_expert_prior_not_empirically_calibrated"
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "channel_reliability": {
+        "network_telemetry": 0.5,
+        "host_forensics": 1.0,
+        "host_probe": 1.0,
+        "analyst": 1.0
+      },
+      "provenance": "legacy_expert_prior_not_empirically_calibrated"
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "channel_reliability": {
+        "network_telemetry": 0.5,
+        "host_forensics": 1.0,
+        "host_probe": 1.0,
+        "analyst": 1.0
+      },
+      "provenance": "legacy_expert_prior_not_empirically_calibrated"
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "channel_reliability": {
+        "scranton_powershell": 1.0,
+        "scranton_sysmon": 1.0,
+        "scranton_security": 1.0,
+        "nashua_powershell": 1.0,
+        "nashua_sysmon": 1.0
+      },
+      "provenance": "legacy_expert_prior_not_empirically_calibrated"
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "channel_reliability": {
+        "asa_summary": 1.0,
+        "asa_targeted_probe": 1.0,
+        "windows_security_audit": 1.0,
+        "precinct_projection_review": 1.0
+      },
+      "provenance": "legacy_expert_prior_not_empirically_calibrated"
+    }
+  ],
+  "input_sha256": {
+    "09-experiments/examples/C01/case_config.json": "91c32d585064893e04483f6aa11cdb714a7629814d0c615d0924c1abb3b02379",
+    "09-experiments/examples/C01/evidence_claims.json": "6404c3b06cd8c87bacd0a6f9d958be717b078fc691c5a31102abd9e9ed99a63d",
+    "09-experiments/examples/C01/acquisition_actions.json": "7d24ed16f8ca73b98f1151b7eda80422451a010d12a1b75751e12b046fe03179",
+    "09-experiments/examples/C02/case_config.json": "0f71f4cebead50648c49086b3e2f3ff8b59bc3d239761e3e1cbb637ae226bdba",
+    "09-experiments/examples/C02/evidence_claims.json": "ddfc628ce84151705e0f480308813f0a790505e664956b2057c682341d86d44a",
+    "09-experiments/examples/C02/acquisition_actions.json": "f8d833d0294844618022856897523dcf1a14d8ac0f72a487c5f5e0174fd84a77",
+    "09-experiments/examples/C03/case_config.json": "2e7071a57e8ccca7ab36a4c35318ff9a48ef3ce074b90b1e1e7232f88b8726be",
+    "09-experiments/examples/C03/evidence_claims.json": "7e070fbce730bb55c3f8255a19b44687a64c7531d63a8182f0fd8f41fb1eee08",
+    "09-experiments/examples/C03/acquisition_actions.json": "dfca78abea7f98a4a14cb57bc81dc64a498b59d4b77d265f39cf2c05a4dabd95",
+    "09-experiments/real_cases/C04-darpa-e3-fivedirections/case_config.json": "fe966d934011f8457ec8fee73c0f4d7c032c1d53aedf8058ed4f4c3a26f29741",
+    "09-experiments/real_cases/C04-darpa-e3-fivedirections/evidence_claims.json": "f18e9ade58ff740e53e639bad1786bcf6f262b6165e9fe70dc4845ffff6418a8",
+    "09-experiments/real_cases/C04-darpa-e3-fivedirections/acquisition_actions.json": "86c1052ea02521022953ed4d4deb7f017ae3e1bd7fceda04e99ad10d30aeac6e",
+    "09-experiments/real_cases/C05-darpa-e3-cadets/case_config.json": "7fcd3980da16edcba7af454be90f61a8835fda2e4a9f26a37cf9ff33cd29e1d0",
+    "09-experiments/real_cases/C05-darpa-e3-cadets/evidence_claims.json": "d55b3d9733c0ef3b31c88287cfeb2a1bb91b59e0a6927109a6a7c85abb443da7",
+    "09-experiments/real_cases/C05-darpa-e3-cadets/acquisition_actions.json": "349610a27f7178b5ee974e17cdf1c3b6d6e26d384df6906559f412ef75b0c0b0",
+    "09-experiments/real_cases/C06-darpa-e3-cadets-0412/case_config.json": "db6c026ced83576935ef591c3f1e6675b6950547018108097082174b6383eb42",
+    "09-experiments/real_cases/C06-darpa-e3-cadets-0412/evidence_claims.json": "b98b5a5f19d2fc552b733bd5bbaae7d1768c731ec7702c313b5744205c472f30",
+    "09-experiments/real_cases/C06-darpa-e3-cadets-0412/acquisition_actions.json": "fd9dee760980f102487a726485fa60f9f405f05b6d29ec545a7bb9ad063e25ca",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/case_config.json": "3109531bb0566dfc7e70a3e101d347bb4125250e2c3a298a05b12bf1de56bbac",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/evidence_claims.json": "f4e3002d59572fc045cfe578d301604210f40aca315ae969b67d5feb64ce534b",
+    "09-experiments/real_cases/C07-darpa-e5-theia-0515/acquisition_actions.json": "1112039b03b0d02b7cda4afd3714a04974c4e8fce74f797b01016c96e7d8f93d",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/case_config.json": "91d578968041fca5e90b7efb74caf9e3e4d7966c9ec0baf5565c4217d82492bd",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/evidence_claims.json": "ebaa3eeb961389af3b2b3749289ee690d87c4e1365c32eddcb9f3a3023fee3bb",
+    "09-experiments/real_cases/C08-darpa-e5-clearscope-0515/acquisition_actions.json": "c8c89d0f6a7c42b15ac6468757133bf2bb6115029daf67ad17dbd852a8f3bd28",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/case_config.json": "621acf6e37e92048025a2979ebcd7541eb86ca6803d601b23a205b3e741e2199",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/evidence_claims.json": "ea6fc0cb7017dbd40ddcdc1afb10614272500d2fac9256f157ea2b8d79013592",
+    "09-experiments/real_cases/C09-darpa-optc-sysclient0201-0923/acquisition_actions.json": "666edeecba095aa051aeea7cb512f827af3ceb0d3f27e97c8d466e3571484762",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/case_config.json": "3eee6bd1fc279a62797aa5169aa99f0c707c60317bc792cd3f8917634bc3b95b",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/evidence_claims.json": "a4db589cc7ed2786b2040c1bc3d6b898af395504001fbfc5f6b8e19502488669",
+    "09-experiments/real_cases/C10-darpa-optc-sysclient0351-0925/acquisition_actions.json": "434502bb49d56af466a0f74ceb8d2d3ccf7000c9b02ce7ac302fc421af9cb505",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/case_config.json": "9a7a2da88e044cbd916738f218cbf21d4f72bba0690d8d4508a7ea0fcf62d71d",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/evidence_claims.json": "f97e35f90ec8189bc8d4dae0299aab91df6b9a8a376e5f3b4604e335c80d4644",
+    "09-experiments/real_cases/C11-otrf-apt29-day1-scranton-nashua/acquisition_actions.json": "b6374b82ec11d8b3cb412b0431356cb3e7d630a11656856513ccf9d8febb612d",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/case_config.json": "49dbe6d28bfed311f3613c34f4e22fba42fb1add5a496e33e67c27fe7e9393fd",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/evidence_claims.json": "449808e95a6a13e838e106b134af8901735497bebc25269c955762d6b8b4516c",
+    "09-experiments/real_cases/C12-witfoo-precinct6-f10c7270/acquisition_actions.json": "1c5096996dcace7a58ecd7be4211cbe366479b6a267285c90c5298ebe7eec595"
+  }
+}

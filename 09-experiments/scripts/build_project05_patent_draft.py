@@ -18,8 +18,18 @@ DEFAULT_OUTPUT = PATENT_WORK / "07-structured-draft-v0.4.json"
 
 
 def section(text: str, start: str, end: str | None) -> str:
-    start_pos = text.index(start) + len(start)
-    end_pos = text.index(end, start_pos) if end else len(text)
+    try:
+        start_pos = text.index(start) + len(start)
+    except ValueError as exc:
+        raise ValueError(f"Patent markdown is missing section heading: {start!r}") from exc
+    if not end:
+        return text[start_pos:].strip()
+    try:
+        end_pos = text.index(end, start_pos)
+    except ValueError as exc:
+        raise ValueError(
+            f"Patent markdown is missing section heading {end!r} after {start!r}"
+        ) from exc
     return text[start_pos:end_pos].strip()
 
 
@@ -92,6 +102,12 @@ def claim_feature_map(claim_numbers: set[int]) -> list[dict[str, Any]]:
         11: ["F001", "F002", "F003", "F004", "F005", "F009"],
         12: ["F001", "F002", "F003", "F004", "F005", "F009"],
     }
+    unmapped = sorted(claim_numbers - set(mapping))
+    if unmapped:
+        raise ValueError(
+            f"No claim->feature mapping defined for claim numbers {unmapped}; "
+            "update claim_feature_map after changing the claim set."
+        )
     return [
         {
             "claim_number": number,
@@ -226,7 +242,12 @@ def main() -> None:
     claims = load_claims(args.claims_txt)
     claim_numbers = {claim["number"] for claim in claims}
     method_only = claim_numbers == set(range(1, 10))
-    title = re.search(r"^#\s+(.+)$", text, flags=re.MULTILINE).group(1)
+    title_match = re.search(r"^#\s+(.+)$", text, flags=re.MULTILINE)
+    if title_match is None:
+        raise ValueError(
+            f"Patent markdown {args.patent_md} has no level-1 (# ) title heading"
+        )
+    title = title_match.group(1)
     technical_field = paragraphs(section(text, "### 1. 技术领域", "### 2. 背景技术"))
     background = paragraphs(section(text, "### 2. 背景技术", "### 3. 发明内容"))
     problem = paragraphs(section(text, "#### 3.1 要解决的技术问题", "#### 3.2 技术方案"))
@@ -242,6 +263,8 @@ def main() -> None:
         first, *rest = part.splitlines()
         embodiments.append({"heading": first.strip(), "paragraphs": paragraphs("\n".join(rest))})
     abstract_blocks = paragraphs(section(text, "## 三、说明书摘要", "## 四、提交前红线"))
+    if not abstract_blocks:
+        raise ValueError("Patent markdown abstract section (说明书摘要) is empty")
     abstract = abstract_blocks[0]
 
     data = {

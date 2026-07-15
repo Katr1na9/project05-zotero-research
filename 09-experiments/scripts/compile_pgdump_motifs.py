@@ -164,9 +164,16 @@ def compile_motifs(
             state = motif_states[motif["motif_id"]]
             state["count"] += 1
             timestamp = event["timestamp_nanos"]
-            if state["first_timestamp_nanos"] is None:
+            if (
+                state["first_timestamp_nanos"] is None
+                or timestamp < state["first_timestamp_nanos"]
+            ):
                 state["first_timestamp_nanos"] = timestamp
-            state["last_timestamp_nanos"] = timestamp
+            if (
+                state["last_timestamp_nanos"] is None
+                or timestamp > state["last_timestamp_nanos"]
+            ):
+                state["last_timestamp_nanos"] = timestamp
             if len(state["representative_event_uuids"]) < 5:
                 state["representative_event_uuids"].append(event["event_uuid"])
 

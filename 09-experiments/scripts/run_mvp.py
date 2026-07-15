@@ -17,6 +17,7 @@ import json
 import math
 import random
 from copy import deepcopy
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from typing import Any
 
@@ -50,6 +51,15 @@ CASE_FILENAMES = (
     "acquisition_actions.json",
 )
 STOP_ACTION_ID = "STOP"
+COST_REGIMES = ("legacy", "uniform", "rubric", "measured")
+COST_COMPONENTS = ("E", "V", "D", "A", "R")
+BUILTIN_UNIFORM_COST_PROFILE = {
+    "profile_id": "project05-uniform-cost-v1",
+    "version": "1.0.0",
+    "status": "frozen",
+    "regime": "uniform",
+    "fixed_cost": 1.0,
+}
 PLANNER_ACTION_FIELDS = frozenset(
     {
         "action_id",
@@ -103,6 +113,261 @@ def write_json(path: Path, data: Any) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write("\n")
+
+
+def canonical_json_sha256(data: Any) -> str:
+    """Return a stable SHA-256 for an in-memory JSON-compatible value."""
+
+    payload = json.dumps(
+        data,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def load_cost_profile(path: Path) -> dict[str, Any]:
+    """Load a cost-profile document and retain its exact file hash."""
+
+    raw = path.read_bytes()
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Invalid UTF-8 JSON cost profile: {path}") from exc
+    if not isinstance(document, dict):
+        raise ValueError("A cost profile must be a JSON object")
+    return {
+        "document": document,
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "source_path": str(path.resolve()),
+    }
+
+
+def _is_finite_number(value: Any) -> bool:
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(float(value))
+    )
+
+
+def compose_rubric_cost(
+    components: dict[str, Any],
+    scoring: dict[str, Any],
+) -> float:
+    """Deterministically compose an anchored E/V/D/A/R rubric cost."""
+
+    weights = scoring.get("weights")
+    if not isinstance(weights, dict) or set(weights) != set(COST_COMPONENTS):
+        raise ValueError(
+            "Rubric scoring.weights must contain exactly E, V, D, A, and R"
+        )
+    if not isinstance(components, dict) or set(components) != set(COST_COMPONENTS):
+        raise ValueError("Rubric components must contain exactly E, V, D, A, and R")
+
+    raw = Decimal("0")
+    for component in COST_COMPONENTS:
+        score = components[component]
+        weight = weights[component]
+        if not isinstance(score, int) or isinstance(score, bool) or not 0 <= score <= 3:
+            raise ValueError(f"Rubric component {component} must be an integer in [0, 3]")
+        if not _is_finite_number(weight) or float(weight) <= 0:
+            raise ValueError(f"Rubric weight {component} must be finite and positive")
+        raw += Decimal(str(score)) * Decimal(str(weight))
+
+    scale = scoring.get("scale")
+    minimum = scoring.get("minimum_cost")
+    maximum = scoring.get("maximum_cost")
+    if not _is_finite_number(scale) or float(scale) <= 0:
+        raise ValueError("Rubric scoring.scale must be finite and positive")
+    if not _is_finite_number(minimum) or not _is_finite_number(maximum):
+        raise ValueError("Rubric cost bounds must be finite numbers")
+    if float(minimum) <= 0 or float(maximum) < float(minimum):
+        raise ValueError("Rubric cost bounds must satisfy 0 < minimum_cost <= maximum_cost")
+    if scoring.get("rounding") != "half_up":
+        raise ValueError("Rubric scoring.rounding must be 'half_up'")
+
+    scaled = raw / Decimal(str(scale))
+    rounded = scaled.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+    clipped = min(
+        Decimal(str(maximum)),
+        max(Decimal(str(minimum)), rounded),
+    )
+    return float(clipped)
+
+
+def _profile_entries_by_case(
+    document: dict[str, Any],
+) -> dict[str, dict[str, dict[str, Any]]]:
+    entries = document.get("actions")
+    if not isinstance(entries, list):
+        raise ValueError("Cost profile actions must be an array")
+    indexed: dict[str, dict[str, dict[str, Any]]] = {}
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise ValueError("Each cost profile action must be an object")
+        case_id = entry.get("case_id")
+        action_id = entry.get("action_id")
+        if not isinstance(case_id, str) or not case_id:
+            raise ValueError("Each cost profile action requires a non-empty case_id")
+        if not isinstance(action_id, str) or not action_id:
+            raise ValueError("Each cost profile action requires a non-empty action_id")
+        case_entries = indexed.setdefault(case_id, {})
+        if action_id in case_entries:
+            raise ValueError(
+                f"Duplicate cost profile action: {case_id}/{action_id}"
+            )
+        case_entries[action_id] = entry
+    return indexed
+
+
+def apply_cost_regime(
+    actions: list[dict[str, Any]],
+    case_id: str,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, str] | None]:
+    """Return copied actions with a selected, fully provenance-tracked cost regime.
+
+    The legacy default deliberately returns the original values without adding
+    result metadata. External rubric/measured profiles must be frozen and cover
+    exactly the selected case's actions; drafts can never enter a formal run.
+    """
+
+    if cost_regime not in COST_REGIMES:
+        raise ValueError(
+            f"Unknown cost regime {cost_regime!r}; expected one of {COST_REGIMES}"
+        )
+    copied = deepcopy(actions)
+    if cost_regime == "legacy":
+        if cost_profile is not None:
+            raise ValueError("legacy cost runs do not accept --cost-profile")
+        return copied, None
+
+    if cost_regime == "uniform":
+        if cost_profile is not None:
+            raise ValueError("uniform cost runs use the built-in frozen profile")
+        for action in copied:
+            if not is_stop_action(action):
+                action["cost"] = float(BUILTIN_UNIFORM_COST_PROFILE["fixed_cost"])
+        document = BUILTIN_UNIFORM_COST_PROFILE
+        return copied, {
+            "cost_regime": "uniform",
+            "cost_profile_id": str(document["profile_id"]),
+            "cost_profile_version": str(document["version"]),
+            "cost_profile_sha256": canonical_json_sha256(document),
+        }
+
+    if cost_profile is None:
+        raise ValueError(f"{cost_regime} cost runs require a --cost-profile file")
+    document = cost_profile.get("document")
+    profile_hash = cost_profile.get("sha256")
+    if not isinstance(document, dict) or not isinstance(profile_hash, str):
+        raise ValueError("Cost profile bundle must come from load_cost_profile()")
+    if document.get("status") != "frozen":
+        raise ValueError(
+            "Formal rubric/measured runs require cost profile status='frozen'"
+        )
+    if document.get("regime") != cost_regime:
+        raise ValueError(
+            f"Cost profile regime {document.get('regime')!r} does not match "
+            f"requested regime {cost_regime!r}"
+        )
+    for field in ("profile_id", "version"):
+        if not isinstance(document.get(field), str) or not document[field]:
+            raise ValueError(f"Cost profile requires a non-empty {field}")
+    scope = document.get("scope")
+    if not isinstance(scope, dict) or not isinstance(scope.get("case_ids"), list):
+        raise ValueError("Cost profile scope.case_ids must be an array")
+    if case_id not in scope["case_ids"]:
+        raise ValueError(f"Cost profile does not declare case {case_id}")
+
+    indexed = _profile_entries_by_case(document)
+    case_entries = indexed.get(case_id, {})
+    expected_ids = {
+        action["action_id"] for action in copied if not is_stop_action(action)
+    }
+    profile_ids = set(case_entries)
+    missing = sorted(expected_ids - profile_ids)
+    extra = sorted(profile_ids - expected_ids)
+    if missing or extra:
+        raise ValueError(
+            f"Cost profile coverage mismatch for {case_id}: "
+            f"missing={missing}, extra={extra}"
+        )
+
+    scoring = document.get("scoring")
+    if not isinstance(scoring, dict):
+        raise ValueError("Cost profile scoring must be an object")
+    costs: dict[str, float] = {}
+    for action_id, entry in case_entries.items():
+        if cost_regime == "rubric":
+            costs[action_id] = compose_rubric_cost(
+                entry.get("components"),
+                scoring,
+            )
+        else:
+            measured_cost = entry.get("measured_cost")
+            if not _is_finite_number(measured_cost) or float(measured_cost) <= 0:
+                raise ValueError(
+                    f"Measured cost for {case_id}/{action_id} must be finite and positive"
+                )
+            costs[action_id] = float(measured_cost)
+
+    for action in copied:
+        if not is_stop_action(action):
+            action["cost"] = costs[action["action_id"]]
+    return copied, {
+        "cost_regime": cost_regime,
+        "cost_profile_id": str(document["profile_id"]),
+        "cost_profile_version": str(document["version"]),
+        "cost_profile_sha256": profile_hash,
+    }
+
+
+def cost_profile_identity(
+    actions: list[dict[str, Any]],
+    case_id: str,
+    cost_regime: str = "legacy",
+    cost_metadata: dict[str, str] | None = None,
+) -> dict[str, str]:
+    """Return a manifest-safe identity for the costs actually used by a case."""
+
+    provenance = {
+        "legacy": "case_embedded_legacy_exogenous_cost",
+        "uniform": "uniform_frozen_exogenous_cost",
+        "rubric": "rubric_frozen_independent_ratings",
+        "measured": "measured_frozen_operational_cost",
+    }
+    if cost_regime not in provenance:
+        raise ValueError(f"Unknown cost regime {cost_regime!r}")
+    if cost_regime == "legacy":
+        basis = sorted(
+            (
+                {
+                    "action_id": str(action["action_id"]),
+                    "cost": float(action["cost"]),
+                }
+                for action in actions
+                if not is_stop_action(action)
+            ),
+            key=lambda row: row["action_id"],
+        )
+        return {
+            "profile_id": f"{case_id}-embedded-legacy-cost",
+            "version": "1.0.0",
+            "sha256": canonical_json_sha256(basis),
+            "provenance": provenance[cost_regime],
+        }
+    if cost_metadata is None:
+        raise ValueError(f"{cost_regime} cost identity requires cost metadata")
+    return {
+        "profile_id": str(cost_metadata["cost_profile_id"]),
+        "version": str(cost_metadata["cost_profile_version"]),
+        "sha256": str(cost_metadata["cost_profile_sha256"]),
+        "provenance": provenance[cost_regime],
+    }
 
 
 def discover_case_dirs(examples_dir: Path) -> list[Path]:
@@ -225,19 +490,77 @@ def entropy_binary(p: float) -> float:
     return -(p * math.log2(p) + q * math.log2(q))
 
 
-def covered_node_ids(config: dict[str, Any], visible_ids: set[str]) -> set[str]:
+def _node_corroboration_units(
+    config: dict[str, Any],
+    node: dict[str, Any],
+) -> dict[str, set[str]]:
+    """Return corroboration units without pretending records are independent.
+
+    The legacy/default unit is an individual required claim. A source-group
+    scan is allowed only when an explicit claim_source_groups mapping is
+    supplied; this prevents two records from the same provider being silently
+    counted as two independent sources.
+    """
+
+    required = [str(claim_id) for claim_id in node["required_claim_ids"]]
+    unit = str(config.get("corroboration_unit", "claim")).casefold()
+    if unit == "claim":
+        return {claim_id: {claim_id} for claim_id in required}
+    if unit != "source_group":
+        raise ValueError(
+            "corroboration_unit must be either 'claim' or 'source_group'"
+        )
+
+    source_groups = config.get("claim_source_groups")
+    if not isinstance(source_groups, dict):
+        raise ValueError(
+            "source_group corroboration requires claim_source_groups mapping"
+        )
+    units: dict[str, set[str]] = {}
+    for claim_id in required:
+        group = source_groups.get(claim_id)
+        if not isinstance(group, str) or not group:
+            raise ValueError(
+                f"Missing source group for required claim {claim_id!r}"
+            )
+        units.setdefault(group, set()).add(claim_id)
+    return units
+
+
+def _required_corroboration_count(
+    config: dict[str, Any],
+    available_unit_count: int,
+) -> int:
     semantics = str(config.get("node_coverage_semantics", "OR")).upper()
-    if semantics not in {"OR", "AND"}:
+    if semantics == "OR":
+        return 1
+    if semantics == "AND":
+        return available_unit_count
+    if semantics != "K_OF_N":
         raise ValueError(f"Unsupported node coverage semantics: {semantics}")
+    configured_k = config.get("node_coverage_k")
+    if (
+        not isinstance(configured_k, int)
+        or isinstance(configured_k, bool)
+        or configured_k < 1
+    ):
+        raise ValueError(
+            "K_OF_N node coverage requires a positive integer node_coverage_k"
+        )
+    # A global k scan uses min(k, n) so single-claim nodes remain identifiable
+    # while multi-claim nodes move from OR (k=1) toward AND (k>=n).
+    return min(configured_k, available_unit_count)
+
+
+def covered_node_ids(config: dict[str, Any], visible_ids: set[str]) -> set[str]:
     covered = set()
     for node in config["cti_nodes"]:
-        required = set(node["required_claim_ids"])
-        is_covered = (
-            bool(required & visible_ids)
-            if semantics == "OR"
-            else bool(required) and required <= visible_ids
+        units = _node_corroboration_units(config, node)
+        required_count = _required_corroboration_count(config, len(units))
+        visible_count = sum(
+            bool(claim_ids & visible_ids) for claim_ids in units.values()
         )
-        if is_covered:
+        if units and visible_count >= required_count:
             covered.add(node["node_id"])
     return covered
 
@@ -822,7 +1145,10 @@ def m2_action_score(
     action: dict[str, Any],
     state: dict[str, Any],
     actions: list[dict[str, Any]],
+    cost_coefficient: float = 0.75,
 ) -> float:
+    if not _is_finite_number(cost_coefficient) or float(cost_coefficient) < 0:
+        raise ValueError("M2 cost_coefficient must be finite and nonnegative")
     coverage = state.get("coverage", {})
     stage_coverage = coverage.get("stage_coverage", {})
     evidence_coverage = coverage.get("evidence_type_coverage", {})
@@ -891,7 +1217,7 @@ def m2_action_score(
         + 1.00 * evidence_gap
         - 1.50 * overlap
         - 1.00 * no_yield_risk
-        - 0.75 * cost_ratio
+        - float(cost_coefficient) * cost_ratio
     )
 
 
@@ -1443,10 +1769,18 @@ def run_episode(
 
 def execute_case(
     case_dir: Path,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     config = load_json(case_dir / "case_config.json")
     claims = load_json(case_dir / "evidence_claims.json")
     actions = load_json(case_dir / "acquisition_actions.json")
+    actions, cost_metadata = apply_cost_regime(
+        actions,
+        config["case_id"],
+        cost_regime,
+        cost_profile,
+    )
 
     rows: list[dict[str, Any]] = []
     traces: list[dict[str, Any]] = []
@@ -1461,6 +1795,8 @@ def execute_case(
                 seed,
                 planner,
             )
+            if cost_metadata is not None:
+                row.update(cost_metadata)
             rows.append(row)
             traces.append(
                 {
@@ -1505,8 +1841,13 @@ def single_case_output_paths(output_dir: Path, case_id: str) -> dict[str, Path]:
     }
 
 
-def run_all(case_dir: Path, output_dir: Path) -> None:
-    rows, traces = execute_case(case_dir)
+def run_all(
+    case_dir: Path,
+    output_dir: Path,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
+) -> None:
+    rows, traces = execute_case(case_dir, cost_regime, cost_profile)
     output_dir.mkdir(parents=True, exist_ok=True)
     case_id = load_json(case_dir / "case_config.json")["case_id"]
     output_paths = single_case_output_paths(output_dir, case_id)
@@ -1526,6 +1867,8 @@ def run_cases(
     case_dirs: list[Path],
     output_dir: Path,
     write_traces: bool = True,
+    cost_regime: str = "legacy",
+    cost_profile: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     if not case_dirs:
         raise ValueError("No complete case directories were found")
@@ -1534,7 +1877,11 @@ def run_cases(
     rows: list[dict[str, Any]] = []
     traces: list[dict[str, Any]] = []
     for case_dir in case_dirs:
-        case_rows, case_traces = execute_case(case_dir)
+        case_rows, case_traces = execute_case(
+            case_dir,
+            cost_regime,
+            cost_profile,
+        )
         rows.extend(case_rows)
         traces.extend(case_traces)
 
@@ -1827,14 +2174,53 @@ def main() -> None:
         default=Path(__file__).resolve().parents[1] / "results",
         help="Directory for simulator outputs.",
     )
+    parser.add_argument(
+        "--cost-regime",
+        choices=COST_REGIMES,
+        default="legacy",
+        help=(
+            "Cost source: embedded legacy values (default), built-in uniform, "
+            "or a frozen external rubric/measured profile."
+        ),
+    )
+    parser.add_argument(
+        "--cost-profile",
+        type=Path,
+        help="Frozen cost-profile JSON; required for rubric/measured regimes.",
+    )
     args = parser.parse_args()
+    if args.cost_regime in {"rubric", "measured"} and args.cost_profile is None:
+        parser.error(f"--cost-profile is required for --cost-regime {args.cost_regime}")
+    if args.cost_regime in {"legacy", "uniform"} and args.cost_profile is not None:
+        parser.error(f"--cost-profile is not valid for --cost-regime {args.cost_regime}")
+    if args.cost_regime != "legacy" and args.output_dir.exists():
+        if not args.output_dir.is_dir() or any(args.output_dir.iterdir()):
+            parser.error(
+                "non-legacy cost runs require a new or empty --output-dir so "
+                "frozen legacy results cannot be overwritten"
+            )
+    cost_profile = (
+        load_cost_profile(args.cost_profile)
+        if args.cost_profile is not None
+        else None
+    )
     if args.examples_dir is not None:
-        run_cases(discover_case_dirs(args.examples_dir), args.output_dir)
+        run_cases(
+            discover_case_dirs(args.examples_dir),
+            args.output_dir,
+            cost_regime=args.cost_regime,
+            cost_profile=cost_profile,
+        )
         return
     case_dir = args.case_dir or (
         Path(__file__).resolve().parents[1] / "examples" / "C01"
     )
-    run_all(case_dir, args.output_dir)
+    run_all(
+        case_dir,
+        args.output_dir,
+        cost_regime=args.cost_regime,
+        cost_profile=cost_profile,
+    )
 
 
 if __name__ == "__main__":

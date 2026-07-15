@@ -100,6 +100,111 @@ class AfaVoiBaselineTests(unittest.TestCase):
         second = module.select_afa_voi("afa_voi_myopic", config(), state(), changed)
         self.assertEqual(first["action_id"], second["action_id"])
 
+    def test_planner_channel_prior_override_keeps_execution_profile_fixed(self):
+        module = self.require_module()
+        execution = config()
+        execution["channel_reliability"] = {"host": 0.8}
+
+        planner_config, metadata = module.planner_config_for_channel_prior(
+            execution, 0.75
+        )
+
+        self.assertEqual({"host": 0.8}, execution["channel_reliability"])
+        self.assertEqual({"host": 0.6}, planner_config["channel_reliability"])
+        self.assertEqual("planner_belief_only", metadata["channel_prior_scope"])
+        self.assertEqual(1, metadata["execution_channel_profile_held_constant"])
+        self.assertNotEqual(
+            metadata["execution_channel_profile_sha256"],
+            metadata["planner_channel_prior_sha256"],
+        )
+
+    def test_execute_cases_marks_which_planners_consume_channel_belief(self):
+        module = self.require_module()
+        case = next(
+            (ROOT / "09-experiments" / "real_cases").glob("C12-*")
+        )
+
+        rows, _ = module.execute_cases(
+            [case], channel_prior_multiplier=0.75
+        )
+
+        self.assertEqual(180, len(rows))
+        self.assertEqual(
+            {"planner_belief_only"},
+            {row["channel_prior_scope"] for row in rows},
+        )
+        self.assertEqual(
+            {1},
+            {int(row["execution_channel_profile_held_constant"]) for row in rows},
+        )
+        consumed = {
+            planner: {
+                int(row["channel_prior_consumed_by_planner"])
+                for row in rows
+                if row["planner"] == planner
+            }
+            for planner in module.PLANNERS
+        }
+        self.assertEqual({0}, consumed["project05_m2"])
+        self.assertEqual({1}, consumed[module.MYOPIC])
+        self.assertEqual({1}, consumed[module.ROLLOUT])
+        self.assertEqual({0}, consumed["oracle_optimal"])
+        self.assertEqual(
+            1,
+            len({row["execution_channel_profile_sha256"] for row in rows}),
+        )
+        self.assertEqual(
+            1,
+            len({row["planner_channel_prior_sha256"] for row in rows}),
+        )
+        self.assertNotEqual(
+            rows[0]["execution_channel_profile_sha256"],
+            rows[0]["planner_channel_prior_sha256"],
+        )
+
+    def test_manifest_records_hashes_statistical_unit_and_closed_writing_gate(self):
+        module = self.require_module()
+        case = next(
+            (ROOT / "09-experiments" / "real_cases").glob("C12-*")
+        )
+        case_id = MVP.load_json(case / "case_config.json")["case_id"]
+        rows = [
+            {
+                "case_id": case_id,
+                "mask_strategy": "random",
+                "mask_intensity": 0.2,
+                "seed": 11,
+            }
+        ]
+        manifest = module.evaluation_manifest(
+            [case],
+            rows,
+            "test-afa-manifest",
+            channel_prior_multiplier=0.75,
+            output_hashes={"results.csv": "a" * 64},
+        )
+
+        self.assertEqual("case_or_attack_chain", manifest["statistical_unit"]["independent"])
+        self.assertTrue(manifest["statistical_unit"]["pseudoreplication_forbidden"])
+        self.assertEqual(0.75, manifest["channel_prior_intervention"]["multiplier"])
+        self.assertEqual("planner_belief_only", manifest["channel_prior_intervention"]["scope"])
+        self.assertEqual({"results.csv": "a" * 64}, manifest["output_sha256"])
+        self.assertEqual("legacy", manifest["cost_regime"])
+        self.assertEqual(1, len(manifest["cost_profile_identity_by_case"]))
+        self.assertEqual(64, len(manifest["runner_sha256"]))
+        self.assertFalse(manifest["all_experiments_complete"])
+        self.assertFalse(manifest["paper_or_patent_updated"])
+
+    def test_uniform_costs_are_applied_and_identified(self):
+        module = self.require_module()
+        case = next((ROOT / "09-experiments" / "real_cases").glob("C12-*"))
+        rows, _ = module.execute_cases([case], cost_regime="uniform")
+        self.assertEqual({"uniform"}, {row["cost_regime"] for row in rows})
+        self.assertEqual(1, len({row["cost_profile_sha256"] for row in rows}))
+        identities = module.cost_profile_identities([case], "uniform")
+        identity = next(iter(identities.values()))
+        self.assertEqual("uniform_frozen_exogenous_cost", identity["provenance"])
+
     def test_non_greedy_rollout_can_select_complementary_plan_member(self):
         module = self.require_module()
         actions = [

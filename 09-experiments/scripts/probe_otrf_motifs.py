@@ -202,7 +202,7 @@ def probe_archive(
             and len(counted_families)
             >= node["minimum_distinct_provider_families"]
         )
-        if node_pass:
+        if node_pass and node["critical"]:
             passing_nodes += 1
         node_summaries.append(
             {

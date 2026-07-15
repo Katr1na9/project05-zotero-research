@@ -51,6 +51,8 @@ def write_json(path: Path, value: Any) -> None:
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        raise ValueError(f"Refusing to write an empty CSV: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
@@ -93,8 +95,10 @@ def paired_against_m2(
     wins = ties = losses = repairs = regressions = joint_success = 0
     differences: list[float] = []
     for planners in grouped.values():
-        m2 = planners["project05_m2"]
-        candidate = planners[candidate_planner]
+        m2 = planners.get("project05_m2")
+        candidate = planners.get(candidate_planner)
+        if m2 is None or candidate is None:
+            continue
         m2_success = int(m2["reached_target"])
         candidate_success = int(candidate["reached_target"])
         repairs += int(candidate_success == 1 and m2_success == 0)
@@ -117,8 +121,10 @@ def paired_against_m2(
         "cost_wins_vs_m2": wins,
         "cost_ties_vs_m2": ties,
         "cost_losses_vs_m2": losses,
-        "mean_cost_difference_vs_m2_on_joint_success": round(
-            sum(differences) / len(differences), 4
+        "mean_cost_difference_vs_m2_on_joint_success": (
+            round(sum(differences) / len(differences), 4)
+            if differences
+            else None
         ),
     }
 
@@ -129,7 +135,11 @@ def compact_result(
     return {
         "planner": planner,
         "family": family,
-        "repeated_run_count": int(summary.get("repeated_run_count", summary.get("runs"))),
+        "repeated_run_count": int(
+            summary.get("repeated_run_count")
+            or summary.get("runs")
+            or 0
+        ),
         "success_rate": float(summary["success_rate"]),
         "mean_cost_to_target": float(summary["mean_cost_to_target"]),
         "mean_cost_regret_vs_oracle": summary.get("mean_cost_regret_vs_oracle"),
