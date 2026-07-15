@@ -1,7 +1,9 @@
 # Project03-Derived Ideas: Preliminary Collision Scan
 
-检索日期：2026-07-12  
-检索范围：截至 2026-07-12 可发现的论文、预印本、RFC 与专利。  
+> Superseded for active scoping on 2026-07-13. This file preserves the earlier path/protocol-transformation scan, but W1 is no longer the active main line after the user clarified the Project03 contribution boundary. Use `search-protocol-pcap-llm-kg-20260713.md` and the 2026-07-13 reusable-core audit for current work.
+
+检索日期：2026-07-12
+检索范围：截至 2026-07-12 可发现的论文、预印本、RFC 与专利。
 状态：功能级初筛完成；不是系统综述，不等于 G2 通过。
 
 ## 1. 检索目标
@@ -107,4 +109,3 @@ W1 进入 G1 前必须同时满足：
 - I1/I2/I3 的宽版本均已撞题或高度拥挤。
 - W1 是当前唯一值得继续验证的问题母体，但仍是 `amber`，不是选题。
 - 下一步应先精读 SecTracer、Forensic Coverage、ID-INT、P4Prime、EDL/XAPT/StageFinder，再决定是否保留 W1。
-

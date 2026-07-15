@@ -9,7 +9,7 @@
 | ID | 工作名称 | 目录 | 当前阶段 | 权威状态 |
 |---|---|---|---|---|
 | P05-L1 | 不完整证据下、信息边界约束的 APT 调查控制 | [`01-incomplete-evidence-investigation-control/`](01-incomplete-evidence-investigation-control/) | 论文 v0.4；C11 与盲标 v0.2 已完成工程准备 | 既有论文线 |
-| P05-L2 | 五模态异构路径下的行为追溯与意图感知，暂定 | [`02-multimodal-threat-attribution/`](02-multimodal-threat-attribution/) | Stage 1；初筛完成，W1 amber，P0 精读待进行 | 新论文线 |
+| P05-L2 | 流量/日志双源事件证据图与 LLM 攻击链/意图推理，候选阶段 | [`02-multimodal-threat-attribution/`](02-multimodal-threat-attribution/) | Stage 3 完成；C01-C61/F01-F06 已综合，候选题待人工选择 | 新论文线 |
 
 ## 共享工作区
 

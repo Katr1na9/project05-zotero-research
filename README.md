@@ -9,7 +9,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 | 研究线 | 核心内容 | 当前状态 |
 |---|---|---|
 | [P05-L1](10-research-lines/01-incomplete-evidence-investigation-control/) | 不完整证据下、信息边界约束的 APT 调查控制 | 论文 v0.7；C11 G2、C12 生产 SOC G1 与外部 AFA 映射已入正文 |
-| [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | IPv4/IPv6/MPLS/Geo/SCION 异构路径下的行为追溯与意图感知，暂定 | Stage 1；初筛完成，W1 amber，P0 精读待进行 |
+| [P05-L2](10-research-lines/02-multimodal-threat-attribution/) | 流量/日志双源事件证据图与 LLM 攻击链/意图推理，候选阶段 | Stage 3 完成；二次撞题检索与精读完成，3 个候选题待人工选择 |
 
 共享 SOP、单篇精读、模板和 Zotero 导出继续使用根目录的稳定路径，所有权规则见 [Shared Workspace](10-research-lines/00-shared-workspace/README.md)。
 
@@ -63,7 +63,7 @@ Project05 现在按“共享工作区 + 独立论文线”管理，入口见 [Re
 
 ## 当前下一步
 
-1. P05-L2：按 [reading queue](10-research-lines/02-multimodal-threat-attribution/02-literature-notes/reading-queue.md) 精读 P0 五篇，验证 W1 能否区别于 SecTracer、Forensic Coverage、ID-INT 和 P4Prime。G1 前不选模型、不写论文。
+1. P05-L2：阅读 [候选题与可行性矩阵](10-research-lines/02-multimodal-threat-attribution/03-ideas/candidate-thesis-topics-and-feasibility-v0.1-20260715.md)，由用户选择 A/B/C 或批准“A 叙事 + B 核心 + C 可选”。确认前不下载数据、不选模型、不启动实验。
 2. P05-L1：C07-C11 A/B 首轮 114/114 已完成；Claim/Intent 未过预注册一致性门槛。下一步完成 7+25 项第三人裁决，并确认或重做粒度独立标注。
 3. P05-L1：C12 已作为正文独立 G1 外部压力；下一步扩第二个独立运营 incident 或分析师效用终点，继续禁止把 `Disrupted` 写成 actor/campaign 真值。
 4. P05-L1：外部 AFA 源码与接口映射已完成；下一步先冻结 endpoint contract，再决定是否运行跨任务复现或显式 adapter。

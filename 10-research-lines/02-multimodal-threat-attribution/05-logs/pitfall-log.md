@@ -37,3 +37,39 @@
 - 解决：本线固定使用 `network intent/compliance` 与 `attack stage/TTP/intent candidate` 两套术语。
 - 预防：检索矩阵和论文定义中必须分别列出主体、观测和真值。
 - 影响：高，会导致错误撞题判断和错误贡献表述。
+
+## 2026-07-15：把网络字段当作独立流量证据
+
+- 场景：论文同时包含 IP/port/netflow 节点和系统日志。
+- 表现：容易称为 traffic+log 双模态图。
+- 原因：没有检查网络信息是否来自独立 PCAP/传感器，还是同一 audit event 的字段。
+- 解决：只有独立 source lineage、raw anchor 和单独子图才计为流量证据线。
+- 预防：功能矩阵固定列 Input、Anchor、X-edge。
+- 影响：高，会误判 SAURONEYES、ProHunter 等 audit-only 工作。
+
+## 2026-07-15：把 Softmax/专家权重称为校准概率
+
+- 场景：APMP、MPCA、M-DUCAG 和早期 evidence graph 都带 confidence/probability。
+- 表现：误以为 R2 已完全撞题，或反过来把普通分数包装成 calibration novelty。
+- 原因：混淆 ranking/discrimination 与 probability calibration。
+- 解决：要求独立 calibration set、Brier/ECE/reliability diagram 和 risk-coverage。
+- 预防：所有“可信/置信度”主张逐项审计概率含义与样本独立性。
+- 影响：高，直接决定核心创新是否成立。
+
+## 2026-07-15：让确定性 join 生成训练真值
+
+- 场景：用时间/五元组/PID 自动生成 packet-log 正样本，再训练模型超越同一规则。
+- 表现：模型获得漂亮结果，但只复现标注规则。
+- 原因：标签与 baseline 同源，形成循环验证。
+- 解决：基于场景/raw evidence 定义独立关系语义，双人标注歧义样本并构造 hard negatives。
+- 预防：pilot 先计算标注一致性，campaign-disjoint 切分后才训练。
+- 影响：致命，若不解决会使 R2 无效。
+
+## 2026-07-15：把访问受限摘要写成全文精读
+
+- 场景：T-Trace、Citar、ANTEATER 等只有出版页/索引内容。
+- 表现：容易复述搜索索引中的表格或方法细节。
+- 原因：检索工具暴露长摘要片段，看起来像全文。
+- 解决：使用 `extended-indexed-read` / `metadata-abstract-only` 状态并限制可用 claim。
+- 预防：每篇笔记顶部记录合法全文来源和允许用途。
+- 影响：高，关系到综述证据可信度。

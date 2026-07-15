@@ -1,39 +1,92 @@
 # P05-L2 Material Passport
 
+Updated: 2026-07-15
+
 ## Identity
 
-- Line ID：P05-L2
-- Working name：Multimodal Threat Attribution
-- Created：2026-07-12
-- Active workflow：academic-research-suite / deep-research / socratic
-- Current stage：Stage 0 Inbox
+- Line ID: P05-L2
+- Working name: Traffic-Log Evidence Graph + LLM Threat Tracing
+- Created: 2026-07-12
+- Active workflow: academic-research-suite / deep-research
+- Current stage: Stage 3 synthesis/collision complete; user topic selection pending
+- Literature freeze: 2026-07-13
 
-## Verified Inputs
+## Verified Project Inputs
 
-- 用户原始 idea：希望在 Project05 中建立多模态论文支线。
-- 共享背景：Project05 已有威胁归因、CTI、ATT&CK、KG/RAG、provenance 和可信评估精读。
-- 用户限定的五种模态：IPv4、IPv6、MPLS、GeoNetworking、SCION。
-- 用户在 Project03 的已有职责与积累：行为追溯、攻击意图候选感知。
-- Project03 本地快照已审计，见 [handoff audit](../04-progress/project03-handoff-audit-20260712.md)。
-- 已核验 Geo 外层 `0x8947`；IPv6 有逐跳实测记录；SCION 当前只有 intended label，wire 表现为 IPv4/UDP。
+- Project03 reusable core: PCAP parsing, ThreatObservation generation, graph query and trace localization.
+- Project03 non-reusable engineering scope: CENI controller/network-element deployment and compatibility compromises.
+- Log-side design exists but extraction/build code is incomplete in the audited snapshot.
+- IPv4/IPv6/MPLS/GeoNetworking/SCION are protocol/environment conditions, not independent evidence modalities.
+- Static CAPEC/ATT&CK/CTI knowledge graph, task subgraph and runtime event evidence graph are separate graph types.
+
+## Verified Literature State
+
+- Canonical corpus: [collision-corpus-v0.3-20260713.md](../02-literature-notes/collision-corpus-v0.3-20260713.md)
+- Functional matrix: [functional-collision-matrix-v0.2-20260713.md](../02-literature-notes/functional-collision-matrix-v0.2-20260713.md)
+- Second search: [second-collision-search-20260713.md](../02-literature-notes/second-collision-search-20260713.md)
+- Scope: C01-C61/F01-F06.
+- Legal full texts available for new core papers were read and converted to 15-section shared notes.
+- T-Trace, M-IDAS, Citar and ANTEATER remain visibly access-limited; they support only boundary-level claims.
+- MuSAR/Traffic2Chain citation sweep did not locate a direct R2 equivalent by the freeze date.
+
+## Verified Novelty Boundary
+
+Occupied:
+
+- broad packet/network + log graph construction;
+- network-enhanced provenance graph;
+- probabilistic evidence/attack graph and missing evidence;
+- graph-internal relation completion/confidence;
+- CTI-to-provenance matching;
+- LLM/multi-agent chain investigation and reports.
+
+Strongest residual:
+
+- campaign-disjoint calibrated multi-candidate packet-log observation linking;
+- source-preserving raw anchors and independent subgraph fidelity;
+- explicit conflict/missing-source propagation;
+- joint packet+log claim-to-record replay.
+
+High-level goal intent is secondary and cannot be conflated with ATT&CK tactic, event maliciousness or actor attribution.
+
+## Candidate State
+
+- Candidate A: complete source-preserving graph + evidence-constrained LLM main line.
+- Candidate B: calibrated cross-source relation and uncertainty core.
+- Candidate C: trustworthy LLM chain/intent extension.
+- Recommendation: A narrative + B mandatory core + C optional.
+- Decision: pending user review; no RQ is frozen.
+
+## Data Feasibility
+
+- Primary candidate: ProvICS (raw PCAP + host/PLC provenance + physical state; CC BY-NC 4.0 reported).
+- External candidate: AIT Log Dataset 2.0 (PCAP + heterogeneous logs; CC BY-NC-SA 4.0 reported).
+- Conditional: CICAPT-IIoT/ProvCon after license verification.
+- Auxiliary only: OpTC, because it provides flow summaries rather than raw PCAP.
+- Dataset audit: [dataset-feasibility-audit-v0.1-20260715.md](../09-experiments/dataset-feasibility-audit-v0.1-20260715.md)
 
 ## Not Yet Verified
 
-- 具体研究问题；
-- 具体模态组合；
-- 多模态相对单模态的真实增益；
-- 可用数据集与标签；
-- 最新工作是否已覆盖候选 idea；
-- 120 条多模态批次的原始 PCAP/CSV 与完整运行代码；
-- MPLS 的完整证据包与真实 SCION 封装；
-- stage/intent 的独立人工或权威 ground truth；
-- W1 是否在 SecTracer、Forensic Coverage、ID-INT 和 P4Prime 的全文中仍有功能级差异；
-- 方法、指标、venue 和论文题目。
+- user-selected Primary RQ and final thesis title;
+- ProvICS/AIT v2 local manifests, checksums and exact downloadable subsets;
+- relation ontology, pilot labels and inter-annotator agreement;
+- campaign-level sample size/power and compute budget;
+- cross-domain transfer beyond ICS;
+- high-level intent class validity and annotator agreement;
+- final model, prompt, baseline implementation and venue;
+- patent legal status/families through CNIPA review.
 
 ## Human-Read State
 
-本线尚未建立独立文献语料。不得把共享笔记的存在自动记为“本线已完成阅读与综合”。
+AI-assisted full-text reading and synthesis are complete for the recorded corpus. This does **not** mean the user has personally read every note. User review is required for candidate selection, relation semantics and all manuscript claims.
 
-## Current Boundary
+## Reproducibility Boundary
 
-工作区结构、五模态范围和 Project03 交接事实已冻结。I1/I2/I3 宽版本已被初步撞题检索淘汰或降级；W1 仅为 `amber` 问题母体，不是创新主张。任何后续 RQ、文献结论和方法主张都必须带来源、日期、验证状态和对应 Gate。
+- Full-text cache is local/ignored and must not be committed.
+- No raw PCAP, malware, private logs or licensed PDF may enter Git.
+- Every future dataset snapshot requires source URL, version, license, checksum, extraction command and parser version.
+- Candidate edges and LLM hypotheses must never overwrite observed evidence.
+
+## Current Gate
+
+G2 passed; G3 conditional pass; G1 awaits user topic selection. No dataset acquisition, model implementation or paper drafting is authorized before that decision.
