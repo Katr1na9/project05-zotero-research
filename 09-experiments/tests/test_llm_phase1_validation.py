@@ -9,6 +9,11 @@ from pathlib import Path
 EXPERIMENT_ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR_PATH = EXPERIMENT_ROOT / "scripts" / "validate_llm_phase1_output.py"
 BUILDER_PATH = EXPERIMENT_ROOT / "scripts" / "build_llm_evaluation_packets.py"
+RUNNER_PATH = EXPERIMENT_ROOT / "scripts" / "run_llm_phase1.py"
+CONFIG = EXPERIMENT_ROOT / "llm_compiler_v0.2" / "experiment_config.json"
+CONTRACT = (
+    EXPERIMENT_ROOT / "governance" / "contracts" / "llm-compiler-contract-v0.2.json"
+)
 
 
 def load_module(name, path):
@@ -21,6 +26,7 @@ def load_module(name, path):
 
 builder = load_module("llm_packet_builder_for_validation", BUILDER_PATH)
 validator = load_module("validate_llm_phase1_output", VALIDATOR_PATH)
+runner = load_module("run_llm_phase1", RUNNER_PATH)
 
 
 def fixture_valid_candidate_and_packet():
@@ -204,6 +210,129 @@ class ManifestValidationTests(unittest.TestCase):
                 manifest, changed, input_manifest, prompt_lock, model_lock
             ),
         )
+
+
+class RuleBaselineTests(unittest.TestCase):
+    def fixture_development_manifest_and_results(self):
+        manifest = {
+            "split": "development",
+            "packet_count": 52,
+            "positive_count": 26,
+            "null_count": 26,
+            "input_manifest_sha256": "A" * 64,
+            "null_construction_audit": {
+                "status": "frozen",
+                "audit_sha256": "B" * 64,
+            },
+        }
+        rows = []
+        for index in range(26):
+            rows.append(
+                {
+                    "request_id": f"REQ-{index:024X}",
+                    "case_id": "C04-evaluation-case",
+                    "packet_role": "positive",
+                    "schema_valid": True,
+                    "project_gold_packet_agreement": 1.0,
+                    "result": {"status": "completed", "candidate_claims": [{}]},
+                }
+            )
+        for index in range(26, 52):
+            rows.append(
+                {
+                    "request_id": f"REQ-{index:024X}",
+                    "case_id": "C04-evaluation-case",
+                    "packet_role": "null",
+                    "schema_valid": True,
+                    "project_gold_packet_agreement": 1.0,
+                    "result": {"status": "abstain", "candidate_claims": []},
+                }
+            )
+        return manifest, rows
+
+    def test_rule_snapshot_is_required_before_any_llm_backend(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with self.assertRaisesRegex(ValueError, "rule baseline snapshot"):
+                runner.preflight_llm_backend(
+                    Path(temp) / "missing.json", CONFIG, CONTRACT
+                )
+
+    def test_rule_or_config_drift_after_snapshot_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest, rows = self.fixture_development_manifest_and_results()
+            snapshot = root / "rule-baseline-development.json"
+            runner.freeze_rule_snapshot(
+                CONFIG,
+                CONTRACT,
+                manifest,
+                rows,
+                snapshot,
+            )
+            changed = json.loads(CONFIG.read_text(encoding="utf-8"))
+            changed["rule_baseline"]["operation_map"]["EVENT_READ"] = (
+                "changed_after_freeze"
+            )
+            changed_path = root / "changed.json"
+            changed_path.write_text(json.dumps(changed), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "snapshot hash mismatch"):
+                runner.require_rule_snapshot_unchanged(
+                    snapshot, changed_path, CONTRACT
+                )
+
+    def test_rule_compiler_emits_only_g0_valid_literal_observation(self):
+        payload = {
+            "operation": "EVENT_WRITE",
+            "process": "powershell.exe",
+            "path": "C:\\Temp\\A.zip",
+        }
+        record = builder.make_packet_record(
+            "local_log",
+            {"artifact_id": "SRC-C07-01", "record_id": "event-1"},
+            payload,
+        )
+        packet = {
+            "request_id": "REQ-" + "A" * 24,
+            "case_id": "C07-evaluation-case",
+            "split": "test",
+            "packet_role": "positive",
+            "support_ceiling": "G2_tactic_intent",
+            "records": [record],
+        }
+
+        result = runner.rule_compile(packet)
+
+        self.assertEqual("completed", result["status"])
+        self.assertEqual(1, len(result["candidate_claims"]))
+        self.assertEqual("wrote", result["candidate_claims"][0]["predicate"])
+        self.assertEqual(
+            [],
+            validator.validate_candidate(
+                result["candidate_claims"][0],
+                packet,
+                "rule_compiler",
+                0,
+                0,
+            ),
+        )
+
+    def test_rule_compiler_abstains_when_operation_is_unmapped(self):
+        candidate, packet = fixture_valid_candidate_and_packet()
+        del candidate
+        packet["records"][0]["source_payload"] = {
+            "operation": "UNMAPPED_EVENT",
+            "process": "powershell.exe",
+            "path": "C:\\Temp\\A.zip",
+        }
+        packet["records"][0]["record_sha256"] = builder.sha256_bytes(
+            builder.canonical_json(packet["records"][0]["source_payload"])
+        )
+
+        result = runner.rule_compile(packet)
+
+        self.assertEqual("abstain", result["status"])
+        self.assertEqual([], result["candidate_claims"])
 
 
 if __name__ == "__main__":

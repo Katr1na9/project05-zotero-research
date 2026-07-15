@@ -107,7 +107,29 @@
     "status": "unfrozen",
     "development_only": true,
     "must_precede_any_llm_output": true,
-    "requires_frozen_development_null_audit": true
+    "requires_frozen_development_null_audit": true,
+    "operation_map": {
+      "EVENT_ACCEPT": "accepted_external_connection",
+      "EVENT_CONNECT": "connected_to",
+      "EVENT_EXECUTE": "executed",
+      "EVENT_OPEN": "opened",
+      "EVENT_READ": "read",
+      "EVENT_RECVFROM": "received_data_from",
+      "EVENT_SENDTO": "sent_data_to",
+      "EVENT_WRITE": "wrote",
+      "FILE:CREATE": "created",
+      "FILE:READ": "read",
+      "FILE:WRITE": "wrote",
+      "FLOW:MESSAGE": "connected_to",
+      "PROCESS:CREATE": "executed",
+      "REGISTRY:MODIFY": "set_registry_value_for",
+      "WINDOWS:11": "created",
+      "WINDOWS:4688": "executed",
+      "WINDOWS:800": "executed_command",
+      "WINDOWS:4104": "executed_command",
+      "WITFOO:BLOCK": "attempted_blocked_connection_to",
+      "WITFOO:4672": "received_special_privileges_on"
+    }
   },
   "runtime": {
     "dependency_install_authorized": false,

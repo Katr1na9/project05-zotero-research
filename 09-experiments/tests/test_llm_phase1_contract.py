@@ -84,6 +84,15 @@ class LlmPhase1ContractTests(unittest.TestCase):
         self.assertEqual(256, config["call_budget"]["first_pass"])
         self.assertEqual(192, config["call_budget"]["repeat_diagnostic"])
         self.assertEqual(448, config["call_budget"]["maximum_formal"])
+
+    def test_rule_operation_map_and_pre_llm_freeze_gate_are_declared(self):
+        config = load_json(CONFIG_PATH)
+        rule = config["rule_baseline"]
+
+        self.assertEqual("unfrozen", rule["status"])
+        self.assertTrue(rule["requires_frozen_development_null_audit"])
+        self.assertEqual("wrote", rule["operation_map"]["EVENT_WRITE"])
+        self.assertEqual("opened", rule["operation_map"]["EVENT_OPEN"])
         self.assertEqual(
             "pre_model_infrastructure", config["status"]
         )
