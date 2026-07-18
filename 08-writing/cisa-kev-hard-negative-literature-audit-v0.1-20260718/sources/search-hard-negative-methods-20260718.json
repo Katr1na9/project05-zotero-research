@@ -1,0 +1,162 @@
+{
+  "search_id": "search_bbe24e25be244a0684569c2bdf5e8907",
+  "session_id": "session_bbe24e25be244a0684569c2bdf5e8907",
+  "status": "ok",
+  "results": [
+    {
+      "url": "https://arxiv.org/html/2411.14103v1",
+      "title": "Lost in Inference: Rediscovering the Role of Natural Language Inference for Large Language Models",
+      "publish_date": "2024-11-21",
+      "excerpts": [
+        "# Lost in Inference: Rediscovering the Role of Natural Language Inference for Large Language Models\n## 3 Setup\n### 3.1 Benchmarks\n#### HANS\nThe adversarial dataset Heuristic Analysis for NLI Systems (HANS, McCoy et al., [2019](https://arxiv.org/html/2411.14103v1.bib18) ) is generated to contain examples that cannot be solved through heuristics like lexical overlap, and contains 30K examples.\n\n...\n\n### 3.3 Evaluation details\nSince there are only a limited number of choices depending on the task (two or three), we append the these choices to the prompt and compute the negative log likelihood (NLL) over the letter choice.\nWe then choose the option which has the lowest NLL as the model\u2019s prediction.\n\n...\n\n## 4 Results\n### 4.2 Informativeness during training\n#### Training curves\nTable 1: Monotonicity values during the course of training. We report monotonicity both for accuracy ( $mon_{Acc}$ ) and negative log likelihood of the correct answer ( $mon_{NLL}$ ).\n\n...\n\n### 4.4 Dataset saturation\n#### Error types\nFor example, in the first row of [Table 2](https://arxiv.org/html/2411.14103v1.T2 \"In 4.4 Dataset saturation \u2023 4 Results \u2023 Lost in Inference: Rediscovering the Role of Natural Language Inference for Large Language Models\") , whether the correct label is contradiction or negation would depend on a not-specified sentiment\n\n...\n\n## Appendix A Benchmarks\n### A.3 HANS\nSpecifically, the templates are designed to generate examples that can not be solved through heuristics such as lexical, subsequence, or constituent overlap.\nAt the time of proposal, none of the SOTA models were able to solve such examples.\n\n...\n\n## Appendix C Prompt templates\n``` |\nAnswer: {{ choice_text }}\n``` |\n|HansNLI |```\n{% for x in few_shot -%}\nPremise: {{ x[\"premise\"] }}.\nHypothesis: {{ x[\"hypothesis\"] }}.\nA. Entailment\nB. Non-Entailment\nAnswer: {{ x[\"answer\"] }}\n\n{% endfor -%}\nPremise: {{ premise }}.\nHypothesis: {{ hypothesis }}.\nA. Entailment\nB. Non-Entailment\n```"
+      ]
+    },
+    {
+      "url": "https://aclanthology.org/2021.acl-long.277/",
+      "title": "Revisiting the Negative Data of Distantly Supervised Relation Extraction - ACL Anthology",
+      "publish_date": "2021-08-01",
+      "excerpts": [
+        "# [Revisiting the Negative Data of Distantly Supervised Relation Extraction](https://aclanthology.org/2021.acl-long.277.pdf)\n## Correct Metadata for\n### Abstract\nDistantly supervision automatically generates plenty of training samples for relation extraction. However, it also incurs two major problems: noisy labels and imbalanced training data.\nPrevious works focus more on reducing wrongly labeled relations (false positives) while few explore the missing relations that are caused by incompleteness of knowledge base (false negatives). Furthermore, the quantity of negative labels overwhelmingly surpasses the positive ones in previous problem formulations.\nIn this paper, we first provide a thorough analysis of the above challenges caused by negative data. Next, we formulate the problem of relation extraction into as a positive unlabeled learning task to alleviate false negative problem.\n\n...\n\n#### Export citation\n```\n    abstract = \"Distantly supervision automatically generates plenty of training samples for relation extraction. However, it also incurs two major problems: noisy labels and imbalanced training data. Previous works focus more on reducing wrongly labeled relations (false positives) while few explore the missing rela\n```\n\n...\n\n```\n    <abstract>Distantly supervision automatically generates plenty of training samples for relation extraction. However, it also incurs two major problems: noisy labels and imbalanced training data. Previous works focus more on reducing wrongly labeled relations (false positives) while few explore the missing relati\n```\n\n...\n\n```\n%X Distantly supervision automatically generates plenty of training samples for relation extraction. However, it also incurs two major problems: noisy labels and imbalanced training data. Previous works focus more on reducing wrongly labeled relations (false positives) while few explore the missing relations that ar\n```"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2405.01259v1",
+      "title": "Identification of Entailment and Contradiction Relations ...",
+      "publish_date": null,
+      "excerpts": [
+        "# Identification of Entailment and Contradiction Relations between Natural Language Sentences:\n## 3 Background\n### 3.1 Abstract meaning representation\nIn AMR, negation is represented via the :polarity relation.\n\n...\n\n### 3.2 Automated reasoning\nWe start with a set of propositional atoms (letters), and we constructed formula in the usual way using the connectives for negation $\\neg$ , conjunction $\\wedge$ , disjunction $\\lor$ , implication $\\leftarrow$ , and biconditio1nal $\\leftrightarrow$ .\n\n...\n\n## 5 Method\n### 5.1 Entailment methods\n#### 5.1.1 Propositional entailment\n##### Definition 1 .\n###### Definition 3 .\nAs we illustrate in the following example, $\\tt car(c1)$ occuring in the premise and $\\tt car(c2)$ occuring in the claim can be considered the same because we are making the assumption the $\\tt c1$ and $\\tt c2$ refer to the same car.\n\n...\n\n### 5.2 Contradiction methods\nOften explanations express things that cannot happen. This appears in the logical representation as a negation of a conjunction of atoms. For example, the explanation \u201cyou cannot walk when you sleep on the bed\" might be represented by $\\tt\\neg(possible(p)\\wedge ARG1(p,w)\\wedge walk(w)\\wedge ARG0(w,y)\\wedge you(y)%\n\n...\n\n### 5.3 Classification of relations\nThere is another possibility for classification of relations, and that is when $\\Phi\\wedge\\neg\\alpha$ is inconsistent (False) and $\\Phi^{*}\\wedge\\alpha$ is inconsistent (False).\n\n...\n\nThis suggests that inconsistent premises $\\Phi$ are a rare or potentially non-existent occurrence in the datasets we used for our studies.\n\n...\n\n## 6 Results\n### 6.1 Evaluation\nTP is the number of cases that are correctly identified as positive,\nN is the number of negative cases in the data,\nand TN is the number of cases that are correctly identified as negative.\n\n...\n\n### 6.2 Different similarity thresholds\nFurthermore, the increased performance for the neutral class suggests that the relaxation methods have a negative effect on identifying the neutral class correctly, and this is also seen in the following experiment."
+      ]
+    },
+    {
+      "url": "https://arxiv.org/pdf/2401.10407",
+      "title": "",
+      "publish_date": null,
+      "excerpts": [
+        "context-aware approach, UCTopic ( Li et al. , 2022 ),\nfurther improved phrase representations by using\ncluster-assisted negative sampling i.e., leveraging\nclustering results as pseudo-labels.\nHowever, this prior work faces several limita-\ntions. First, phrases frequently appear devoid of\ncontext cues, especially in tabular data, and are of-\n\n...\n\nneglects the type information of phrases. For ex-\nample, although _\u201cThe New York Times\u201d_ and _\u201cNew_\n_York\u201d_ have a high lexical overlap, a good repre-\nsentation model should distinguish them since the\nfirst phrase pertains to an organization while the\nsecond is linked to a geopolitical entity. Third, ex-\n\n...\n\nlevel encoders. We then learn embeddings with the\nhelp of contrastive loss, which aims to pull close\npositive pairs while pushing apart in-batch nega-\ntive samples. In order to learn more expressive\nrepresentations, we add a certain number of hard\nnegatives to each batch. For example, _\u201cNew York_\n_Post\u201d_ and _\u201cNew York\u201d_ can serve as hard negatives,\ngiven their high lexical overlap with the original\nphrase coupled with very distinct semantics. To\nintegrate phrase structural information into the rep-\nresentations, we force the framework to assign tags\nof a lexical class and a named entity type to each\nphrase. For example, the framework learns to as-\nsign a NP-ORG tag to the phrase _\u201cThe New York_\n_Times\u201d_ , meaning that the phrase is a noun phrase\nassociated with an organization. The negative sam-\nple _\u201cNew York\u201d_ , in contrast, receives a NP-GPE tag,\nmeaning that the phrase is a noun phrase linked\n\n...\n\nConventional contrastive learn-\ning regards other samples in the same batch as\nnegatives (in-batch negatives) ( Hjelm et al. , 2019 ;\nChen et al. , 2020 ), which is simple and effective.\nHowever, these negative samples might be easy to\ndistinguish by a model. For example, _\u201cThe New_\n_York Times\u201d_ and _\u201ctwo years after\u201d_ can be in the\nsame batch during training, but this negative pair\ncontributes less to the parameter optimization pro-\ncess. Hence, we introduce _hard negatives_ into each\nbatch, i.e., samples that have a surface form sim-\nilar to the original phrase, but a different seman-\ntics \u2013 as in _\u201cThe New York Times\u201d_ and _\u201cNew York_\n_City\u201d_ . For each phrase in the training set, we first\nretrieve candidates that have a small edit distance\nwith the original phrase. Next, all the candidates\nare encoded by the E5 text embedding. Finally, the\ncandidates with a low cosine similarity are selected\nas the hard negatives. During training, a certain\n\n...\n\nstrongest impact on the representation capabilities\nof a model. Removing all augmentations results in\nan average drop of 2.4 percentage points.\n**Hard Negatives.**\nAs random in-batch negatives\ncontain relatively less information to learn, we in-\nsert a number of hard negatives into each batch.\nThese negatives share similar surface forms with"
+      ]
+    },
+    {
+      "url": "https://aclanthology.org/2022.emnlp-main.580.pdf",
+      "title": "Revisiting DocRED \u2013 Addressing the False Negative ...",
+      "publish_date": null,
+      "excerpts": [
+        "_Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing_ , pages 8472\u20138487\n**Revisiting DocRED \u2013 Addressing the False Negative Problem**\n**in Relation Extraction**\n**Qingyu Tan** *** 1, 2**\n**Lu Xu** *** 1, 3** **Lidong Bing**\n_\u2020_ **1**\n**Hwee Tou Ng** **2** **Sharifah Mahani Aljunied** **1**\n\n...\n\nWiki20 ( Gao et al. , 2021 ) and DocRED ( Yao et al. ,\n2019 ) originated from distant supervision from the\nWikidata knowledge base ( Vrande\u02c7ci\u00b4c and Kr\u00f6tzsch ,\n2014 ) and Wikipedia articles. By exploiting distant\n_\u2217_ Equal contribution. Qingyu Tan and Lu Xu are under\nthe Joint PhD Program between Alibaba and NUS/SUTD.\n_\u2020_ Corresponding author.\n\n...\n\ndiscussions and examples emphasized the efforts\non correcting the false positive samples, all the\nrevised versions of the datasets have a significant\nincrease of positive samples. That is, many sam-\nples that are previously labeled as _no_relation_ (NA)\nare re-annotated with relation labels in the revised\ndatasets. We show the detailed statistics in Ta-\nble 1 , which indicates that the false negative prob-\nlem is prevalent in the sentence-level relation ex-\ntraction field.\nCompared to the sentence-level\ntask, document-level RE is more susceptible to the\nfalse negative problem. This is primarily because\n\n...\n\nTable 1: Statistics of relation extraction datasets. We can see that all re-annotation efforts on sentence-level relation\nextraction datasets (Wiki20 _\u2192_ Wiki20m, TACRED _\u2192_ Re-TACRED) result in significantly smaller percentages of\n_no_relation_ (NA) samples, indicating that false negative is a common problem in the RE datasets.\n\n...\n\nThat is, many semantically related triples are not\nreflected in the KB. Therefore, treating such triples\nas negative instances ( _no_relation_ ) will introduce\nfalse negative examples into the dataset. In the\noriginal DocRED production process, only the dis-\ntantly supervised data is used to train the RE model,\n\n...\n\nYun Ma. 2021. H-FND: hierarchical false-negative\ndenoising for distant supervision relation extraction .\nIn _Findings of ACL_ .\nQiao Cheng, Juntao Liu, Xiaoye Qu, Jin Zhao, Jiaqing\nLiang, Zhefeng Wang, Baoxing Huai, Nicholas Jing\nYuan, and Yanghua Xiao. 2021. HacRED: A large-\nscale relation extraction dataset toward hard cases in\n\n...\n\nTherefore, the average number of entities per doc-\nument of Re-DocRED is slightly lower than the\noriginal DocRED.\n**C**\n**Details on Negative Sampling**\nThis section describes the details of the experi-\nments with negative sampling. Given a text _T_ and\na set of _n_ entities _{_ _e_ 1 _, ..., e_ _n_ _}_ , the document-level\nRE task requires making predictions on all possible\nentity pairs ( _e_ _i_ _, e_ _j_ ) for _i, j_ _\u2208_ 1 _, ..., n, i_ _\u0338_ = _j_ . As we\ncan see in Table 1 , over 90% of the entity pairs are\nnegative instances. Instead of using all negative in-\nstances, we sample a fraction of negative instances\nfor training. Figure 3 shows the performance with"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/pdf/2405.01259",
+      "title": "Identification of Entailment and Contradiction Relations ...",
+      "publish_date": null,
+      "excerpts": [
+        "**Identification of Entailment and Contradiction Relations**\n**between Natural Language Sentences:**\n**A Neurosymbolic Approach**\n**Xuyao Feng** a,* **and Anthony Hunter** a\na Department of Computer Science, University College London, London, UK\n**Abstract.**\nNatural language inference (NLI), also known as Rec-\n\n...\n\nAn important subtopic of natural language understanding (NLU) is\nnatural language inference (NLI), also known as Recognizing Tex-\ntual Entailment (RTE), which aims to classify or identify the se-\nmantic relationship between natural language sentences. Suppose we\nhave a premises (P) sentence and a claim (C) sentence. The relation-\nship between a pair of P and C is classified as entailment, contradic-\ntion, or neutral [25, 26, 12].\nWe need to identify entailment and contradiction relations in text\nfor a variety of cognitive activities. For instance, humans constantly\nresort to argumentation when there appears to be conflicting and\n\n...\n\nthe inferential relationship between texts. The main disadvantage of\nlogical inference-based methods is that they require additional infor-\nmation to handle sentences involving commonsense knowledge.\n**Lexical-based methods** : These work with the input surface string\nto determine the entailment relationship based on lexical concepts.\n\n...\n\n\u201cThe boy does not want to go.\" (right).\nIn AMR, negation is represented via the :polarity relation. For ex-\nample, Figure 1 represents \u201cThe boy does not want to go.\" In AMR,\nthe numbers after the instance name (such as want-01 above) de-\nnote a particular OntoNotes or PropBank semantic frame [20]. These\n\n...\n\nmethod for identifying whether a set of premises contradicts a claim.\nWe also require a notion of forgetting that we explain next.\nOften explanations express things that cannot happen. This\nappears in the logical representation as a negation of a con-\njunction of atoms. For example, the explanation \u201cyou can-\n\n...\n\nsistent. We investigated this by randomly selecting 1000 data items\nfrom the e-SNLI dataset, and in all cases, \u03a6 was consistent. This\nsuggests that inconsistent premises \u03a6 are a rare or potentially non-\nexistent occurrence in the datasets we used for our studies.\nWe may also get entailment and contradiction being false due to\n\n...\n\ncorrectly identified as positive, N is the number of negative cases in\nthe data, and TN is the number of cases that are correctly identified\nas negative. In the results, accuracy refers to the overall accuracy\nencompassing all three classes, and support refers to the number of\nexamples in the class that we used in the experiment (which is 500\n\n...\n\nmatically compared to where relaxation methods are employed. This\nsuggests that relaxation methods are effective at improving perfor-\nmance relative to not using the relaxation methods. Furthermore, the\nincreased performance for the neutral class suggests that the relax-\nation methods have a negative effect on identifying the neutral class"
+      ]
+    },
+    {
+      "url": "https://aclanthology.org/2026.findings-eacl.157.pdf",
+      "title": "Negative Sampling Techniques in Information Retrieval",
+      "publish_date": null,
+      "excerpts": [
+        "false negative problem. The very process of min-\ning top-ranked documents for negatives risks in-\ncluding genuinely relevant but unlabeled passages.\nRocketQA ( Qu et al. , 2021 ) quantified this risk,\nestimating that 70% of top-retrieved but unlabeled\npassages are actually positives, a contamination\n\n...\n\nbegins. The most common method uses a sparse\nretriever like BM25 to find passages that are lex-\nically similar to the query but are not labeled as\npositive ( Karpukhin et al. , 2020a ). While compu-\ntationally cheap, this approach can bias the model\ntowards lexical cues and may miss negatives that\nare semantically challenging but lexically dissimi-\n\n...\n\nTable 4: Natural Questions Open-Domain QA results\nshowing progression from lexical to neural dense re-\ntrieval with various negative sampling strategies.\n**Method**\n**Technique**\n**Top-20**\n**R@100**\nBM25 Baseline\nLexical\n62.9\n-\nDPR Random\nIn-Batch\n78.4\n85.4\nANCE Dynamic\nANN Mining\n81.9\n87.5\nRocketQA\nDenoised\n84.1\n88.5\n\n...\n\nZhang, and Shaoping Ma. 2021b. Optimizing dense\nretrieval model training with hard negatives. In _Pro-_\n_ceedings of the 44th international ACM SIGIR con-_\n_ference on research and development in information_\n_retrieval_ , pages 1503\u20131512.\nJingtao Zhan, Jiaxin Mao, Yiqun Liu, Min Zhang, and\nShaoping Ma. 2020.\nLearning to retrieve: How\nto train a dense retrieval model effectively and ef-\nficiently. _arXiv preprint arXiv:2010.10469_ .\nChu Zhao, Enneng Yang, Yuting Liu, Jianzhe Zhao,\nGuibing Guo, and Xingwei Wang. 2025. Can llm-\ndriven hard negative sampling empower collaborative\nfiltering? findings and potentials. _arXiv preprint_\n_arXiv:2504.04726_ .\n\n...\n\n_Hard Negative_\n_Mining_\nStatic\nFinds lexically similar hard negatives with\na one-time, offline cost. Can be based on\nquery similarity (BM25) or positive passage\nsimilarity (PassageBM25) ( Karpukhin et al. ,\n2020a ; Nguyen et al. , 2023 ).\nLow\nMedium\n_Hard Negative_\n_Mining_\nDynamic Model-Based\nContinuously finds the hardest negatives ac-\ncording to the current model state, ensuring\na challenging and relevant learning signal\nthroughout training ( Xiong et al. , 2020 ).\nHigh\nHard\n_Hard Negative_\n_Mining_\nCluster-Based\nSamples negatives from different semantic\nclusters to ensure diversity and avoid redun-\ndant hard negatives, focusing on semantic\nambiguity ( Cohen et al. , 2024 ; Zerveas et al. ,\n2023 ).\nMedium\nHard\n_Hard Negative_\n_Mining_\nTriSampler\nSample negatives from the quasi-triangular\nregion created by the query and the positive\nsample to ensure uniform gradients ( Yang\net al. , 2024c ).\nMedium\nMedium\n_False Negative_\n_Mitigation_\nTop-k Filtering\nAssume the top-k most relevant potential\nnegatives are false negatives and ignore them\nwhen sampling negatives ( Zhou et al. , 2022 ;\nHu et al. , 2025 ; de Souza P. Moreira et al. ,\n2025 ; Solatorio , 2024 ).\nVery Low\nEasy\n_False Negative_\n_Mitigation_\nDenoised Hard Negatives\nExplicitly filters false negatives from the"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/abs/2012.03536",
+      "title": "[2012.03536] H-FND: Hierarchical False-Negative Denoising for Distant Supervision Relation Extraction",
+      "publish_date": "2020-12-07",
+      "excerpts": [
+        "# Title: H-FND: Hierarchical False-Negative Denoising for Distant Supervision Relation Extraction\nAuthors: [Jhih-Wei Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+J) , [Tsu-Jui Fu](https://arxiv.org/search/cs?searchtype=author&query=Fu,+T) , [Chen-Kang Lee](https://arxiv.org/search/cs?searchtype=author&query=Lee,+C) ,\n[Wei-Yun Ma](https://arxiv.org/search/cs?searchtype=author&query=Ma,+W)\nView PDF\n> Abstract: Although distant supervision automatically generates training data for relation extraction, it also introduces false-positive (FP) and false-negative (FN) training instances to the generated datasets.\nWhereas both types of errors degrade the final model performance, previous work on distant supervision denoising focuses more on suppressing FP noise and less on resolving the FN problem.\nWe here propose H-FND, a hierarchical false-negative denoising framework for robust distant supervision relation extraction, as an FN denoising solution.\nH-FND uses a hierarchical policy which first determines whether non-relation (NA) instances should be kept, discarded, or revised during the training process.\nFor those learning instances which are to be revised, the policy further reassigns them appropriate relations, making them better training inputs.\nExperiments on SemEval-2010 and TACRED were conducted with controlled FN ratios that randomly turn the relations of training and validation instances into negatives to generate FN instances.\nIn this setting, H-FND can revise FN instances correctly and maintains high F1 scores even when 50% of the instances have been turned into negatives.\nExperiment on NYT10 is further conducted to shows that H-FND is applicable in a realistic setting."
+      ]
+    },
+    {
+      "url": "https://arxiv.org/abs/2012.03536v2",
+      "title": "[2012.03536v2] H-FND: Hierarchical False-Negative Denoising for Distant Supervision Relation Extraction",
+      "publish_date": "2020-12-07",
+      "excerpts": [
+        "# Title: H-FND: Hierarchical False-Negative Denoising for Distant Supervision Relation Extraction\nAuthors: [Jhih-Wei Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+J) , [Tsu-Jui Fu](https://arxiv.org/search/cs?searchtype=author&query=Fu,+T) , [Chen-Kang Lee](https://arxiv.org/search/cs?searchtype=author&query=Lee,+C) ,\n[Wei-Yun Ma](https://arxiv.org/search/cs?searchtype=author&query=Ma,+W)\nView PDF\n> Abstract: Although distant supervision automatically generates training data for relation extraction, it also introduces false-positive (FP) and false-negative (FN) training instances to the generated datasets.\nWhereas both types of errors degrade the final model performance, previous work on distant supervision denoising focuses more on suppressing FP noise and less on resolving the FN problem.\nWe here propose H-FND, a hierarchical false-negative denoising framework for robust distant supervision relation extraction, as an FN denoising solution.\nH-FND uses a hierarchical policy which first determines whether non-relation (NA) instances should be kept, discarded, or revised during the training process.\nFor those learning instances which are to be revised, the policy further reassigns them appropriate relations, making them better training inputs.\nExperiments on SemEval-2010 and TACRED were conducted with controlled FN ratios that randomly turn the relations of training and validation instances into negatives to generate FN instances.\nIn this setting, H-FND can revise FN instances correctly and maintains high F1 scores even when 50% of the instances have been turned into negatives.\nExperiment on NYT10 is further conducted to shows that H-FND is applicable in a realistic setting."
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2504.04726v2",
+      "title": "Hard Negative Sampling via Large Language Models for Recommendation",
+      "publish_date": null,
+      "excerpts": [
+        "# Hard Negative Sampling via Large Language Models for Recommendation\n## Abstract\nLacking semantic awareness, these methods often misclassify items that align with users\u2019 semantic interests as negatives, resulting in False Hard Negative Samples (FHNS). Such FHNS inject noisy supervision and hinder the model\u2019s optimal performance.\n\n...\n\n## 1 Introduction\nWithout semantic awareness, they may mistakenly treat items that are semantically consistent with a user\u2019s interests but structurally distant in the interaction graph as negatives. This produces False Hard Negative Samples (FHNS), injects noisy supervision, and limits the performance upper bound.\n\n...\n\nSpecifically, we compare the sampled hard negatives with the user\u2019s held-out test positives and label a sample as FHNS if it is highly similar to any test positive in embedding space (cosine similarity $\\geq\\tau$ ), where $\\tau$ is a predefined threshold (set to $0.99$ in our experiments).\n\n...\n\nIn the semantic manifold of LLMs, items with high linguistic similarity (e.g., iPhone 13 and iPhone 14 ) are considered \"hard\" pairs. However, in the collaborative manifold of recommendation, such pairs often exhibit high behavioral correlation (i.e., users upgrading devices), making them positive samples.\nOur preliminary analysis reveals that direct LLMs prompting fails to distinguish between semantic similarity and behavioral irrelevance . Consequently, raw LLM-generated negatives fall into the False Negative trap, introducing severe noise and conflicting gradients that can even untrain the recommender systems.\n\n...\n\n## Appendix A Related Work\n### A.2 LLM-based Recommendation\n#### LLM-assisted sample selection and negative generation.\nDifferent from NegGen, we focus on the semantic\u2013behavior mismatch in implicit CF that induces false hard negatives, and propose a collaborative-aligned generation-and-alignment scheme to mitigate such FHNS-driven supervision noise.\n\n## Appendix B Time Complexity Analysis\nThe overall workflow of HNLMRec consists of two main stages: (1) a supervised fine-tuning stage, where the LLM is optimized using collaborative signals to generate high-quality hard negative embeddings; and (2) an inference-and-training stage, where the fine-tuned LLM is used to pre-generate hard"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2402.17238v1",
+      "title": "Does Negative Sampling Matter? A Review with Insights into its Theory and Applications",
+      "publish_date": null,
+      "excerpts": [
+        "Does Negative Sampling Matter? A Review with Insights ...\nNegative sampling (NS) is a critical technique used in machine learning, designed to enhance the efficiency of models by selecting a small subset of negative\u00a0"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2603.18005v1",
+      "title": "Negative Sampling Techniques in Information Retrieval: A Survey",
+      "publish_date": "2026-01-09",
+      "excerpts": [
+        "Negative Sampling Techniques in Information Retrieval\nJan 9, 2026 \u2014 We propose splitting the set of techniques into those that change the way negatives are sampled from the dataset and into ways that are"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2504.04726",
+      "title": "Hard Negative Sampling via Large Language Models for Recommendation",
+      "publish_date": null,
+      "excerpts": [
+        "... user-item profile generation, semantic negative sampling, and semantic alignment & training\n.\n3 Methodology ... provide a theoretical analysis of the bias induced by false hard negatives and explain how our method mitigates it. Finally, in Sectio"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2603.20990v1",
+      "title": "ECI: Effective Contrastive Information to Evaluate Hard-Negatives",
+      "publish_date": null,
+      "excerpts": [
+        "Effective Contrastive Information to Evaluate Hard-Negatives\nHard negatives play a critical role in training and fine-tuning dense retrieval models, as they are semantically similar to positive documents"
+      ]
+    },
+    {
+      "url": "https://ar5iv.labs.arxiv.org/html/2005.04732",
+      "title": "[2005.04732] Towards Robustifying NLI Models Against Lexical Dataset Biases",
+      "publish_date": null,
+      "excerpts": [
+        "... S5.SS1 \"5.1 Datasets \u2023 5 Experimental Setup \u2023 Towards Robustifying NLI Models Against Lexical Dataset Biases\") ) in the hypothesis sentence but not in the premise sentence. For the WOB, we select non-entailment samples with highest word overlappi"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/abs/2105.10158",
+      "title": "[2105.10158] Revisiting the Negative Data of Distantly Supervised Relation Extraction",
+      "publish_date": "2021-05-21",
+      "excerpts": [
+        "Thirdly, we propose a pipeline approach, dubbed \\textsc{ReRe}, that performs sentence-level relation detection then subject/object extraction to achieve sample-efficient training. Experimental results show that the proposed method consistently outperforms existing approaches and remains excellent performance even learned with a large quantity of false positive samples. From: Chenhao Xie [view email] [v1] Fri, 21 May 2021 06:44:19 UTC (301 KB) ... View a PDF of the paper titled Revisiting the Negative Data of Distantly Supervised Relation Extraction, by Chenhao Xie and 5 other authors"
+      ]
+    },
+    {
+      "url": "https://aclanthology.org/P18-1199",
+      "title": "Robust Distant Supervision Relation Extraction via Deep Reinforcement Learning - ACL Anthology",
+      "publish_date": "2018-07-01",
+      "excerpts": [
+        "... indicator, where we automatically recognize false positives for each relation type without any supervised information. Unlike the removal operation ... previous studies, we redistribute them into the negative examples. The experimental results .."
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2511.11234v1",
+      "title": "LANE: Lexical Adversarial Negative Examples for Word Sense Disambiguation",
+      "publish_date": null,
+      "excerpts": [
+        "LANE: Lexical Adversarial Negative Examples for Word ...\nLANE generates adversarial negatives by substituting the highlighted word while keeping the sentence context unchanged. These hard negatives"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "name": "sku_search",
+      "count": 1
+    },
+    {
+      "name": "sku_extract_excerpts",
+      "count": 8
+    }
+  ],
+  "warnings": []
+}

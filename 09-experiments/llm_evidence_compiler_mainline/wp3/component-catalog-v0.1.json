@@ -1,0 +1,89 @@
+{
+  "catalog_id": "project05-mainline-compiler-component-catalog-v0.1",
+  "version": "0.1.0",
+  "status": "frozen_for_wp3_clean_room_adapter",
+  "frozen_date": "2026-07-17",
+  "scope": "component identity, license, I/O profile and current runtime authority",
+  "third_party_code_copied": false,
+  "components": [
+    {
+      "component_id": "ctinexus",
+      "repository": "https://github.com/peng-gao-lab/ctinexus",
+      "revision": "0c688536d85eae72f6055723492b573b0a1ff865",
+      "license": "MIT",
+      "availability": "available",
+      "input_profile": "cti_text",
+      "output_profile": "ctinexus_aligned_triplets_compatible_v0.1",
+      "wp3_role": "primary_output_contract_profile_only",
+      "runtime_authorized": false,
+      "package_installed": false,
+      "code_copy_authorized": false
+    },
+    {
+      "component_id": "ontologx",
+      "repository": "https://github.com/LucaCtt/ontologx",
+      "revision": "6ed386e6850870656a78abf83f70f06688c16b7f",
+      "license": "MIT",
+      "availability": "available",
+      "input_profile": "log_event_context_and_ontology",
+      "output_profile": "source_grounded_graph_document",
+      "wp3_role": "schema_and_method_reference_only",
+      "runtime_authorized": false,
+      "package_installed": false,
+      "code_copy_authorized": false
+    },
+    {
+      "component_id": "matryoshka",
+      "repository": "https://github.com/julien-piet/matryoshka",
+      "revision": "2ee96934823ce3d01f70bdf84ff8cd4aa64acd2a",
+      "license": "GPL-3.0",
+      "availability": "available",
+      "input_profile": "unlabelled_raw_log_samples",
+      "output_profile": "deterministic_parser_and_common_schema_mapping",
+      "wp3_role": "algorithm_reference_only_no_vendor",
+      "runtime_authorized": false,
+      "package_installed": false,
+      "code_copy_authorized": false
+    },
+    {
+      "component_id": "auto_prov",
+      "repository": "https://github.com/intelligenceafa-cloud/Auto-Prov",
+      "revision": null,
+      "license": null,
+      "availability": "http_404_on_2026_07_17",
+      "input_profile": "heterogeneous_raw_logs",
+      "output_profile": "provenance_graph",
+      "wp3_role": "paper_reference_only",
+      "runtime_authorized": false,
+      "package_installed": false,
+      "code_copy_authorized": false
+    },
+    {
+      "component_id": "tactic_kg",
+      "repository": "https://github.com/mohaminemed/TACTIC-KG",
+      "revision": "5df3b6302bbf83f2439a9755b3eb55c25a39ed4d",
+      "license": null,
+      "availability": "available_without_code_license",
+      "input_profile": "cti_text",
+      "output_profile": "extracted_and_verified_cybersecurity_knowledge_graph",
+      "wp3_role": "paper_and_interface_reference_only_no_code_copy",
+      "runtime_authorized": false,
+      "package_installed": false,
+      "code_copy_authorized": false
+    }
+  ],
+  "selected_adapter_profile": {
+    "component_id": "ctinexus",
+    "revision": "0c688536d85eae72f6055723492b573b0a1ff865",
+    "license": "MIT",
+    "output_profile": "ctinexus_aligned_triplets_compatible_v0.1",
+    "authorized_implementation": "clean_room_output_adapter_and_source_span_recovery_only",
+    "external_runtime_authorized": false
+  },
+  "prohibited_claims": [
+    "component_performance_gain",
+    "llm_performance_gain",
+    "human_validated_grounding",
+    "end_to_end_controller_gain"
+  ]
+}

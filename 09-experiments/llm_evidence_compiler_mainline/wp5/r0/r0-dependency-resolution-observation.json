@@ -1,0 +1,25 @@
+{
+  "observation_id": "project05-ctinexus-r0-full-dependency-resolution-observation-v0.1",
+  "date": "2026-07-17",
+  "operation": "pip install --dry-run --ignore-installed for the fixed CTINexus wheel",
+  "status": "failed_closed_before_project_environment_install",
+  "failure_stage": "litellm_1.92.0_sdist_metadata_generation_on_windows",
+  "failure_reason": "the build backend attempted to obtain a Rust toolchain but Cargo was not available on PATH; no complete pip report was produced",
+  "project_r0_venv_modified_by_failed_resolution": false,
+  "ctinexus_full_dependency_closure_installed": false,
+  "model_or_embedding_downloaded": false,
+  "component_pipeline_executed": false,
+  "external_api_called": false,
+  "temporary_external_cache_side_effect": {
+    "observed": true,
+    "paths": [
+      "C:/Users/35393/AppData/Local/puccinialin/puccinialin/Cache/cargo",
+      "C:/Users/35393/AppData/Local/puccinialin/puccinialin/Cache/rustup",
+      "C:/Users/35393/AppData/Local/puccinialin/puccinialin/Cache/rustup-init"
+    ],
+    "all_paths_created_during_attempt": true,
+    "cleanup_status": "deleted_after_exact_path_verification"
+  },
+  "scientific_effect": "none; this is an environment feasibility observation and not a component result",
+  "next_decision": "do not retry the full dependency resolver until a separate runtime dependency strategy is frozen"
+}

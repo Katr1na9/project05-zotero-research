@@ -1,0 +1,1009 @@
+An End-to-End Framework for Functionality-Embedded Provenance Graph Construction and Threat Interpretation
+Report GitHub Issue
+×
+Title:
+Content selection saved. Describe the issue below:
+Description:
+Submit without GitHub
+Submit in GitHub
+arXiv is now an independent nonprofit!
+Learn more
+×
+Back to arXiv
+Why HTML?
+Report Issue
+Back to Abstract
+Download PDF
+Abstract
+1 Introduction
+2 Background and Related Work
+3 Threat Model
+4 Auto-Prov
+4.1 Overview
+4.2 Finding Different Log Types
+4.3 Candidate Provenance Extractor
+4.4 Rule Generator
+4.5 Learning with Functional Node Features
+4.6 Attack Graph Assistant
+5 Experiments
+5.1 Datasets
+5.2 Setup
+5.3 Detection Performance
+5.4 Framework Analysis
+5.4.1 Log Clustering
+5.4.2 Ablation Studies
+5.5 Assistant Evaluation
+6 Discussion and Limitations
+7 Conclusion
+References
+A Appendix
+A.1 LLM Prompts
+A.1.1 Candidate Provenance Extractor
+A.1.2 Rule Generator
+A.1.3 Node Enricher
+A.1.4 Graph Assistant
+A.1.5 LLM Judges
+A.2 Graph Assistant Summaries
+License: CC BY 4.0
+arXiv:2603.17100v1 [cs.CR] 17 Mar 2026
+An End-to-End Framework for Functionality-Embedded Provenance Graph Construction and Threat Interpretation
+Kushankur Ghosh
+University of Alberta
+kushanku@ualberta.ca
+Mehar Klair
+University of Alberta
+meharsin@ualberta.ca
+Kian Kyars
+University of Alberta
+kkyars@ualberta.ca
+Euijin Choo
+University of Alberta
+euijin@ualberta.ca
+Corresponding author: euijin@ualberta.ca
+Jörg Sander
+University of Alberta
+jsander@ualberta.ca
+Abstract
+Provenance graphs model causal system-level interactions from logs, enabling anomaly detectors to learn normal behavior and detect deviations as attacks. However, existing approaches rely on brittle, manually engineered rules to build provenance graphs , lack functional context for system entities, and provide limited support for analyst investigation.
+We present Auto-Prov , an adaptive, end-to-end framework that leverages large language models (LLMs) to automatically construct provenance graphs
+from heterogeneous and evolving logs,
+embed system-level functional attributes into the graph,
+enable provenance graph-based anomaly detectors to learn from these enriched graphs,
+and summarize the detected attacks to assist an analyst’s investigation.
+Auto-Prov clusters unseen log types and efficiently extracts provenance edges and
+entity-level information via automatically generated rules.
+It further infers system-level functional context
+for both known and previously unseen system entities using a combination of LLM inference and behavior-based estimation.
+Attacks detected by provenance-graph-based anomaly detectors trained on Auto-Prov ’s graphs are then summarized into natural-language text.
+We evaluate Auto-Prov with four state-of-the-art provenance graph-based detectors across diverse logs. Results show that Auto-Prov consistently enhances detection performance, generalizes across heterogeneous log formats, and produces stable, interpretable attack summaries that remain robust under system evolution.
+1 Introduction
+Advanced Persistent Threats (APTs) are
+stealthy attacks that evade detection by blending into normal operations and advance slowly through multiple stages [ jia2024magic , aly2025ocr ] .
+If not detected early, they can establish persistence and escalate privileges, leading to large-scale breaches and data loss.
+To spot APT activities, analysts monitor a vast volume of
+logs that capture system-level interactions (e.g., process executions, file accesses, and network connections) to uncover rare or unexpected behaviors.
+However, logs are largely unstructured, inconsistent across platforms, and contain low-level details (e.g., thread ID ), making it difficult to infer meaningful interactions between system entities (e.g., files, processes, and network components) directly from raw logs (see Fig. 1 ) [ du2017deeplog ] .
+Provenance graphs resolve this challenge by modelling log entries into
+cause-and-effect relationships. In a provenance graph, nodes represent system entities and edges capture causal interactions (e.g., read, write, execute).
+By linking independent log entries into a coherent execution flow, provenance graphs enable
+anomaly detectors to learn normal behavior built on benign logs and flag deviations as threats [ aly2025ocr ] .
+However, building provenance graphs from raw logs and effectively detecting anomalies
+within them pose challenges.
+Figure 1 : Examples of Different Log Entries
+Challenge 1. Constructing a provenance graph largely depends on manual effort and does not scale well across heterogeneous and evolving systems.
+Existing provenance graph construction approaches rely heavily on manually crafted regular-expression rules to extract entities, their types (e.g., file, process ), names (e.g., vmtoolsd.exe ), and interactions from logs [ rehman2024flash , cheng2024kairos , jia2024magic ] . This process assumes knowledge of all log formats and types.
+Given the volume, heterogeneity, and constant evolution of system logs, crafting and maintaining such rules is labor-intensive.
+As software evolves, even minor changes in log formats can invalidate existing rules, requiring constant manual re-engineering [ zhong2024logparser ] .
+Challenge 2. Existing provenance-graph-based anomaly detectors
+struggle to capture the functionality of entities within the graphs due to the limited contextual information available in the logs.
+Prior work typically represents nodes using embeddings of entity names [ rehman2024flash , cheng2024kairos ] or coarse-grained types (e.g., process ) [ jia2024magic ] , often derived from generic embedding models (e.g., word2vec ) [ rehman2024flash ] , or through handcrafted behavioral statistics such as action frequencies [ lv2024trec , aly2025ocr ] . These representations describe what an entity is or how it behaves, but not why it behaves in that way. Hence, detectors may struggle to learn whether an interaction aligns with entity’s functionality, causing benign and malicious behaviors that differ primarily in intent to be modeled similarly and degrading detection performance. For example, a coarse type process can encompass functionally distinct subtypes:
+document editor process
+calling
+a command-line process often signals compromise, whereas the same behavior is expected for a service host process [ wang2020you ] .
+Similarly, entities with different intents may exhibit comparable behavioral statistics:
+malware C2 beaconing and benign system processes such as automated updates may both produce periodic communication patterns [ mahboubi2025evolving ] .
+Also, when using entity names as node features, embedding models trained on general corpora often treat functionally related entities (e.g., fltmgr.sys and storqosflt.sys ) as unrelated, leading to poor detection and limited generalization to previously unseen entities as systems evolve.
+Challenge 3.
+Existing anomaly detectors offer limited support for analyst interpretation. Detected alerts are often presented as large, complex attack graphs that are difficult to interpret and overwhelming in practice [ aly2025ocr ] .
+Motivation. LLMs have shown promise across a range of tasks involving unstructured data, including constructing cybersecurity knowledge graphs from cyber threat intelligence (CTI) reports [ huang2024ctikg , cheng2025ctinexus ] , enriching node features to improve graph learning [ chen2024exploring ] , and generating CTI reports from graphs or logs [ aly2025ocr , aldaihan2025clouseau ] .
+These studies suggest that LLMs can interpret heterogeneous inputs, infer relationships, extract semantic attributes, and generate higher-level abstractions.
+Therefore, LLMs may address challenges 1–3 ; however, directly using them for the provenance graph entails additional challenges.
+First ,
+given the sheer volume of system logs, applying LLMs directly to log streams is computationally impractical.
+Second ,
+constructing graphs from system logs is more challenging than from CTI reports, because logs consist of low-level records that lack the narrative structure, explicit relational cues, paragraphs, sentences, and contextual explanations present in natural-language text, that align closely with the data LLMs are primarily trained on [ liu2025datasets ] .
+Third ,
+the use of LLMs to infer functional context for nodes in the provenance graph remains unexplored, where nodes correspond to low-level system entities rather than natural-language descriptions.
+Accurately representing these entities requires inferring their functionality to address Challenge 2 .
+However, many entities in evolving system logs are domain-specific or newly introduced and are often absent from an LLM’s pretraining corpus, complicating direct inference.
+Fourth ,
+existing studies that use LLMs to “summarize” graphs into reports typically assume that the LLM itself can act as a threat detector,
+relying on embedded security knowledge to identify attack-related artifacts [ rehman2024flash , aly2025ocr ] .
+Such outputs may be driven primarily by the model’s prior knowledge of known system files rather than by reasoning over observed system behavior.
+In evolving systems containing previously unseen entities, this limits reliability, as LLMs may mischaracterize unfamiliar components without knowledge about their functionalities.
+Our Approach. We propose Auto-Prov , an adaptive, end-to-end framework
+that automatically models heterogeneous system logs into provenance graphs with functional context for anomaly detection and interpretation.
+The goal is to enhance the practicality of provenance-graph-based anomaly detection by making it more resilient to system evolution and bringing it closer to real-world deployment.
+Auto-Prov
+continuously identifies and clusters distinct log types from log streams, allowing it to accommodate previously unseen log formats (section 4.2 ).
+On randomly selected samples of each log type, Auto-Prov then uses a large LLM to extract the entities (nodes), their associated information (e.g., entity names), and links them by extracting the interaction types between them and timestamps, forming the provenance graph edges (section 4.3 ).
+To scale this process to high-volume log streams, we utilize a smaller open-source LLM to generate rules that replicate the extracted patterns and build the provenance graph (section 4.4 ).
+Auto-Prov then embeds functional context for system entities in the graph. Auto-Prov infers the functionality labels (e.g., document editor, browser) by leveraging the open-source LLM for known system entities and a behavior classifier for unknown entities(section 4.5 ). Anomaly detectors trained on the graphs identify malicious nodes and edges, which are linked to form attack graphs.
+Auto-Prov subsequently summarizes the attack graphs into concise natural-language descriptions and maps to likely APT tactics to assist analysts’ investigation (section 4.6 ).
+We evaluate Auto-Prov on four state-of-the-art provenance graph-based anomaly detectors [ rehman2024flash , jia2024magic , aly2025ocr , cheng2024kairos ] having diverse node feature representations.
+Experiments are conducted on heterogeneous logs collected from multiple platforms, which cover six real-world attacks and exhibit substantially different logging formats (Fig. 1 ) [ darpa_tc_e3 , alsaheel2021atlas ] . We show that Auto-Prov (1) successfully identifies different log types; (2) automatically constructs richer provenance graphs from heterogeneous logs; (3) infers functionality labels for known and unknown system entities; (4) consistently improves detection performance of all evaluated detectors; and (5) generates concise natural-language summaries of detected attack graphs that highlight behaviors aligned with APT tactics, and remain consistent with previously unseen entities. Our major contributions are:
+•
+We propose an adaptive, end-to-end framework, Auto-Prov , that automatically constructs provenance graphs from raw logs, infers functional context for system entities, and generates concise attack graph summaries
+in natural language to support the analyst’s investigation.
+•
+Auto-Prov continuously identifies new log types and leverages LLMs to extract provenance edges and node-level information,
+scaling to high-volume log streams.
+•
+We propose a functional-context representation for provenance graph nodes that embeds entities with
+functionality labels,
+combining LLM-based inference for known entities with behavior-driven functionality estimation for previously unseen entities.
+•
+We propose an attack summarization approach that translates detected attack graphs into a natural language summary
+and maps observed behaviors to likely APT tactics.
+2 Background and Related Work
+Provenance Graph from System Logs.
+System logs record system-level activities by capturing interactions among entities such as processes, files, and network components.
+Individual log entries typically describe isolated events and include entity identifiers, names, coarse entity types, interaction types, and auxiliary metadata such as timestamps [ zeng2021watson ] .
+Provenance graphs model these unstructured, low-level logs as directed graphs, where nodes represent system entities and edges represent causal interactions (e.g., read, write, execute). By linking log entries over time through shared entities, provenance graphs provide a unified execution flow that enables downstream analysis, including anomaly detection [ rehman2024flash , jia2024magic , aly2025ocr , cheng2024kairos ] . Existing provenance graph-based anomaly detectors construct such graphs using manually crafted, log-specific regular expression rules to extract entities, their associated information, and interactions from raw logs.
+These rules are typically static and must be customized for different platforms, log sources, and datasets, and re-engineered as logging formats evolve. This makes provenance graph construction labor-intensive and difficult to scale in practice.
+Prior work on automated log parsing focuses on extracting structured fields or templates from raw logs to facilitate log analysis [ du2017deeplog , li2020swisslog , le2023log , ma2024llmparser ] . However, these approaches do not address automated provenance graph construction.
+Provenance-Graph-based Detection. Early provenance-graph-based detectors relied on expert-defined attack patterns, making them brittle against evolving attacks [ jia2024magic , aly2025ocr , altinisik2023provg , aly2024megr ] . Recently, graph neural network-based detectors are used to detect malicious nodes or edges in provenance graphs [ rehman2024flash , jia2024magic , aly2025ocr , cheng2024kairos ] , but challenges remain. They use static regular expression rules for provenance graph constructions, which become invalid as logs evolve, and use node features
+that fail to capture entity functionality.
+Flash [ rehman2024flash ] and Kairos [ cheng2024kairos ] use raw file paths and IP addresses as node features and optimize learning objectives such as predicting coarse entity types [ rehman2024flash ] or interaction types [ cheng2024kairos ] .
+MAGIC [ jia2024magic ] use coarse entity and interaction types, and trains to reconstruct masked features and predict edge existence.
+OCR-APT [ aly2025ocr ] use behavioral statistics, such as action frequencies and idle-period features as node features.
+As discussed in section 1 , these representations makes it challenging for detectors to know whether an observed interaction is expected for a given entity.
+Hence, malicious entities resembling the normal interactions of other entities may evade detection. Additionally, most detectors provide limited support for analysts. Alerts are often presented as large, low-level attack graphs that are difficult to interpret.
+Recently
+LLMs have been used to generate reports
+out of them [ aly2025ocr ] , but treating LLMs as detectors may be unreliable in evolving systems with newer system entities unknown to the LLM.
+LLMs and their Applications. LLMs have gained attention for strong performance in language understanding and generation tasks, including summarizing and interpreting complex text [ fang2024large , ning2024cheatagent , xu2025chatpd ] . They exhibit robust contextual understanding and can extract structured information from unstructured texts.
+LLMs typically fall into two categories: proprietary models (e.g., GPT-4o),
+accessed via APIs with restricted interfaces and usage-based costs that can be prohibitive for high-throughput applications [ hurst2024gpt , chen2024frugalgpt ] ; and
+open-source LLMs (e.g., LLaMA-3), with full parameter access [ grattafiori2024llama ] .
+While open-source LLMs can be adapted to specific tasks via fine-tuning , this often requires substantial labeled data and compute and risks issues such as catastrophic forgetting [ li-etal-2024-revisiting ] . Alternatively, in-context learning allows both model types to adapt at inference time via carefully designed prompts using role specification and few-shot [ brown2020language ] or zero-shot [ kojima2022large ] examples.
+Existing LLM-based work falls into three categories. The first category use LLMs for graph generation. CTINexus [ cheng2025ctinexus ] extracts entity–relation triplets from CTI reports to build cybersecurity knowledge graphs . ProvSyn [ huang2025provsyn ] and PROVCREATOR [ wang2025provcreator ] generate synthetic graphs to aid anomaly detection: ProvSyn learns a distribution over existing provenance graphs and synthesizes new ones with topology, labels, and LLM-generated node names, while PROVCREATOR jointly model existing graph structure and node attributes. In contrast, we automatically construct provenance graphs from heterogeneous, evolving system logs in a zero-shot setting.
+The second category uses LLMs to enhance node attributes. Prior work generates text-attributed nodes [ yu2025leveraging ] or pseudo-labels [ he2024harnessing , chen2024exploring ] , mainly on citation graphs with well-formed text (e.g., titles, abstracts), that align with LLM pretraining data. In contrast, provenance graphs contain low-level system entities (e.g., process) that lack well-formed text, and LLMs may not recognize new or unknown entities appearing as software evolves.
+The third category uses LLMs for attack explanation and investigation. Racounteur [ deng2024raconteur ] explains suspicious shell commands using MITRE ATT&CK tactics, while Clouseau [ aldaihan2025clouseau ] and OCR-APT [ aly2025ocr ] embed LLMs in multi-stage pipelines as detectors of suspicious entities or indicators of compromise (IOCs) to generate reports.
+However, LLM-based detection raises concerns: it is often
+unclear whether IOC or suspicious entity detections reflect
+reasoning over observed system behavior or biases toward
+familiar entity names from the LLM’s pretraining data. LLMs
+may mischaracterize unfamiliar entities in evolving systems.
+In contrast, we use LLMs as assistants to summarize detected attack graphs and highlight behaviors consistent with APT tactics to support analysts.
+3 Threat Model
+We adopt a threat model consistent with prior work [ rehman2024flash , jia2024magic , cheng2024kairos , jiang2025orthrus ] . We assume attackers operate from outside the system and execute stealthy, sophisticated actions that blend into normal system behavior while still leaving observable traces in network- and system-level logs.
+We assume a trusted logging infrastructure. Attackers cannot delete or modify logs once they are generated. Attacks that compromise the logging infrastructure or attempt to poison detectors or LLM components via crafted malicious inputs [ chen2025struq ] are out of our scope.
+4 Auto-Prov
+Figure 2 : Auto-Prov workflow.
+4.1 Overview
+Auto-Prov is an end-to-end framework for automatic construction of functionality-embedded provenance graphs to support anomaly detection and attack summarization.
+To address three challenges discussed in section 1 , Auto-Prov leverages LLMs in a zero-shot setting. (1) It automatically induces regular expression rules to extract provenance graphs from heterogeneous system logs with evolving structural formats (i.e., the same fields within the log arranged in a consistent pattern) (Challenge 1).
+(2) It enriches graph nodes with inferred functionality attributes, enabling existing provenance graph-based anomaly detectors to better distinguish functionally similar and dissimilar entities (Challenge 2). (3) It summarizes detected attack graphs into natural-language descriptions and maps observed events to likely APT tactics (Challenge 3). Fig. 2 depicts Auto-Prov consisting of the following components.
+① Automatic discovery of different log types (section 4.2 ).
+To enable scalable provenance graph extraction across heterogeneous and evolving logs, Auto-Prov exploits the heavy structural redundancy present in system logs. It groups logs sharing a similar structural format into
+the same log type and processes them using a common extraction rule.
+By automatically discovering these log types, Auto-Prov requires the LLM to process only a small number of representative logs per type to generate extraction rules, which are then applied at scale to the remaining logs.
+As log formats are unknown a priori and may evolve over time, Auto-Prov discovers log types by clustering continuously arriving logs based on structural similarity and treats each cluster as a distinct log type.
+For each discovered type, Auto-Prov selects a small set of representative logs, which are aggregated into a candidate log-set that collectively covers all observed log formats.
+② Candidate Provenance Extractor (section 4.3 ).
+After identifying representative logs that cover the discovered log formats, Auto-Prov requires a set of high-quality provenance extractions to serve as reference points, to generate rules that can be used to replicate those extractions across different log formats at scale.
+These candidate extractions define what information should be extracted from each log type, including interacting entities, interaction type and direction, timestamps, and entity-level information (e.g., names and coarse types). Obtaining such reference provenance information is challenging because raw system logs are dense and unstructured, and inferring which entities interact and how the interactions are directed, therefore, requires substantial reasoning capability. Auto-Prov addresses this by applying a large, powerful LLM as the Candidate Provenance Extractor (CPE). The CPE operates on the candidate log-set and produces candidate provenance graphs, which are used to guide rule generation.
+③ Rule Generator (section 4.4 ) .
+While the CPE provides high-quality extractions, applying a large LLM to streaming logs is computationally infeasible.
+Auto-Prov thus distills the CPE’s extraction behavior into lightweight, reusable rules.
+Using each log in the candidate log-set and its corresponding CPE output, the rule generator induces regular expression rules that reproduce the provenance fields extracted by the CPE (i.e., source and destination entities, interaction types and directions, timestamps, and entity-level information).
+These rules are stored in a rule database and are applied to streaming logs to extract the provenance graph. The rule database is incrementally updated whenever a new log type is discovered, allowing Auto-Prov to adapt to evolving log formats.
+④ Anomaly Detection with Node Enricher (section 4.5 ). To address Challenge 2 (section 1 ), Auto-Prov infers functionality labels (e.g., document editor, Microsoft driver) to represent nodes using a node enricher component. When an entity is first encountered, Auto-Prov attempts to infer its functionality directly from its name using an LLM.
+To improve efficiency, inferred labels are cached in a functionality database and reused for subsequent occurrences of known entities.
+When the LLM cannot assign a label—e.g., for obscure or previously unseen entities—the node enricher falls back to a behavioral classifier that estimates labels based on similarity of one-hop system-level interactions to those of known entities.
+The inferred labels are embedded as node attributes in the generated provenance graph. Auto-Prov then applies existing provenance-graph-based anomaly detectors to the functionality-embedded graph to detect anomalous nodes or edges, which are subsequently linked to form attack graphs representing suspicious activity.
+⑤ Graph Assistant (section 4.6 ).
+To address the Challenge 3 (section 1 ) and support the human analyst’s investigation, Auto-Prov converts detected attack graphs into concise, natural-language summaries. The graph assistant component of Auto-Prov first translates each edge in an attack graph into a natural-language format capturing the source entity, destination entity, and interaction type. These are then provided to an LLM, which generates a summary of the attack graph explaining the sequence of suspicious activities. To further guide analysis, the LLM is instructed to highlight events from the summary and map them to likely APT tactics (e.g., initial compromise), providing reasoning that explains how the characteristics of each event align with the inferred tactic.
+4.2 Finding Different Log Types
+The task of clustering logs to automatically discover different log types presents two key challenges. First , system logs are highly redundant. Within short time intervals, millions of entries may share the same format while differing only in variable fields such as timestamps and identifiers. Clustering all such entries is expensive and unnecessary. Second , new, previously unseen formats appear over time. Hence, the method needs to continuously assign incoming logs into clusters while simultaneously detecting and incorporating new clusters.
+Auto-Prov addresses both challenges by (i) sampling logs while preserving format diversity, (ii) clustering sampled logs online to discover newer log types, and (iii) selecting a small set of representative logs per type to characterize each format.
+Sampling Logs. Auto-Prov samples logs within short time windows (e.g., one hour). As Auto-Prov samples in successive windows, newly appearing log formats are naturally incorporated. Within each time window t F t_{F} , every log entry is encoded using RoBERTa [ liu2019roberta ] , producing an embedding matrix 𝒱 t F = [ v i ] i = 1 n \mathcal{V}^{t_{F}}=[v_{i}]^{n}_{i=1} . Auto-Prov then selects k k maximally dissimilar logs using greedy farthest point (GFP) sampling [ li2022adjustable ] . GFP iteratively selects the log that maximizes its minimum cosine distance to previously selected samples, yielding a diverse subset of logs 𝒮 t F \mathcal{S}^{t_{F}} that spans various formats in that window. The value of k k is chosen to be larger than the expected number of log types, ensuring that no distinct format is missed.
+Clustering Sampled Logs. Sampling reduces redundancy but does not discover log types. Auto-Prov thus clusters the sampled logs 𝒮 t F \mathcal{S}^{t_{F}} to group entries with similar formats. To do so,
+we use DBStream [ hahsler2016clustering ] , a density-based clustering algorithm designed for streaming data.
+DBStream builds a set of micro-clusters 𝒞 t F \mathcal{C}^{t_{F}} , each representing a group of log entries whose embeddings lie within a small radius in the embedding space, indicating similar log formats.
+Each micro-cluster corresponds to a single log type.
+Logs whose embeddings fall outside the radius of existing micro-clusters (i.e., previously unseen formats) are initialized as new clusters. Hence, Auto-Prov continuously discovers new log types as formats evolve.
+Selecting representative logs per type. As log formats are assumed to be similar within a cluster, we only pass a small number of representative samples to the LLM components to generate the rules.
+For each discovered cluster c j ∈ 𝒞 t F c_{j}\in\mathcal{C}^{t_{F}} , Auto-Prov randomly selects a
+subset of logs c j ′ ⊆ c j c^{\prime}_{j}\subseteq c_{j} of size min ⁡ ( m , | c j | ) \min(m,|c_{j}|) . These logs serve as exemplars of the corresponding format.
+All exemplar logs across clusters are aggregated into a candidate log-set ℒ t F = ⋃ j = 1 | 𝒞 t F | c j ′ \mathcal{L}^{t_{F}}=\bigcup_{j=1}^{|\mathcal{C}^{t_{F}}|}c^{\prime}_{j} , which collectively covers all discovered log formats. This candidate log-set is passed to the candidate provenance extractor (section 4.3 ).
+4.3 Candidate Provenance Extractor
+The Candidate Provenance Extractor (CPE) extracts reference provenance graph information directly from raw logs in candidate log-set ℒ t F \mathcal{L}^{t_{F}} , including interacting entities, interaction direction and type, timestamps, and available entity-level details. As raw logs are highly unstructured and often omit explicit provenance cues (e.g., source and destination names), this task requires substantial reasoning capability.
+A single log entry may contain multiple entity mentions and metadata fields without explicitly indicating which entities participate in the recorded interaction or how they interact.
+Moreover, interaction direction and type are often implicit and need to be inferred. As a result, provenance extraction in a zero-shot setting
+requires resolving several ambiguities.
+To do so, the CPE
+leverages a powerful, general-purpose LLM GPT-4o [ hurst2024gpt ] . To further improve extraction accuracy, CPE decomposes provenance extraction into a sequence of simpler subtasks, following prior work showing that task decomposition improves LLM performance on complex problems [ zhou2022least ] . Each log entry l ∈ ℒ t F l\in\mathcal{L}^{t_{F}} is processed using the following steps. The prompts used for this are in appendix A.1.1 .
+Log Summarization.
+Logs often contain details irrelevant for provenance graph construction.
+In the first subtask, the LLM generates a natural-language summary describing the system-level interactions captured in l l .
+The model is provided with the raw log entry and minimal contextual information (e.g., operating system).
+The summary explicitly captures source and destination entity identifiers (Sid,Did), their names (Sname,Dname), their coarse types (Stype,Dtype) when available, and the interaction type (Itype).
+When explicit identifiers are missing, the LLM assigns placeholder identifiers (e.g., entity-1) alongside entity names to enable consistent reference in subsequent subtasks.
+Entity Types Extraction.
+Using the generated summary and the log entry l l , the second subtask extracts the set of distinct entity identifiers appearing in l l and assigns each coarse entity type (e.g., process, file) when defined in the log.
+The output is a structured mapping V l = { entity- ​ i : t ​ y ​ p ​ e ​ ( entity- ​ i ) } V_{l}=\{\text{entity-}i:type(\text{entity-}i)\} .
+These coarse entity types are not used as node features in Auto-Prov ; instead, they are extracted to support learning objectives in certain anomaly detectors (e.g., Flash [ rehman2024flash ] ).
+Entity Extraction.
+Not all entities present in a log entry participate in system-level interactions.
+For instance, a Windows audit log may include both the executable paths of a process and low-level details,
+only a subset of which correspond to entities participating in the interaction.
+This subtask identifies the subset of entities that interact and extracts their names or paths (e.g. vmtoolsd.exe ) when present.
+The LLM first produces a set of interacting entity pairs (entity- i i , entity- j j ).
+For each participating entity, it then extracts the full name or path as it appears in the log, yielding a mapping
+𝒩 l = { entity- ​ i : n ​ a ​ m ​ e ​ ( entity- ​ i ) } \mathcal{N}_{l}=\{\text{entity-}i:name(\text{entity-}i)\} , which is later used for inferring functional labels (section 4.5 ).
+Edge Extraction.
+For each interacting entity pair, the LLM infers the direction of interaction and the interaction type (e.g., read, write).
+Given the raw log entry, its summary, and the extracted entity pairs, the model outputs a set of directed edges
+E l = { ( Sid , Did , Itype , time ) } E_{l}=\{(\text{Sid},\text{Did},\text{Itype},\text{time})\} , where each edge represents a directed system interaction between two entities.
+Processing logs independently may introduce variability, as the LLM can produce multiple plausible outputs for similar entries. To improve consistency, we apply two techniques.
+First, each prompt includes a small, randomly sampled set of prior extractions as in-context examples to encourage consistent conventions across entries [ brown2020language ] . Second, to reduce random direction inversions during edge extraction, we invoke the LLM multiple times per log entry and apply majority voting over inferred edge directions [ wang2022self ] . In our experiments, we use seven independent runs and retain the most frequent direction.
+After processing each log entry l ∈ ℒ t F l\in\mathcal{L}^{t_{F}} , the CPE outputs ( E l , V l , 𝒩 l ) (E_{l},V_{l},\mathcal{N}_{l}) ,
+each capturing a distinct component of the extracted interaction.
+These outputs are combined to construct a set of provenance records,
+where each provenance record corresponds to a single directed interaction (i.e., one edge) extracted from l l .
+Formally, each provenance record is defined as
+p = { Sid , Stype , Sname , Did , Dtype , Dname , Itype , time } p=\{\text{Sid},\text{Stype},\text{Sname},\text{Did},\text{Dtype},\text{Dname},\text{Itype},\text{time}\} ,
+representing one directed interaction between two entities.
+For each l l , we collect its records into a set P l = ( p 1 , p 2 , … , p k ) P_{l}=(p_{1},p_{2},\ldots,p_{k}) . Across the entire candidate log-set , this yields the candidate provenance database
+𝒫 D ​ B = { l : P l | l ∈ ℒ t F } \mathcal{P}_{DB}=\{l:P_{l}\;|\;l\in\mathcal{L}^{t_{F}}\} , which serves as the reference input for rule generation (section 4.4 ).
+4.4 Rule Generator
+For scalability,
+we distill the large LLM’s extraction behavior across all the log formats in the candidate log-set into a set of reusable regular expression (regex) rules. Given the candidate provenance database , 𝒫 D ​ B \mathcal{P}_{DB} , we leverage
+a smaller open-source LLM (LLaMA-3 [ grattafiori2024llama ] ) to induce regex rules that reproduce the field values (e.g., Sid) extracted for each provenance record in 𝒫 D ​ B \mathcal{P}_{DB} . We use the smaller LLM, as rule generation does not require reasoning over unstructured logs.
+The rule generator processes each provenance record p ∈ P l p\in P_{l} independently
+and operates in a field-wise manner.
+Given a log entry l l in the candidate log-set and a single field value from p p (e.g., p [ p[ Sid ] ] ),
+the generator is instructed to induce a regex that extracts the same value from the raw log text.
+The per-record output is a rule set
+r p r_{p} = { Sid r , Stype r , Sname r , Did r , Dtype r , Dname r , Itype r , time r } \{\text{Sid}_{r},\text{Stype}_{r},\text{Sname}_{r},\text{Did}_{r},\text{Dtype}_{r},\text{Dname}_{r},\text{Itype}_{r},\text{time}_{r}\} .
+These rule sets are generated for all provenance records, and unique rules are stored into a rule database ℛ D ​ B \mathcal{R}_{DB} .
+We observe that entity types extracted in section 4.3 are often normalized by the LLM (e.g., returning “file” when the log contains “FileObject”). When an extracted type does not appear verbatim in the log, the rule generator is instructed to identify the token in the log that best corresponds to the extracted type and to construct a regex that extracts that token. The prompts of this component are in appendix A.1.2 .
+Each rule set r p ∈ ℛ D ​ B r_{p}\in\mathcal{R}_{DB}
+is applied
+to raw log entries to extract provenance edges, timestamp, and entity-level information.
+Each successful application yields provenance records p ( r ) p^{(r)} of the form { \{ Sid , Stype , Sname , Did , Dtype , Dname , Itype , time } \} , which are linked into a provenance graph.
+4.5 Learning with Functional Node Features
+To address Challenge 2 (section 1 ) and properly capture the system-level functionality of entities,
+the node enricher component enriches provenance graphs with functional node features that explicitly encode the functionality of each entity.
+Each provenance record p ( r ) p^{(r)} from section 4.4 introduces two entities identified by their names Sname and Dname (e.g., file paths, URLs).
+In the constructed provenance graph, each entity name e e corresponds to a node v e v_{e} .
+The node enricher assigns a functional label τ f ​ ( e ) \tau_{f}(e) to each entity
+and stores it in a functionality database ℱ D ​ B = { e : τ f ​ ( e ) } \mathcal{F}_{DB}=\{e:\tau_{f}(e)\} which ensures consistent functional attribution for the same entity in future logs.
+Functionality label inference begins with name-based reasoning.
+Each e e is first normalized to remove incidental variability while preserving semantic structure: redundant path delimiters are removed; numeric substrings (e.g., version numbers) are removed from directory components; and for files, the directory path is sanitized similarly while
+preserving the filename base and extension.
+The normalized entity is then passed to an open-source LLM (LLaMA-3 [ grattafiori2024llama ] ), which
+(i) determines whether the input corresponds to a valid system entity (e.g., file, directory, URL),
+(ii) if valid, infers its system-level functionality based on naming patterns, path structure, domains, or executable–argument relationships, and
+(iii) outputs a functional label τ f ​ ( e ) \tau_{f}(e) summarizing the functionality (e.g., document editor, Microsoft driver).
+If the LLM cannot infer functionality,
+common for evolving or previously unseen software,
+the entity is assigned a special ‘NO LABEL’ tag and deferred to behavior-based inference. The prompts used here are presented in appendix A.1.3 .
+For entities with ‘NO LABEL’, Auto-Prov
+infers functionality from behavioral signatures observed in the provenance graph.
+The underlying intuition is that system-level functionality is reflected in how an entity interacts with other entities: entities with similar functionality tend to participate in similar types of interactions.
+For instance, document editors (e.g., MS Word) mostly interact with documents, text files, images, and browsers, whereas system drivers primarily interact with the kernel and hardware interfaces.
+For a node v e v_{e} , we define its behavioral-profile b ​ ( v e ) b(v_{e}) as the set of unique one-hop behavioral signatures derived from edges adjacent to v e v_{e} .
+Each signature encodes both the interaction and functional type of the neighboring node, thereby capturing incoming interactions (e.g., read-by web browser) and outgoing interactions (e.g., write-to Microsoft driver).
+Let ℐ = { i 1 , i 2 , … ​ i d } \mathcal{I}=\{i_{1},i_{2},\ldots i_{d}\} denote the set of observed behavioral signatures across the graph. Each node v e v_{e} is represented by a multi-hot vector
+x v e ∈ { 0 , 1 } d x_{v_{e}}\in\{0,1\}^{d} , where x v e ​ [ i ] = 1 x_{v_{e}}[i]=1 if pattern s i ∈ b ​ ( v e ) s_{i}\in b(v_{e}) , and 0 otherwise.
+Behavioral profiles of nodes with known functional labels serve as reference points and are stored in a behavioral database
+ℬ D ​ B = { v e : x v e } \mathcal{B}_{DB}=\{v_{e}:x_{v_{e}}\} .
+For an unlabeled entity e u ​ n ​ k ​ n ​ o ​ w ​ n e_{unknown} , we first construct its multi-hot behavioral profile x v e u ​ n ​ k ​ n ​ o ​ w ​ n x_{v_{e_{unknown}}} in the same way from its adjacent interactions.
+The
+behavioral classifier assigns τ f ​ ( e u ​ n ​ k ​ n ​ o ​ w ​ n ) \tau_{f}(e_{unknown}) by identifying the nearest labeled node in this space using cosine similarity and assigning its functional label.
+The inferred label is then added to both the ℬ D ​ B \mathcal{B}_{DB} and ℱ D ​ B \mathcal{F}_{DB} , enabling consistent functional attribution for previously unseen entities.
+Once the provenance graph is embedded with functional labels, Auto-Prov encodes them using MPNet [ song2020mpnet ] , trains existing provenance graph-based anomaly detectors [ rehman2024flash , jia2024magic , aly2025ocr , cheng2024kairos ] on benign data to learn normal system behavior. Detected anomalous artifacts (e.g., nodes) are then connected through the provenance graph to construct compact attack graphs, following prior approaches that aggregate anomalies via local graph expansion or community discovery [ cheng2024kairos , aly2025ocr ] .
+4.6 Attack Graph Assistant
+Addressing Challenge 3 (section 1 ), Auto-Prov introduces graph assistant based on an open-source LLM (LLaMA-3 [ grattafiori2024llama ] ). Operating strictly as a post-detection layer, it does not perform anomaly detection but converts detected attack graphs into concise, human-readable explanations to aid analyst understanding and guide investigations.
+Given a detected attack graph, Auto-Prov converts it into a natural-language narrative for LLM-based analysis. Edges are linearized temporally, with nodes resolved to entity names and represented as “source –interaction-type–> target”, where source and target denote entity names. Duplicate consecutive edges are aggregated with a repetition count (e.g., “×10”) to reduce redundancy while preserving behavior intensity.
+The graph assistant operates in three stages.
+First, it ensures that all entities appearing in the graph are grounded in a functional context.
+For each entity in the attack graph,
+the LLM is instructed to assess whether it recognizes the entity’s functionality, producing a binary decision (YES/NO).
+For entities deemed unknown, Auto-Prov injects explicit functional context into the prompt.
+Specifically, each unknown entity e u ​ n ​ k ​ n ​ o ​ w ​ n e_{unknown} is paired with its inferred functional label τ f ​ ( e u ​ n ​ k ​ n ​ o ​ w ​ n ) \tau_{f}(e_{unknown}) , obtained from the functionality database populated by the behavioral classifier (section 4.5 ). These ( e u ​ n ​ k ​ n ​ o ​ w ​ n , τ f ​ ( e u ​ n ​ k ​ n ​ o ​ w ​ n ) ) (e_{unknown},\tau_{f}(e_{unknown}))
+tuples are provided as supplementary context in the prompt, while entities recognized by the LLM rely solely on its prior knowledge. This ensures that even previously unseen entity names are anchored to their functionalities,
+enabling coherent reasoning over the attack graph.
+Second, the assistant generates a natural-language summary of the attack graph.
+The temporally ordered edge sequence with any injected functional labels for unknown entities is provided to a summarization prompt that instructs the LLM to describe the overall attack behavior captured in the graph.
+The resulting summary highlights the interactions flagged by the anomaly detector and provides context for why they may be suspicious.
+An example attack graph and its corresponding summary are shown in appendix A.2 .
+Third, the assistant further maps the generated attack summary to high-level attacker objectives.
+Given the summary and a set of candidate APT tactics (e.g., Reconnaissance, Privilege Escalation),
+derived from the
+MITRE ATT&CK knowledge base [ mitre_attack ] ,
+the LLM identifies which interactions described in the summary are consistent with each tactic’s defining characteristics and provides a reasoning for each mapping. The reasoning is a textual explanation of why the observed interactions align with that tactic. The prompts of this component are in appendix A.1.4 .
+This step is not intended to produce authoritative or precise tactic labels. Instead, it offers interpretable hypotheses about the attacker’s possible intent and supporting reasoning to help analysts prioritize alerts and direct their investigation.
+5 Experiments
+We conduct the experiments on a Ubuntu 22.04 server, with AMD EPYC 7713 CPU (64 cores, 2.0 GHz), 503 GB of RAM, and NVIDIA RTX 6000 Ada GPUs with 192 GB memory. We frame our evaluation around the following key questions:
+•
+RQ1: Do Auto-Prov ’s functionality-embedded provenance graphs improve anomaly detection over manually engineered graphs across heterogeneous logs?
+•
+RQ2: How do Auto-Prov ’s individual components contribute to its overall performance?
+•
+RQ3: Can Auto-Prov summarize attack graphs into accurate and robust natural-language explanations?
+5.1 Datasets
+We evaluate Auto-Prov under realistic conditions characterized by heterogeneous log formats, diverse system platforms, and APT attacks. To ensure coverage along these dimensions, we select datasets that satisfy the following criteria.
+(C1) Heterogeneous Log formats.
+Auto-Prov is designed to automatically adapt to different log structures without manual engineering. We therefore evaluate it on logs from the widely adopted DARPA-E3 Transparent Computing THEIA dataset [ bilot2025sometimes , jiang2025orthrus , darpa_tc_e3 ] and the ATLAS public datasets (S1–S4) [ purseclab_atlas , alsaheel2021atlas , liu2025we , 10.5555/3762387.3762567 , ding2023airtag , yang2023prographer ] . These datasets are collected from various system platforms, which differ substantially in structure, field semantics, and abstraction level (Fig. 1 ). THEIA logs are relatively structured and JSON-based, whereas ATLAS logs are less uniform and vary across data sources. Together, they allow us to assess Auto-Prov ’s ability to operate across heterogeneous log formats.
+(C2) Diverse platforms.
+The datasets span multiple platforms and logging infrastructures. THEIA is collected on Ubuntu 12.04 and captures low-level system events such as file accesses and network connections. ATLAS includes Windows 10 audit logs, Firefox logs, and DNS traffic collected. This diversity enables evaluation across fundamentally different system environments.
+(C3) Diverse real-world attacks.
+Both datasets contain real-world attacks amid benign background activity (e.g., web browsing, email access). THEIA includes two expert-simulated enterprise attacks: firefox backdoor w/ drakon in-memory (FBI) and browser extension w/ drakon dropper (BED). ATLAS includes four attacks— strategic web compromise (WEB), malvertising dominate (MAD), spam campaign (SPAM), and pony campaign (PONY)—covering phishing, malicious code injection, and data exfiltration.
+Note that other datasets released under DARPA-E3 or ATLAS do not introduce fundamentally new log formats beyond those considered here. Similarly, log datasets used in prior provenance graph based methods largely follow comparable JSON formats already covered by THEIA [ rehman2024flash , jia2024magic , aly2025ocr , cheng2024kairos ] .
+Therefore, we believe that the selected datasets provide broad coverage for fairly evaluating Auto-Prov ’s stability and adaptability across three dimensions we mentioned above.
+5.2 Setup
+Baselines for Provenance Graph Construction.
+To enable a fair comparison between manually engineered provenance graphs and those automatically constructed by Auto-Prov , we follow standard provenance graph construction practices for each dataset.
+For THEIA, we use the provenance graph construction pipelines provided by each considered detector. For ATLAS, we use the original provenance graph generator released with the ATLAS dataset [ purseclab_atlas ] .
+Anomaly Detectors.
+To evaluate the effectiveness of Auto-Prov ,
+we measure how using functionality-embedded provenance graphs affects the detection performance of state-of-the-art provenance-graph-based anomaly detectors.
+We consider four representative systems: Flash [ rehman2024flash ] , MAGIC [ jia2024magic ] , OCR-APT [ aly2025ocr ] , and Kairos [ cheng2024kairos ] , and use the publicly released source code provided by the respective authors. These are selected to assess whether Auto-Prov ’s functional labels consistently improve detection across diverse node representations. To the best of our knowledge, we cover all the variants of provenance graph node representation used in the literature.
+Note that not all anomaly detectors are applicable to ATLAS when using Auto-Prov –generated graphs due to differences in the availability of coarse-grained entity type information. The baseline generator of ATLAS [ purseclab_atlas ] produces graphs through manual preprocessing steps that explicitly assign coarse entity types (e.g., process, file) to nodes, when such information is absent from the raw logs. However, Auto-Prov generates extraction rules from raw logs and extracts entity names, actions, and coarse entity types only when explicitly present in the logs. It does not infer or fabricate missing coarse entity types. As Flash [ rehman2024flash ] and OCR-APT [ aly2025ocr ] rely on coarse type information for their training or prediction, we exclude them from our evaluation on ATLAS, while including them in evaluations on THEIA; on the other hand, MAGIC [ jia2024magic ] and Kairos [ cheng2024kairos ] do not require entity types for their training or prediction. MAGIC uses coarse entity types only as node features, and Kairos relies on entity names and learns via edge prediction. We thus report results for MAGIC and Kairos on both ATLAS and THEIA.
+Ground Truth and Evaluation Measures.
+For THEIA, we use the ground truth recently released by [ bilot2025sometimes , jiang2025orthrus ] ,
+which provides separate labels for individual attacks, unlike prior work that aggregates all malicious labels [ rehman2024flash , jia2024magic , cheng2024kairos , aly2025ocr ] .
+This enables attack level analysis.
+Also, ground truth annotations in earlier evaluations label many unrelated nodes as malicious, which can distort evaluation [ bilot2025sometimes ] .
+For ATLAS, we obtain the ground truth
+from the original data repository [ purseclab_atlas ] .
+Following [ ding2023airtag ] , we map the malicious entities back to the
+corresponding log entries, labeled as malicious.
+Prior work primarily reported threshold-based metrics such as precision, recall, F1, or accuracy, which are evaluated at a single decision threshold and can be sensitive to threshold selection, potentially biasing results [ bilot2025sometimes ] . In contrast, AUC-ROC (Area Under ROC curve) and AUC-PR (Area Under Precision-Recall Curve) consider the full distribution of anomaly scores. AUC-ROC measures the probability that an attack instance is assigned a higher anomaly score than a benign instance, while AUC-PR emphasizes ranking quality when attack instances are rare by focusing on precision among the highest-scored nodes. Therefore, we use them in our investigation.
+Recent research pointed out a challenge in evaluating provenance graph-based anomaly detectors using threshhold-based or ranking-based metrics, and proposed a new metric, called Attack Detection Precision (ADP) [ bilot2025sometimes ] . Concretely, some attacks produce large anomalous subgraphs that are relatively easy to detect, while others are stealthier and manifest as only a few anomalous nodes. Threshold-based or ranking-based metrics can therefore be dominated by attacks with many anomalous nodes, masking failures to detect smaller or stealthier attacks. To better assess whether detectors identify all attacks, we thus report ADP [ bilot2025sometimes ] . ADP evaluates detection performance at the attack level by quantifying, across precision budgets, the fraction of attacks for which at least one attack node is correctly ranked.
+5.3 Detection Performance
+Tables 1 and 2 report detection performance on the THEIA and ATLAS across evaluated anomaly detectors.
+For each detector, ( β \beta )
+denotes the results obtained when training the anomaly detectors using the baseline provenance graphs,
+while Auto-Prov denotes the results when training on our functionality-embedded provenance graphs.
+Provenance
+Framework
+Flash [ rehman2024flash ]
+MAGIC [ jia2024magic ]
+OCR-APT [ aly2025ocr ]
+Kairos [ cheng2024kairos ]
+Attack
+AUC-ROC
+AUC-PR
+ADP
+Attack
+AUC-ROC
+AUC-PR
+ADP
+Attack
+AUC-ROC
+AUC-PR
+ADP
+Attack
+AUC-ROC
+AUC-PR
+ADP
+( β \beta )
+FBI
+0.666
+0.0000
+0.5
+FBI
+0.593
+0.027
+0.507
+FBI
+0.47
+0.0000
+1.0
+FBI
+0.803
+0.0027
+0.666
+BED
+0.671
+0.0001
+BED
+0.79
+0.0013
+BED
+0.65
+0.0001
+BED
+0.806
+0.0008
+Avg.
+0.668
+0.0000
+Avg.
+0. 691
+0.014
+Avg.
+0.56
+0.0000
+Avg.
+0.804
+0.0014
+Auto-Prov
+FBI
+0.901
+0.001
+1.0
+FBI
+0.81
+0.015
+1.0
+FBI
+0.962
+0.0036
+1.0
+FBI
+0.858
+0.0053
+0.666
+BED
+0.853
+0.001
+BED
+0.869
+0.017
+BED
+0.826
+0.006
+BED
+0.813
+0.0001
+Avg.
+0.877
+0.001
+Avg.
+0.839
+0.016
+Avg.
+0.894
+0.005
+Avg.
+0.835
+0.003
+Table 1 : Detection results on the THEIA dataset [ darpa_tc_e3 ] .
+Finding 1. Auto-Prov generalizes across diverse log formats.
+Tables 1 and 2 show that Auto-Prov consistently improves detection performance across datasets with fundamentally different log structures. Notably, Auto-Prov improves average AUC-ROC by 0.23 on THEIA and 0.15 on ATLAS across all applicable detectors. We significantly improve ADP for Flash on THEIA (0.5) and MAGIC on THEIA (0.493) and ATLAS (0.61). Importantly, these improvements are observed despite ATLAS logs being substantially less structured.
+Note that baseline AUC-PR values are often near zero, as reported in recent work [ bilot2025sometimes ] , reflecting class imbalance and stealthy attacks with sparse manifestations.
+In this setting, even modest absolute gains (e.g., 0.002) in AUC-PR are meaningful. Auto-Prov ’s consistent improvements indicate better prioritization of malicious entities among top-ranked alerts, while larger AUC-ROC gains indicate improved global separation between benign and malicious behavior.
+Finding 2. Functionality features and provenance graphs generated by Auto-Prov outperform existing feature representations and manually-constructed graphs.
+Auto-Prov ’s functionality-embedded provenance graphs consistently improve AUC-ROC over baselines, indicating better separation between benign and malicious behavior. The largest improvements occur for OCR-APT across diverse attacks, suggesting that functionality features capture richer context than behavioral statistics.
+The overall AUC-PR gains are smaller but consistent, reflecting reduced false positives while remaining challenged by attacks that mimic benign activity. Importantly, Auto-Prov ’s goal is not to maximize node-level precision, but to provide anomaly detectors with richer provenance graphs that reliably surface attack instances for analyst investigation. This is reflected in the consistently high ADP.
+Finding 3. Auto-Prov enables reliable attack-level detection across diverse attacks.
+Across all datasets and detectors, detectors trained on Auto-Prov -generated graphs
+often reaches 1.0 1.0 ADP and never degrades relative to baseline graphs.
+This is because Auto-Prov increases the likelihood that at least one attack-related node is prioritized among the top alerts,
+including stealthy attacks generating only a few anomalous events.
+In practice, such results are often more valuable than improvements in aggregated ranking metrics,
+which ensures that attacks are rarely missed.
+Provenance
+Framework
+Kairos [ cheng2024kairos ]
+MAGIC [ jia2024magic ]
+Attack
+AUC-ROC
+AUC-PR
+ADP
+Attack
+AUC-ROC
+AUC-PR
+ADP
+( β \beta )
+MAD
+0.498
+0.024
+0.997
+MAD
+0.5
+0.046
+0.385
+PONY
+0.498
+0.024
+PONY
+0.498
+0.138
+SPAM
+0.504
+0.008
+SPAM
+0.503
+0.044
+WEB
+0.498
+0.007
+WEB
+0.499
+0.052
+Avg.
+0.499
+0.015
+Avg.
+0.5
+0.07
+Auto-Prov
+MAD
+0.683
+0.037
+0.997
+MAD
+0.815
+0.132
+0.995
+PONY
+0.622
+0.031
+PONY
+0.64
+0.202
+SPAM
+0.625
+0.01
+SPAM
+0.692
+0.08
+WEB
+0.606
+0.009
+WEB
+0.526
+0.067
+Avg.
+0.634
+0.021
+Avg.
+0.668
+0.12
+Table 2 : Detection results on ATLAS datasets [ alsaheel2021atlas ] .
+(a)
+(b)
+(c)
+(d)
+(e)
+Figure 3 : (a): Clustering performance of DBStream [ hahsler2016clustering ] across different log embedding models. (b): Clustering performance of DBStream [ hahsler2016clustering ] and DenStream [ cao2006density ] . (c) – (d): Detection performance on THEIA [ darpa_tc_e3 ] and ATLAS [ alsaheel2021atlas ] with different embedding models for node features, respectively. (e): Number of edges generated by different LLMs as the candidate provenance extractor .
+5.4 Framework Analysis
+5.4.1 Log Clustering
+Auto-Prov clusters streaming logs online
+to discover heterogeneous log structures as new log types emerge, enabling downstream provenance extraction without prior knowledge of log formats.
+We evaluate Auto-Prov ’s design choices by comparing alternative streaming clustering algorithms and log embedding models.
+Streaming logs simulation. To approximate a realistic streaming setting, we construct an incremental log stream from the THEIA.
+THEIA logs provide explicit indicators of log type (e.g., Event, FileObject), which we use solely to establish ground truth for evaluation. In practice, we may not have such indicators, and the clustering algorithm is expected to discover them automatically. THEIA logs are assigned to their corresponding log types based on the indicators. Each log type differs in structure and semantics.
+Logs are grouped by type and randomly sampled to form balanced ground-truth clusters. The grouped logs are shuffled and randomly given incrementally to the clustering. Then, a log is drawn from a randomly selected group and processed online. This process continues until all logs are exhausted, yielding a controlled yet realistic simulation of streaming logs.
+Configuration
+THEIA [ darpa_tc_e3 ] + OCR-APT [ aly2025ocr ]
+ATLAS [ alsaheel2021atlas ] + Kairos [ cheng2024kairos ]
+FBI
+BED
+MAD
+PONY
+SPAM
+WEB
+AUC-ROC
+AUC-PR
+AUC-ROC
+AUC-PR
+AUC-ROC
+AUC-PR
+AUC-ROC
+AUC-PR
+AUC-ROC
+AUC-PR
+AUC-ROC
+AUC-PR
+( β \beta ) + τ f \tau_{f}
+0.48
+0.0000
+0.344
+0.0001
+0.5
+0.024
+0.5
+0.024
+0.503
+0.08
+0.5
+0.007
+Auto-Prov - τ f \tau_{f}
+0.532
+0.0007
+0.7
+0.0001
+0.529
+0.022
+0.544
+0.023
+0.52
+0.007
+0.514
+0.006
+Auto-Prov
+0.962
+0.0036
+0.826
+0.006
+0.683
+0.037
+0.622
+0.031
+0.625
+0.01
+0.606
+0.009
+Table 3 : Detection performance comparison between Auto-Prov and its variants: (1) “( β \beta ) + τ f \tau_{f} ”: baseline provenance graphs with Auto-Prov’s functionality features; (2) “Auto-Prov - τ f \tau_{f} ”: Auto-Prov-generated provenance graphs with the baseline node features.
+Clustering algorithms and evaluation measures.
+We evaluate clustering quality using the Adjusted Rand Index (ARI), which measures pairwise agreement between predicted clusters and ground truth [ hubert1985comparing , teitz2023potential , mani2025securing ] . We compare two streaming clustering methods: DBStream [ hahsler2016clustering ] , used in Auto-Prov , and DenStream [ cao2006density ] .
+Both operate online and require no predefined number of clusters.
+We use the implementations in [ montiel2021river ] with default hyperparameters and report ARI at each iteration.
+Finding 4. DBStream more reliably distinguishes logs than DenStream.
+Fig. 3(b) shows that DBStream consistently achieves high clustering quality throughout the stream, maintaining an ARI above 0.8 0.8 across iterations. In contrast, DenStream yields ARI values close to zero.
+These results justify our choice of DBStream for online log clustering in Auto-Prov .
+Log embeddings.
+To study the impact of log embeddings on clustering performance, we compare RoBERTa [ liu2019roberta ] used in Auto-Prov with two widely used embedding models, MPNet [ song2020mpnet ] and DistilBERT [ sanh2019distilbert ] , for encoding raw streaming logs.
+Finding 5. RoBERTa-based embeddings provide the most stable representation for streaming log clustering.
+Fig. 3(a) shows that RoBERTa consistently outperforms MPNet and DistilBERT in ARI, indicating better capture of structural and semantic log distinctions and more reliable online clustering. Since accurate log-type discovery impacts downstream provenance extraction and rule generation, these results motivate our use of DBStream with RoBERTa in Auto-Prov .
+5.4.2 Ablation Studies
+Auto-Prov Components. We evaluate whether Auto-Prov ’s gains stem from richer graphs generated by Auto-Prov , functionality features, or their combination.
+‘( β \beta ) + τ f \tau_{f} ’ denotes the baseline graph with our functionality features, and ‘Auto-Prov - τ f \tau_{f} ’ denote Auto-Prov without the functionality features. We evaluate configurations only when applicable.
+For THEIA, we use OCR-APT, which shows the largest performance gains in section 5.3 .
+For ATLAS, we use Kairos, as it operates directly on entity names and edges.
+We exclude MAGIC from this analysis because it relies on coarse entity types, and hence, MAGIC cannot be applied to the ‘Auto-Prov - τ f \tau_{f} ’.
+Finding 6. Auto-Prov’s graphs capture more meaningful system relationships than manually engineered rules.
+Comparing Auto-Prov - τ f \tau_{f} with the baseline results in Tables 3 and 1 shows
+consistent performance improvements even without functional features.
+This indicates that Auto-Prov -generated graphs model higher-fidelity causal relationships than rule-based pipelines.
+Manually engineered regex rules rely on predefined assumptions and often miss valid dependencies, whereas Auto-Prov leverages LLM-based reasoning to model plausible interactions directly from logs.
+Finding 7. Functional features amplify Auto-Prov’s graphs but cannot compensate for deficiencies in baseline graphs.
+Auto-Prov -generated graphs with functionality features yield substantial detection gains, demonstrating that functional context complements the graph. In contrast, embedding functionality features into baseline graphs provides limited or even negative effects. For example, for the BED attack, adding functionality to the baseline graph reduces AUC-ROC from 0.65 to 0.34 (Table 3 ). This suggests that when the underlying provenance graph is incomplete, functional context alone cannot correct structural errors and may instead amplify noise.
+(a)
+(b)
+(c)
+(d)
+(e)
+Figure 4 : (a) – (c): Detection performance with different LLMs as candidate provenance extractor , rule generator , and node enricher , respectively. (d): Number of entities for which functionality features cannot be inferred due to insufficient LLM knowledge. (e): Assistant robustness under entity-name poisoning, measured by tactic correctness α T ​ C \alpha_{TC} , summary similarity α B ​ E ​ R ​ T \alpha_{BERT} , and tactic consistency α R \alpha_{R} , averaged over attacks in THEIA [ darpa_tc_e3 ] and ATLAS [ alsaheel2021atlas ] at varying poisoning rates.
+LLMs for Candidate Provenance Extractor.
+We evaluate multiple LLMs—GPT-4o [ hurst2024gpt ] , GPT-3.5-turbo [ openai2022chatgpt ] , LLaMA-3-70B [ grattafiori2024llama ] , Qwen-2-72B [ team2024qwen2 ] , and DeepSeek-R1-32B [ guo2025deepseek ] —as candidate provenance extractors using ATLAS logs. The prompt is held constant across models.
+We use ATLAS for this study, as its logs are highly heterogeneous and substantially less structured than those in THEIA.
+To isolate provenance graph construction quality, functionality features are disabled, and we measure AUC-ROC using Kairos, which operates directly on entity names and graph structure.
+Finding 8. GPT-4o recovers provenance structure more consistently across heterogeneous logs.
+Fig. 4(a) shows that Kairos trained on GPT-4o-generated graphs achieves higher AUC-ROC across attacks compared to graphs produced by other LLMs. While absolute AUC-ROC values remain moderate, the relative differences reflect variations in structural completeness and cross-log connectivity, rather than downstream detection capacity. GPT-4o preserves a broader set of inter-entity relations that enable Kairos to surface attack-relevant deviations that are otherwise weakly observable.
+Finding 9. Smaller LLMs struggle to recover cross-log provenance interactions.
+Fig. 3(e) shows that GPT-4o extracts candidate graphs spanning Windows audit, DNS, and Firefox logs. In contrast, GPT-3.5-turbo and LLaMA-3 primarily recover from Windows audit level,
+while Qwen-2 and DeepSeek-R1 fail to generate candidates.
+AUC-ROC alone may miss these differences, as many attacks manifest only partially at the audit level.
+Even with richer cross-log provenance, overall detection remains bounded by attacks with sparse observable behavior.
+Detectors trained on
+GPT-3.5-turbo and LLaMA-3 graphs
+are
+limited to audit activity, with little to no visibility into network or browser behavior.
+However, GPT-4o’s ability to retain cross-log interactions becomes increasingly important for attacks dominated by network or browser activity [ gast2024snailload ] .
+Finding 10. Smaller LLMs require explicit anchors to extract provenance interactions.
+GPT-3.5-turbo and LLaMA-3 succeed primarily when logs contain explicit anchors (e.g., process name). They fail on highly unstructured logs (e.g., DNS), where relationships must be inferred, not directly stated. This highlights the need for large, general-purpose LLMs with strong reasoning capabilities for provenance extraction across heterogeneous logs.
+LLMs for Rule Generator.
+Building on the previous investigation, we evaluate open-source LLMs as rule generators (Fig. 4(b) ). We compare LLaMA-3-70B [ grattafiori2024llama ] , Qwen-2-72B [ team2024qwen2 ] , and DeepSeek-R1-32B [ guo2025deepseek ] , using Kairos on the ATLAS. As before, the prompt is held constant across all models to isolate the effect of rule generation quality.
+Finding 11. LLaMA-3 generates the most complete rule sets across heterogeneous logs.
+Regular expression rules generated by LLaMA-3 yield the highest AUC-ROC across all evaluated attacks. Qwen-2 achieves comparable performance on several attacks but occasionally fails to generate rules for specific HTTP interactions in Firefox logs, leading to modest performance degradation.
+In contrast, DeepSeek-R1 fails to generate usable rules, consistent with its inability to act as an effective candidate provenance extractor in the prior evaluation.
+Node Embedding Models.
+Fig. 3(c) and Fig. 3(d) evaluate the impact of different node embedding models on detection performance when trained on Auto-Prov ’s functionality embedded provenance graphs. We focus on OCR-APT for THEIA and MAGIC for ATLAS, as these benefit most from functionality features (Table 1 and 2 ).
+Finding 12. MPNet provides the most robust embeddings across heterogeneous logs.
+MPNet consistently achieves the highest AUC-ROC across attacks and datasets. While DistilBERT often yields comparable results on individual attacks, its performance is less consistent across datasets, whereas RoBERTa is least effective.
+LLMs for Functionality Node Features. We compare different open-source LLMs to generate the functionality features in the
+node enricher . We use the LLMs used in the previous investigations, and the prompt is kept constant across all LLMs.
+Finding 13. LLaMA-3 produces the most effective functionality features.
+Fig. 4(c) shows that functionality features generated by LLaMA-3 consistently achieve the highest AUC-ROC across most attacks. While other LLMs yield comparable AUC-ROC, this metric alone does not fully capture differences in the quality and coverage of inferred functionality across entities.
+Finding 14. LLaMA-3 provides the most reliable functionality inference across heterogeneous logs.
+LLaMA-3 infers functionality for more entities than Qwen-2 and DeepSeek-R1. Fig. 4(d) shows that LLaMA-3 fails to infer functionality for only 11 entities, compared to 687 for Qwen-2 and over 3,800 for DeepSeek-R1.
+This broader coverage leads to more complete functionality-embedded provenance graphs, which in turn result in more stable detection performance.
+Finding 15. Behavioral classifier successfully estimates the functionality features for entities unknown to the LLM.
+Although Qwen-2 and DeepSeek-R1 fail to infer functionality for many entities, detectors trained on their outputs achieve AUC-ROC comparable to LLaMA-3 (Fig. 4(c) ). This shows the effectiveness of the behavioral classifier in estimating functionality for unknown entities (Section 4.5 ). Performance with Qwen-2 is closer to LLaMA-3 due to its smaller set of unknown entities,
+while DeepSeek-R1 relies more on functionality estimation, resulting in lower overall AUC-ROC.
+5.5 Assistant Evaluation
+We evaluate the graph assistant on both THEIA [ darpa_tc_e3 ] and ATLAS [ alsaheel2021atlas ] . For THEIA, we use OCR-APT [ aly2025ocr ] as the base anomaly detector, as it achieves the largest performance gains with Auto-Prov (section 5.3 ). For ATLAS, we use MAGIC [ jia2024magic ] for the same reason. Detected anomalous nodes are linked into graphs using the attack graph construction method from OCR-APT [ aly2025ocr ] . This choice does not affect the assistant evaluation, as the assistant operates on the resulting graphs rather than on the detection process itself.
+The attack graph construction proceeds by selecting the top n s ​ e ​ e ​ d n_{seed} anomalous nodes (ranked by anomaly score) as seeds and expanding each via a one-hop bidirectional traversal, connecting anomalous nodes through intermediate benign nodes to preserve contextual relationships.
+Evaluation.
+In Auto-Prov , the assistant operates as a post-detection interpretation layer to support and direct the analyst’s investigation of potential attacker intent.
+Consequently, evaluating the assistant using detection-centric metrics (e.g., recall) would conflate explanation quality with detection performance and fail to capture the assistant’s intended role. Therefore, we evaluate the graph assistant in two ways.
+(1) Correctness of tactic reasoning.
+We evaluate whether the assistant’s reasoning for assigning adversary tactics is consistent with established characteristics of those tactics.
+For each attack graph, the assistant produces a natural-language summary containing a set of APT tactics, labeled by the assistant, each accompanied by a natural-language reasoning .
+We compare the assistant’s reasoning against ground-truth descriptions of tactics in the MITRE ATT&CK [ mitre_attack ] .
+As this evaluation involves open-ended natural-language reasoning, we adopt LLM-as-judge evaluation, following recent work that uses off-the-shelf LLMs to assess reasoning quality when human evaluation is costly [ laskar-etal-2025-improving ] .
+We use three LLMs—DeepSeek-R1-32B [ guo2025deepseek ] , Qwen-2-72B [ team2024qwen2 ] , and Gemma-2-27B [ team2024gemma ] —as judges, distinct from the assistant’s base LLM to avoid bias.
+Each judge receives (i) the MITRE tactic description and (ii) the assistant’s reasoning,
+and is instructed to determine whether the reasoning reflects the defining characteristics of the tactic.
+Formally, let M M be the set of tactics labeled by the assistant for a given attack graph.
+For each m ∈ M m\in M , let J i ​ ( m ) ∈ { 0 , 1 } J_{i}(m)\in\{0,1\} be the binary judgment of judge i i , where 1 1 indicates correct reasoning and 0 incorrect. A tactic label is considered correct if at least two out of three judges agree that the reasoning is consistent with the MITRE ground truth.
+We compute an indicator function 𝕀 ​ ( m ) = 1 ​ ( Σ i = 1 3 ​ J i ​ ( m ) ≥ 2 ) \mathbb{I}(m)=1(\Sigma_{i=1}^{3}J_{i}(m)\geq 2) and define tactic correctness
+α T ​ C = 1 | M | ​ Σ m ∈ M ​ 𝕀 ​ ( m ) \alpha_{TC}=\frac{1}{|M|}\Sigma_{m\in M}\mathbb{I}(m) . The prompts of the judges are in appendix A.1.5 .
+(2) Robustness to unknown entities.
+To evaluate the assistant’s robustness to unseen entities, we apply controlled entity-name poisoning to attack graphs, since the base LLM (LLaMA-3) recognizes most entity names in these popular datasets, hindering systematic evaluation.
+For each attack graph, we collect the set of unique entity names 𝒩 a = { e i , … , e | 𝒩 a | } \mathcal{N}_{a}=\{e_{i},\ldots,e_{|\mathcal{N}_{a}|}\} . Given a poisoning rate r ∈ [ 0 , 100 ] r\in[0,100] , we sample 𝒩 a ′ ⊆ 𝒩 a \mathcal{N}_{a}^{\prime}\subseteq\mathcal{N}_{a} with | 𝒩 a ′ | = max ​ ( 1 , ⌊ r ​ 𝒩 a 100 ⌋ ) |\mathcal{N}_{a}^{\prime}|=\text{max}(1,\lfloor\frac{r\mathcal{N}_{a}}{100}\rfloor) and define a deterministic mapping π : 𝒩 a ′ ↦ 𝒩 a ~ \pi:\mathcal{N}_{a}^{\prime}\mapsto\tilde{\mathcal{N}_{a}} , where each poisoned name e ~ = π ​ ( e ) \tilde{e}=\pi(e) is a randomly generated string that preserves the syntactic structure of e e (e.g., file extensions) while removing semantic cues. As explained in section 4.6 , the assistant will flag these poisoned entities as unknown and estimate their functional label using the behavioral classifier .
+We evaluate robustness along three dimensions. First , we measure whether tactic reasoning remains correct under poisoning by computing α T ​ C \alpha_{TC} .
+Second , we assess explanation stability by comparing summaries generated from the original and poisoned graphs using BERTScore α B ​ E ​ R ​ T \alpha_{BERT} [ zhang2019bertscore , pape2025prompt ] , which computes cosine similarity between contextual embeddings from BERT [ koroteev2021bert ] . Third , we evaluate tactic consistency by measuring the fraction of tactics in the original summary M o M^{o} that also appear in the poisoned summary M p M^{p} , α R = | M o ∩ M p | | M o | \alpha_{R}=\frac{|M^{o}\cap M^{p}|}{|M^{o}|} .
+Together, these metrics assess whether the assistant can both reason correctly about adversary tactics and remain robust with unknown entities. We report our findings as follows.
+Figure 5 : Tactic correctness across attacks in THEIA [ darpa_tc_e3 ] and ATLAS [ alsaheel2021atlas ] .
+Finding 16. The assistant produces reliable tactic interpretations across different attacks.
+Across all attacks, the assistant achieves consistently high tactic correctness , frequently attaining α T ​ C = 1.0 \alpha_{TC}=1.0 and remaining above 0.8 0.8 in most cases (Fig. 5 ).
+This indicates that the assistant’s reasoning is largely consistent with the defining characteristics of adversary tactics in the MITRE ATT&CK. Errors primarily arise in ambiguous system behaviors that admit multiple plausible interpretations. For example, the assistant occasionally maps repeated DNS activity with the “Initial Access” tactic, although such patterns may also reflect benign name resolution behavior. These cases lead to lower tactic correctness scores ( e . g . , α T ​ C > 0.75 e.g.,\alpha_{TC}>0.75 for SPAM). Importantly, these failures do not dominate overall performance.
+Finding 17. The assistant remains robust to unknown entities.
+As shown in 4(e) , under entity-name poisoning, the assistant maintains high tactic correctness ( α T ​ C \alpha_{TC} ) and summary similarity ( α B ​ E ​ R ​ T \alpha_{BERT} ), both consistently exceeding 0.8 0.8 across poisoning rates. This demonstrates that estimated functionality allows the assistant to reason effectively when entities are unknown, producing similar summaries and correct tactic inferences. We observe occasional reductions in tactic consistency ( α R ≈ 0.7 \alpha_{R}\approx 0.7 ), which occur when multiple MITRE tactics exhibit overlapping characteristics rather than due to reasoning errors. Despite this ambiguity, the generated reasoning remains informative and can guide the analyst’s investigation.
+6 Discussion and Limitations
+Unseen functionality.
+Auto-Prov infers functionality labels for previously unseen entities using an LLM’s knowledge and a similarity-based behavior classifier. This inference is constrained to LLM’s prior knowledge or interaction patterns observed in the log. While entities with entirely new functionality will rarely appear in practice, we note that if a system introduces a novel entity whose functionality is neither recognizable by the LLM nor behaviorally similar to known entities, Auto-Prov may fail to assign a correct label. Handling such cases can be a promising direction for future work.
+Prompt injection attacks.
+Auto-Prov assumes that the log inputs and prompts are not adversarially manipulated. An attacker who injects malicious instructions into logs to influence LLM behavior [ chen2025struq ] could potentially interfere with provenance extraction or explanation generation. Defending against such attacks is outside of our scope. Existing prompt channeling techniques [ chen2025struq ] could be incorporated to mitigate this risk.
+7 Conclusion
+Auto-Prov addresses the key limitations in provenance graph based anomaly detection by automating provenance graph construction, embedding functional context for system entities, and providing analyst-oriented attack summaries.
+Across diverse logs, platforms, and state-of-the-art detectors, Auto-Prov consistently improves detection accuracy and attack-level coverage while remaining robust to previously unseen entities, advancing the practicality of provenance graph-based anomaly detection in real-world deployments.
+Open Science Policy
+Datasets. Our experiments are conducted on publicly available datasets [ darpa_tc_e3 , alsaheel2021atlas , purseclab_atlas ] ,
+which have been widely used in prior research. Ground-truth labels are also publicly available [ alsaheel2021atlas , bilot2025sometimes ] .
+Software Artifacts. We release our source code at https://github.com/intelligenceafa-cloud/Auto-Prov.
+The repository includes scripts and configuration details necessary to reproduce the experiments.
+Additional details on experimental setup are provided in section 5 .
+Ethics Considerations
+We assessed the potential risks and benefits of our research
+following the ethical guidelines outlined in [ kohno2023ethical ] . To the best
+of our knowledge, this work adheres to established ethical
+standards. Our experiments do not involve sensitive, private,
+or personally identifiable information. All experiments are
+conducted exclusively on publicly available datasets that were
+collected and released in an ethical way for research purposes.
+References
+Appendix A Appendix
+A.1 LLM Prompts
+A.1.1 Candidate Provenance Extractor
+You are an expert in cybersecurity and system provenance graphs. You will be provided with a <Platform Name> log. Your task is to
+understand the structure and semantics of the log and produce a structured
+natural-language paragraph suitable for constructing a provenance graph.
+Identify and describe all entities and interactions in the logs that are
+relevant to system and network provenance. This may include system components, operating systems, and storage artifacts,
+configurations, hosts, users, network endpoints, and, when
+present, web-related objects and requests.
+Each entity must be explicitly
+named and accompanied by its unique identifier in round brackets.
+If identifiers are not provided in the log, assign deterministic sequential
+identifiers (id-1) and use them consistently.
+Summarize only provenance interactions (e.g., events, accesses,
+requests) between entities, and exclude irrelevant identifiers or low-level
+log artifacts that are not useful for provenance graph construction.
+Instructions:
+1. Read the log carefully and identify all interactions relevant to provenance graph construction. Write a single paragraph describing all activities in the log, where each sentence corresponds to one interaction.
+2. If present, include only entity names enclosed in quotes "…" with
+their identifiers in round brackets (…).
+3. Mark interaction types using curly brackets {…}.
+4. Mark entity types (if present) using square brackets […].
+5. Preserve subject and object identifiers explicitly and avoid introducing
+any identifiers beyond those required for provenance construction.
+6. Strictly follow the output format below.
+Output Format:
+<single structured paragraph>
+Prompt 1: Log Summarization
+You are an expert in cybersecurity and system provenance graphs. You will be given as input (i) a <Platform Name> log and (ii) a
+[SUMMARY] describing the activities observed in that log.
+Your task is to extract all identifiers relevant to provenance graph
+construction and the corresponding entity types. This
+includes identifiers explicitly mentioned in the paragraph as well as any
+additional identifiers present in the log that are necessary to represent
+provenance-relevant entities or network endpoints.
+First, identify all unique entity identifiers appearing in round brackets (…),
+ignoring event-specific or transient identifiers. In addition, identify any
+network addresses and ports appearing in the log or paragraph and distinguish
+their roles when possible (e.g., local vs. remote, source vs. destination).
+Then, for each extracted identifier, determine the system-level type of the corresponding
+entity by using the entity-type annotations in the paragraph or
+implicit type information available in the log. If no provenance-relevant
+entity type can be determined, assign the type NONE. Multiple identifiers may
+share the same entity type.
+Strictly follow the output format below.
+Output Format:
+"ID-1" = "entity-type-1"
+"ID-2" = "entity-type-2"
+"ID-3" = "NONE"
+"IP:port-1" = "source address"
+"IP:port-2" = "destination address"
+Prompt 2: Entity Types Extraction
+You are an expert in cybersecurity and system provenance graphs.
+You will be given as input:
+(1) A <Platform Name> log
+(2) A [SUMMARY] describing the activities observed in that log
+Your task is to extract all meaningful relationships and resolve entity names for
+provenance graph construction, following two consecutive steps:
+Step A: Identify Relationships Between Entities and IPs
+- Read the log and [SUMMARY] to identify all unique entity identifiers in round brackets (…)
+and all network addresses and ports.
+- Detect transitory relationships (e.g., parent-child between services or files)
+and explicit interactions between entities.
+- Identify network connections between IP addresses and between entities and IPs.
+- For each detected relationship, generate a unique pair in one of the formats: (ID, ID), (IP:port, IP:port),
+or (ID, IP:port).
+- If no meaningful relationships exist, output: [NO MEANINGFUL PAIRS POSSIBLE]
+Step B: Resolve Entity Names
+- For each entity ID appearing in the relationship pairs, locate the corresponding full entity name
+(e.g., system-level service, application, files, URL) in the paragraph.
+- If no full name is available,
+assign NONE.
+- Ignore network addresses; focus only on system entities.
+Output Format:
+[RELATED ENTITIES and IP ADDRESSES]
+(ID-1, ID-2) A: […]
+(ID-1, ID-3) A: […]
+(ID-2, ID-5) A: […]
+(IP:port-1, IP:port-2) A: […]
+(ID-6, IP:port-5) A: […]
+[ENTITY NAMES]
+"ID-1" = "entity-name-1"
+"ID-2" = "entity-name-2"
+"ID-3" = NONE
+"ID-4" = "entity-name-4"
+"ID-5" = NONE
+Prompt 3: Entity Extraction
+You are an expert in cybersecurity and system provenance graphs. You will be given as input:
+1. A <Platform Name> log
+2. A [SUMMARY] describing the activities observed in the log
+3. Pairs of entity IDs as (ID, ID)
+4. Pairs of IP addresses as (IP:port, IP:port)
+5. Pairs of entity IDs and IPs as (ID, IP:port) or (IP:port, ID)
+Your task is to determine the action/event/access/interaction types or web requests occurring between these entities, along with their directions and timestamps, to construct a provenance graph. Perform this step by step:
+Step 1: Analyze the log and [SUMMARY] line by line to understand all operations.
+Step 2: For each pair, fill the "A: […]" with the action/event/access types or web requests as mentioned in the log. Do not rephrase, invent, or omit any relevant types. If no type is found, write "NO LABEL".
+Step 3: Determine the direction of the interaction: {D=->} for left-to-right, {D=<-} for right-to-left.
+Step 4: Include the timestamp of each interaction as (timestamp=…). If the log does not provide a timestamp, leave it as (timestamp=…).
+Step 5: Strictly follow the output format below.
+Output Format:
+(ID-1, ID-2) A: […] {D=-> or D=<-} (timestamp=…)
+(ID-1, ID-3) A: […] {D=-> or D=<-} (timestamp=…)
+(ID-2, ID-5) A: […] {D=-> or D=<-} (timestamp=…)
+(ID-6, ID-3) A: […] {D=-> or D=<-} (timestamp=…)
+(IP:port-1, IP:port-2) A: […] {D=-> or D=<-} (timestamp=…)
+(ID-6, IP:port-5) A: […] {D=-> or D=<-} (timestamp=…)
+Prompt 4: Edge Extraction
+A.1.2 Rule Generator
+You are an expert in system provenance and regular expressions. You are given:
+(1) a raw system log entry, and
+(2) a single field value from a provenance record extracted from that log
+(e.g., source ID, destination ID, interaction type, entity name, or timestamp).
+Your goal is to induce a regex rule that, when applied to
+the raw log text, reproduces the same field value. Rules must be structurally anchored, reusable across logs with the same format, and extract only the intended value. Reason step by step, but your output must strictly follow the required format.
+TASK 1.
+Given an exact identifier value (e.g., source ID, destination ID, entity ID) or
+Vtype, generate a generic and
+reusable regex that extracts this same value from the raw log.
+If the given value consists of multiple components (e.g., IP address and port),
+generate separate regex patterns for each component.
+TASK 2.
+Given an extracted interaction type value, generate a generic and
+reusable regex that extracts any interaction type appearing at the same structural location in similar logs.
+Do not include the specific extracted value in the regex; match only the format
+TASK 3.
+Given an extracted timestamp, generate a generic and
+reusable regex that extracts timestamps
+from the same structural location in similar logs.
+Do not include the specific timestamp value in the regex; match only the format.
+TASK 4.
+Given an extracted entity name (e.g., domain, URL, file path, or filename),
+generate a generic and
+reusable regex that extracts any entity name from the same structural
+location in similar logs.
+Rule Validation and Correction Guidelines.
+All generated regex rules must extract only the intended value and nothing
+else. Preserve the punctuation, spacing, and
+capitalization.
+Use capturing groups () only around the intended value.
+Never use overly broad patterns (e.g., .+ ) to capture content.
+If a generated regex is found to be incorrect, fix it by preserving the exact log
+structure and generalizing only the specified token using [A-Za-z]+ .
+If a task cannot be completed unambiguously from the log, return No Regex .
+Prompt 5: Rule Generator
+A.1.3 Node Enricher
+You are an expert in cybersecurity and system provenance graphs. You will be given a text from <Platform Name> logs that may represent entities such as files, directory, URL/website, or command-line invocation, etc. Your task is to classify the entity, analyze its purpose and functionality, and provide a detailed type label. Do this step by step.
+Step 1: Determine the broad category of the entity: If it is a file (has extensions like .exe, .dll etc.), a directory, classify as a **File/Directory**. If it is a URL (e.g., http://, www.), classify as **URL/Website**. If it is a command-line invocation, classify as **Command-Line**. If it is abstract, ambiguous, classify it as **NO LABEL**.
+Step 2: Examine the entity in detail: For **File/Directory**: analyze the extension, path structure, naming patterns, and likely system usage (library, config, system file, etc.). For **URL/Website**: analyze the protocol, domain, subdomain; consider what service it represents. For **Command-Line**: analyze its arguments and parameters; determine the command’s purpose and effect in the system.
+Step 3: Contextual Analysis: Consider the entity’s role in system operations. What would the file, directory, URL, or command typically do? How does it interact with the system or network?
+Step 4: Functional Explanation: Write a detailed explanation of what the entity does, its purpose, and how it operates. Explain each technical term if applicable.
+Step 5: Type Label: Summarize the functionality into a concise but detailed type label. If the entity is invalid or ambiguous, assign ‘NO LABEL‘.
+Strictly follow the output format below:
+entity_name | Type: <functional_label>
+entity_name | Type: <NO LABEL>
+Prompt 6: Assigning Functional Labels τ f \tau_{f}
+A.1.4 Graph Assistant
+You have been given a system entity (eg., processes, files, network sockets). Based on your knowledge, do you have information about the functionality of this system entity?
+Respond with ONLY "YES" or "NO" nothing else.
+Prompt 7: Flagging unknown nodes
+You are an expert in cybersecurity and system provenance graphs. You are given
+a graph in which each line represents a directed edge of the form:
+[source node] –[interaction type]–> [destination node]
+Edges are ordered chronologically from earliest to latest, reflecting the
+temporal sequence of events. When the same edge (same source node, destination
+node, and interaction type) appears consecutively, it is annotated with a
+repetition count, e.g., (x3), indicating repeated operations such as repeated
+connections, file access, or requests.
+You are given: A list of nodes that have been detected as malicious. Supplementary node metadata in the form of (node name, node functionality), which describes the system-level functionality of some nodes appearing in the
+graph.The graph may represent only a portion of a larger attack.
+Task 1: Provenance-Based Narrative Generation
+Produce a detailed natural-language narrative that describes what is happening
+in this graph step by step, based solely on the observed entities, interactions,
+and their temporal order. Construct the most coherent explanation possible from
+the available evidence, without inferring external context or attack phases.
+Return one paragraph in the following format:
+Summary: <single continuous narrative paragraph>
+Guidelines for Task 1: Do not include headings, labels, bullet points, or numbered lists inside the summary text. Do not speculate beyond what is supported by the graph structure and node metadata.
+Task 2: APT Tactic Identification
+You are given a list of APT tactics.
+Based only on the events described in the generated summary, identify which tactics are explicitly matches the observed behavior. List only
+the tactics that are evident from the summary; do not infer tactics that are not in the list.
+For each inferred tactic, provide a concise explanation that explicitly
+references the system entities and interactions described in the summary.
+Use the following structured format:
+Stage: <APT tactic name>
+Reasoning: <evidence-based explanation>
+Guidelines for Task 2: You do not need to identify all tactics, only those clearly supported by the
+summary. Base your reasoning strictly on the narrative produced in Task 1. Avoid speculation or assumptions beyond the described evidence.
+Prompt 8: Summarizing attack graphs and labeling APT tactics.
+A.1.5 LLM Judges
+You are an expert and evaluator in cybersecurity and the MITRE ATT&CK framework. Below, you are given two pieces of reasoning: (1) Model Reasoning, and (2) MITRE Reference. Carefully compare the Model Reasoning to the MITRE Reference Reasoning.
+Task:
+Does the Model Reasoning align with the MITRE Reference for the model to categorize this attack under this APT tactic?
+Format your answer as:
+YES/NO
+Prompt 9: LLM Judge Prompt
+Figure 6 : An example of malvertising dominate attack graph from ATLAS [ alsaheel2021atlas ] .
+A.2 Graph Assistant Summaries
+In Fig. 7 , the generated narrative closely mirrors the detected attack graph in Fig. 6 , explicitly describing repeated DNS queries and responses while preserving their temporal ordering. The underlying graph exhibits high edge density, frequent repeated interactions, and many-to-many communication patterns across entities. Instead of simply restating these patterns as suspicious, the graph assistant contextualizes them as consistent with DNS resolution and CDN caching behavior.
+This behavior is valuable from an analyst’s perspective. While anomaly detectors are sensitive to irregular patterns, its difficult to know why an alert. The graph assistant offers plausible benign interpretations of the observed interactions, enabling analysts to quickly assess whether an alert warrants deeper investigation or can be deprioritized.
+The assistant’s utility is further reflected in its mapping to APT tactics. Based on the summarization, it identifies only Reconnaissance and explicitly rules out subsequent tactics. The accompanying reasoning is evidence-based, emphasizing the absence of actions beyond DNS queries. This restrained tactic attribution helps analysts avoid over-interpreting early-stage or ambiguous interactions.
+Figure 7 : An example of graph assistant’s output on the attack graph in Fig. 6 .
+Experimental support, please
+view the build logs
+for errors. Generated by
+L
+A
+T
+E
+xml
+.
+Instructions for reporting errors
+We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile
+support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the
+methods listed below:
+Click the "Report Issue" (
+) button, located in the page header.
+Tip: You can select the relevant text first, to include it in your report.
+Our team has already identified the following issues . We appreciate your time reviewing and reporting rendering errors we
+may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability
+should not be a barrier to accessing research. Thank you for your continued support in championing open access for
+all.
+Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a list of packages that need conversion , and welcome developer contributions .
+We gratefully acknowledge support from
+our major funders ,
+member institutions , ,
+and all contributors.
+About
+·
+Help
+·
+Contact
+·
+Subscribe
+·
+Copyright
+·
+Privacy
+·
+Accessibility
+·
+Operational Status (opens in new tab)
+Major funding support from

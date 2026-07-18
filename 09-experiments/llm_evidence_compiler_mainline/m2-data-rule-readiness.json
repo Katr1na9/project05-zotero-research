@@ -1,0 +1,69 @@
+{
+  "report_id": "project05-mainline-evidence-compiler-m2-data-rule-readiness-v0.1",
+  "date": "2026-07-17",
+  "status": "ready_for_user_m2_review",
+  "scope": "WP2",
+  "data_readiness": {
+    "case_count": 9,
+    "development_case_count": 3,
+    "test_case_count": 6,
+    "frozen_reference_claim_count": 58,
+    "resolved_pointer_count": 58,
+    "public_artifact_count": 58,
+    "public_target_node_count": 37,
+    "public_target_edge_count": 28,
+    "public_visibility_scenario_count": 405,
+    "private_action_count": 50,
+    "public_private_identifier_collision_count": 0,
+    "public_contract_reference_fields_used": false
+  },
+  "rule_strong_snapshot": {
+    "status": "frozen_before_any_llm_output",
+    "case_ids": [
+      "C04-compiler-evaluation",
+      "C05-compiler-evaluation",
+      "C06-compiler-evaluation"
+    ],
+    "artifact_count": 26,
+    "record_count": 26,
+    "raw_candidate_count": 26,
+    "admitted_claim_count": 26,
+    "admitted_link_count": 15,
+    "rejected_candidate_count": 0,
+    "rejected_link_count": 0,
+    "test_case_ids_processed": [],
+    "reference_data_used": false,
+    "private_files_read": false,
+    "snapshot_sha256": "26A4B2FACCAC3857687F75D4DF21A8E19821BECC984398D241529224AEE2B2D9"
+  },
+  "validation": {
+    "compiler_targeted": {
+      "status": "passed",
+      "passed": 35,
+      "subtests_passed": 131
+    },
+    "repository_excluding_parallel_m3star_test_file": {
+      "status": "passed",
+      "passed": 440,
+      "skipped": 6,
+      "subtests_passed": 339
+    },
+    "full_repository": {
+      "status": "one_unrelated_parallel_m3star_failure",
+      "passed": 465,
+      "failed": 1,
+      "skipped": 6,
+      "subtests_passed": 339,
+      "failure": "09-experiments/tests/test_run_m3star.py::M3StarExperimentRunnerTests::test_method_matrix_contains_dual_head_ablation_and_frozen_baselines"
+    }
+  },
+  "authority": {
+    "model_environment_install_authorized": false,
+    "model_download_authorized": false,
+    "training_authorized": false,
+    "formal_inference_authorized": false,
+    "human_e2_audit_required_for_wp2": false,
+    "wp3_authorized": false,
+    "next_gate": "user_m2_review"
+  }
+}

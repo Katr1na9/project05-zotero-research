@@ -1,0 +1,171 @@
+{
+  "baseline_readiness_canonical_sha256": "F9721F0AD37F372EFD91C044120C684CBFC0B84A0653BB0149033E29EEE89498",
+  "baseline_readiness_id": "project05-qwen-candidate-edge-readiness-v0.1",
+  "created_date": "2026-07-18",
+  "execution_claims": {
+    "corpus_copied_into_mainline": false,
+    "formal_candidate_pairs_constructed": false,
+    "formal_inference_run": false,
+    "m3_runtime_integrated": false,
+    "model_used": false,
+    "runtime_modified": false,
+    "source_records_rewritten": false,
+    "tokenizer_used": false,
+    "training_run": false
+  },
+  "families": [
+    {
+      "baseline_g0_positive_candidates": 0,
+      "legacy_packet_null_negative_credit": 0,
+      "legacy_packet_null_rows": 0,
+      "new_parser_g0_positive_candidates": 166,
+      "parser_template_counts": {
+        "cam_linux_audit_execve_v1": 59,
+        "cam_linux_audit_proctitle_hex_v1": 107
+      },
+      "projected_g0_positive_candidates": 166,
+      "records_scanned": 800,
+      "source_family_id": "ait_cam_lds_manifestations_filtered",
+      "source_modality": "endpoint_event",
+      "split_role": "train"
+    },
+    {
+      "baseline_g0_positive_candidates": 683,
+      "legacy_packet_null_negative_credit": 0,
+      "legacy_packet_null_rows": 0,
+      "new_parser_g0_positive_candidates": 0,
+      "parser_template_counts": {},
+      "projected_g0_positive_candidates": 683,
+      "records_scanned": 795,
+      "source_family_id": "fkie_socbed_acsac2021_winlogbeat",
+      "source_modality": "endpoint_event",
+      "split_role": "train"
+    },
+    {
+      "baseline_g0_positive_candidates": 0,
+      "legacy_packet_null_negative_credit": 0,
+      "legacy_packet_null_rows": 500,
+      "new_parser_g0_positive_candidates": 193,
+      "parser_template_counts": {
+        "loghub_oom_killed_process_v1": 193
+      },
+      "projected_g0_positive_candidates": 193,
+      "records_scanned": 500,
+      "source_family_id": "logpai_loghub_linux",
+      "source_modality": "endpoint_event",
+      "split_role": "training-validation"
+    },
+    {
+      "baseline_g0_positive_candidates": 798,
+      "legacy_packet_null_negative_credit": 0,
+      "legacy_packet_null_rows": 0,
+      "new_parser_g0_positive_candidates": 0,
+      "parser_template_counts": {},
+      "projected_g0_positive_candidates": 798,
+      "records_scanned": 799,
+      "source_family_id": "redcanary_atomic_red_team",
+      "source_modality": "endpoint_event",
+      "split_role": "train"
+    },
+    {
+      "baseline_g0_positive_candidates": 0,
+      "legacy_packet_null_negative_credit": 0,
+      "legacy_packet_null_rows": 2,
+      "new_parser_g0_positive_candidates": 0,
+      "parser_template_counts": {},
+      "projected_g0_positive_candidates": 0,
+      "records_scanned": 2,
+      "source_family_id": "splunk_attack_data_manifests",
+      "source_modality": "endpoint_event",
+      "split_role": "train"
+    },
+    {
+      "baseline_g0_positive_candidates": 483,
+      "legacy_packet_null_negative_credit": 0,
+      "legacy_packet_null_rows": 17,
+      "new_parser_g0_positive_candidates": 0,
+      "parser_template_counts": {},
+      "projected_g0_positive_candidates": 483,
+      "records_scanned": 500,
+      "source_family_id": "zeek_non_pcap_test_logs",
+      "source_modality": "network_event",
+      "split_role": "training-validation"
+    }
+  ],
+  "field_map_version": "0.2.0",
+  "formal_data_gate_passed": false,
+  "formal_data_gate_reason": "non_token_gate_failed",
+  "hard_stops": [
+    "beth_download_requires_separate_user_authorization",
+    "do_not_construct_formal_candidate_pairs",
+    "do_not_download_tokenizer_or_model",
+    "do_not_install_or_modify_runtime",
+    "do_not_train_or_run_formal_inference",
+    "do_not_integrate_into_m3_runtime"
+  ],
+  "historical_source_root": ".worktrees/llm-apt-phase1/09-experiments/llm_finetuning_v0.3/generated/exclusion-passed-records",
+  "legacy_packet_null_negative_credit": 0,
+  "non_token_gate": {
+    "failure_reasons": [
+      "train_g0_positive_families_below_4"
+    ],
+    "family_overlap": [],
+    "maximum_balanced_train_pairs": 3294,
+    "maximum_balanced_validation_pairs": 1352,
+    "status": "failed_non_token_data_gate",
+    "token_gate_status": "not_measured_not_authorized",
+    "train_g0_positive_count": 1647,
+    "train_g0_positive_families": [
+      "ait_cam_lds_manifestations_filtered",
+      "fkie_socbed_acsac2021_winlogbeat",
+      "redcanary_atomic_red_team"
+    ],
+    "validation_g0_positive_count": 676,
+    "validation_g0_positive_families": [
+      "logpai_loghub_linux",
+      "zeek_non_pcap_test_logs"
+    ]
+  },
+  "readiness_id": "project05-qwen-positive-remap-readiness-v0.1",
+  "remaining_source_gap": {
+    "beth_status": "metadata_candidate_not_download_authorized",
+    "missing_train_families": 1,
+    "train_g0_positive_families_observed": 3,
+    "train_g0_positive_families_required": 4
+  },
+  "scope": "read_only_record_local_positive_remap_audit",
+  "source_file_manifest": [
+    {
+      "bytes": 75057,
+      "relative_path": "train/ait_cam_lds_manifestations_filtered.jsonl.gz",
+      "sha256": "4A31785938E48E4E574E1B0714F779023FB39EC5FF395677D79DB00D12B10729"
+    },
+    {
+      "bytes": 136776,
+      "relative_path": "train/fkie_socbed_acsac2021_winlogbeat.jsonl.gz",
+      "sha256": "58E5685C7750A02A6C34AA72B582254C873CCC6E7202CD4033A73DE0B5565245"
+    },
+    {
+      "bytes": 119155,
+      "relative_path": "train/redcanary_atomic_red_team.jsonl.gz",
+      "sha256": "991CA086A04B3B99AEC853F8625A8B7EE12759E972EF9FEB94F465CB8D47CFA2"
+    },
+    {
+      "bytes": 553,
+      "relative_path": "train/splunk_attack_data_manifests.jsonl.gz",
+      "sha256": "E597E9053C0435A61D0960566450B1CFD598DC923A209CD0E144999CE358E3FE"
+    },
+    {
+      "bytes": 24733,
+      "relative_path": "training-validation/logpai_loghub_linux.jsonl.gz",
+      "sha256": "BA1D07B9AAE0590775F36D57BF14C81021A9FFCC46F6A4A4825FDD8529EE9C19"
+    },
+    {
+      "bytes": 19370,
+      "relative_path": "training-validation/zeek_non_pcap_test_logs.jsonl.gz",
+      "sha256": "BE540CB5206B6CF663BC8F90FBCCE2D81461D8EB8A8917B655625B6A749A55CF"
+    }
+  ],
+  "status": "failed_non_token_data_gate",
+  "version": "0.1.0"
+}

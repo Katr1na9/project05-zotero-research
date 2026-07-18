@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/compiler_run_manifest.schema.json",
+  "title": "CompilerRunManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "request_id",
+    "compiler_run_id",
+    "condition_id",
+    "backend_id",
+    "status",
+    "stage_hash_chain",
+    "contract_sha256",
+    "model_runtime_loaded",
+    "private_reference_accessed",
+    "telemetry"
+  ],
+  "properties": {
+    "manifest_version": {"const": "0.1.0"},
+    "request_id": {"type": "string", "pattern": "^REQ-[A-F0-9]{24}$"},
+    "compiler_run_id": {"type": "string", "pattern": "^RUN-[A-F0-9]{24}$"},
+    "condition_id": {"enum": ["stub", "rule_strong", "reuse_hybrid", "llm_constrained", "llm_direct"]},
+    "backend_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["completed", "abstain", "rejected", "invalid", "error"]},
+    "stage_hash_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_sha256", "candidate_payload_sha256", "admission_sha256"],
+      "properties": {
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_payload_sha256": {"$ref": "#/$defs/sha256"},
+        "admission_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "contract_sha256": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"$ref": "#/$defs/sha256"}
+    },
+    "model_runtime_loaded": {"type": "boolean"},
+    "private_reference_accessed": {"type": "boolean"},
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latency_ms", "input_tokens", "output_tokens", "peak_vram_mb"],
+      "properties": {
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "peak_vram_mb": {"type": ["number", "null"], "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}

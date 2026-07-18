@@ -1,0 +1,93 @@
+{
+  "authority_id": "project05-llm-evidence-compiler-qwen25-paired-v0.3",
+  "version": "0.3.0",
+  "status": "qwen25_paired_route_design_locked_kev_formal_null_rejected",
+  "created_date": "2026-07-18",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.2.json",
+    "sha256": "6067B2681CBFA1FD788A66F315126CFECD78BAA51F2F3E585C288CA3818E5827"
+  },
+  "model_selection_supersession": {
+    "superseded_route": "olmo2_open_base_candidate",
+    "superseded_document": "08-writing/llm-evidence-compiler-open-base-finetuning-amendment-v0.1-20260718.md",
+    "superseded_document_sha256": "6F437E93C49D6D181038381AB804D6E2D85D69A42774D7C86B875B12DC2BAA09",
+    "historical_record_preserved": true
+  },
+  "authoritative_documents": {
+    "08-writing/llm-evidence-compiler-qwen25-paired-route-amendment-v0.1-20260718.md": "9FAEF06836D33C794607C6C5012BEAE259DC13D192CFE61446FDB79937B0200F",
+    "08-writing/cisa-kev-hard-negative-literature-audit-v0.1-20260718/cisa-kev-hard-negative-literature-audit-v0.1.md": "DC0BAEECC76996DC3DAB7222A95A7D43DF36A8499AC57F6EC3B4E4492A40FA89"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen-paired-fairness-contract-v0.1.json": "AC570A99C275706C715937F30E4B80B788E68257FB793C509C1CFAB158558AB9",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/train-null-source-literature-gate-v0.1.json": "CF8408D2D1C3842D371EDCB74268506C7850B119DD3855C385351EDB6D8A609C",
+    "09-experiments/llm_evidence_compiler_mainline/qwen-data-reuse-readiness-v0.2.json": "79A0D1A05217BE2D0620733E9D775A40D88BA649EC96C13D9344422B14FEE2AA"
+  },
+  "model_contract": {
+    "base_model_id": "Qwen/Qwen2.5-7B-Instruct",
+    "base_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "license_metadata": "apache-2.0",
+    "general_condition": {
+      "condition_id": "QWEN-GENERAL",
+      "adapter_enabled": false,
+      "base_trainable": false
+    },
+    "adapted_condition": {
+      "condition_id": "QWEN-ADAPTED",
+      "adapter_enabled": true,
+      "adapter_key": "project05_obs_compiler",
+      "base_trainable": false,
+      "maximum_trainable_parameter_fraction": 0.01,
+      "save_adapter_only": true,
+      "merged_full_model_forbidden": true
+    },
+    "only_intended_model_difference": "adapter_state",
+    "training_method": "causal_sft_4bit_nf4_qlora",
+    "sequence_length_candidate": 1024
+  },
+  "data_truth_contract": {
+    "formal_train_null_minimum": 480,
+    "currently_eligible_train_null": 2,
+    "current_minimum_deficit": 478,
+    "cisa_kev_formal_train_null_eligible": false,
+    "cisa_kev_diagnostic_only": true,
+    "single_author_kev_review_required": false,
+    "external_evidence_before_row_review": true
+  },
+  "required_conditions": [
+    "RULE-STRONG",
+    "QWEN-GENERAL",
+    "QWEN-ADAPTED",
+    "REUSE-HYBRID",
+    "GENERAL-CONSTRAINED",
+    "GENERAL-DIRECT"
+  ],
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "test_case_count": 6,
+    "generation_repeats_are_independent": false
+  },
+  "authorized_scope": [
+    "literature_and_official_source_audit",
+    "dependency_free_contracts",
+    "offline_tests",
+    "historical_artifact_supersession_without_row_labeling",
+    "data_gate_readiness_report"
+  ],
+  "not_authorized": [
+    "new_corpus_download",
+    "dependency_install_or_change",
+    "tokenizer_download",
+    "model_download",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "frozen_case_overwrite",
+    "frozen_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

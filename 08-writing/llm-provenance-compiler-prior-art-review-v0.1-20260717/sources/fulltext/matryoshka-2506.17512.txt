@@ -1,0 +1,1335 @@
+Semantic-Aware Parsing for Security Logs
+1 Introduction
+2 Background
+2.1 Anatomy of a parser
+2.2 Security operations
+2.3 Parser requirements
+3 Related work
+4 System architecture
+4.1 Generation phase
+4.1.1 Syntax parsing
+4.1.2 Schema creation
+4.1.3 Mapping
+4.2 Validation phase
+5 Evaluation
+5.1 SecurityLogs
+5.1.1 Dataset
+5.1.2 Query comparison
+5.1.3 Ablations
+5.1.4 Template generation shortcomings
+5.1.5 Micro benchmarks
+5.1.6 Time and cost evaluation
+5.2 LogHub2.0
+5.2.1 Dataset
+5.2.2 Experiment
+5.3 Real-world evaluation
+5.3.1 Dataset
+5.3.2 Side-by-side holistic comparison
+5.3.3 Query comparison
+6 Discussion
+6.1 To normalize or not to normalize
+6.2 Limitations
+7 Conclusion
+A Additional results
+B Evaluation queries
+Semantic-Aware Parsing for Security Logs
+Julien Piet12,
+Vivian Fang1,
+Rishi Khare1,
+Scott Coull2,
+Vern Paxson13,
+Raluca Ada Popa1,
+David Wagner1
+Abstract
+Security logs are foundational to threat detection and post-incident investigation, yet analysts often struggle to fully leverage them due to their heterogeneity and unstructured nature. The standard practice of manually writing parsers to normalize the data in security event management systems is time-consuming and costly due to the long tail of log formats. Meanwhile, querying raw logs without explicit parsing using large language models (LLMs) is impractical at scale.
+In this paper, we introduce Matryoshka, an end-to-end system leveraging LLMs to automatically generate semantically-aware structured log parsers without labeled examples or human intervention. Matryoshka achieves this by directly inferring log syntax, variable naming, and normalization to common security-specific schemas (e.g., OCSF [ ocsf ] ) from unlabeled log line samples, then generating deterministic parsers and mapping rules that can be efficiently applied during data ingest. This approach provides analysts with semantically-rich data representations at scale, facilitating rapid and precise log search without the traditional burden of manual parser construction.
+We evaluate Matryoshka’s capabilities through both established template generation datasets and new datasets curated to establish end-to-end performance on a realistic distribution of log types. Our experiments show that Matryoshka outperforms prior work on syntax parsing while matching human-generated parsers in both side-by-side comparisons and retrieval for security-relevant queries. These results demonstrate that Matryoshka significantly reduces manual effort by automatically extracting and organizing valuable security data, moving us closer to fully automated, AI-driven analytics.
+1 Introduction
+Security operations depend on analysts’ ability to rapidly search and cross-correlate vast quantities of data to detect and respond to threats. However, this comes with a fundamental challenge: correlating events from multiple log sources (e.g., infrastructure operational events, network devices, applications, and security tools) that are heterogeneous, massive, and most often semi-structured . Each data source generates logs in different formats with varying levels of detail, and even within a given source these formats come in many variants and evolve over time.
+Logs underpin two core security operations workflows: (i) interactive investigations that reconstruct a chain of events, and (ii) automated real-time detection using rules and machine learning. To leverage the sources of log data, security teams write parsers that convert logs into a structured schema, such as Google’s Unified Data Model [ udm ] (UDM) or the Open Cybersecurity Schema Framework [ ocsf ] (OCSF). These schemas aim to unify the representation of log events across sources and provide a structured, normalized way to represent this data used in security event management systems, but they are difficult to maintain at scale.
+To underscore this challenge, UDM exposes around 20,000 distinct attributes, while OCSF provides more than 50,000. A typical event management platform, such as Google SecOps, provides over 1,000 distinct log parsers [ googleparsers ] , and pushes more than 200 parser updates monthly, requiring more than 4,000 engineer-hours. Despite this effort, mappings are often ambiguous or incomplete, leading to poor detection and investigation outcomes. In our evaluation of end-to-end query performance (§ 5.3.3 ), for instance, human-written parsers achieved a precision of only 0.50 and recall of 0.48 across a diverse set of security-relevant queries due to the inherent difficulty in producing normalized schema mappings.
+On the surface, modern large language model (LLM)-based systems seem ideally suited for this problem. LLMs can understand system logs [ liu2025loglmtaskbasedinstructionbasedautomated , cui2024logevalcomprehensivebenchmarksuite , karlsen2024 ] , retrieval-augmented generation (RAG) systems can query heterogeneous data using natural language [ rag ] , and they can even generate SQL queries for structured data analysis [ hong2024next , yu2018syntaxsqlnetsyntaxtreenetworks , yu2019spiderlargescalehumanlabeleddataset , guo2019complextexttosqlcrossdomaindatabase , scholak2021picardparsingincrementallyconstrained ] . However, real-world systems generate millions of log lines daily—far exceeding any language model’s context window. Log data often combines natural language, technical identifiers, and structured delimiters, making standard text embeddings inefficient and inaccurate. Even recent advances in querying unstructured data cannot keep pace with log generation rates since those approaches require embedding each new line individually and often resort to imprecise clustering for speed [ dai2024uqequeryengineunstructured ] .
+Security teams are thus left with two suboptimal approaches: either (1) write parsers by hand to convert them to a structured form, requiring substantial human resources but enabling efficient ingestion and search over logs, or (2) use AI search tools to retrieve log events from unstructured data formats, a slow and costly approach that can result in poor retrieval and fails to scale to security workload volumes, thereby sacrificing both ingestion speed and quality.
+Instead, we propose Matryoshka, the first end-to-end system leveraging LLMs to automatically generate deterministic, semantically-aware structured log parsers , offering fast ingestion and search with no human intervention. Matryoshka proceeds in three steps. First, a syntax parser captures the syntax of each log line and identifies variables. Second, a semantic naming step consistently names and clusters these extracted variables, producing a coherent schema suitable for structured queries. Finally, and optionally, Matryoshka can map the newly created fields to normalized security schemas, such as UDM or OCSF. At run time our generated parsers rely exclusively on static regular-expression matching— not LLM-based analysis—enabling efficient ingestion. The schema produced by the syntax parser and semantic naming provides analysts with a queryable, structured dataset that supports fast searches even without normalization, and the final mapping step enables query and rule creation across log sources using normalized schemas within security event management systems.
+Matryoshka addresses three key challenges that make automated end-to-end log parsing difficult in practice:
+1.
+Scale and heterogeneity. Real-world logs are massive, diverse, and evolve constantly, making manual parser maintenance costly and brittle. Matryoshka automates this process by learning log syntax and structure and generating deterministic parsers directly from unlabeled log samples, scaling across heterogeneous formats without human input.
+2.
+Limited expressiveness. Past work focuses on template generation , a different task from log parsing. These methods construct templates with wildcards to match variables, and identify specific log formats [ jiang2024lilac , jiang2024large , brain23 , Drain ] . Such templates blur boundaries between adjacent fields and often over-capture, leading to poor variable extraction and degraded end-to-end parsing performance. In contrast, Matryoshka’s syntax parsing unifies log templates into a single parsing tree, relying on regular expressions to accurately capture variable boundaries, and thus enabling the precision necessary for later parsing stages and, ultimately, downstream analysis tasks.
+3.
+Missing semantics. Prior approaches do not attach semantic names to variables and thus provide no schema for querying. Naively employing a language model for naming yields inconsistent field names (e.g., one log line may use “ source_ip ” while another uses “ src_ip ”). Matryoshka’s semantic naming and mapping stages incorporate an execution-guided validation phase that enforces global consistency across templates, yielding coherent schema and substantially improving query accuracy.
+To evaluate Matryoshka, we use three datasets: (i) SecurityLogs, a new dataset containing five common log types to evaluate schema mapping and end-to-end retrieval, (ii) LogHub2.0 [ loghub ] , a standard template generation benchmark to demonstrate syntax parsing capabilities, and (iii) examples from 27 real-world enterprise log types from Google SecOps that capture the long tail of log formats seen in practice. Our experiments highlight the efficiency and performance of our approach at each stage in the parsing process.
+On end-to-end retrieval tasks for representative security queries, for instance, Matryoshka demonstrates significant improvements over human-generated parsers in both precision (0.60 vs. 0.50) and recall (0.60 vs. 0.48) on data normalized to the UDM schema. In side-by-side comparisons, Matryoshka’s mapping to UDM achieves the same quality as the human-written parsers. Meanwhile, without mapping to a normalized schema (i.e., leveraging semantic naming alone), Matryoshka achieves near-perfect performance on those same security queries, highlighting the inherent difficulty of mapping to normalized security taxonomies for both humans and machines. More importantly, though, these results demonstrate Matryoshka’s ability to achieve human-levels of parser quality without any human intervention, thereby enabling more complete threat detection and incident reconstruction.
+We proceed by examining preliminaries of log parsing in Section 2 , followed by related work in Section 3 . Section 4 provides a detailed description of Matryoshka’s architecture and Section 5 presents our evaluation methodology and results demonstrating the efficacy of Matryoshka. Finally, Section 6 addresses the strengths and limitations of our approach. Our source code and benchmark are publicly available. 1 1 1 https://github.com/julien-piet/matryoshka
+Figure 1: Parsers convert unstructured log lines (top) to structured data suitable for ingestion into a database (upper-right), in a sequence of three steps. The output format makes it easy to query logs for events that satisfy certain conditions (lower-right). Matryoshka creates such parsers by learning the log’s syntax ①, crafting a schema ②, and mapping to a taxonomy ③.
+2 Background
+2.1 Anatomy of a parser
+System logs are text-based messages that record a program’s state and report events, from kernel messages to application activity. Log formats vary widely, even across versions of the same application, complicating parsing and querying. While there is no standard design for log parsers, it is useful to distinguish three conceptual stages that any parser may incorporate: syntax parsing, semantic naming, and schema mapping.
+Syntax parsing. Programs emit log lines by interpolating variable entities into a fixed message template. The syntax of each line is thus determined by its template. Templates are defined as sequences of tokens, where each token is either a fixed string or a variable. We associate each variable with a regular expression. Step ➀ in Fig. 1 shows an example template that captures an SSH accepted connection event.
+Many templates may share a common prefix. For instance, Linux system logs often share a prefix indicating the date, hostname, process name, and process ID, followed by program-specific content. Syntax parsing in Matryoshka relies on a tree of templates, where all templates in a subtree share a common prefix. This design helps parse log lines consistently, as repeated prefixes are parsed identically.
+For example, consider the log line in Fig. 1 , which highlights some of the challenges of real-world log parsing. Delimiters ( = , : , {} ) mixed with free text and nested key-value pairs make fields hard to separate; for example, the variable “ pw ” implies password authentication without stating it explicitly. Moreover, different clients (or even versions of the same client) may change the syntax or semantics of these log lines in subtle ways.
+One possible template for the log line is “ <*> <*> sshd[<*>]: Accepted conn user:<*> <*> src={ip=<*> port=<*>} ”, and it can be captured by the main branch in the parsing tree represented in Fig. 2 . The start of the line (up to the process ID brackets) is present in all log lines, so it represents a branching point in the tree of templates.
+Each leaf represents a distinct template.
+Because the date and hostname are adjacent, parsing with wildcards would be unable to disambiguate where the date ends and hostname begins.
+This motivates the use of regular expressions to capture variables (e.g., “ \S+\s+\d+\s+\d+:\d+:\d+ ” for the date) and enable unique disambiguation.
+Semantic naming. While templates capture a line’s syntax, they provide no information about its meaning. Therefore, the next parsing stage maps each template to a schema. Each schema includes a description of the template and a set of fields representing the template’s variables and constants of importance, where each field is assigned a name and description. Names must reflect not only the data type of the original variable but also the variable’s purpose within the broader log context (see Fig. 1 , step ➁).
+After this stage, each log line is mapped to a JSON object containing a description of the template and a list of named fields corresponding to the variables in the line.
+Schema for related templates must be consistent (e.g., use the same field name when the “same” variable appears in multiple templates).
+Schema mapping. The first two stages produce a structured representation of the log file, enabling fast and efficient querying. The third step maps this structured representation to an existing normalized taxonomy so analysts can search over standardized attribute names (see Fig. 1 , step ➂). Each named entity in the parser’s parsing tree is assigned to one or more attributes in the target taxonomy. Some fields cannot be mapped to standardized attributes. Normalized taxonomies are often incomplete and cannot represent every domain-specific value. In these cases, the field is described using the custom schema from step ➁.
+Mar 9 23:46:29 \S+\s+ ⋯ \cdots \d+:\d+ puma25 \S+ sshd [ 17376 \d+ ]: Accepted conn user: root \S+ pw \S+ src= { ip= 10.35.161.71 \d+.\d+.\d+.\d+ port= 59271 \d+ } Failed none \S+ for user root \S+
+Figure 2: Example parsing tree, with two templates that share a common prefix. Each node/token represents either a string constant (black) or a variable (with associated regular expression; blue), and each leaf corresponds to a template (given by the path from the root to that leaf).
+2.2 Security operations
+Security operations teams focus on detecting, investigating, and mitigating threats. Logs underpin two core workflows: (i) interactive investigations to reconstruct chains of events, and (ii) real-time detection using alerting rules. Both are hindered when key semantics—“who did what to whom, where, and how”—are hidden in unstructured or semi-structured text.
+Analysts often start with substring search (e.g., searching for “ Accepted conn ” in sshd logs). This is brittle: different software versions use different wording, and substring search struggles with structured fields like dates. To improve accuracy, analysts can write parsers to convert log data to a structured format, and then search this structured data. In practice, parsers can be extremely complex. For instance, one SSH parser we examined used a 3616-character regex inside a 160-line Python script, focusing solely on extracting the usernames, IPs and timestamps of successful connections. The slow, manual process of writing parsers for each data source and type of log event can consume days or even weeks, taking up analyst time that could instead be dedicated to investigating threats.
+Industry mitigates this by normalizing logs into large taxonomies such as UDM ( ∼ \sim 20K attributes) and OCSF ( > > 50K). While such breadth captures important nuance, it also makes mapping onerous and fragile. Google SecOps alone maintains roughly 1,000 active parsers [ googleparsers ] , while Splunk lists support for logs generated by 100+ companies with monthly updates [ splunkparsers ] and Elastic shows a similar maintenance cadence. Maintaining these parsers is expensive: Google SecOps releases over 200 parser updates each month, consuming about 4,000 engineer-hours from over 30 domain specialists. This level of effort indicates that supporting the long tail of real-world log types can be punishing, with many parsers used by fewer than ten customers.
+Even with expert effort, semantic mismatches remain. Taxonomies provide an overwhelming level of nuance, making it difficult to determine which field should be used. For instance, UDM exposes “ principal.network.application_protocol ”, “ target.network.application_protocol ”, and “ network.application_protocol ”, any of which could be used to store the value “HTTP” in an Apache log. In other cases, mappings depend on perspective. In a reverse SSH tunnel , host A initiates an outbound connection to host B , after which B can reach services on A . In a single event, A is simultaneously the source (packets originate there), the initiator (it opened the session), and once the tunnel is active, the target of inbound traffic. Choosing one attribute discards context; populating several creates ambiguity. At the other extreme, even rich taxonomies can under-capture domain-specific detail. Both issues hinder detection and retrieval accuracy: across a corpus of queries spanning multiple task categories in the NICCS NICE framework [ niccs_nice_framework ] , expert parsers achieve an F1 score of only 0.49 because ambiguous or missing mappings propagate into query logic.
+In this paper we propose an end-to-end pipeline that removes the manual burden of writing parsers, achieves expert-level mapping, and additionally supports direct querying through both a custom schema and standardized taxonomies (UDM/OCSF).
+2.3 Parser requirements
+Given the sensitive security use cases that we focus on and the end-to-end nature of the parsers developed by Matryoshka, we have designed our system around four core principles:
+•
+Accuracy. The structured representation of the logs must be correct: each template should match only a single event. Variable tokens should capture parts of the line that can vary and convey some meaningful information about the event. Template schemas must accurately represent the content of log lines, with meaningful variable names. Fields must only be mapped to standardized attributes that capture their intended role. Lastly, queries executed on the structured data should yield the same result as painstakingly searching the raw logs.
+•
+Completeness. The structured representation must capture all information in the original log file. Any query that could be executed on the raw logs should be equally feasible on the structured data.
+•
+Consistency. Variables fulfilling the same role across multiple log lines should be handled identically: they must have the same field names, descriptions, OCSF mappings, and data types. Similarly, templates that are syntactically different but serve the same purpose should have the same schema.
+•
+Run-time efficiency. The parser we produce should operate efficiently: we should not need to invoke a language model on every log line and queries against structured data should run more efficiently than a linear scan over the raw logs.
+While these five principles guide our system, it is impossible to perfectly meet them all in practice. For instance, perfect accuracy cannot be achieved without complete knowledge of the developer’s original intention, and consistency involves a subjective notion of semantic similarity across fields.
+3 Related work
+Most of the literature refers to log parsing as the task of generating templates that identify variables using wildcard placeholders. The intuition is that applications typically generate log messages with a printf-style (format string) API, and each template should correspond to a unique format string in the source code.
+We call this template generation . These wildcard templates are useful for identifying log events, but insufficient for ingesting the log message and extracting its variables, as we show in Section 5.1.4 . Template generation has been studied for decades, and existing approaches can be divided into statistics-based and LLM-based approaches.
+Statistics-based template generation.
+Earlier work on template generation applies statistical methods to find variables in log messages: they identified variables based on word length, frequency, and other statistical features.
+Frequency-based methods [ vaarandi2003data , nagappan2010abstracting , vaarandi2015logcluster , dai2020logram ] rely on occurrence frequencies or n n -gram counts to build templates. Clustering-based techniques [ fu2009execution , hamooni2016logmine , tang2011logsig , shima2016length , mizutani2013incremental ] group similar log lines to produce templates. Heuristic-based approaches [ tak2021lognroll , jiang2008abstracting , fu2009execution , Drain , SPINE , Spell , IPLoM , POP , brain23 ] employ various heuristics or rule-based methods to detect the variable parts of each line. These approaches fail to incorporate semantic information about logs, leading to worse performance than more recent works.
+LLM-based template generation.
+Recent work has trended towards using LLM-based analysis of logs to improve the quality of generated templates.
+Earlier iterations of these approaches cast template generation as a token classification task and trained neural networks [ huo2023semparser , li2023did , liu2022uniparser ] to mine structural relationships among tokens from log messages.
+More recently, researchers have shown that LLMs are effective at template generation [ le2023log , ma2024librelog , zhang2024lemur , yu2024loggenius , astekin2024comparative , vaarandi2025usinglargelanguagemodels ] , especially when leveraging in-context learning [ brown2020language ] . DivLog [ xu2024divlog ] , for instance, selects examples for developers to label; then when generating a log template for a target log line, it includes the most similar labeled examples in the LLM prompt. LILAC [ jiang2024lilac ] builds on DivLog by improving the sampling method when choosing examples for a target log line, and adds a parsing cache to reduce the number of LLM queries. Other approaches focus on reducing the number of LLM queries [ zhong2024logparser , huang2024lunar , xiao2024free ] or fine-tune smaller LLMs for better performance [ ma2024llmparser , ma2024luk ] .
+This past work has focused primarily on generating wildcard templates that identify the variables associated with each template. Notably, these templates do not map the variables into a common schema, and their wildcard representation tend to over-capture and conflate consecutive variables.
+By contrast, Matryoshka both extracts syntactic information from logs, but also maps each line to a structured, semantically rich format without labeled examples.
+Moreover, our approach improves generates a regular expression for each variable, thereby improving the quality and precision of the templates in the syntax parsing phase.
+Finally, past work has typically not been evaluated on security-focused workloads, because of lack of suitable datasets; we address this by collecting a dataset of security-relevant logs, and discover that real-world security logs are more diverse and challenging than prior datasets.
+Schema matching.
+The database research community has previously studied schema mapping, where the goal is to map data in one schema into a second schema [ rahm2001survey , smat ] .
+Existing methods are effective in settings where both schemas are thoroughly documented, but they are insufficient in our setting where schemas are auto-generated, do not come with documentation of the meaning of fields in the schema, and can contain tens of thousands of fields.
+Recent work explores using LLMs for schema mapping [ sheetrit2024rematchretrievalenhancedschema , parciak2024schemamatchinglargelanguage , zhang2024smutfschemamatchingusing , liu2024magnetocombiningsmalllarge , xu2025kcmfknowledgecompliantframeworkschema ] , but it too shares some of these limitations.
+Log querying.
+LLMs are good at analyzing data [ chen2023largelanguagemodelsfew1shot , fang2024largelanguagemodelsllmstabular , li2023tablegpttabletunedgptdiverse ] , including unstructured logs [ liu2025loglmtaskbasedinstructionbasedautomated , cui2024logevalcomprehensivebenchmarksuite , karlsen2024 ] . Structured data can be queried using text-to-SQL tools [ hong2024next , yu2018syntaxsqlnetsyntaxtreenetworks , yu2019spiderlargescalehumanlabeleddataset , guo2019complextexttosqlcrossdomaindatabase , scholak2021picardparsingincrementallyconstrained ] , while unstructured data is usually queried using RAG [ gao2024retrievalaugmentedgenerationlargelanguage , rag ] .
+LLMs can be used to plan out complex queries over structured data [ liu2025optimizingllmqueriesrelational ] , unstructured data [ anderson2024designllmpoweredunstructuredanalytics ] , or both [ dai2024uqequeryengineunstructured ] .
+Unfortunately, these methods are not sufficient for our use case: they typically apply a LLM to each log line, which is too expensive; query expressivity is limited, because they rely on a vector embedding of each line; and they produce approximate results.
+Security logs.
+In the security domain, structured logs are usually ingested into log managers such as Splunk [ splunk ] , Google Security Operations [ gso ] , or Elastic Security [ elastic ] . These systems operate over normalized/structured data and support expressive query languages (often with AI-assisted query builders). However, the effectiveness of such queries relies on accurate normalization. Similar events may be recorded in multiple formats and mapped differently across sources, making it challenging to write a query that matches all instances of an event.
+Figure 3: Matryoshka creates parsers in three stages, each subdivided into two logical steps. Matryoshka generates candidate solutions for log lines sequentially, then it validates batches of lines to enforce consistency. Validation produces code to edit the parse tree, iterating until valid.
+4 System architecture
+Matryoshka automates the creation of log parsers without requiring any labeled data or human intervention. 2 2 2 Named after Matryoshka dolls because of the nested layers of parsing involved in extracting vital information from log messages.
+Its design mirrors the architecture of a parser: it creates a parsing tree, builds schemas, and maps fields to a taxonomy.
+To achieve this, Matryoshka uses large language models only during parser creation, never at run time.
+This ensures that parsers applied to live logs are fast and deterministic.
+As illustrated in Fig. 3 , parser construction unfolds in three stages, each following the same parallel two-phase pattern:
+1.
+Generation. Process inputs sequentially, using
+standard LLM techniques (few-shot prompting, guided chain of
+thought, self-consistency) to propose solutions.
+2.
+Validation. Revisit candidates in batches,
+reconcile them for global consistency, and fix or discard any
+that fail structural checks.
+Concretely, this means during syntax parsing we first let the LLM generate new templates for unmatched lines, then validate entire sub-trees for consistency; in schema creation we name variables line-by-line, then run a batch pass that merges similar concepts into a single canonical field; and in mapping we assign provisional attributes one field at a time, then batch-correct them so that twin and sibling fields share consistent parents in the hierarchy.
+This generate-validate loop produces deterministic, consistent parsers and bridges the gap between probabilistic language models and the deterministic behavior required for parsing.
+We quantitatively evaluate the contribution of validation in Section 5.1.3 .
+4.1 Generation phase
+For each new object—an unmatched log line, a template, or a field awaiting a mapping—we run a multi-turn prompt that relies on the following building blocks.
+•
+Chain-of-thought. Prompts the model to explain its reasoning, ensuring the model analyzes all relevant context. We supply a structured algorithm to steer its reasoning process, ensuring thorough analysis of the input data.
+•
+Self-consistency. We sample several completions using slightly different variants of the prompt and keep the majority vote. Self-consistency has been shown to outperform greedy decoding by allowing the model to explore multiple reasoning paths [ wang2023selfconsistencyimproveschainthought ] .
+•
+Execution checks. Each generation loop produces a candidate, runs deterministic checks (regex compilation, field existence … \ldots ), and, if failed, provides the model with feedback. This is repeated until all checks pass.
+•
+Few-shot examples with description embeddings . Including few-shot examples that closely match the current prompt substantially improves both consistency and accuracy. Crucially, these examples are drawn from previously generated objects, rather than human-provided labels. Standard retrieval approaches perform poorly due to the mix of structured and unstructured text, so we first have the LLM write a short semantic description of the example, then embed that description; cosine similarity over these summaries reliably surfaces the most relevant prior examples. By default, we include up to 5 few-shot examples, but performance is similar when using 3 to 7 examples.
+We now detail the generation process for each of the three parsing stages. This entire process is automatic, with no human involvement. The full set of prompts can be found in our source code.
+4.1.1 Syntax parsing
+We learn a parsing tree iteratively from raw logs. Unmatched lines are clustered before
+generating templates. Specifically, we buffer up to 2,500 lines and partition
+them in two lightweight passes: (i) a coarse pass that groups lines by their
+longest shared prefix with the current tree, and (ii) a fine pass that clusters
+lines via cosine similarity over embeddings of short, LLM-written semantic descriptions.
+We rely on DBSCAN [ dbscan ] ( ϵ = 0.05 \epsilon=0.05 ).
+The most dense cluster is then fed to a language model to confirm its elements should
+all be parsed by a single template—if not, the model isolates a subset of lines
+from the cluster that share a template.
+The language model then proposes a template for this cluster, by providing a
+tokenization into constants and variables and a regex per variable. Proposals
+undergo a self-correction loop until each variable’s regex compiles, then are
+sampled with self-consistency and scored by a simple objective: maximize
+coverage of the cluster while minimizing spillover onto already-parsed lines.
+Once the model produced a candidate template, we check if it overlaps existing ones.
+Template overlaps can be legitimate, for instance, when an older template is too specific
+or a new one is needed for malformed values. They may also indicate over-capture, in which
+case the new template should be discarded. If a new template overlaps existing ones, we
+sample overlapping lines and ask the model if they come from the same format. If so, the
+old templates are likely too specific; we replace them with the candidate. If not, the new
+template is likely over-capturing; we run a self-correction loop to narrow the candidate.
+The final template is added to the parsing tree; its prompt and language model
+output are cached to be used as few-shot examples in subsequent generations.
+4.1.2 Schema creation
+Schemas are learned iteratively from templates. Given a template, the model names
+each variable and semantically relevant constant, then writes a description for each named token.
+Since templates reside in the same parsing tree, their tokens often share common prefixes. We give
+the model the names and descriptions for these existing prefix tokens, and enforce their reuse through self-correction.
+We ensure consistency through few-shot prompting, encouraging the model to reuse variable names and
+descriptions across templates when the same semantic roles are present. We identify similar templates
+that have already been mapped to a schema using description embeddings, and provide them as few-shot examples.
+4.1.3 Mapping
+We flatten the target taxonomy to leaf attributes, use the language model to write a short description of each,
+and embed that description. 3 3 3 This pre-processing step only needs to be run once for every update to the taxonomy.
+Parser update cycles typically occur every few months.
+We then map fields in our created schema iteratively. For each field, we embed its description and filter the closest 50
+target taxonomy attributes based on cosine similarity of their embeddings. Then, we have the language model select the most appropriate attributes, if any, given these filtered candidates.
+We bias for consistency by injecting sibling fields of already assigned attributes into the filtered list of candidates, and providing previously mapped similar fields as few-shot examples. Sibling fields are attributes that share a direct parent in the taxonomy’s hierarchy. For instance, if a field called “ src_ip ” has already been assigned to “ src_endpoint.ip ”, we will add sibling fields such as “ src_endpoint.hostname ” to the candidate list of other fields that appear in a template with “ src_ip ”.
+Some taxonomies have stronger type systems than others. OCSF, for instance, has types for usernames, dates, and process names. When mapping to such a taxonomy, we optionally have the language model assign each field a type first, then use the types to prune potential candidates in the mapping stage.
+4.2 Validation phase
+Batch validation lets the model view related candidates side-by-side,
+catching inconsistencies that a sequential pass would miss.
+As an example, consider the SSH log line in Fig. 1 whose
+authentication method is “ pw ” for password. If the model sees only that line during generation it may incorrectly treat pw as a constant token; when a future line introduces pka and mfa , these will generate another template. Validation merges all three into a single auth_method variable.
+Because a full parse tree or schema often exceeds context limits, we
+validate in rolling batches : each batch sees a subset of previously validated
+solutions as well as new candidates and may only modify the latter.
+This limits the scope of validation to only change the most recently
+generated solutions, preventing it from fixing some long-distance inconsistencies
+in the input.
+Validation requires changing the parsing tree, either to rearrange nodes or add field names.
+Trees are complex objects for language models to work with, and simply asking the model to return a corrected tree almost always leads to mistakes.
+Instead, we frame validation as a code generation task: we supply
+API stubs that manipulate the tree (add, delete, move nodes; rename
+fields; adjust mappings) and ask the model to output Python code plus a
+natural-language rationale. The code is executed inside a controlled sandbox;
+Compile and runtime errors or failed checks an automatic self-repair loop.
+This technique, illustrated in Fig. 3 , has three main advantages: (1) it frames validation as a coding problem, which is in-distribution for many language models; (2) correctness of the validated tree can be checked after every API call, errors can be used to give fine-grained feedback to the model so it can refine its code until it produces a valid output;
+(3) we can restrict the API to only allow some actions and prevent the model from changing ground truth parts of the tree.
+This strategy builds on recent ideas in LLM self-verification and code-execution feedback loops [ wang2023selfconsistencyimproveschainthought , chen2023teachinglargelanguagemodels , schick2023toolformerlanguagemodelsteach ] , but we adapt them for consistency rather than reasoning accuracy, using controlled code synthesis to repair parser trees deterministically.
+In syntax parsing, we let the model add, delete and move nodes in the tree.
+When executing the code, we check that the graph resulting from the change is still a tree and that the final tree still matches the same set of lines as previously.
+In schema creation, we let the model create new field names, assign field names to nodes in the tree, and assign descriptions to field names. We verify new field names are unique. Separating field name creation and assignment avoids the model accidentally naming two different concepts the same name.
+In mapping, we let the model assign field names to attributes, making sure the attribute exists in the target taxonomy. We enforce that at most N N attributes are assigned per field (where N N is a parameter that defaults to 1).
+This alternating generate/validate strategy enforces consistency by construction. The generation phase relies on small, focused LLM calls that iteratively propose high-quality candidates, while the validation phase executes model-generated repair code inside a sandbox to verify and enforce structural invariants across related log events. Although generation can run on lightweight non-reasoning models, advanced reasoning capabilities are required for validation. This back-and-forth between generation and validation yields deterministic and consistent parsers, bridging the gap between probabilistic language models and the reliability requirements of security infrastructure.
+5 Evaluation
+To evaluate Matryoshka, we use three different datasets to show our approach produces high quality parsers, comparable to those produced by expert analysts, on a wide variety of log types.
+1.
+SecurityLogs (§ 5.1 ). We curated SecurityLogs by crawling system logs uploaded to Red Hat Bugzilla and extracting 500K+ lines across five log types (Audit, Puppet, SSHD, DHCP, Cron). On these complex files, Matryoshka scales and yields high-precision/high-recall query results, especially when using LLM-derived semantic naming to create a custom schema. We provide step-wise microbenchmarks (template, schema, mapping), ablations, and efficiency evaluations.
+2.
+LogHub2.0 [ loghub ] (§ 5.2 ). LogHub2.0 is a benchmark of 14 log files used for template generation evaluation. While Matryoshka is designed for end-to-end log parsing, we show our syntax parsing primitive is also suited for template generation. Matryoshka equals or outperforms leading template generation methods, such as LILAC [ jiang2024lilac ] , Drain [ Drain ] , and Brain [ brain23 ] , when cast to the canonical template-generation task.
+3.
+Real-world logs (§ 5.3 ). The real-world dataset contains 27 enterprise log types from Google SecOps with associated expert-written parsers. Matryoshka generalizes to this dataset and delivers schema quality and retrieval results comparable to expert-written parsers without any manual effort.
+Setup. Matryoshka is run with no human input using Gemini 2.5 Pro and the text-embedding-005 embedding model, unless otherwise stated. Our source code, prompts, public SecurityLogs dataset, and curation tools to edit parsers and run queries are made public at https://github.com/julien-piet/matryoshka/ .
+We rely on the Gemini [ gemini ] suite of models in our paper, but the code can support OpenAI models as well. We evaluate using Gemini 2.5 Flash and OpenAI o4-mini (see Table III ) to confirm that the pipeline generalizes across model families. Our implementation supports both OCSF and UDM, but our mapping logic can be applied to any taxonomy.
+TABLE I: SecurityLogs parser summary
+Total
+nodes
+Variable
+nodes
+Templates
+Unique
+fields
+Unique
+OCSF
+attributes
+SSHD
+384
+154
+98
+47
+135
+Cron
+72
+19
+7
+8
+35
+DHCP
+441
+153
+178
+41
+67
+Audit
+6309
+3000
+496
+150
+286
+Puppet
+981
+370
+254
+101
+77
+Total
+8187
+3696
+1033
+347
+600
+5.1 SecurityLogs
+SecurityLogs contains Linux system logs uploaded to a bug tracking website. These large and heterogeneous logs demonstrate Matryoshka’s ability to scale to formats with hundreds of different templates. Queries against our created schema consistently achieve high precision/recall and outperform naive substring matching. We additionally run ablation studies and introduce step-wise metrics to measure the performance of each stage of the parsing pipeline.
+5.1.1 Dataset
+We curated our dataset from Redhat Bugzilla bug reports [ RedHatBugzilla ] . We discovered that many users attach system log files to public bug reports there, so we crawled the Bugzilla website and downloaded all log files attached to bug reports up to August 2023. In total, this dataset contains over 30 million log lines. We filter to logs from five applications that are security-relevant and are well-enough documented that we could manually construct ground-truth parsers:
+•
+Linux kernel Audit logs (77K lines) : Fine-grained logs of security-relevant events in Linux systems.
+•
+Puppet logs (157K lines) : Logs from Puppet, an orchestration tool for server configuration deployment.
+•
+SSH daemon logs (35K lines) : Logs involving SSH authentications and connections.
+•
+DHCP logs (378K lines) : DHCP client logs reporting DHCP requests and lease information.
+•
+Cron logs (13K lines) : Reports of scheduled Cron jobs.
+We ran Matryoshka on each log file.
+We created ground-truth parsers, by manually checking and fixing every template, field name, and mapping generated by Matryoshka. The ground truth parsers are summarized in Table I .
+5.1.2 Query comparison
+Our first evaluation measures Matryoshka’s ability to create queryable schemas for SecurityLogs.
+We define 10 security-relevant queries per log file that correspond
+to tasks in the NICCS NICE framework [ niccs_nice_framework ] , execute the queries, and
+compare the resulting set of results to the ground-truth golden result, reporting
+precision and recall. 4 4 4 We only wrote 5
+queries for Cron, which is less diverse than the four other log files.
+We use our hand-written parsers to collect ground-truth answers.
+Each query is written in three variants:
+1.
+a standardized form that uses canonical field names
+exactly as defined in the OCSF taxonomy;
+2.
+a custom form that uses the semantic field names
+produced by Matryoshka for that log file.
+3.
+a naive substring form that uses simple substring matches directly on raw log messages.
+TABLE II: Matryoshka query precision and recall metrics
+Dataset
+OCSF
+Created
+Naive
+attributes
+attributes
+substring
+Prec.
+Rec.
+Prec.
+Rec.
+Prec.
+Rec.
+SSHD
+0.90
+0.90
+1.00
+1.00
+0.90
+0.80
+Cron
+1.00
+1.00
+1.00
+1.00
+0.92
+1.00
+DHCP
+0.80
+0.77
+1.00
+0.97
+0.92
+0.71
+Audit
+0.70
+0.69
+1.00
+0.99
+0.97
+0.85
+Puppet
+0.90
+0.88
+1.00
+0.98
+1.00
+0.63
+Average
+0.86
+0.85
+1.00
+0.99
+0.94
+0.80
+For example, one of our Cron log queries looks for scheduled jobs from a particular
+host within a specific time window, filtering on OCSF fields time_dt
+and device.hostname , and checking for the presence of the job.cmd_line
+OCSF field. In order to run expressive queries, we sometime include custom fields in
+standardized queries when one of the predicates was over a field that does not map to
+any OCSF attribute.
+Standardized and custom queries are formed by applying unions or intersections of predicates.
+Predicates can be over the values of the fields, or over the static part of templates.
+Predicates on the static template are defined by substring matching.
+This limits the range of queries we can run. For example, “return all lines indicating
+a bind error due to an already-in-use address” is tedious to formulate in our query
+syntax, because it requires knowing all possible templates that could indicate such
+an event. A dedicated LLM-powered query planner could plausibly map queries to the relevant
+set of templates; we leave that to future work.
+Substring matching is a common technique used by analysts to
+query unstructured log data. This technique is limited to simple queries (e.g., matching fixed phrases) and fails to express constraints on structured fields, time ranges, or events that occur in many different log formats.
+In our experience, substring-match queries take longer to write than our structured queries.
+We assume an analyst will not have resources to comprehensively identify all message formats/templates that might have relevant information; instead, we simulate an analyst who looks for the first example they can find of a log message containing the necessary information and identifies a single substring from that log message to search for. We coin these queries naive substring matches.
+Results.
+The average precision and recall of the queries is reported in Table II . We observe that using OCSF attributes for querying performs poorly compared to Matryoshka-created attributes: This is due to the difficulties discussed in Section 2.2 . If the mapping for a high-volume variable fails, this variable cannot be queried using OCSF attributes. We show in Section 5.3 that even expert-written parsers struggle at standardization: Matryoshka-generated parsers slightly outperform expert-written ones on standardized queries.
+In contrast, custom-form queries have perfect precision and near-perfect recall.
+The main error source is inconsistent naming of fields. For example, the Audit log has a field for the current working directory of a process. This field in the generated parser is most often called “ current_working_directory ”, but sometimes abbreviated as “ cwd ”. For the sake of simplicity, we chose to run queries on only one created field name, even when there are multiple names for the same concept: requiring analysts to list all possible fields would be tedious. Using an LLM query engine could help here, as the model could automatically select all relevant fields.
+Queries over Matryoshka-created field names consistently perform better than naive substring queries. OCSF-based querying achieves a similar F1 score to substring matching (0.85 for OCSF vs 0.86 for substring matching). OCSF queries have worse precision, due to different source fields collapsing into a single OCSF attribute, but better recall. Naive substring matching uses an arbitrary line as an example to model the substrings needed to run the query: this leads to missed lines when there are multiple possible templates that would match a given query, and to over-capture if the same substring is present in other lines. The complete set of substrings used for this task are detailed on our github, examples for DHCP are given in Appendix B .
+TABLE III: Average query precision/recall across ablations
+Model
+Ablation
+OCSF
+Custom
+Gemini 2.5 Flash [ gemini ]
+none
+0.76 / 0.76
+0.92 / 0.91
+o4-mini [ openai-o4mini-2025 ]
+none
+0.83 / 0.81
+0.98 / 0.95
+Gemini 2.5 Pro [ gemini ]
+none
+0.86 / 0.85
+1.00 / 0.99
+no validation
+0.79 / 0.77
+0.99 / 0.96
+no few-shot
+0.42 / 0.43
+0.74 / 0.71
+5.1.3 Ablations
+Our next experiments analyze how sensitive Matryoshka is to different language models.
+We also isolate the impact of Matryoshka’s validation and few-shot mechanisms to show parser consistency is not an emergent property of large model but the result of an architecture explicitly designed to build reliable parsers from unreliable language model outputs. We report average metrics in Table III , leaving per-file results to Table X in Appendix A .
+Language model generalization.
+We ran our pipeline using three language models: Gemini 2.5 Pro, Gemini 2.5 Flash 5 5 5 We still rely on Pro for the validation step, as it require advanced reasoning to be able to function. , and OpenAI’s o4-mini [ openai-o4mini-2025 ] .
+Overall, Gemini 2.5 Flash performs worse than Pro, both using created and OCSF queries, most notably on Puppet logs. The model under-parsed Puppet log lines, keeping long error messages as single variables, instead of breaking them down into more granular component, which negatively impacts queryability. We recommend using advanced reasoning models with Matryoshka. The prompts used in Matryoshka were developed for the Gemini suite of models. o4-mini’s performance (close to Gemini 2.5 Pro) shows the prompts generalize to other models, albeit with a slight decrease in performance.
+Architecture.
+We ran two additional experiments, one removing Matryoshka’s validation steps, and one without providing the model with few-shot examples of previous generations. Validation improves custom query recall, by coalescing variables that have different names into a single attribute, and also improves mapping significantly. Few-shot prompting helps the model maintain consistent syntax and semantics. Without few-shot examples, the model fails to parse similar structures in the same manner. The resulting parser is fragmented and queries achieve lower precision and recall.
+TABLE IV: Average query precision/recall across different architectures (all relying on Gemini-2.5-Pro).
+Variant
+OCSF
+Custom
+LILAC [ jiang2024lilac ] + naming heuristic
+0.24 / 0.21
+0.42 / 0.31
+LILAC + Matryoshka semantic steps
+0.34 / 0.31
+0.60 / 0.60
+Matryoshka
+0.86 / 0.85
+1.00 / 0.99
+5.1.4 Template generation shortcomings
+Prior work studies the problem of template generation , whose goal is to associate each log entry with a wildcard template. While this representation provides useful signals for clustering and event recognition, it lacks the semantic information necessary for querying and advanced analytics. Moreover, we find that such representations are not suitable for log parsing, even when combined with a post-hoc semantic naming pipeline. To underscore this distinction in capabilities, we evaluate LILAC [ jiang2024lilac ] , a state-of-the-art template generation algorithm, as the syntax parsing layer of increasingly more complex end-to-end parsing pipelines:
+•
+LILAC + naming heuristic: Generate wildcard templates using LILAC, then apply a single-prompt heuristic to associate each template with a schema and a second prompt to map schema fields to OCSF. Both prompts use fixed few-shot examples, provided in our source code.
+•
+LILAC + Matryoshka semantics: Convert LILAC-generated templates into the tree structure used by Matryoshka, and run Matryoshka’s semantic stages (schema creation and mapping) on the resulting tree.
+•
+Matryoshka end-to-end: Use Matryoshka for all three stages—syntax parsing, schema creation, and mapping.
+All architectures rely on Gemini-2.5-Pro for parity. We compute query precision and recall as defined in Section 5.1.2 , and show results in Table IV . LILAC with a naming heuristic achieves a precision of 0.42 and recall of 0.31; LILAC paired with Matryoshka’s semantic steps improves to 0.60 and 0.60; while the full Matryoshka pipeline reaches 0.99 and 0.96. These results clearly illustrate the gap between template generation and end-to-end log parsing.
+Upon inspection of these results, two factors dominate the poor performance of the LILAC-based architectures:
+•
+Inconsistent naming: Independently naming variables often leads to multiple names for the same concept. In the SSHD log, this approach produced three distinct field names for the source IP of an SSH connection: ‘ source_IP ’, ‘ client_IP ’, and ‘ ip_address ’. This inconsistency complicates querying. Matryoshka mitigates this through its parsing tree, which shares variables across templates, reuses previously named examples, and employs batched validation to ensure that identical concepts have a single canonical name.
+•
+Hallucinated OCSF attributes: The naive mapping stage often invents attributes that do not exist in the target taxonomy, reducing query precision. Matryoshka prevents this by providing the model with a shortlist of valid fields and enforcing that any predicted attribute must be valid in the target taxonomy. Validation further ensures consistency across all templates.
+While adding Matryoshka’s semantic steps to LILAC improves both precision and recall, the resulting parsers still fall short of the full Matryoshka pipeline. The remaining errors are not due to flaws in LILAC’s algorithm, but rather to the intrinsic limitations of the wildcard representation. These limitations prevent accurate recovery of syntactic boundaries and constants, showing that the template generation task alone is insufficient to produce high-quality parsers. We attribute the gap to three root causes:
+•
+Blurry variable boundaries: Wildcards set imprecise variable boundaries, which leads both to blurred fields and to over-capture. When two fields are adjacent, such as the date and hostname in ‘ Mar 9 23:46:29 puma25 sshd[17376] ’, a template like ‘ <*> <*> sshd[<*>] ’ cannot tell where one field ends and the next begins. This imprecision can lead to over-capture and collapse distinct log variants into a single template. For example, ‘ Mar 9 23:46:29 puma25 sshd[17376]: Accepted conn user:root pw ’ may be matched by ‘ <*> <*> sshd[<*>: Accepted conn user:<*> <*>] ’, which also matches the line in Fig. 1 but captures far more than intended. In contrast, Matryoshka uses per-variable regular expressions to enforce precise boundaries and prevent such unintended capture.
+•
+Missing constants: Wildcard templates omit constant tokens, leaving fixed values such as ‘ sshd ’ unparsed and unqueryable. Matryoshka instead isolates constants as distinct tokens that can be named, mapped, and queried.
+Overall, these results yields two key takeaways. First, adding semantics to logs requires systematic validation to ensure consistent naming and accurate mapping; simply prompting an LLM without structure leads to inconsistency. Second, generating semantic-aware log parsers is fundamentally different from generating log templates. Even when state-of-the-art template generators are augmented with semantic steps, the resulting outputs remain unsuitable for accurate querying due to conflated variables, unparsed constants, and over-capture.
+5.1.5 Micro benchmarks
+We now evaluate individual steps on the same SecurityLogs files: syntax parsing, schema creation, and mapping.
+Syntax parsing.
+We evaluate syntax parsing using similar metrics to those used for template generation. Template generation evaluation rely on two metrics. Group Accuracy (GA) measures whether log lines derived from the same format string are grouped together. Parser Accuracy (PA) checks if the predicted template exactly matches the ground truth. Both have drawbacks: PA is overly strict (splitting a field such as “IP:port” into two variables yields a score of zero even though the result may be more useful), while GA penalizes under-capture and over-capture equally. In practice, over-capture is worse, since it conflates distinct fields. For example, the template “ Accepted <*> from <*> ” is meant to capture usernames, but also absorbs IP addresses when present, merging unrelated variables.
+To address these issues, we introduce two refined metrics. Template Similarity (TS) measures how close the predicted template is to the ground truth when all variables are replaced by “ <*> ”. It is computed as 1 − Levenshtein ​ ( Ground Truth , Predicted ) max ⁡ ( | Ground Truth | , | Predicted | ) 1-\frac{\text{Levenshtein}(\text{Ground Truth},\text{Predicted})}{\max(|\text{Ground Truth}|,|\text{Predicted}|)} ,
+so small differences such as splitting or merging variables only reduce the score slightly rather than to zero. Parser Group Similarity (PGS) measures how well the parser keeps log lines that share the same format string together. Over-capture (merging different formats into one group) yields a score of 0 , while under-capture (splitting one true group into smaller ones) receives partial credit given by | Parser Group | / | Ground Truth Group | |\text{Parser Group}|/|\text{Ground Truth Group}| .
+We compute both metrics for Matryoshka using Gemini 2.5 Pro. We provide as a reference the
+metrics for wildcard templates generated by two prior works—LILAC [ jiang2024lilac ]
+and Brain [ brain23 ] . Matryoshka outperforms both other works on all five logs.
+This performance gap can be attributed to two main factors: wildcard template have a tendency to over-capture, leading to poor parser group similarity, and prior work lacks consistency when parsing parallel structures in different log lines, leading to poor template similarity. The other drawbacks of wildcard templates mentioned in Section 5.1.4 impact end-to-end performance but are not captured by these metrics.
+TABLE V: Syntax parsing metrics versus related work.
+Dataset
+Lines
+Matryoshka
+LILAC
+brain23
+PGS
+TS
+PGS
+TS
+PGS
+TS
+SSHD
+35,329
+1.00
+0.90
+0.95
+0.78
+0.88
+0.73
+Cron
+12,547
+1.00
+0.80
+1.00
+0.80
+1.00
+0.60
+DHCP
+377,653
+0.98
+0.89
+0.18
+0.68
+0.54
+0.69
+Audit
+76,636
+0.97
+0.98
+0.26
+0.78
+0.62
+0.52
+Puppet
+156,880
+0.97
+0.99
+0.77
+0.76
+0.96
+0.68
+TABLE VI: Matryoshka schema and mapping metrics
+SSHD
+Cron
+DHCP
+Audit
+Puppet
+Schema Group
+Similarity
+0.95
+1.00
+0.94
+0.64
+0.85
+Mapping Accuracy
+0.93
+0.93
+0.59
+0.79
+0.98
+Schema creation.
+Schema creation entails clustering variables by meaning (e.g., assigning every “source IP” variable to a field “ source_ip ”). For this step, we define Schema Group Similarity (SGS) . We group variables by their assigned name and score each variable. If multiple ground truth fields are merged (overcapture), the score is 0. If a ground truth field is split into several fields (undercapture), the score is the ratio of the parser’s group size to that of the ground-truth cluster. This rewards grouping variables of the same semantic role without merging separate roles. The final score is the weighted average of variable scores depending on their frequency.
+We ran Matryoshka’s schema creation on ground-truth templates so that both parsers expose the same set of variables. Results are reported in Table VI . SGS is nearly perfect for SSHD, Cron, and DHCP. Puppet and Audit score lower at 0.85 and 0.64, because high-volume variables such as the “ operation ” field are split across multiple names. In rarer cases, the created schema slightly over-captures: “ audit_user_id ” is merged “ new_audit_user_id ”.
+Mapping.
+The final step evaluates how well fields are mapped to standardized attributes. We define a per-field accuracy score: if a parser assigns no mapping to a field that also has no mapping in the ground truth, it is counted correct. Otherwise, accuracy is the fraction of assigned attributes that also appear in the ground-truth set. The mapping accuracy is the weighted average of the scores.
+We ran mapping independently on ground truth schemas, using Gemini 2.5 Pro, and restricted the number of mappings to at most one per source attribute. Results are shown in Table VI . SSHD, Puppet and Cron mappings are mostly correct. Audit and DHCP score lower (at 0.79 and 0.59), due to mistakes on high volume variables. The logging server’s hostname and assigned IP map to OCSF’s “ device.hostname “ and “ device.ip “, respectively. The generated parser assigns these to attributes in the “ src_endpoint “ tree, which is less appropriate.
+5.1.6 Time and cost evaluation
+TABLE VII: Timing and LLM token usage (in/out in millions of tokens) for Matryoshka steps
+Step
+SSHD
+Cron
+DHCP
+Audit
+Puppet
+Generation
+1h 45m
+28m
+4h 16m
+10h 7m
+4h 16m
+Creation
+30m
+2m
+2h 16m
+9h 33m
+1h 13m
+Mapping
+1h 7m
+9m
+1h 24m
+4h 30m
+2h 13m
+Total
+3h 22m
+39m
+7h 56m
+24h 10m
+7h 42m
+MTok In/Out
+21 / 3
+2 / 1
+33 / 3
+162 / 15
+50 / 5
+Our system allows running queries in a few seconds, even when the source log file is hundreds of thousands of lines. Log ingestion is also fast: we consistently parse log files at over 500 lines per second. This is possible because LLMs are only used at generation time, not at run-time: live data is statically parsed.
+However, the process of generating parsers is slow, due to the fact most steps use previous answers of the model to few-shot prompt the next ones, thus cannot be parallelized. Matryoshka takes on average 150 seconds per template. Run times and token usage are detailed in Table VII . Matryoshka only needs to be run once, but future work should look at speeding up this process. We estimate the number of input and output tokens required for each file—system prompts and repeated queries are cached to reduce costs. Averaging over the five files, each template requires about 250K input tokens and 25K output tokens (including every step’s generation and validation), or an average of 0.60 USD per template when using Gemini 2.5 Pro or 0.14 USD with Gemini 2.5 Flash. As a back-of-the-envelope comparison, Google SecOps pushes 200 parser updates monthly, requiring 4,000 engineer-hours, or 20 hours per update. A typical update touches a handful of templates; conservatively assuming ∼ \sim 10 templates per update yields 2 hours per template (time spent researching field semantics, selecting mappings, and writing code). Matryoshka is 40 × 40\times faster and 25 × 25\times cheaper at U.S. federal minimum wage when using Gemini 2.5 Pro.
+5.2 LogHub2.0
+The second dataset we evaluate against is an existing benchmark for template generation works. While prior work’s wildcard templates are insufficient for end-to-end parsing ( Section 5.1.4 ), templates generated as part of Matryoshka’s syntax parser can be converted back to wildcard templates, which equal or outperform those created by state of the art approaches such as LILAC [ jiang2024lilac ] , Drain [ Drain ] , and Brain [ brain23 ] when evaluated under the same settings and language model.
+5.2.1 Dataset
+Existing approaches to template generation commonly use LogHub2.0 [ jiang2024 , loghub ] . This resource contains 14 log files (over 3 million lines) annotated with ground-truth wildcard-based templates. We use it to compare the performance of our template generation step against prior methods, but we do not generate ground-truth labels for schema creation or attribute mapping because (1) most of the data is outdated (some logs are over 20 years old); (2) several files are heavily anonymized, limiting reliable semantic extraction; and (3) most are not security-focused and instead are activity logs from supercomputers or distributed systems.
+5.2.2 Experiment
+We selected three prior works with the best performance to compare against:
+LILAC [ jiang2024lilac ] ,
+one of the most promising LLM-based approaches, Brain [ brain23 ] , a lightweight
+parser, and Drain3, the latest version of Drain [ Drain ] , a popular log parsing
+algorithm. On the LogHub2.0 dataset, these three frameworks use a pre-parsed version of
+the logs and only generate templates for the suffixes. Drain and Brain do not use LLMs.
+To ensure an equal comparison, both LILAC and Matryoshka are run using Gemini 2.5 Flash, using a single human-labeled example (LILAC used human-labeled examples in their evaluation).
+Results.
+We report two metrics, defined in Section 5.1.5 : parser group similarity, measuring whether log lines derived from the same format string are grouped together (PGS),
+and template similarity, measuring how close each template is to the ground truth (TS). Full results are in Table IX in Appendix A . Matryoshka matches or outperforms other works on most log files.
+On average, we obtain a parser group similarity of 0.97 and a template similarity of 0.92, while the best of the other schemes,
+LILAC, obtains a PGS of 0.95 and a TS of 0.87. Drain3 achieves a PGS=0.89 and TS=0.81, while Brain gets PGS=0.86 and TS=0.74.
+When using the traditional metrics (parser accuracy and group accuracy), Matryoshka improves on LILAC’s parser accuracy, getting 0.70
+instead of 0.63, but is worse for group accuracy, with 0.85 instead of 0.88. This is reflective of Matryoshka’s tendency to parse
+variables with more granularity. For example, LogHub2.0 provides the following template in the Spark log file:
+‘ Error sending message [message = <*>] in <*> attempts ’. Matryoshka further split this
+into four different templates based on the content of the message, with sub-templates such as ‘ message = GetLocations(<*>) ’ or
+‘ message = RetrieveSparkProps ’. In contrast, LILAC generated a single template, ‘ Error sending message [<*>] in <*> attempts ’.
+The performance gap is not as significant as observed in Section 5.1.5 , because in the LogHub2.0 dataset similar prefixes across
+lines are pre-parsed, making consistency less important.
+5.3 Real-world evaluation
+Our last dataset comprises real-world enterprise log files. We leverage this data to evaluate Matryoshka on diverse log types, and show we rival expert-written parsers while being fully automated and requiring no manual effort.
+5.3.1 Dataset
+Our dataset comprises real-world log samples from 27 diverse log types with associated human-written parsers from Google SecOps. These include web-server access logs, intrusion-prevention alerts, user-management audits, and endpoint-protection telemetry. Each sample is modest in size—no more than a few hundred lines—but collectively they span a spectrum of events found in real-world enterprise environments. We use this corpus to assess Matryoshka on the long-tail of real-world log types and to compare its output against the hand-written parsers.
+5.3.2 Side-by-side holistic comparison
+We ingest logs into structured UDM format using two parsers—an expert-written parser, and a Matryoshka-generated one. We compare both these schemas along four axes: coverage (fraction of source fields mapped), accuracy (semantic correctness of each mapping), consistency (stability of mappings across a line), and queryability (how easily an analyst can express predicates).
+Step 1: Expert assessment.
+We drew a random sample of log lines along with both schemas, presented them blindly to an experienced UDM rule writer,
+and asked for a 1–5 preference score
+(1/5 = strong preference for the left/right schema, 2/4 = weak preference, 3 = tie) using the four axes above.
+Across 15 comparisons the expert judged the schemas equivalent in 8 cases, preferred Matryoshka in 3, and preferred the UDM baseline in 4. While this sample is modest—reflecting limited expert availability—we use it primarily to calibrate our LLM autorater.
+Step 2: LLM autorater.
+We use the expert-labelled sample to calibrate a Gemini 2.0 Pro autorater—a model from a different family to those used during generation time—that compares the two schemas. For each log line, the model receives the raw text, the Matryoshka fields, the expert-parser fields, and a four-axis rubric, then outputs a 1–5 preference score. We randomize parser order, sample multiple completions, and average scores to eliminate positional bias. We retain the prompt variant that exactly reproduces the expert’s preferences on the calibration set.
+Results.
+After calibration the autorater graded every line in the 27 files.
+It preferred Matryoshka in 25% of cases, favored the UDM baseline
+in 24%, and reported no preference in 49%.
+These findings echo the expert’s conclusion: Matryoshka delivers schema
+quality comparable to expert-written parsers—without any manual work.
+We substantiate these observations with larger-scale quantitative results in the subsequent subsection.
+5.3.3 Query comparison
+We further compare Matryoshka’s UDM output to expert-written UDM parsers by measuring how well Matryoshka parsers support queries. Similar to Section 5.1.2 , we define security-relevant queries, execute them and compare the results to a manually derived ground-truth response set.
+Experimental setup.
+We select 10 files at random from the 27, devise a security-relevant query for each,
+informed by NICE tasks, and manually identify the correct matches. The queries span tasks such as account monitoring, network reconnaissance, or resource-access analysis.
+Then, each query is expressed in a standard UDM form, and in a custom-schema form
+using Matryoshka-generated field names. The UDM query is written agnostically of the parser, using the taxonomy’s documentation. We then run three configurations: (1) expert-written UDM parser, queried with the UDM-form query; (2) Matryoshka-generated UDM parser, queried with the UDM-form query; (3) Matryoshka-generated parser, queried with the custom-schema form query.
+TABLE VIII: Enterprise-log query accuracy
+Configuration
+Precision
+Recall
+Expert-written UDM parser
+0.50
+0.48
+Matryoshka + UDM query
+0.60
+0.60
+Matryoshka + custom-schema query
+1.00
+0.95
+Results. Custom-schema queries yield near-perfect performance, while both UDM parsers struggle. Three points stand out: (i) Queries against taxonomies are not accurate, even when using expert-written parsers. This is representative of the mapping difficulties discussed in Section 2.2 . (ii) Matryoshka UDM parsers are less accurate (fields are not always mapped to the best candidate attribute) than expert-written UDM parsers, but have better coverage. (iii) Queries using Matryoshka’s custom schema yield far more precise results, demonstrating that log-specific field names enable more accurate predicates, albeit at the cost of learning a file-local vocabulary rather than a general-purpose, normalized schema.
+6 Discussion
+6.1 To normalize or not to normalize
+Our evaluations show mapping logs to standard taxonomies is difficult,
+even for expert analysts. Misalignment between the specificity of source
+logs and taxonomies both under-capture domain-specific
+concepts and provide excessive nuance for standard concepts
+(§ 2.2 ). Despite these issues, industry continues to use
+common taxonomies for normalization. They allow for detection rules that are agnostic to the source data, and enable cross-correlation in ways custom schemas cannot.
+Yet, we find custom schemas (i.e., semantic naming) allow for more precise search over logs, since they are created on a per-log basis. We suggest that future research could explore parsing logs to a custom schema, and using LLMs to compile a natural language query/rule to custom-schema fields, and skip normalization entirely.
+6.2 Limitations
+Although Matryoshka advances end-to-end log parsing, several limitations remain.
+As noted above, mapping extracted fields to standard schema attributes is challenging due
+to the volume of target attributes and nuances in field definitions. Queries against these incorrect or missing mappings can lead to missed attacks or false positives. Given analysts’ need for high reliability, any incorrect or missing fields can significantly impact usefulness, though as we have seen this is a common problem even for human-generated parsers. To mitigate this, we built a prototype
+interface for analysts to inspect and correct parsers generated by Matryoshka, though automated methods to identify and fix these errors based on query-time usage remain an interesting area of potential future work.
+7 Conclusion
+We presented Matryoshka, the first end-to-end system leveraging LLMs to automatically generate semantically-aware structured log parsers. Matryoshka combines a novel syntactic parser with a semantic layer that clusters variables, maps them to structured schemas, assigns contextually meaningful field names, and maps variables to attributes from standard taxonomies.
+While log standardization remains challenging, Matryoshka parsers rival expert-written parsers on real-world logs both in qualitative head-to-head comparisons and in query accuracy, removing much of the costly human effort needed to craft parsers. Matryoshka-created schemas offer an alternative to standardized taxonomies that enable precise querying ( F 1 = 0.99 F_{1}=0.99 ), significantly higher than achievable with existing substring-matching techniques, at a similar cost in query writing. By automatically transforming unstructured logs into structured, semantically rich data, Matryoshka represents a meaningful step toward enabling security analysts to focus on threat detection rather than manual parser construction.
+Acknowledgments
+We thank Sizhe Chen for gathering the logs from the Redhat Bugzilla. We thank Aashish Sharma and the cybersecurity team at Lawrence Berkeley National Laboratory for providing valuable insights into security operations and helping shape this project. We also thank Calvin Kim for his expert advice in comparing Matryoshka to existing UDM parsers, Sunil Vasisht for his insightful feedback that helped shape Matryoshka, and David Huang for helping implement template generation works.
+This research was supported by the KACST-UCB Joint Center on Cybersecurity, OpenAI, the National Science Foundation under grant numbers 2229876 (the ACTION center) and CNS-2154873, the Department of Homeland Security, IBM, C3.ai Digital Transformation Institute, Open Philanthropy, and Google. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the sponsors.
+Ethical Considerations
+Stakeholders.
+Our work potentially impacts multiple groups: (i) security analysts and organizations that rely on log data for detection and forensics, (ii) end users whose activities are indirectly reflected in log data, (iii) service providers that generate and process logs, and (iv) the research community developing AI-driven security analytics.
+Impacts and Principles.
+Following the Menlo Report [ menlo2012 ] , we considered:
+•
+Beneficence. Our goal is to improve security monitoring efficiency by reducing manual parser creation.
+•
+Respect for Persons. We only used public datasets (e.g., Red Hat Bugzilla logs) or enterprise logs under strict safeguards.
+•
+Justice. Results are shared via open benchmarks and code to ensure broad benefit.
+•
+Respect for Law and Public Interest. We adhered to data policies and avoided any live system interaction.
+Potential Harms and Mitigations.
+•
+Privacy. We processed enterprise data only on authorized systems and share only aggregate, vetted results.
+•
+Operational. Experiments were run offline to avoid production impact.
+•
+Workforce. Automation reduces repetitive workload without displacing analysts.
+We judged the benefits—improved defenses, reduced analyst burden, and reproducibility—to outweigh residual risks.
+Appendix A Additional results
+We provide here detailed metrics for (1) the template generation metrics for each file in the LogHub2.0 dataset ( Section 5.2 ), and (2) precision and recall for each file in the SecurityLogs dataset for our ablation studies ( Section 5.1 ).
+TABLE IX: Comparison of Matryoshka and prior template generation on LogHub2.0 data
+Dataset
+Matryoshka
+LILAC
+Drain3
+Brain
+Dataset
+Matryoshka
+LILAC
+Drain3
+Brain
+PGS
+TS
+PGS
+TS
+PGS
+TS
+PGS
+TS
+PGS
+TS
+PGS
+TS
+PGS
+TS
+PGS
+TS
+Apache
+1.00
+1.00
+1.00
+1.00
+0.99
+0.89
+0.99
+0.88
+HPC
+1.00
+1.00
+1.00
+1.00
+0.97
+0.96
+0.78
+0.75
+BGL
+0.99
+0.99
+0.99
+0.98
+0.95
+0.96
+0.88
+0.79
+Linux
+0.87
+0.92
+0.91
+0.94
+0.87
+0.80
+0.81
+0.71
+Hadoop
+0.98
+0.94
+0.99
+0.92
+0.88
+0.71
+0.35
+0.29
+Mac
+0.96
+0.94
+0.91
+0.92
+0.83
+0.82
+0.95
+0.89
+HDFS
+1.00
+0.98
+1.00
+0.87
+0.97
+0.93
+0.97
+0.84
+OpenSSH
+0.97
+0.97
+0.77
+0.76
+0.96
+0.92
+0.99
+0.92
+HealthApp
+1.00
+0.91
+1.00
+0.89
+0.97
+0.92
+0.54
+0.44
+OpenStack
+0.88
+0.88
+0.83
+0.81
+0.66
+0.67
+1.00
+0.97
+Proxifier
+1.00
+0.50
+1.00
+0.4
+0.52
+0.31
+0.99
+0.35
+Spark
+0.97
+0.95
+1.00
+0.97
+0.97
+0.79
+0.97
+0.91
+Thunderbird
+0.97
+0.86
+0.99
+0.86
+0.87
+0.68
+0.79
+0.69
+Zookeeper
+1.00
+0.98
+0.86
+0.83
+0.99
+0.98
+0.99
+0.95
+TABLE X: Matryoshka query precision and recall metrics across Gemini models on SecurityLogs
+Dataset
+Gemini 2.5 Flash [ gemini ]
+Gemini 2.5 Pro [ gemini ]
+Gemini 2.5 Pro
+No Validation
+Gemini 2.5 Pro
+No Fewshot
+o4-mini [ openai-o4mini-2025 ]
+OCSF
+Custom
+OCSF
+Custom
+OCSF
+Custom
+OCSF
+Custom
+OCSF
+Custom
+P
+R
+P
+R
+P
+R
+P
+R
+P
+R
+P
+R
+P
+R
+P
+R
+P
+R
+P
+R
+SSHD
+0.70
+0.70
+1.00
+1.00
+0.90
+0.90
+1.00
+1.00
+0.80
+0.80
+1.00
+1.00
+0.40
+0.40
+0.90
+0.81
+1.00
+1.00
+1.00
+1.00
+Cron
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+1.00
+0.40
+0.40
+0.60
+0.60
+0.80
+0.80
+1.00
+1.00
+DHCP
+0.80
+0.77
+0.90
+0.87
+0.80
+0.77
+1.00
+0.97
+0.54
+0.57
+0.94
+0.97
+0.41
+0.47
+0.81
+0.82
+0.64
+0.62
+0.90
+0.83
+Audit
+0.60
+0.60
+1.00
+0.96
+0.70
+0.69
+1.00
+0.99
+0.70
+0.68
+1.00
+0.95
+0.20
+0.19
+0.70
+0.63
+0.80
+0.80
+1.00
+0.98
+Puppet
+0.70
+0.71
+0.70
+0.71
+0.90
+0.88
+1.00
+0.98
+0.90
+0.79
+1.00
+0.89
+0.69
+0.69
+0.69
+0.69
+0.89
+0.85
+1.00
+0.95
+Average
+0.76
+0.76
+0.92
+0.91
+0.86
+0.85
+1.00
+0.99
+0.79
+0.77
+0.99
+0.96
+0.42
+0.43
+0.74
+0.71
+0.83
+0.81
+0.98
+0.95
+Appendix B Evaluation queries
+TABLE XI: DHCP Log Queries
+Assigned addresses for a given hostname
+Description
+Identifies IP addresses assigned to a specific host.
+Query
+assigned_ip exists AND log_host is laphroaig
+Naive substring
+fgrep "bound to" | fgrep "laphroaig"
+List all server IPs
+Description
+Enumerates all DHCP server IP addresses that are not broadcast addresses.
+Query
+server_ip != 255.255.255.255
+Naive substring
+fgrep "port" | fgrep -v "255.255.255.255"
+Note
+The word port seems to always be present next to server IPs
+Track all log messages for a given transaction ID
+Description
+Follows the complete lifecycle of a specific DHCP transaction.
+Query
+transaction_id is 0x6520bf0e
+Naive substring
+fgrep "xid=0x6520bf0e"
+List the MAC addresses used by a specific host
+Description
+Retrieves entries containing MAC address information for a particular hostname.
+Query
+mac_address exists and log_host is laphroaig
+Naive substring
+fgrep "laphroaig" | fgrep "Listening"
+Entries with high renewal times
+Description
+Identifies DHCP leases with renewal times exceeding 1 day (86400 seconds).
+Query
+renewal_time > 86400
+Naive substring
+fgrep "renewal"
+Note
+We cannot compare numbers so we can only search for lines that include renewal times.
+Servers on non-standard ports
+Description
+Lists DHCP servers operating on ports other than the standard port 67.
+Query
+server_port is not 67
+Naive substring
+fgrep "port" | fgrep -v "67"
+Specific client version usage
+Description
+Identifies log entries associated with a specific DHCP client version (3.0.1).
+Query
+client_version is 3.0.1
+Naive substring
+fgrep "3.0.1"
+DHCPDISCOVER messages
+Description
+Lists clients that have sent DHCPDISCOVER messages.
+Query
+DHCP_message_type is DHCPDISCOVER
+Naive substring
+fgrep "DHCPDISCOVER"
+XMT Renew messages
+Description
+Lists clients that have issued renewal requests.
+Query
+DHCP_message_type is Renew
+Naive substring
+fgrep "Renew"
+Bad IP checksums
+Description
+Identifies packets with incorrect IP checksums.
+Query
+bad IP checksums
+Naive substring
+fgrep "bad IP checksums"
+TABLE XII: SSHD Log Queries
+Password authentication for root
+Description
+Identifies instances where the root account attempted to authenticate using a password.
+Query
+authentication_method is password and user_name is root
+Naive substring
+fgrep "password" | fgrep "root"
+Unusual server ports
+Description
+Detects SSH servers operating on non-standard ports (not port 22).
+Query
+bind_port is not 22
+Naive substring
+fgrep "port" | fgrep -v "22"
+Usage of specific key
+Description
+Tracks usage of a particular SSH key based on its fingerprint.
+Query
+key_hash is SHA256:iJC3O+heWZCsp5 ⋯ \cdots +VwGmmcFhEnc
+Naive substring
+fgrep "SHA256:iJC3O+heWZCsp5 ⋯ \cdots VwGmmcFhEnc"
+Root user SSH keys
+Description
+Retrieves all SSH key fingerprints associated with root user logins.
+Query
+key_hash exists and user_name is root
+Naive substring
+fgrep "root" | fgrep "publickey"
+Activity from specific IP on specific date
+Description
+Monitors all SSH activity from IP 61.143.236.193 on September 25.
+Query
+remote_ip is 61.143.236.193 and log_timestamp > sept. 25 00:00:00 and log_timestamp < sept. 26 00:00:00
+Naive substring
+fgrep "61.143.236.193" | fgrep "sept. 25"
+Non-SSH terminals for root user
+Description
+Identifies root logins through terminal types other than SSH.
+Query
+terminal_type is not ssh and user_name is root
+Naive substring
+fgrep "root" | fgrep "tty" | fgrep -v "tty=ssh"
+Root sessions initiated by non-root accounts
+Description
+Detects when standard users escalate to root privileges.
+Query
+initiating_user_name is not root and user_name is root
+Naive substring
+fgrep "user root" | fgrep -v "root("
+Note
+This matches the format of the main template that contains this information
+“None” authentication attempts
+Description
+Identifies login attempts using the ”none” authentication method.
+Query
+authentication_method is none
+Naive substring
+fgrep "none"
+Activity for specific system and process
+Description
+Tracks SSH activity related to a specific process ID on a particular host.
+Query
+process_id is 4317 and log_host is LIPC003.intranet.local
+Naive substring
+fgrep "4317" | fgrep "LIPC003.intranet.local"
+Host key mentions
+Description
+Finds log entries that reference host key files or paths.
+Query
+host_key_path exists
+Naive substring
+fgrep "host key"
+TABLE XIII: Audit Log Queries
+Sudo/su usage by non-root users
+Description
+Identifies when standard users attempt to use sudo or su commands.
+Query
+(executable_path contains /sudo or executable_path contains /su) AND user_id is not 0
+Naive substring
+fgrep "/su" | fgrep -v "uid=0"
+Denied write operations for rsync
+Description
+Detects when rsync processes are denied write permissions.
+Query
+avc_operation contains write and process_name contains rsync
+Naive substring
+fgrep "write" | fgrep "rsync"
+Specific Target SELinux context
+Description
+Finds log entries with a specific target SELinux context.
+Query
+target_context is system_u:system_r:udev_t:s0-s0:c0.c1023
+Naive substring
+fgrep "system_u:system_r:udev_t:s0-s0:c0.c1023"
+Devices that had denied calls to mount
+Description
+Identifies log entries related to mounting storage devices.
+Query
+device_name exists and process_name is "mount"
+Naive substring
+fgrep "mount" | fgrep ’dev=’
+Root user logins
+Description
+Captures all direct login events for the root user.
+Query
+audit_type is LOGIN and user_id is 0
+Naive substring
+fgrep "LOGIN" | fgrep "uid=0"
+Audit rule removal
+Description
+Detects when audit rules are removed from the system.
+Query
+operation contains "remove rule"
+Naive substring
+fgrep "remove rule"
+SELinux permissive mode setting
+Description
+Identifies when SELinux is set to permissive mode rather than enforcing.
+Query
+selinux_permissive is 1
+Naive substring
+fgrep "permissive=1"
+Root directory as working directory
+Description
+Finds processes operating with root (/) as their current working directory.
+Query
+current_working_directory is ’/’ or current_working_directory is ’"/"’
+Naive substring
+fgrep "cwd=/ " and fgrep ’cwd="/"’
+Non-binary audit enabled flags
+Description
+Detects when the audit enabled flag is set to a value other than 0 or 1.
+Query
+audit_enabled is not 0 and audit_enabled is not 1
+Naive substring
+fgrep "audit_enabled=" | fgrep -v "audit_enabled=1" | fgrep -v "audit_enabled=0"
+Remote SSH connections to specific host on specific date
+Description
+Tracks remote hosts that established SSH connections to a particular server on a specific date.
+Query
+audit_datetime >= Aug 3 and audit_datetime < Aug 4 and terminal contains ssh and remote_hostname exists and audit_host is perfc-380g8-01
+Naive substring
+fgrep "perfc-380g8-01" | fgrep "Aug 3" | fgrep "terminal=ssh" | fgrep "hostname"
+TABLE XIV: Cron Log Queries
+List all executed jobs on a host at a specific date
+Description
+Identifies entries with executable paths on a particular host within a specific date range.
+Query
+executable_path exists and log_timestamp >= 2017-07-14 and log_timestamp < 2017-07-15 and log_hostname is httpboot
+Naive substring
+fgrep "CMD" | fgrep "2017-07-14" | fgrep "httpboot"
+Entries with scaling factor
+Description
+Locates log entries that contain scaling factor information.
+Query
+scaling_factor exists
+Naive substring
+fgrep "factor"
+Specific process ID
+Description
+Finds entries related to a specific process ID.
+Query
+process_id is 24225
+Naive substring
+fgrep "24225"
+CRON session openings for root
+Description
+Lists all session openings for the root user before a specific date.
+Query
+opened and username is root and log_timestamp < 2017-07-15
+Naive substring
+fgrep "opened" | fgrep "root" | fgrep "2017-07-14"
+Note
+We cannot compare dates so we look for the day before
+CRON session closings
+Description
+Lists all session closings before a specific date.
+Query
+closed and log_timestamp < 2017-07-15
+Naive substring
+fgrep "closed" | fgrep "2017-07-14"
+TABLE XV: Puppet Log Queries
+Resource-specific failures for a host
+Description
+Retrieves failure reports about a specific Puppet resource on a particular host.
+Query
+puppet_resource is Service[galera] AND has failures AND log_hostname is controller1
+Naive substring
+fgrep "Service[galera]" | fgrep "has failures" | fgrep "controller1"
+Revoked certificates
+Description
+Identifies logs reporting revoked certificates.
+Query
+certificate_common_name exists AND revoked
+Naive substring
+fgrep "revoked"
+Specific error code on similar hosts
+Description
+Finds hosts with similar naming patterns experiencing a specific error code.
+Query
+error_code is 14 and log_hostname contains maca
+Naive substring
+fgrep "14" | fgrep "maca"
+Host associated with specific request ID
+Description
+Identifies the host linked to a particular Puppet request ID.
+Query
+request_id is req-9ac8edb7-f81f-44a7-9f34-9a375e7df573
+Naive substring
+fgrep "req-9ac8edb7-f81f-44a7-9f34-9a375e7df573"
+Interval value changes
+Description
+Tracks changes to interval values in Puppet configurations.
+Query
+attribute_name is interval and new_value exists
+Naive substring
+fgrep "interval"
+Specific SQL password hash detection
+Description
+Checks if any SQL-related resources contain a specific password hash value.
+Query
+attribute_name is password_hash and new_value contains D602AB02F4227D3EBF5FE6EA0323BD6D586A7454 and reporting_resource contains sql
+Naive substring
+fgrep "D602AB02F4227D3EBF5FE6EA0323BD6D586A7454" | fgrep "sql"
+Extended Puppet run durations
+Description
+Identifies Puppet runs that took longer than 1 hour (3600 seconds).
+Query
+run_time > 3600
+Naive substring
+fgrep "catalog run"
+Note
+We cannot compare numbers without parsing
+Non-localhost server connections
+Description
+Lists connections to non-localhost servers by a Puppet agent on a specific date.
+Query
+server_ip is not 127.0.0.1 and log_hostname is puma03 and log_timestamp >= Jan 8 and log_timestamp < Jan 9
+Naive substring
+fgrep "127.0.0.1" | fgrep "puma03" | fgrep "Jan 8"
+Firewall persistence failures
+Description
+Identifies cases where firewall rules cannot be persisted.
+Query
+Unable to persist firewall rules
+Naive substring
+fgrep "Unable to persist firewall rules"
+HTTP URL targets
+Description
+Lists log entries with HTTP URL targets.
+Query
+target_url contains http://
+Naive substring
+fgrep "http://"
+Generated on Fri Nov 14 21:22:34 2025 by L a T e XML

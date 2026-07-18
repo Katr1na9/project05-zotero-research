@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/pointer_bounded_negative_proof.schema.json",
+  "title": "Project05 pointer-bounded negative proof",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proof_version",
+    "generator",
+    "same_packet",
+    "positive_record_sha256",
+    "bound_record_sha256",
+    "donor_record_sha256",
+    "candidate_before",
+    "candidate_after",
+    "field_map_id",
+    "mechanical_checks"
+  ],
+  "properties": {
+    "proof_version": {"const": "pointer-bounded-negative-v1"},
+    "generator": {"enum": ["N1", "N2", "N3", "N4"]},
+    "same_packet": {"type": "boolean"},
+    "positive_record_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "bound_record_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "donor_record_sha256": {
+      "oneOf": [
+        {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+        {"type": "null"}
+      ]
+    },
+    "candidate_before": {"type": "object"},
+    "candidate_after": {"type": "object"},
+    "field_map_id": {"type": "string", "minLength": 1},
+    "mechanical_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_not_supported_by_bound_record",
+        "world_false_claim_made",
+        "path_or_scenario_supervision_used",
+        "source_family_matched"
+      ],
+      "properties": {
+        "candidate_not_supported_by_bound_record": {"const": true},
+        "world_false_claim_made": {"const": false},
+        "path_or_scenario_supervision_used": {"const": false},
+        "source_family_matched": {"const": true}
+      }
+    }
+  }
+}

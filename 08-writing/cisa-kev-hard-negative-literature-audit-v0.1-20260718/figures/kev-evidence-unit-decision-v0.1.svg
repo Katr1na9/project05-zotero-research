@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Evidence-unit decision for using CISA KEV in Project05</title>
+  <desc id="desc">CISA KEV provides CVE-level evidence of exploitation in the wild and supports vulnerability prioritization, but it does not provide case-specific host, process, file, or network event pointers. Positive-unlabeled and relation-extraction evidence warns that unobserved facts are not negatives. Therefore KEV is rejected as formal training null but may be retained as an isolated non-entailing diagnostic challenge set.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#222222"/>
+    </marker>
+    <pattern id="diag" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#FCE8DF"/>
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#D55E00" stroke-width="3"/>
+    </pattern>
+    <style>
+      .title { font: 700 30px Arial, Helvetica, sans-serif; fill: #111111; }
+      .head { font: 700 21px Arial, Helvetica, sans-serif; fill: #111111; }
+      .body { font: 17px Arial, Helvetica, sans-serif; fill: #111111; }
+      .small { font: 15px Arial, Helvetica, sans-serif; fill: #222222; }
+      .box { stroke: #222222; stroke-width: 2.2; rx: 18; ry: 18; }
+      .arrow { stroke: #222222; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 10 8; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="820" fill="#FFFFFF"/>
+  <text x="700" y="48" text-anchor="middle" class="title">Can CISA KEV serve as Project05 training null / hard negative?</text>
+
+  <rect class="box" x="60" y="105" width="350" height="205" fill="#DCEFFA"/>
+  <text x="235" y="142" text-anchor="middle" class="head">CISA KEV record</text>
+  <text x="85" y="182" class="body">• Unit: CVE / vulnerability type</text>
+  <text x="85" y="216" class="body">• Reliable evidence of in-the-wild use</text>
+  <text x="85" y="250" class="body">• Used for remediation prioritization</text>
+  <text x="85" y="284" class="small">Not endpoint or provenance telemetry</text>
+
+  <rect class="box" x="525" y="105" width="350" height="205" fill="#FFF2CC"/>
+  <text x="700" y="142" text-anchor="middle" class="head">Project05 null contract</text>
+  <text x="550" y="182" class="body">• Unit: evidence packet × case</text>
+  <text x="550" y="216" class="body">• Target: concrete event / relation</text>
+  <text x="550" y="250" class="body">• Requires source pointer and scope</text>
+  <text x="550" y="284" class="small">Host / process / file / network / time</text>
+
+  <rect class="box" x="990" y="105" width="350" height="205" fill="#E7E1F2"/>
+  <text x="1165" y="142" text-anchor="middle" class="head">Methodological evidence</text>
+  <text x="1015" y="182" class="body">• PU learning: unlabeled ≠ negative</text>
+  <text x="1015" y="216" class="body">• Incomplete KB → false negatives</text>
+  <text x="1015" y="250" class="body">• “No relation” often misses relations</text>
+  <text x="1015" y="284" class="small">Closed-world inference is unsafe</text>
+
+  <path class="arrow" d="M410 207 L515 207"/>
+  <path class="arrow" d="M990 207 L885 207"/>
+
+  <polygon points="700,340 950,465 700,590 450,465" fill="#F3F3F3" stroke="#222222" stroke-width="2.5"/>
+  <text x="700" y="432" text-anchor="middle" class="head">Same statistical unit</text>
+  <text x="700" y="468" text-anchor="middle" class="head">and same truth claim?</text>
+
+  <path class="arrow" d="M700 310 L700 330"/>
+
+  <rect class="box" x="85" y="625" width="370" height="135" fill="url(#diag)"/>
+  <text x="270" y="666" text-anchor="middle" class="head">Formal train-null: REJECT</text>
+  <text x="115" y="704" class="body">Not benign / normal / “event absent” gold</text>
+  <text x="115" y="735" class="small">Counts 0 toward the 480-null training gate</text>
+
+  <rect class="box" x="515" y="625" width="370" height="135" fill="#DFF3EA"/>
+  <text x="700" y="666" text-anchor="middle" class="head">Diagnostic challenge: ALLOW</text>
+  <text x="545" y="704" class="body">Label only as contract non-entailment</text>
+  <text x="545" y="735" class="small">Isolated reporting; no training-gate credit</text>
+
+  <rect class="box" x="945" y="625" width="370" height="135" fill="#DCEFFA"/>
+  <text x="1130" y="666" text-anchor="middle" class="head">CVE prediction: OUT OF SCOPE</text>
+  <text x="975" y="704" class="body">KEV may be high-confidence positive here</text>
+  <text x="975" y="735" class="small">Does not transfer to case-level extraction</text>
+
+  <path class="arrow" d="M590 575 C510 605 380 590 290 618"/>
+  <path class="arrow" d="M700 590 L700 615"/>
+  <path class="arrow" d="M810 575 C890 605 1020 590 1110 618"/>
+  <text x="470" y="606" class="small" fill="#D55E00">No</text>
+  <text x="715" y="610" class="small" fill="#009E73">Bounded reuse</text>
+  <text x="940" y="606" class="small" fill="#0072B2">Different task</text>
+
+  <text x="700" y="800" text-anchor="middle" class="small">Decision basis: CISA official semantics + CVE-level KEV studies + PU / relation-extraction false-negative literature</text>
+</svg>

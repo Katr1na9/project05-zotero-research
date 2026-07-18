@@ -1,0 +1,90 @@
+{
+  "contract_id": "project05-qwen25-general-adapted-fairness-v0.1",
+  "version": "0.1.0",
+  "status": "frozen_before_model_runtime",
+  "created_date": "2026-07-18",
+  "authority_lock": "authority-lock-v0.2.json",
+  "comparison": {
+    "control_condition": "QWEN-GENERAL",
+    "treatment_condition": "QWEN-ADAPTED",
+    "only_allowed_model_difference": "adapter_state",
+    "control_adapter_state": "off",
+    "treatment_adapter_state": "project05_obs_compiler:on"
+  },
+  "shared_model_identity": {
+    "model_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "base_trainable": false
+  },
+  "must_match_manifest_fields": [
+    "base_snapshot_sha256",
+    "tokenizer_snapshot_sha256",
+    "runtime_lock_sha256",
+    "quantization_config_sha256",
+    "prompt_sha256",
+    "schema_sha256",
+    "public_packet_sha256",
+    "max_context_tokens",
+    "decode_config_sha256",
+    "hardware_id",
+    "admission_contract_sha256",
+    "scorer_contract_sha256"
+  ],
+  "forbidden_between_condition_differences": [
+    "base_model",
+    "base_revision",
+    "tokenizer",
+    "quantization",
+    "prompt",
+    "schema",
+    "public_input",
+    "max_context",
+    "decoding",
+    "hardware",
+    "admission",
+    "scorer",
+    "checkpoint_selected_from_test",
+    "repair_policy"
+  ],
+  "run_design": {
+    "independent_unit": "case_or_attack_chain",
+    "test_case_count": 6,
+    "generation_repeats_are_technical_repeats": true,
+    "generation_repeats_are_independent_samples": false,
+    "blocking_factors": [
+      "case_id",
+      "packet_role",
+      "source_modality"
+    ],
+    "condition_order_seed": 2026071801,
+    "same_loaded_base_required": true,
+    "adapter_toggle_logged_per_call": true
+  },
+  "test_blindness": {
+    "prompt_frozen_before_test": true,
+    "training_data_frozen_before_test": true,
+    "hyperparameters_frozen_before_test": true,
+    "checkpoint_selected_on_training_validation_only": true,
+    "test_output_may_change_checkpoint": false,
+    "test_output_may_change_gate": false
+  },
+  "adapter_selection_gate": {
+    "minimum_case_macro_reference_claim_link_f1_delta": 0.05,
+    "minimum_non_worse_case_count": 4,
+    "maximum_case_count": 6,
+    "minimum_admitted_coverage_delta": -0.05,
+    "invalid_pointer_must_not_increase": true,
+    "surface_unsupported_must_not_increase": true,
+    "ceiling_violation_must_not_increase": true,
+    "all_abstain_cannot_pass": true,
+    "single_source_or_predicate_dominance_requires_diagnostic_downgrade": true
+  },
+  "fallback_order": [
+    "QWEN-ADAPTED_if_all_adapter_gates_pass",
+    "QWEN-GENERAL_if_adapter_is_tied_or_unnecessary",
+    "REUSE-HYBRID_if_equal_or_better_than_llm_conditions",
+    "RULE-STRONG_if_llm_conditions_fail_compiler_gate"
+  ],
+  "execution_authorized": false,
+  "controller_eligible": false
+}

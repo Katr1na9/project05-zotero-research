@@ -1,0 +1,1129 @@
+{
+  "cases": [
+    {
+      "case_id": "C04-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-1FC4EEF2F1B96138",
+          "source": "NODE-BF392E9ABBC1336D",
+          "target": "NODE-07CE1A734878E764"
+        },
+        {
+          "edge_id": "EDGE-6D1EDBB3BD77180A",
+          "source": "NODE-303581C615D90C28",
+          "target": "NODE-BF392E9ABBC1336D"
+        },
+        {
+          "edge_id": "EDGE-9A34FED8ED1689B0",
+          "source": "NODE-45C9301EC94BB0AF",
+          "target": "NODE-6A1B1147320008EB"
+        },
+        {
+          "edge_id": "EDGE-B6CD621FFD50812A",
+          "source": "NODE-07CE1A734878E764",
+          "target": "NODE-45C9301EC94BB0AF"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "executed",
+            "executed_command",
+            "opened",
+            "read"
+          ],
+          "description": "stage=discovery; behavior=discovery",
+          "node_id": "NODE-07CE1A734878E764"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=execution; behavior=initial access",
+          "node_id": "NODE-303581C615D90C28"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "opened",
+            "read",
+            "wrote"
+          ],
+          "description": "stage=collection; behavior=collection",
+          "node_id": "NODE-45C9301EC94BB0AF"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "sent_data_to",
+            "wrote"
+          ],
+          "description": "stage=exfiltration; behavior=exfiltration",
+          "node_id": "NODE-6A1B1147320008EB"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=c2",
+          "node_id": "NODE-BF392E9ABBC1336D"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ],
+        "provenance_graph": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "development",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C05-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-B091646EA9164A4C",
+          "source": "NODE-CFB2060B57F8EA40",
+          "target": "NODE-823F45C21776F046"
+        },
+        {
+          "edge_id": "EDGE-D444DE694DE11A20",
+          "source": "NODE-9A0BB8BC29B775E8",
+          "target": "NODE-CFB2060B57F8EA40"
+        },
+        {
+          "edge_id": "EDGE-F2B986AF29A2C7AF",
+          "source": "NODE-823F45C21776F046",
+          "target": "NODE-9BE80833C2FD9A7A"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=c2",
+          "node_id": "NODE-823F45C21776F046"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=execution; behavior=initial access",
+          "node_id": "NODE-9A0BB8BC29B775E8"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "executed",
+            "executed_command",
+            "opened",
+            "read"
+          ],
+          "description": "stage=discovery; behavior=discovery",
+          "node_id": "NODE-9BE80833C2FD9A7A"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=execution; behavior=payload",
+          "node_id": "NODE-CFB2060B57F8EA40"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ],
+        "provenance_graph": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "development",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C06-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-21D7B248AFFF261C",
+          "source": "NODE-D59CA24B5BC265CB",
+          "target": "NODE-B3E861A84E637AC9"
+        },
+        {
+          "edge_id": "EDGE-34E217E7BD8C8663",
+          "source": "NODE-1608F6777A92DD34",
+          "target": "NODE-3193CA270D446B71"
+        },
+        {
+          "edge_id": "EDGE-5C2D58ED6A38FA72",
+          "source": "NODE-73C0BAEA35F20275",
+          "target": "NODE-1608F6777A92DD34"
+        },
+        {
+          "edge_id": "EDGE-653D8F66B14F10E5",
+          "source": "NODE-3193CA270D446B71",
+          "target": "NODE-D59CA24B5BC265CB"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=execution; behavior=payload privilege",
+          "node_id": "NODE-1608F6777A92DD34"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=drakon",
+          "node_id": "NODE-3193CA270D446B71"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=execution; behavior=initial access",
+          "node_id": "NODE-73C0BAEA35F20275"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "executed",
+            "executed_command",
+            "opened",
+            "read"
+          ],
+          "description": "stage=discovery; behavior=scan",
+          "node_id": "NODE-B3E861A84E637AC9"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=micro",
+          "node_id": "NODE-D59CA24B5BC265CB"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ],
+        "provenance_graph": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "development",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C07-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-34636D72F94165DA",
+          "source": "NODE-E3C4A0643C6462CF",
+          "target": "NODE-2C62AFDD2FC0798B"
+        },
+        {
+          "edge_id": "EDGE-D37EAB3D071CA1AB",
+          "source": "NODE-980A58FB6D339300",
+          "target": "NODE-E3C4A0643C6462CF"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "opened",
+            "wrote"
+          ],
+          "description": "stage=post_compromise; behavior=sshd artifact",
+          "node_id": "NODE-2C62AFDD2FC0798B"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=firefox c2",
+          "node_id": "NODE-980A58FB6D339300"
+        },
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "file_activity",
+            "process_execution",
+            "registry_modification"
+          ],
+          "allowed_predicates": [
+            "executed",
+            "executed_command",
+            "received_special_privileges_on",
+            "set_registry_value_for",
+            "wrote"
+          ],
+          "description": "stage=privilege_escalation; behavior=binfmt elevation",
+          "node_id": "NODE-E3C4A0643C6462CF"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ],
+        "provenance_graph": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "test",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C08-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-ADAA160BF32AB8A9",
+          "source": "NODE-4295F18F3AF1DB5A",
+          "target": "NODE-7136D0DCE87C2F82"
+        },
+        {
+          "edge_id": "EDGE-E121FBB321B107B1",
+          "source": "NODE-4295F18F3AF1DB5A",
+          "target": "NODE-9700E488EF2172E7"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=appstarter c2",
+          "node_id": "NODE-4295F18F3AF1DB5A"
+        },
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "file_activity",
+            "process_execution",
+            "registry_modification"
+          ],
+          "allowed_predicates": [
+            "executed",
+            "executed_command",
+            "received_special_privileges_on",
+            "set_registry_value_for",
+            "wrote"
+          ],
+          "description": "stage=privilege_escalation; behavior=elevate msm",
+          "node_id": "NODE-7136D0DCE87C2F82"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "opened",
+            "read",
+            "wrote"
+          ],
+          "description": "stage=collection; behavior=screencap",
+          "node_id": "NODE-9700E488EF2172E7"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ],
+        "provenance_graph": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "test",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C09-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-4A75F7153C6DAE62",
+          "source": "NODE-E1D072A760FEF7E6",
+          "target": "NODE-C7777DD20E4FE3E6"
+        },
+        {
+          "edge_id": "EDGE-A0992604B499B93E",
+          "source": "NODE-B42917D6E03F8060",
+          "target": "NODE-E1D072A760FEF7E6"
+        },
+        {
+          "edge_id": "EDGE-FADA259A6F8FF045",
+          "source": "NODE-E1D072A760FEF7E6",
+          "target": "NODE-795B0915F9613777"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "executed",
+            "executed_command",
+            "received_special_privileges_on"
+          ],
+          "description": "stage=lateral_movement; behavior=wmi 0402",
+          "node_id": "NODE-795B0915F9613777"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=empire c2",
+          "node_id": "NODE-B42917D6E03F8060"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "opened",
+            "read",
+            "wrote"
+          ],
+          "description": "stage=collection; behavior=screenshot",
+          "node_id": "NODE-C7777DD20E4FE3E6"
+        },
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "file_activity",
+            "process_execution",
+            "registry_modification"
+          ],
+          "allowed_predicates": [
+            "executed",
+            "executed_command",
+            "received_special_privileges_on",
+            "set_registry_value_for",
+            "wrote"
+          ],
+          "description": "stage=privilege_escalation; behavior=uac windir",
+          "node_id": "NODE-E1D072A760FEF7E6"
+        }
+      ],
+      "predicate_allowlist": {
+        "host_forensics": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ]
+      },
+      "split": "test",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C10-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-1F3AC082061FD999",
+          "source": "NODE-C2EB48E054987756",
+          "target": "NODE-C11794C1DFCD7AFB"
+        },
+        {
+          "edge_id": "EDGE-2F0A4C7DC71DFC49",
+          "source": "NODE-957EC63A315053CD",
+          "target": "NODE-C2EB48E054987756"
+        },
+        {
+          "edge_id": "EDGE-6A13C35BF107132F",
+          "source": "NODE-C11794C1DFCD7AFB",
+          "target": "NODE-3F6B8B29944F79AA"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "file_activity",
+            "network_connection",
+            "process_execution",
+            "registry_modification"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "created",
+            "executed",
+            "executed_command",
+            "opened",
+            "read",
+            "received_data_from",
+            "received_special_privileges_on",
+            "sent_data_to",
+            "set_registry_value_for",
+            "wrote"
+          ],
+          "description": "stage=defense_evasion; behavior=lwabeat migration",
+          "node_id": "NODE-3F6B8B29944F79AA"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "connected_to",
+            "created",
+            "executed",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=initial_access; behavior=malicious upgrade drop",
+          "node_id": "NODE-957EC63A315053CD"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=command_and_control; behavior=meterpreter c2",
+          "node_id": "NODE-C11794C1DFCD7AFB"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=execution; behavior=payload execution",
+          "node_id": "NODE-C2EB48E054987756"
+        }
+      ],
+      "predicate_allowlist": {
+        "host_forensics": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ]
+      },
+      "split": "test",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C11-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-04EEA81B0022FB09",
+          "source": "NODE-D9120F624B8772B2",
+          "target": "NODE-6AF62293E600F21E"
+        },
+        {
+          "edge_id": "EDGE-0E1CEF0C4B81136E",
+          "source": "NODE-EAE39F8117244844",
+          "target": "NODE-7AC460B764B5D6C5"
+        },
+        {
+          "edge_id": "EDGE-A6E0E8B111DA7FF6",
+          "source": "NODE-6AF62293E600F21E",
+          "target": "NODE-EAE39F8117244844"
+        },
+        {
+          "edge_id": "EDGE-C9D87B249DEF1ADC",
+          "source": "NODE-9746ED0109D31BC0",
+          "target": "NODE-D9120F624B8772B2"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "file_activity",
+            "process_execution",
+            "registry_modification"
+          ],
+          "allowed_predicates": [
+            "executed",
+            "executed_command",
+            "received_special_privileges_on",
+            "set_registry_value_for",
+            "wrote"
+          ],
+          "description": "stage=privilege_escalation; behavior=uac bypass https c2",
+          "node_id": "NODE-6AF62293E600F21E"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "created",
+            "executed",
+            "executed_command",
+            "opened",
+            "read",
+            "sent_data_to",
+            "wrote"
+          ],
+          "description": "stage=collection_exfiltration; behavior=nashua collection exfil",
+          "node_id": "NODE-7AC460B764B5D6C5"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "connected_to",
+            "created",
+            "executed",
+            "received_data_from",
+            "wrote"
+          ],
+          "description": "stage=initial_access; behavior=initial breach c2",
+          "node_id": "NODE-9746ED0109D31BC0"
+        },
+        {
+          "allowed_claim_types": [
+            "file_activity",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "created",
+            "executed",
+            "executed_command",
+            "opened",
+            "read",
+            "wrote"
+          ],
+          "description": "stage=collection; behavior=collection first exfil",
+          "node_id": "NODE-D9120F624B8772B2"
+        },
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "network_connection",
+            "process_execution"
+          ],
+          "allowed_predicates": [
+            "connected_to",
+            "executed",
+            "executed_command",
+            "received_special_privileges_on"
+          ],
+          "description": "stage=lateral_movement; behavior=lateral movement",
+          "node_id": "NODE-EAE39F8117244844"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "test",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    },
+    {
+      "case_id": "C12-compiler-evaluation",
+      "edges": [
+        {
+          "edge_id": "EDGE-122E86CD105C1A53",
+          "source": "NODE-C9E9B0F1D69D59B1",
+          "target": "NODE-EBC0C888C03E1A9E"
+        },
+        {
+          "edge_id": "EDGE-414AAB6AA9B2F42C",
+          "source": "NODE-EC8CF16D59706C62",
+          "target": "NODE-C9E9B0F1D69D59B1"
+        },
+        {
+          "edge_id": "EDGE-CDC18FA78F53B68C",
+          "source": "NODE-7E84246A3209A7E4",
+          "target": "NODE-C9E9B0F1D69D59B1"
+        }
+      ],
+      "nodes": [
+        {
+          "allowed_claim_types": [
+            "credential_activity"
+          ],
+          "allowed_predicates": [
+            "received_special_privileges_on"
+          ],
+          "description": "stage=credential_observation; behavior=privileged identity activity",
+          "node_id": "NODE-7E84246A3209A7E4"
+        },
+        {
+          "allowed_claim_types": [
+            "credential_activity",
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "received_special_privileges_on",
+            "sent_data_to"
+          ],
+          "description": "stage=cross_channel_correlation; behavior=cross channel context",
+          "node_id": "NODE-C9E9B0F1D69D59B1"
+        },
+        {
+          "allowed_claim_types": [
+            "other"
+          ],
+          "allowed_predicates": [
+            "unsupported_by_local_observation"
+          ],
+          "description": "stage=actor_attribution; behavior=actor campaign attribution",
+          "node_id": "NODE-EBC0C888C03E1A9E"
+        },
+        {
+          "allowed_claim_types": [
+            "network_connection"
+          ],
+          "allowed_predicates": [
+            "accepted_external_connection",
+            "attempted_blocked_connection_to",
+            "connected_to",
+            "received_data_from",
+            "sent_data_to"
+          ],
+          "description": "stage=network_observation; behavior=perimeter activity",
+          "node_id": "NODE-EC8CF16D59706C62"
+        }
+      ],
+      "predicate_allowlist": {
+        "local_log": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ],
+        "network_summary": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "received_data_from",
+          "sent_data_to"
+        ],
+        "provenance_graph": [
+          "accepted_external_connection",
+          "attempted_blocked_connection_to",
+          "connected_to",
+          "created",
+          "executed",
+          "executed_command",
+          "opened",
+          "read",
+          "received_data_from",
+          "received_special_privileges_on",
+          "sent_data_to",
+          "set_registry_value_for",
+          "wrote"
+        ]
+      },
+      "split": "test",
+      "stage_a_target_contract": "frozen_public_stage_vocabulary_v0.1_without_reference_claims"
+    }
+  ],
+  "catalog_version": "project05-mainline-target-nodes-stage-a-v0.1"
+}
