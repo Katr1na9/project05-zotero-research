@@ -1,0 +1,140 @@
+{
+  "batch_id": "project05-operational-cost-measurements-v0.3",
+  "version": "0.3.0",
+  "created_utc": "2026-07-18T07:04:10Z",
+  "protocol": {
+    "protocol_id": "project05-operational-cost-measurement-protocol-v0.3",
+    "ontology_profile": {
+      "path": "09-experiments/governance/profiles/action-ontology-v0.3-real-only-draft.json",
+      "sha256": "f5434498234838ac0d049c2694fcf9a23d5960a080dcf27f8529b49eb61a58eb"
+    },
+    "action_executor_registry": {
+      "path": "09-experiments/governance/measurement_v0.3/action-executor-registry-v0.1-draft.json",
+      "sha256": "ef5a09708536946769a4ffc0a6bab6c2cb0db751b747abf10fae70bec470e145"
+    },
+    "execution_readiness": "blocked_no_real_action_executor",
+    "schedule_authorization": "template_only_do_not_execute_until_action_adapters_are_frozen",
+    "experimental_unit": "independent_execution_attempt_from_declared_initial_state",
+    "coverage_gate": {
+      "purpose": "coverage_and_smoke_only",
+      "minimum_completed_primary_attempts_per_action": 3,
+      "formal_statistical_claim_authorized": false
+    },
+    "statistical_sufficiency": {
+      "status": "not_established_by_coverage_gate",
+      "required_separate_analysis": true
+    },
+    "randomization": {
+      "method": "seeded_blocked_permutation",
+      "seed": 20260718,
+      "within_block_order": "randomized"
+    },
+    "blocking": {
+      "design_blocks": [
+        "phase",
+        "attempt_round"
+      ],
+      "recorded_nuisance_factors": [
+        "case_id",
+        "machine_id",
+        "cache_state",
+        "executor_id",
+        "execution_date",
+        "environment_id"
+      ]
+    },
+    "failure_policy": "retain_and_include_all_attempts_in_failure_and_resource_distributions",
+    "retry_policy": "each_retry_is_a_new_linked_execution_attempt_not_an_independent_coverage_replicate",
+    "shared_overhead_policy": "track_unallocated",
+    "scalar_cost_status": "undefined_until_transformation_model_is_separately_calibrated_and_frozen"
+  },
+  "schedule": {
+    "schedule_id": "project05-operational-cost-minimum-coverage-schedule-v0.3",
+    "path": "09-experiments/governance/measurement_v0.3/minimum-coverage-schedule-v0.3.csv",
+    "sha256": "157d53502052f50fd79673c95be9c36712d8cc04d18f82abb581e2d7b4c92158",
+    "scheduled_primary_attempt_count": 150
+  },
+  "records": [
+    {
+      "measurement_id": "capability-pilot--C02--C02-AA-003--schedule-010",
+      "case_id": "C02",
+      "action_id": "C02-AA-003",
+      "phase": "calibration",
+      "planner_decision_id": "capability-pilot-decision--C02--C02-AA-003--schedule-010",
+      "execution_attempt_id": "capability-pilot-attempt--C02--C02-AA-003--schedule-010",
+      "retry_of_attempt_id": null,
+      "attempt_round": 1,
+      "scheduled_run_index": 10,
+      "block_id": "calibration-round-01",
+      "randomization_deviation": {
+        "deviation_type": "unscheduled_capability_pilot",
+        "reason": "Executed before the action-executor registry and controlled initial-state protocol were frozen; excluded from formal schedule compliance, coverage, and scalar-cost claims.",
+        "adjudication_status": "accepted"
+      },
+      "started_utc": "2026-07-18T07:04:10.582957Z",
+      "ended_utc": "2026-07-18T07:04:10.749668Z",
+      "execution_status": "completed",
+      "termination_reason": "completed_observed_remote_endpoint_summary_external_classification_unresolved",
+      "primitive_operation_count": 33292,
+      "resource_trace": {
+        "analyst_time_by_role": [],
+        "compute": {
+          "wall_seconds": 0.17153010000038194,
+          "cpu_seconds": 0.171875,
+          "memory_byte_seconds": 4061438.209631577
+        },
+        "data_access": {
+          "bytes_scanned": 14101676,
+          "records_scanned": 33292
+        },
+        "direct_currency": {
+          "amount": 0.0,
+          "currency": "CNY"
+        },
+        "authorization_wait_seconds": 0.0,
+        "shared_overhead": {
+          "setup_seconds": 0.0,
+          "allocation_status": "unallocated",
+          "allocation_rule": null
+        }
+      },
+      "context_covariates": {
+        "host_count": 1,
+        "retention_window_days": null,
+        "authorization": {
+          "required": false,
+          "boundary": "none",
+          "approval_reference": null
+        },
+        "machine_id": "local-workstation-pseudonym-v0.1",
+        "cache_state": "unknown",
+        "executor_id": "project05-recover-network-summary-r02-case-pilot-v0.1",
+        "execution_date": "2026-07-18",
+        "environment_id": "windows-local-cpython311-psutil722",
+        "initial_state_id": "uncontrolled-local-filesystem-state",
+        "initial_state_reset": false
+      },
+      "hard_constraints": {
+        "authorization_satisfied": true,
+        "data_available": true,
+        "safety_gate_passed": true,
+        "violations": []
+      },
+      "observation_summary": {
+        "returned_evidence_count": 143,
+        "evidence_perturbations": [],
+        "downtime_seconds": 0.0
+      },
+      "source_file": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/governance/measurement_v0.3/pilots/c02-aa-003-r02-observed-remote-endpoints-v0.1/measurement-input/capability-pilot-measurement-source.json",
+      "source_file_sha256": "7c5bb6c15428a4a908c3d492bed3016982937baf6af45d0e51245f24d5030b96",
+      "record_sha256": "ef4d57dd7a568914966566db7f9293e3c84e24a6bc0e5911c52ae9cdf507730e"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/governance/measurement_v0.3/pilots/c02-aa-003-r02-observed-remote-endpoints-v0.1/measurement-input/capability-pilot-measurement-source.json",
+      "sha256": "7c5bb6c15428a4a908c3d492bed3016982937baf6af45d0e51245f24d5030b96",
+      "record_count": 1
+    }
+  ]
+}

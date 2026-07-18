@@ -23,7 +23,7 @@ def load_script(name):
     return module
 
 
-run_mvp = load_script("run_mvp")
+run_mvp = load_script("cost_profile_runtime")
 builder = load_script("build_cost_profile_drafts")
 validator = load_script("validate_cost_profile")
 
@@ -40,7 +40,7 @@ class CostRegimeTests(unittest.TestCase):
             {
                 "case_id": self.config["case_id"],
                 "action_id": action["action_id"],
-                "components": {"E": 1, "V": 1, "D": 1, "A": 0, "R": 0},
+                "components": {"E": 1, "V": 1, "D": 1, "A": 1, "R": 0},
             }
             for action in self.actions
         ]
@@ -54,6 +54,7 @@ class CostRegimeTests(unittest.TestCase):
                 "regime": "rubric",
                 "scope": {"case_ids": [self.config["case_id"]]},
                 "scoring": {
+                    "volatility_treatment": "separate_delay_loss",
                     "weights": {"E": 1, "V": 1, "D": 1, "A": 1, "R": 1},
                     "scale": 2,
                     "rounding": "half_up",
@@ -134,6 +135,38 @@ class CostRegimeTests(unittest.TestCase):
         self.assertEqual("test-rubric-v1", metadata["cost_profile_id"])
         self.assertEqual("a" * 64, metadata["cost_profile_sha256"])
 
+    def test_rubric_cost_excludes_volatility_from_acquisition_burden(self):
+        scoring = self.rubric_bundle()["document"]["scoring"]
+        low_volatility = {"E": 1, "V": 0, "D": 1, "A": 0, "R": 0}
+        high_volatility = {"E": 1, "V": 3, "D": 1, "A": 0, "R": 0}
+
+        self.assertEqual(
+            run_mvp.compose_rubric_cost(low_volatility, scoring),
+            run_mvp.compose_rubric_cost(high_volatility, scoring),
+        )
+
+    def test_rubric_cost_rejects_implicit_volatility_semantics(self):
+        scoring = self.rubric_bundle()["document"]["scoring"]
+        scoring.pop("volatility_treatment")
+
+        with self.assertRaisesRegex(ValueError, "volatility_treatment"):
+            run_mvp.compose_rubric_cost(
+                {"E": 1, "V": 3, "D": 1, "A": 0, "R": 0}, scoring
+            )
+
+    def test_legacy_positive_volatility_burden_requires_explicit_compatibility(self):
+        scoring = self.rubric_bundle()["document"]["scoring"]
+        scoring["volatility_treatment"] = "legacy_positive_burden"
+
+        low = run_mvp.compose_rubric_cost(
+            {"E": 1, "V": 0, "D": 1, "A": 0, "R": 0}, scoring
+        )
+        high = run_mvp.compose_rubric_cost(
+            {"E": 1, "V": 3, "D": 1, "A": 0, "R": 0}, scoring
+        )
+
+        self.assertGreater(high, low)
+
     def test_measured_preserves_continuous_values_reproducibly(self):
         bundle = self.measured_bundle()
 
@@ -213,6 +246,36 @@ class CostRegimeTests(unittest.TestCase):
 
 
 class DraftBuilderAndValidatorTests(unittest.TestCase):
+    def test_cost_pipeline_contract_selects_one_canonical_builder(self):
+        contract = json.loads(
+            (
+                EXPERIMENT_ROOT
+                / "governance"
+                / "contracts"
+                / "cost-pipeline-contract-v0.2.json"
+            ).read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(
+            "09-experiments/scripts/build_cost_profile_drafts.py",
+            contract["canonical_pipeline"]["builder"],
+        )
+        self.assertEqual(
+            "deprecated_compatibility_only",
+            contract["noncanonical_pipelines"][0]["status"],
+        )
+        self.assertEqual(
+            "separate_delay_loss",
+            contract["cost_semantics"]["normative_volatility_treatment"],
+        )
+        self.assertEqual(
+            3,
+            contract["operational_measurement"][
+                "minimum_completed_attempts_per_action"
+            ],
+        )
+        self.assertEqual("sealed", contract["data_boundary"]["C13_plus"])
+
     def build_drafts(self, output_dir):
         return builder.build(
             SimpleNamespace(
@@ -271,6 +334,9 @@ class DraftBuilderAndValidatorTests(unittest.TestCase):
             self.assertTrue(rubric["coverage_valid"])
             self.assertFalse(rubric["formal_ready"])
             self.assertEqual(360, rubric["pending_component_values"])
+            self.assertEqual(
+                "separate_delay_loss", rubric["volatility_treatment"]
+            )
             self.assertEqual(0, rubric["pending_measured_costs"])
             self.assertTrue(measured["schema_valid"])
             self.assertTrue(measured["coverage_valid"])
@@ -314,6 +380,7 @@ class DraftBuilderAndValidatorTests(unittest.TestCase):
             profile["status"] = "frozen"
             profile["scoring"].update(
                 {
+                    "volatility_treatment": "separate_delay_loss",
                     "weights": {"E": 1, "V": 1, "D": 1, "A": 1, "R": 1},
                     "scale": 3.75,
                     "rounding": "half_up",

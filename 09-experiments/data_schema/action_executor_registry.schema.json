@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/action_executor_registry.schema.json",
+  "title": "Project05 action executor adapter registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "registry_id",
+    "version",
+    "status",
+    "created_utc",
+    "ontology_profile",
+    "data_boundary",
+    "required_telemetry_dimensions",
+    "adapters"
+  ],
+  "properties": {
+    "registry_id": {"const": "project05-action-executor-registry-v0.1-draft"},
+    "version": {"const": "0.1.0-draft"},
+    "status": {"enum": ["draft", "frozen"]},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "ontology_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "data_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_C01_C09", "canonical_C10_plus", "source_C13_plus"],
+      "properties": {
+        "canonical_C01_C09": {"const": "real_cases_in_scope"},
+        "canonical_C10_plus": {"const": "unassigned_and_sealed"},
+        "source_C13_plus": {"const": "sealed"}
+      }
+    },
+    "required_telemetry_dimensions": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "analyst_seconds_by_role",
+          "compute_wall_seconds",
+          "compute_cpu_seconds",
+          "memory_byte_seconds",
+          "bytes_scanned",
+          "records_scanned",
+          "direct_currency",
+          "authorization_wait_seconds",
+          "downtime_seconds",
+          "evidence_perturbations"
+        ]
+      },
+      "minItems": 10,
+      "uniqueItems": true
+    },
+    "adapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/adapter"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableString": {"type": ["string", "null"]},
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_type",
+        "adapter_id",
+        "status",
+        "operational_cost_measurement_eligible",
+        "oracle_input_fields_forbidden",
+        "contract",
+        "unresolved_contracts"
+      ],
+      "properties": {
+        "action_type": {"type": "string", "minLength": 1},
+        "adapter_id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["unimplemented", "implemented"]},
+        "operational_cost_measurement_eligible": {"type": "boolean"},
+        "oracle_input_fields_forbidden": {
+          "type": "array",
+          "items": {"enum": ["recoverable_claim_ids", "oracle_effects", "hidden_claim_ids"]},
+          "minItems": 3,
+          "uniqueItems": true
+        },
+        "contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actor_role",
+            "authority_boundary",
+            "initial_state_reset_procedure",
+            "precondition_evaluator",
+            "invocation_entrypoint",
+            "target_parameter_mapping",
+            "completion_and_timeout_criteria",
+            "observation_schema_ref",
+            "state_effect_mapping",
+            "primitive_operation_definition",
+            "retry_policy",
+            "shared_overhead_policy",
+            "telemetry_emitter"
+          ],
+          "properties": {
+            "actor_role": {"$ref": "#/$defs/nullableString"},
+            "authority_boundary": {"$ref": "#/$defs/nullableString"},
+            "initial_state_reset_procedure": {"$ref": "#/$defs/nullableString"},
+            "precondition_evaluator": {"$ref": "#/$defs/nullableString"},
+            "invocation_entrypoint": {"$ref": "#/$defs/nullableString"},
+            "target_parameter_mapping": {"$ref": "#/$defs/nullableString"},
+            "completion_and_timeout_criteria": {"$ref": "#/$defs/nullableString"},
+            "observation_schema_ref": {"$ref": "#/$defs/nullableString"},
+            "state_effect_mapping": {"$ref": "#/$defs/nullableString"},
+            "primitive_operation_definition": {"$ref": "#/$defs/nullableString"},
+            "retry_policy": {"$ref": "#/$defs/nullableString"},
+            "shared_overhead_policy": {"$ref": "#/$defs/nullableString"},
+            "telemetry_emitter": {"$ref": "#/$defs/nullableString"}
+          }
+        },
+        "unresolved_contracts": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "actor_and_authority",
+              "initial_state_and_preconditions",
+              "invocation",
+              "termination",
+              "observation",
+              "state_effects",
+              "primitive_operation_boundary",
+              "retry_policy",
+              "shared_overhead_policy",
+              "telemetry_emitter"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "unimplemented"}}},
+          "then": {
+            "properties": {
+              "operational_cost_measurement_eligible": {"const": false},
+              "unresolved_contracts": {"minItems": 1}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "implemented"}}},
+          "then": {
+            "properties": {
+              "operational_cost_measurement_eligible": {"const": true},
+              "unresolved_contracts": {"maxItems": 0},
+              "contract": {
+                "properties": {
+                  "actor_role": {"type": "string", "minLength": 1},
+                  "authority_boundary": {"type": "string", "minLength": 1},
+                  "initial_state_reset_procedure": {"type": "string", "minLength": 1},
+                  "precondition_evaluator": {"type": "string", "minLength": 1},
+                  "invocation_entrypoint": {"type": "string", "minLength": 1},
+                  "target_parameter_mapping": {"type": "string", "minLength": 1},
+                  "completion_and_timeout_criteria": {"type": "string", "minLength": 1},
+                  "observation_schema_ref": {"type": "string", "minLength": 1},
+                  "state_effect_mapping": {"type": "string", "minLength": 1},
+                  "primitive_operation_definition": {"type": "string", "minLength": 1},
+                  "retry_policy": {"type": "string", "minLength": 1},
+                  "shared_overhead_policy": {"type": "string", "minLength": 1},
+                  "telemetry_emitter": {"type": "string", "minLength": 1}
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

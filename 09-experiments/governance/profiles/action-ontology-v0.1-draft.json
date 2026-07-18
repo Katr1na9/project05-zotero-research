@@ -1,0 +1,4141 @@
+{
+  "profile_id": "project05-action-ontology-v0.1-draft",
+  "version": "0.1.0-draft",
+  "status": "draft",
+  "created_utc": "2026-07-18T00:00:00Z",
+  "evidence_basis": {
+    "construct_synthesis_ref": "04-progress/cost-action-construct-review-v0.1-20260718/construct-synthesis.md",
+    "construct_synthesis_sha256": "091b6c59b83c6a7281406c23b5793ba51e23ee0701e6cd40072212a2e278eeb7"
+  },
+  "runtime_audit": {
+    "current_executor_type": "outcome_reveal_simulator",
+    "source_ref": "09-experiments/scripts/run_mvp.py::run_episode/recoverable_hidden/channel_is_up",
+    "source_sha256": "a7ebcf2739b7cd708011db378d0f18af3eb970c6236813be7f8258d5394a952e",
+    "execution_mechanism": "seeded_channel_availability_then_recoverable_hidden_claim_set_reveal",
+    "external_collector_invoked": false,
+    "operational_cost_measurement_eligible": false,
+    "blocking_reason": "No real per-action collector or adapter currently executes the eight acquisition action types and emits unit-bearing resource telemetry."
+  },
+  "data_boundary": {
+    "calibration_cases": [
+      "C01-linux-provenance",
+      "C02-freebsd-provenance",
+      "C03-windows-host",
+      "C04-darpa-e3-fivedirections",
+      "C05-darpa-e3-cadets",
+      "C06-darpa-e3-cadets-0412"
+    ],
+    "development_cases": [
+      "C07-darpa-e5-theia-0515",
+      "C08-darpa-e5-clearscope-0515",
+      "C09-darpa-optc-sysclient0201-0923",
+      "C10-darpa-optc-sysclient0351-0925",
+      "C11-otrf-apt29-day1-scranton-nashua",
+      "C12-witfoo-precinct6-f10c7270"
+    ],
+    "C13_plus": "sealed"
+  },
+  "scope": {
+    "case_ids": [
+      "C01-linux-provenance",
+      "C02-freebsd-provenance",
+      "C03-windows-host",
+      "C04-darpa-e3-fivedirections",
+      "C05-darpa-e3-cadets",
+      "C06-darpa-e3-cadets-0412",
+      "C07-darpa-e5-theia-0515",
+      "C08-darpa-e5-clearscope-0515",
+      "C09-darpa-optc-sysclient0201-0923",
+      "C10-darpa-optc-sysclient0351-0925",
+      "C11-otrf-apt29-day1-scranton-nashua",
+      "C12-witfoo-precinct6-f10c7270"
+    ],
+    "action_count": 72,
+    "legacy_case_files_mutated": false
+  },
+  "counting_semantics": {
+    "status": "frozen_v0.1",
+    "planner_decision_count": {
+      "unit": "accepted_planner_output",
+      "definition": "Count each planner output accepted at a decision boundary; a selected STOP is one planner decision.",
+      "stop_counts_as_decision": true
+    },
+    "execution_attempt_count": {
+      "unit": "executor_dispatch_attempt",
+      "definition": "Count every dispatched acquisition execution separately, including failed, cancelled, and retried attempts.",
+      "failures_count": true,
+      "cancellations_count": true,
+      "retries_are_new_attempts": true,
+      "stop_counts_as_attempt": false
+    },
+    "primitive_operation_count": {
+      "unit": "instrumented_low_level_operation",
+      "definition": "Count operations at the collector-defined primitive boundary; never infer one primitive from one planner action.",
+      "implicit_one_per_planner_action_forbidden": true
+    },
+    "split_merge_invariance": {
+      "status": "required_before_formal_cost_claims",
+      "rule": "Equivalent work must conserve raw resource totals when a planner action is split or merged; only the declared count level may change.",
+      "required_tests": [
+        "split_equivalent",
+        "merge_equivalent",
+        "retry_not_mergeable",
+        "shared_overhead_conservation"
+      ]
+    }
+  },
+  "actions": [
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "calibration",
+      "source_action_sha256": "5c2804f9183c345a1e8de4c7101174a3fcca5144145d40f32195ad9d60e8c463",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "time_window",
+        "target_value": "2026-07-01T10:01:30Z/2026-07-01T10:03:00Z"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "log_retention",
+        "natural_language_request": "Expand the Linux audit/provenance time window around the initial shell execution.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "fee3db9a0d1d0b661c535e099d7b49a2e6fb170a6f2ff27b280c3e25a8d641dd",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "/tmp/.cache/upd"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Query the local provenance subgraph rooted at /tmp/.cache/upd.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "malware_analysis"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-003",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "2706465dc128fe570f4546af7575648e674323ee99fcf6f0554d347264fd888e",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "ip",
+        "target_value": "198.51.100.77"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover network flow summaries involving 198.51.100.77.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-004",
+      "action_type": "ttp_local_probe",
+      "phase": "calibration",
+      "source_action_sha256": "280111eebfe2f66443bb92d9eab90d3d6167de627361344611b77a6692238492",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "technique",
+        "target_value": "T1059"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe local evidence for command and scripting interpreter behavior.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-005",
+      "action_type": "malware_analysis",
+      "phase": "calibration",
+      "source_action_sha256": "83ca7ace752036af3c634e9d8c5eadeb16b86a02521377857e776a49a2cf73c2",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/tmp/.cache/upd"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "sample_lab",
+        "natural_language_request": "Analyze the dropped payload /tmp/.cache/upd.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "malware_analysis"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-006",
+      "action_type": "ioc_enrichment",
+      "phase": "calibration",
+      "source_action_sha256": "18148ac2b8960baa4f04cdc3b3bb12de40bc2db9e7a7ab0cd6426e86b2e86846",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "ip",
+        "target_value": "198.51.100.77"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "threat_intel",
+        "natural_language_request": "Enrich IP 198.51.100.77 against historical infrastructure observations.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "ioc_enrichment"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-007",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "bb7f7b66ed8b57931ed87a9b6a7ed03ea46a2741d4fd1c67646f92d9493ca739",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/tmp/.cache/archive.tgz"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Query provenance around the archive file created during collection.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C01-linux-provenance",
+      "action_id": "C01-AA-008",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "d9f64c56f8cb9f567ebdba612cf4f464b143f9cfba545a158c03029353b3f0b0",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "time_window",
+        "target_value": "2026-07-01T10:06:00Z/2026-07-01T10:08:00Z"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover outbound network summary during the suspected exfiltration window.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "calibration",
+      "source_action_sha256": "d5092f71dbbb5f8ab83e217306aaf5caca4a0226150a6813910ea66e597b5465",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "freebsd-web-01"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "log_retention",
+        "natural_language_request": "Extend BSM audit coverage around the initial shell execution.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "baeab5d93eabbf97069232eba8599cedda51337ad621f994901d53d856cb449a",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "/tmp/.kworker"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the provenance subgraph rooted at /tmp/.kworker.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-003",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "9acf741bccb71de80ac2cbbefe126212bd2587c14d63e4681d51d4cfb6604710",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "ip",
+        "target_value": "203.0.113.44"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover DNS and flow summaries for the suspected external endpoint.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-004",
+      "action_type": "ttp_local_probe",
+      "phase": "calibration",
+      "source_action_sha256": "6a6e2f67e79e19a18074b4ca2cce317204c69497cfab0bf0ffb281a315f997f6",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "technique",
+        "target_value": "T1560"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe local audit evidence for collection and archive creation.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-005",
+      "action_type": "malware_analysis",
+      "phase": "calibration",
+      "source_action_sha256": "50efbc8c78d2c1558145010e4457dbad12998725f778fc0cc795842d53dd00ee",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/tmp/.kworker"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "sample_lab",
+        "natural_language_request": "Analyze the recovered FreeBSD payload.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-006",
+      "action_type": "human_review",
+      "phase": "calibration",
+      "source_action_sha256": "0f604ebdc63857a7dcf8ad8aa5c75117391312b06922d99b7e486be379d91ae5",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "claim",
+        "target_value": "C02-EC-010"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Review the weak DNS observation before treating it as C2 support.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "human_review"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C02-freebsd-provenance",
+      "action_id": "C02-AA-007",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "ac9675a4cdb0da64341ad4a4301a0848ee35d1e3dc0febd011cef74428262e49",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/var/spool/exfil.tar"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover host provenance for the staged archive to confirm the exfiltration node when network telemetry is unavailable.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "calibration",
+      "source_action_sha256": "1e37f958f3487620ca4a9a317244e73c9188df3a3c24a121bcc08077c575f9a2",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "WIN-ACCT-07"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "log_retention",
+        "natural_language_request": "Extend Sysmon and EDR coverage around the initial PowerShell event.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "ef11e16b69a3dfdc79511818787417a78dc648b4691a7d2172f93ea15e7df7b2",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "C:\\ProgramData\\winupd.dll"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the Windows host subgraph around the dropped DLL and its descendants.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-003",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "7ee9e49ae6c67cedd899aea9c1da70bbf4055bd16db5bced2674555dead32024",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "ip",
+        "target_value": "192.0.2.88"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover DNS and flow summaries for the Windows host.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-004",
+      "action_type": "ttp_local_probe",
+      "phase": "calibration",
+      "source_action_sha256": "d6c08e1b2dff968965c9802c8e2ee7608de609a9af001287280928586ba1cc9a",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "technique",
+        "target_value": "T1003"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe EDR telemetry for LSASS credential access.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-005",
+      "action_type": "ioc_enrichment",
+      "phase": "calibration",
+      "source_action_sha256": "5112c12e62a474b4f581ffbb1dd318723b488c2b4ca11f2feda3863b89bda91c",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "domain",
+        "target_value": "cdn-sync.example.org"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "threat_intel",
+        "natural_language_request": "Enrich the observed C2 domain against campaign history.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "ioc_enrichment"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-006",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "e5ed526b32e4f1b08c6cc9381612daf207c3ced330057dbe1313167ef25234ff",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "C:\\ProgramData\\cache.7z"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Trace the archive from collection through outbound transfer.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C03-windows-host",
+      "action_id": "C03-AA-007",
+      "action_type": "human_review",
+      "phase": "calibration",
+      "source_action_sha256": "aac384095fbdee4e903e3577929c5e0af4509ff8e49de444f382ab705cfdc7cb",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "registry_key",
+        "target_value": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\WinUpdate"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Review the registry persistence observation.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "human_review"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "action_id": "C04-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "calibration",
+      "source_action_sha256": "0b88a6e83da98aed6b3d81b5de355e18060c5840618b1afd111311ada4387be4",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "firefox.exe"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "log_retention",
+        "natural_language_request": "Extend Firefox host and network telemetry around the exploitation attempts.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "action_id": "C04-AA-002",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "56a7377eeb859bbe1101a144536b58f88332537c4d7b02a53c3fb503ae95efa4",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "firefox.exe"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover Firefox flows to the C2 and netrecon endpoints.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "action_id": "C04-AA-003",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "f7e7269b9ef0351026d21b1a973e7a4ba870feb823b57eed66a89ea5f926b111",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "ethinfo.txt|recondata.txt"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the provenance neighborhood of the reconnaissance output files.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "action_id": "C04-AA-004",
+      "action_type": "ttp_local_probe",
+      "phase": "calibration",
+      "source_action_sha256": "a85321f04b8e3deba0b428c6746c14b61a37a218adda237d543c1655a7473633",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "technique",
+        "target_value": "T1005"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe document access in the target user's Documents directory.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "action_id": "C04-AA-005",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "286267e74bfaf40262c4c46165ef181a789e3702e92bf5da37458ad2be7b13ed",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "case",
+        "target_value": "R01 collection-to-exfiltration chain"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the joined collection and netrecon exfiltration subgraph.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C04-darpa-e3-fivedirections",
+      "action_id": "C04-AA-006",
+      "action_type": "cti_report_lookup",
+      "phase": "calibration",
+      "source_action_sha256": "ed12437818445f8d7e1cfd521eddc7aa952cea4dfbfdad52c7de0ab084cbf9bd",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "ip",
+        "target_value": "16.54.116.146"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "threat_intel",
+        "natural_language_request": "Look up documented C2 infrastructure for 16.54.116.146 to confirm the command-and-control node when Firefox flow telemetry is unavailable.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "infrastructure_history"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "action_id": "C05-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "calibration",
+      "source_action_sha256": "26dbd8c3c58b3c69a84673aeebc123922e8cb5cbb70fc9b03c1d0ddc4582d5ad",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "nginx"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "log_retention",
+        "natural_language_request": "Extend Nginx audit and flow telemetry around the exploit window.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "action_id": "C05-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "358bf8df52cd12c2112d8f8491c8368b0fb4570153ef401877e67d7e19601631",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/tmp/vUgefal"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the provenance subgraph for the downloaded and elevated payload.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "action_id": "C05-AA-003",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "561fdf7f91519a300cf803cc0b8300994a5ef2a8c4e361168a5d79f921b643ee",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "case",
+        "target_value": "R02 external endpoints"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover flow summaries for the post-exploitation external endpoints.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "action_id": "C05-AA-004",
+      "action_type": "ttp_local_probe",
+      "phase": "calibration",
+      "source_action_sha256": "80b87f4c5b9d86d80b7763aa77d13946e0e4642663fb3c967f64052aba10d489",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/etc/passwd"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe local provenance for post-exploitation discovery activity.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "action_id": "C05-AA-005",
+      "action_type": "human_review",
+      "phase": "calibration",
+      "source_action_sha256": "04c3dd2082b804bfab7d3ea063f13eb38053c55dff2a353b8bd0ceb3d787db91",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "case",
+        "target_value": "R02 missing collection and exfiltration stages"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Confirm that the provider trace contains no supportable complete collection or exfiltration chain.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "human_review"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C05-darpa-e3-cadets",
+      "action_id": "C05-AA-006",
+      "action_type": "ioc_enrichment",
+      "phase": "calibration",
+      "source_action_sha256": "38a07ec1e2fc4e0538d460e494129e211d8cd4646648a79cc50817284b1f08f8",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "case",
+        "target_value": "R02 external endpoints"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "threat_intel",
+        "natural_language_request": "Enrich the R02 external endpoints against threat-intel infrastructure to confirm the C2 node when flow telemetry is unavailable.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "ioc_enrichment"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "calibration",
+      "source_action_sha256": "a85570a08404b42b155576eb4490a89d3596b8d4dc76ce76b14625bda68dc309",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "nginx"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "log_retention",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "f43dd3ed74f77e5f879fc6a7a5f861e5e5f0b8427e0f0f38ca460eab44fb6d76",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "CADETS victim payload chain"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-003",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "ba7503cb4a59378e9929b16dd47c6edcaa5e9c3d39b9a05c569cc0024a68b4c2",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "XIM"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-004",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "21cba7b1fabb874173535dca89049e2363d98e1eab58b64eb29223216c7451c6",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/var/log/netlog"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-005",
+      "action_type": "recover_network_summary",
+      "phase": "calibration",
+      "source_action_sha256": "ec97f4ee58a3445261221bcc68219fddfb62abf16f1b0613afc5c46f461da9d0",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "test"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-006",
+      "action_type": "ttp_local_probe",
+      "phase": "calibration",
+      "source_action_sha256": "f337853a1ad9f58f695538933e73f8506fbf98d2e0d807e2ba65770e9465003c",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "technique",
+        "target_value": "T1046"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C06-darpa-e3-cadets-0412",
+      "action_id": "C06-AA-007",
+      "action_type": "query_host_subgraph",
+      "phase": "calibration",
+      "source_action_sha256": "14220b6eadabd6b350d314f3ff6b6ab40d1417aa116c1f7978cedb067e2d0ff1",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "case",
+        "target_value": "R03 post-exploitation chain"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": null,
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-001",
+      "action_type": "recover_network_summary",
+      "phase": "development",
+      "source_action_sha256": "68675b72c870a38359a14dbdda66474b0f44a6ef4739f752715c36546f3139cd",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "endpoint",
+        "target_value": "Firefox to 208.203.20.42:80"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover Firefox C2 flow summaries and any network-visible follow-on elevation indicators around the same window.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "d8ccc4cd76e42d965a5094b2d7871e584ff9fd3ce7ae5713dfaa5879308d33f0",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "Firefox process lineage around report PID 534051"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the Firefox host lineage to confirm C2 and look for elevation-adjacent process context.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-003",
+      "action_type": "ttp_local_probe",
+      "phase": "development",
+      "source_action_sha256": "493fa00f0be153847f349c61122b82d1161aefa772b3d7998af848b62a6f83fb",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "command",
+        "target_value": "/sbin/modprobe -q -- binfmt-0000"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe local provenance for the binfmt elevation handler and any immediate post-elevation host artifacts.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-004",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "fa27c01889ab424526a0cef211b9de50b40b5862b75bc77c4f038ce2c098e1ee",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/var/log/sshdlog"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover host provenance around /var/log/sshdlog to place post-compromise activity in the elevation chain.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C07-darpa-e5-theia-0515",
+      "action_id": "C07-AA-005",
+      "action_type": "human_review",
+      "phase": "development",
+      "source_action_sha256": "95a6c6aaea93c77f0bffbc3cbbd5182053e1e9dfad5c2fdc00d7106b74259cd6",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "context",
+        "target_value": "load_helper.ko and read_scan.ko benign driver activity"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Review benign driver installs that should not be treated as attack-chain gaps.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-001",
+      "action_type": "recover_network_summary",
+      "phase": "development",
+      "source_action_sha256": "723155076f0c14e885d1a9dd7c0ff1480a0c330c1ed07d9c03270dbebd1acc95",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "endpoint",
+        "target_value": "Appstarter busybox outbound Micro APT C2 socket"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover Appstarter/Micro APT C2 flow summaries and any network-visible elevation indicators around the same window.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "17fa66b63dc222d55fd08c8ed5ebef90dea3d9c0c237b4838e3d73e2cb4db24d",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "/data/data/de.belu.appstarter/busybox lineage"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the Appstarter busybox host lineage to confirm C2 and look for elevation-adjacent process context.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph",
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-003",
+      "action_type": "ttp_local_probe",
+      "phase": "development",
+      "source_action_sha256": "ae3676277f1acbaf6b896a04935bc09a213356ac142d623e33d4e292b0efe2f3",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/dev/msm_g711tlaw elevate device"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe local provenance for the msm_g711tlaw elevate device open and any concurrent Micro APT collection artifacts.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-004",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "aeb780e1d320c7991a0697ad969649767a8917c9e8ec518eac29a19f1909a048",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "/system/bin/screencap"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover host provenance around screencap execution to place Micro APT collection in the C2/elevate campaign.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "provenance_graph"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C08-darpa-e5-clearscope-0515",
+      "action_id": "C08-AA-005",
+      "action_type": "human_review",
+      "phase": "development",
+      "source_action_sha256": "66e018283e833927d0054cd0711fc99bf923484092016c3ff039949b7fe61d71",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "context",
+        "target_value": "/data/local/tmp/sl elevate-driver benign setup"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Review the benign sl elevate-driver setup that should not be treated as an attack-chain gap.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-001",
+      "action_type": "recover_network_summary",
+      "phase": "development",
+      "source_action_sha256": "fb98ae65f412792af48f1a39fb13b7ff28e8ed3897b6953326f24953da4cd9ad",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "endpoint",
+        "target_value": "powershell Empire C2 to 132.197.158.98:80"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover Empire C2 flow summaries and any concurrent elevation indicators around the same window.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "aa0185b9ac466600796fd975b877052d7b0d4c95cc14c17491aef7db588c5fc6",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "powershell.exe Empire C2 lineage"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover host lineage for powershell Empire C2 and look for elevation-adjacent registry context.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary",
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-003",
+      "action_type": "ttp_local_probe",
+      "phase": "development",
+      "source_action_sha256": "c1943952ab8a1ab8b8423638c0f8e6da31dc006a3618788ebb7581ec4ad6d277",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "registry_key",
+        "target_value": "HKCU\\Environment\\windir UAC bypass"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Probe the windir Environment UAC bypass and any concurrent desktop-collection artifacts.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-004",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "e61124cb930fd1c4e93f3e319a79c7385aff898b23b51a390d4a5542ad4a9e6a",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "module",
+        "target_value": "Empire Get-Screenshot"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover shell provenance around Get-Screenshot to place collection in the Empire C2 campaign.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-005",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "4f623cbf429fc9e4abac7a228106262e79bf50d3cf2772979f68cf604f6cea98",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "Invoke-WmiMethod to SysClient0402"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover WMI pivot evidence to SysClient0402 and any concurrent collection context.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C09-darpa-optc-sysclient0201-0923",
+      "action_id": "C09-AA-006",
+      "action_type": "human_review",
+      "phase": "development",
+      "source_action_sha256": "0c5024b01052417dabf169cc3923c5b92bdd635416a72ffb5de82bd7ec3bd197",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "GoogleUpdate.exe benign updater activity"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Review interleaved Google Update process activity that should not be treated as an Empire attack-chain gap.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-001",
+      "action_type": "recover_network_summary",
+      "phase": "development",
+      "source_action_sha256": "c4fcc55ce7d7e1ca52617e8aa2860a9f8e1da31c4ede6e075acf803a22f0164e",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "endpoint",
+        "target_value": "f.exe reverse TCP to 53.192.68.50:8080"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "network_telemetry",
+        "natural_language_request": "Recover reverse-TCP flow summaries and look for migration-adjacent activity around the same payload session.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "43d8eb44aa3f89a939c2a095a283acab344639908369ddc45198f3a76294a23f",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "f.exe C2 lineage"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover host-backed f.exe C2 lineage and inspect adjacent remote-thread activity.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary",
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-003",
+      "action_type": "ttp_local_probe",
+      "phase": "development",
+      "source_action_sha256": "05df3fe857ebbe3a5686dd4f7af9488fc98a649d310433f622addeb5614ffea9",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "file",
+        "target_value": "Notepad++ updater drop of Temp\\f.exe"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_probe",
+        "natural_language_request": "Recover the updater-created payload file and determine whether it subsequently executed.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-004",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "6b610b495076e630afae889370a3d22855db403c7079f44cc9df2e4881529d70",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "Temp\\f.exe PID 1932 creation"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover f.exe process creation and place it beside any immediately following C2 activity.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-005",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "2eaac9d4941c5571ac694734c2d07abfe0505089e8a76fe6e30b50983242ecd4",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "thread",
+        "target_value": "remote thread from f.exe PID 1932 to lwabeat PID 1256"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "host_forensics",
+        "natural_language_request": "Recover the f.exe-to-lwabeat remote-thread migration and correlate it with the reverse-TCP session.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "host_forensics"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C10-darpa-optc-sysclient0351-0925",
+      "action_id": "C10-AA-006",
+      "action_type": "human_review",
+      "phase": "development",
+      "source_action_sha256": "2e11f9a6e405601e60ac61082ff135090888fd1ab78b5d7d011b85675c2e325d",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "process",
+        "target_value": "python.exe multicast flow to 225.0.0.1:5000"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "analyst",
+        "natural_language_request": "Review interleaved Python multicast activity that should not be treated as a malicious-upgrade chain gap.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-001",
+      "action_type": "extend_log_window",
+      "phase": "development",
+      "source_action_sha256": "c351f921cc3cfe3b42c8bb79127d7d6a62438b8d1321d21467ff68ad91b2af59",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "SCRANTON PowerShell logs"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "scranton_powershell",
+        "natural_language_request": "Recover SCRANTON PowerShell execution records across the locked Day 1 investigation window.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-002",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "a1537d5b0c687f7739e7f697b685d8d90d93f0d95a25d1547eb423d2d0cd9024",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "SCRANTON Sysmon records"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "scranton_sysmon",
+        "natural_language_request": "Recover SCRANTON Sysmon process, file and registry records for the locked nodes.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-003",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "16fb5e65d658915e6aacc29191832fdb112cf4a0952d321741501c8e4b8ce7b6",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "SCRANTON Security process records"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "scranton_security",
+        "natural_language_request": "Recover SCRANTON Security process-creation records around UAC bypass and remote execution.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-004",
+      "action_type": "extend_log_window",
+      "phase": "development",
+      "source_action_sha256": "ee0c1514c411ee88caf509383b13e22ece0299bb03016baf6ddf71b391f292e7",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "NASHUA PowerShell logs"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "nashua_powershell",
+        "natural_language_request": "Recover NASHUA PowerShell records after the locked lateral-movement step.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "action_id": "C11-AA-005",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "100cb8a092b3357a73c147ba867ff39de59c03f8c637dfa534395e558821ae7f",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "NASHUA Sysmon records"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "nashua_sysmon",
+        "natural_language_request": "Recover NASHUA Sysmon records for files and processes created after lateral movement.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-001",
+      "action_type": "recover_network_summary",
+      "phase": "development",
+      "source_action_sha256": "b37e45e709a61daf35973199dd85544864f5a6f955bc922ed4e458f67b5f2f36",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "time_window",
+        "target_value": "ASA blocked-connection summary for the frozen incident window"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "asa_summary",
+        "natural_language_request": "Summarize blocked ASA connections across the frozen incident window without reading vendor attribution labels.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "network_summary"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-002",
+      "action_type": "ttp_local_probe",
+      "phase": "development",
+      "source_action_sha256": "99777c986bbdd8b7e46db2953e8a2460a9fdc9146abd41f951653afda3baffb0",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "technique",
+        "target_value": "targeted service-access observation around destination port 445"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "asa_targeted_probe",
+        "natural_language_request": "Recover a representative ASA record for the blocked destination-port-445 observation.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-003",
+      "action_type": "query_host_subgraph",
+      "phase": "development",
+      "source_action_sha256": "7deb570d5e9d06082bd78fc171393e80eae0def035c42f23e203e6da81032882",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "host",
+        "target_value": "Windows Security 4672 observations in the frozen incident"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "windows_security_audit",
+        "natural_language_request": "Recover Windows Security Event 4672 records linked to the frozen incident.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "local_log"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    },
+    {
+      "case_id": "C12-witfoo-precinct6-f10c7270",
+      "action_id": "C12-AA-004",
+      "action_type": "human_review",
+      "phase": "development",
+      "source_action_sha256": "905264f6dc9214e327160ad4a3bd215fe784b13867a20b70f0f8d172ae128b56",
+      "abstraction_level": "planner_evidence_acquisition_decision",
+      "actor_and_authority": {
+        "actor_role": null,
+        "authority_boundary": null,
+        "mapping_status": "unresolved"
+      },
+      "target": {
+        "target_type": "case",
+        "target_value": "f10c7270-1228-11ed-99ed-adca11e4059c"
+      },
+      "preconditions": {
+        "source_declared": [],
+        "mapping_status": "unresolved"
+      },
+      "invocation": {
+        "acquisition_channel": "precinct_projection_review",
+        "natural_language_request": "Review the vendor incident projection and record its provenance boundary.",
+        "machine_interface": null,
+        "mapping_status": "unresolved"
+      },
+      "termination": {
+        "success_criterion": null,
+        "timeout_policy": null,
+        "mapping_status": "unresolved"
+      },
+      "observation": {
+        "declared_evidence_types": [
+          "human_review"
+        ],
+        "observation_schema_ref": null,
+        "mapping_status": "unresolved"
+      },
+      "state_effects": {
+        "declared_expected_effect_fields": [
+          "expected_conflict_resolution",
+          "expected_coverage_delta",
+          "expected_granularity_gain",
+          "expected_over_attribution_risk_reduction",
+          "expected_uncertainty_reduction"
+        ],
+        "realized_effect_source": "executor_observation_not_planner_prior",
+        "mapping_status": "unresolved"
+      },
+      "execution_mapping": {
+        "attempt_unit": "unresolved",
+        "primitive_operation_boundary": "unresolved",
+        "retry_policy": "unresolved",
+        "shared_overhead_policy": "unresolved"
+      }
+    }
+  ]
+}

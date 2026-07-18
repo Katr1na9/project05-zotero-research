@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/action_ontology_profile.schema.json",
+  "title": "Project05 governed acquisition-action ontology profile",
+  "description": "A sidecar contract that freezes action boundaries and counting semantics without rewriting the legacy case files or treating their scalar cost labels as measured cost.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "version",
+    "status",
+    "created_utc",
+    "evidence_basis",
+    "runtime_audit",
+    "data_boundary",
+    "scope",
+    "counting_semantics",
+    "actions"
+  ],
+  "properties": {
+    "profile_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-draft)?$"},
+    "status": {"enum": ["draft", "frozen"]},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "evidence_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["construct_synthesis_ref", "construct_synthesis_sha256"],
+      "properties": {
+        "construct_synthesis_ref": {"type": "string", "minLength": 1},
+        "construct_synthesis_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "case_cohort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "runtime_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_executor_type",
+        "source_ref",
+        "source_sha256",
+        "execution_mechanism",
+        "external_collector_invoked",
+        "operational_cost_measurement_eligible",
+        "blocking_reason"
+      ],
+      "properties": {
+        "current_executor_type": {"const": "outcome_reveal_simulator"},
+        "source_ref": {"type": "string", "minLength": 1},
+        "source_sha256": {"$ref": "#/$defs/sha256"},
+        "execution_mechanism": {"const": "seeded_channel_availability_then_recoverable_hidden_claim_set_reveal"},
+        "external_collector_invoked": {"const": false},
+        "operational_cost_measurement_eligible": {"const": false},
+        "blocking_reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "data_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibration_cases", "development_cases", "C13_plus"],
+      "properties": {
+        "calibration_cases": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^C0[1-6].*$"},
+          "uniqueItems": true
+        },
+        "development_cases": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^C(?:0[4-9]|1[0-2]).*$"},
+          "uniqueItems": true
+        },
+        "C13_plus": {"const": "sealed"},
+        "canonical_C10_plus": {"const": "unassigned_and_sealed"}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_ids", "action_count", "legacy_case_files_mutated"],
+      "properties": {
+        "case_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^C[0-9]{2}.*$"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "action_count": {"type": "integer", "minimum": 1},
+        "legacy_case_files_mutated": {"const": false}
+      }
+    },
+    "counting_semantics": {"$ref": "#/$defs/countingSemantics"},
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/actionEntry"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "countDefinition": {
+      "type": "object",
+      "required": ["unit", "definition"],
+      "properties": {
+        "unit": {"type": "string", "minLength": 1},
+        "definition": {"type": "string", "minLength": 1}
+      }
+    },
+    "countingSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "planner_decision_count",
+        "execution_attempt_count",
+        "primitive_operation_count",
+        "split_merge_invariance"
+      ],
+      "properties": {
+        "status": {"const": "frozen_v0.1"},
+        "planner_decision_count": {
+          "allOf": [
+            {"$ref": "#/$defs/countDefinition"},
+            {
+              "type": "object",
+              "required": ["stop_counts_as_decision"],
+              "properties": {"stop_counts_as_decision": {"const": true}}
+            }
+          ]
+        },
+        "execution_attempt_count": {
+          "allOf": [
+            {"$ref": "#/$defs/countDefinition"},
+            {
+              "type": "object",
+              "required": ["failures_count", "cancellations_count", "retries_are_new_attempts", "stop_counts_as_attempt"],
+              "properties": {
+                "failures_count": {"const": true},
+                "cancellations_count": {"const": true},
+                "retries_are_new_attempts": {"const": true},
+                "stop_counts_as_attempt": {"const": false}
+              }
+            }
+          ]
+        },
+        "primitive_operation_count": {
+          "allOf": [
+            {"$ref": "#/$defs/countDefinition"},
+            {
+              "type": "object",
+              "required": ["implicit_one_per_planner_action_forbidden"],
+              "properties": {"implicit_one_per_planner_action_forbidden": {"const": true}}
+            }
+          ]
+        },
+        "split_merge_invariance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "rule", "required_tests"],
+          "properties": {
+            "status": {"const": "required_before_formal_cost_claims"},
+            "rule": {"type": "string", "minLength": 1},
+            "required_tests": {
+              "type": "array",
+              "items": {"enum": ["split_equivalent", "merge_equivalent", "retry_not_mergeable", "shared_overhead_conservation"]},
+              "minItems": 4,
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": ["target_type", "target_value"],
+      "properties": {
+        "target_type": {"type": "string", "minLength": 1},
+        "target_value": {"type": "string", "minLength": 1}
+      }
+    },
+    "mappingStatus": {"enum": ["resolved", "unresolved"]},
+    "actionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "action_id",
+        "action_type",
+        "phase",
+        "source_action_sha256",
+        "abstraction_level",
+        "actor_and_authority",
+        "target",
+        "preconditions",
+        "invocation",
+        "termination",
+        "observation",
+        "state_effects",
+        "execution_mapping"
+      ],
+      "properties": {
+        "case_id": {"type": "string", "pattern": "^C[0-9]{2}.*$"},
+        "action_id": {"type": "string", "minLength": 1},
+        "source_case_id": {"type": "string", "pattern": "^C[0-9]{2}.*$"},
+        "source_action_id": {"type": "string", "minLength": 1},
+        "source_action_ref": {"type": "string", "minLength": 1},
+        "action_type": {"type": "string", "minLength": 1},
+        "phase": {"enum": ["calibration", "development"]},
+        "source_action_sha256": {"$ref": "#/$defs/sha256"},
+        "abstraction_level": {"const": "planner_evidence_acquisition_decision"},
+        "actor_and_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["actor_role", "authority_boundary", "mapping_status"],
+          "properties": {
+            "actor_role": {"type": ["string", "null"]},
+            "authority_boundary": {"type": ["string", "null"]},
+            "mapping_status": {"$ref": "#/$defs/mappingStatus"}
+          }
+        },
+        "target": {"$ref": "#/$defs/target"},
+        "preconditions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_declared", "mapping_status"],
+          "properties": {
+            "source_declared": {"type": "array"},
+            "mapping_status": {"$ref": "#/$defs/mappingStatus"}
+          }
+        },
+        "invocation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["acquisition_channel", "natural_language_request", "machine_interface", "mapping_status"],
+          "properties": {
+            "acquisition_channel": {"type": "string", "minLength": 1},
+            "natural_language_request": {"type": ["string", "null"]},
+            "machine_interface": {"type": ["string", "null"]},
+            "mapping_status": {"$ref": "#/$defs/mappingStatus"}
+          }
+        },
+        "termination": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["success_criterion", "timeout_policy", "mapping_status"],
+          "properties": {
+            "success_criterion": {"type": ["string", "null"]},
+            "timeout_policy": {"type": ["string", "null"]},
+            "mapping_status": {"$ref": "#/$defs/mappingStatus"}
+          }
+        },
+        "observation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declared_evidence_types", "observation_schema_ref", "mapping_status"],
+          "properties": {
+            "declared_evidence_types": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "observation_schema_ref": {"type": ["string", "null"]},
+            "mapping_status": {"$ref": "#/$defs/mappingStatus"}
+          }
+        },
+        "state_effects": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declared_expected_effect_fields", "realized_effect_source", "mapping_status"],
+          "properties": {
+            "declared_expected_effect_fields": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "realized_effect_source": {"const": "executor_observation_not_planner_prior"},
+            "mapping_status": {"$ref": "#/$defs/mappingStatus"}
+          }
+        },
+        "execution_mapping": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["attempt_unit", "primitive_operation_boundary", "retry_policy", "shared_overhead_policy"],
+          "properties": {
+            "attempt_unit": {"$ref": "#/$defs/mappingStatus"},
+            "primitive_operation_boundary": {"$ref": "#/$defs/mappingStatus"},
+            "retry_policy": {"$ref": "#/$defs/mappingStatus"},
+            "shared_overhead_policy": {"$ref": "#/$defs/mappingStatus"}
+          }
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MVP_PATH = Path(__file__).with_name("run_mvp.py")
+MVP_PATH = Path(__file__).with_name("cost_profile_runtime.py")
 ENDPOINT_ADAPTER_PATH = Path(__file__).with_name("planner_runtime_adapter.py")
 PLANNER = "project05_depth2_public"
 DISCOUNT = 0.8
@@ -32,7 +32,7 @@ DEFAULT_CASE_PREFIXES = ("C07", "C08", "C09", "C10")
 def _load_mvp() -> Any:
     spec = importlib.util.spec_from_file_location("project05_run_mvp", MVP_PATH)
     if spec is None or spec.loader is None:
-        raise ImportError(f"Cannot load simulator from {MVP_PATH}")
+        raise ImportError(f"Cannot load governed cost runtime from {MVP_PATH}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

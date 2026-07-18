@@ -1,0 +1,65 @@
+{
+  "protocol_id": "project05-operational-cost-measurement-protocol-v0.3",
+  "version": "0.3.0",
+  "status": "draft_pending_runtime_block_assignments_and_statistical_sufficiency",
+  "execution_readiness": "blocked_no_real_action_executor",
+  "schedule_authorization": "template_only_do_not_execute_until_action_adapters_are_frozen",
+  "action_executor_registry": {
+    "path": "09-experiments/governance/measurement_v0.3/action-executor-registry-v0.1-draft.json",
+    "sha256": "ef5a09708536946769a4ffc0a6bab6c2cb0db751b747abf10fae70bec470e145"
+  },
+  "ontology_profile": {
+    "path": "09-experiments/governance/profiles/action-ontology-v0.3-real-only-draft.json",
+    "sha256": "f5434498234838ac0d049c2694fcf9a23d5960a080dcf27f8529b49eb61a58eb"
+  },
+  "experimental_unit": "independent_execution_attempt_from_declared_initial_state",
+  "counting_semantics": {
+    "planner_decision_count": "unique accepted planner_decision_id including STOP",
+    "execution_attempt_count": "unique execution_attempt_id including failures cancellations and retries",
+    "primitive_operation_count": "sum of instrumented primitive_operation_count; never inferred from planner actions"
+  },
+  "coverage_gate": {
+    "purpose": "coverage_and_smoke_only",
+    "minimum_completed_primary_attempts_per_action": 3,
+    "formal_statistical_claim_authorized": false
+  },
+  "statistical_sufficiency": {
+    "status": "not_established_by_coverage_gate",
+    "required_separate_analysis": true
+  },
+  "randomization": {
+    "method": "seeded_blocked_permutation",
+    "seed": 20260718,
+    "within_block_order": "randomized"
+  },
+  "blocking": {
+    "design_blocks": [
+      "phase",
+      "attempt_round"
+    ],
+    "recorded_nuisance_factors": [
+      "case_id",
+      "machine_id",
+      "cache_state",
+      "executor_id",
+      "execution_date",
+      "environment_id"
+    ]
+  },
+  "failure_policy": "retain_and_include_all_attempts_in_failure_and_resource_distributions",
+  "retry_policy": "each_retry_is_a_new_linked_execution_attempt_not_an_independent_coverage_replicate",
+  "shared_overhead_policy": "track_unallocated",
+  "scalar_cost_status": "undefined_until_transformation_model_is_separately_calibrated_and_frozen",
+  "schedule": {
+    "schedule_id": "project05-operational-cost-minimum-coverage-schedule-v0.3",
+    "path": "09-experiments/governance/measurement_v0.3/minimum-coverage-schedule-v0.3.csv",
+    "sha256": "157d53502052f50fd79673c95be9c36712d8cc04d18f82abb581e2d7b4c92158",
+    "scheduled_primary_attempt_count": 150
+  },
+  "data_boundary": {
+    "canonical_C01_C03": "calibration",
+    "canonical_C04_C09": "development_repeat_validation",
+    "canonical_C10_plus": "unassigned_and_sealed",
+    "source_C13_plus": "sealed"
+  }
+}

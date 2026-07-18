@@ -1,0 +1,80 @@
+{
+  "adapter_id": "project05-query-host-subgraph-file-pilot-v0.1",
+  "adapter_source": {
+    "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/scripts/query_host_subgraph_adapter.py",
+    "sha256": "58339a149e9c6bd7ad2168d34512cc08c8af3800aa980390e3768d54ade2164d"
+  },
+  "invocation": {
+    "case_id": "C02",
+    "action_id": "C02-AA-002",
+    "action_type": "query_host_subgraph",
+    "target": {
+      "target_type": "file",
+      "target_value": "/tmp/vUgefal"
+    }
+  },
+  "started_utc": "2026-07-18T06:48:54.583661Z",
+  "ended_utc": "2026-07-18T06:49:04.938577Z",
+  "execution_status": "completed",
+  "termination_reason": "completed_after_integrity_seed_one_hop_and_node_resolution_scans",
+  "primitive_operation_definition": "one raw JSONL source line read, including immutable-input integrity scans",
+  "primitive_operation_count": 807514,
+  "resource_trace": {
+    "analyst_time_by_role": [],
+    "compute": {
+      "wall_seconds": 10.355915699999969,
+      "cpu_seconds": 9.984375,
+      "memory_byte_seconds": 244984898.89484233
+    },
+    "data_access": {
+      "bytes_scanned": 901652996,
+      "records_scanned": 807514
+    },
+    "direct_currency": {
+      "amount": 0.0,
+      "currency": "CNY"
+    },
+    "authorization_wait_seconds": 0.0,
+    "shared_overhead": {
+      "setup_seconds": 0.0,
+      "allocation_status": "unallocated",
+      "allocation_rule": null
+    }
+  },
+  "input_integrity": {
+    "events": {
+      "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/real_data/darpa_tc_e3/extracted/R02/events.jsonl",
+      "sha256": "8581dc84eccaaa03df957793fc47ed42159ac58d3e17ab714064c0d39bc2b32d"
+    },
+    "event_shards": [
+      {
+        "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/real_data/darpa_tc_e3/extracted/R02/events.jsonl",
+        "sha256": "8581dc84eccaaa03df957793fc47ed42159ac58d3e17ab714064c0d39bc2b32d"
+      }
+    ],
+    "nodes": {
+      "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/real_data/darpa_tc_e3/extracted/R02/nodes.jsonl",
+      "sha256": "f7c874aaac39260e4c67515f9041876d72b7a54fb0a30e1f9eab11f036d47301"
+    }
+  },
+  "observation": {
+    "schema_id": "project05-cdm18-file-one-hop-subgraph-v0.1",
+    "one_hop_definition": "all event records with at least one endpoint UUID in the exact-target seed endpoint set",
+    "target_match_event_count": 5,
+    "seed_node_count": 4,
+    "subgraph_event_count": 3002,
+    "subgraph_node_count": 1391,
+    "evidence_perturbations": [],
+    "downtime_seconds": 0.0,
+    "artifacts": {
+      "events": {
+        "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/governance/measurement_v0.3/pilots/c02-aa-002-r02-file-one-hop-v0.3/observation/subgraph-events.jsonl",
+        "sha256": "e57e7fc8a50cf8ee137d056f2425b61dc6bdbb22bd2ddda5cc744834220772d1"
+      },
+      "nodes": {
+        "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/governance/measurement_v0.3/pilots/c02-aa-002-r02-file-one-hop-v0.3/observation/subgraph-nodes.jsonl",
+        "sha256": "b05bde9903a053c88b0ae1eb52b8dcc38f5ea79e74c4b7c27401b1b155fe4582"
+      }
+    }
+  }
+}

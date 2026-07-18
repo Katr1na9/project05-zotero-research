@@ -26,7 +26,7 @@ def load_script(name: str) -> Any:
 
 
 run_m3b = load_script("run_m3b")
-run_mvp = run_m3b.run_mvp
+run_mvp = load_script("cost_profile_runtime")
 runtime_adapter = load_script("planner_runtime_adapter")
 RUNTIME_CONTRACT = runtime_adapter.load_contract()
 FEATURE_COLUMNS = run_m3b.FEATURE_COLUMNS

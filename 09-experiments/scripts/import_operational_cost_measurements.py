@@ -26,6 +26,7 @@ def load_validator() -> Any:
 
 
 VALIDATOR = load_validator()
+MINIMUM_COMPLETED_ATTEMPTS_PER_ACTION = 3
 
 
 def canonical_sha256(value: Any) -> str:
@@ -81,9 +82,19 @@ def import_measurements(
         )
     normalized.sort(key=lambda row: (str(row.get("case_id", "")), str(row.get("action_id", "")), str(row.get("attempt_id", "")), str(row.get("measurement_id", ""))))
     batch = {
-        "batch_id": "project05-operational-cost-measurements-v0.1",
-        "version": "0.1.0",
+        "batch_id": "project05-operational-cost-measurements-v0.2",
+        "version": "0.2.0",
         "created_utc": created_utc,
+        "measurement_protocol": {
+            "protocol_id": "project05-operational-cost-measurement-protocol-v0.2",
+            "minimum_completed_attempts_per_action": MINIMUM_COMPLETED_ATTEMPTS_PER_ACTION,
+            "coverage_execution_status": "completed",
+            "aggregation_unit": "case_action",
+            "independent_attempt_definition": (
+                "A distinct action execution with a unique case_id/action_id/attempt_id; "
+                "only completed executions count toward coverage."
+            ),
+        },
         "records": normalized,
         "source_files": source_files,
     }
