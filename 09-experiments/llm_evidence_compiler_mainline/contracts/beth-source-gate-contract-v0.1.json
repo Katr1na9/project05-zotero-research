@@ -1,0 +1,77 @@
+{
+  "contract_id": "project05-beth-single-file-source-gate-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-18",
+  "status": "authorized_bounded_acquisition_and_read_only_audit_only",
+  "dataset": {
+    "dataset_ref": "katehighnam/beth-dataset",
+    "dataset_version_number": 3,
+    "allowlisted_file": "labelled_2021may-ip-10-100-1-105.csv",
+    "maximum_source_files": 1,
+    "maximum_downloaded_bytes": 536870912,
+    "declared_dataset_level_bytes": 928188305,
+    "expected_license_id": "CC0-1.0"
+  },
+  "request_fields": [
+    "owner_slug",
+    "dataset_slug",
+    "dataset_version_number",
+    "file_name"
+  ],
+  "required_schema_fields": [
+    "timestamp",
+    "processId",
+    "threadId",
+    "parentProcessId",
+    "userId",
+    "mountNamespace",
+    "processName",
+    "hostName",
+    "eventId",
+    "eventName",
+    "argsNum",
+    "returnValue",
+    "stackAddresses",
+    "args",
+    "sus",
+    "evil"
+  ],
+  "prohibited_supervision_fields": [
+    "sus",
+    "evil",
+    "original_split",
+    "filename",
+    "host_role",
+    "attack_narrative"
+  ],
+  "g0_audit": {
+    "minimum_unique_pointer_bound_candidates": 150,
+    "record_local_only": true,
+    "cross_record_parent_name_join_allowed": false,
+    "normalized_record_output_allowed": false,
+    "candidate_output_allowed": false,
+    "counts_and_hashes_only": true
+  },
+  "protected_scan": {
+    "lock_path": "09-experiments/llm_evidence_compiler_mainline/wp4/generated/retrieval-v0.1/protected-signature-lock-v0.1.json",
+    "near_duplicate_threshold": 0.85,
+    "contains_raw_test_payload": false,
+    "contains_raw_private_gold": false
+  },
+  "not_authorized": [
+    "whole_beth_dataset_download",
+    "second_beth_file_download",
+    "normalized_record_output",
+    "formal_candidate_pair_construction",
+    "dependency_install_or_change",
+    "tokenizer_download",
+    "model_download",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "frozen_case_or_result_overwrite"
+  ]
+}

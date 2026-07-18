@@ -1,0 +1,109 @@
+{
+  "contract_id": "project05-beth-single-file-source-gate-v0.2",
+  "version": "0.2.0",
+  "created_date": "2026-07-18",
+  "status": "authorized_exact_observed_schema_and_read_only_audit_only",
+  "dataset": {
+    "dataset_ref": "katehighnam/beth-dataset",
+    "dataset_version_number": 3,
+    "allowlisted_file": "labelled_2021may-ip-10-100-1-105.csv",
+    "maximum_source_files": 1,
+    "maximum_downloaded_bytes": 536870912,
+    "declared_dataset_level_bytes": 928188305,
+    "expected_csv_bytes": 99560489,
+    "expected_csv_sha256": "528AD1F4813A9FBB839F3C4B37F7B1A861F0E33D998FB46E6D59CAEF119FB597",
+    "expected_transport_zip_bytes": 3997971,
+    "expected_transport_zip_sha256": "82AEEBC2CE0D0027EDC9DB794F11FC50F536557AA2EBA5031DAA671B41CE1E0A",
+    "expected_license_id": "CC0-1.0"
+  },
+  "request_fields": [
+    "owner_slug",
+    "dataset_slug",
+    "dataset_version_number",
+    "file_name"
+  ],
+  "required_schema_fields": [
+    "timestamp",
+    "processId",
+    "parentProcessId",
+    "userId",
+    "processName",
+    "hostName",
+    "eventId",
+    "eventName",
+    "argsNum",
+    "returnValue",
+    "args",
+    "sus",
+    "evil"
+  ],
+  "required_schema_order_sha256": "08584B99F7229981D2345B8AF887B7FB73486DA55651A2FDC81E397FD0870D80",
+  "published_but_absent_in_observed_v3_host_file": [
+    "threadId",
+    "mountNamespace",
+    "stackAddresses"
+  ],
+  "prohibited_supervision_fields": [
+    "sus",
+    "evil",
+    "original_split",
+    "filename",
+    "host_role",
+    "attack_narrative"
+  ],
+  "license_evidence": {
+    "dataset_view_url": "https://www.kaggle.com/api/v1/datasets/view/katehighnam/beth-dataset?datasetVersionNumber=3",
+    "dataset_files_url": "https://www.kaggle.com/api/v1/datasets/list/katehighnam/beth-dataset?datasetVersionNumber=3&pageSize=100",
+    "page_extract_path": "08-writing/llm-evidence-compiler-positive-source-gap-audit-v0.1-20260718/extract-02-beth-kaggle.json",
+    "page_extract_sha256": "1ABF7C4AFF6DF502AAFF79FE3919E36D1752331A10800357AB0FDEE32704D231",
+    "legalcode_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+    "legalcode_sha256": "A2010F343487D3F7618AFFE54F789F5487602331C0A8D03F49E9A7C547CF0499",
+    "expected_file_inventory": [
+      "labelled_2021may-ip-10-100-1-105-dns.csv",
+      "labelled_2021may-ip-10-100-1-105.csv",
+      "labelled_2021may-ip-10-100-1-186-dns.csv",
+      "labelled_2021may-ip-10-100-1-186.csv",
+      "labelled_2021may-ip-10-100-1-26-dns.csv",
+      "labelled_2021may-ip-10-100-1-26.csv",
+      "labelled_2021may-ip-10-100-1-4-dns.csv",
+      "labelled_2021may-ip-10-100-1-4.csv",
+      "labelled_2021may-ip-10-100-1-95-dns.csv",
+      "labelled_2021may-ip-10-100-1-95.csv",
+      "labelled_2021may-ubuntu-dns.csv",
+      "labelled_2021may-ubuntu.csv",
+      "labelled_testing_data.csv",
+      "labelled_training_data.csv",
+      "labelled_validation_data.csv"
+    ]
+  },
+  "g0_audit": {
+    "minimum_unique_pointer_bound_candidates": 150,
+    "record_local_only": true,
+    "cross_record_parent_name_join_allowed": false,
+    "normalized_record_output_allowed": false,
+    "candidate_output_allowed": false,
+    "counts_and_hashes_only": true
+  },
+  "protected_scan": {
+    "lock_path": "09-experiments/llm_evidence_compiler_mainline/wp4/generated/retrieval-v0.1/protected-signature-lock-v0.1.json",
+    "near_duplicate_threshold": 0.85,
+    "contains_raw_test_payload": false,
+    "contains_raw_private_gold": false
+  },
+  "not_authorized": [
+    "whole_beth_dataset_download",
+    "second_beth_file_download",
+    "normalized_record_output",
+    "formal_candidate_pair_construction",
+    "dependency_install_or_change",
+    "tokenizer_download",
+    "model_download",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "frozen_case_or_result_overwrite"
+  ]
+}
