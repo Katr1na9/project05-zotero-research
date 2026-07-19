@@ -1,0 +1,99 @@
+{
+  "contract_id": "project05-label-blind-token-length-gate-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "authorized_tokenizer_audit_only",
+  "inputs": {
+    "pair_data_gate_audit_path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.1/generated/data-gate-audit-v0.1.json",
+    "pair_data_gate_audit_sha256": "E495DC901DD5247C04401646389B1300315CE8541FB30428B2DDDECC2308DAB5",
+    "pair_determinism_audit_path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.1/generated/determinism-audit-v0.1.json",
+    "pair_determinism_audit_sha256": "5FDDC84DC270F7946F7EC0651662E2C69442D0A98472F46BD87A442EE13059A2",
+    "qwen_fairness_contract_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen-paired-fairness-contract-v0.1.json",
+    "qwen_fairness_contract_sha256": "AC570A99C275706C715937F30E4B80B788E68257FB793C509C1CFAB158558AB9"
+  },
+  "tokenizer": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "allowlisted_files": [
+      "merges.txt",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "vocab.json"
+    ],
+    "maximum_total_download_bytes": 20000000,
+    "engine_package": "tokenizers",
+    "engine_version": "0.21.4",
+    "engine_install_mode": "isolated_target_no_dependencies",
+    "transformers_allowed": false,
+    "model_files_allowed": false
+  },
+  "serialization": {
+    "serialization_id": "project05-qwen25-pointer-support-chat-v0.1",
+    "system_message": "You are a provenance evidence compiler. Decide whether the candidate observation is directly supported by the bound source record. Use only the visible record fields and exact source pointer. Return only the required JSON object. Unsupported means unsupported by this bound record, not false in the world, benign, or absent from the wider packet.",
+    "user_fields": [
+      "source_family_id",
+      "source_modality",
+      "source_record",
+      "candidate"
+    ],
+    "assistant_fields": [
+      "support_decision",
+      "normalized_edge",
+      "pointer"
+    ],
+    "forbidden_message_fields": [
+      "negative_proof",
+      "example_id",
+      "split_role",
+      "packet_key",
+      "reason_code",
+      "field_map_id"
+    ],
+    "json": {
+      "encoding": "utf-8",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [",", ":"]
+    },
+    "chat_turn_template": "<|im_start|>{role}\n{content}<|im_end|>\n",
+    "role_order": ["system", "user", "assistant"],
+    "add_special_tokens": false,
+    "truncation": false,
+    "padding": false
+  },
+  "gate": {
+    "exact_total_examples": 1500,
+    "exact_train_examples": 1200,
+    "exact_training_validation_examples": 300,
+    "percentile_definition": "nearest_rank_sorted_values_ceil_qn_minus_1",
+    "maximum_p95_tokens": 1024,
+    "maximum_example_tokens": 1024,
+    "maximum_over_limit_examples": 0,
+    "example_exclusion_allowed": false,
+    "truncation_allowed": false,
+    "deterministic_second_run_required": true
+  },
+  "authorized_actions": [
+    "download_four_allowlisted_tokenizer_files_at_fixed_revision",
+    "download_and_install_isolated_tokenizers_0_21_4_wheel",
+    "render_frozen_prompt_and_target_serialization",
+    "count_tokens_without_truncation",
+    "write_counts_hashes_and_gate_audit",
+    "delete_reproduction_only_outputs_after_hash_comparison"
+  ],
+  "not_authorized": [
+    "download_any_model_config_or_weight",
+    "install_transformers_torch_peft_bitsandbytes_or_training_runtime",
+    "modify_pair_payload",
+    "exclude_overlength_examples_without_amendment",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ]
+}

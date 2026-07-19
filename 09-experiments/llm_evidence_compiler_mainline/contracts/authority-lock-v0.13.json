@@ -1,0 +1,60 @@
+{
+  "authority_id": "project05-llm-evidence-compiler-tokenizer-gate-v0.13",
+  "version": "0.13.0",
+  "status": "tokenizer_length_audit_authorized_model_gate_closed",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.12.json",
+    "sha256": "108AADBFB697B7D8E3EEE70A5F45F92CD1256B0E1F797EDB0CA39B93D7BF9A1E",
+    "disposition": "opened_only_the_fixed_revision_tokenizer_length_gate_and_preserved_all_model_and_training_blocks"
+  },
+  "authoritative_documents": {
+    "08-writing/llm-evidence-compiler-token-length-gate-amendment-v0.1-20260719.md": "DE0D4B1584C40FD595BEF7E11D3C8D0D6DC5C2C122B5FFB59EC3AFF3FDCCFE3A"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.1.json": "7B9334A43A91863765C167ED7C80F48E9BB2A26B6FF6206B8D153587E8E32117"
+  },
+  "tokenizer_gate": {
+    "authority_granted": true,
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "allowlisted_file_count": 4,
+    "maximum_total_download_bytes": 20000000,
+    "isolated_tokenizers_version": "0.21.4",
+    "full_prompt_and_target_required": true,
+    "truncation_allowed": false,
+    "maximum_p95_tokens": 1024,
+    "maximum_example_tokens": 1024
+  },
+  "authorized_scope": [
+    "four_file_fixed_revision_tokenizer_retrieval",
+    "isolated_tokenizers_wheel_retrieval_and_install",
+    "tokenizer_file_and_wheel_hash_lock",
+    "frozen_chat_serialization",
+    "full_prompt_target_token_count",
+    "nearest_rank_p50_p95_max_audit",
+    "byte_determinism_reproduction",
+    "counts_hashes_and_gate_report"
+  ],
+  "not_authorized": [
+    "model_config_download",
+    "model_weight_download",
+    "transformers_install",
+    "torch_install",
+    "peft_install",
+    "bitsandbytes_install",
+    "adapter_or_optimizer_creation",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_overwrite",
+    "frozen_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
