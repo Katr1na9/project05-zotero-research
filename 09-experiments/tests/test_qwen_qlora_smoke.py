@@ -27,7 +27,7 @@ LOCAL_REQUIREMENTS_PATH = (
 LOCAL_LAUNCHER_PATH = (
     MAINLINE_ROOT / "qlora_smoke_v0.2" / "run-local-smoke-v0.2.ps1"
 )
-AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.19.json"
+AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.20.json"
 
 
 def load_module(path: Path, name: str):
@@ -173,6 +173,9 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
         launcher = LOCAL_LAUNCHER_PATH.read_text(encoding="utf-8")
         for name in (
             "PIP_CACHE_DIR",
+            "TEMP",
+            "TMP",
+            "TMPDIR",
             "HF_HOME",
             "HF_HUB_CACHE",
             "TRANSFORMERS_CACHE",

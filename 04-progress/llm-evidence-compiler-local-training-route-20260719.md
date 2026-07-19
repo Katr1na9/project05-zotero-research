@@ -35,3 +35,11 @@
 
 本地 smoke 完成后必须提交运行环境、loss、trainable ratio、峰值显存、adapter
 文件和边界审计。只有 smoke 通过并经结果复核，才能另行打开正式训练 Gate。
+
+## 本地启动前边界修订
+
+首次本地环境安装在 PyTorch wheel 下载阶段发现：pip cache 虽已位于 run root，
+但 Windows 的下载临时文件仍使用系统 `TEMP`。进程树在 wheel 下载完成前被精确
+停止，未安装训练栈、未下载 Qwen、未训练。v0.20 将 `TEMP`、`TMP` 与 `TMPDIR`
+全部锁定为 `.local-qwen25-smoke/local-cache/tmp` 后才允许续跑；并行 M3 进程未受
+影响。

@@ -25,8 +25,12 @@ if ($Drive.AvailableFreeSpace -lt 40000000000) {
 }
 
 New-Item -ItemType Directory -Force -Path (Join-Path $RunRoot 'local-runtime'), (Join-Path $RunRoot 'local-cache'), (Join-Path $RunRoot 'local-output') | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $RunRoot 'local-cache\tmp') | Out-Null
 $env:PIP_CACHE_DIR = Join-Path $RunRoot 'local-cache\pip'
 $env:PIP_DISABLE_PIP_VERSION_CHECK = '1'
+$env:TEMP = Join-Path $RunRoot 'local-cache\tmp'
+$env:TMP = Join-Path $RunRoot 'local-cache\tmp'
+$env:TMPDIR = Join-Path $RunRoot 'local-cache\tmp'
 $env:HF_HOME = Join-Path $RunRoot 'local-cache\huggingface-home'
 $env:HF_HUB_CACHE = Join-Path $RunRoot 'local-cache\huggingface-hub'
 $env:TRANSFORMERS_CACHE = Join-Path $RunRoot 'local-cache\transformers'

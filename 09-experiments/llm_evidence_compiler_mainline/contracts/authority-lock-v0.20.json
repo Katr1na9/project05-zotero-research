@@ -1,0 +1,82 @@
+{
+  "authority_id": "project05-qwen25-qlora-local-temp-boundary-v0.20",
+  "version": "0.20.0",
+  "status": "local_smoke_authorized_with_all_temp_and_cache_paths_confined",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_local_2080ti_smoke",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.19.json",
+    "sha256": "375E5677808A5B7E111F9ADFD6D2021C29E4E40CD8EEEAF6DD50CB41E53F2C11",
+    "disposition": "adds_only_windows_temp_confinement_before_resuming_environment_install"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-local-smoke-contract-v0.2.json": "F37984ADCABA6B19A7FFFFED8F7E5CE91DCF9F994A31416929842B92C43209EF",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/training-config-v0.2-local.json": "9E7C48BCEBA524DCE0E3472A2B1A00C9F8366A08C6B85E83BB9CF290A7D4DCAA",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/requirements-windows-cu121-v0.2.txt": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/prepare_qwen_qlora_smoke.py": "3AF88EAA22D4D62DCECB71BCA6DB768C3898456D0B7A91531E0E1C666FB20A8D",
+    "09-experiments/scripts/train_qwen_qlora_smoke.py": "8F6A692AB93D302AF4113B80A0673DE4626C5D7B71F777A193F5FDA65A15593B",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/run-local-smoke-v0.2.ps1": "4A9C03B1A0ECC45015D7FA907FBD3F216B7D7B879846A267262A6C804A4EC861"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_smoke.py": "0C3056A54A3364D0BC5CF1E61957C83B38FCF576C1CC2951ABFBC26A546B561E"
+  },
+  "authoritative_documentation": {
+    "04-progress/llm-evidence-compiler-local-training-route-20260719.md": "18B4B61023734A50CB4973CA7DD03C49B3A3036EFEF73E7DE421FBAD18CF22FD"
+  },
+  "server_route": {
+    "status": "abandoned_by_user",
+    "further_connection_authorized": false,
+    "runtime_or_weight_download_authorized": false,
+    "training_authorized": false,
+    "remote_cleanup_authorized": false
+  },
+  "local_boundary_correction": {
+    "first_launcher_process_tree_stopped": true,
+    "parallel_m3_processes_stopped": false,
+    "pytorch_wheel_download_completed": false,
+    "training_runtime_installed": false,
+    "qwen_weight_downloaded": false,
+    "training_run": false,
+    "pip_cache": ".local-qwen25-smoke/local-cache/pip",
+    "windows_temp": ".local-qwen25-smoke/local-cache/tmp",
+    "temp_variables_locked": ["TEMP", "TMP", "TMPDIR"]
+  },
+  "smoke_gate": {
+    "user_authorized": true,
+    "execution_location": "repository_local_windows",
+    "run_root": ".local-qwen25-smoke",
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "maximum_operational_peak_vram_gib": 10.5,
+    "resume_environment_install_authorized": true,
+    "fixed_revision_model_download_authorized": true,
+    "one_step_adapter_only_smoke_authorized": true,
+    "execution_completed": false
+  },
+  "next_gate": {
+    "status": "resume_local_smoke_then_hard_stop_for_result_review",
+    "local_runtime_install_authorized": true,
+    "fixed_revision_model_download_authorized": true,
+    "one_step_smoke_authorized": true,
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "not_authorized": [
+    "any_server_connection_or_training",
+    "primary_or_multi_epoch_training",
+    "hyperparameter_search",
+    "merged_model_save",
+    "hub_upload",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
