@@ -119,6 +119,22 @@ def test_smoke_must_pass_before_one_primary_execution():
     assert authority["rtx4090_execution_gate"]["maximum_primary_executions"] == 1
 
 
+def test_corrected_smoke_authority_preserves_single_optimizer_bearing_execution():
+    authority = load_json(AUTHORITY_PATH)
+    correction = authority["corrected_smoke_authority"]
+    assert authority["version"] == "0.30.1"
+    assert correction["first_launcher_attempt_forward_calls"] == 0
+    assert correction["first_launcher_attempt_backward_calls"] == 0
+    assert correction["first_launcher_attempt_optimizer_steps"] == 0
+    assert correction["first_launcher_attempt_adapter_or_checkpoint_writes"] == 0
+    assert correction["first_launcher_attempt_counts_as_optimizer_bearing_smoke_execution"] is False
+    assert correction["corrected_smoke_rerun_authorized"] is True
+    assert correction["maximum_optimizer_bearing_smoke_executions"] == 1
+    assert correction["automatic_retry_after_corrected_smoke_authorized"] is False
+    assert correction["scientific_configuration_change_authorized"] is False
+    assert authority["rtx4090_execution_gate"]["maximum_optimizer_bearing_smoke_executions"] == 1
+
+
 def test_memory_gate_uses_allocated_and_free_but_not_reserved():
     module = load_script()
     config = load_json(CONFIG_PATH)
