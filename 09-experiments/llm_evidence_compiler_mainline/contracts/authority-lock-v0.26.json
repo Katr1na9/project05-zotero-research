@@ -1,0 +1,121 @@
+{
+  "authority_id": "project05-qwen25-primary-training-failure-v0.26",
+  "version": "0.26.0",
+  "status": "task4_failed_memory_gate_all_execution_closed",
+  "created_date": "2026-07-19",
+  "trigger": {
+    "type": "automatic_contract_hard_stop",
+    "source_authority": "project05-qwen25-single-primary-training-v0.25",
+    "reason": "operational_peak_reserved_vram_exceeded_10_5_gib",
+    "new_user_authority_inferred": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.25.json",
+    "sha256": "5DADC3CFD6DCC4805767F516364DC493CBDEA633C8FF508BB7A43A99C04EF397",
+    "disposition": "the_single_execution_was_consumed_and_failed"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_primary_failure_result.py": "7B500B8CDA6C3BF7D2FE90F111C32EB3D5D6810922D19B59CF07ABA2A6B4F334"
+  },
+  "authoritative_results": {
+    "09-experiments/llm_evidence_compiler_mainline/results/qwen25-primary-training-failure-result-v0.1.json": "A2D5A6BB7CB92FDFEBC1AC4A9D4E2AE0C199C565194AA17B807CC45B8191824D"
+  },
+  "authoritative_documentation": {
+    "04-progress/llm-evidence-compiler-qwen25-primary-training-failure-20260719.md": "5D6AD276EE893973BAEB72D0BC20F3216AF61B1139307614A79CA8311E56285F"
+  },
+  "local_execution_evidence": {
+    "failure_manifest": {
+      "path": ".local-qwen25-smoke/local-output/primary-v0.1/primary-training-failure-v0.1.json",
+      "bytes": 841,
+      "sha256": "D18D4A58875C45602D2ADF767345D5234D9B5D8286D2881D5169F785B2222DEB",
+      "gitignored": true
+    },
+    "progress_log": {
+      "path": ".local-qwen25-smoke/local-output/primary-v0.1/primary-training-progress-v0.1.jsonl",
+      "bytes": 699,
+      "sha256": "A7CECF88D484B790AA533731B6E20DB899283DA95E28A5722A55A07A988465FF",
+      "gitignored": true
+    }
+  },
+  "failure_result_gate": {
+    "attempt_completed": true,
+    "attempt_passed": false,
+    "execution_count": 1,
+    "completed_epochs": 0,
+    "microbatches_completed": 48,
+    "optimizer_steps_completed": 3,
+    "checkpoint_count": 0,
+    "adapter_saved": false,
+    "failure_gate": "peak_reserved_vram",
+    "frozen_limit_bytes": 11274289152,
+    "actual_exceeding_value_recorded": false,
+    "automatic_restart_used": false,
+    "gpu_released_after_failure": true,
+    "interpretation": "capacity_failure_not_model_quality_result"
+  },
+  "verification": {
+    "failure_result_tests": {
+      "tests_run": 7,
+      "passed": 7,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "primary_smoke_preflight_execution_chain_tests": {
+      "tests_run": 67,
+      "passed": 67,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "adjacent_llm_compiler_regression": {
+      "tests_run": 149,
+      "passed": 145,
+      "skipped": 1,
+      "failures": 2,
+      "errors": 1,
+      "status": "existing_repository_conditions_outside_task4_diff",
+      "conditions": [
+        "citation_report_frozen_sha_mismatch",
+        "positive_remap_historical_records_root_missing",
+        "wp2_rule_snapshot_sidecar_sha_mismatch"
+      ],
+      "affected_paths_modified_by_task4": false
+    }
+  },
+  "next_gate": {
+    "status": "hard_stop_for_new_memory_amendment_and_explicit_retry_authorization",
+    "primary_training_authorized": false,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "second_training_execution",
+    "automatic_restart_or_resume",
+    "memory_allocator_change_without_amendment",
+    "resource_limit_change_without_amendment",
+    "sequence_rank_batch_data_seed_or_hardware_change",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
