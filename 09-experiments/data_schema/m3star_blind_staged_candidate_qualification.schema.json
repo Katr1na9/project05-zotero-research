@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/m3star-blind-staged-candidate-qualification-v0.2.json",
+  "title": "Project05 M3* Blind Staged Candidate Qualification Checkpoint",
+  "type": "object",
+  "required": [
+    "report_id",
+    "status",
+    "report_created_utc",
+    "amendment_id",
+    "amendment_sha256",
+    "curation_and_seal_separation",
+    "non_consuming_disclosure_boundary",
+    "source_artifact_hash_ledger_id",
+    "phase_1_source_results",
+    "sequential_candidate_results",
+    "audited_candidate_count",
+    "reported_qualified_count",
+    "reported_not_qualified_count",
+    "unaudited_reserve_count",
+    "qualified_cases",
+    "all_qualified_cases_retained",
+    "qualification_rules_changed_after_access",
+    "case_selection_used_model_outputs",
+    "stage_transition_used_only_permitted_fields",
+    "within_case_conditions_counted_as_independent_cases"
+  ],
+  "properties": {
+    "report_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "curator_staged_qualification_checkpoint"
+    },
+    "report_created_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "amendment_id": {
+      "const": "project05-m3star-blind-staged-acquisition-amendment-v0.2"
+    },
+    "amendment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "curation_and_seal_separation": {
+      "$ref": "#/$defs/roleSeparation"
+    },
+    "non_consuming_disclosure_boundary": {
+      "$ref": "#/$defs/disclosureBoundary"
+    },
+    "source_artifact_hash_ledger_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phase_1_source_results": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "$ref": "#/$defs/phase1SourceResult"
+      }
+    },
+    "sequential_candidate_results": {
+      "type": "array",
+      "maxItems": 14,
+      "items": {
+        "$ref": "#/$defs/sequentialCandidateResult"
+      }
+    },
+    "audited_candidate_count": {
+      "type": "integer",
+      "minimum": 81,
+      "maximum": 95
+    },
+    "reported_qualified_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 95
+    },
+    "reported_not_qualified_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 95
+    },
+    "unaudited_reserve_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 14
+    },
+    "qualified_cases": {
+      "type": "array",
+      "maxItems": 95,
+      "items": {
+        "$ref": "#/$defs/qualifiedCase"
+      }
+    },
+    "all_qualified_cases_retained": {
+      "const": true
+    },
+    "qualification_rules_changed_after_access": {
+      "const": false
+    },
+    "case_selection_used_model_outputs": {
+      "const": false
+    },
+    "stage_transition_used_only_permitted_fields": {
+      "const": true
+    },
+    "within_case_conditions_counted_as_independent_cases": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullableCandidateKey": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "roleSeparation": {
+      "type": "object",
+      "required": [
+        "curation_team_id",
+        "model_development_team_id",
+        "ground_truth_custodian_id",
+        "teams_are_disjoint",
+        "curator_blind_to_model_outputs",
+        "model_developers_blind_to_candidate_payloads",
+        "ground_truth_custodian_distinct_from_curator_and_model_developer"
+      ],
+      "properties": {
+        "curation_team_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_development_team_id": {
+          "const": "project05-model-development"
+        },
+        "ground_truth_custodian_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "teams_are_disjoint": {
+          "const": true
+        },
+        "curator_blind_to_model_outputs": {
+          "const": true
+        },
+        "model_developers_blind_to_candidate_payloads": {
+          "const": true
+        },
+        "ground_truth_custodian_distinct_from_curator_and_model_developer": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "disclosureBoundary": {
+      "type": "object",
+      "required": [
+        "telemetry_contents_returned_to_model_development",
+        "labels_returned_to_model_development",
+        "ground_truth_returned_to_model_development",
+        "attack_narratives_returned_to_model_development",
+        "cost_values_returned_to_model_development",
+        "model_outputs_opened_during_qualification"
+      ],
+      "properties": {
+        "telemetry_contents_returned_to_model_development": {
+          "const": false
+        },
+        "labels_returned_to_model_development": {
+          "const": false
+        },
+        "ground_truth_returned_to_model_development": {
+          "const": false
+        },
+        "attack_narratives_returned_to_model_development": {
+          "const": false
+        },
+        "cost_values_returned_to_model_development": {
+          "const": false
+        },
+        "model_outputs_opened_during_qualification": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "attritionReasons": {
+      "type": "object",
+      "properties": {
+        "upper_bound_not_instantiated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "official_artifact_unavailable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "publisher_checksum_mismatch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "incomplete_campaign_boundary": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "incomplete_host_or_sensor_coverage": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_multi_stage": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_scenario_family": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_campaign_execution": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_telemetry_capture": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preblind_campaign_overlap": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parameter_or_representation_variant": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cost_measurement_scope_unsupported": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "license_or_access_failure": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "other_documented": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "phase1SourceResult": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "candidate_key",
+        "planned_candidate_slots",
+        "qualified_count",
+        "not_qualified_count",
+        "attrition_reason_counts",
+        "all_planned_slots_audited"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_key": {
+          "$ref": "#/$defs/nullableCandidateKey"
+        },
+        "planned_candidate_slots": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "qualified_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_qualified_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attrition_reason_counts": {
+          "$ref": "#/$defs/attritionReasons"
+        },
+        "all_planned_slots_audited": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "sequentialCandidateResult": {
+      "type": "object",
+      "required": [
+        "phase",
+        "phase_candidate_index",
+        "source_id",
+        "candidate_key",
+        "qualification_status",
+        "attrition_reason"
+      ],
+      "properties": {
+        "phase": {
+          "enum": [
+            2,
+            3
+          ]
+        },
+        "phase_candidate_index": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "qualification_status": {
+          "enum": [
+            "qualified",
+            "not_qualified"
+          ]
+        },
+        "attrition_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "qualifiedCase": {
+      "type": "object",
+      "required": [
+        "qualification_case_id",
+        "source_id",
+        "candidate_key",
+        "source_cluster_id",
+        "source_release_id",
+        "source_artifact_sha256",
+        "scenario_family_sha256",
+        "attack_chain_definition_sha256",
+        "campaign_execution_sha256",
+        "telemetry_capture_sha256",
+        "original_telemetry_present",
+        "multi_stage_attack_chain_present",
+        "full_campaign_time_window_included",
+        "all_in_scope_campaign_hosts_combined",
+        "not_a_host_slice",
+        "not_a_time_slice",
+        "not_a_mask_variant",
+        "not_a_parameter_only_variant",
+        "not_used_in_model_development",
+        "cost_measurement_scope_supported",
+        "ground_truth_sealed",
+        "cost_values_sealed_from_model_development",
+        "ground_truth_seal_id",
+        "cost_measurement_seal_id"
+      ],
+      "properties": {
+        "qualification_case_id": {
+          "type": "string",
+          "pattern": "^QB-[0-9]{3}$"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_key": {
+          "$ref": "#/$defs/nullableCandidateKey"
+        },
+        "source_cluster_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_release_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scenario_family_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "attack_chain_definition_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "campaign_execution_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "telemetry_capture_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "original_telemetry_present": {
+          "const": true
+        },
+        "multi_stage_attack_chain_present": {
+          "const": true
+        },
+        "full_campaign_time_window_included": {
+          "const": true
+        },
+        "all_in_scope_campaign_hosts_combined": {
+          "const": true
+        },
+        "not_a_host_slice": {
+          "const": true
+        },
+        "not_a_time_slice": {
+          "const": true
+        },
+        "not_a_mask_variant": {
+          "const": true
+        },
+        "not_a_parameter_only_variant": {
+          "const": true
+        },
+        "not_used_in_model_development": {
+          "const": true
+        },
+        "cost_measurement_scope_supported": {
+          "const": true
+        },
+        "ground_truth_sealed": {
+          "const": true
+        },
+        "cost_values_sealed_from_model_development": {
+          "const": true
+        },
+        "ground_truth_seal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cost_measurement_seal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

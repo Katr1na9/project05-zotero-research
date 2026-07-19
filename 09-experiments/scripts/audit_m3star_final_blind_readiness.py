@@ -27,7 +27,7 @@ SOURCE_CANDIDATE_MATRIX_RELATIVE_PATH = Path(
 )
 QUALIFICATION_READINESS_RELATIVE_PATH = Path(
     "09-experiments/results/"
-    "m3star_blind_candidate_qualification_readiness_v0.1/readiness_audit.json"
+    "m3star_blind_staged_candidate_qualification_readiness_v0.2/readiness_audit.json"
 )
 
 
@@ -99,15 +99,36 @@ def audit_readiness(
     qualification_summary: dict[str, Any] = {}
     if qualification_path.is_file():
         qualification_summary = runner.load_json(qualification_path)
+    qualified_count = qualification_summary.get("actual_qualified_case_count")
     qualification_gate_pass = (
         qualification_summary.get("status") == "qualification_complete"
+        and qualification_summary.get("acquisition_complete") is True
+        and isinstance(qualified_count, int)
+        and qualified_count >= runner.MINIMUM_VALID_COMPLETE_CASES
+        and qualification_summary.get("source_search_required") is False
     )
     if not qualification_gate_pass:
         blockers.append(
-            "The frozen 102-candidate pool has no completed, role-separated "
-            "qualification report."
+            "The amended staged pool has no completed, role-separated qualification "
+            "report demonstrating at least 79 independent complete cases."
         )
-    preflight_input_gate_pass = external_inputs_present and qualification_gate_pass
+    current_protocol_count_gate_met = (
+        qualification_gate_pass
+        and qualified_count >= runner.OPERATIONAL_RECRUITMENT_TARGET
+    )
+    protocol_count_gate_amendment_required = (
+        qualification_gate_pass and not current_protocol_count_gate_met
+    )
+    if protocol_count_gate_amendment_required:
+        blockers.append(
+            "The staged qualification minimum is met, but the legacy 96-case "
+            "preflight gate requires a recorded pre-outcome protocol amendment."
+        )
+    preflight_input_gate_pass = (
+        external_inputs_present
+        and qualification_gate_pass
+        and current_protocol_count_gate_met
+    )
     return {
         "audit_id": "project05-m3star-final-blind-readiness-audit-v0.1",
         "status": (
@@ -161,14 +182,28 @@ def audit_readiness(
         ),
         "candidate_qualification_status": qualification_summary.get("status"),
         "candidate_qualification_gate_pass": qualification_gate_pass,
-        "actual_qualified_case_count": qualification_summary.get(
-            "actual_qualified_case_count"
+        "candidate_upper_bound_after_resource_amendment": qualification_summary.get(
+            "candidate_upper_bound"
+        ),
+        "audited_candidate_count": qualification_summary.get(
+            "audited_candidate_count"
+        ),
+        "unaudited_reserve_count": qualification_summary.get(
+            "unaudited_reserve_count"
+        ),
+        "actual_qualified_case_count": qualified_count,
+        "qualification_acquisition_complete": qualification_summary.get(
+            "acquisition_complete"
         ),
         "source_search_required_after_qualification": qualification_summary.get(
             "source_search_required"
         ),
         "source_discovery_paused_pending_qualification": qualification_summary.get(
             "source_discovery_paused"
+        ),
+        "current_protocol_count_gate_met": current_protocol_count_gate_met,
+        "protocol_count_gate_amendment_required": (
+            protocol_count_gate_amendment_required
         ),
         "dataset_manifest_present": dataset_manifest_present,
         "evaluation_cost_profile_present": evaluation_cost_profile_present,

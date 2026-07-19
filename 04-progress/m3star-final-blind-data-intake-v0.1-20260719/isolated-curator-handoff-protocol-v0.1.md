@@ -1,4 +1,4 @@
-# Isolated curator handoff protocol v0.1
+# Isolated curator handoff protocol v0.1 with staged amendment v0.2
 
 This is an experiment-input governance artifact. It does not authorize model
 evaluation and contains no C13+ labels, costs, ground truth, or model outcomes.
@@ -15,17 +15,28 @@ authorized one-shot execution.
 The access classification for each prioritized source is frozen in
 `source-artifact-access-boundary-v0.1.json`.
 
-Source discovery is paused while the fixed 102-candidate A+B qualification
-pool is audited. The source quotas, input hashes, and outcome-free decision rule
-are frozen in `candidate-qualification-pool-v0.1.json`. Qualification must cover
-every source quota; reviewing only the easiest-looking sources is forbidden.
+The original 102-candidate A+B pool and its full-pool audit are preserved as
+the superseded record in `candidate-qualification-pool-v0.1.json`. They must
+not be used as the active acquisition instruction after the v0.2 amendment.
+
+The pre-access resource amendment
+`staged-acquisition-protocol-amendment-v0.2.json` supersedes the full-pool
+acquisition order without changing case eligibility rules. AVIATOR is excluded
+before payload access because its indivisible official archive is 109.261 GB.
+The remaining 95 slots must be acquired only in the amendment's frozen phases.
+Phase 1 must be exhausted; later slots are sequential reserves and acquisition
+stops as soon as at least 79 independently qualified complete cases exist.
+This stopping rule may not use any model output, cost, ground truth, success
+result, or action sequence.
 
 ## Curator procedure
 
 1. Download candidate artifacts only from the official locators in the source
    evidence files. Record the release identifier, file name, byte size,
    publisher checksum, local SHA-256, retrieval UTC time, and final resolved
-   URL. A downloaded source package is not yet a case.
+   URL. Acquire Phase 1 only at first. Do not download a Phase-2 or Phase-3
+   artifact until the v0.2 auditor returns that exact candidate as
+   `next_frozen_candidate`. A downloaded source package is not yet a case.
 2. Verify every local artifact against the publisher checksum when one exists.
    A mismatch excludes the artifact; silent substitution or retry against an
    unofficial mirror is forbidden.
@@ -50,24 +61,26 @@ every source quota; reviewing only the easiest-looking sources is forbidden.
    Run `09-experiments/scripts/validate_m3star_final_blind_intake.py` without
    opening ground truth or cost values.
 
-Before producing the final intake manifest, return a completed qualification
-report conforming to
-`09-experiments/data_schema/m3star_blind_candidate_qualification.schema.json`.
-Start from `curator-candidate-qualification-report.template.json`. For each of
-the 18 frozen sources, the report must exhaust its candidate upper bound into
-`qualified_count` plus `not_qualified_count`, and the attrition reason counts
-must exactly equal the latter. Each qualified case must be represented only by
-opaque identifiers, source/release identity, SHA-256 values, seal identifiers,
-and eligibility booleans. No telemetry, label, narrative, cost value, or model
+After exhausting Phase 1, and after each later candidate if a reserve is
+needed, return a checkpoint report conforming to
+`09-experiments/data_schema/m3star_blind_staged_candidate_qualification.schema.json`.
+Start from `curator-staged-candidate-qualification-report.template.json`.
+Phase 1 must exhaust all 81 slots. Later results must be the exact prefix of
+the frozen Phase-2/Phase-3 order. Every audited slot is either `qualified` or
+`not_qualified`; every untouched later slot remains an unaudited reserve and
+is not a failure. Attrition reason counts must exactly exhaust only the
+not-qualified audited slots. Each qualified case is represented only by opaque
+identifiers, source/release identity, SHA-256 values, seal identifiers, and
+eligibility booleans. No telemetry, label, narrative, cost value, or model
 output may be returned.
 
 The model-development side audits the returned report with:
 
 ```text
-python 09-experiments/scripts/audit_m3star_blind_candidate_qualification.py \
-  --pool 04-progress/m3star-final-blind-data-intake-v0.1-20260719/candidate-qualification-pool-v0.1.json \
-  --report <curator-completed-report.json> \
-  --output 09-experiments/results/m3star_blind_candidate_qualification_readiness_v0.1/readiness_audit.json
+python 09-experiments/scripts/audit_m3star_blind_staged_candidate_qualification.py \
+  --amendment 04-progress/m3star-final-blind-data-intake-v0.1-20260719/staged-acquisition-protocol-amendment-v0.2.json \
+  --report <curator-checkpoint-report.json> \
+  --output 09-experiments/results/m3star_blind_staged_candidate_qualification_readiness_v0.2/readiness_audit.json
 ```
 
 This audit does not consume the final blind evaluation.
@@ -102,6 +115,10 @@ only artifacts.
 - Locked Shields receives at most one case per annual Partners Run capture.
   Flows, packets, hosts, sectors, labels, and attack-narrative entries cannot be
   counted separately. LSPR23 and LSPR24 remain in one source cluster.
+- CICAPT-IIoT is the final reserve only. Its official catalog is not publicly
+  enumerable without registration. The curator must not submit any user's
+  identity or registration data unless the user gives separate authorization
+  after all earlier frozen reserves have been exhausted below 79.
 
 ## Label-free return package
 
@@ -114,20 +131,21 @@ returned to model development.
 
 ## Gate to non-consuming preflight
 
-The curator qualification result determines whether source discovery resumes:
+Each checkpoint has exactly one allowed transition:
 
-- 96 or more qualified cases: stop searching and retain all qualified cases;
-  the current count gate is met.
-- 79 to 95 qualified cases: stop searching because the frozen power-design
-  minimum is met, retain all qualified cases, and amend the intake count gate
-  before any outcome or cost value is opened.
-- Fewer than 79 qualified cases: resume source discovery only for the shortfall
-  to at least 79 independently qualified complete cases.
+- At least 79 qualified cases after all of Phase 1 or after one sequential
+  reserve: stop acquisition immediately and retain every qualified case.
+- Fewer than 79 with unaudited reserves: acquire only the single
+  `next_frozen_candidate` returned by the auditor and issue another checkpoint.
+- Fewer than 79 after all 95 amended slots are audited: resume metadata-only
+  source discovery only for the shortfall to 79.
 
-Under the currently frozen protocol, preflight remains blocked until at least
-96 cases pass the validator. A 79-to-95 result therefore does not silently
-bypass the protocol; it triggers a recorded pre-outcome amendment. In every
-branch, the dataset manifest must hash every retained case file and an
-independently measured cost profile must cover exactly the same case
-identifiers. Preflight does not consume the one-shot evaluation; execution
-does.
+The staged acquisition amendment does not silently rewrite the legacy
+execution runner's 96-case preflight gate. Because the amended candidate upper
+bound is 95, a separately hashed, pre-outcome count-gate amendment must be
+frozen before preflight whenever staged qualification succeeds. This is a
+known governance step, not permission to reopen acquisition or inspect model
+outcomes. In every branch, the dataset manifest must hash every retained case
+file and an independently measured cost profile must cover exactly the same
+case identifiers. Preflight does not consume the one-shot evaluation;
+execution does.

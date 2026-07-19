@@ -88,23 +88,37 @@ opened, and pseudoreplication cannot be used to fill the cohort.
 
 ## Qualification-first decision
 
-Source discovery is now paused. The 102 Tier-A plus Tier-B candidates are frozen
-as an independent-curator qualification pool in
-`candidate-qualification-pool-v0.1.json`; the ten Tier-C ATLASv2 metadata-only
-candidates are not included. The qualification result, not the current upper
-bound, decides whether searching resumes:
-
-- at least 96 qualified: retain all qualified cases and do not search;
-- 79 through 95 qualified: retain all, do not search solely to reach 96, and
-  amend the count gate before any outcome or cost value is opened;
-- fewer than 79 qualified: resume source discovery only for the shortfall to
-  the frozen power-design minimum.
-
-The current qualification readiness result is
-`awaiting_independent_curator_report`. No independent curator report exists yet,
+`candidate-qualification-pool-v0.1.json` preserves the original 102-slot
+full-pool plan as a superseded audit record. The active acquisition decision is
+the staged v0.2 amendment below. No independent curator checkpoint exists yet,
 so the observed qualified-case count is unknown rather than zero. The model-
-development role cannot convert the 102 upper-bound slots into qualification
-claims by opening candidate payloads itself.
+development role cannot convert any candidate upper-bound slot into a
+qualification claim by opening candidate payloads itself.
+
+## Resource-minimized staged acquisition amendment
+
+Before any candidate payload access, the user authorized the frozen staged-
+acquisition amendment in `staged-acquisition-protocol-amendment-v0.2.json`.
+AVIATOR is removed for resource feasibility using only its public 109.261 GB
+archive size, reducing the pool upper bound from 102 to 95. This is an
+exclusion, not a failed case.
+
+Phase 1 audits 81 frozen slots with 3.146 GB of planned downloads. If at least
+79 independent complete cases qualify, acquisition stops. Otherwise, eight
+AIT `no-pcaps` testbeds are added one at a time in a frozen ascending-size
+order, followed only if needed by the six Phase-3 reserve slots. Stage
+transitions may use qualification counts and documented attrition reasons
+only; model or baseline outputs, costs, ground truth, success results, and
+action sequences are forbidden. The 45 within-case conditions remain repeated
+measurements and never increase the independent case count.
+
+The staged return contract is frozen by
+`m3star_blind_staged_candidate_qualification.schema.json` and
+`audit_m3star_blind_staged_candidate_qualification.py`; both SHA-256 values are
+anchored inside the amendment. The curator starts from
+`curator-staged-candidate-qualification-report.template.json`. The current
+readiness state is `awaiting_independent_curator_phase_1_report`: zero slots
+have been audited, all 95 remain unaudited, and none is counted as a failure.
 
 `source-artifact-access-boundary-v0.1.json` freezes which source artifacts may
 be inspected as public non-label metadata, which telemetry may only be

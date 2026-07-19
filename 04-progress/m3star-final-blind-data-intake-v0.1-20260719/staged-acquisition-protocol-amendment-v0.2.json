@@ -1,0 +1,144 @@
+{
+  "amendment_id": "project05-m3star-blind-staged-acquisition-amendment-v0.2",
+  "status": "frozen_before_first_candidate_payload_access",
+  "authorized_date": "2026-07-19",
+  "authorization_basis": "User authorized execution of the resource-minimized staged acquisition plan after the official metadata-only size audit.",
+  "paper_or_patent_updated": false,
+  "candidate_payload_access_started": false,
+  "ground_truth_opened": false,
+  "cost_values_opened": false,
+  "model_outputs_used_for_ordering": false,
+  "superseded_pool": {
+    "path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/candidate-qualification-pool-v0.1.json",
+    "sha256": "ed94075e4ae96226ad2ca060a95a3795d70c7b8f6fc817df6c4bf72984eeeb6f",
+    "candidate_upper_bound": 102
+  },
+  "size_audit": {
+    "path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/sources/official-source-size-audit-excluding-aviator-v0.1.json",
+    "sha256": "8b222d8af4e5874378674bc7fa856c44af775343c65e7de45c89d5e4038c4b96"
+  },
+  "staged_qualification_contract": {
+    "schema_path": "09-experiments/data_schema/m3star_blind_staged_candidate_qualification.schema.json",
+    "schema_sha256": "f2a288d7dc2793c7fbe62d27f977cc1aeeb50fa9d3e3bfb3c45c6cbe6b828268",
+    "auditor_path": "09-experiments/scripts/audit_m3star_blind_staged_candidate_qualification.py",
+    "auditor_sha256": "40751a5fee64e0a0e0d9ddd81dc6ca3524c6ce7fec6956e1d04f41181e6e3db1"
+  },
+  "resource_feasibility_exclusion": {
+    "source_id": "aviator",
+    "candidate_upper_bound_removed": 7,
+    "official_archive_bytes_avoided": 109261265408,
+    "basis": "The single official archive is 109.261 GB and cannot be selectively acquired. The exclusion was fixed using public size metadata before payload access and without model outcomes, labels, costs, or ground truth.",
+    "exclusion_is_not_a_case_failure": true
+  },
+  "amended_pool": {
+    "candidate_upper_bound": 95,
+    "minimum_valid_complete_cases": 79,
+    "current_operational_target_96_is_replaced_for_acquisition": true,
+    "acquisition_target": "stop_after_at_least_79_independently_qualified_complete_cases",
+    "all_qualified_cases_from_every_audited_slot_must_be_retained": true,
+    "unaudited_reserve_slots_are_not_failures": true
+  },
+  "independent_unit": "unique_attack_chain_definition_and_whole_campaign_execution",
+  "within_case_conditions": {
+    "count": 45,
+    "role": "paired_repeated_measurements_only",
+    "never_counted_as_independent_cases": true
+  },
+  "stage_rules": {
+    "ordering_basis": "ascending official minimum-download burden subject to retaining source heterogeneity",
+    "ordering_frozen_before_payload_access": true,
+    "stage_transition_may_use_only": [
+      "audited_candidate_count",
+      "qualified_case_count",
+      "documented_nonqualification_reason"
+    ],
+    "stage_transition_must_not_use": [
+      "M3star output",
+      "baseline output",
+      "ground truth outcome",
+      "cost value",
+      "success or failure result",
+      "action sequence"
+    ],
+    "phase_1_must_be_exhausted_before_stopping": true,
+    "phase_2_and_phase_3_are_candidate_sequential": true,
+    "stop_immediately_after_qualified_count_reaches_79": true,
+    "if_all_95_slots_are_audited_below_79": "resume metadata-only source discovery only for the shortfall to 79"
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "planned_candidate_slots": 81,
+      "planned_download_bytes": 3146302753,
+      "must_complete_entire_phase": true,
+      "allocations": [
+        {"source_id": "otrf-security-datasets-compound", "slots": 9},
+        {"source_id": "splunk-attack-data-apt-simulations", "slots": 1},
+        {"source_id": "cam-lds", "slots": 7},
+        {"source_id": "mscad", "slots": 2},
+        {"source_id": "dapt2020", "slots": 1},
+        {"source_id": "capd", "slots": 23},
+        {"source_id": "goose-power-substation-apt", "slots": 1},
+        {"source_id": "cyber-czech-2019", "slots": 1},
+        {"source_id": "windows-apt-2025", "slots": 31},
+        {"source_id": "attackmate-evaluation-data", "slots": 3},
+        {"source_id": "attackmate-robotdog", "slots": 1},
+        {"source_id": "ainception-storylines", "candidate_key": "SL100", "slots": 1}
+      ],
+      "decision_after_phase": {
+        "if_qualified_at_least_79": "stop acquisition and retain all qualified cases",
+        "if_qualified_below_79": "enter phase 2"
+      }
+    },
+    {
+      "phase": 2,
+      "maximum_additional_slots": 8,
+      "maximum_additional_download_bytes": 6444190699,
+      "cumulative_candidate_upper_bound": 89,
+      "candidate_order": [
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "russellmitchell", "file": "russellmitchell_no-pcaps.zip", "bytes": 522084364},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "santos", "file": "santos_no-pcaps.zip", "bytes": 576734274},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "harrison", "file": "harrison_no-pcaps.zip", "bytes": 667985140},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "fox", "file": "fox_no-pcaps.zip", "bytes": 688586900},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "wheeler", "file": "wheeler_no-pcaps.zip", "bytes": 767673839},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "wardbeck", "file": "wardbeck_no-pcaps.zip", "bytes": 818462147},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "wilson", "file": "wilson_no-pcaps.zip", "bytes": 1083526183},
+        {"source_id": "ait-log-data-set-v2.1", "candidate_key": "shaw", "file": "shaw_no-pcaps.zip", "bytes": 1319137852}
+      ],
+      "decision_after_each_candidate": {
+        "if_qualified_at_least_79": "stop acquisition and retain all qualified cases",
+        "otherwise": "continue to the next frozen candidate"
+      }
+    },
+    {
+      "phase": 3,
+      "maximum_additional_slots": 6,
+      "candidate_order": [
+        {"source_id": "apt-sandworm-dataset", "candidate_key": "campaign", "bytes": 1814743122},
+        {"source_id": "locked-shields-partners-run-23", "candidate_key": "LSPR23", "bytes": 1940509448},
+        {"source_id": "ainception-storylines", "candidate_key": "SL700", "bytes": 3358489764},
+        {"source_id": "locked-shields-partners-run-24", "candidate_key": "LSPR24", "bytes": 7973355651},
+        {"source_id": "ainception-storylines", "candidate_key": "SL300", "bytes": 9735245693},
+        {"source_id": "cicapt-iiot", "candidate_key": "campaign", "bytes": null, "requires_official_registration_before_acquisition": true}
+      ],
+      "decision_after_each_candidate": {
+        "if_qualified_at_least_79": "stop acquisition and retain all qualified cases",
+        "otherwise": "continue to the next frozen candidate"
+      }
+    }
+  ],
+  "curator_isolation": {
+    "curator_identity_must_differ_from_model_development": true,
+    "curator_must_not_receive_model_outputs": true,
+    "model_development_must_not_receive_payload_contents": true,
+    "only_permitted_return": [
+      "opaque qualification identifiers",
+      "source and release identifiers",
+      "file sizes and cryptographic hashes",
+      "eligibility booleans",
+      "aggregate attrition reasons",
+      "qualified count and next-stage decision"
+    ]
+  },
+  "one_shot_evaluation_consumed": false
+}
