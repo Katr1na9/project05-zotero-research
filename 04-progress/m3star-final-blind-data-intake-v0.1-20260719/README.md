@@ -119,11 +119,11 @@ The staged return contract is frozen by
 anchored inside the amendment. The curator starts from
 `curator-staged-candidate-qualification-report.template.json`. Phase 1 is now
 complete: all 81 frozen slots were audited, 47 qualified and 34 did not. The
-first two Phase-2 candidates also qualified, so the current readiness state is
-`qualification_checkpoint_continue_acquisition`: 83 slots have been audited,
-49 qualified, 34 did not, and 12 reserve slots remain unaudited. None is
-counted as a failure. The frozen auditor selected Phase 2 index 3,
-`harrison_no-pcaps.zip`, as the sole permitted next candidate.
+first three Phase-2 candidates also qualified, so the current readiness state
+is `qualification_checkpoint_continue_acquisition`: 84 slots have been
+audited, 50 qualified, 34 did not, and 11 reserve slots remain unaudited. None
+is counted as a failure. The frozen auditor selected Phase 2 index 4,
+`fox_no-pcaps.zip`, as the sole permitted next candidate.
 
 Before any payload access, final-blind protocol v0.2 also replaced the legacy
 fixed 96-case preflight target with an outcome-free dynamic gate: the final
