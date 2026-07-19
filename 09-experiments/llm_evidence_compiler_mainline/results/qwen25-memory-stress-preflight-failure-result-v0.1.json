@@ -1,0 +1,107 @@
+{
+  "schema_version": "project05-qwen25-memory-stress-preflight-failure-result-lock-v0.1",
+  "result_id": "project05-qwen25-memory-stress-preflight-failure-result-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "failed_memory_stress_preflight_peak_reserved_no_artifact",
+  "source_audit": {
+    "local_gitignored_path": ".local-qwen25-smoke/local-output/memory-stress-preflight-v0.1.json",
+    "bytes": 6284,
+    "sha256": "AFF78D98210515E675729BE0A5A5D812EB145701AB6725E9DA45098E3388C272",
+    "committed": false
+  },
+  "contract_lock": {
+    "execution_authority_sha256": "8EFDD05F782A1C21C95F963CAF4F1F9BE27D0054C6459DEDAE75AB3B0CB8711F",
+    "memory_stress_contract_sha256": "87F810B8E4AB49756B2DE53B17AD327216B2E47CFFFC4ACBA5060A20F7EAE5F7",
+    "primary_training_contract_sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "training_config_sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "attempt": {
+    "execution_count": 1,
+    "automatic_restart_used": false,
+    "allocator": "max_split_size_mb:128,garbage_collection_threshold:0.8",
+    "stress_examples": 16,
+    "microbatches_completed": 16,
+    "optimizer_steps_completed": 1,
+    "elapsed_seconds": 291.5149999999994,
+    "checkpoint_count": 0,
+    "adapter_saved": false,
+    "model_generation_calls": 0
+  },
+  "selection_envelope": {
+    "minimum_tokens": 982,
+    "maximum_tokens": 1021,
+    "total_tokens": 15999,
+    "mean_tokens": 999.9375,
+    "lengths_descending": [1021, 1020, 1016, 1011, 1010, 1008, 1000, 998, 997, 994, 989, 989, 989, 988, 987, 982],
+    "selection_digest_sha256": "BCF7D96DBD6AFCBFD127137397B638F1662A30D53D5E1F9A853B2D65CAE5BB7D",
+    "raw_identifiers_recorded": false,
+    "raw_content_recorded": false
+  },
+  "numerical_gate": {
+    "loss_first": 0.3148883581161499,
+    "loss_last": 0.3490597605705261,
+    "loss_mean": 0.3696000464260578,
+    "losses_finite": true,
+    "gradient_norm": 1.2481528520584106,
+    "trainable_parameters": 40370176,
+    "total_parameters": 4393342464,
+    "trainable_ratio": 0.00918894357332759,
+    "all_seven_target_module_classes_present": true,
+    "passed": true
+  },
+  "memory_gate": {
+    "cuda_oom": false,
+    "peak_allocated_bytes": 10428610048,
+    "peak_reserved_bytes": 13788774400,
+    "frozen_peak_reserved_limit_bytes": 11274289152,
+    "excess_reserved_bytes": 2514485248,
+    "post_cleanup_reserved_bytes": 50331648,
+    "post_run_gpu_memory_used_mib": 0,
+    "post_run_gpu_utilization_percent": 0,
+    "gate_action": "fail_and_close_without_automatic_retry",
+    "passed": false
+  },
+  "privacy_and_scope": {
+    "raw_pair_content_recorded": false,
+    "raw_generation_recorded": false,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "m3_integrated": false,
+    "server_connected": false,
+    "paper_a_modified": false,
+    "adapter_saved": false,
+    "checkpoint_saved": false,
+    "merged_model_saved": false,
+    "hub_upload_used": false
+  },
+  "interpretation": {
+    "supported_claim": "The sole authorized longest-sequence stress preflight completed sixteen microbatches and one optimizer step with finite numerical values but exceeded the preregistered 10.5 GiB peak-reserved-memory limit and produced no training artifact.",
+    "stabilization_was_insufficient_for_the_frozen_gate": true,
+    "this_is_not_a_model_quality_result": true,
+    "this_does_not_authorize_a_primary_retry": true,
+    "unsupported_claims": [
+      "primary_training_completed",
+      "adapter_checkpoint_exists",
+      "adapter_quality_improvement",
+      "checkpoint_selection_is_possible",
+      "formal_inference_performance",
+      "c07_c12_effectiveness",
+      "m3_integration_effect",
+      "paper_positive_result"
+    ]
+  },
+  "next_gate": {
+    "status": "hard_stop_for_new_capacity_decision_and_explicit_authority",
+    "memory_stress_preflight_authorized": false,
+    "primary_training_authorized": false,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  }
+}
