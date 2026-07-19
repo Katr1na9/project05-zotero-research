@@ -1,0 +1,111 @@
+{
+  "contract_id": "project05-qwen25-qlora-smoke-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "user_authorized_environment_weight_download_and_smoke_only",
+  "server_execution_boundary": {
+    "allowed_home": "/home/myy",
+    "run_directory_name": "project05-qwen25-smoke-v0.1",
+    "repository_must_be_below_allowed_home": true,
+    "explicit_read_list_outside_allowed_home": [],
+    "explicit_write_list_outside_allowed_home": []
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.16.json",
+    "sha256": "73BAAA4D9EA3711E3931B9A9CEB859C7F9F8B6B20BA78E174C29BBCCC2BE2502"
+  },
+  "data_inputs": {
+    "pair_audit_path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/data-gate-audit-v0.2.json",
+    "pair_audit_sha256": "008AA9C131C142862671FB1CDB27DB5133AE1C89F13CF29CCEC90A967BDCB370",
+    "token_audit_path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.2/generated/token-length-audit-v0.2.json",
+    "token_audit_sha256": "9F8B9A4DA5CC2A79EB5845ADE61C8A41D4D78B5DFDA423DA0187171F977E72DC",
+    "serialization_contract_path": "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.2.json",
+    "serialization_contract_sha256": "47C6BDFCCBC4693102D4FF225CFFFB081473BDC78749779D2B52B41B7851E385",
+    "train_pair_sha256": "61B9F3C724CB65A3A2ED8839ED36881A717DC906F32267D7CDED510C2F01B82B",
+    "training_validation_pair_sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552"
+  },
+  "training_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/training-config-v0.1.json",
+    "sha256": "FD1551788BE2AB11131F94DD73967002ED09F0C2EF4611EDB88A15FB19D22D38"
+  },
+  "runtime_requirements": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/requirements-linux-cu121-v0.1.txt",
+    "sha256": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+  },
+  "model": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "license": "Apache-2.0",
+    "repository_bytes": 15242807270,
+    "weight_bytes": 15231271888,
+    "files": [
+      {"path": ".gitattributes", "bytes": 1519, "git_blob_sha1": "a6344aac8c09253b3b630fb776ae94478aa0275b"},
+      {"path": "LICENSE", "bytes": 11343, "git_blob_sha1": "6634c8cc3133b3848ec74b9f275acaaa1ea618ab"},
+      {"path": "README.md", "bytes": 6240, "git_blob_sha1": "4e9536cebaeb5cac673952ad5d0eeae469900f81"},
+      {"path": "config.json", "bytes": 663, "git_blob_sha1": "0178295f88afc3c7f279ed284f961f8c1be00654"},
+      {"path": "generation_config.json", "bytes": 243, "git_blob_sha1": "0eb3c536657dcd12626e09eca4b6198c0cbcde1e"},
+      {"path": "merges.txt", "bytes": 1671839, "git_blob_sha1": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"},
+      {"path": "model.safetensors.index.json", "bytes": 27752, "git_blob_sha1": "14d037fdda5a1311dcc0275003a7a370d84114e6"},
+      {"path": "model-00001-of-00004.safetensors", "bytes": 3945441440, "lfs_sha256": "a1333e6293854747c481288ea83b348226af178dd565c49b6f9495ba1966aba7"},
+      {"path": "model-00002-of-00004.safetensors", "bytes": 3864726352, "lfs_sha256": "f5d25a2772cb825164a2a2c0fb6d51a87e282abf21e4dd75bc5cfb3cd0ea6185"},
+      {"path": "model-00003-of-00004.safetensors", "bytes": 3864726424, "lfs_sha256": "8efdec4c1bc12317ae1a38dc42b595ce777738a64deea3fcb8a0a91381bcdfd5"},
+      {"path": "model-00004-of-00004.safetensors", "bytes": 3556377672, "lfs_sha256": "1a72d403cdf0c1ec3cb7f289f17b394a01e64394c2e9b3c0f94dbce3faf879bd"},
+      {"path": "tokenizer.json", "bytes": 7031645, "git_blob_sha1": "443909a61d429dff23010e5bddd28ff530edda00"},
+      {"path": "tokenizer_config.json", "bytes": 7305, "git_blob_sha1": "07bfe0640cb5a0037f9322287fbfc682806cf672"},
+      {"path": "vocab.json", "bytes": 2776833, "git_blob_sha1": "4783fe10ac3adce15ac8f358ef5462739852c569"}
+    ]
+  },
+  "runtime_packages": {
+    "python": "3.11",
+    "torch": "2.3.1+cu121",
+    "transformers": "4.45.2",
+    "accelerate": "0.34.2",
+    "bitsandbytes": "0.43.1",
+    "peft": "0.13.2",
+    "datasets": "3.0.1",
+    "huggingface-hub": "0.25.2",
+    "safetensors": "0.4.5",
+    "numpy": "1.26.4",
+    "jsonschema": "4.23.0"
+  },
+  "training_config_snapshot": {
+    "hardware": {
+      "minimum_compute_capability": [8, 9],
+      "minimum_total_vram_bytes": 24696061952
+    },
+    "resource_limits": {
+      "maximum_environment_cache_adapter_bytes": 30000000000
+    }
+  },
+  "execution_host_amendment": {
+    "user_authorized_transfer_to_rtx4090_server": true,
+    "operating_system_must_be_recorded_by_probe": true,
+    "gpu_name_required": "NVIDIA GeForce RTX 4090",
+    "maximum_operational_peak_vram_gib": 22.0,
+    "legacy_10_5_gib_portability_is_diagnostic_only": true
+  },
+  "authorized_actions": [
+    "create_isolated_runtime_on_rtx4090_server",
+    "install_exact_runtime_package_pins",
+    "download_allowlisted_files_at_fixed_40_hex_revision",
+    "verify_all_file_sizes_and_hashes",
+    "select_20_label_blind_train_examples",
+    "run_one_16_microbatch_qlora_optimizer_step",
+    "save_and_reload_adapter_only",
+    "run_one_bounded_training_validation_generation",
+    "write_sanitized_hash_and_metric_audits"
+  ],
+  "not_authorized": [
+    "primary_or_multi_epoch_training",
+    "hyperparameter_search",
+    "merged_model_save",
+    "hub_upload",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ]
+}

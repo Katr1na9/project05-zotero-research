@@ -1,0 +1,71 @@
+{
+  "authority_id": "project05-qwen25-qlora-4090-smoke-authority-v0.17",
+  "version": "0.17.0",
+  "status": "portable_4090_smoke_package_ready_server_execution_pending",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_task_schema_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.16.json",
+    "sha256": "73BAAA4D9EA3711E3931B9A9CEB859C7F9F8B6B20BA78E174C29BBCCC2BE2502",
+    "disposition": "opens_only_the_user_authorized_environment_weight_and_one_step_smoke_gate"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-smoke-contract-v0.1.json": "65EBB73CCFBB3485B0942C36D7F5D1BFA3FB520F862A8FD77FC2E9EFF33DC290",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/training-config-v0.1.json": "FD1551788BE2AB11131F94DD73967002ED09F0C2EF4611EDB88A15FB19D22D38",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/requirements-linux-cu121-v0.1.txt": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/prepare_qwen_qlora_smoke.py": "6F89148974D03B6A2FE7C97543D1BD728B9DA9677BB0E7263B5AB7B9888C9FE0",
+    "09-experiments/scripts/train_qwen_qlora_smoke.py": "2BD4C1941EC8025ADBA4FAC75D37631686FFBAF3C4D8267B1F897F883EC1A12A",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/run-server-smoke-v0.1.sh": "8255E755E58A344E786AE283B665BA14644E7F31F0DAAF3833DC43B1F0AD7703"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_smoke.py": "3645102894B922C74632882423A46AA5322DA6DB72FC7ED07C0A5657A7AF2704"
+  },
+  "authoritative_documentation": {
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/README.md": "959A8AFC0A22384B097313D4EB99AD1628B742F4E635437909C5CDF63458E747"
+  },
+  "smoke_gate": {
+    "user_authorized": true,
+    "execution_host": "NVIDIA GeForce RTX 4090",
+    "allowed_server_home": "/home/myy",
+    "run_root": "/home/myy/project05-qwen25-smoke-v0.1",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "base_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "download_allowlist_files": 14,
+    "repository_bytes": 15242807270,
+    "weight_bytes": 15231271888,
+    "quantization": "4bit_nf4_double_quant_fp16",
+    "selected_examples": 20,
+    "training_microbatches": 16,
+    "optimizer_steps": 1,
+    "adapter_only": true,
+    "maximum_operational_peak_vram_gib": 22.0,
+    "maximum_environment_cache_adapter_bytes": 30000000000,
+    "server_execution_completed": false
+  },
+  "next_gate": {
+    "status": "run_server_smoke_then_hard_stop_for_result_review",
+    "server_runtime_install_authorized": true,
+    "fixed_revision_model_download_authorized": true,
+    "one_step_smoke_authorized": true,
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "not_authorized": [
+    "primary_or_multi_epoch_training",
+    "hyperparameter_search",
+    "merged_model_save",
+    "hub_upload",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
