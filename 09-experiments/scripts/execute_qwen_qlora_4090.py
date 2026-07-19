@@ -25,7 +25,6 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 PRIMARY_HELPER = Path(__file__).with_name("train_qwen_qlora_primary.py")
 PREFLIGHT_HELPER = Path(__file__).with_name("preflight_qwen_qlora_primary.py")
 PREPARE_HELPER = Path(__file__).with_name("prepare_qwen_qlora_smoke.py")
-EXPECTED_AUTHORITY_NAME = "authority-lock-v0.30.json"
 SMOKE_AUDIT_NAME = "4090-longest-sequence-smoke-v0.1.json"
 PRIMARY_AUDIT_NAME = "4090-primary-training-audit-v0.1.json"
 PRIMARY_FAILURE_NAME = "4090-primary-training-failure-v0.1.json"
@@ -113,6 +112,14 @@ def validate_memory_gate(samples: list[dict[str, int]], config: dict[str, Any]) 
     }
 
 
+def should_release_allocator_cache(sample: dict[str, int], config: dict[str, Any]) -> bool:
+    """Return whether unused allocator cache must be released before the blocking sample."""
+    hardware = config["hardware"]
+    return bool(hardware.get("cache_normalized_free_memory_gate", False)) and (
+        sample["free_bytes"] < hardware["minimum_synchronized_free_bytes"]
+    )
+
+
 def synchronized_memory_sample(torch: Any, event: str, step: int) -> dict[str, Any]:
     torch.cuda.synchronize(0)
     free, total = torch.cuda.mem_get_info(0)
@@ -133,6 +140,26 @@ def _verify_hash_record(record: dict[str, str], label: str) -> Path:
     return path
 
 
+def _deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = _deep_merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def load_contract_with_parent(contract_path: Path) -> dict[str, Any]:
+    raw = load_json(contract_path)
+    parent_record = raw.get("extends_contract")
+    if parent_record is None:
+        return raw
+    parent_path = _verify_hash_record(parent_record, "parent contract")
+    parent = load_json(parent_path)
+    return _deep_merge(parent, raw)
+
+
 def verify_static_authority(
     contract_path: Path,
     config_path: Path,
@@ -142,9 +169,12 @@ def verify_static_authority(
     contract_path = require_within(contract_path, REPO_ROOT, "contract")
     config_path = require_within(config_path, REPO_ROOT, "config")
     authority_path = require_within(authority_path, REPO_ROOT, "authority")
-    if authority_path.name != EXPECTED_AUTHORITY_NAME:
-        raise ValueError("authority filename is not v0.30")
-    contract = load_json(contract_path)
+    contract = load_contract_with_parent(contract_path)
+    expected_authority = require_within(
+        REPO_ROOT / contract["authority_repository_path"], REPO_ROOT, "contract authority"
+    )
+    if authority_path != expected_authority:
+        raise ValueError("authority path differs from the contract")
     boundary = validate_server_boundary(contract, run_root)
     config = load_json(config_path)
     authority = load_json(authority_path)
@@ -155,14 +185,26 @@ def verify_static_authority(
         raise ValueError("authority contract SHA-256 mismatch")
     if gate["training_config_sha256"] != sha256_file(config_path):
         raise ValueError("authority config SHA-256 mismatch")
-    if not gate["environment_and_weight_preparation_authorized"]:
-        raise PermissionError("environment preparation is not authorized")
-    if not gate["longest_sequence_smoke_authorized"]:
-        raise PermissionError("4090 smoke is not authorized")
+    if not (
+        gate.get("environment_and_weight_preparation_authorized", False)
+        or gate.get("existing_preparation_reuse_authorized", False)
+    ):
+        raise PermissionError("environment preparation or reuse is not authorized")
+    if not (
+        gate.get("longest_sequence_smoke_authorized", False)
+        or gate.get("compatible_prior_smoke_reuse_authorized", False)
+    ):
+        raise PermissionError("4090 smoke execution or exact reuse is not authorized")
     if not gate["primary_training_after_passed_smoke_authorized"]:
         raise PermissionError("primary training is not authorized")
-    if gate["maximum_smoke_executions"] != 1 or gate["maximum_primary_executions"] != 1:
-        raise ValueError("authority must permit exactly one smoke and one primary run")
+    expected_smoke_executions = (
+        1 if gate.get("longest_sequence_smoke_authorized", False) else 0
+    )
+    if (
+        gate["maximum_smoke_executions"] != expected_smoke_executions
+        or gate["maximum_primary_executions"] != 1
+    ):
+        raise ValueError("authority permits an unexpected smoke or primary run count")
     for label, record in contract["frozen_inputs"].items():
         _verify_hash_record(record, label)
     for label, record in contract["implementation"].items():
@@ -473,6 +515,9 @@ def append_progress(path: Path, event: dict[str, Any]) -> None:
         "event", "epoch", "optimizer_step", "optimizer_steps_total",
         "loss_mean_for_step", "gradient_norm", "learning_rate",
         "allocated_bytes", "reserved_bytes_diagnostic", "free_bytes",
+        "allocator_cache_release_attempted",
+        "pre_cache_release_reserved_bytes_diagnostic",
+        "pre_cache_release_free_bytes_diagnostic",
         "elapsed_seconds", "created_date",
     }
     if set(event) - allowed:
@@ -530,10 +575,25 @@ def run_primary(
     smoke = load_json(smoke_path)
     if smoke.get("status") != "passed_4090_longest_sequence_smoke":
         raise ValueError("passed 4090 smoke is required")
-    if smoke.get("contract_sha256") != sha256_file(
+    current_contract_sha256 = sha256_file(
         verified["repo_root"] / verified["contract"]["contract_repository_path"]
-    ):
-        raise ValueError("smoke audit belongs to another contract")
+    )
+    current_config_sha256 = sha256_file(
+        verified["repo_root"] / verified["contract"]["training_config"]["path"]
+    )
+    current_authority_sha256 = sha256_file(
+        verified["repo_root"] / verified["contract"]["authority_repository_path"]
+    )
+    if smoke.get("contract_sha256") != current_contract_sha256:
+        compatibility = verified["contract"].get("compatible_prior_smoke", {})
+        expected = {
+            "contract_sha256": smoke.get("contract_sha256"),
+            "training_config_sha256": smoke.get("training_config_sha256"),
+            "authority_sha256": smoke.get("authority_sha256"),
+            "smoke_audit_sha256": sha256_file(smoke_path),
+        }
+        if compatibility != expected:
+            raise ValueError("smoke audit belongs to another contract")
     output_root = (run_root / config["output_policy"]["run_subdirectory"]).resolve()
     require_within(output_root, run_root, "primary output")
     if output_root.exists():
@@ -541,6 +601,8 @@ def run_primary(
     output_root.mkdir(parents=True, exist_ok=False)
     progress = output_root / PROGRESS_NAME
     state = {"completed_epochs": 0, "optimizer_steps": 0, "microbatches": 0, "checkpoint_epochs": []}
+    last_memory_gate = None
+    last_memory_observation = None
     append_progress(progress, {
         "event": "primary_training_started", "epoch": 0, "optimizer_step": 0,
         "optimizer_steps_total": config["optimizer_steps"], "elapsed_seconds": 0.0,
@@ -611,11 +673,32 @@ def run_primary(
                 state["optimizer_steps"] += 1
                 all_gradients.append(gradient)
                 epoch_gradients.append(gradient)
-                sample = synchronized_memory_sample(
-                    torch, "optimizer_step_completed", state["optimizer_steps"]
+                pre_release_sample = synchronized_memory_sample(
+                    torch, "optimizer_step_before_cache_normalization", state["optimizer_steps"]
                 )
+                cache_release_attempted = should_release_allocator_cache(
+                    pre_release_sample, config
+                )
+                if cache_release_attempted:
+                    torch.cuda.empty_cache()
+                    sample = synchronized_memory_sample(
+                        torch, "optimizer_step_completed", state["optimizer_steps"]
+                    )
+                else:
+                    sample = {**pre_release_sample, "event": "optimizer_step_completed"}
                 memory_samples.append(sample)
                 memory = validate_memory_gate(memory_samples, config)
+                last_memory_gate = memory
+                last_memory_observation = {
+                    "optimizer_step": state["optimizer_steps"],
+                    "allocator_cache_release_attempted": cache_release_attempted,
+                    "pre_cache_release_allocated_bytes": pre_release_sample["allocated_bytes"],
+                    "pre_cache_release_reserved_bytes_diagnostic": pre_release_sample["reserved_bytes"],
+                    "pre_cache_release_free_bytes_diagnostic": pre_release_sample["free_bytes"],
+                    "blocking_allocated_bytes": sample["allocated_bytes"],
+                    "blocking_reserved_bytes_diagnostic": sample["reserved_bytes"],
+                    "blocking_free_bytes": sample["free_bytes"],
+                }
                 if not memory["passed"]:
                     raise ValueError("primary RTX 4090 memory Gate failed")
                 elapsed = time.monotonic() - started
@@ -631,6 +714,9 @@ def run_primary(
                     "allocated_bytes": sample["allocated_bytes"],
                     "reserved_bytes_diagnostic": sample["reserved_bytes"],
                     "free_bytes": sample["free_bytes"], "elapsed_seconds": elapsed,
+                    "allocator_cache_release_attempted": cache_release_attempted,
+                    "pre_cache_release_reserved_bytes_diagnostic": pre_release_sample["reserved_bytes"],
+                    "pre_cache_release_free_bytes_diagnostic": pre_release_sample["free_bytes"],
                 })
                 print(canonical_json({
                     "event": "optimizer_step_completed", "epoch": epoch,
@@ -658,9 +744,9 @@ def run_primary(
                 "schema_version": "project05-4090-primary-trainer-state-v0.1",
                 "completed_epoch": epoch, "optimizer_step": state["optimizer_steps"],
                 "microbatches": state["microbatches"],
-                "contract_sha256": smoke["contract_sha256"],
-                "training_config_sha256": smoke["training_config_sha256"],
-                "authority_sha256": smoke["authority_sha256"],
+                "contract_sha256": current_contract_sha256,
+                "training_config_sha256": current_config_sha256,
+                "authority_sha256": current_authority_sha256,
                 "loss": epoch_summary["loss"],
                 "gradient_norm": epoch_summary["gradient_norm"],
                 "raw_pair_payload_recorded": False,
@@ -695,9 +781,9 @@ def run_primary(
             "schema_version": "project05-qwen25-4090-primary-training-audit-v0.1",
             "status": "passed_single_4090_primary_adapter_training",
             "created_date": verified["authority"]["created_date"],
-            "contract_sha256": smoke["contract_sha256"],
-            "training_config_sha256": smoke["training_config_sha256"],
-            "authority_sha256": smoke["authority_sha256"],
+            "contract_sha256": current_contract_sha256,
+            "training_config_sha256": current_config_sha256,
+            "authority_sha256": current_authority_sha256,
             "smoke_audit_sha256": sha256_file(smoke_path),
             "preparation_audit_sha256": sha256_file(runtime["preparation_audit_path"]),
             "model": {**runtime["model_lock"], "quantization": config["quantization"]},
@@ -755,6 +841,10 @@ def run_primary(
             "resume_authorized": False,
             "checkpoint_selection_authorized": False,
         }
+        if last_memory_gate is not None:
+            failure["memory_gate"] = last_memory_gate
+        if last_memory_observation is not None:
+            failure["triggering_memory_observation"] = last_memory_observation
         failure_path = output_root / PRIMARY_FAILURE_NAME
         if not failure_path.exists():
             write_json_no_overwrite(failure_path, failure)
