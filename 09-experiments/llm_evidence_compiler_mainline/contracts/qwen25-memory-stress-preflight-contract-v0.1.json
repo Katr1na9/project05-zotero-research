@@ -1,0 +1,117 @@
+{
+  "contract_id": "project05-qwen25-memory-stress-preflight-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "approved_for_one_memory_stress_preflight_only",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.26.json",
+    "sha256": "55090D303C5707BAA90F1D4EC137A3425DC06AC5616C7014A8CB99954683391F"
+  },
+  "approved_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-memory-stabilization-amendment-v0.27-20260719.md",
+    "sha256": "04065DE149DB3BEEECAE52F3E400B98F5493EC3FEFE17AFE8FB05FA9E6039EFD"
+  },
+  "frozen_inputs": {
+    "primary_training_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json",
+      "sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE"
+    },
+    "primary_training_config": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json",
+      "sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+    },
+    "primary_failure_result": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-primary-training-failure-result-v0.1.json",
+      "sha256": "A2D5A6BB7CB92FDFEBC1AC4A9D4E2AE0C199C565194AA17B807CC45B8191824D"
+    },
+    "primary_preflight_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-preflight-contract-v0.1.json",
+      "sha256": "3157AF193426778B745955698C49D936C63CA4AE4B424346A7DD1876360EDC39"
+    }
+  },
+  "local_inputs": {
+    "preparation_audit": {
+      "path": ".local-qwen25-smoke/local-output/preparation-audit-v0.2.json",
+      "sha256": "315837270E84C020D097B471D44A63E1C933B7534E52831882F575D3401F206A"
+    },
+    "train_pairs": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data/train.jsonl.gz",
+      "sha256": "61B9F3C724CB65A3A2ED8839ED36881A717DC906F32267D7CDED510C2F01B82B"
+    },
+    "training_validation_pairs": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data/training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552"
+    }
+  },
+  "selection": {
+    "split": "train",
+    "examples": 16,
+    "rank_primary": "complete_prompt_plus_target_token_length_descending",
+    "rank_tie_breaker": "sha256_example_id_ascending",
+    "label_fields_allowed_for_selection": false,
+    "source_family_allowed_for_selection": false,
+    "expected_min_tokens": 982,
+    "expected_max_tokens": 1021,
+    "expected_total_tokens": 15999,
+    "expected_lengths_descending": [
+      1021,
+      1020,
+      1016,
+      1011,
+      1010,
+      1008,
+      1000,
+      998,
+      997,
+      994,
+      989,
+      989,
+      989,
+      988,
+      987,
+      982
+    ],
+    "raw_ids_or_payload_in_result_allowed": false
+  },
+  "stabilization": {
+    "pytorch_cuda_alloc_conf": "max_split_size_mb:128,garbage_collection_threshold:0.8",
+    "delete_batch_and_loss_after_each_microbatch": true,
+    "python_gc_after_each_microbatch": true,
+    "cuda_empty_cache_after_each_microbatch": true,
+    "reset_peak_stats_inside_microbatch_loop": false,
+    "formal_training_order_change_allowed": false
+  },
+  "execution": {
+    "microbatches": 16,
+    "gradient_accumulation_steps": 16,
+    "optimizer_steps": 1,
+    "optimizer": "paged_adamw_8bit",
+    "scheduler_uses_primary_225_step_schedule": true,
+    "model_generation_calls": 0,
+    "adapter_or_checkpoint_save_allowed": false,
+    "maximum_executions": 1
+  },
+  "memory_gate": {
+    "peak_reserved_limit_bytes": 11274289152,
+    "record_peak_allocated": true,
+    "record_peak_reserved": true,
+    "record_post_cleanup_reserved": true,
+    "cuda_oom_allowed": false
+  },
+  "execution_boundary": {
+    "run_root": ".local-qwen25-smoke",
+    "runtime_python": "local-runtime/venv/Scripts/python.exe",
+    "output_path": "local-output/memory-stress-preflight-v0.1.json",
+    "local_files_only": true,
+    "network_or_download_allowed": false,
+    "runtime_install_or_change_allowed": false,
+    "server_allowed": false
+  },
+  "next_gate": {
+    "primary_retry_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "formal_inference_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false
+  }
+}
