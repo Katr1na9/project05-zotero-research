@@ -23,21 +23,31 @@ The source matrix uses three deliberately different counts:
 ## Current result
 
 The verified public-source metadata now provides a conservative upper bound of
-70 candidate chain definitions before raw-artifact and overlap auditing. This
-is not 70 recruited blind cases. The increase comes from CAPD (23), AVIATOR
-(7), and the APT Sandworm Dataset (1). CAPD's paper/repository disagreement
-(23 versus 24 campaigns) is resolved conservatively at 23, AVIATOR's 16 ZIP
-files collapse to seven unique chain definitions after representation and
-implementation variants are removed, and Sandworm is one continuous campaign.
+103 candidate chain definitions before raw-artifact and overlap auditing. This
+is not 103 recruited blind cases. In addition to the earlier CAPD (23), AVIATOR
+(7), and APT Sandworm Dataset (1) audit, the current increase comes from the
+GOOSE power-substation APT dataset (1), Cyber Czech 2019 (1), and Windows-APT
+2025 (31). GOOSE and Cyber Czech each describe one campaign despite multiple
+stages, days, actions, replicas, and sensor views.
+
+Windows-APT reports 36 scenario definitions and ten repeat executions per
+scenario. The 360 executions, 16 period CSV files, combined file, three agents,
+and row-level mappings are not independent cases. Its v4 documentation also
+identifies five scenario definitions whose technique sets are subset-masked by
+larger scenarios, so those five are withheld pending an isolated chain-
+definition separability audit. The current conservative contribution is
+therefore 31, not 36.
 
 A 2026 preprint describes 50 additional unique scenarios but exposes no
 verifiable public data artifact from its article page, so those scenarios
 remain excluded from the current public-artifact count. If all 50 later became
-available and all 120 metadata candidates survived download, identity,
-isolation, and overlap checks, the upper bound would exceed the target by 24.
+available and all 153 metadata candidates survived download, identity,
+isolation, and overlap checks, the upper bound would exceed the target by 57.
 That hypothetical surplus does not replace the frozen 96-case intake gate.
 
-The next valid step is download/hash intake and cross-source overlap auditing
-for the 70 public candidates while continuing source acquisition for the
-remaining metadata gap of 26. No C13+ outcome may be opened, and
-pseudoreplication cannot be used to fill the gap.
+The metadata gap is now closed with a provisional surplus of seven, but the
+hash-bound intake count remains zero. The next valid step is non-consuming
+download/hash intake, independent case-identity construction, and cross-source
+chain-definition and capture-overlap auditing. Source acquisition continues
+only as a reserve against expected attrition. No C13+ outcome may be opened,
+and pseudoreplication cannot be used to fill the cohort.

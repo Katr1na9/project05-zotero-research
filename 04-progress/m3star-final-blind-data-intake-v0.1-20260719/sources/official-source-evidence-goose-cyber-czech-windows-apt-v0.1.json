@@ -1,0 +1,99 @@
+{
+  "evidence_id": "project05-goose-cyber-czech-windows-apt-official-source-audit-v0.1",
+  "access_date": "2026-07-19",
+  "inspection_boundary": {
+    "public_metadata_and_non_label_readmes_only": true,
+    "candidate_ground_truth_opened": false,
+    "candidate_labels_opened": false,
+    "candidate_costs_opened": false,
+    "candidate_model_outputs_opened": false,
+    "scenario_manifest_opened": false,
+    "validation_summary_opened": false,
+    "row_level_mapping_opened": false,
+    "pcap_or_telemetry_payloads_opened": false
+  },
+  "goose_power_substation_apt": {
+    "dataset_doi": "10.5281/zenodo.13912758",
+    "zenodo_record": 13912758,
+    "release_file": "APT.zip",
+    "release_size_bytes": 8291677,
+    "zenodo_md5": "45e34b3136e9d6013c6bb77c9358ffd4",
+    "locally_verified_sha256": "70506d0c27c5d22f1e6ddf1172faaf6262651d2a8f4009a9efe151e867948693",
+    "documented_chain_stages": [
+      "low-rate Nmap reconnaissance",
+      "GOOSE flooding",
+      "false-command injection",
+      "substation trip and islanding effect"
+    ],
+    "conservative_upper_bound": 1
+  },
+  "cyber_czech_2019": {
+    "dataset_doi": "10.5281/zenodo.3746129",
+    "publication_doi": "10.1016/j.dib.2020.105784",
+    "pmc_id": "PMC7300108",
+    "exercise_days": 2,
+    "scheduled_red_team_actions": 16,
+    "telemetry_views": [
+      "IPFIX traffic",
+      "Linux Syslog",
+      "Windows Event Log"
+    ],
+    "counting_decision": "one Red Team exercise scenario; action, day, Blue Team replica, host, and sensor views are within-case observations",
+    "conservative_upper_bound": 1
+  },
+  "windows_apt_2025": {
+    "dataset_doi": "10.17632/b8fmtzvpy8.4",
+    "publication_doi": "10.1016/j.dib.2026.112569",
+    "pmc_id": "PMC12950481",
+    "license": "CC-BY-4.0",
+    "authors": [
+      "Maryam Mozaffari",
+      "Abbas Yazdinejad",
+      "Ali Dehghantanha"
+    ],
+    "collection_start": "2024-10-28",
+    "collection_end": "2024-12-22",
+    "paper_reported_scenario_definitions": 36,
+    "repeated_executions_per_scenario": 10,
+    "repeated_executions_not_independent_cases": 360,
+    "windows_agents": 3,
+    "orchestrator": "Caldera 5.0.0",
+    "telemetry_platform": "Wazuh 4.5.2",
+    "mendeley_v4_root_file_count": 21,
+    "period_csv_count": 16,
+    "combined_csv_count": 1,
+    "supplementary_root_files": [
+      "README.md",
+      "checksums.sha256",
+      "scenario_manifest.csv",
+      "validation_summary.csv"
+    ],
+    "scenario_mapping_supplement_file_count": 4,
+    "row_level_mapping_is_post_hoc": true,
+    "high_confidence_mapping_fraction": 0.062,
+    "high_confidence_tiers": [
+      "UNIQUE-MATCH",
+      "NARROWED"
+    ],
+    "subset_masked_scenario_ids_withheld": [
+      "S02",
+      "S04",
+      "S12",
+      "S13",
+      "S22"
+    ],
+    "conservative_upper_bound": 31,
+    "counting_decision": "retain 31 metadata candidates and withhold five subset-masked definitions until an isolated chain-definition separability audit"
+  },
+  "count_delta": {
+    "prior_public_metadata_upper_bound": 70,
+    "added_goose_power_substation_apt": 1,
+    "added_cyber_czech_2019": 1,
+    "added_windows_apt_2025_conservative": 31,
+    "updated_public_metadata_upper_bound": 103,
+    "frozen_operational_target": 96,
+    "metadata_surplus_before_hashing_and_overlap_audit": 7,
+    "remaining_metadata_gap": 0,
+    "hash_bound_intake_cases": 0
+  }
+}
