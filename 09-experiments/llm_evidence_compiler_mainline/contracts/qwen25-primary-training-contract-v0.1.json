@@ -1,0 +1,181 @@
+{
+  "contract_id": "project05-qwen25-primary-training-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "tasks_1_2_implementation_contract_execution_closed",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.21.json",
+    "sha256": "26FB7FDF300496FB56FC4F33D7A1DF1FD508508959BBC22BBF63BD77CE1188CE"
+  },
+  "approved_plan": {
+    "path": "08-writing/llm-evidence-compiler-primary-training-and-paired-evaluation-plan-v0.1-20260719.md",
+    "sha256": "E2B86CE6077CDAD9771B728F25993E1A7EF5615D5022CE57FB7FE8223E4C1D0B"
+  },
+  "execution_boundary": {
+    "mode": "repository_relative_local_windows",
+    "run_directory_name": ".local-qwen25-smoke",
+    "primary_output_subdirectory": "local-output/primary-v0.1",
+    "repository_root_required": true,
+    "read_or_write_outside_repository_allowed": false,
+    "server_connection_allowed": false
+  },
+  "training_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json",
+    "sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "frozen_inputs": {
+    "formal_data_authority": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.16.json",
+      "sha256": "73BAAA4D9EA3711E3931B9A9CEB859C7F9F8B6B20BA78E174C29BBCCC2BE2502"
+    },
+    "pair_data_gate_audit": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/data-gate-audit-v0.2.json",
+      "sha256": "008AA9C131C142862671FB1CDB27DB5133AE1C89F13CF29CCEC90A967BDCB370"
+    },
+    "pair_determinism_audit": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/determinism-audit-v0.2.json",
+      "sha256": "3AF640FCE90BDF52813A1DDFA94E15AAC073CF8FBBEA7E5466F095F7C75D7C98"
+    },
+    "token_length_audit": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.2/generated/token-length-audit-v0.2.json",
+      "sha256": "9F8B9A4DA5CC2A79EB5845ADE61C8A41D4D78B5DFDA423DA0187171F977E72DC"
+    },
+    "tokenizer_lock": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.2/generated/tokenizer-lock-v0.2.json",
+      "sha256": "D2CC9220EBFFF8C6E47476FCBD6E5DB3A572571B039A5446FFF7D6912C109B26"
+    },
+    "serialization_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.2.json",
+      "sha256": "47C6BDFCCBC4693102D4FF225CFFFB081473BDC78749779D2B52B41B7851E385"
+    },
+    "paired_fairness_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen-paired-fairness-contract-v0.1.json",
+      "sha256": "AC570A99C275706C715937F30E4B80B788E68257FB793C509C1CFAB158558AB9"
+    },
+    "runtime_requirements": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/requirements-windows-cu121-v0.2.txt",
+      "sha256": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+    }
+  },
+  "pair_payloads": {
+    "root": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data",
+    "train": {
+      "file": "train.jsonl.gz",
+      "sha256": "61B9F3C724CB65A3A2ED8839ED36881A717DC906F32267D7CDED510C2F01B82B",
+      "examples": 1200,
+      "supported": 600,
+      "unsupported_by_bound_pointer": 600,
+      "source_families": 4
+    },
+    "training_validation": {
+      "file": "training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552",
+      "examples": 300,
+      "supported": 150,
+      "unsupported_by_bound_pointer": 150,
+      "source_families": 2
+    },
+    "family_overlap_allowed": false
+  },
+  "model": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "license": "Apache-2.0",
+    "reuse_existing_locked_snapshot_only": true,
+    "new_model_or_tokenizer_download_allowed": false
+  },
+  "frozen_training_snapshot": {
+    "sequence_length": 1024,
+    "allow_truncation": false,
+    "epochs": 3,
+    "micro_batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "optimizer_steps": 225,
+    "learning_rate": 0.0002,
+    "optimizer": "paged_adamw_8bit",
+    "weight_decay": 0.0,
+    "scheduler": "cosine",
+    "warmup_steps": 7,
+    "seed": 2026071601,
+    "maximum_trainable_ratio": 0.01,
+    "maximum_operational_peak_vram_gib": 10.5,
+    "maximum_primary_wall_hours": 24,
+    "maximum_total_resource_bytes": 30000000000,
+    "adapter_only": true
+  },
+  "lora_snapshot": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "bias": "none",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "checkpoint_policy": {
+    "save_at_epoch_end": [1, 2, 3],
+    "adapter_only_model_weights": true,
+    "optimizer_scheduler_rng_state_allowed": true,
+    "full_or_merged_model_allowed": false,
+    "selection_uses_training_validation_only": true,
+    "test_or_development_selection_allowed": false
+  },
+  "checkpoint_selection_snapshot": {
+    "split": "training-validation",
+    "examples": 300,
+    "evaluate_all_examples": true,
+    "do_sample": false,
+    "maximum_new_tokens": 256,
+    "repair_invalid_output": false,
+    "primary_metric": "family_macro_support_decision_f1",
+    "tie_breakers": [
+      "canonical_json_exact_match_rate",
+      "normalized_edge_exact_match_rate",
+      "pointer_exact_match_rate",
+      "assistant_token_nll",
+      "earlier_epoch"
+    ]
+  },
+  "execution_authority_requirement": {
+    "separate_authority_file_required": true,
+    "primary_training_gate_authorized_required": true,
+    "exact_contract_and_config_sha256_required": true,
+    "passed_primary_preflight_required": true
+  },
+  "implementation_authorized": true,
+  "execution_authorized": false,
+  "authorized_actions": [
+    "create_primary_training_contract_and_config",
+    "create_lazy_primary_trainer_skeleton",
+    "create_model_free_unit_and_negative_tests",
+    "run_tests_without_loading_model_weights_or_creating_optimizer_steps",
+    "write_and_push_sanitized_implementation_diff"
+  ],
+  "not_authorized": [
+    "formal_preflight",
+    "model_or_tokenizer_download",
+    "runtime_install_or_change",
+    "model_loading",
+    "adapter_or_optimizer_creation",
+    "primary_or_multi_epoch_training",
+    "checkpoint_generation",
+    "training_validation_generation",
+    "paired_runner_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ]
+}

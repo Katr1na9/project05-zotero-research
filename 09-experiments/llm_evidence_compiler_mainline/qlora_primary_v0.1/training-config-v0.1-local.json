@@ -1,0 +1,104 @@
+{
+  "config_id": "project05-qwen25-qlora-primary-training-v0.1-local",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "base_model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "base_resolved_commit": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "adapter_id": "Project05-Evidence-Compiler-Adapter-v0.1",
+  "adapter_key": "project05_obs_compiler",
+  "method": "qlora_causal_sft_primary_single_run",
+  "quantization": {
+    "bits": 4,
+    "type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16"
+  },
+  "lora": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "bias": "none",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "data": {
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "train_source_families": 4,
+    "training_validation_source_families": 2,
+    "supported_fraction": 0.5,
+    "family_overlap_allowed": false
+  },
+  "sequence_length": 1024,
+  "allow_truncation": false,
+  "micro_batch_size": 1,
+  "gradient_accumulation_steps": 16,
+  "effective_batch_size": 16,
+  "epochs": 3,
+  "optimizer_steps": 225,
+  "optimizer_steps_per_epoch": 75,
+  "learning_rate": 0.0002,
+  "optimizer": "paged_adamw_8bit",
+  "weight_decay": 0.0,
+  "scheduler": {
+    "name": "cosine",
+    "warmup_ratio": 0.03,
+    "warmup_steps": 7
+  },
+  "gradient_checkpointing": true,
+  "maximum_gradient_norm": 1.0,
+  "seed": 2026071601,
+  "loss_mask": "assistant_target_only",
+  "checkpointing": {
+    "save_strategy": "epoch",
+    "epochs": [1, 2, 3],
+    "save_adapter": true,
+    "save_optimizer": true,
+    "save_scheduler": true,
+    "save_rng_state": true,
+    "maximum_checkpoint_count": 3
+  },
+  "training_validation": {
+    "evaluate_all_examples": true,
+    "examples": 300,
+    "do_sample": false,
+    "maximum_new_tokens": 256,
+    "repair_invalid_output": false,
+    "primary_metric": "family_macro_support_decision_f1",
+    "tie_breakers": [
+      "canonical_json_exact_match_rate",
+      "normalized_edge_exact_match_rate",
+      "pointer_exact_match_rate",
+      "assistant_token_nll",
+      "earlier_epoch"
+    ]
+  },
+  "hardware": {
+    "execution_target": "NVIDIA GeForce RTX 2080 Ti",
+    "minimum_compute_capability": [7, 5],
+    "minimum_total_vram_gib": 10.5,
+    "maximum_operational_peak_vram_gib": 10.5,
+    "local_memory_gate_is_blocking": true
+  },
+  "resource_limits": {
+    "maximum_environment_cache_checkpoint_output_bytes": 30000000000,
+    "maximum_primary_wall_hours": 24,
+    "maximum_adapter_file_bytes": 1000000000
+  },
+  "output_policy": {
+    "run_subdirectory": "local-output/primary-v0.1",
+    "adapter_only": true,
+    "allow_merged_model": false,
+    "allow_hub_upload": false,
+    "allow_raw_pair_payload_in_audit": false,
+    "allow_raw_generation_in_committed_audit": false,
+    "controller_eligible": false
+  }
+}
