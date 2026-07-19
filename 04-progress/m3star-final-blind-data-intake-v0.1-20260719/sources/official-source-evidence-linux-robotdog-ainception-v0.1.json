@@ -1,0 +1,139 @@
+{
+  "evidence_id": "project05-linux-robotdog-ainception-official-source-audit-v0.1",
+  "access_date": "2026-07-19",
+  "inspection_boundary": {
+    "public_metadata_and_peer_reviewed_description_only": true,
+    "candidate_ground_truth_opened": false,
+    "candidate_labels_opened": false,
+    "candidate_costs_opened": false,
+    "candidate_model_outputs_opened": false,
+    "telemetry_or_log_payloads_opened": false,
+    "source_archives_downloaded": false
+  },
+  "linux_apt_dataset_2024": {
+    "dataset_doi": "10.5281/zenodo.10685642",
+    "publication_doi": "10.1016/j.dib.2024.110290",
+    "full_text_record": "PMC11220842",
+    "publisher": "Data in Brief and Zenodo",
+    "public_file_inventory": {
+      "dated_csv_partitions": 17,
+      "other_files": [
+        "local_rules.xml"
+      ],
+      "date_span": "2023-10-01 through 2024-01-07"
+    },
+    "boundary_observations": [
+      "The peer-reviewed article explicitly says the dataset was divided because of a 10,000-record-per-file limit.",
+      "Table 1 lists 17 date or part-number ranges plus separate Combine and Processed Version aggregate views.",
+      "Table 2 has five selected APT or payload-category rows, but neither the article nor the Zenodo metadata binds those rows to five complete, disjoint executions.",
+      "The public artifacts aggregate benign and malicious records and expose no defensible whole-campaign start/end identity without inspecting sealed content."
+    ],
+    "counting_decision": "The 17 CSVs, five APT or payload categories, aggregate files, rows, dates, hosts, and sensors do not create independent cases.",
+    "conservative_upper_bound": 0,
+    "reconsideration_gate": "Only an isolated curator may assign positive credit after proving a complete unique execution boundary and a unique all-required-telemetry capture without exposing labels or outcomes to model developers."
+  },
+  "attackmate_robotdog": {
+    "dataset_doi": "10.5281/zenodo.18482763",
+    "zenodo_record": 18482763,
+    "publisher": "Austrian Institute of Technology authors",
+    "public_files": [
+      {
+        "name": "attack_audit.log",
+        "size_bytes": 2824772,
+        "zenodo_md5": "0a748fe4dbe28475a07e39ce97514c25"
+      },
+      {
+        "name": "clean_audit.log",
+        "size_bytes": 4456361,
+        "zenodo_md5": "07bc8820860c75e209feac34716d2632"
+      }
+    ],
+    "boundary_observations": [
+      "The public record describes one combined physical and cyber scenario involving a robot dog, webcam, Wi-Fi network, physical intrusion, sabotage-hardware installation, and robot takeover.",
+      "The release exposes robot-unit audit logs for attack and normal conditions but does not publicly prove complete telemetry coverage of the webcam and other participating devices.",
+      "Attack and clean conditions, devices, and log records cannot expand one scenario into multiple cases."
+    ],
+    "candidate_risk_tier": "B",
+    "conservative_upper_bound": 1,
+    "required_before_case_credit": "The curator must prove a complete attack execution boundary, sufficient campaign-wide coverage, unique telemetry identity, and no AttackMate-family or cross-source overlap."
+  },
+  "ainception_storylines": {
+    "dataset_doi": "10.5281/zenodo.17659656",
+    "zenodo_record": 17659656,
+    "publisher": "The AInception Consortium, European Defence Fund project GA 101103385",
+    "public_file_count": 16,
+    "public_simulation_archive_count": 15,
+    "public_storyline_definition_count": 3,
+    "storyline_archive_counts": {
+      "SL100": 1,
+      "SL300": 8,
+      "SL700": 6
+    },
+    "public_archive_inventory": [
+      "SL100.zip",
+      "SL300_variant_2.zip",
+      "SL300_variant_4.zip",
+      "SL300_variant_5.zip",
+      "SL300_variant_6.zip",
+      "SL300_variant_7.zip",
+      "SL300_variant_8.zip",
+      "SL300_variant_9.zip",
+      "SL300_variant_10.zip",
+      "SL700_variant_a_a.zip",
+      "SL700_variant_a_b.zip",
+      "SL700_variant_a_c.zip",
+      "SL700_variant_b_a.zip",
+      "SL700_variant_e_a.zip",
+      "SL700_variant_f_a.zip"
+    ],
+    "boundary_observations": [
+      "The official record describes SL100, SL300, and SL700 as three distinct military cyber-defence storylines with multi-step attack chains.",
+      "The record reports 15 complete simulations, but each simulation is a variant or execution of one of the three storyline definitions.",
+      "The three storyline definitions are the only current metadata-level case credits; the 15 archives cannot be counted as 15 unique chains.",
+      "The archives contain raw logs, network data, timelines, and labelled subsets and therefore remain sealed from the model-development role."
+    ],
+    "candidate_risk_tier": "A",
+    "conservative_upper_bound": 3,
+    "required_before_case_credit": "The curator must preselect at most one complete execution per storyline, hash the retained archive, prove complete coverage, and audit overlap with AttackMate-derived and other emulation sources."
+  },
+  "additional_screened_sources_not_counted": [
+    {
+      "source": "CasinoLimit",
+      "doi": "10.5281/zenodo.17256954",
+      "reason": "The RAID 2025 release reports 114 instances of one game; public metadata does not prove 114 unique chain definitions, so no credit is assigned."
+    },
+    {
+      "source": "Measuring Attack Observability in Cloud Telemetry Logs",
+      "doi": "10.5281/zenodo.19933893",
+      "reason": "The public README reports 35 subscription-level attack scripts across AWS, Azure, and GCP, but does not establish 35 complete multi-stage campaign definitions."
+    },
+    {
+      "source": "Cyber-Physical Power System Dataset for Cyber Security of Digital Substations",
+      "doi": "10.5281/zenodo.15371179",
+      "reason": "The public record lists operating conditions and individual attack types; it does not establish distinct complete APT-style chains."
+    },
+    {
+      "source": "QUICLab",
+      "doi": "10.5281/zenodo.19894960",
+      "reason": "The record is anonymous and reports three attack scenarios without an authoritative chain-boundary publication; it remains excluded."
+    },
+    {
+      "source": "SysJoker feasibility study",
+      "doi": "10.5281/zenodo.13739719",
+      "reason": "The record exposes only the paper PDF and no authoritative raw telemetry artifact."
+    }
+  ],
+  "count_delta": {
+    "prior_public_metadata_upper_bound": 108,
+    "added_attackmate_robotdog": 1,
+    "added_ainception_storylines": 3,
+    "added_linux_apt_dataset_2024": 0,
+    "updated_public_metadata_upper_bound": 112,
+    "authoritative_artifact_verified_upper_bound": 102,
+    "tier_a_high_confidence_upper_bound": 11,
+    "frozen_operational_target": 96,
+    "metadata_surplus_before_hashing_and_overlap_audit": 16,
+    "artifact_verified_surplus_before_hashing_and_overlap_audit": 6,
+    "hash_bound_intake_cases": 0
+  }
+}

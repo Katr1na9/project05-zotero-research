@@ -111,6 +111,24 @@ def audit_readiness(
         "current_public_metadata_candidate_upper_bound": source_summary.get(
             "current_public_metadata_candidate_upper_bound_before_download_hashing_and_overlap_audit"
         ),
+        "tier_a_high_confidence_candidate_upper_bound": source_summary.get(
+            "tier_a_high_confidence_candidate_upper_bound"
+        ),
+        "tier_b_boundary_or_overlap_risk_candidate_upper_bound": source_summary.get(
+            "tier_b_boundary_or_overlap_risk_candidate_upper_bound"
+        ),
+        "tier_c_unverified_authoritative_artifact_candidate_upper_bound": source_summary.get(
+            "tier_c_unverified_authoritative_artifact_candidate_upper_bound"
+        ),
+        "current_authoritative_artifact_verified_candidate_upper_bound": source_summary.get(
+            "current_authoritative_artifact_verified_candidate_upper_bound"
+        ),
+        "authoritative_artifact_verified_candidate_surplus_over_target": source_summary.get(
+            "authoritative_artifact_verified_candidate_surplus_over_target"
+        ),
+        "tier_a_gap_to_operational_target": source_summary.get(
+            "tier_a_gap_to_operational_target"
+        ),
         "current_hash_bound_intake_case_count": source_summary.get(
             "current_hash_bound_intake_case_count"
         ),

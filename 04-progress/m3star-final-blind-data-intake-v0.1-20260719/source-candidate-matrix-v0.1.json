@@ -6,9 +6,17 @@
   "ground_truth_opened": false,
   "cost_values_opened": false,
   "model_outputs_used_for_source_selection": false,
+  "risk_tier_scheme": {
+    "A": "Authoritative source artifact is publicly verifiable and the counted whole-chain boundary is clear from non-label metadata.",
+    "B": "An authoritative artifact exists, but execution-boundary, cross-source overlap, representation, or full-coverage risk can materially reduce the count.",
+    "C": "The authoritative original payload artifact is unavailable or has not been verified; the count is metadata-only and cannot support intake planning without replacement evidence.",
+    "EXCLUDED": "The source is frozen out of C13+ recruitment or contributes no current candidate credit for a separate governance reason."
+  },
   "sources": [
     {
       "source_id": "otrf-security-datasets-compound",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Compound definitions exist, but execution identity and atomic-versus-campaign separation still require artifact and overlap review.",
       "reported_attack_sessions": null,
       "conservative_unique_chain_upper_bound": 9,
       "hash_bound_intake_cases": 0,
@@ -21,6 +29,8 @@
     },
     {
       "source_id": "splunk-attack-data-apt-simulations",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "The official repository exposes one compound APT simulation with a clear non-label chain boundary.",
       "reported_attack_sessions": null,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -33,6 +43,8 @@
     },
     {
       "source_id": "ait-log-data-set-v2.1",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Eight testbeds are documented, but derivative releases and prior-case overlap can reduce the unique count.",
       "reported_attack_sessions": 8,
       "conservative_unique_chain_upper_bound": 8,
       "hash_bound_intake_cases": 0,
@@ -45,6 +57,8 @@
     },
     {
       "source_id": "cam-lds",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Thirty-four archives collapse to seven families and parameter-variant identity still requires curator review.",
       "reported_attack_sessions": 34,
       "conservative_unique_chain_upper_bound": 7,
       "hash_bound_intake_cases": 0,
@@ -57,6 +71,8 @@
     },
     {
       "source_id": "mscad",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "The author release explicitly binds six PCAP components to two distinct multi-step scenarios.",
       "reported_attack_sessions": 2,
       "conservative_unique_chain_upper_bound": 2,
       "hash_bound_intake_cases": 0,
@@ -69,6 +85,8 @@
     },
     {
       "source_id": "atlasv2",
+      "candidate_risk_tier": "C",
+      "risk_tier_reason": "The paper reports ten scenarios, but no publisher-controlled original payload artifact was verified.",
       "reported_attack_sessions": 10,
       "conservative_unique_chain_upper_bound": 10,
       "hash_bound_intake_cases": 0,
@@ -81,6 +99,8 @@
     },
     {
       "source_id": "cicapt-iiot",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "The official catalog and paper describe one bounded seven-day multi-phase campaign.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -93,6 +113,8 @@
     },
     {
       "source_id": "dapt2020",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "The author release describes one five-day accelerated campaign and does not support day-level expansion.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -105,6 +127,8 @@
     },
     {
       "source_id": "capd",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Authoritative artifacts exist, but the paper reports 23 campaigns while the repository exposes 24 campaign directories.",
       "reported_attack_sessions": 23,
       "repository_campaign_directories": 24,
       "conservative_unique_chain_upper_bound": 23,
@@ -118,6 +142,8 @@
     },
     {
       "source_id": "aviator",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Seven definitions are visible, but paired representations and MITRE-plan or preblind overlap can reduce the unique count.",
       "reported_attack_sessions": null,
       "repository_chain_definitions": 7,
       "radar_archive_files": 16,
@@ -132,6 +158,8 @@
     },
     {
       "source_id": "apt-sandworm-dataset",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "One official PCAP is bound by public non-label metadata to one continuous multi-host campaign.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -144,6 +172,8 @@
     },
     {
       "source_id": "goose-power-substation-apt",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "One official archive is bound by public metadata to one continuous reconnaissance-to-impact campaign.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -156,6 +186,8 @@
     },
     {
       "source_id": "cyber-czech-2019",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "The official release and publication identify one exercise scenario across days, replicas, and sensor views.",
       "reported_attack_sessions": 1,
       "scheduled_red_team_actions": 16,
       "conservative_unique_chain_upper_bound": 1,
@@ -169,6 +201,8 @@
     },
     {
       "source_id": "windows-apt-2025",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Official files exist, but repeated executions, post-hoc row attribution, and subset-masked definitions create material separability risk.",
       "reported_attack_sessions": 360,
       "paper_reported_scenario_definitions": 36,
       "repeated_executions_per_scenario": 10,
@@ -184,6 +218,8 @@
     },
     {
       "source_id": "attackmate-evaluation-data",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Three definitions are public, but alternate implementations and overlap with AIT or CAM-LDS can reduce the retained count.",
       "reported_attack_sessions": 8,
       "reported_scenario_definitions": 3,
       "conservative_unique_chain_upper_bound": 3,
@@ -196,7 +232,54 @@
       "pseudoreplication_risk": "AttackMate and Caldera executions, SCP/SSH alternatives, and timeout variants implement three scenario definitions and cannot be counted as eight cases"
     },
     {
+      "source_id": "attackmate-robotdog",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "One combined physical-cyber chain is explicit, but the release contains only robot-unit audit logs and does not prove all-device campaign coverage.",
+      "reported_attack_sessions": 1,
+      "conservative_unique_chain_upper_bound": 1,
+      "hash_bound_intake_cases": 0,
+      "raw_telemetry_claimed": true,
+      "multi_stage_claimed": true,
+      "ground_truth_or_scenario_metadata_claimed": true,
+      "artifact_status": "official_zenodo_record_and_two_audit_log_files_verified_payload_hashing_and_full_coverage_review_pending",
+      "overlap_status": "attackmate_family_and_cross_source_definition_overlap_audit_pending",
+      "pseudoreplication_risk": "attack and clean audit logs are alternate conditions for one robot-dog scenario; devices and log streams are not additional cases"
+    },
+    {
+      "source_id": "ainception-storylines",
+      "candidate_risk_tier": "A",
+      "risk_tier_reason": "The European Defence Fund consortium release binds official artifacts to three distinct multi-step military cyber-defence storylines.",
+      "reported_attack_sessions": 15,
+      "reported_storyline_definitions": 3,
+      "conservative_unique_chain_upper_bound": 3,
+      "hash_bound_intake_cases": 0,
+      "raw_telemetry_claimed": true,
+      "multi_stage_claimed": true,
+      "ground_truth_or_scenario_metadata_claimed": true,
+      "artifact_status": "official_zenodo_record_and_fifteen_simulation_archives_verified_download_hashing_and_sealed_boundary_review_pending",
+      "overlap_status": "variant_and_cross_source_definition_capture_overlap_audit_pending",
+      "pseudoreplication_risk": "one SL100, eight SL300, and six SL700 archives are variants or executions of three storyline definitions and cannot be counted as fifteen unique chains"
+    },
+    {
+      "source_id": "linux-apt-dataset-2024",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Authoritative files exist, but date partitions aggregate multiple APT and payload categories without public complete-execution boundaries.",
+      "reported_attack_sessions": null,
+      "dated_csv_partitions": 17,
+      "reported_apt_or_payload_categories": 5,
+      "conservative_unique_chain_upper_bound": 0,
+      "hash_bound_intake_cases": 0,
+      "raw_telemetry_claimed": true,
+      "multi_stage_claimed": true,
+      "ground_truth_or_scenario_metadata_claimed": true,
+      "artifact_status": "official_zenodo_record_and_date_partition_files_verified_no_defensible_whole_chain_boundary",
+      "overlap_status": "not_started_no_case_credit",
+      "pseudoreplication_risk": "17 CSVs are date or record-limit partitions and the five listed APT or payload categories are not five proven complete executions"
+    },
+    {
       "source_id": "locked-shields-partners-run-23",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Official annual telemetry exists, but the complete exercise boundary is tied to sealed narrative and coverage material.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -209,6 +292,8 @@
     },
     {
       "source_id": "locked-shields-partners-run-24",
+      "candidate_risk_tier": "B",
+      "risk_tier_reason": "Official annual telemetry exists, but the complete exercise boundary is tied to sealed narrative and coverage material.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 1,
       "hash_bound_intake_cases": 0,
@@ -221,6 +306,8 @@
     },
     {
       "source_id": "locked-shields-partners-run-25",
+      "candidate_risk_tier": "C",
+      "risk_tier_reason": "The metadata record exposes no public source files.",
       "reported_attack_sessions": 1,
       "conservative_unique_chain_upper_bound": 0,
       "hash_bound_intake_cases": 0,
@@ -230,10 +317,12 @@
       "artifact_status": "official_zenodo_metadata_record_has_no_public_files",
       "overlap_status": "not_started",
       "pseudoreplication_risk": "metadata-only annual release cannot contribute a hash-bound case",
-      "included_in_current_public_artifact_upper_bound": true
+      "included_in_current_metadata_upper_bound": true
     },
     {
       "source_id": "multi-source-attack-logs-2026",
+      "candidate_risk_tier": "C",
+      "risk_tier_reason": "The preprint reports scenarios but exposes no verifiable public payload artifact.",
       "reported_attack_sessions": 70,
       "conservative_unique_chain_upper_bound": 50,
       "hash_bound_intake_cases": 0,
@@ -243,10 +332,12 @@
       "artifact_status": "paper_only_no_verifiable_public_artifact_link",
       "overlap_status": "not_started",
       "pseudoreplication_risk": "70 sessions arise from only 50 scenario definitions",
-      "included_in_current_public_artifact_upper_bound": false
+      "included_in_current_metadata_upper_bound": false
     },
     {
       "source_id": "darpa-e3-e5-optc",
+      "candidate_risk_tier": "EXCLUDED",
+      "risk_tier_reason": "These campaigns were used during model development and are frozen out of C13+ recruitment.",
       "reported_attack_sessions": null,
       "conservative_unique_chain_upper_bound": 0,
       "hash_bound_intake_cases": 0,
@@ -259,13 +350,19 @@
     }
   ],
   "summary": {
-    "current_public_metadata_candidate_upper_bound_before_download_hashing_and_overlap_audit": 108,
+    "current_public_metadata_candidate_upper_bound_before_download_hashing_and_overlap_audit": 112,
+    "tier_a_high_confidence_candidate_upper_bound": 11,
+    "tier_b_boundary_or_overlap_risk_candidate_upper_bound": 91,
+    "tier_c_unverified_authoritative_artifact_candidate_upper_bound": 10,
+    "current_authoritative_artifact_verified_candidate_upper_bound": 102,
     "current_hash_bound_intake_case_count": 0,
     "frozen_operational_target": 96,
     "current_candidate_gap_to_target": 0,
-    "current_candidate_surplus_over_target": 12,
+    "current_candidate_surplus_over_target": 16,
+    "authoritative_artifact_verified_candidate_surplus_over_target": 6,
+    "tier_a_gap_to_operational_target": 85,
     "paper_only_additional_scenario_upper_bound": 50,
-    "surplus_if_all_paper_only_scenarios_later_become_public_and_all_158_candidates_pass": 62,
+    "surplus_if_all_paper_only_scenarios_later_become_public_and_all_162_candidates_pass": 66,
     "interpretation": "No final-blind performance evaluation is currently authorized."
   }
 }

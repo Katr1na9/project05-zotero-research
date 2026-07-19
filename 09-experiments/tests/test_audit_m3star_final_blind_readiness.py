@@ -67,6 +67,16 @@ class FinalBlindReadinessAuditTests(unittest.TestCase):
         self.assertFalse(report["c13_plus_case_contents_opened"])
         self.assertFalse(report["ground_truth_opened"])
         self.assertFalse(report["consumption_ledger_created"])
+        self.assertEqual(112, report["current_public_metadata_candidate_upper_bound"])
+        self.assertEqual(11, report["tier_a_high_confidence_candidate_upper_bound"])
+        self.assertEqual(
+            102,
+            report["current_authoritative_artifact_verified_candidate_upper_bound"],
+        )
+        self.assertEqual(
+            6,
+            report["authoritative_artifact_verified_candidate_surplus_over_target"],
+        )
         self.assertEqual(3, len(report["blockers"]))
 
 
