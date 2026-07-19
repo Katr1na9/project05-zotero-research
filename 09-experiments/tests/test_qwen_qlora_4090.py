@@ -45,6 +45,10 @@ def load_script():
 def test_contract_and_authority_hash_chain_is_closed():
     contract = load_json(CONTRACT_PATH)
     authority = load_json(AUTHORITY_PATH)
+    assert contract["version"] == "0.1.1"
+    assert contract["preparation_audit_compatible_contract_sha256"] == [
+        "05EFA61DE6D88691EA62269632B1B335B3CCA0488C7B2451F40FCB331A49F1D9"
+    ]
     assert authority["authoritative_contract"]["sha256"] == sha256(CONTRACT_PATH)
     assert authority["rtx4090_execution_gate"]["contract_sha256"] == sha256(CONTRACT_PATH)
     assert contract["training_config"]["sha256"] == sha256(CONFIG_PATH)
@@ -147,6 +151,27 @@ def test_memory_gate_rejects_allocated_or_free_boundary_violation():
     }]
     assert module.validate_memory_gate(allocated_failure, config)["passed"] is False
     assert module.validate_memory_gate(free_failure, config)["passed"] is False
+
+
+def test_model_inventory_consumes_shared_preflight_schema():
+    module = load_script()
+    report = module.build_model_inventory(
+        trainable=40,
+        total=10_000,
+        parameter_gate={"ratio": 0.004, "passed": True},
+        module_gate={
+            "counts": {"q_proj": 28, "down_proj": 28},
+            "total_matches": 56,
+            "all_target_families_present": True,
+        },
+    )
+    assert report == {
+        "trainable_parameters": 40,
+        "total_parameters": 10_000,
+        "trainable_ratio": 0.004,
+        "target_module_counts": {"q_proj": 28, "down_proj": 28},
+        "all_target_families_present": True,
+    }
 
 
 def test_launcher_discards_pathological_login_environment_and_binds_uuid():

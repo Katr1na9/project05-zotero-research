@@ -188,9 +188,14 @@ def verify_runtime_and_inputs(
     preparation = load_json(preparation_audit_path)
     if preparation.get("status") != "passed_runtime_and_fixed_revision_weight_gate":
         raise ValueError("runtime/model preparation Gate has not passed")
-    if preparation.get("contract_sha256") != sha256_file(
+    current_contract_sha256 = sha256_file(
         verified["repo_root"] / contract["contract_repository_path"]
-    ):
+    )
+    compatible_contracts = set(
+        contract.get("preparation_audit_compatible_contract_sha256", [])
+    )
+    compatible_contracts.add(current_contract_sha256)
+    if preparation.get("contract_sha256") not in compatible_contracts:
         raise ValueError("preparation audit belongs to another contract")
     snapshot_dir = require_within(
         Path(preparation["model_snapshot"]["snapshot_dir"]), run_root, "model snapshot"
@@ -310,12 +315,24 @@ def _build_model(
     module_gate = PREFLIGHT.summarize_target_module_inventory(
         [name for name, _ in model.named_modules()], config["lora"]["target_modules"]
     )
-    return model, tokenizer, parameters, {
+    return model, tokenizer, parameters, build_model_inventory(
+        trainable, total, parameter_gate, module_gate
+    )
+
+
+def build_model_inventory(
+    trainable: int,
+    total: int,
+    parameter_gate: dict[str, Any],
+    module_gate: dict[str, Any],
+) -> dict[str, Any]:
+    """Map the shared preflight reports into the 4090 execution audit schema."""
+    return {
         "trainable_parameters": trainable,
         "total_parameters": total,
         "trainable_ratio": parameter_gate["ratio"],
         "target_module_counts": module_gate["counts"],
-        "all_target_families_present": module_gate["passed"],
+        "all_target_families_present": module_gate["all_target_families_present"],
     }
 
 
