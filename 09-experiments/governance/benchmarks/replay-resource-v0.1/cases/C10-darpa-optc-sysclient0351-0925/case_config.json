@@ -1,0 +1,77 @@
+{
+  "case_id": "C10-darpa-optc-sysclient0351-0925",
+  "source_case_id": "R07",
+  "case_name": "DARPA OpTC Day3 Malicious Upgrade on Sysclient0351",
+  "description": "Parameter-locked cross-day OpTC robustness case compiled from the 2019-09-25 Sysclient0351 eCAR window. Claims are event-backed only; literal Meterpreter and attacker DNS labels remain report-only gaps.",
+  "development_only": false,
+  "holdout_role": "parameter_locked_cross_day_same_corpus_fourth_case",
+  "target_granularity": "G3_campaign",
+  "support_ceiling": "G3_campaign",
+  "budget_total": 11,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C10-AA-001", "C10-AA-002", "C10-AA-003", "C10-AA-004", "C10-AA-005", "C10-AA-006"],
+  "stage_mask_tags": [
+    "stage:initial_access",
+    "stage:execution",
+    "stage:command_and_control",
+    "stage:defense_evasion"
+  ],
+  "discriminative_claim_ids": ["C10-EC-001", "C10-EC-002", "C10-EC-003", "C10-EC-004"],
+  "channel_reliability": {
+    "network_telemetry": 0.5,
+    "host_forensics": 1.0,
+    "host_probe": 1.0,
+    "analyst": 1.0
+  },
+  "cti_nodes": [
+    {
+      "node_id": "N01_malicious_upgrade_drop",
+      "stage": "initial_access",
+      "required_claim_ids": ["C10-EC-001"],
+      "critical": true
+    },
+    {
+      "node_id": "N02_payload_execution",
+      "stage": "execution",
+      "required_claim_ids": ["C10-EC-002"],
+      "critical": true
+    },
+    {
+      "node_id": "N03_meterpreter_c2",
+      "stage": "command_and_control",
+      "required_claim_ids": ["C10-EC-003"],
+      "critical": true
+    },
+    {
+      "node_id": "N04_lwabeat_migration",
+      "stage": "defense_evasion",
+      "required_claim_ids": ["C10-EC-004"],
+      "critical": true
+    }
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_malicious_upgrade_drop", "target": "N02_payload_execution"},
+    {"edge_id": "E02", "source": "N02_payload_execution", "target": "N03_meterpreter_c2"},
+    {"edge_id": "E03", "source": "N03_meterpreter_c2", "target": "N04_lwabeat_migration"}
+  ],
+  "natural_incompleteness": {
+    "report_only_observables": [
+      "Literal Meterpreter label (behavior is event-backed, but the string is absent from eCAR)",
+      "notepadplus-sourceforge.net and microsoft.com DNS labels",
+      "Ground truth calls the downloaded binary update.exe; the observed Sysclient0351 payload path is Temp\\f.exe",
+      "Named threat actor identity beyond the Day3 campaign"
+    ],
+    "schema_unavailable_observables": [],
+    "policy": "No claim is synthesized for absent Meterpreter/DNS strings or a named actor. The G3 campaign ceiling is supported only by the observed updater drop, payload execution, C2 flow, and remote-thread migration chain."
+  },
+  "granularity_order": [
+    "G0_unknown",
+    "G1_technique",
+    "G2_tactic_intent",
+    "G3_campaign",
+    "G4_actor_cluster",
+    "G5_named_actor"
+  ]
+}

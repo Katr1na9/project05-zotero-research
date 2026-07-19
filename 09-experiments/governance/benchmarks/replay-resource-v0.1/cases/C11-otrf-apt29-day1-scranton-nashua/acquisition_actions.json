@@ -1,0 +1,188 @@
+[
+  {
+    "action_id": "C11-AA-001",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "action_type": "extend_log_window",
+    "acquisition_channel": "scranton_powershell",
+    "target": {
+      "target_type": "host",
+      "target_value": "SCRANTON PowerShell logs"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C11-EC-001",
+      "C11-EC-003",
+      "C11-EC-005"
+    ],
+    "intended_cti_node_ids": [
+      "N01_initial_breach_c2",
+      "N02_collection_first_exfil",
+      "N03_uac_bypass_https_c2",
+      "N04_lateral_movement"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "initial_access",
+      "collection",
+      "privilege_escalation",
+      "lateral_movement"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.35,
+      "expected_over_attribution_risk_reduction": 0.3,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.3
+    },
+    "status": "available",
+    "natural_language_request": "Recover SCRANTON PowerShell execution records across the locked Day 1 investigation window.",
+    "notes": "Public intent includes N01, but the frozen source contains no recoverable N01 claim."
+  },
+  {
+    "action_id": "C11-AA-002",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "scranton_sysmon",
+    "target": {
+      "target_type": "host",
+      "target_value": "SCRANTON Sysmon records"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C11-EC-002"
+    ],
+    "intended_cti_node_ids": [
+      "N01_initial_breach_c2",
+      "N02_collection_first_exfil",
+      "N03_uac_bypass_https_c2"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "initial_access",
+      "collection",
+      "privilege_escalation"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.22,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.12
+    },
+    "status": "available",
+    "natural_language_request": "Recover SCRANTON Sysmon process, file and registry records for the locked nodes.",
+    "notes": "The compiled required claim recovered by this action is Draft.Zip creation; broader intent is not an answer key."
+  },
+  {
+    "action_id": "C11-AA-003",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "scranton_security",
+    "target": {
+      "target_type": "host",
+      "target_value": "SCRANTON Security process records"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C11-EC-004",
+      "C11-EC-006"
+    ],
+    "intended_cti_node_ids": [
+      "N03_uac_bypass_https_c2",
+      "N04_lateral_movement",
+      "N05_nashua_collection_exfil"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "privilege_escalation",
+      "lateral_movement",
+      "collection_exfiltration"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.32,
+      "expected_over_attribution_risk_reduction": 0.3,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.24
+    },
+    "status": "available",
+    "natural_language_request": "Recover SCRANTON Security process-creation records around UAC bypass and remote execution.",
+    "notes": "The public request spans possible NASHUA follow-on activity, while actual recovery remains on N03/N04."
+  },
+  {
+    "action_id": "C11-AA-004",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "action_type": "extend_log_window",
+    "acquisition_channel": "nashua_powershell",
+    "target": {
+      "target_type": "host",
+      "target_value": "NASHUA PowerShell logs"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": [
+      "C11-EC-007"
+    ],
+    "intended_cti_node_ids": [
+      "N04_lateral_movement",
+      "N05_nashua_collection_exfil"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "lateral_movement",
+      "collection_exfiltration"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.26,
+      "expected_over_attribution_risk_reduction": 0.24,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.12
+    },
+    "status": "available",
+    "natural_language_request": "Recover NASHUA PowerShell records after the locked lateral-movement step.",
+    "notes": "Intent spans arrival and follow-on collection; the selected claim supports N05 only."
+  },
+  {
+    "action_id": "C11-AA-005",
+    "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "nashua_sysmon",
+    "target": {
+      "target_type": "host",
+      "target_value": "NASHUA Sysmon records"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C11-EC-008"
+    ],
+    "intended_cti_node_ids": [
+      "N04_lateral_movement",
+      "N05_nashua_collection_exfil"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "lateral_movement",
+      "collection_exfiltration"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.24,
+      "expected_over_attribution_risk_reduction": 0.22,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.12
+    },
+    "status": "available",
+    "natural_language_request": "Recover NASHUA Sysmon records for files and processes created after lateral movement.",
+    "notes": "Intent includes N04 context, while the selected recoverable claim supports N05 only."
+  }
+]

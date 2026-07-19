@@ -1,0 +1,70 @@
+{
+  "$schema": "../../data_schema/planner_runtime_contract_m3star_overlay.schema.json",
+  "contract_id": "project05-m3star-runtime-contract-v0.7",
+  "version": "0.7.0",
+  "status": "frozen_for_new_runs",
+  "created_utc": "2026-07-18T10:00:00Z",
+  "base_contract": {
+    "path": "planner-runtime-contract-m3star-v0.6.json",
+    "sha256": "16b8a68b34cb0608aa5c2dfe82f7b3423811b09f1a0d0f0d255c2e787bc4cb99"
+  },
+  "supersedes": {
+    "contract_id": "project05-m3star-runtime-contract-v0.6",
+    "sha256": "16b8a68b34cb0608aa5c2dfe82f7b3423811b09f1a0d0f0d255c2e787bc4cb99",
+    "reason": "C11 development replay showed that relaxing transition noninferiority after observed feedback amplified cross-case action-head error. v0.7 disables learned-head resource Pareto filtering after feedback and retains only four-way noninferiority at the executed root before feedback."
+  },
+  "overrides": {
+    "selection_contract": {
+      "frozen_components": [
+        "public_graph_transition_learning",
+        "action_optimality_learning",
+        "action_reachability_learning",
+        "action_cost_to_go_learning",
+        "post_selection_stochastic_dominance",
+        "multi_head_consensus_shield",
+        "learned_head_resource_pareto_filter"
+      ],
+      "reference_configuration": {
+        "planner_id": "project05_m3star_h3_dual",
+        "planning_horizon": 3,
+        "target_reach_threshold": 0.9,
+        "max_outcome_nodes": 8,
+        "myopic_safety_shield": true,
+        "stochastic_dominance_shield": true,
+        "multi_head_consensus_shield": true,
+        "learned_head_resource_pareto_filter": true,
+        "learned_head_resource_pareto_filter_scope": "executed_root_pre_feedback_only",
+        "pre_feedback_transition_noninferiority_required": true,
+        "post_feedback_transition_override_allowed": false
+      },
+      "experimental_options": {
+        "planning_horizon": "not_independently_supported_on_legacy_development_matrix",
+        "myopic_safety_shield": "not_independently_supported_on_legacy_development_matrix"
+      },
+      "post_selection_stochastic_dominance": {
+        "requires_nonempty_exact_intended_cti_node_set": true,
+        "requires_strictly_higher_channel_reliability": true,
+        "noninferior_expected_effect_fields": [
+          "expected_granularity_gain",
+          "expected_uncertainty_reduction",
+          "expected_over_attribution_risk_reduction",
+          "expected_conflict_resolution",
+          "expected_coverage_delta"
+        ],
+        "resource_cost_rule": "alternative_cost <= source_cost",
+        "reliability_treatment": "separate_constraint_not_folded_into_acquisition_cost",
+        "replacement_must_use_precomputed_plan": true,
+        "source_selection_preserved_when_no_eligible_replacement": true
+      }
+    }
+  },
+  "change_basis": {
+    "result_directory": "09-experiments/results/m3star_measured_replay_rootpareto_c11_c12_v0.5",
+    "development_summary_sha256": "837a2ff86390717b87bd996c9005fdc60fe532abe192c73abdd50b14ad9679fe",
+    "evaluation_manifest_sha256": "135539368980e74dcb0d389aeeb6968e5c2ea7dbb5c2502f9af063bc4575bb28",
+    "cost_profile_id": "project05-replay-full-scan-equivalent-cost-v0.1",
+    "cost_profile_sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+    "finding": "Feedback-conditioned root filtering caused C11 cost regressions of +17 versus XGBoost, +16 versus Logistic/M3b, and +7 versus M2 without a success gain, while the pre-feedback four-way filter repaired C12.",
+    "final_blind_cases_loaded": false
+  }
+}

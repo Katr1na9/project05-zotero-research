@@ -1,0 +1,99 @@
+{
+  "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+  "source_case_id": "R08",
+  "case_name": "OTRF APT29 Day 1 SCRANTON to NASHUA multi-provider emulation",
+  "description": "Third-data-family parameter-locked case compiled from OTRF Windows events. Five nodes were preregistered with AND semantics; N01 has no event-backed frozen-anchor claim, so the compiled target is downgraded to G2.",
+  "development_only": false,
+  "holdout_role": "third_data_family_parameter_locked_multiclaim_case",
+  "node_coverage_semantics": "AND",
+  "target_granularity": "G2_tactic_intent",
+  "support_ceiling": "G2_tactic_intent",
+  "budget_total": 10,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": [
+    "C11-AA-001",
+    "C11-AA-002",
+    "C11-AA-003",
+    "C11-AA-004",
+    "C11-AA-005"
+  ],
+  "stage_mask_tags": [
+    "stage:collection",
+    "stage:privilege_escalation",
+    "stage:lateral_movement",
+    "stage:collection_exfiltration"
+  ],
+  "discriminative_claim_ids": [
+    "C11-EC-001",
+    "C11-EC-002",
+    "C11-EC-003",
+    "C11-EC-004",
+    "C11-EC-005",
+    "C11-EC-006",
+    "C11-EC-007",
+    "C11-EC-008"
+  ],
+  "channel_reliability": {
+    "scranton_powershell": 1.0,
+    "scranton_sysmon": 1.0,
+    "scranton_security": 1.0,
+    "nashua_powershell": 1.0,
+    "nashua_sysmon": 1.0
+  },
+  "cti_nodes": [
+    {
+      "node_id": "N01_initial_breach_c2",
+      "stage": "initial_access",
+      "required_claim_ids": [],
+      "critical": true,
+      "natural_gap": "Frozen 3aka3.doc anchor absent; no replacement anchor allowed."
+    },
+    {
+      "node_id": "N02_collection_first_exfil",
+      "stage": "collection",
+      "required_claim_ids": ["C11-EC-001", "C11-EC-002"],
+      "critical": true
+    },
+    {
+      "node_id": "N03_uac_bypass_https_c2",
+      "stage": "privilege_escalation",
+      "required_claim_ids": ["C11-EC-003", "C11-EC-004"],
+      "critical": true
+    },
+    {
+      "node_id": "N04_lateral_movement",
+      "stage": "lateral_movement",
+      "required_claim_ids": ["C11-EC-005", "C11-EC-006"],
+      "critical": true
+    },
+    {
+      "node_id": "N05_nashua_collection_exfil",
+      "stage": "collection_exfiltration",
+      "required_claim_ids": ["C11-EC-007", "C11-EC-008"],
+      "critical": true
+    }
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_initial_breach_c2", "target": "N02_collection_first_exfil"},
+    {"edge_id": "E02", "source": "N02_collection_first_exfil", "target": "N03_uac_bypass_https_c2"},
+    {"edge_id": "E03", "source": "N03_uac_bypass_https_c2", "target": "N04_lateral_movement"},
+    {"edge_id": "E04", "source": "N04_lateral_movement", "target": "N05_nashua_collection_exfil"}
+  ],
+  "natural_incompleteness": {
+    "unsupported_nodes": ["N01_initial_breach_c2"],
+    "cross_source_limit": "Host and Zeek packages do not overlap in time; Zeek is excluded from event-level claims.",
+    "actor_label_limit": "APT29 is an emulation label, not an unknown actor prediction endpoint.",
+    "policy": "Keep N01 uncovered, use AND semantics on the four event-backed nodes, and cap the compiled case at G2."
+  },
+  "granularity_order": [
+    "G0_unknown",
+    "G1_technique",
+    "G2_tactic_intent",
+    "G3_campaign",
+    "G4_actor_cluster",
+    "G5_named_actor"
+  ]
+}
+

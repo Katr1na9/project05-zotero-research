@@ -1,0 +1,32 @@
+{
+  "case_id": "C06-darpa-e3-cadets-0412",
+  "source_case_id": "R03",
+  "case_name": "DARPA E3 CADETS April 12 held-out campaign trace",
+  "description": "Behavior motifs compiled from the held-out R03 CADETS bounded CDM trace.",
+  "development_only": true,
+  "holdout_role": "internal_same_dataset_family",
+  "target_granularity": "G3_campaign",
+  "support_ceiling": "G3_campaign",
+  "budget_total": 8,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C06-AA-001", "C06-AA-002", "C06-AA-003", "C06-AA-004", "C06-AA-005", "C06-AA-006", "C06-AA-007"],
+  "stage_mask_tags": ["stage:execution", "stage:command_and_control", "stage:discovery"],
+  "discriminative_claim_ids": ["C06-EC-001", "C06-EC-002", "C06-EC-003", "C06-EC-004", "C06-EC-005", "C06-EC-006", "C06-EC-007", "C06-EC-009", "C06-EC-010"],
+  "channel_reliability": {"network_telemetry": 0.5},
+  "cti_nodes": [
+    {"node_id": "N01_initial_access", "stage": "execution", "required_claim_ids": ["C06-EC-001", "C06-EC-002", "C06-EC-003"], "critical": true},
+    {"node_id": "N02_payload_privilege", "stage": "execution", "required_claim_ids": ["C06-EC-004", "C06-EC-005", "C06-EC-006"], "critical": true},
+    {"node_id": "N03_drakon", "stage": "command_and_control", "required_claim_ids": ["C06-EC-007", "C06-EC-008"], "critical": true},
+    {"node_id": "N04_micro", "stage": "command_and_control", "required_claim_ids": ["C06-EC-009"], "critical": true},
+    {"node_id": "N05_scan", "stage": "discovery", "required_claim_ids": ["C06-EC-010"], "critical": false}
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_initial_access", "target": "N02_payload_privilege"},
+    {"edge_id": "E02", "source": "N02_payload_privilege", "target": "N03_drakon"},
+    {"edge_id": "E03", "source": "N03_drakon", "target": "N04_micro"},
+    {"edge_id": "E04", "source": "N04_micro", "target": "N05_scan"}
+  ],
+  "granularity_order": ["G0_unknown", "G1_technique", "G2_tactic_intent", "G3_campaign", "G4_actor_cluster", "G5_named_actor"]
+}

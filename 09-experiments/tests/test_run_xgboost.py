@@ -16,6 +16,23 @@ SPEC.loader.exec_module(run_xgboost)
 
 
 class XGBoostModelTests(unittest.TestCase):
+    def test_real_only_training_scope_excludes_all_toy_examples(self):
+        experiment_dir = SCRIPT_DIR.parent
+
+        train_dirs, test_dirs = run_xgboost.selected_case_dirs(
+            experiment_dir / "examples",
+            experiment_dir / "real_cases",
+            test_prefixes=("C07-", "C08-", "C09-", "C10-", "C11-", "C12-"),
+            training_scope="real_only_three",
+        )
+
+        self.assertEqual(
+            ["C04-", "C05-", "C06-"],
+            [path.name[:4] for path in train_dirs],
+        )
+        self.assertEqual(6, len(test_dirs))
+        self.assertTrue(all(path.parent == experiment_dir / "real_cases" for path in train_dirs))
+
     def test_new_runs_refuse_nonempty_output_directories(self):
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp)

@@ -38,6 +38,16 @@ class RealCaseCohortV03Tests(unittest.TestCase):
             cohort["renaming_policy"],
         )
 
+    def test_hash_schemes_separate_raw_replay_from_repository_text_identity(self):
+        cohort = BUILDER.build_cohort()
+
+        self.assertIn("repository_text_hash_scheme", cohort)
+        self.assertIn("replay_artifact_hash_scheme", cohort)
+        self.assertEqual(
+            "utf8_lf_normalized_sha256", cohort["repository_text_hash_scheme"]
+        )
+        self.assertEqual("raw_bytes_sha256", cohort["replay_artifact_hash_scheme"])
+
     def test_toy_cases_are_excluded_from_formal_and_paper_results(self):
         cohort = BUILDER.build_cohort()
 

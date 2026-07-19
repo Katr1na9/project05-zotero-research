@@ -1,0 +1,128 @@
+{
+  "$schema": "../../data_schema/planner_runtime_contract_m3star_overlay.schema.json",
+  "contract_id": "project05-m3star-runtime-contract-v0.8",
+  "version": "0.8.0",
+  "status": "frozen_for_new_runs",
+  "created_utc": "2026-07-19T01:00:00Z",
+  "base_contract": {
+    "path": "planner-runtime-contract-m3star-v0.7.json",
+    "sha256": "f3cd1013040a7c7bdc49a974a21fae0ba90e7f08696b0c867b9503ee2448e6ba"
+  },
+  "supersedes": {
+    "contract_id": "project05-m3star-runtime-contract-v0.7",
+    "sha256": "f3cd1013040a7c7bdc49a974a21fae0ba90e7f08696b0c867b9503ee2448e6ba",
+    "reason": "C11 retained a small per-case cost regression against XGBoost and Logistic/M3b. Offline six-case auditing rejected two-expert and transition-gated overrides, then identified a three-expert candidate using a C04-C06-only pairwise action ranker; v0.8 enables that candidate under nonincreasing measured cost and the frozen reachability threshold."
+  },
+  "overrides": {
+    "selection_contract": {
+      "frozen_components": [
+        "public_graph_transition_learning",
+        "action_optimality_learning",
+        "action_reachability_learning",
+        "action_cost_to_go_learning",
+        "post_selection_stochastic_dominance",
+        "multi_head_consensus_shield",
+        "learned_head_resource_pareto_filter",
+        "pairwise_action_ranking",
+        "policy_expert_consensus"
+      ],
+      "reference_configuration": {
+        "planner_id": "project05_m3star_h3_dual",
+        "planning_horizon": 3,
+        "target_reach_threshold": 0.9,
+        "max_outcome_nodes": 8,
+        "myopic_safety_shield": true,
+        "stochastic_dominance_shield": true,
+        "multi_head_consensus_shield": true,
+        "learned_head_resource_pareto_filter": true,
+        "learned_head_resource_pareto_filter_scope": "executed_root_pre_feedback_only",
+        "pre_feedback_transition_noninferiority_required": true,
+        "post_feedback_transition_override_allowed": false,
+        "pairwise_action_ranking": true,
+        "policy_expert_consensus": true,
+        "policy_expert_ids": ["xgboost", "logistic", "pairwise_rank"]
+      },
+      "experimental_options": {
+        "planning_horizon": "not_independently_supported_on_legacy_development_matrix",
+        "myopic_safety_shield": "not_independently_supported_on_legacy_development_matrix"
+      },
+      "post_selection_stochastic_dominance": {
+        "requires_nonempty_exact_intended_cti_node_set": true,
+        "requires_strictly_higher_channel_reliability": true,
+        "noninferior_expected_effect_fields": [
+          "expected_granularity_gain",
+          "expected_uncertainty_reduction",
+          "expected_over_attribution_risk_reduction",
+          "expected_conflict_resolution",
+          "expected_coverage_delta"
+        ],
+        "resource_cost_rule": "alternative_cost <= source_cost",
+        "reliability_treatment": "separate_constraint_not_folded_into_acquisition_cost",
+        "replacement_must_use_precomputed_plan": true,
+        "source_selection_preserved_when_no_eligible_replacement": true
+      }
+    },
+    "audit_contract": {
+      "decision_fields": [
+        "head_pareto_filtered_action_ids",
+        "head_pareto_filter_count",
+        "pre_dominance_action_id",
+        "dominance_substitution_applied",
+        "dominance_selection_reason",
+        "dominance_source_action_id",
+        "dominance_target_action_id",
+        "dominance_source_reliability",
+        "dominance_target_reliability",
+        "dominance_source_cost",
+        "dominance_target_cost",
+        "dominance_source_risk_adjusted_cost",
+        "expert_consensus_source_action_id",
+        "expert_consensus_candidate_action_id",
+        "expert_action_ids",
+        "expert_consensus_source_cost",
+        "expert_consensus_candidate_cost",
+        "expert_consensus_candidate_reachability",
+        "expert_consensus_applied",
+        "expert_consensus_reason"
+      ],
+      "episode_fields": [
+        "stochastic_dominance_shield",
+        "dominance_substitution_count",
+        "head_pareto_filter_count",
+        "policy_expert_consensus_enabled",
+        "expert_consensus_substitution_count"
+      ],
+      "learned_signal_fields": [
+        "action_value_probability",
+        "action_reachability_probability",
+        "action_cost_to_go"
+      ],
+      "model_identity_fields": [
+        "transition_model_family",
+        "action_value_model_family",
+        "action_reachability_model_family",
+        "action_cost_model_family"
+      ],
+      "runtime_contract_fields": [
+        "runtime_contract_id",
+        "runtime_contract_version",
+        "runtime_contract_sha256"
+      ],
+      "method_development_evidence": {
+        "audit_directory": "09-experiments/results/m3star_expert_consensus_rank_audit_v0.5",
+        "audit_report_sha256": "0c51117a9aad25c5f6ac58250316072a9da57b9b247cf28df8da5822cef69f84",
+        "decision_csv_sha256": "e18dd5f8799a1a19cc55d6aafc58f5dc1ca520f0e28331d3be9866f8b7591a60",
+        "final_blind_cases_loaded": false
+      }
+    }
+  },
+  "change_basis": {
+    "result_directory": "09-experiments/results/m3star_measured_replay_prefeedback_c11_c12_v0.6",
+    "development_summary_sha256": "ee78b14732bbc86062165a12458f2b71ca1ba6fba4f08aa4a3221e3a95a994d7",
+    "evaluation_manifest_sha256": "2386b1cb45d7a3b0d824eef40eddf7f77944b69db159a71c883fc91c89911417",
+    "cost_profile_id": "project05-replay-full-scan-equivalent-cost-v0.1",
+    "cost_profile_sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+    "finding": "The v0.7 pre-feedback-only filter restored C11 versus M2 and retained C12 gains, but C11 remained +4 cost units versus XGBoost and +3 versus Logistic/M3b; the v0.5 offline consensus audit motivates a closed-loop v0.8 candidate test without using C13+.",
+    "final_blind_cases_loaded": false
+  }
+}

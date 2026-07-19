@@ -52,6 +52,7 @@ METHOD_SPECS: tuple[dict[str, Any], ...] = (
         "use_action_value": True,
         "myopic_safety_shield": True,
         "stochastic_dominance_shield": True,
+        "use_policy_expert_consensus": True,
     },
     {
         "planner_id": "project05_m3star_h3_no_dominance_dual",
@@ -114,6 +115,59 @@ def runtime_contract_metadata() -> dict[str, Any]:
     return run_m3star.runtime_adapter.contract_metadata(
         run_m3star.RUNTIME_CONTRACT,
     )
+
+
+def cost_profile_identity(
+    cost_regime: str,
+    cost_profile: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    if cost_regime == "legacy":
+        return None
+    if cost_regime == "uniform":
+        document = run_mvp.BUILTIN_UNIFORM_COST_PROFILE
+        return {
+            "profile_id": str(document["profile_id"]),
+            "version": str(document["version"]),
+            "status": str(document["status"]),
+            "regime": "uniform",
+            "sha256": run_mvp.canonical_json_sha256(document),
+            "source_path": None,
+        }
+    if cost_profile is None:
+        raise ValueError(f"{cost_regime} cost runs require a cost profile")
+    document = cost_profile.get("document")
+    if not isinstance(document, dict):
+        raise ValueError("Cost profile bundle is missing its document")
+    return {
+        "profile_id": str(document["profile_id"]),
+        "version": str(document["version"]),
+        "status": str(document["status"]),
+        "regime": str(document["regime"]),
+        "sha256": str(cost_profile["sha256"]),
+        "source_path": str(cost_profile["source_path"]),
+    }
+
+
+def cost_claim_context(
+    cost_regime: str,
+    evaluation_role: str,
+    profile_identity: dict[str, Any] | None,
+) -> dict[str, Any]:
+    if cost_regime not in {"rubric", "measured"}:
+        reason = "non_normative_cost_regime"
+    elif evaluation_role != "final_blind":
+        reason = "development_evaluation_not_final_blind_confirmation"
+    else:
+        reason = "final_gate_must_be_evaluated_after_one_shot_confirmation"
+    return {
+        "formal_cost_claim_allowed": False,
+        "reason": reason,
+        "cost_regime": cost_regime,
+        "cost_profile_identity": profile_identity,
+        "evaluation_role": evaluation_role,
+    }
+
+
 CONDITION_FIELDS = (
     "case_id",
     "mask_strategy",
@@ -167,6 +221,20 @@ def validate_case_id_partition(
             "M3* training and evaluation case IDs must be disjoint; "
             f"overlap={sorted(overlap)}"
         )
+
+
+def select_experiment_case_dirs(
+    examples_root: Path,
+    real_cases_root: Path,
+    evaluation_prefixes: tuple[str, ...],
+    training_scope: str,
+) -> tuple[list[Path], list[Path]]:
+    return run_xgboost.selected_case_dirs(
+        examples_root,
+        real_cases_root,
+        test_prefixes=evaluation_prefixes,
+        training_scope=training_scope,
+    )
 
 
 def select_evaluation_subset(
@@ -483,6 +551,11 @@ def train_models(
         action_rows,
         boost_rounds=boost_rounds,
     )
+    print("[train] fitting M3* pairwise action-rank head", flush=True)
+    action_rank_model = run_m3star.train_graph_action_rank_model(
+        action_rows,
+        boost_rounds=boost_rounds,
+    )
     baseline_rows = run_xgboost.build_rows_for_cost_regime(
         train_dirs,
         cost_regime,
@@ -504,6 +577,7 @@ def train_models(
     models = {
         "transition": transition_model,
         "action_value": action_value_model,
+        "action_rank": action_rank_model,
         "xgboost": xgboost_model,
         "logistic": logistic_model,
     }
@@ -514,6 +588,62 @@ def train_models(
         "summary": _dataset_summary(node_rows, action_rows),
     }
     return models, dataset
+
+
+def build_policy_expert_advisor(models: dict[str, Any]) -> Any:
+    rank_predictor = run_m3star.model_action_rank_predictor(
+        models["action_rank"]
+    )
+
+    def advise(
+        config: dict[str, Any],
+        state: dict[str, Any],
+        actions: list[dict[str, Any]],
+    ) -> dict[str, str]:
+        xgboost_action = run_xgboost.select_xgboost_action(
+            config,
+            state,
+            actions,
+            models["xgboost"],
+            run_xgboost.FROZEN_COST_PENALTY,
+        )
+        logistic_action = run_xgboost.select_logistic_action(
+            config,
+            state,
+            actions,
+            models["logistic"],
+            run_xgboost.FROZEN_COST_PENALTY,
+        )
+        snapshot = run_m3star.public_graph_snapshot(config, state, actions)
+        candidates = run_m3star._candidate_actions(snapshot)
+        rank_scores = rank_predictor(snapshot, candidates)
+        ranked = sorted(
+            candidates,
+            key=lambda action: (
+                -float(rank_scores[action["action_id"]]),
+                float(action["cost"]),
+                str(action["action_id"]),
+            ),
+        )
+        return {
+            "xgboost": (
+                run_mvp.STOP_ACTION_ID
+                if xgboost_action is None
+                else str(xgboost_action["action_id"])
+            ),
+            "logistic": (
+                run_mvp.STOP_ACTION_ID
+                if logistic_action is None
+                else str(logistic_action["action_id"])
+            ),
+            "pairwise_rank": (
+                run_mvp.STOP_ACTION_ID
+                if not ranked
+                else str(ranked[0]["action_id"])
+            ),
+        }
+
+    return advise
 
 
 def _run_method(
@@ -552,6 +682,11 @@ def _run_method(
                 "stochastic_dominance_shield",
                 True,
             ),
+            policy_expert_advisor=(
+                build_policy_expert_advisor(models)
+                if spec.get("use_policy_expert_consensus", False)
+                else None
+            ),
         )
         row["planner"] = spec["planner_id"]
         row["m3star_requested_horizon"] = spec["horizon"]
@@ -561,6 +696,9 @@ def _run_method(
         )
         row["m3star_stochastic_dominance_shield"] = int(
             spec.get("stochastic_dominance_shield", True)
+        )
+        row["m3star_uses_policy_expert_consensus"] = int(
+            spec.get("use_policy_expert_consensus", False)
         )
         return row, trace
     if kind == "xgboost":
@@ -924,6 +1062,10 @@ def strict_core_gate(
 def summarize_results(
     rows: list[dict[str, Any]],
     traces: list[dict[str, Any]] | None = None,
+    *,
+    cost_regime: str = "legacy",
+    profile_identity: dict[str, Any] | None = None,
+    evaluation_role: str = "development",
 ) -> dict[str, Any]:
     stratified = run_mvp.summarize_stratified(rows)
     paired = {
@@ -936,12 +1078,11 @@ def summarize_results(
     }
     gate = strict_core_gate(paired, paired_by_case)
     gate.update(
-        {
-            "formal_cost_claim_allowed": False,
-            "reason": (
-                "legacy_cost_regime_is_not_the_frozen_normative_cost_standard"
-            ),
-        }
+        cost_claim_context(
+            cost_regime,
+            evaluation_role,
+            profile_identity,
+        )
     )
     summary = {
         **stratified,
@@ -958,7 +1099,7 @@ def _save_models(output_dir: Path, models: dict[str, Any]) -> dict[str, Any]:
     model_dir = output_dir / "models"
     model_dir.mkdir(parents=True, exist_ok=True)
     files: dict[str, str] = {}
-    for name in ("transition", "action_value", "xgboost"):
+    for name in ("transition", "action_value", "action_rank", "xgboost"):
         path = model_dir / f"{name}.json"
         models[name]["booster"].save_model(path)
         files[name] = str(path.relative_to(output_dir))
@@ -1005,6 +1146,7 @@ def run_experiment(
     partitions: tuple[str, ...] = ("train", "development"),
     cost_regime: str = "legacy",
     cost_profile: dict[str, Any] | None = None,
+    training_scope: str = "legacy_six",
     max_depth: int = 3,
     boost_rounds: int = 150,
     target_reach_threshold: float = run_m3star.DEFAULT_TARGET_REACH_THRESHOLD,
@@ -1027,10 +1169,11 @@ def run_experiment(
         raise ValueError(f"Output directory must be new or empty: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    train_dirs, evaluation_dirs = run_xgboost.selected_case_dirs(
+    train_dirs, evaluation_dirs = select_experiment_case_dirs(
         examples_root,
         real_cases_root,
-        test_prefixes=evaluation_prefixes,
+        evaluation_prefixes,
+        training_scope,
     )
     train_cases = run_xgboost.load_cases(
         train_dirs,
@@ -1085,6 +1228,7 @@ def run_experiment(
         "train": train_cases,
         "development": evaluation_cases,
     }
+    profile_identity = cost_profile_identity(cost_regime, cost_profile)
     partition_reports: dict[str, Any] = {}
     for partition in partitions:
         rows, traces = evaluate_partition(
@@ -1096,7 +1240,13 @@ def run_experiment(
             max_outcome_nodes,
             max_explicit_outcomes,
         )
-        summary = summarize_results(rows, traces)
+        summary = summarize_results(
+            rows,
+            traces,
+            cost_regime=cost_regime,
+            profile_identity=profile_identity,
+            evaluation_role=evaluation_role,
+        )
         write_csv(output_dir / f"{partition}_policy_results.csv", rows)
         write_json_gzip(
             output_dir / f"{partition}_m3star_traces.json.gz",
@@ -1113,6 +1263,8 @@ def run_experiment(
         "paper_or_patent_updated": False,
         "formal_cost_claim_allowed": False,
         "cost_regime": cost_regime,
+        "cost_profile_identity": profile_identity,
+        "training_scope": training_scope,
         "train_case_ids": train_case_ids,
         "held_out_case_ids": held_out_case_ids,
         "evaluation_case_ids": evaluation_case_ids,
@@ -1199,6 +1351,11 @@ def main() -> None:
         default="legacy",
     )
     parser.add_argument("--cost-profile", type=Path)
+    parser.add_argument(
+        "--training-scope",
+        choices=("legacy_six", "real_only_three"),
+        default="legacy_six",
+    )
     parser.add_argument("--max-depth", type=int, default=3)
     parser.add_argument("--boost-rounds", type=int, default=150)
     parser.add_argument(
@@ -1238,6 +1395,7 @@ def main() -> None:
         partitions=partitions,
         cost_regime=args.cost_regime,
         cost_profile=cost_profile,
+        training_scope=args.training_scope,
         max_depth=args.max_depth,
         boost_rounds=args.boost_rounds,
         target_reach_threshold=args.target_reach_threshold,

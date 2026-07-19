@@ -1,0 +1,194 @@
+{
+  "benchmark_id": "project05-replay-resource-benchmark-v0.1",
+  "version": "0.1.0",
+  "status": "frozen_single_resource_scenario",
+  "created_utc": "2026-07-18T08:37:49Z",
+  "case_count": 9,
+  "executable_action_count": 42,
+  "executable_action_types": [
+    "extend_log_window",
+    "query_host_subgraph",
+    "recover_network_summary",
+    "ttp_local_probe"
+  ],
+  "excluded_action_types": [
+    "cti_report_lookup",
+    "human_review",
+    "ioc_enrichment"
+  ],
+  "cost_construct": "deterministic_replay_data_access_burden",
+  "scalar_unit": "case_replay_full_scan_equivalent",
+  "raw_resource_unit": "bytes",
+  "inputs": {
+    "09-experiments/governance/cohorts/real-case-cohort-v0.3.json": "82bad7074fb0e162234d40170fd1f3551b9b301b3f0e12904ce1258c48932f0a",
+    "09-experiments/governance/profiles/action-ontology-v0.3-real-only-draft.json": "c6925bb66bd8d348c3d49ba3e3b8930acb10e34c4701a0ef3bdf37c9cc4fb7ee"
+  },
+  "profile": {
+    "path": "09-experiments/governance/profiles/cost-replay-scan-equivalent-v0.1.json",
+    "sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b"
+  },
+  "cases": [
+    {
+      "canonical_case_id": "C01",
+      "source_case_id": "C04-darpa-e3-fivedirections",
+      "phase": "calibration",
+      "source_action_count": 6,
+      "executable_action_count": 5,
+      "case_full_scan_bytes": 3999856103,
+      "source_files_sha256": {
+        "case_config.json": "fe966d934011f8457ec8fee73c0f4d7c032c1d53aedf8058ed4f4c3a26f29741",
+        "evidence_claims.json": "801c202b8a45942238bf73e41306b711a66fef0e9e5e95a61d712099758aed60",
+        "acquisition_actions.json": "db14fedda00a084b60be9017d04b8440ffe42d3c0d3a2d1807a4997d828382dc"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "89384d0a1d0c8c387afd8d629d506cd0b2c22c4f6c890596f94272689a02b9ff",
+        "case_config.json": "fe966d934011f8457ec8fee73c0f4d7c032c1d53aedf8058ed4f4c3a26f29741",
+        "evidence_claims.json": "801c202b8a45942238bf73e41306b711a66fef0e9e5e95a61d712099758aed60"
+      }
+    },
+    {
+      "canonical_case_id": "C02",
+      "source_case_id": "C05-darpa-e3-cadets",
+      "phase": "calibration",
+      "source_action_count": 6,
+      "executable_action_count": 4,
+      "case_full_scan_bytes": 302901278,
+      "source_files_sha256": {
+        "case_config.json": "7fcd3980da16edcba7af454be90f61a8835fda2e4a9f26a37cf9ff33cd29e1d0",
+        "evidence_claims.json": "4311ebf485f9412b167f7660abb7caae973812ca9783e959a99a5853e627d845",
+        "acquisition_actions.json": "7c9682d87a3b20e4d20db44fe8c68a8781508dc52051eac7811664b29f0e8f5b"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "1924451867432840eb35e2eda950c4929c71a38d5c0a842688d4b36aab4c53fd",
+        "case_config.json": "7fcd3980da16edcba7af454be90f61a8835fda2e4a9f26a37cf9ff33cd29e1d0",
+        "evidence_claims.json": "4311ebf485f9412b167f7660abb7caae973812ca9783e959a99a5853e627d845"
+      }
+    },
+    {
+      "canonical_case_id": "C03",
+      "source_case_id": "C06-darpa-e3-cadets-0412",
+      "phase": "calibration",
+      "source_action_count": 7,
+      "executable_action_count": 7,
+      "case_full_scan_bytes": 379694019,
+      "source_files_sha256": {
+        "case_config.json": "db6c026ced83576935ef591c3f1e6675b6950547018108097082174b6383eb42",
+        "evidence_claims.json": "8abd435f338f22e2d3560dfd21256f8d2a441164085c64501ab025df83b2821f",
+        "acquisition_actions.json": "f8d9303d8b2e8897d802f9d715b79c04a77396836b30c41133f1afe7e144f7d0"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "fd9dee760980f102487a726485fa60f9f405f05b6d29ec545a7bb9ad063e25ca",
+        "case_config.json": "db6c026ced83576935ef591c3f1e6675b6950547018108097082174b6383eb42",
+        "evidence_claims.json": "8abd435f338f22e2d3560dfd21256f8d2a441164085c64501ab025df83b2821f"
+      }
+    },
+    {
+      "canonical_case_id": "C04",
+      "source_case_id": "C07-darpa-e5-theia-0515",
+      "phase": "development",
+      "source_action_count": 5,
+      "executable_action_count": 4,
+      "case_full_scan_bytes": 56971845,
+      "source_files_sha256": {
+        "case_config.json": "3109531bb0566dfc7e70a3e101d347bb4125250e2c3a298a05b12bf1de56bbac",
+        "evidence_claims.json": "6ce22f6e3345de142f49357ddac0696e1a34d4149ad289c8c2f6025830c1da90",
+        "acquisition_actions.json": "1112039b03b0d02b7cda4afd3714a04974c4e8fce74f797b01016c96e7d8f93d"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "6024d8a7d93de863f1c1760246c713d195fb8d6e4e0d31e1227370325d1742c9",
+        "case_config.json": "3109531bb0566dfc7e70a3e101d347bb4125250e2c3a298a05b12bf1de56bbac",
+        "evidence_claims.json": "6ce22f6e3345de142f49357ddac0696e1a34d4149ad289c8c2f6025830c1da90"
+      }
+    },
+    {
+      "canonical_case_id": "C05",
+      "source_case_id": "C08-darpa-e5-clearscope-0515",
+      "phase": "development",
+      "source_action_count": 5,
+      "executable_action_count": 4,
+      "case_full_scan_bytes": 153901849,
+      "source_files_sha256": {
+        "case_config.json": "91d578968041fca5e90b7efb74caf9e3e4d7966c9ec0baf5565c4217d82492bd",
+        "evidence_claims.json": "582672a3d231b93681d38e09a199473419b65995746700011228946504821f70",
+        "acquisition_actions.json": "c8c89d0f6a7c42b15ac6468757133bf2bb6115029daf67ad17dbd852a8f3bd28"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "b0a298f1671e718bdfe0768f50858232eb7c6523a86ee79a901e04a383afa5de",
+        "case_config.json": "91d578968041fca5e90b7efb74caf9e3e4d7966c9ec0baf5565c4217d82492bd",
+        "evidence_claims.json": "582672a3d231b93681d38e09a199473419b65995746700011228946504821f70"
+      }
+    },
+    {
+      "canonical_case_id": "C06",
+      "source_case_id": "C09-darpa-optc-sysclient0201-0923",
+      "phase": "development",
+      "source_action_count": 6,
+      "executable_action_count": 5,
+      "case_full_scan_bytes": 553944823,
+      "source_files_sha256": {
+        "case_config.json": "621acf6e37e92048025a2979ebcd7541eb86ca6803d601b23a205b3e741e2199",
+        "evidence_claims.json": "030ab0fac6649c53b7437d40656c8e2871c987e05b81cc532131991ea3f35b94",
+        "acquisition_actions.json": "666edeecba095aa051aeea7cb512f827af3ceb0d3f27e97c8d466e3571484762"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "acb609ee0ef94e090d8a67666d89765a3ce61567bde02c16e1e019fda8d350ce",
+        "case_config.json": "621acf6e37e92048025a2979ebcd7541eb86ca6803d601b23a205b3e741e2199",
+        "evidence_claims.json": "030ab0fac6649c53b7437d40656c8e2871c987e05b81cc532131991ea3f35b94"
+      }
+    },
+    {
+      "canonical_case_id": "C07",
+      "source_case_id": "C10-darpa-optc-sysclient0351-0925",
+      "phase": "development",
+      "source_action_count": 6,
+      "executable_action_count": 5,
+      "case_full_scan_bytes": 20914691,
+      "source_files_sha256": {
+        "case_config.json": "3eee6bd1fc279a62797aa5169aa99f0c707c60317bc792cd3f8917634bc3b95b",
+        "evidence_claims.json": "50d02cd47a06b9ee08a1766cdc995a94026b4d39c693e7824a22bdf34cc5ccab",
+        "acquisition_actions.json": "434502bb49d56af466a0f74ceb8d2d3ccf7000c9b02ce7ac302fc421af9cb505"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "bc9a69cd158a8734d3d361bb607aced0d95fda50b2ee912e06133f6f2678e513",
+        "case_config.json": "3eee6bd1fc279a62797aa5169aa99f0c707c60317bc792cd3f8917634bc3b95b",
+        "evidence_claims.json": "50d02cd47a06b9ee08a1766cdc995a94026b4d39c693e7824a22bdf34cc5ccab"
+      }
+    },
+    {
+      "canonical_case_id": "C08",
+      "source_case_id": "C11-otrf-apt29-day1-scranton-nashua",
+      "phase": "development",
+      "source_action_count": 5,
+      "executable_action_count": 5,
+      "case_full_scan_bytes": 13944973,
+      "source_files_sha256": {
+        "case_config.json": "9a7a2da88e044cbd916738f218cbf21d4f72bba0690d8d4508a7ea0fcf62d71d",
+        "evidence_claims.json": "f97e35f90ec8189bc8d4dae0299aab91df6b9a8a376e5f3b4604e335c80d4644",
+        "acquisition_actions.json": "b6374b82ec11d8b3cb412b0431356cb3e7d630a11656856513ccf9d8febb612d"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "bbaa4e14c42524abd9a08f9c7c874e7105f139f8c19cc8ca1a8f651a333d87ff",
+        "case_config.json": "9a7a2da88e044cbd916738f218cbf21d4f72bba0690d8d4508a7ea0fcf62d71d",
+        "evidence_claims.json": "f97e35f90ec8189bc8d4dae0299aab91df6b9a8a376e5f3b4604e335c80d4644"
+      }
+    },
+    {
+      "canonical_case_id": "C09",
+      "source_case_id": "C12-witfoo-precinct6-f10c7270",
+      "phase": "development",
+      "source_action_count": 4,
+      "executable_action_count": 3,
+      "case_full_scan_bytes": 51533,
+      "source_files_sha256": {
+        "case_config.json": "6eac0965a76432ad3896035c08ad6e5a1c002f7035c14c3a89eba6e4e535499b",
+        "evidence_claims.json": "289ad3377f060c61b377b55fe17745eee4308f2def960e670548810b2bd5a6e1",
+        "acquisition_actions.json": "a12056a0198a5568342b0f553b2e93e62ec2daf3953a05c3b118857ec1527999"
+      },
+      "view_files_sha256": {
+        "acquisition_actions.json": "c7d79c2912c1312137f1f95f3c48ccacf753f4063638997d5abc3b69eb9a7eec",
+        "case_config.json": "6eac0965a76432ad3896035c08ad6e5a1c002f7035c14c3a89eba6e4e535499b",
+        "evidence_claims.json": "289ad3377f060c61b377b55fe17745eee4308f2def960e670548810b2bd5a6e1"
+      }
+    }
+  ]
+}

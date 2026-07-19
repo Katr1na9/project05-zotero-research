@@ -1,0 +1,140 @@
+[
+  {
+    "action_id": "C05-AA-001",
+    "case_id": "C05-darpa-e3-cadets",
+    "action_type": "extend_log_window",
+    "target": {
+      "target_type": "process",
+      "target_value": "nginx"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C05-EC-001",
+      "C05-EC-002"
+    ],
+    "intended_cti_node_ids": [
+      "N01_initial_access",
+      "N02_payload"
+    ],
+    "expected_evidence_types": [
+      "local_log",
+      "network_summary"
+    ],
+    "expected_stages": [
+      "execution"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.2,
+      "expected_over_attribution_risk_reduction": 0.2,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Extend Nginx audit and flow telemetry around the exploit window.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N02_payload, while recoverable OR-coverage remains ['N01_initial_access']."
+  },
+  {
+    "action_id": "C05-AA-002",
+    "case_id": "C05-darpa-e3-cadets",
+    "action_type": "query_host_subgraph",
+    "target": {
+      "target_type": "file",
+      "target_value": "/tmp/vUgefal"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": [
+      "C05-EC-003",
+      "C05-EC-004",
+      "C05-EC-005"
+    ],
+    "intended_cti_node_ids": [
+      "N02_payload",
+      "N03_c2"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph",
+      "local_log"
+    ],
+    "expected_stages": [
+      "execution"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 2,
+      "expected_uncertainty_reduction": 0.38,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Recover the provenance subgraph for the downloaded and elevated payload.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N03_c2, while recoverable OR-coverage remains ['N02_payload']."
+  },
+  {
+    "action_id": "C05-AA-003",
+    "case_id": "C05-darpa-e3-cadets",
+    "action_type": "recover_network_summary",
+    "target": {
+      "target_type": "case",
+      "target_value": "R02 external endpoints"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C05-EC-006",
+      "C05-EC-008"
+    ],
+    "intended_cti_node_ids": [
+      "N03_c2",
+      "N04_discovery"
+    ],
+    "expected_evidence_types": [
+      "network_summary"
+    ],
+    "expected_stages": [
+      "command_and_control"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.32,
+      "expected_over_attribution_risk_reduction": 0.3,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Recover flow summaries for the post-exploitation external endpoints.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N04_discovery, while recoverable OR-coverage remains ['N03_c2']."
+  },
+  {
+    "action_id": "C05-AA-004",
+    "case_id": "C05-darpa-e3-cadets",
+    "action_type": "ttp_local_probe",
+    "target": {
+      "target_type": "file",
+      "target_value": "/etc/passwd"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C05-EC-007"
+    ],
+    "intended_cti_node_ids": [
+      "N03_c2",
+      "N04_discovery"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph"
+    ],
+    "expected_stages": [
+      "discovery"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.18,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Probe local provenance for post-exploitation discovery activity.",
+    "notes": "Over-declared intent for information-boundary compliance: request framed as covering adjacent chain node N03_c2, while recoverable OR-coverage remains ['N04_discovery']."
+  }
+]

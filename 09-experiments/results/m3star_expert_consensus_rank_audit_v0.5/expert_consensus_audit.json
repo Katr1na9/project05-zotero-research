@@ -1,0 +1,215 @@
+{
+  "audit_id": "project05-m3star-policy-expert-consensus-audit-v0.1",
+  "status": "offline_method_development_diagnostic",
+  "runtime_use_of_hidden_outcomes": false,
+  "independent_statistical_unit": "case_id",
+  "within_case_conditions_are_repeated_measurements": true,
+  "reachability_threshold": 0.9,
+  "yield_threshold": 0.9,
+  "cost_rule": "candidate_measured_cost <= m3star_measured_cost",
+  "expert_rule": "xgboost_action_id == logistic_action_id != STOP",
+  "training_case_dirs": [
+    "C04-darpa-e3-fivedirections",
+    "C05-darpa-e3-cadets",
+    "C06-darpa-e3-cadets-0412"
+  ],
+  "logistic_training_row_count": 720,
+  "yield_training_row_count": 5599,
+  "cost_profile_sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+  "inputs": {
+    "09-experiments/results/m3star_measured_replay_prefeedback_c07_c10_v0.7": {
+      "policy_results_sha256": "7322cea64a9c1f1854cb704ae0546604ddd764fed2ae031c43081cb1dbeac021",
+      "m3star_traces_sha256": "37f583229253db30debf6c0363940d93c0a4e6caaad68609d19c33fe0111c840",
+      "model_metadata_sha256": "6194a80829c26a7bc875091829bca21337d122df070bf44397b6a9e32312c007"
+    },
+    "09-experiments/results/m3star_measured_replay_prefeedback_c11_c12_v0.6": {
+      "policy_results_sha256": "5f6a2e7a29f5f0d4a3fd216bace1d07da1f73be1d0cc94e526eb3ccbb1e22a35",
+      "m3star_traces_sha256": "e0407ff70aebc65be38f6f2d67082dae58962b8805a2095bcba8dfe43a539397",
+      "model_metadata_sha256": "6194a80829c26a7bc875091829bca21337d122df070bf44397b6a9e32312c007"
+    }
+  },
+  "summary": {
+    "decision_count": 457,
+    "expert_agreement_count": 295,
+    "eligible_substitution_count": 51,
+    "transition_gated_substitution_count": 0,
+    "yield_gated_substitution_count": 2,
+    "rank_gated_substitution_count": 28,
+    "rank_gated_in_logistic_failure_episode_count": 0,
+    "rank_gated_candidate_zero_yield_count": 8,
+    "yield_gated_in_logistic_failure_episode_count": 0,
+    "yield_gated_candidate_zero_yield_count": 0,
+    "transition_gated_in_logistic_failure_episode_count": 0,
+    "transition_gated_candidate_zero_yield_count": 0,
+    "eligible_in_logistic_failure_episode_count": 2,
+    "eligible_candidate_zero_yield_count": 19,
+    "by_case": {
+      "C07-darpa-e5-theia-0515": {
+        "decision_count": 86,
+        "expert_agreement_count": 34,
+        "eligible_substitution_count": 12,
+        "transition_gated_substitution_count": 0,
+        "yield_gated_substitution_count": 0,
+        "rank_gated_substitution_count": 10,
+        "rank_gated_in_logistic_failure_episode_count": 0,
+        "rank_gated_candidate_zero_yield_count": 4,
+        "yield_gated_in_logistic_failure_episode_count": 0,
+        "yield_gated_candidate_zero_yield_count": 0,
+        "transition_gated_in_logistic_failure_episode_count": 0,
+        "transition_gated_candidate_zero_yield_count": 0,
+        "eligible_in_logistic_failure_episode_count": 0,
+        "eligible_in_xgboost_failure_episode_count": 0,
+        "eligible_candidate_zero_yield_count": 6,
+        "eligible_m3star_zero_yield_count": 0,
+        "eligible_action_pairs": [
+          {
+            "m3star_action_id": "C07-AA-002",
+            "candidate_action_id": "C07-AA-001",
+            "count": 10
+          },
+          {
+            "m3star_action_id": "C07-AA-004",
+            "candidate_action_id": "C07-AA-003",
+            "count": 2
+          }
+        ]
+      },
+      "C08-darpa-e5-clearscope-0515": {
+        "decision_count": 91,
+        "expert_agreement_count": 46,
+        "eligible_substitution_count": 12,
+        "transition_gated_substitution_count": 0,
+        "yield_gated_substitution_count": 0,
+        "rank_gated_substitution_count": 10,
+        "rank_gated_in_logistic_failure_episode_count": 0,
+        "rank_gated_candidate_zero_yield_count": 4,
+        "yield_gated_in_logistic_failure_episode_count": 0,
+        "yield_gated_candidate_zero_yield_count": 0,
+        "transition_gated_in_logistic_failure_episode_count": 0,
+        "transition_gated_candidate_zero_yield_count": 0,
+        "eligible_in_logistic_failure_episode_count": 0,
+        "eligible_in_xgboost_failure_episode_count": 0,
+        "eligible_candidate_zero_yield_count": 6,
+        "eligible_m3star_zero_yield_count": 0,
+        "eligible_action_pairs": [
+          {
+            "m3star_action_id": "C08-AA-002",
+            "candidate_action_id": "C08-AA-001",
+            "count": 10
+          },
+          {
+            "m3star_action_id": "C08-AA-004",
+            "candidate_action_id": "C08-AA-003",
+            "count": 2
+          }
+        ]
+      },
+      "C09-darpa-optc-sysclient0201-0923": {
+        "decision_count": 96,
+        "expert_agreement_count": 76,
+        "eligible_substitution_count": 14,
+        "transition_gated_substitution_count": 0,
+        "yield_gated_substitution_count": 2,
+        "rank_gated_substitution_count": 0,
+        "rank_gated_in_logistic_failure_episode_count": 0,
+        "rank_gated_candidate_zero_yield_count": 0,
+        "yield_gated_in_logistic_failure_episode_count": 0,
+        "yield_gated_candidate_zero_yield_count": 0,
+        "transition_gated_in_logistic_failure_episode_count": 0,
+        "transition_gated_candidate_zero_yield_count": 0,
+        "eligible_in_logistic_failure_episode_count": 0,
+        "eligible_in_xgboost_failure_episode_count": 0,
+        "eligible_candidate_zero_yield_count": 2,
+        "eligible_m3star_zero_yield_count": 0,
+        "eligible_action_pairs": [
+          {
+            "m3star_action_id": "C09-AA-004",
+            "candidate_action_id": "C09-AA-003",
+            "count": 12
+          },
+          {
+            "m3star_action_id": "C09-AA-004",
+            "candidate_action_id": "C09-AA-005",
+            "count": 2
+          }
+        ]
+      },
+      "C10-darpa-optc-sysclient0351-0925": {
+        "decision_count": 87,
+        "expert_agreement_count": 56,
+        "eligible_substitution_count": 7,
+        "transition_gated_substitution_count": 0,
+        "yield_gated_substitution_count": 0,
+        "rank_gated_substitution_count": 2,
+        "rank_gated_in_logistic_failure_episode_count": 0,
+        "rank_gated_candidate_zero_yield_count": 0,
+        "yield_gated_in_logistic_failure_episode_count": 0,
+        "yield_gated_candidate_zero_yield_count": 0,
+        "transition_gated_in_logistic_failure_episode_count": 0,
+        "transition_gated_candidate_zero_yield_count": 0,
+        "eligible_in_logistic_failure_episode_count": 2,
+        "eligible_in_xgboost_failure_episode_count": 0,
+        "eligible_candidate_zero_yield_count": 5,
+        "eligible_m3star_zero_yield_count": 0,
+        "eligible_action_pairs": [
+          {
+            "m3star_action_id": "C10-AA-002",
+            "candidate_action_id": "C10-AA-005",
+            "count": 2
+          },
+          {
+            "m3star_action_id": "C10-AA-005",
+            "candidate_action_id": "C10-AA-001",
+            "count": 5
+          }
+        ]
+      },
+      "C11-otrf-apt29-day1-scranton-nashua": {
+        "decision_count": 69,
+        "expert_agreement_count": 67,
+        "eligible_substitution_count": 6,
+        "transition_gated_substitution_count": 0,
+        "yield_gated_substitution_count": 0,
+        "rank_gated_substitution_count": 6,
+        "rank_gated_in_logistic_failure_episode_count": 0,
+        "rank_gated_candidate_zero_yield_count": 0,
+        "yield_gated_in_logistic_failure_episode_count": 0,
+        "yield_gated_candidate_zero_yield_count": 0,
+        "transition_gated_in_logistic_failure_episode_count": 0,
+        "transition_gated_candidate_zero_yield_count": 0,
+        "eligible_in_logistic_failure_episode_count": 0,
+        "eligible_in_xgboost_failure_episode_count": 0,
+        "eligible_candidate_zero_yield_count": 0,
+        "eligible_m3star_zero_yield_count": 0,
+        "eligible_action_pairs": [
+          {
+            "m3star_action_id": "C11-AA-003",
+            "candidate_action_id": "C11-AA-004",
+            "count": 6
+          }
+        ]
+      },
+      "C12-witfoo-precinct6-f10c7270": {
+        "decision_count": 28,
+        "expert_agreement_count": 16,
+        "eligible_substitution_count": 0,
+        "transition_gated_substitution_count": 0,
+        "yield_gated_substitution_count": 0,
+        "rank_gated_substitution_count": 0,
+        "rank_gated_in_logistic_failure_episode_count": 0,
+        "rank_gated_candidate_zero_yield_count": 0,
+        "yield_gated_in_logistic_failure_episode_count": 0,
+        "yield_gated_candidate_zero_yield_count": 0,
+        "transition_gated_in_logistic_failure_episode_count": 0,
+        "transition_gated_candidate_zero_yield_count": 0,
+        "eligible_in_logistic_failure_episode_count": 0,
+        "eligible_in_xgboost_failure_episode_count": 0,
+        "eligible_candidate_zero_yield_count": 0,
+        "eligible_m3star_zero_yield_count": 0,
+        "eligible_action_pairs": []
+      }
+    }
+  },
+  "decision_csv": "expert_consensus_decisions.csv",
+  "decision_csv_sha256": "e18dd5f8799a1a19cc55d6aafc58f5dc1ca520f0e28331d3be9866f8b7591a60"
+}

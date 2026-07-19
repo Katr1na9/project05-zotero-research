@@ -361,14 +361,23 @@ def selected_case_dirs(
     real_cases_root: Path,
     include_c10: bool = False,
     test_prefixes: tuple[str, ...] | None = None,
+    training_scope: str = "legacy_six",
 ) -> tuple[list[Path], list[Path]]:
     if include_c10 and test_prefixes is not None:
         raise ValueError("--include-c10 and explicit test_prefixes are mutually exclusive")
     examples = run_mvp.discover_case_dirs(examples_root)
     real = run_mvp.discover_case_dirs(real_cases_root)
-    train = examples + [
+    real_training = [
         path for path in real if path.name.startswith(("C04-", "C05-", "C06-"))
     ]
+    if training_scope == "legacy_six":
+        train = examples + real_training
+        expected_train_cases = 6
+    elif training_scope == "real_only_three":
+        train = real_training
+        expected_train_cases = 3
+    else:
+        raise ValueError(f"Unknown training_scope: {training_scope!r}")
     selected_prefixes = (
         C07_C10_TEST_PREFIXES
         if include_c10
@@ -380,9 +389,9 @@ def selected_case_dirs(
         raise ValueError(f"Duplicate test case prefixes: {selected_prefixes}")
     test = [path for path in real if path.name.startswith(selected_prefixes)]
     expected_test_cases = len(selected_prefixes)
-    if len(train) != 6 or len(test) != expected_test_cases:
+    if len(train) != expected_train_cases or len(test) != expected_test_cases:
         raise ValueError(
-            f"Expected 6 train and {expected_test_cases} test cases, "
+            f"Expected {expected_train_cases} train and {expected_test_cases} test cases, "
             f"found {len(train)} and {len(test)} for prefixes {selected_prefixes}"
         )
     return train, test

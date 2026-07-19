@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
@@ -17,16 +17,24 @@ EXP = ROOT / "09-experiments"
 DEFAULT_SCHEMA = EXP / "data_schema" / "real_case_cohort.schema.json"
 
 
+def load_script(name: str) -> Any:
+    path = Path(__file__).with_name(f"{name}.py")
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
+HASHING = load_script("artifact_hashing")
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def file_sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+def file_sha256(path: Path, scheme: str) -> str:
+    return HASHING.file_sha256(path, scheme)
 
 
 def resolve_reference(value: Any) -> Path:
@@ -48,6 +56,8 @@ def validate_cohort(
         for error in sorted(validator.iter_errors(cohort), key=lambda item: list(item.path))
     ]
     semantic_errors: list[str] = []
+    repository_text_hash_scheme = cohort.get("repository_text_hash_scheme")
+    replay_artifact_hash_scheme = cohort.get("replay_artifact_hash_scheme")
     cases = cohort.get("cases", [])
     canonical_ids = [row.get("canonical_case_id") for row in cases]
     source_ids = [row.get("source_case_id") for row in cases]
@@ -67,7 +77,9 @@ def validate_cohort(
             config = load_json(config_path)
             if config.get("case_id") != row.get("source_case_id"):
                 semantic_errors.append(f"source case ID mismatch: {canonical_id}")
-            if file_sha256(config_path) != row.get("source_case_config_sha256"):
+            if file_sha256(config_path, repository_text_hash_scheme) != row.get(
+                "source_case_config_sha256"
+            ):
                 semantic_errors.append(f"source case config hash mismatch: {canonical_id}")
         expected_phase = "calibration" if canonical_id in {"C01", "C02", "C03"} else "development"
         if row.get("phase") != expected_phase:
@@ -84,10 +96,12 @@ def validate_cohort(
             digest_path = resolve_reference(digest_source.get("path"))
             if not digest_path.is_file():
                 semantic_errors.append(f"declared digest source unavailable: {canonical_id}/{digest_path}")
-            elif file_sha256(digest_path) != digest_source.get("sha256"):
+            elif file_sha256(digest_path, repository_text_hash_scheme) != digest_source.get(
+                "sha256"
+            ):
                 semantic_errors.append(f"declared digest source hash mismatch: {canonical_id}/{digest_path}")
             if verify_artifact_bytes:
-                if file_sha256(path) != replay.get("sha256"):
+                if file_sha256(path, replay_artifact_hash_scheme) != replay.get("sha256"):
                     semantic_errors.append(f"replay artifact hash mismatch: {canonical_id}/{path}")
                 else:
                     verified_artifacts += 1
@@ -102,7 +116,9 @@ def validate_cohort(
         toy_ids.append(str(config.get("case_id")))
         if config.get("case_id") != row.get("source_case_id"):
             semantic_errors.append(f"toy source case ID mismatch: {case_dir}")
-        if file_sha256(config_path) != row.get("source_case_config_sha256"):
+        if file_sha256(config_path, repository_text_hash_scheme) != row.get(
+            "source_case_config_sha256"
+        ):
             semantic_errors.append(f"toy source config hash mismatch: {case_dir}")
     if len(toy_ids) != 3 or any(not value.startswith(("C01", "C02", "C03")) for value in toy_ids):
         semantic_errors.append("toy exclusion set does not exactly represent source C01-C03")

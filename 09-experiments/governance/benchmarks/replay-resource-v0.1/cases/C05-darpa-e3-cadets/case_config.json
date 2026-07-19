@@ -1,0 +1,29 @@
+{
+  "case_id": "C05-darpa-e3-cadets",
+  "source_case_id": "R02",
+  "case_name": "DARPA E3 CADETS Nginx backdoor incomplete real trace",
+  "description": "Behavior motifs compiled from the R02 CADETS bounded CDM trace.",
+  "development_only": true,
+  "target_granularity": "G2_tactic_intent",
+  "support_ceiling": "G2_tactic_intent",
+  "budget_total": 7,
+  "mask_intensities": [0.2, 0.4, 0.6],
+  "mask_strategies": ["random", "stage", "discriminative"],
+  "random_seeds": [11, 23, 37, 41, 53],
+  "fixed_action_order": ["C05-AA-001", "C05-AA-002", "C05-AA-003", "C05-AA-004", "C05-AA-005", "C05-AA-006"],
+  "stage_mask_tags": ["stage:execution", "stage:command_and_control", "stage:discovery"],
+  "discriminative_claim_ids": ["C05-EC-002", "C05-EC-003", "C05-EC-004", "C05-EC-005", "C05-EC-006", "C05-EC-008"],
+  "channel_reliability": {"network_telemetry": 0.5},
+  "cti_nodes": [
+    {"node_id": "N01_initial_access", "stage": "execution", "required_claim_ids": ["C05-EC-001", "C05-EC-002"], "critical": true},
+    {"node_id": "N02_payload", "stage": "execution", "required_claim_ids": ["C05-EC-003", "C05-EC-004", "C05-EC-005"], "critical": true},
+    {"node_id": "N03_c2", "stage": "command_and_control", "required_claim_ids": ["C05-EC-006", "C05-EC-008"], "critical": true},
+    {"node_id": "N04_discovery", "stage": "discovery", "required_claim_ids": ["C05-EC-007"], "critical": false}
+  ],
+  "cti_edges": [
+    {"edge_id": "E01", "source": "N01_initial_access", "target": "N02_payload"},
+    {"edge_id": "E02", "source": "N02_payload", "target": "N03_c2"},
+    {"edge_id": "E03", "source": "N03_c2", "target": "N04_discovery"}
+  ],
+  "granularity_order": ["G0_unknown", "G1_technique", "G2_tactic_intent", "G3_campaign", "G4_actor_cluster", "G5_named_actor"]
+}

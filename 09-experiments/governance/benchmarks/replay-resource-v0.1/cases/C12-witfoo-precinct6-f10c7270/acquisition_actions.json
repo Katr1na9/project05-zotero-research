@@ -1,0 +1,112 @@
+[
+  {
+    "action_id": "C12-AA-001",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "action_type": "recover_network_summary",
+    "acquisition_channel": "asa_summary",
+    "target": {
+      "target_type": "time_window",
+      "target_value": "ASA blocked-connection summary for the frozen incident window"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C12-EC-001"
+    ],
+    "intended_cti_node_ids": [
+      "N01_perimeter_activity",
+      "N03_cross_channel_context",
+      "N04_actor_campaign_attribution"
+    ],
+    "expected_evidence_types": [
+      "network_summary"
+    ],
+    "expected_stages": [
+      "network_observation",
+      "cross_channel_correlation",
+      "actor_attribution"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.3,
+      "expected_over_attribution_risk_reduction": 0.25,
+      "expected_conflict_resolution": 0.05,
+      "expected_coverage_delta": 0.2
+    },
+    "status": "available",
+    "natural_language_request": "Summarize blocked ASA connections across the frozen incident window without reading vendor attribution labels.",
+    "notes": "Public intent over-declares cross-channel and actor value; actual recovery is the perimeter aggregate only."
+  },
+  {
+    "action_id": "C12-AA-002",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "action_type": "ttp_local_probe",
+    "acquisition_channel": "asa_targeted_probe",
+    "target": {
+      "target_type": "technique",
+      "target_value": "targeted service-access observation around destination port 445"
+    },
+    "cost": 1,
+    "recoverable_claim_ids": [
+      "C12-EC-002"
+    ],
+    "intended_cti_node_ids": [
+      "N01_perimeter_activity",
+      "N03_cross_channel_context"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "network_observation",
+      "cross_channel_correlation"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.16,
+      "expected_over_attribution_risk_reduction": 0.14,
+      "expected_conflict_resolution": 0.02,
+      "expected_coverage_delta": 0.12
+    },
+    "status": "available",
+    "natural_language_request": "Recover a representative ASA record for the blocked destination-port-445 observation.",
+    "notes": "The action recovers an observation, not a validated ATT&CK technique label."
+  },
+  {
+    "action_id": "C12-AA-003",
+    "case_id": "C12-witfoo-precinct6-f10c7270",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "windows_security_audit",
+    "target": {
+      "target_type": "host",
+      "target_value": "Windows Security 4672 observations in the frozen incident"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": [
+      "C12-EC-003",
+      "C12-EC-004"
+    ],
+    "intended_cti_node_ids": [
+      "N02_privileged_identity_activity",
+      "N03_cross_channel_context",
+      "N04_actor_campaign_attribution"
+    ],
+    "expected_evidence_types": [
+      "local_log"
+    ],
+    "expected_stages": [
+      "credential_observation",
+      "cross_channel_correlation",
+      "actor_attribution"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.34,
+      "expected_over_attribution_risk_reduction": 0.32,
+      "expected_conflict_resolution": 0.08,
+      "expected_coverage_delta": 0.3
+    },
+    "status": "available",
+    "natural_language_request": "Recover Windows Security Event 4672 records linked to the frozen incident.",
+    "notes": "Actual recovery supports privileged identity observations only; it cannot identify an actor."
+  }
+]

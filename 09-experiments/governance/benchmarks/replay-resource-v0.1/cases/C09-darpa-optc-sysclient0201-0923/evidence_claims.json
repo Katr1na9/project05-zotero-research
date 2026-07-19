@@ -1,0 +1,200 @@
+[
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "powershell.exe"
+    },
+    "predicate": "connected_to",
+    "object": {
+      "entity_type": "endpoint",
+      "value": "132.197.158.98:80"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.93,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R06_campaign"
+    ],
+    "notes": "PowerShell Empire C2 flows to the GT listener IP on port 80. The GT also names news.com; hostname resolution is not required for this IP-backed claim. matched_event_count=3762; first_timestamp_utc=2019-09-23T15:24:02.875000Z; last_timestamp_utc=2019-09-23T18:05:09.074000Z; representative_event_ids=67b3d5d0-2ca8-4354-9396-8e56e0742b3d,7070c417-04cd-44ed-86a2-2e090d9052dc,8ddd3c91-5331-4a6f-92ea-a0b8d476dafb,d5107977-8577-416e-aba1-006bfc32aa70,a897c7bf-8da3-497f-b9ec-5655d92e18b3",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:command_and_control",
+      "node:N01_empire_c2",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C09-EC-001",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R06_sysclient0201_ecar_window",
+      "record_id": "67b3d5d0-2ca8-4354-9396-8e56e0742b3d"
+    }
+  },
+  {
+    "source_type": "host_forensics",
+    "claim_type": "registry_modification",
+    "subject": {
+      "entity_type": "process",
+      "value": "powershell.exe"
+    },
+    "predicate": "modified",
+    "object": {
+      "entity_type": "registry_key",
+      "value": "HKCU\\Environment\\windir"
+    },
+    "mapped_tactic": [
+      "privilege_escalation"
+    ],
+    "mapped_technique": [
+      "T1548.002"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.95,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R06_campaign"
+    ],
+    "notes": "Matches the GT UAC bypass that writes the Environment windir value from the unelevated Empire agent (PID 5452 / VL8B5T3U). matched_event_count=1; first_timestamp_utc=2019-09-23T15:25:48.259000Z; last_timestamp_utc=2019-09-23T15:25:48.259000Z; representative_event_ids=5cedea14-aed8-4ca4-98e8-642c816ed754",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:privilege_escalation",
+      "node:N02_uac_windir",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C09-EC-002",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R06_sysclient0201_ecar_window",
+      "record_id": "5cedea14-aed8-4ca4-98e8-642c816ed754"
+    }
+  },
+  {
+    "source_type": "host_forensics",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "powershell.exe"
+    },
+    "predicate": "executed",
+    "object": {
+      "entity_type": "module",
+      "value": "Get-Screenshot"
+    },
+    "mapped_tactic": [
+      "collection"
+    ],
+    "mapped_technique": [
+      "T1113"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.92,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R06_campaign"
+    ],
+    "notes": "Shell telemetry captures the Empire Get-Screenshot Invoke-Expression payload on the elevated agent (PID 2952 / LUAVR71T). matched_event_count=1; first_timestamp_utc=2019-09-23T16:51:54.506000Z; last_timestamp_utc=2019-09-23T16:51:54.506000Z; representative_event_ids=989d6566-697b-4025-aca5-5ad344c1ef96",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:collection",
+      "node:N03_screenshot",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C09-EC-003",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R06_sysclient0201_ecar_window",
+      "record_id": "989d6566-697b-4025-aca5-5ad344c1ef96"
+    }
+  },
+  {
+    "source_type": "host_forensics",
+    "claim_type": "lateral_movement",
+    "subject": {
+      "entity_type": "process",
+      "value": "powershell.exe"
+    },
+    "predicate": "invoked_wmi_against",
+    "object": {
+      "entity_type": "host",
+      "value": "SysClient0402"
+    },
+    "mapped_tactic": [
+      "lateral_movement"
+    ],
+    "mapped_technique": [
+      "T1047"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.94,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R06_campaign"
+    ],
+    "notes": "Shell payloads reference Invoke-WmiMethod / ComputerName SYSCLIENT0402. This claim is scoped to the primary-host window only; SysClient0402 local eCAR is not required. matched_event_count=4; first_timestamp_utc=2019-09-23T17:19:42.324000Z; last_timestamp_utc=2019-09-23T17:23:31.973000Z; representative_event_ids=ebdbcea1-803f-4dc0-a198-d417521fcdfa,f6776b1a-9043-4241-ae5f-fa738820c386,eadee188-296c-4273-9e99-c591c5b995d5,1750aeb9-bce4-4f19-9d9a-7d51dd294fd4",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:lateral_movement",
+      "node:N04_wmi_0402",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C09-EC-004",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R06_sysclient0201_ecar_window",
+      "record_id": "ebdbcea1-803f-4dc0-a198-d417521fcdfa"
+    }
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "GoogleUpdate.exe"
+    },
+    "predicate": "executed",
+    "object": {
+      "entity_type": "host",
+      "value": "SysClient0201"
+    },
+    "mapped_tactic": [
+      "benign_context"
+    ],
+    "mapped_technique": [],
+    "evidence_strength": "supporting",
+    "confidence": 0.7,
+    "observable_status": "visible",
+    "supports_hypotheses": [],
+    "notes": "Benign Google Update process creates interleaved with the attack window; not part of the Empire campaign graph. matched_event_count=16; first_timestamp_utc=2019-09-23T15:35:00.297000Z; last_timestamp_utc=2019-09-23T18:49:10.727000Z; representative_event_ids=ba179a20-143d-4d48-ab56-83f23979f1f6,b672cdb6-3847-4d6a-99c0-cf454fec19ee,d892fbe7-399a-4798-9a95-985cb76bdfc1,bc8aa457-308b-47b8-be7c-1c5a1e5c05cd,40785306-578c-44dc-910c-95a3ff6ab1c1",
+    "tags": [
+      "hideable",
+      "real_ecar",
+      "stage:benign_context",
+      "noise"
+    ],
+    "claim_id": "C09-EC-005",
+    "case_id": "C09-darpa-optc-sysclient0201-0923",
+    "source_pointer": {
+      "artifact_id": "darpa_optc_R06_sysclient0201_ecar_window",
+      "record_id": "ba179a20-143d-4d48-ab56-83f23979f1f6"
+    }
+  }
+]

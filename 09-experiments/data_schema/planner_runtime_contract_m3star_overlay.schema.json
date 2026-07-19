@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/planner_runtime_contract_m3star_overlay.schema.json",
+  "title": "Project05 M3* frozen runtime-contract overlay",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contract_id",
+    "version",
+    "status",
+    "created_utc",
+    "base_contract",
+    "supersedes",
+    "overrides",
+    "change_basis"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../data_schema/planner_runtime_contract_m3star_overlay.schema.json"
+    },
+    "contract_id": {
+      "enum": [
+        "project05-m3star-runtime-contract-v0.3",
+        "project05-m3star-runtime-contract-v0.4",
+        "project05-m3star-runtime-contract-v0.5",
+        "project05-m3star-runtime-contract-v0.6",
+        "project05-m3star-runtime-contract-v0.7",
+        "project05-m3star-runtime-contract-v0.8"
+      ]
+    },
+    "version": {"enum": ["0.3.0", "0.4.0", "0.5.0", "0.6.0", "0.7.0", "0.8.0"]},
+    "status": {"const": "frozen_for_new_runs"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "base_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "enum": [
+            "planner-runtime-contract-m3star-v0.2.json",
+            "planner-runtime-contract-m3star-v0.3.json",
+            "planner-runtime-contract-m3star-v0.4.json",
+            "planner-runtime-contract-m3star-v0.5.json",
+            "planner-runtime-contract-m3star-v0.6.json",
+            "planner-runtime-contract-m3star-v0.7.json"
+          ]
+        },
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "supersedes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_id", "sha256", "reason"],
+      "properties": {
+        "contract_id": {
+          "enum": [
+            "project05-m3star-runtime-contract-v0.2",
+            "project05-m3star-runtime-contract-v0.3",
+            "project05-m3star-runtime-contract-v0.4",
+            "project05-m3star-runtime-contract-v0.5",
+            "project05-m3star-runtime-contract-v0.6",
+            "project05-m3star-runtime-contract-v0.7"
+          ]
+        },
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false,
+          "required": ["selection_contract"],
+      "properties": {
+        "selection_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "frozen_components",
+            "reference_configuration",
+            "experimental_options",
+            "post_selection_stochastic_dominance"
+          ],
+          "properties": {
+            "frozen_components": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 9,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "public_graph_transition_learning",
+                  "action_optimality_learning",
+                  "action_reachability_learning",
+                  "action_cost_to_go_learning",
+                  "post_selection_stochastic_dominance",
+                  "multi_head_consensus_shield",
+                  "learned_head_resource_pareto_filter",
+                  "pairwise_action_ranking",
+                  "policy_expert_consensus"
+                ]
+              }
+            },
+            "reference_configuration": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "planner_id",
+                "planning_horizon",
+                "target_reach_threshold",
+                "max_outcome_nodes",
+                "myopic_safety_shield",
+                "stochastic_dominance_shield"
+              ],
+              "properties": {
+                "planner_id": {"const": "project05_m3star_h3_dual"},
+                "planning_horizon": {"const": 3},
+                "target_reach_threshold": {"const": 0.9},
+                "max_outcome_nodes": {"const": 8},
+                "myopic_safety_shield": {"const": true},
+                "stochastic_dominance_shield": {"const": true}
+                ,
+                "multi_head_consensus_shield": {"type": "boolean"},
+                "learned_head_resource_pareto_filter": {"type": "boolean"},
+                "learned_head_resource_pareto_filter_scope": {
+                  "type": "string"
+                },
+                "pre_feedback_transition_noninferiority_required": {
+                  "type": "boolean"
+                },
+                "post_feedback_transition_override_allowed": {
+                  "type": "boolean"
+                },
+                "pairwise_action_ranking": {
+                  "type": "boolean"
+                },
+                "policy_expert_consensus": {
+                  "type": "boolean"
+                },
+                "policy_expert_ids": {
+                  "type": "array",
+                  "const": ["xgboost", "logistic", "pairwise_rank"]
+                }
+              }
+            },
+            "experimental_options": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["planning_horizon", "myopic_safety_shield"],
+              "properties": {
+                "planning_horizon": {
+                  "const": "not_independently_supported_on_legacy_development_matrix"
+                },
+                "myopic_safety_shield": {
+                  "const": "not_independently_supported_on_legacy_development_matrix"
+                }
+              }
+            },
+            "post_selection_stochastic_dominance": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "requires_nonempty_exact_intended_cti_node_set",
+                "requires_strictly_higher_channel_reliability",
+                "noninferior_expected_effect_fields",
+                "resource_cost_rule",
+                "reliability_treatment",
+                "replacement_must_use_precomputed_plan",
+                "source_selection_preserved_when_no_eligible_replacement"
+              ],
+              "properties": {
+                "requires_nonempty_exact_intended_cti_node_set": {"const": true},
+                "requires_strictly_higher_channel_reliability": {"const": true},
+                "noninferior_expected_effect_fields": {
+                  "type": "array",
+                  "const": [
+                    "expected_granularity_gain",
+                    "expected_uncertainty_reduction",
+                    "expected_over_attribution_risk_reduction",
+                    "expected_conflict_resolution",
+                    "expected_coverage_delta"
+                  ]
+                },
+                "resource_cost_rule": {"const": "alternative_cost <= source_cost"},
+                "reliability_treatment": {
+                  "const": "separate_constraint_not_folded_into_acquisition_cost"
+                },
+                "replacement_must_use_precomputed_plan": {"const": true},
+                "source_selection_preserved_when_no_eligible_replacement": {
+                  "const": true
+                }
+              }
+            }
+          }
+        },
+        "audit_contract": {"type": "object"}
+      }
+    },
+    "change_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_directory",
+        "development_summary_sha256",
+        "evaluation_manifest_sha256",
+        "cost_profile_id",
+        "cost_profile_sha256",
+        "finding",
+        "final_blind_cases_loaded"
+      ],
+      "properties": {
+        "result_directory": {"type": "string", "minLength": 1},
+        "development_summary_sha256": {"$ref": "#/$defs/sha256"},
+        "evaluation_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "cost_profile_id": {
+          "const": "project05-replay-full-scan-equivalent-cost-v0.1"
+        },
+        "cost_profile_sha256": {"$ref": "#/$defs/sha256"},
+        "finding": {"type": "string", "minLength": 1},
+        "final_blind_cases_loaded": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

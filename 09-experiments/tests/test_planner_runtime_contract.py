@@ -1,5 +1,7 @@
 import importlib.util
+import hashlib
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -22,6 +24,68 @@ def load(path, name):
 
 
 class PlannerRuntimeContractTests(unittest.TestCase):
+    def test_overlay_contract_binds_and_overrides_frozen_base(self):
+        adapter = load(ADAPTER_PATH, "planner_runtime_adapter_overlay_test")
+        base = {
+            "contract_id": "base-v1",
+            "version": "1.0.0",
+            "status": "frozen_for_new_runs",
+            "planner_visibility": {"recursive_forbidden_keys": []},
+            "ml_feature_contract": {"labels_runtime_visible": False},
+            "selection_contract": {"cost_rule": "risk_adjusted"},
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            base_path = root / "base.json"
+            base_path.write_text(json.dumps(base), encoding="utf-8")
+            base_hash = hashlib.sha256(base_path.read_bytes()).hexdigest()
+            overlay = {
+                "contract_id": "overlay-v2",
+                "version": "2.0.0",
+                "status": "frozen_for_new_runs",
+                "base_contract": {
+                    "path": "base.json",
+                    "sha256": base_hash,
+                },
+                "overrides": {
+                    "selection_contract": {"cost_rule": "raw_nonincrease"}
+                },
+            }
+            overlay_path = root / "overlay.json"
+            overlay_path.write_text(json.dumps(overlay), encoding="utf-8")
+
+            bundle = adapter.load_contract(overlay_path)
+            overlay_hash = hashlib.sha256(overlay_path.read_bytes()).hexdigest()
+            chained_overlay = {
+                "contract_id": "overlay-v3",
+                "version": "3.0.0",
+                "status": "frozen_for_new_runs",
+                "base_contract": {
+                    "path": "overlay.json",
+                    "sha256": overlay_hash,
+                },
+                "overrides": {
+                    "selection_contract": {"cost_rule": "multi_head_pareto"}
+                },
+            }
+            chained_path = root / "chained.json"
+            chained_path.write_text(json.dumps(chained_overlay), encoding="utf-8")
+            chained_bundle = adapter.load_contract(chained_path)
+
+        self.assertEqual("overlay-v2", bundle["document"]["contract_id"])
+        self.assertEqual("2.0.0", bundle["document"]["version"])
+        self.assertEqual(
+            {"cost_rule": "raw_nonincrease"},
+            bundle["document"]["selection_contract"],
+        )
+        self.assertEqual(base_hash, bundle["base_contract_sha256"])
+        self.assertEqual("overlay-v3", chained_bundle["document"]["contract_id"])
+        self.assertEqual(
+            {"cost_rule": "multi_head_pareto"},
+            chained_bundle["document"]["selection_contract"],
+        )
+        self.assertIn("planner_visibility", chained_bundle["document"])
+
     def test_contract_schema_and_frozen_feature_columns(self):
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))

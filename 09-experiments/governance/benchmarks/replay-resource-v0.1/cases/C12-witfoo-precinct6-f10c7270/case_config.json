@@ -1,0 +1,125 @@
+{
+  "case_id": "C12-witfoo-precinct6-f10c7270",
+  "source_case_id": "f10c7270-1228-11ed-99ed-adca11e4059c",
+  "case_name": "WitFoo Precinct 6 production-SOC multichannel incident f10c7270",
+  "description": "Natural operational external stress case compiled from analyst-disrupted WitFoo incident leads. Raw ASA and Windows audit streams are recoverable; actor and campaign attribution remain unsupported.",
+  "development_only": false,
+  "holdout_role": "natural_operational_production_soc_parameter_locked_stress_case",
+  "node_coverage_semantics": "AND",
+  "target_granularity": "G1_technique",
+  "support_ceiling": "G1_technique",
+  "budget_total": 8,
+  "mask_intensities": [
+    0.2,
+    0.4,
+    0.6
+  ],
+  "mask_strategies": [
+    "random",
+    "stage",
+    "discriminative"
+  ],
+  "random_seeds": [
+    11,
+    23,
+    37,
+    41,
+    53
+  ],
+  "fixed_action_order": [
+    "C12-AA-001",
+    "C12-AA-002",
+    "C12-AA-003",
+    "C12-AA-004"
+  ],
+  "stage_mask_tags": [
+    "stage:network_observation",
+    "stage:credential_observation",
+    "stage:cross_channel_correlation",
+    "stage:actor_attribution"
+  ],
+  "discriminative_claim_ids": [
+    "C12-EC-001",
+    "C12-EC-002",
+    "C12-EC-003",
+    "C12-EC-004"
+  ],
+  "channel_reliability": {
+    "asa_summary": 1.0,
+    "asa_targeted_probe": 1.0,
+    "windows_security_audit": 1.0,
+    "precinct_projection_review": 1.0
+  },
+  "cti_nodes": [
+    {
+      "node_id": "N01_perimeter_activity",
+      "stage": "network_observation",
+      "required_claim_ids": [
+        "C12-EC-001",
+        "C12-EC-002"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N02_privileged_identity_activity",
+      "stage": "credential_observation",
+      "required_claim_ids": [
+        "C12-EC-003",
+        "C12-EC-004"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N03_cross_channel_context",
+      "stage": "cross_channel_correlation",
+      "required_claim_ids": [
+        "C12-EC-001",
+        "C12-EC-003",
+        "C12-EC-005"
+      ],
+      "critical": true
+    },
+    {
+      "node_id": "N04_actor_campaign_attribution",
+      "stage": "actor_attribution",
+      "required_claim_ids": [],
+      "critical": true,
+      "natural_gap": "No actor label or independent campaign ground truth is present."
+    }
+  ],
+  "cti_edges": [
+    {
+      "edge_id": "E01",
+      "source": "N01_perimeter_activity",
+      "target": "N03_cross_channel_context"
+    },
+    {
+      "edge_id": "E02",
+      "source": "N02_privileged_identity_activity",
+      "target": "N03_cross_channel_context"
+    },
+    {
+      "edge_id": "E03",
+      "source": "N03_cross_channel_context",
+      "target": "N04_actor_campaign_attribution"
+    }
+  ],
+  "natural_incompleteness": {
+    "unsupported_nodes": [
+      "N04_actor_campaign_attribution"
+    ],
+    "actor_label_limit": "actors is empty and no independent actor-attribution truth exists.",
+    "timestamp_limit": "Vendor observed_at and embedded source clocks are inconsistent; no causal event ordering is claimed.",
+    "entity_link_limit": "Structured and embedded-message pseudonyms are not joined across sanitization layers.",
+    "graph_limit": "GraphML contains only vendor INCIDENT_LINK projections.",
+    "policy": "Retain the natural gap and cap the case at G1."
+  },
+  "granularity_order": [
+    "G0_unknown",
+    "G1_technique",
+    "G2_tactic_intent",
+    "G3_campaign",
+    "G4_actor_cluster",
+    "G5_named_actor"
+  ]
+}

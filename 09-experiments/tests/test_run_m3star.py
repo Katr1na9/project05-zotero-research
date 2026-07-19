@@ -305,6 +305,149 @@ class M3StarPublicGraphTests(unittest.TestCase):
 
 
 class M3StarPlanningTests(unittest.TestCase):
+    def test_three_expert_consensus_applies_only_under_cost_and_reachability_gates(self):
+        m3star = load_m3star(self)
+        actions = [
+            {"action_id": "A-source", "cost": 2.0},
+            {"action_id": "A-candidate", "cost": 1.0},
+            {"action_id": "STOP", "cost": 0.0, "action_type": "stop"},
+        ]
+        recommendations = {
+            "xgboost": "A-candidate",
+            "logistic": "A-candidate",
+            "pairwise_rank": "A-candidate",
+        }
+
+        selected = m3star._apply_policy_expert_consensus(
+            "A-source",
+            actions,
+            recommendations,
+            {"A-candidate": 0.95},
+            0.9,
+        )
+
+        self.assertEqual("A-candidate", selected["selected_action_id"])
+        self.assertEqual(1, selected["expert_consensus_applied"])
+        self.assertEqual("three_expert_cost_reachability_consensus", selected["reason"])
+
+        for rejected, reason in (
+            (
+                m3star._apply_policy_expert_consensus(
+                    "A-source",
+                    actions,
+                    {**recommendations, "pairwise_rank": "A-source"},
+                    {"A-candidate": 0.95},
+                    0.9,
+                ),
+                "expert_disagreement",
+            ),
+            (
+                m3star._apply_policy_expert_consensus(
+                    "A-source",
+                    actions,
+                    recommendations,
+                    {"A-candidate": 0.89},
+                    0.9,
+                ),
+                "candidate_reachability_below_threshold",
+            ),
+            (
+                m3star._apply_policy_expert_consensus(
+                    "A-candidate",
+                    actions,
+                    {
+                        "xgboost": "A-source",
+                        "logistic": "A-source",
+                        "pairwise_rank": "A-source",
+                    },
+                    {"A-source": 0.95},
+                    0.9,
+                ),
+                "candidate_cost_increase",
+            ),
+            (
+                m3star._apply_policy_expert_consensus(
+                    "A-source",
+                    actions,
+                    {key: "STOP" for key in recommendations},
+                    {"STOP": 1.0},
+                    0.9,
+                ),
+                "candidate_stop_forbidden",
+            ),
+        ):
+            self.assertEqual(rejected["source_action_id"], rejected["selected_action_id"])
+            self.assertEqual(0, rejected["expert_consensus_applied"])
+            self.assertEqual(reason, rejected["reason"])
+
+    def test_learned_head_resource_pareto_filter_is_disabled_after_feedback(self):
+        m3star = load_m3star(self)
+        transition_favored = {
+            "action_id": "A-query",
+            "immediate_action_cost": 2.0,
+            "target_reach_probability": 0.98,
+            "action_value_probability": 0.35,
+            "action_reachability_probability": 0.98,
+            "action_cost_to_go": 2.0,
+        }
+        learned_head_favored = {
+            "action_id": "A-extend",
+            "immediate_action_cost": 1.0,
+            "target_reach_probability": 0.15,
+            "action_value_probability": 0.79,
+            "action_reachability_probability": 0.99,
+            "action_cost_to_go": 2.7,
+        }
+
+        without_feedback, not_filtered = (
+            m3star._filter_learned_head_dominated_plans(
+                [transition_favored, learned_head_favored],
+                target_reach_threshold=0.9,
+                observed_feedback=False,
+            )
+        )
+        survivors, filtered = m3star._filter_learned_head_dominated_plans(
+            [transition_favored, learned_head_favored],
+            target_reach_threshold=0.9,
+            observed_feedback=True,
+        )
+
+        self.assertEqual(2, len(without_feedback))
+        self.assertEqual([], not_filtered)
+        self.assertEqual(
+            ["A-query", "A-extend"],
+            [plan["action_id"] for plan in survivors],
+        )
+        self.assertEqual([], filtered)
+
+    def test_learned_head_resource_pareto_filter_requires_four_way_dominance(self):
+        m3star = load_m3star(self)
+        dominated = {
+            "action_id": "A-query",
+            "immediate_action_cost": 2.0,
+            "target_reach_probability": 0.98,
+            "action_value_probability": 0.35,
+            "action_reachability_probability": 0.98,
+            "action_cost_to_go": 2.0,
+        }
+        dominant = {
+            "action_id": "A-extend",
+            "immediate_action_cost": 1.0,
+            "target_reach_probability": 0.98,
+            "action_value_probability": 0.79,
+            "action_reachability_probability": 0.99,
+            "action_cost_to_go": 2.7,
+        }
+
+        survivors, filtered = m3star._filter_learned_head_dominated_plans(
+            [dominated, dominant],
+            target_reach_threshold=0.9,
+            observed_feedback=False,
+        )
+
+        self.assertEqual(["A-extend"], [plan["action_id"] for plan in survivors])
+        self.assertEqual(["A-query"], filtered)
+
     def test_learned_cost_to_go_avoids_cheap_probe_with_expensive_repair(self):
         m3star = load_m3star(self)
         config = {
@@ -433,15 +576,40 @@ class M3StarPlanningTests(unittest.TestCase):
             },
         )
 
-        self.assertEqual("A-reliable", dominance_corrected["action_id"])
+        self.assertEqual("A-cheap-probe", dominance_corrected["action_id"])
+        self.assertEqual(0, dominance_corrected["dominance_substitution_applied"])
+
+        actions[1]["cost"] = 2.0
+        cost_nonincreasing_dominance = m3star.plan_m3star_action(
+            config,
+            state,
+            actions,
+            transition,
+            horizon=1,
+            action_value_predictor=lambda snapshot, candidates: {
+                candidate["action_id"]: 0.5 for candidate in candidates
+            },
+            action_reachability_predictor=lambda snapshot, candidates: {
+                candidate["action_id"]: 0.95 for candidate in candidates
+            },
+            action_cost_predictor=lambda snapshot, candidates: {
+                "A-cheap-probe": 2.0,
+                "A-reliable": 2.0,
+            },
+        )
+
+        self.assertEqual("A-reliable", cost_nonincreasing_dominance["action_id"])
         self.assertEqual(
             "A-cheap-probe",
-            dominance_corrected["pre_dominance_action_id"],
+            cost_nonincreasing_dominance["pre_dominance_action_id"],
         )
-        self.assertEqual(1, dominance_corrected["dominance_substitution_applied"])
+        self.assertEqual(
+            1,
+            cost_nonincreasing_dominance["dominance_substitution_applied"],
+        )
         self.assertEqual(
             "strict_equivalent_action_stochastic_dominance",
-            dominance_corrected["dominance_selection_reason"],
+            cost_nonincreasing_dominance["dominance_selection_reason"],
         )
 
         actions[1]["intended_cti_node_ids"] = []
@@ -1000,6 +1168,28 @@ class M3StarPlanningTests(unittest.TestCase):
             horizon=2,
             action_value_predictor=action_value,
         )
+        disagreement = m3star.plan_m3star_action(
+            config,
+            state,
+            actions,
+            learned_transition,
+            horizon=2,
+            action_value_predictor=lambda snapshot, candidates: {
+                candidate["action_id"]: (
+                    0.9 if candidate["action_id"] == "A-safe" else 0.01
+                )
+                for candidate in candidates
+            },
+            action_reachability_predictor=lambda snapshot, candidates: {
+                candidate["action_id"]: (
+                    0.9 if candidate["action_id"] == "A-safe" else 0.1
+                )
+                for candidate in candidates
+            },
+            action_cost_predictor=lambda snapshot, candidates: {
+                candidate["action_id"]: 2.0 for candidate in candidates
+            },
+        )
 
         self.assertEqual("A-safe", shielded["action_id"])
         self.assertEqual(2, len(root_rollout_memos))
@@ -1053,6 +1243,12 @@ class M3StarPlanningTests(unittest.TestCase):
         self.assertAlmostEqual(
             0.0,
             dominant["counterfactual_cost_delta"],
+        )
+        self.assertEqual("A-safe", disagreement["action_id"])
+        self.assertEqual(1, disagreement["effective_horizon"])
+        self.assertEqual(
+            "multi_head_disagreement_shield",
+            disagreement["horizon_selection_reason"],
         )
 
     def test_chance_constraint_prefers_lower_cost_once_reliability_target_is_met(self):
@@ -2044,6 +2240,41 @@ class M3StarDatasetTests(unittest.TestCase):
 
 
 class M3StarLearningTests(unittest.TestCase):
+    def test_single_class_reachability_uses_an_auditable_constant_head(self):
+        m3star = load_m3star(self)
+        rows = []
+        for state_index in range(8):
+            for action_index, label in enumerate((1, 0)):
+                row = {
+                    column: 0.0 for column in m3star.ACTION_VALUE_FEATURE_COLUMNS
+                }
+                row.update(
+                    {
+                        "case_id": f"C{state_index:02d}",
+                        "state_id": f"S{state_index:02d}",
+                        "action_id": f"A{action_index}",
+                        "label_oracle_optimal_action": label,
+                        "label_oracle_reachable_via_action": 1,
+                        "label_oracle_cost_via_action": float(action_index + 1),
+                    }
+                )
+                row["cost"] = float(action_index + 1)
+                rows.append(row)
+
+        model = m3star.train_graph_action_value_model(rows, boost_rounds=5)
+
+        self.assertNotIn("reachability_booster", model)
+        self.assertEqual(1.0, model["reachability_constant_probability"])
+        self.assertEqual(
+            [1.0] * len(rows),
+            m3star.predict_action_reachability_probabilities(model, rows),
+        )
+        self.assertEqual(
+            "m3star_constant_binary_probability_v0.1",
+            model["reachability_model_family"],
+        )
+        self.assertTrue(m3star.has_action_reachability_head(model))
+
     def test_graph_action_value_head_learns_minimum_cost_action(self):
         m3star = load_m3star(self)
 
@@ -2446,16 +2677,84 @@ class M3StarLearningTests(unittest.TestCase):
 
 
 class M3StarExperimentRunnerTests(unittest.TestCase):
+    def test_frozen_measured_cost_profile_identity_is_reportable(self):
+        runner = load_m3star_experiment(self)
+        profile = {
+            "document": {
+                "profile_id": "measured-profile-v0.1",
+                "version": "0.1.0",
+                "status": "frozen",
+                "regime": "measured",
+            },
+            "sha256": "a" * 64,
+            "source_path": "C:/tmp/measured-profile.json",
+        }
+
+        identity = runner.cost_profile_identity("measured", profile)
+
+        self.assertEqual(
+            {
+                "profile_id": "measured-profile-v0.1",
+                "version": "0.1.0",
+                "status": "frozen",
+                "regime": "measured",
+                "sha256": "a" * 64,
+                "source_path": "C:/tmp/measured-profile.json",
+            },
+            identity,
+        )
+
+    def test_measured_development_claim_context_is_not_mislabeled_legacy(self):
+        runner = load_m3star_experiment(self)
+        identity = {
+            "profile_id": "measured-profile-v0.1",
+            "version": "0.1.0",
+            "status": "frozen",
+            "regime": "measured",
+            "sha256": "a" * 64,
+            "source_path": "C:/tmp/measured-profile.json",
+        }
+
+        context = runner.cost_claim_context(
+            "measured",
+            "development",
+            identity,
+        )
+
+        self.assertFalse(context["formal_cost_claim_allowed"])
+        self.assertEqual(
+            "development_evaluation_not_final_blind_confirmation",
+            context["reason"],
+        )
+        self.assertEqual(identity, context["cost_profile_identity"])
+
+    def test_runner_selects_real_only_training_scope_without_toy_cases(self):
+        runner = load_m3star_experiment(self)
+        experiment_dir = SCRIPT_DIR.parent
+
+        train_dirs, evaluation_dirs = runner.select_experiment_case_dirs(
+            experiment_dir / "examples",
+            experiment_dir / "real_cases",
+            runner.DEVELOPMENT_EVALUATION_PREFIXES,
+            "real_only_three",
+        )
+
+        self.assertEqual(
+            ["C04-", "C05-", "C06-"],
+            [path.name[:4] for path in train_dirs],
+        )
+        self.assertEqual(6, len(evaluation_dirs))
+
     def test_runner_exposes_frozen_runtime_contract_metadata(self):
         runner = load_m3star_experiment(self)
 
         metadata = runner.runtime_contract_metadata()
 
         self.assertEqual(
-            "project05-m3star-runtime-contract-v0.2",
+            "project05-m3star-runtime-contract-v0.8",
             metadata["contract_id"],
         )
-        self.assertEqual("0.2.0", metadata["version"])
+        self.assertEqual("0.8.0", metadata["version"])
         self.assertEqual(64, len(metadata["sha256"]))
         self.assertTrue(metadata["runtime_allowlist_enforced"])
 
@@ -2792,24 +3091,22 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
 class M3StarRuntimeContractTests(unittest.TestCase):
     def test_frozen_contract_validates_and_matches_implementation(self):
         m3star = load_m3star(self)
-        contract_path = (
-            SCRIPT_DIR.parent
-            / "governance"
-            / "contracts"
-            / "planner-runtime-contract-m3star-v0.2.json"
-        )
-        contract = json.loads(contract_path.read_text(encoding="utf-8"))
-        schema_path = (contract_path.parent / contract["$schema"]).resolve()
+        contract_path = m3star.CONTRACT_PATH
+        contract_source = json.loads(contract_path.read_text(encoding="utf-8"))
+        schema_path = (
+            contract_path.parent / contract_source["$schema"]
+        ).resolve()
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
         Draft202012Validator.check_schema(schema)
         errors = sorted(
             Draft202012Validator(
                 schema,
                 format_checker=FormatChecker(),
-            ).iter_errors(contract),
+            ).iter_errors(contract_source),
             key=lambda error: list(error.absolute_path),
         )
         self.assertEqual([], [error.message for error in errors])
+        contract = m3star.RUNTIME_CONTRACT["document"]
 
         feature_contract = contract["ml_feature_contract"]
         self.assertEqual(
@@ -2841,10 +3138,48 @@ class M3StarRuntimeContractTests(unittest.TestCase):
             dominance["noninferior_expected_effect_fields"],
         )
         self.assertEqual(
-            "alternative_cost <= source_cost / max(0.05, source_reliability)",
-            dominance["risk_adjusted_cost_rule"],
+            "alternative_cost <= source_cost",
+            dominance["resource_cost_rule"],
+        )
+        self.assertEqual(
+            "separate_constraint_not_folded_into_acquisition_cost",
+            dominance["reliability_treatment"],
         )
         self.assertTrue(dominance["replacement_must_use_precomputed_plan"])
+        self.assertTrue(
+            selection["reference_configuration"][
+                "multi_head_consensus_shield"
+            ]
+        )
+        self.assertIn(
+            "multi_head_consensus_shield",
+            selection["frozen_components"],
+        )
+        self.assertTrue(
+            selection["reference_configuration"][
+                "learned_head_resource_pareto_filter"
+            ]
+        )
+        self.assertIn(
+            "learned_head_resource_pareto_filter",
+            selection["frozen_components"],
+        )
+        self.assertEqual(
+            "executed_root_pre_feedback_only",
+            selection["reference_configuration"][
+                "learned_head_resource_pareto_filter_scope"
+            ],
+        )
+        self.assertTrue(
+            selection["reference_configuration"][
+                "pre_feedback_transition_noninferiority_required"
+            ]
+        )
+        self.assertFalse(
+            selection["reference_configuration"][
+                "post_feedback_transition_override_allowed"
+            ]
+        )
         self.assertEqual(
             "not_independently_supported_on_legacy_development_matrix",
             selection["experimental_options"]["planning_horizon"],
@@ -2865,6 +3200,16 @@ class M3StarRuntimeContractTests(unittest.TestCase):
                 "dominance_source_cost",
                 "dominance_target_cost",
                 "dominance_source_risk_adjusted_cost",
+                "head_pareto_filtered_action_ids",
+                "head_pareto_filter_count",
+                "expert_consensus_source_action_id",
+                "expert_consensus_candidate_action_id",
+                "expert_action_ids",
+                "expert_consensus_source_cost",
+                "expert_consensus_candidate_cost",
+                "expert_consensus_candidate_reachability",
+                "expert_consensus_applied",
+                "expert_consensus_reason",
             },
             set(contract["audit_contract"]["decision_fields"]),
         )
@@ -2887,6 +3232,15 @@ class M3StarRuntimeContractTests(unittest.TestCase):
         )
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
         evidence = contract["development_evidence"]
+        self.assertEqual(
+            "utf8_lf_normalized_sha256", evidence.get("artifact_hash_scheme")
+        )
+        hashing_spec = importlib.util.spec_from_file_location(
+            "artifact_hashing_for_m3star_contract", SCRIPT_DIR / "artifact_hashing.py"
+        )
+        hashing = importlib.util.module_from_spec(hashing_spec)
+        assert hashing_spec.loader is not None
+        hashing_spec.loader.exec_module(hashing)
         precursor_path = contract_path.with_name(
             "planner-runtime-contract-m3star-v0.1.json"
         )
@@ -2897,7 +3251,9 @@ class M3StarRuntimeContractTests(unittest.TestCase):
         result_dir = project_root / evidence["result_directory"]
         self.assertTrue(result_dir.is_dir())
         for relative_path, expected in evidence["artifact_sha256"].items():
-            actual = hashlib.sha256((result_dir / relative_path).read_bytes()).hexdigest()
+            actual = hashing.file_sha256(
+                result_dir / relative_path, evidence["artifact_hash_scheme"]
+            )
             self.assertEqual(expected, actual, relative_path)
 
         report = json.loads(

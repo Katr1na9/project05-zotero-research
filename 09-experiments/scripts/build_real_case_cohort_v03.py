@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
@@ -26,12 +26,24 @@ REAL_CASE_NAMES = [
 ]
 
 
+def load_script(name: str) -> Any:
+    path = Path(__file__).with_name(f"{name}.py")
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
+HASHING = load_script("artifact_hashing")
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def file_sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def file_sha256(path: Path, scheme: str) -> str:
+    return HASHING.file_sha256(path, scheme)
 
 
 def relative_path(path: Path) -> str:
@@ -51,7 +63,9 @@ def artifact(
         "size_bytes": path.stat().st_size,
         "declared_digest_source": {
             "path": relative_path(declared_digest_source),
-            "sha256": file_sha256(declared_digest_source),
+            "sha256": file_sha256(
+                declared_digest_source, HASHING.UTF8_LF_NORMALIZED_SHA256
+            ),
         },
     }
 
@@ -145,7 +159,9 @@ def build_cohort(created_utc: str = "2026-07-18T00:00:00Z") -> dict[str, Any]:
                 "canonical_case_id": canonical_id,
                 "source_case_id": config["case_id"],
                 "source_case_path": relative_path(case_dir),
-                "source_case_config_sha256": file_sha256(config_path),
+                "source_case_config_sha256": file_sha256(
+                    config_path, HASHING.UTF8_LF_NORMALIZED_SHA256
+                ),
                 "upstream_case_id": str(config.get("source_case_id", config["case_id"])),
                 "phase": "calibration" if canonical_number <= 3 else "development",
                 "replay_artifacts": replay[canonical_id],
@@ -160,7 +176,9 @@ def build_cohort(created_utc: str = "2026-07-18T00:00:00Z") -> dict[str, Any]:
             {
                 "source_case_id": config["case_id"],
                 "source_case_path": relative_path(case_dir),
-                "source_case_config_sha256": file_sha256(config_path),
+                "source_case_config_sha256": file_sha256(
+                    config_path, HASHING.UTF8_LF_NORMALIZED_SHA256
+                ),
                 "reason": "no_replayable_original_event_data_for_operational_acquisition_cost",
                 "permitted_use": "toy_unit_and_interface_tests_only",
                 "formal_experiment_included": False,
@@ -172,6 +190,8 @@ def build_cohort(created_utc: str = "2026-07-18T00:00:00Z") -> dict[str, Any]:
         "version": "0.3.0",
         "status": "frozen",
         "created_utc": created_utc,
+        "repository_text_hash_scheme": HASHING.UTF8_LF_NORMALIZED_SHA256,
+        "replay_artifact_hash_scheme": HASHING.RAW_BYTES_SHA256,
         "renaming_policy": "canonical_alias_only_preserve_source_ids_paths_and_files",
         "phase_policy": {
             "C01_C03": "calibration",

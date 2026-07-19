@@ -1,0 +1,139 @@
+[
+  {
+    "action_id": "C08-AA-001",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "action_type": "recover_network_summary",
+    "acquisition_channel": "network_telemetry",
+    "target": {
+      "target_type": "endpoint",
+      "target_value": "Appstarter busybox outbound Micro APT C2 socket"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C08-EC-001"
+    ],
+    "intended_cti_node_ids": [
+      "N01_appstarter_c2",
+      "N02_elevate_msm"
+    ],
+    "expected_evidence_types": [
+      "network_summary"
+    ],
+    "expected_stages": [
+      "command_and_control"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.32,
+      "expected_over_attribution_risk_reduction": 0.35,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.34
+    },
+    "status": "available",
+    "natural_language_request": "Recover Appstarter/Micro APT C2 flow summaries and any network-visible elevation indicators around the same window.",
+    "notes": "Over-declared intent: the request asks about C2 plus follow-on elevation clues, but this channel only recovers the busybox C2 claim (N01)."
+  },
+  {
+    "action_id": "C08-AA-002",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "process",
+      "target_value": "/data/data/de.belu.appstarter/busybox lineage"
+    },
+    "cost": 3,
+    "recoverable_claim_ids": [
+      "C08-EC-001"
+    ],
+    "intended_cti_node_ids": [
+      "N01_appstarter_c2",
+      "N02_elevate_msm"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph",
+      "network_summary"
+    ],
+    "expected_stages": [
+      "command_and_control"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.38,
+      "expected_over_attribution_risk_reduction": 0.38,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.34
+    },
+    "status": "available",
+    "natural_language_request": "Recover the Appstarter busybox host lineage to confirm C2 and look for elevation-adjacent process context.",
+    "notes": "Reliable host fallback for the C2 claim. Intent mirrors the analyst request (C2 + elevation context) while recoverable coverage remains N01 only."
+  },
+  {
+    "action_id": "C08-AA-003",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "action_type": "ttp_local_probe",
+    "acquisition_channel": "host_probe",
+    "target": {
+      "target_type": "file",
+      "target_value": "/dev/msm_g711tlaw elevate device"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C08-EC-002"
+    ],
+    "intended_cti_node_ids": [
+      "N02_elevate_msm",
+      "N03_screencap"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph"
+    ],
+    "expected_stages": [
+      "privilege_escalation"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.34,
+      "expected_over_attribution_risk_reduction": 0.31,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.33
+    },
+    "status": "available",
+    "natural_language_request": "Probe local provenance for the msm_g711tlaw elevate device open and any concurrent Micro APT collection artifacts.",
+    "notes": "Over-declared intent: request spans elevation and collection; this probe only recovers the elevate claim (N02)."
+  },
+  {
+    "action_id": "C08-AA-004",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "action_type": "query_host_subgraph",
+    "acquisition_channel": "host_forensics",
+    "target": {
+      "target_type": "file",
+      "target_value": "/system/bin/screencap"
+    },
+    "cost": 2,
+    "recoverable_claim_ids": [
+      "C08-EC-003"
+    ],
+    "intended_cti_node_ids": [
+      "N01_appstarter_c2",
+      "N03_screencap"
+    ],
+    "expected_evidence_types": [
+      "provenance_graph"
+    ],
+    "expected_stages": [
+      "collection"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 1,
+      "expected_uncertainty_reduction": 0.34,
+      "expected_over_attribution_risk_reduction": 0.36,
+      "expected_conflict_resolution": 0,
+      "expected_coverage_delta": 0.33
+    },
+    "status": "available",
+    "natural_language_request": "Recover host provenance around screencap execution to place Micro APT collection in the C2/elevate campaign.",
+    "notes": "Over-declared intent: analyst frames screencap beside C2 and elevation; recoverable coverage is N03 only."
+  }
+]

@@ -1,0 +1,159 @@
+[
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "/data/data/de.belu.appstarter/busybox"
+    },
+    "predicate": "received_data_on_socket",
+    "object": {
+      "entity_type": "endpoint",
+      "value": "outbound Micro APT C2 socket (remote IP scrubbed in PGDMP)"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.92,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R05_campaign"
+    ],
+    "notes": "The raw window links Appstarter-bundled busybox to CONNECT/RECVFROM/SENDTO activity. The TA5.1 report names 77.138.117.150:80, but PIDSMaker netflow destinations in this dump are scrubbed to 0 and are not turned into a remote-IP claim. matched_event_count=12; first_timestamp_nanos=1557949897888000000; last_timestamp_nanos=1557950598367000000; representative_event_uuids=AC255D0F-A8D1-1811-FF3B-01F10EE07D64,4F15AB8E-C89D-9BC9-ABA4-1BF53AB7B3D8,86191F5D-6AF3-17DB-BC85-4EAAF6DAE1EB,AAFBCC7F-B3B2-BBDA-FA7D-48B9F198058C,D89AFA7B-E564-2C98-359F-36BD25589088",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:command_and_control",
+      "node:N01_appstarter_c2",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C08-EC-001",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R05_pidsmaker_event_table",
+      "record_id": "AC255D0F-A8D1-1811-FF3B-01F10EE07D64"
+    }
+  },
+  {
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "/data/data/de.belu.appstarter/busybox"
+    },
+    "predicate": "opened",
+    "object": {
+      "entity_type": "file",
+      "value": "/dev/msm_g711tlaw"
+    },
+    "mapped_tactic": [
+      "privilege_escalation"
+    ],
+    "mapped_technique": [
+      "T1068"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.95,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R05_campaign"
+    ],
+    "notes": "Matches the TA5.1 elevate path through /dev/msm_g711tlaw after the benign sl driver install. The claim records the device open, not an independent uid=0 assertion. matched_event_count=1; first_timestamp_nanos=1557950598372000000; last_timestamp_nanos=1557950598372000000; representative_event_uuids=E2340144-D07A-02E6-A1F5-E92B1D6C56A8",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:privilege_escalation",
+      "node:N02_elevate_msm",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C08-EC-002",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R05_pidsmaker_event_table",
+      "record_id": "E2340144-D07A-02E6-A1F5-E92B1D6C56A8"
+    }
+  },
+  {
+    "source_type": "provenance_graph",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "/data/data/de.belu.appstarter/busybox"
+    },
+    "predicate": "executed",
+    "object": {
+      "entity_type": "file",
+      "value": "/system/bin/screencap"
+    },
+    "mapped_tactic": [
+      "collection"
+    ],
+    "mapped_technique": [
+      "T1113"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.94,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R05_campaign"
+    ],
+    "notes": "Observed screencap execute by Appstarter busybox. Wall-clock order places this event before the msm elevate open, matching the TA5.1 failed pre-elevate screenshot attempt; no separate post-elevate screencap or DB-exfil path is present in the PGDMP window. calllog.db/calendar.db/mmssms.db remain report-only. matched_event_count=1; first_timestamp_nanos=1557950007942000000; last_timestamp_nanos=1557950007942000000; representative_event_uuids=E7D3C83C-EB66-EC0A-C696-7EF506B0F0C3",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:collection",
+      "node:N03_screencap",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C08-EC-003",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R05_pidsmaker_event_table",
+      "record_id": "E7D3C83C-EB66-EC0A-C696-7EF506B0F0C3"
+    }
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "benign_maintenance",
+    "subject": {
+      "entity_type": "process",
+      "value": "/data/local/tmp/sl"
+    },
+    "predicate": "ran_elevate_driver_setup",
+    "object": {
+      "entity_type": "file",
+      "value": "/data/local/tmp/sl"
+    },
+    "mapped_tactic": [],
+    "evidence_strength": "context",
+    "confidence": 0.97,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "benign_context"
+    ],
+    "notes": "TA5.1 identifies the sl/sl.ko elevate-driver install as benign setup interleaved with the attack. sl.ko itself is not present as a file node in the bounded window. matched_event_count=1; first_timestamp_nanos=1557950471690000000; last_timestamp_nanos=1557950471690000000; representative_event_uuids=4C43CE3F-256F-02E8-7C40-00F512A25844",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:benign_context",
+      "benign_context",
+      "decoy"
+    ],
+    "claim_id": "C08-EC-004",
+    "case_id": "C08-darpa-e5-clearscope-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R05_pidsmaker_event_table",
+      "record_id": "4C43CE3F-256F-02E8-7C40-00F512A25844"
+    }
+  }
+]

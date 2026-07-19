@@ -34,7 +34,7 @@ CONTRACT_PATH = (
     Path(__file__).resolve().parents[1]
     / "governance"
     / "contracts"
-    / "planner-runtime-contract-m3star-v0.2.json"
+    / "planner-runtime-contract-m3star-v0.8.json"
 )
 RUNTIME_CONTRACT = runtime_adapter.load_contract(CONTRACT_PATH)
 FORBIDDEN_RUNTIME_KEYS = set(
@@ -121,6 +121,7 @@ DOMINANCE_EFFECT_KEYS = (
     "expected_conflict_resolution",
     "expected_coverage_delta",
 )
+POLICY_EXPERT_IDS = ("xgboost", "logistic", "pairwise_rank")
 
 
 def forbidden_runtime_key_hits(value: Any) -> list[str]:
@@ -946,19 +947,32 @@ def train_graph_action_value_model(
         int(row["label_oracle_reachable_via_action"])
         for row in rows
     }
-    if reachability_labels != {0, 1}:
-        raise ValueError(
-            "M3* action-reachability training requires both classes; "
-            f"found {sorted(reachability_labels)}"
-        )
-    reachability_booster = xgb.train(
-        frozen_params,
-        _action_value_matrix(
-            rows,
-            label_column="label_oracle_reachable_via_action",
-        ),
-        num_boost_round=boost_rounds,
-    )
+    reachability_head: dict[str, Any]
+    if reachability_labels == {0, 1}:
+        reachability_head = {
+            "reachability_booster": xgb.train(
+                frozen_params,
+                _action_value_matrix(
+                    rows,
+                    label_column="label_oracle_reachable_via_action",
+                ),
+                num_boost_round=boost_rounds,
+            ),
+            "reachability_model_family": (
+                "m3star_graph_action_reachability_xgboost_v0.1"
+            ),
+        }
+    elif len(reachability_labels) == 1:
+        reachability_head = {
+            "reachability_constant_probability": float(
+                next(iter(reachability_labels))
+            ),
+            "reachability_model_family": (
+                "m3star_constant_binary_probability_v0.1"
+            ),
+        }
+    else:
+        raise ValueError("M3* action-reachability labels are empty")
     cost_rows = [
         row
         for row in rows
@@ -982,7 +996,7 @@ def train_graph_action_value_model(
     return {
         "model_family": "m3star_graph_action_value_xgboost_v0.3",
         "booster": booster,
-        "reachability_booster": reachability_booster,
+        **reachability_head,
         "cost_booster": cost_booster,
         "feature_columns": list(ACTION_VALUE_FEATURE_COLUMNS),
         "label_column": "label_oracle_optimal_action",
@@ -997,6 +1011,76 @@ def train_graph_action_value_model(
             {str(row["case_id"]) for row in rows if row.get("case_id")}
         ),
     }
+
+
+def train_graph_action_rank_model(
+    rows: list[dict[str, Any]],
+    *,
+    boost_rounds: int = 150,
+    params: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Learn within-state oracle action ordering with a pairwise objective."""
+
+    if not rows:
+        raise ValueError("Cannot train M3* action ranker on an empty dataset")
+    ordered = sorted(
+        rows,
+        key=lambda row: (
+            str(row["case_id"]),
+            str(row["state_id"]),
+            str(row["action_id"]),
+        ),
+    )
+    group_sizes: list[int] = []
+    prior_group: tuple[str, str] | None = None
+    for row in ordered:
+        group = (str(row["case_id"]), str(row["state_id"]))
+        if group != prior_group:
+            group_sizes.append(0)
+            prior_group = group
+        group_sizes[-1] += 1
+    frozen_params = {
+        **dict(ACTION_VALUE_PARAMS),
+        **({} if params is None else params),
+        "objective": "rank:pairwise",
+        "eval_metric": "ndcg",
+    }
+    matrix = _action_value_matrix(
+        ordered,
+        label_column="label_oracle_optimal_action",
+    )
+    matrix.set_group(group_sizes)
+    booster = xgb.train(
+        frozen_params,
+        matrix,
+        num_boost_round=boost_rounds,
+    )
+    return {
+        "model_family": "m3star_graph_action_pairwise_rank_xgboost_v0.1",
+        "booster": booster,
+        "feature_columns": list(ACTION_VALUE_FEATURE_COLUMNS),
+        "label_column": "label_oracle_optimal_action",
+        "params": frozen_params,
+        "boost_rounds": boost_rounds,
+        "training_case_ids": sorted(
+            {str(row["case_id"]) for row in rows if row.get("case_id")}
+        ),
+        "training_group_count": len(group_sizes),
+    }
+
+
+def predict_action_rank_scores(
+    model: dict[str, Any],
+    rows: list[dict[str, Any]],
+) -> list[float]:
+    if list(model.get("feature_columns", [])) != ACTION_VALUE_FEATURE_COLUMNS:
+        raise ValueError("M3* action-rank feature contract does not match runtime")
+    if not rows:
+        return []
+    return [
+        float(value)
+        for value in model["booster"].predict(_action_value_matrix(rows))
+    ]
 
 
 def predict_action_optimal_probabilities(
@@ -1017,14 +1101,28 @@ def predict_action_reachability_probabilities(
 ) -> list[float]:
     if list(model.get("feature_columns", [])) != ACTION_VALUE_FEATURE_COLUMNS:
         raise ValueError("M3* action-reachability feature contract does not match runtime")
-    if "reachability_booster" not in model:
-        raise ValueError("M3* action-value bundle is missing its reachability head")
     if not rows:
         return []
+    if "reachability_constant_probability" in model:
+        if "reachability_booster" in model:
+            raise ValueError("M3* action-value bundle has ambiguous reachability heads")
+        probability = float(model["reachability_constant_probability"])
+        if not math.isfinite(probability) or not 0.0 <= probability <= 1.0:
+            raise ValueError("M3* constant reachability probability must be in [0, 1]")
+        return [probability] * len(rows)
+    if "reachability_booster" not in model:
+        raise ValueError("M3* action-value bundle is missing its reachability head")
     predictions = model["reachability_booster"].predict(
         _action_value_matrix(rows)
     )
     return [float(value) for value in predictions]
+
+
+def has_action_reachability_head(model: dict[str, Any]) -> bool:
+    return (
+        "reachability_booster" in model
+        or "reachability_constant_probability" in model
+    )
 
 
 def predict_action_costs(
@@ -1099,6 +1197,23 @@ def model_action_value_predictor(
         return {
             row["action_id"]: probability
             for row, probability in zip(rows, probabilities)
+        }
+
+    return predict
+
+
+def model_action_rank_predictor(
+    model: dict[str, Any],
+) -> ActionValuePredictor:
+    def predict(
+        snapshot: dict[str, Any],
+        actions: list[dict[str, Any]],
+    ) -> dict[str, float]:
+        rows = action_value_feature_rows(snapshot, actions)
+        scores = predict_action_rank_scores(model, rows)
+        return {
+            row["action_id"]: score
+            for row, score in zip(rows, scores)
         }
 
     return predict
@@ -1399,6 +1514,81 @@ ActionCostPredictor = Callable[
     [dict[str, Any], list[dict[str, Any]]],
     dict[str, float],
 ]
+PolicyExpertAdvisor = Callable[
+    [dict[str, Any], dict[str, Any], list[dict[str, Any]]],
+    dict[str, str],
+]
+
+
+def _apply_policy_expert_consensus(
+    source_action_id: str,
+    actions: list[dict[str, Any]],
+    recommendations: dict[str, str],
+    action_reachabilities: dict[str, float],
+    target_reach_threshold: float,
+) -> dict[str, Any]:
+    if set(recommendations) != set(POLICY_EXPERT_IDS):
+        raise ValueError(
+            "M3* policy-expert advisor must return exactly "
+            f"{POLICY_EXPERT_IDS}"
+        )
+    by_id = {str(action["action_id"]): action for action in actions}
+    if source_action_id not in by_id:
+        raise ValueError(f"M3* consensus source action is absent: {source_action_id}")
+    source = by_id[source_action_id]
+    audit = {
+        "selected_action_id": source_action_id,
+        "source_action_id": source_action_id,
+        "candidate_action_id": None,
+        "expert_action_ids": dict(recommendations),
+        "source_cost": float(source["cost"]),
+        "candidate_cost": None,
+        "candidate_reachability": None,
+        "expert_consensus_applied": 0,
+        "reason": "expert_disagreement",
+    }
+    if source_action_id == run_mvp.STOP_ACTION_ID:
+        audit["reason"] = "source_stop_forbidden"
+        return audit
+    recommended_ids = {str(value) for value in recommendations.values()}
+    if len(recommended_ids) != 1:
+        return audit
+    candidate_id = next(iter(recommended_ids))
+    audit["candidate_action_id"] = candidate_id
+    if candidate_id == run_mvp.STOP_ACTION_ID:
+        audit["reason"] = "candidate_stop_forbidden"
+        return audit
+    if candidate_id == source_action_id:
+        audit["reason"] = "candidate_same_as_source"
+        return audit
+    candidate = by_id.get(candidate_id)
+    if candidate is None:
+        audit["reason"] = "candidate_absent"
+        return audit
+    candidate_cost = float(candidate["cost"])
+    audit["candidate_cost"] = candidate_cost
+    if candidate_cost > float(source["cost"]) + 1e-9:
+        audit["reason"] = "candidate_cost_increase"
+        return audit
+    candidate_reachability = action_reachabilities.get(candidate_id)
+    if candidate_reachability is None:
+        audit["reason"] = "candidate_reachability_missing"
+        return audit
+    candidate_reachability = float(candidate_reachability)
+    if not math.isfinite(candidate_reachability):
+        raise ValueError("M3* consensus reachability must be finite")
+    audit["candidate_reachability"] = candidate_reachability
+    if candidate_reachability < float(target_reach_threshold) - 1e-9:
+        audit["reason"] = "candidate_reachability_below_threshold"
+        return audit
+    audit.update(
+        {
+            "selected_action_id": candidate_id,
+            "expert_consensus_applied": 1,
+            "reason": "three_expert_cost_reachability_consensus",
+        }
+    )
+    return audit
 
 
 def _granularity_index(snapshot: dict[str, Any], name: str) -> int:
@@ -1619,7 +1809,7 @@ def _stochastically_dominating_equivalent_action(
         if alternative_reliability <= selected_reliability:
             continue
         alternative_cost = float(alternative["cost"])
-        if alternative_cost > risk_adjusted_selected_cost + 1e-9:
+        if alternative_cost > selected_cost + 1e-9:
             continue
         alternative_effects = alternative.get("expected_effects", {})
         if any(
@@ -1711,6 +1901,7 @@ def _apply_post_selection_stochastic_dominance(
 def _empty_plan() -> dict[str, Any]:
     return {
         "action_id": None,
+        "immediate_action_cost": 0.0,
         "planned_action_ids": [],
         "target_reach_probability": 0.0,
         "expected_total_cost": 0.0,
@@ -1718,6 +1909,8 @@ def _empty_plan() -> dict[str, Any]:
         "action_value_cost_index": 0.0,
         "action_reachability_probability": 0.0,
         "action_cost_to_go": 0.0,
+        "head_pareto_filtered_action_ids": [],
+        "head_pareto_filter_count": 0,
         **_dominance_audit_fields(None, "not_applied"),
     }
 
@@ -1840,6 +2033,92 @@ def _plan_pareto_dominates(
     return probability_noninferior and cost_noninferior and strictly_better
 
 
+def _learned_heads_pareto_dominate(
+    candidate: dict[str, Any],
+    baseline: dict[str, Any],
+    tolerance: float = 1e-9,
+) -> bool:
+    candidate_value = float(candidate["action_value_probability"])
+    baseline_value = float(baseline["action_value_probability"])
+    candidate_reachability = float(
+        candidate["action_reachability_probability"]
+    )
+    baseline_reachability = float(
+        baseline["action_reachability_probability"]
+    )
+    candidate_cost = float(candidate["action_cost_to_go"])
+    baseline_cost = float(baseline["action_cost_to_go"])
+    value_noninferior = candidate_value >= baseline_value - tolerance
+    reachability_noninferior = candidate_reachability >= (
+        baseline_reachability - tolerance
+    )
+    cost_noninferior = candidate_cost <= baseline_cost + tolerance
+    strictly_better = (
+        candidate_value > baseline_value + tolerance
+        or candidate_reachability > baseline_reachability + tolerance
+        or candidate_cost < baseline_cost - tolerance
+    )
+    return (
+        value_noninferior
+        and reachability_noninferior
+        and cost_noninferior
+        and strictly_better
+    )
+
+
+def _filter_learned_head_dominated_plans(
+    plans: list[dict[str, Any]],
+    target_reach_threshold: float,
+    observed_feedback: bool,
+    tolerance: float = 1e-9,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    if observed_feedback:
+        return plans, []
+    dominated: set[str] = set()
+    for source in plans:
+        source_id = str(source["action_id"])
+        source_cost = float(source["immediate_action_cost"])
+        source_value = float(source["action_value_probability"])
+        source_reachability = float(
+            source["action_reachability_probability"]
+        )
+        for alternative in plans:
+            if alternative["action_id"] == source["action_id"]:
+                continue
+            alternative_cost = float(alternative["immediate_action_cost"])
+            alternative_value = float(alternative["action_value_probability"])
+            alternative_reachability = float(
+                alternative["action_reachability_probability"]
+            )
+            alternative_transition_reach = float(
+                alternative["target_reach_probability"]
+            )
+            source_transition_reach = float(
+                source["target_reach_probability"]
+            )
+            if alternative_reachability < target_reach_threshold - tolerance:
+                continue
+            if alternative_transition_reach < source_transition_reach - tolerance:
+                continue
+            if alternative_cost > source_cost + tolerance:
+                continue
+            if alternative_value < source_value - tolerance:
+                continue
+            if alternative_reachability < source_reachability - tolerance:
+                continue
+            if not (
+                alternative_value > source_value + tolerance
+                or alternative_reachability > source_reachability + tolerance
+            ):
+                continue
+            dominated.add(source_id)
+            break
+    survivors = [
+        plan for plan in plans if str(plan["action_id"]) not in dominated
+    ]
+    return survivors, sorted(dominated)
+
+
 def _planning_state_key(
     snapshot: dict[str, Any],
     depth: int,
@@ -1885,6 +2164,7 @@ def _best_plan(
     ) = None,
     required_action_id: str | None = None,
     apply_post_selection_dominance: bool = False,
+    apply_head_pareto_filter: bool = False,
 ) -> dict[str, Any]:
     if action_reachability_cache is None:
         action_reachability_cache = {}
@@ -1893,6 +2173,7 @@ def _best_plan(
     state_key = (
         *_planning_state_key(snapshot, depth),
         required_action_id,
+        apply_head_pareto_filter,
     )
     if state_key in memo:
         return memo[state_key]
@@ -2044,6 +2325,7 @@ def _best_plan(
         plans.append(
             {
                 "action_id": action["action_id"],
+                "immediate_action_cost": float(action["cost"]),
                 "planned_action_ids": [
                     action["action_id"],
                     *representative_child["planned_action_ids"],
@@ -2067,6 +2349,16 @@ def _best_plan(
         result = _empty_plan()
         memo[state_key] = result
         return result
+    if apply_head_pareto_filter:
+        plans, head_pareto_filtered_action_ids = (
+            _filter_learned_head_dominated_plans(
+                plans,
+                target_reach_threshold,
+                observed_feedback=bool(snapshot.get("action_feedback")),
+            )
+        )
+    else:
+        head_pareto_filtered_action_ids = []
     threshold_plans = [
         plan
         for plan in plans
@@ -2096,6 +2388,11 @@ def _best_plan(
                 **best,
                 **_dominance_audit_fields(best.get("action_id"), "disabled"),
             }
+        best = {
+            **best,
+            "head_pareto_filtered_action_ids": head_pareto_filtered_action_ids,
+            "head_pareto_filter_count": len(head_pareto_filtered_action_ids),
+        }
         memo[state_key] = best
         return best
     best = min(
@@ -2125,6 +2422,11 @@ def _best_plan(
             **best,
             **_dominance_audit_fields(best.get("action_id"), "disabled"),
         }
+    best = {
+        **best,
+        "head_pareto_filtered_action_ids": head_pareto_filtered_action_ids,
+        "head_pareto_filter_count": len(head_pareto_filtered_action_ids),
+    }
     memo[state_key] = best
     return best
 
@@ -2202,6 +2504,7 @@ def plan_m3star_action(
         action_cost_predictor,
         action_cost_cache,
         apply_post_selection_dominance=stochastic_dominance_shield,
+        apply_head_pareto_filter=True,
     )
     if (
         one_step["action_id"] is not None
@@ -2244,6 +2547,7 @@ def plan_m3star_action(
         action_cost_predictor,
         action_cost_cache,
         apply_post_selection_dominance=stochastic_dominance_shield,
+        apply_head_pareto_filter=True,
     )
     myopic_rollout = None
     if (
@@ -2268,6 +2572,7 @@ def plan_m3star_action(
                 action_cost_predictor,
                 action_cost_cache,
                 required_action_id=str(one_step["action_id"]),
+                apply_head_pareto_filter=True,
             )
     if myopic_safety_shield and one_step["action_id"] is not None:
         nonmyopic_dominates = (
@@ -2275,7 +2580,14 @@ def plan_m3star_action(
             and myopic_rollout is not None
             and _plan_pareto_dominates(plan, myopic_rollout)
         )
-        if nonmyopic_dominates:
+        multi_head_disagreement = (
+            nonmyopic_dominates
+            and action_value_predictor is not None
+            and action_reachability_predictor is not None
+            and action_cost_predictor is not None
+            and _learned_heads_pareto_dominate(one_step, plan)
+        )
+        if nonmyopic_dominates and not multi_head_disagreement:
             return {
                 **plan,
                 "requested_horizon": horizon,
@@ -2291,12 +2603,16 @@ def plan_m3star_action(
             **one_step,
             "requested_horizon": horizon,
             "effective_horizon": 1,
-            **_horizon_diagnostics(
-                one_step,
-                plan,
-                "counterfactual_rollout_shield",
-                myopic_rollout,
-            ),
+                **_horizon_diagnostics(
+                    one_step,
+                    plan,
+                    (
+                        "multi_head_disagreement_shield"
+                        if multi_head_disagreement
+                        else "counterfactual_rollout_shield"
+                    ),
+                    myopic_rollout,
+                ),
         }
     return {
         **plan,
@@ -2331,6 +2647,7 @@ def run_m3star_episode(
     action_cost_predictor: ActionCostPredictor | None = None,
     myopic_safety_shield: bool = True,
     stochastic_dominance_shield: bool = True,
+    policy_expert_advisor: PolicyExpertAdvisor | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Execute M3* as an auditable receding-horizon learned controller."""
 
@@ -2368,8 +2685,67 @@ def run_m3star_episode(
             state,
             public_actions,
         )
+        recommendations: dict[str, str] = {}
+        candidate_reachabilities: dict[str, float] = {}
+        if policy_expert_advisor is not None:
+            recommendations = policy_expert_advisor(
+                episode_config,
+                state,
+                public_actions,
+            )
+            recommended_ids = {str(value) for value in recommendations.values()}
+            if (
+                len(recommended_ids) == 1
+                and run_mvp.STOP_ACTION_ID not in recommended_ids
+                and action_reachability_predictor is not None
+            ):
+                candidate_id = next(iter(recommended_ids))
+                candidate = by_id.get(candidate_id)
+                if candidate is not None:
+                    candidate_reachabilities = action_reachability_predictor(
+                        snapshot,
+                        [candidate],
+                    )
+            consensus = _apply_policy_expert_consensus(
+                selected_action_id,
+                public_actions,
+                recommendations,
+                candidate_reachabilities,
+                float(target_reach_threshold),
+            )
+            selected_action_id = str(consensus["selected_action_id"])
+            selected_action = by_id[selected_action_id]
+        else:
+            consensus = {
+                "source_action_id": selected_action_id,
+                "candidate_action_id": None,
+                "expert_action_ids": {},
+                "source_cost": float(selected_action["cost"]),
+                "candidate_cost": None,
+                "candidate_reachability": None,
+                "expert_consensus_applied": 0,
+                "reason": "disabled",
+            }
         decision = {
                 "selected_action_id": selected_action_id,
+                "expert_consensus_source_action_id": consensus[
+                    "source_action_id"
+                ],
+                "expert_consensus_candidate_action_id": consensus[
+                    "candidate_action_id"
+                ],
+                "expert_action_ids": consensus["expert_action_ids"],
+                "expert_consensus_source_cost": consensus["source_cost"],
+                "expert_consensus_candidate_cost": consensus[
+                    "candidate_cost"
+                ],
+                "expert_consensus_candidate_reachability": consensus[
+                    "candidate_reachability"
+                ],
+                "expert_consensus_applied": int(
+                    consensus["expert_consensus_applied"]
+                ),
+                "expert_consensus_reason": consensus["reason"],
                 "planned_action_ids": list(plan["planned_action_ids"]),
                 "target_reach_probability": float(
                     plan["target_reach_probability"]
@@ -2385,6 +2761,12 @@ def run_m3star_episode(
                     plan["action_reachability_probability"]
                 ),
                 "action_cost_to_go": float(plan["action_cost_to_go"]),
+                "head_pareto_filtered_action_ids": list(
+                    plan["head_pareto_filtered_action_ids"]
+                ),
+                "head_pareto_filter_count": int(
+                    plan["head_pareto_filter_count"]
+                ),
                 "pre_dominance_action_id": plan[
                     "pre_dominance_action_id"
                 ],
@@ -2528,6 +2910,14 @@ def run_m3star_episode(
         int(decision["dominance_substitution_applied"])
         for decision in decisions
     )
+    result["head_pareto_filter_count"] = sum(
+        int(decision["head_pareto_filter_count"])
+        for decision in decisions
+    )
+    result["expert_consensus_substitution_count"] = sum(
+        int(decision["expert_consensus_applied"])
+        for decision in decisions
+    )
     public_episode_actions = run_mvp.planner_action_views(episode_actions)
     public_actions_by_id = run_mvp.action_by_id(public_episode_actions)
     for decision, event in zip(decisions, action_events):
@@ -2570,6 +2960,7 @@ def run_m3star_model_episode(
     target_reach_threshold: float = DEFAULT_TARGET_REACH_THRESHOLD,
     myopic_safety_shield: bool = True,
     stochastic_dominance_shield: bool = True,
+    policy_expert_advisor: PolicyExpertAdvisor | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Connect fitted transition/value heads to the M3* controller."""
 
@@ -2595,7 +2986,7 @@ def run_m3star_model_episode(
         action_reachability_predictor=(
             model_action_reachability_predictor(action_value_model)
             if action_value_model is not None
-            and "reachability_booster" in action_value_model
+            and has_action_reachability_head(action_value_model)
             else None
         ),
         action_cost_predictor=(
@@ -2606,6 +2997,7 @@ def run_m3star_model_episode(
         ),
         myopic_safety_shield=myopic_safety_shield,
         stochastic_dominance_shield=stochastic_dominance_shield,
+        policy_expert_advisor=policy_expert_advisor,
     )
     model_family = str(model.get("model_family", "unknown"))
     action_value_model_family = (
@@ -2614,9 +3006,14 @@ def run_m3star_model_episode(
         else "none"
     )
     action_reachability_model_family = (
-        action_value_model_family
+        str(
+            action_value_model.get(
+                "reachability_model_family",
+                action_value_model_family,
+            )
+        )
         if action_value_model is not None
-        and "reachability_booster" in action_value_model
+        and has_action_reachability_head(action_value_model)
         else "none"
     )
     action_cost_model_family = (
@@ -2638,6 +3035,9 @@ def run_m3star_model_episode(
     result["myopic_safety_shield"] = int(myopic_safety_shield)
     result["stochastic_dominance_shield"] = int(
         stochastic_dominance_shield
+    )
+    result["policy_expert_consensus_enabled"] = int(
+        policy_expert_advisor is not None
     )
     result["max_outcome_nodes"] = max_outcome_nodes
     result["max_explicit_outcomes"] = (

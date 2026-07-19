@@ -9,6 +9,8 @@
     "version",
     "status",
     "created_utc",
+    "repository_text_hash_scheme",
+    "replay_artifact_hash_scheme",
     "renaming_policy",
     "phase_policy",
     "cases",
@@ -20,6 +22,8 @@
     "version": {"const": "0.3.0"},
     "status": {"const": "frozen"},
     "created_utc": {"type": "string", "format": "date-time"},
+    "repository_text_hash_scheme": {"const": "utf8_lf_normalized_sha256"},
+    "replay_artifact_hash_scheme": {"const": "raw_bytes_sha256"},
     "renaming_policy": {"const": "canonical_alias_only_preserve_source_ids_paths_and_files"},
     "phase_policy": {
       "type": "object",

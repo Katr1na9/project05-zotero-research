@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import importlib.util
 import json
 import random
@@ -15,6 +14,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 MVP_PATH = Path(__file__).with_name("run_mvp.py")
+HASHING_PATH = Path(__file__).with_name("artifact_hashing.py")
 DEFAULT_CASE_PREFIXES = ("C07", "C08", "C09", "C10", "C11")
 DEFAULT_PACKET_VERSION = "c07_c11_v0.2"
 DEFAULT_SEED = 20260712
@@ -32,8 +32,26 @@ def _load_mvp() -> Any:
 MVP = _load_mvp()
 
 
+def _load_hashing() -> Any:
+    spec = importlib.util.spec_from_file_location(
+        "project05_artifact_hashing",
+        HASHING_PATH,
+    )
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load artifact hashing from {HASHING_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+HASHING = _load_hashing()
+
+
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest().upper()
+    return HASHING.file_sha256(
+        path,
+        HASHING.UTF8_LF_NORMALIZED_SHA256,
+    ).upper()
 
 
 def resolve_cases(
@@ -368,7 +386,9 @@ def build_packets(
         ),
         "maximum_granularity_states_per_case": 12,
         "public_file_sha256": public_hashes,
+        "public_file_sha256_scheme": HASHING.UTF8_LF_NORMALIZED_SHA256,
         "source_case_file_sha256": source_case_hashes,
+        "source_case_file_sha256_scheme": HASHING.UTF8_LF_NORMALIZED_SHA256,
         "source_access_gate": (
             "Referenced raw record or a hash-anchored canonical excerpt must be "
             "available before claim support is labeled; project notes are not "

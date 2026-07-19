@@ -1,0 +1,190 @@
+[
+  {
+    "source_type": "network_summary",
+    "claim_type": "network_connection",
+    "subject": {
+      "entity_type": "process",
+      "value": "Firefox (report PID 534051)"
+    },
+    "predicate": "received_data_from",
+    "object": {
+      "entity_type": "ip",
+      "value": "208.203.20.42:80"
+    },
+    "mapped_tactic": [
+      "command_and_control"
+    ],
+    "mapped_technique": [
+      "T1071"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.98,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R04_campaign"
+    ],
+    "notes": "The raw window directly links Firefox to the observed 208.203.20.42:80 endpoint. The separate report-only 189.141.204.211 endpoint is not turned into a trace claim. matched_event_count=24; first_timestamp_nanos=1557946122525363144; last_timestamp_nanos=1557946827595739597; representative_event_uuids=B16C3A7D-F514-5107-AF3D-8704A0DD7960,A2D13062-4E93-55D0-84DF-AE6CCE0A4C1B,C431FFAC-77BE-5FE1-A0D6-07E6E2D93CC5,CC3036AD-1F69-521A-814A-A0A0724CA55F,3FBC3ED4-D5F1-5AC5-AE5A-9B1D35AD5CBD",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:command_and_control",
+      "node:N01_firefox_c2",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C07-EC-001",
+    "case_id": "C07-darpa-e5-theia-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R04_pidsmaker_event_table",
+      "record_id": "B16C3A7D-F514-5107-AF3D-8704A0DD7960"
+    }
+  },
+  {
+    "source_type": "provenance_graph",
+    "claim_type": "process_execution",
+    "subject": {
+      "entity_type": "process",
+      "value": "/sbin/modprobe"
+    },
+    "predicate": "executed_binfmt_handler",
+    "object": {
+      "entity_type": "command",
+      "value": "/sbin/modprobe -q -- binfmt-0000"
+    },
+    "mapped_tactic": [
+      "privilege_escalation"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.94,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R04_campaign"
+    ],
+    "notes": "The raw observation is the binfmt handler execution. The TA5.1 report links this capability to elevation; this claim does not independently assert a root transition. matched_event_count=2; first_timestamp_nanos=1557946215381385863; last_timestamp_nanos=1557946485057349274; representative_event_uuids=2829D08D-5EFC-5F1E-A48A-B324F79B11D5,6C98A8AF-3903-5554-9248-AC68BD0FEEDA",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:privilege_escalation",
+      "node:N02_binfmt_elevation",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C07-EC-002",
+    "case_id": "C07-darpa-e5-theia-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R04_pidsmaker_event_table",
+      "record_id": "2829D08D-5EFC-5F1E-A48A-B324F79B11D5"
+    }
+  },
+  {
+    "source_type": "provenance_graph",
+    "claim_type": "file_activity",
+    "subject": {
+      "entity_type": "process",
+      "value": "/usr/sbin/sshd"
+    },
+    "predicate": "opened",
+    "object": {
+      "entity_type": "file",
+      "value": "/var/log/sshdlog"
+    },
+    "mapped_tactic": [
+      "defense_evasion"
+    ],
+    "mapped_technique": [
+      "T1055"
+    ],
+    "evidence_strength": "critical",
+    "confidence": 0.93,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "R04_campaign"
+    ],
+    "notes": "The TA5.1 report attributes sshdlog to Inject2 shellcode. The PGDMP schema directly exposes only the linked sshd file-open artifact, not a dedicated injection event type. matched_event_count=1; first_timestamp_nanos=1557946699571502038; last_timestamp_nanos=1557946699571502038; representative_event_uuids=271F6436-69E7-5D6B-8B21-AFF938D299B7",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:post_compromise",
+      "node:N03_sshd_artifact",
+      "critical",
+      "discriminative",
+      "unique"
+    ],
+    "claim_id": "C07-EC-003",
+    "case_id": "C07-darpa-e5-theia-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R04_pidsmaker_event_table",
+      "record_id": "271F6436-69E7-5D6B-8B21-AFF938D299B7"
+    }
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "benign_maintenance",
+    "subject": {
+      "entity_type": "process",
+      "value": "/usr/bin/sudo"
+    },
+    "predicate": "installed_kernel_module",
+    "object": {
+      "entity_type": "file",
+      "value": "/home/admin/load_helper.ko"
+    },
+    "mapped_tactic": [],
+    "evidence_strength": "context",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "benign_context"
+    ],
+    "notes": "The TA5.1 report identifies this driver installation as benign activity during the engagement. matched_event_count=1; first_timestamp_nanos=1557946440710088926; last_timestamp_nanos=1557946440710088926; representative_event_uuids=B30DDA22-CA54-5DB7-9994-2D856C23041F",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:benign_context",
+      "benign_context",
+      "decoy"
+    ],
+    "claim_id": "C07-EC-004",
+    "case_id": "C07-darpa-e5-theia-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R04_pidsmaker_event_table",
+      "record_id": "B30DDA22-CA54-5DB7-9994-2D856C23041F"
+    }
+  },
+  {
+    "source_type": "local_log",
+    "claim_type": "benign_maintenance",
+    "subject": {
+      "entity_type": "process",
+      "value": "/usr/bin/sudo"
+    },
+    "predicate": "installed_kernel_module",
+    "object": {
+      "entity_type": "file",
+      "value": "/home/admin/read_scan.ko"
+    },
+    "mapped_tactic": [],
+    "evidence_strength": "context",
+    "confidence": 0.99,
+    "observable_status": "visible",
+    "supports_hypotheses": [
+      "benign_context"
+    ],
+    "notes": "The TA5.1 report identifies this driver installation as benign activity during the engagement. matched_event_count=1; first_timestamp_nanos=1557946447747285195; last_timestamp_nanos=1557946447747285195; representative_event_uuids=4442EBE9-25BA-57E1-ABBD-6CD58C7352B5",
+    "tags": [
+      "hideable",
+      "real_pidsmaker",
+      "stage:benign_context",
+      "benign_context",
+      "decoy"
+    ],
+    "claim_id": "C07-EC-005",
+    "case_id": "C07-darpa-e5-theia-0515",
+    "source_pointer": {
+      "artifact_id": "darpa_e5_R04_pidsmaker_event_table",
+      "record_id": "4442EBE9-25BA-57E1-ABBD-6CD58C7352B5"
+    }
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "$schema": "../../data_schema/planner_runtime_contract_m3star_overlay.schema.json",
+  "contract_id": "project05-m3star-runtime-contract-v0.3",
+  "version": "0.3.0",
+  "status": "frozen_for_new_runs",
+  "created_utc": "2026-07-18T09:00:00Z",
+  "base_contract": {
+    "path": "planner-runtime-contract-m3star-v0.2.json",
+    "sha256": "1d6aba35aea1a24726afcd8150a1a283bfe11842b59c83e2194db68b1a24c7bf"
+  },
+  "supersedes": {
+    "contract_id": "project05-m3star-runtime-contract-v0.2",
+    "sha256": "1d6aba35aea1a24726afcd8150a1a283bfe11842b59c83e2194db68b1a24c7bf",
+    "reason": "Measured replay-resource development exposed resource-cost regressions caused by folding channel reliability into the acquisition-cost dominance threshold."
+  },
+  "overrides": {
+    "selection_contract": {
+      "frozen_components": [
+        "public_graph_transition_learning",
+        "action_optimality_learning",
+        "action_reachability_learning",
+        "action_cost_to_go_learning",
+        "post_selection_stochastic_dominance"
+      ],
+      "reference_configuration": {
+        "planner_id": "project05_m3star_h3_dual",
+        "planning_horizon": 3,
+        "target_reach_threshold": 0.9,
+        "max_outcome_nodes": 8,
+        "myopic_safety_shield": true,
+        "stochastic_dominance_shield": true
+      },
+      "experimental_options": {
+        "planning_horizon": "not_independently_supported_on_legacy_development_matrix",
+        "myopic_safety_shield": "not_independently_supported_on_legacy_development_matrix"
+      },
+      "post_selection_stochastic_dominance": {
+        "requires_nonempty_exact_intended_cti_node_set": true,
+        "requires_strictly_higher_channel_reliability": true,
+        "noninferior_expected_effect_fields": [
+          "expected_granularity_gain",
+          "expected_uncertainty_reduction",
+          "expected_over_attribution_risk_reduction",
+          "expected_conflict_resolution",
+          "expected_coverage_delta"
+        ],
+        "resource_cost_rule": "alternative_cost <= source_cost",
+        "reliability_treatment": "separate_constraint_not_folded_into_acquisition_cost",
+        "replacement_must_use_precomputed_plan": true,
+        "source_selection_preserved_when_no_eligible_replacement": true
+      }
+    }
+  },
+  "change_basis": {
+    "result_directory": "09-experiments/results/m3star_measured_replay_realonly_train_development_v0.1",
+    "development_summary_sha256": "844fcd8f760c4dc8e026594a52efa1fcd0f87b3ae05acce94c245954e4e5f6d8",
+    "evaluation_manifest_sha256": "efaa2354957a22b1d1147dc7c9e7b72123807ec186534b45db44aa185d5bff34",
+    "cost_profile_id": "project05-replay-full-scan-equivalent-cost-v0.1",
+    "cost_profile_sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+    "finding": "The v0.2 shield replaced selected lower-resource actions with higher-resource actions whenever reliability-adjusted cost tied, producing case-level measured-cost regressions despite unchanged success.",
+    "final_blind_cases_loaded": false
+  }
+}

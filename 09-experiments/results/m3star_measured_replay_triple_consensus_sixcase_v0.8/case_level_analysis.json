@@ -1,0 +1,647 @@
+{
+  "analysis_id": "project05-m3star-sixcase-case-level-analysis-v0.1",
+  "status": "development_analysis_not_final_blind_confirmation",
+  "independent_statistical_unit": "case_id",
+  "independent_unit_count": 6,
+  "within_case_repeated_condition_count": 45,
+  "total_paired_condition_count": 270,
+  "pseudoreplication_control": "bootstrap resamples six case-level effects; 270 repeated conditions are never treated as independent inferential units",
+  "confirmatory_p_value_claim_allowed": false,
+  "reason": "reused_method_development_cases_and_small_independent_n",
+  "method_descriptives": {
+    "project05_m3star_h3_dual": {
+      "condition_count": 270,
+      "success_count": 270,
+      "success_rate": 1.0,
+      "mean_cost_to_target_on_success": 2.388888888888889,
+      "mean_actions_to_target_on_success": 1.7259259259259259,
+      "mean_steps_taken_all_conditions": 1.7259259259259259
+    },
+    "project05_m2": {
+      "condition_count": 270,
+      "success_count": 270,
+      "success_rate": 1.0,
+      "mean_cost_to_target_on_success": 2.4851851851851854,
+      "mean_actions_to_target_on_success": 1.7296296296296296,
+      "mean_steps_taken_all_conditions": 1.7296296296296296
+    },
+    "project05_xgboost_policy": {
+      "condition_count": 270,
+      "success_count": 270,
+      "success_rate": 1.0,
+      "mean_cost_to_target_on_success": 2.9,
+      "mean_actions_to_target_on_success": 1.885185185185185,
+      "mean_steps_taken_all_conditions": 1.885185185185185
+    },
+    "project05_m3b_policy": {
+      "condition_count": 270,
+      "success_count": 249,
+      "success_rate": 0.9222222222222223,
+      "mean_cost_to_target_on_success": 2.5060240963855422,
+      "mean_actions_to_target_on_success": 1.855421686746988,
+      "mean_steps_taken_all_conditions": 1.825925925925926
+    },
+    "oracle_optimal": {
+      "condition_count": 270,
+      "success_count": 270,
+      "success_rate": 1.0,
+      "mean_cost_to_target_on_success": 2.1666666666666665,
+      "mean_actions_to_target_on_success": 1.5222222222222221,
+      "mean_steps_taken_all_conditions": 1.5222222222222221
+    }
+  },
+  "paired_case_level_effects": {
+    "project05_m2": {
+      "candidate": "project05_m3star_h3_dual",
+      "baseline": "project05_m2",
+      "independent_case_count": 6,
+      "within_case_paired_condition_count": 270,
+      "success_loss_count": 0,
+      "success_gain_count": 0,
+      "all_cases_pass_directional_pareto_gate": true,
+      "case_mean_cost_delta_descriptives": {
+        "n_cases": 6,
+        "mean": -0.09629629629629628,
+        "median": -0.044444444444444446,
+        "sd": 0.09904897570635128,
+        "minimum": -0.2222222222222222,
+        "maximum": 0.0
+      },
+      "case_mean_cost_delta_bootstrap": {
+        "resampling_unit": "case_id",
+        "draws": 100000,
+        "seed": 20260719,
+        "mean_effect": -0.09629629629629628,
+        "percentile_95_interval": [
+          -0.16296296296296295,
+          -0.02962962962962963
+        ],
+        "bootstrap_fraction_below_zero": 0.99997,
+        "bootstrap_fraction_at_or_below_zero": 1.0
+      },
+      "case_mean_actions_delta_descriptives": {
+        "n_cases": 6,
+        "mean": -0.003703703703703701,
+        "median": 0.022222222222222223,
+        "sd": 0.09779461134556675,
+        "minimum": -0.13333333333333333,
+        "maximum": 0.08888888888888889
+      },
+      "case_mean_actions_delta_bootstrap": {
+        "resampling_unit": "case_id",
+        "draws": 100000,
+        "seed": 20260720,
+        "mean_effect": -0.003703703703703701,
+        "percentile_95_interval": [
+          -0.07777777777777777,
+          0.06666666666666667
+        ],
+        "bootstrap_fraction_below_zero": 0.50268,
+        "bootstrap_fraction_at_or_below_zero": 0.50781
+      },
+      "by_case": {
+        "C07-darpa-e5-theia-0515": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.044444444444444446,
+          "mean_actions_to_target_delta_on_both_success": 0.08888888888888889,
+          "mean_steps_taken_delta_all_conditions": 0.08888888888888889,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C08-darpa-e5-clearscope-0515": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.044444444444444446,
+          "mean_actions_to_target_delta_on_both_success": 0.08888888888888889,
+          "mean_steps_taken_delta_all_conditions": 0.08888888888888889,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C09-darpa-optc-sysclient0201-0923": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": 0.0,
+          "mean_actions_to_target_delta_on_both_success": 0.0,
+          "mean_steps_taken_delta_all_conditions": 0.0,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C10-darpa-optc-sysclient0351-0925": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.044444444444444446,
+          "mean_actions_to_target_delta_on_both_success": -0.13333333333333333,
+          "mean_steps_taken_delta_all_conditions": -0.13333333333333333,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C11-otrf-apt29-day1-scranton-nashua": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.2222222222222222,
+          "mean_actions_to_target_delta_on_both_success": -0.1111111111111111,
+          "mean_steps_taken_delta_all_conditions": -0.1111111111111111,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C12-witfoo-precinct6-f10c7270": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.2222222222222222,
+          "mean_actions_to_target_delta_on_both_success": 0.044444444444444446,
+          "mean_steps_taken_delta_all_conditions": 0.044444444444444446,
+          "cost_noninferior_without_success_loss": true
+        }
+      }
+    },
+    "project05_xgboost_policy": {
+      "candidate": "project05_m3star_h3_dual",
+      "baseline": "project05_xgboost_policy",
+      "independent_case_count": 6,
+      "within_case_paired_condition_count": 270,
+      "success_loss_count": 0,
+      "success_gain_count": 0,
+      "all_cases_pass_directional_pareto_gate": true,
+      "case_mean_cost_delta_descriptives": {
+        "n_cases": 6,
+        "mean": -0.5111111111111111,
+        "median": -0.5222222222222223,
+        "sd": 0.38025332686590996,
+        "minimum": -1.1333333333333333,
+        "maximum": 0.0
+      },
+      "case_mean_cost_delta_bootstrap": {
+        "resampling_unit": "case_id",
+        "draws": 100000,
+        "seed": 20260729,
+        "mean_effect": -0.5111111111111111,
+        "percentile_95_interval": [
+          -0.7962962962962963,
+          -0.24444444444444444
+        ],
+        "bootstrap_fraction_below_zero": 0.99997,
+        "bootstrap_fraction_at_or_below_zero": 1.0
+      },
+      "case_mean_actions_delta_descriptives": {
+        "n_cases": 6,
+        "mean": -0.15925925925925924,
+        "median": -0.14444444444444443,
+        "sd": 0.16889863519636095,
+        "minimum": -0.35555555555555557,
+        "maximum": 0.0
+      },
+      "case_mean_actions_delta_bootstrap": {
+        "resampling_unit": "case_id",
+        "draws": 100000,
+        "seed": 20260730,
+        "mean_effect": -0.15925925925925924,
+        "percentile_95_interval": [
+          -0.2777777777777778,
+          -0.04814814814814814
+        ],
+        "bootstrap_fraction_below_zero": 0.99867,
+        "bootstrap_fraction_at_or_below_zero": 1.0
+      },
+      "by_case": {
+        "C07-darpa-e5-theia-0515": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -1.1333333333333333,
+          "mean_actions_to_target_delta_on_both_success": -0.35555555555555557,
+          "mean_steps_taken_delta_all_conditions": -0.35555555555555557,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C08-darpa-e5-clearscope-0515": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.5555555555555556,
+          "mean_actions_to_target_delta_on_both_success": -0.022222222222222223,
+          "mean_steps_taken_delta_all_conditions": -0.022222222222222223,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C09-darpa-optc-sysclient0201-0923": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.4888888888888889,
+          "mean_actions_to_target_delta_on_both_success": -0.26666666666666666,
+          "mean_steps_taken_delta_all_conditions": -0.26666666666666666,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C10-darpa-optc-sysclient0351-0925": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.6222222222222222,
+          "mean_actions_to_target_delta_on_both_success": -0.3111111111111111,
+          "mean_steps_taken_delta_all_conditions": -0.3111111111111111,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C11-otrf-apt29-day1-scranton-nashua": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": 0.0,
+          "mean_actions_to_target_delta_on_both_success": 0.0,
+          "mean_steps_taken_delta_all_conditions": 0.0,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C12-witfoo-precinct6-f10c7270": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.26666666666666666,
+          "mean_actions_to_target_delta_on_both_success": 0.0,
+          "mean_steps_taken_delta_all_conditions": 0.0,
+          "cost_noninferior_without_success_loss": true
+        }
+      }
+    },
+    "project05_m3b_policy": {
+      "candidate": "project05_m3star_h3_dual",
+      "baseline": "project05_m3b_policy",
+      "independent_case_count": 6,
+      "within_case_paired_condition_count": 270,
+      "success_loss_count": 0,
+      "success_gain_count": 21,
+      "all_cases_pass_directional_pareto_gate": true,
+      "case_mean_cost_delta_descriptives": {
+        "n_cases": 6,
+        "mean": -0.17820512820512815,
+        "median": -0.10683760683760683,
+        "sd": 0.23406307103304155,
+        "minimum": -0.6333333333333333,
+        "maximum": 0.0
+      },
+      "case_mean_cost_delta_bootstrap": {
+        "resampling_unit": "case_id",
+        "draws": 100000,
+        "seed": 20260739,
+        "mean_effect": -0.17820512820512815,
+        "percentile_95_interval": [
+          -0.37079772079772083,
+          -0.044444444444444446
+        ],
+        "bootstrap_fraction_below_zero": 0.99999,
+        "bootstrap_fraction_at_or_below_zero": 1.0
+      },
+      "case_mean_actions_delta_descriptives": {
+        "n_cases": 6,
+        "mean": -0.1572649572649573,
+        "median": -0.09401709401709402,
+        "sd": 0.1973866812524617,
+        "minimum": -0.5333333333333333,
+        "maximum": 0.0
+      },
+      "case_mean_actions_delta_bootstrap": {
+        "resampling_unit": "case_id",
+        "draws": 100000,
+        "seed": 20260740,
+        "mean_effect": -0.1572649572649573,
+        "percentile_95_interval": [
+          -0.3185185185185185,
+          -0.04074074074074074
+        ],
+        "bootstrap_fraction_below_zero": 0.99999,
+        "bootstrap_fraction_at_or_below_zero": 1.0
+      },
+      "by_case": {
+        "C07-darpa-e5-theia-0515": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.2,
+          "mean_actions_to_target_delta_on_both_success": -0.2,
+          "mean_steps_taken_delta_all_conditions": -0.2,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C08-darpa-e5-clearscope-0515": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.1111111111111111,
+          "mean_actions_to_target_delta_on_both_success": -0.1111111111111111,
+          "mean_steps_taken_delta_all_conditions": -0.1111111111111111,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C09-darpa-optc-sysclient0201-0923": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 6,
+          "both_success_count": 39,
+          "mean_cost_delta_on_both_success": -0.10256410256410256,
+          "mean_actions_to_target_delta_on_both_success": -0.07692307692307693,
+          "mean_steps_taken_delta_all_conditions": -0.022222222222222223,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C10-darpa-optc-sysclient0351-0925": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 15,
+          "both_success_count": 30,
+          "mean_cost_delta_on_both_success": -0.6333333333333333,
+          "mean_actions_to_target_delta_on_both_success": -0.5333333333333333,
+          "mean_steps_taken_delta_all_conditions": -0.24444444444444444,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C11-otrf-apt29-day1-scranton-nashua": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": -0.022222222222222223,
+          "mean_actions_to_target_delta_on_both_success": -0.022222222222222223,
+          "mean_steps_taken_delta_all_conditions": -0.022222222222222223,
+          "cost_noninferior_without_success_loss": true
+        },
+        "C12-witfoo-precinct6-f10c7270": {
+          "paired_condition_count": 45,
+          "success_loss_count": 0,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "mean_cost_delta_on_both_success": 0.0,
+          "mean_actions_to_target_delta_on_both_success": 0.0,
+          "mean_steps_taken_delta_all_conditions": 0.0,
+          "cost_noninferior_without_success_loss": true
+        }
+      }
+    }
+  },
+  "runner_strict_gate": {
+    "criterion": "overall_zero_success_losses_and_strictly_lower_paired_cost;_every_case_zero_success_losses_and_either_noninferior_paired_cost_or_incremental_rescue_cost_strictly_below_case_budget",
+    "overall_by_baseline": {
+      "project05_m2": true,
+      "project05_xgboost_policy": true,
+      "project05_m3b_policy": true
+    },
+    "case_pareto_by_baseline": {
+      "project05_m2": {
+        "C07-darpa-e5-theia-0515": true,
+        "C08-darpa-e5-clearscope-0515": true,
+        "C09-darpa-optc-sysclient0201-0923": true,
+        "C10-darpa-optc-sysclient0351-0925": true,
+        "C11-otrf-apt29-day1-scranton-nashua": true,
+        "C12-witfoo-precinct6-f10c7270": true
+      },
+      "project05_xgboost_policy": {
+        "C07-darpa-e5-theia-0515": true,
+        "C08-darpa-e5-clearscope-0515": true,
+        "C09-darpa-optc-sysclient0201-0923": true,
+        "C10-darpa-optc-sysclient0351-0925": true,
+        "C11-otrf-apt29-day1-scranton-nashua": true,
+        "C12-witfoo-precinct6-f10c7270": true
+      },
+      "project05_m3b_policy": {
+        "C07-darpa-e5-theia-0515": true,
+        "C08-darpa-e5-clearscope-0515": true,
+        "C09-darpa-optc-sysclient0201-0923": true,
+        "C10-darpa-optc-sysclient0351-0925": true,
+        "C11-otrf-apt29-day1-scranton-nashua": true,
+        "C12-witfoo-precinct6-f10c7270": true
+      }
+    },
+    "case_pareto_details_by_baseline": {
+      "project05_m2": {
+        "C07-darpa-e5-theia-0515": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -2.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 9.0
+        },
+        "C08-darpa-e5-clearscope-0515": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -2.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 9.0
+        },
+        "C09-darpa-optc-sysclient0201-0923": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": 0.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 11.0
+        },
+        "C10-darpa-optc-sysclient0351-0925": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -2.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 11.0
+        },
+        "C11-otrf-apt29-day1-scranton-nashua": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -10.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 10.0
+        },
+        "C12-witfoo-precinct6-f10c7270": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -10.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 8.0
+        }
+      },
+      "project05_xgboost_policy": {
+        "C07-darpa-e5-theia-0515": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -51.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 9.0
+        },
+        "C08-darpa-e5-clearscope-0515": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -25.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 9.0
+        },
+        "C09-darpa-optc-sysclient0201-0923": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -22.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 11.0
+        },
+        "C10-darpa-optc-sysclient0351-0925": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -28.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 11.0
+        },
+        "C11-otrf-apt29-day1-scranton-nashua": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": 0.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 10.0
+        },
+        "C12-witfoo-precinct6-f10c7270": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -12.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 8.0
+        }
+      },
+      "project05_m3b_policy": {
+        "C07-darpa-e5-theia-0515": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -9.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 9.0
+        },
+        "C08-darpa-e5-clearscope-0515": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -5.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 9.0
+        },
+        "C09-darpa-optc-sysclient0201-0923": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 6,
+          "both_success_count": 39,
+          "total_cost_delta_on_both_success": -4.0,
+          "incremental_cost_per_success_gain": 0.0,
+          "rescue_cost_cap": 11.0
+        },
+        "C10-darpa-optc-sysclient0351-0925": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 15,
+          "both_success_count": 30,
+          "total_cost_delta_on_both_success": -19.0,
+          "incremental_cost_per_success_gain": 0.0,
+          "rescue_cost_cap": 11.0
+        },
+        "C11-otrf-apt29-day1-scranton-nashua": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": -1.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 10.0
+        },
+        "C12-witfoo-precinct6-f10c7270": {
+          "passed": true,
+          "acceptance_mode": "cost_noninferior",
+          "rejection_reason": null,
+          "zero_success_losses": true,
+          "success_gain_count": 0,
+          "both_success_count": 45,
+          "total_cost_delta_on_both_success": 0.0,
+          "incremental_cost_per_success_gain": null,
+          "rescue_cost_cap": 8.0
+        }
+      }
+    },
+    "all_core_baselines_pass": true,
+    "formal_cost_claim_allowed": false,
+    "reason": "development_evaluation_not_final_blind_confirmation",
+    "cost_regime": "measured",
+    "cost_profile_identity": {
+      "profile_id": "project05-replay-full-scan-equivalent-cost-v0.1",
+      "version": "0.1.0",
+      "status": "frozen",
+      "regime": "measured",
+      "sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+      "source_path": "C:\\Users\\35393\\Desktop\\workspace\\Project05-Zotero\\.worktrees\\cost-action-m3star-evaluation\\09-experiments\\governance\\profiles\\cost-replay-scan-equivalent-v0.1.json"
+    },
+    "evaluation_role": "development"
+  },
+  "input_sha256": {
+    "policy_results": "e29d9e60950efd6cddc85a2fa365212746b9272520342236dcb95ad9783c4348",
+    "summary": "542cbea28b41e39ab9f9049d0cfc9f66e80c962d483bb8081649910f846cdbe8"
+  },
+  "analysis_script_sha256": "21e8b56bc81a8426416e69e0edbdcecc2f9923b11f2e68901a7cbe4773360c99",
+  "numpy_version": "2.4.6"
+}
