@@ -1,0 +1,126 @@
+{
+  "review_id": "project05-m3star-final-blind-sample-size-review-v0.1",
+  "status": "outcome_free_review_no_protocol_change",
+  "paper_or_patent_updated": false,
+  "final_blind_outcomes_opened": false,
+  "current_frozen_protocol_still_controls": true,
+  "input_sha256": {
+    "power_design": "048960fa10ddf98a8c948b1d7d9e1a7a843cea0457678fcdd4c3994d057c4b9f",
+    "qualification_audit": "6eec48f8f018fd46c009dfa7e47c31a12f23a90c8ce86dcf6651e3b65ff1e933",
+    "cost_profile": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b"
+  },
+  "threshold_authority": {
+    "externally_mandated_case_count": false,
+    "statement": "No field authority mandates 79 or 96 cases; both are Project05 design choices determined by effect, variance, alpha, power, safety precision, and attrition assumptions."
+  },
+  "cost_unit_and_sesoi": {
+    "unit": "case_replay_full_scan_equivalent",
+    "formula": "action_raw_scan_bytes / case_full_scan_bytes",
+    "frozen_sesoi": 0.05,
+    "interpretation": "A 0.05 case-mean difference equals five percent of one case-local full-scan-equivalent data-access burden.",
+    "domain_or_decision_anchor_documented_before_review": false
+  },
+  "frozen_assumptions": {
+    "one_sided_alpha": 0.05,
+    "target_power": 0.9,
+    "conservative_case_level_standard_deviation": 0.15,
+    "standardized_effect": 0.33333333333333337,
+    "minimum_valid_complete_independent_cases": 79,
+    "legacy_recruitment_target": 96
+  },
+  "current_qualification_checkpoint": {
+    "audited_candidate_count": 86,
+    "qualified_independent_case_count": 52,
+    "not_qualified_count": 34,
+    "unaudited_reserve_count": 9,
+    "phase_2_ceiling_if_all_three_remaining_qualify": 55,
+    "frozen_pool_ceiling_if_all_reserves_qualify": 61
+  },
+  "independent_checks": {
+    "cost_n_at_80_percent_power": 58,
+    "cost_n_at_90_percent_power": 79,
+    "zero_success_loss_n_for_one_sided_95_percent_upper_at_most_5_percent": 59,
+    "combined_n_at_80_percent_power": 59,
+    "combined_n_at_90_percent_power": 79
+  },
+  "standard_deviation_sensitivity": [
+    {
+      "case_level_standard_deviation": 0.1,
+      "required_n_at_80_percent_power": 27,
+      "required_n_at_90_percent_power": 36
+    },
+    {
+      "case_level_standard_deviation": 0.125,
+      "required_n_at_80_percent_power": 41,
+      "required_n_at_90_percent_power": 55
+    },
+    {
+      "case_level_standard_deviation": 0.15,
+      "required_n_at_80_percent_power": 58,
+      "required_n_at_90_percent_power": 79
+    }
+  ],
+  "fixed_n_sensitivity": [
+    {
+      "independent_case_count": 52,
+      "power_at_frozen_sesoi": 0.7663135985891087,
+      "mde_at_80_percent_power": 0.05242201492745288,
+      "mde_at_90_percent_power": 0.0616989797949242,
+      "zero_success_loss_one_sided_95_percent_upper_probability": 0.05598218012623557
+    },
+    {
+      "independent_case_count": 55,
+      "power_at_frozen_sesoi": 0.7869974835941459,
+      "mde_at_80_percent_power": 0.0509337152968876,
+      "mde_at_90_percent_power": 0.05994709140718173,
+      "zero_success_loss_one_sided_95_percent_upper_probability": 0.0530110549512538
+    },
+    {
+      "independent_case_count": 59,
+      "power_at_frozen_sesoi": 0.8120499033944197,
+      "mde_at_80_percent_power": 0.049133305561836774,
+      "mde_at_90_percent_power": 0.05782785480593683,
+      "zero_success_loss_one_sided_95_percent_upper_probability": 0.049507609888227
+    },
+    {
+      "independent_case_count": 61,
+      "power_at_frozen_sesoi": 0.8235617046796619,
+      "mde_at_80_percent_power": 0.04830189566964808,
+      "mde_at_90_percent_power": 0.056849227317579375,
+      "zero_success_loss_one_sided_95_percent_upper_probability": 0.04792395210660738
+    },
+    {
+      "independent_case_count": 79,
+      "power_at_frozen_sesoi": 0.9018257443689728,
+      "mde_at_80_percent_power": 0.042331343349772434,
+      "mde_at_90_percent_power": 0.049821676139308955,
+      "zero_success_loss_one_sided_95_percent_upper_probability": 0.03721067606158024
+    }
+  ],
+  "design_options": [
+    {
+      "option": "retain_frozen_90_percent_design",
+      "minimum_independent_cases": 79,
+      "additional_qualified_cases_from_current_checkpoint": 27,
+      "tradeoff": "Highest planned power; largest acquisition burden."
+    },
+    {
+      "option": "amend_to_conventional_80_percent_plus_safety_precision",
+      "minimum_independent_cases": 59,
+      "additional_qualified_cases_from_current_checkpoint": 7,
+      "tradeoff": "Power decreases from 90% to at least 80% under the same worst-case SD, while the zero-loss 95% upper bound remains at most 5%."
+    },
+    {
+      "option": "stop_at_current_checkpoint",
+      "minimum_independent_cases": 52,
+      "additional_qualified_cases_from_current_checkpoint": 0,
+      "tradeoff": "Does not meet either 80% power under SD=0.15 or the frozen zero-loss 5% precision threshold; confirmatory claim would need to be weakened."
+    }
+  ],
+  "governance_decision": {
+    "automatic_threshold_change_authorized": false,
+    "protocol_amendment_required_before_any_threshold_change": true,
+    "no_additional_candidate_download_authorized_by_this_review": true,
+    "review_does_not_use_qualification_yield_to_estimate_model_effect": true
+  }
+}
