@@ -1,0 +1,130 @@
+{
+  "authority_id": "project05-qwen25-qlora-local-smoke-result-v0.21",
+  "version": "0.21.0",
+  "status": "local_one_step_adapter_only_smoke_passed_primary_training_closed",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_local_2080ti_smoke",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.20.json",
+    "sha256": "848DC1ED58DE79FFE1A51DBEB6FE12C4AD0CFA05808AE2BBFA0EBD5416A6DFCB",
+    "disposition": "records_completed_local_smoke_without_opening_primary_training"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-local-smoke-contract-v0.2.json": "F37984ADCABA6B19A7FFFFED8F7E5CE91DCF9F994A31416929842B92C43209EF",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/training-config-v0.2-local.json": "9E7C48BCEBA524DCE0E3472A2B1A00C9F8366A08C6B85E83BB9CF290A7D4DCAA",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/requirements-windows-cu121-v0.2.txt": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/prepare_qwen_qlora_smoke.py": "3AF88EAA22D4D62DCECB71BCA6DB768C3898456D0B7A91531E0E1C666FB20A8D",
+    "09-experiments/scripts/train_qwen_qlora_smoke.py": "8F6A692AB93D302AF4113B80A0673DE4626C5D7B71F777A193F5FDA65A15593B",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/run-local-smoke-v0.2.ps1": "4A9C03B1A0ECC45015D7FA907FBD3F216B7D7B879846A267262A6C804A4EC861"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_smoke.py": "FFB7AB8446B20A4B411BCA92C25592D27575266309CA655EDAB3148DE1DC1B0E"
+  },
+  "authoritative_results": {
+    "09-experiments/llm_evidence_compiler_mainline/results/qwen25-qlora-local-smoke-result-v0.2.json": "5AB4B06FCE642722B376B00243C4AE8012CE62B552AE99595463555BE20C37C4"
+  },
+  "authoritative_documentation": {
+    "04-progress/llm-evidence-compiler-local-training-route-20260719.md": "18B4B61023734A50CB4973CA7DD03C49B3A3036EFEF73E7DE421FBAD18CF22FD",
+    "04-progress/llm-evidence-compiler-local-smoke-result-20260719.md": "22D12217BEFE8558E370DD98F55EA5373426EB9B3D26E46C3472405D1074BD34"
+  },
+  "local_gitignored_evidence": {
+    ".local-qwen25-smoke/local-output/preparation-audit-v0.2.json": {
+      "bytes": 3686,
+      "sha256": "315837270E84C020D097B471D44A63E1C933B7534E52831882F575D3401F206A"
+    },
+    ".local-qwen25-smoke/local-output/smoke-audit-v0.2.json": {
+      "bytes": 5463,
+      "sha256": "00A952B64A467FBF638DE84FBA06C1A5EEE44447DF3D448D1F23A0EF64435C73"
+    },
+    "raw_pair_payload_committed": false,
+    "raw_generation_committed": false,
+    "adapter_artifacts_committed": false,
+    "model_weights_committed": false
+  },
+  "server_route": {
+    "status": "abandoned_by_user",
+    "further_connection_authorized": false,
+    "runtime_or_weight_download_authorized": false,
+    "training_authorized": false,
+    "remote_cleanup_authorized": false
+  },
+  "preparation_gate": {
+    "status": "passed_runtime_and_fixed_revision_weight_gate",
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "allowlisted_file_count": 14,
+    "repository_bytes": 15242807270,
+    "weight_bytes": 15231271888,
+    "all_size_and_hash_checks_passed": true,
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "compute_capability": [
+      7,
+      5
+    ],
+    "nf4_cuda_probe": "passed",
+    "resource_bytes": 24023078772,
+    "resource_limit_bytes": 30000000000
+  },
+  "smoke_gate": {
+    "user_authorized": true,
+    "execution_location": "repository_local_windows",
+    "execution_completed": true,
+    "execution_passed": true,
+    "optimizer_steps": 1,
+    "training_microbatches": 16,
+    "losses_finite": true,
+    "loss_mean": 0.6207229122519493,
+    "trainable_parameters": 40370176,
+    "total_parameters": 4393342464,
+    "trainable_ratio": 0.00918894357332759,
+    "maximum_trainable_ratio": 0.01,
+    "peak_vram_bytes": 11186208768,
+    "peak_vram_limit_bytes": 11274289152,
+    "peak_vram_margin_bytes": 88080384,
+    "adapter_only": true,
+    "adapter_saved_and_reloaded": true,
+    "merged_model_saved": false,
+    "validation_generation_raw_text_recorded": false
+  },
+  "scope_audit": {
+    "primary_training_run": false,
+    "formal_inference_run": false,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "m3_integrated": false,
+    "parallel_m3_processes_stopped": false,
+    "paper_a_modified": false
+  },
+  "result_interpretation": {
+    "runtime_and_bounded_smoke_feasibility_supported": true,
+    "adapter_quality_improvement_supported": false,
+    "formal_model_effectiveness_supported": false,
+    "peak_vram_margin_is_narrow": true
+  },
+  "next_gate": {
+    "status": "hard_stop_for_result_review",
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "any_server_connection_or_training",
+    "primary_or_multi_epoch_training",
+    "hyperparameter_search",
+    "merged_model_save",
+    "hub_upload",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

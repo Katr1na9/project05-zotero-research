@@ -27,7 +27,10 @@ LOCAL_REQUIREMENTS_PATH = (
 LOCAL_LAUNCHER_PATH = (
     MAINLINE_ROOT / "qlora_smoke_v0.2" / "run-local-smoke-v0.2.ps1"
 )
-AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.20.json"
+RESULT_PATH = (
+    MAINLINE_ROOT / "results" / "qwen25-qlora-local-smoke-result-v0.2.json"
+)
+AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.21.json"
 
 
 def load_module(path: Path, name: str):
@@ -289,6 +292,52 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
         )
         self.assertNotIn("rm -", launcher)
 
+    def test_local_smoke_result_is_sanitized_and_passes_bounded_gates(self):
+        result = load_json(RESULT_PATH)
+        self.assertEqual("passed_one_step_adapter_only_smoke", result["status"])
+        self.assertEqual(14, result["preparation_gate"]["file_count"])
+        self.assertEqual(4, len(result["preparation_gate"]["weight_files"]))
+        self.assertEqual(1, result["smoke_gate"]["optimizer_steps"])
+        self.assertEqual(16, result["smoke_gate"]["training_microbatches"])
+        self.assertTrue(result["smoke_gate"]["losses_finite"])
+        self.assertGreater(result["smoke_gate"]["trainable_ratio"], 0)
+        self.assertLess(
+            result["smoke_gate"]["trainable_ratio"],
+            result["smoke_gate"]["maximum_trainable_ratio"],
+        )
+        self.assertLessEqual(
+            result["smoke_gate"]["peak_vram_bytes"],
+            result["smoke_gate"]["peak_vram_limit_bytes"],
+        )
+        self.assertTrue(result["adapter"]["adapter_only"])
+        self.assertTrue(result["adapter"]["saved_and_reloaded"])
+        self.assertFalse(result["adapter"]["merged_model_saved"])
+        self.assertFalse(result["adapter"]["local_artifacts_committed"])
+        self.assertFalse(result["validation_generation"]["raw_generation_recorded"])
+        self.assertFalse(result["privacy_and_scope"]["raw_pair_payload_recorded"])
+        self.assertTrue(
+            all(
+                not value
+                for key, value in result["privacy_and_scope"].items()
+                if key != "parallel_m3_processes_stopped"
+            )
+        )
+        self.assertFalse(
+            result["privacy_and_scope"]["parallel_m3_processes_stopped"]
+        )
+        targeted = result["verification"]["targeted_smoke_tests"]
+        self.assertEqual(17, targeted["tests_run"])
+        self.assertEqual(17, targeted["passed"])
+        self.assertEqual(0, targeted["failures"])
+        self.assertEqual(0, targeted["errors"])
+        regression = result["verification"]["llm_compiler_regression"]
+        self.assertEqual(149, regression["tests_run"])
+        self.assertFalse(regression["affected_paths_modified_by_this_task"])
+        self.assertEqual(
+            "passed", result["verification"]["local_audit_to_result_cross_check"]
+        )
+        self.assertFalse(result["next_gate"]["primary_training_authorized"])
+
     def test_authority_hash_chain_and_closed_primary_gate(self):
         authority = load_json(AUTHORITY_PATH)
         parent = authority["parent_authority"]
@@ -297,11 +346,14 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
             "authoritative_contracts",
             "authoritative_implementation",
             "authoritative_tests",
+            "authoritative_results",
+            "authoritative_documentation",
         ):
             for relative, expected in authority[group].items():
                 with self.subTest(path=relative):
                     self.assertEqual(expected, sha256(REPO_ROOT / relative))
-        self.assertTrue(authority["smoke_gate"]["user_authorized"])
+        self.assertTrue(authority["smoke_gate"]["execution_completed"])
+        self.assertTrue(authority["smoke_gate"]["execution_passed"])
         self.assertFalse(authority["next_gate"]["primary_training_authorized"])
         self.assertEqual("abandoned_by_user", authority["server_route"]["status"])
         self.assertFalse(authority["server_route"]["further_connection_authorized"])
