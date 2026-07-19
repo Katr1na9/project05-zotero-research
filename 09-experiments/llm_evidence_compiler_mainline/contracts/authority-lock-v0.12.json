@@ -1,0 +1,66 @@
+{
+  "authority_id": "project05-llm-evidence-compiler-non-token-data-gate-v0.12",
+  "version": "0.12.0",
+  "status": "non_token_data_gate_passed_token_and_model_gates_closed",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.11.json",
+    "sha256": "1DF1575BCC52B4D7AEB0E0845CCC81EF0C0408C9813D9E309F43229C13D4F258",
+    "disposition": "consumed_the_authorized_v02_pair_construction_scope_and_preserved_all_later_gates"
+  },
+  "authoritative_documents": {},
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/label-blind-pair-construction-contract-v0.2.json": "66BC9B88724C8D4A9937B42A1CB3E56E9E789324AFAC8951D607ABCE4B5CAD32"
+  },
+  "authoritative_evidence": {
+    "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.1/generated/data-gate-audit-v0.1.json": "E495DC901DD5247C04401646389B1300315CE8541FB30428B2DDDECC2308DAB5",
+    "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.1/generated/determinism-audit-v0.1.json": "5FDDC84DC270F7946F7EC0651662E2C69442D0A98472F46BD87A442EE13059A2"
+  },
+  "non_token_data_gate": {
+    "passed": true,
+    "examples": 1500,
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "supported": 750,
+    "unsupported_by_bound_pointer": 750,
+    "duplicate_example_ids": 0,
+    "negative_proof_pass_fraction": 1.0,
+    "pointer_pass_fraction": 1.0,
+    "modality_pass_fraction": 1.0,
+    "protected_exact_matches": 0,
+    "protected_near_matches": 0,
+    "forbidden_supervision_keys_observed": [],
+    "ttp_identifier_values_observed": [],
+    "byte_identical_reconstruction_passed": true,
+    "canonical_example_digest": "B2B1620B40BF7CEC94FD08EB4692CE7212FEB40E6A0E92228AB739B4A8DFB882"
+  },
+  "payload_boundary": {
+    "pair_payload_local_and_git_ignored": true,
+    "pair_payload_commit_or_push_allowed": false,
+    "counts_hashes_and_audits_committable": true
+  },
+  "next_gate": {
+    "formal_data_gate_passed": false,
+    "token_gate_status": "pending_not_authorized",
+    "maximum_token_p95": 1024,
+    "truncation_allowed": false,
+    "separate_explicit_authorization_required": true
+  },
+  "not_authorized": [
+    "dependency_install_or_change",
+    "tokenizer_download_or_use",
+    "model_download_or_use",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_overwrite",
+    "frozen_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

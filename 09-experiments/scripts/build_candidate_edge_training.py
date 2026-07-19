@@ -214,7 +214,41 @@ def parse_loghub_oom_candidate(record: dict[str, Any]) -> dict[str, Any] | None:
     }
 
 
+def parse_beth_parent_process_candidate(
+    record: dict[str, Any],
+) -> dict[str, Any] | None:
+    if record.get("source_family_id") != "beth_process_events":
+        return None
+    payload = record.get("payload")
+    pointer = _record_source_pointer(record)
+    if not isinstance(payload, dict) or pointer is None:
+        return None
+    process_id = str(payload.get("process_id") or "").strip()
+    parent_process_id = str(payload.get("parent_process_id") or "").strip()
+    process_name = str(payload.get("process_name") or "").strip()
+    host_name = str(payload.get("host_name") or "").strip()
+    event_time = str(payload.get("timestamp") or "").strip()
+    if not re.fullmatch(r"[0-9]+", process_id):
+        return None
+    if not re.fullmatch(r"[0-9]+", parent_process_id):
+        return None
+    if not process_name or not host_name:
+        return None
+    if not re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", event_time):
+        return None
+    return {
+        "subject_type": "process",
+        "subject_value": f"pid={int(parent_process_id)}@{host_name}",
+        "predicate": "parent_of",
+        "object_type": "process",
+        "object_value": f"{process_name}#pid={int(process_id)}@{host_name}",
+        "event_time": event_time,
+        "source_pointer": pointer,
+    }
+
+
 _CANDIDATE_PARSERS = {
+    "beth_record_local_parent_process_v1": parse_beth_parent_process_candidate,
     "linux_audit_execve_v1": parse_linux_audit_execve_candidate,
     "linux_audit_proctitle_hex_v1": parse_linux_audit_proctitle_candidate,
     "loghub_oom_killed_process_v1": parse_loghub_oom_candidate,

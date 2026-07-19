@@ -1,0 +1,144 @@
+{
+  "beth_selection_pool": {
+    "eligible_rows_retained": 2000,
+    "label_values_read": false,
+    "label_values_used": false,
+    "rows_examined": 2000,
+    "standalone_normalized_records_written": false
+  },
+  "contract_id": "project05-label-blind-pair-construction-v0.2",
+  "created_date": "2026-07-19",
+  "dataset": {
+    "canonical_example_digest": "B2B1620B40BF7CEC94FD08EB4692CE7212FEB40E6A0E92228AB739B4A8DFB882",
+    "duplicate_example_ids": 0,
+    "examples": 1500,
+    "supported": 750,
+    "train_validation_family_overlap": [],
+    "unsupported_by_bound_pointer": 750
+  },
+  "execution_claims": {
+    "candidate_pairs_constructed": true,
+    "formal_inference_run": false,
+    "m3_runtime_integrated": false,
+    "model_downloaded": false,
+    "model_used": false,
+    "pair_files_git_ignored": true,
+    "standalone_normalized_records_written": false,
+    "tokenizer_used": false,
+    "training_run": false
+  },
+  "field_map_version": "0.3.0",
+  "formal_data_gate_passed": false,
+  "historical_exact_duplicate_rows_removed": {
+    "ait_cam_lds_manifestations_filtered": 0,
+    "fkie_socbed_acsac2021_winlogbeat": 0,
+    "logpai_loghub_linux": 0,
+    "redcanary_atomic_red_team": 0,
+    "zeek_non_pcap_test_logs": 1
+  },
+  "modality_audit": {
+    "pass_fraction": 1.0,
+    "passed_examples": 1500
+  },
+  "non_token_data_gate_passed": true,
+  "pair_file_manifest": [
+    {
+      "bytes": 377666,
+      "relative_name": "train.jsonl.gz",
+      "sha256": "CEB1B12B42BC702E8DC403195682E6FFC37DA2E9E5204550C1E6C9CAADAC5FC9",
+      "split_role": "train"
+    },
+    {
+      "bytes": 38030,
+      "relative_name": "training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552",
+      "split_role": "training-validation"
+    }
+  ],
+  "pair_file_manifest_sha256": "C13CFF9E667C460B933D29B9B5519A73A58FF252062AF1573E2799E26BB10B6C",
+  "pointer_audit": {
+    "pass_fraction": 1.0,
+    "passed_examples": 1500
+  },
+  "proof_audit": {
+    "pass_fraction": 1.0,
+    "passed_negatives": 750,
+    "validated_negatives": 750
+  },
+  "protected_scan": {
+    "contains_raw_protected_payload": false,
+    "exact_matches": 0,
+    "matched_normalized_hashes": [],
+    "maximum_jaccard": 0.6585365853658537,
+    "near_matches": 0,
+    "raw_matches": [],
+    "status": "passed_clean",
+    "threshold": 0.85
+  },
+  "schema_version": "project05-label-blind-candidate-pairs-v0.1",
+  "splits": {
+    "train": {
+      "examples": 1200,
+      "families": {
+        "ait_cam_lds_manifestations_filtered": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        },
+        "beth_process_events": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        },
+        "fkie_socbed_acsac2021_winlogbeat": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        },
+        "redcanary_atomic_red_team": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        }
+      },
+      "maximum_single_negative_generator_fraction": 0.25,
+      "negative_generators": {
+        "N1": 150,
+        "N2": 150,
+        "N3": 150,
+        "N4": 150
+      },
+      "same_packet_negative_fraction": 1.0,
+      "supported": 600,
+      "supported_fraction": 0.5,
+      "unsupported_by_bound_pointer": 600
+    },
+    "training-validation": {
+      "examples": 300,
+      "families": {
+        "logpai_loghub_linux": {
+          "supported": 75,
+          "unsupported_by_bound_pointer": 75
+        },
+        "zeek_non_pcap_test_logs": {
+          "supported": 75,
+          "unsupported_by_bound_pointer": 75
+        }
+      },
+      "maximum_single_negative_generator_fraction": 0.4066666666666667,
+      "negative_generators": {
+        "N1": 61,
+        "N2": 29,
+        "N3": 60
+      },
+      "same_packet_negative_fraction": 1.0,
+      "supported": 150,
+      "supported_fraction": 0.5,
+      "unsupported_by_bound_pointer": 150
+    }
+  },
+  "status": "passed_non_token_data_gate_token_gate_pending",
+  "supervision_audit": {
+    "beth_label_values_read": false,
+    "beth_label_values_used": false,
+    "forbidden_keys_observed": [],
+    "ttp_identifier_values_observed": []
+  },
+  "token_gate_status": "pending_not_authorized"
+}
