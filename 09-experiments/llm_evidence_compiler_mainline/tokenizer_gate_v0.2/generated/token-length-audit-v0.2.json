@@ -1,0 +1,138 @@
+{
+  "contract_id": "project05-label-blind-token-length-gate-v0.2",
+  "contract_sha256": "47C6BDFCCBC4693102D4FF225CFFFB081473BDC78749779D2B52B41B7851E385",
+  "created_date": "2026-07-19",
+  "dataset": {
+    "examples": 1500,
+    "families": {
+      "ait_cam_lds_manifestations_filtered": {
+        "count": 300,
+        "max": 938,
+        "min": 440,
+        "over_limit": 0,
+        "p50": 588,
+        "p95": 813
+      },
+      "beth_process_events": {
+        "count": 300,
+        "max": 748,
+        "min": 501,
+        "over_limit": 0,
+        "p50": 619,
+        "p95": 721
+      },
+      "fkie_socbed_acsac2021_winlogbeat": {
+        "count": 300,
+        "max": 1021,
+        "min": 672,
+        "over_limit": 0,
+        "p50": 788,
+        "p95": 976
+      },
+      "logpai_loghub_linux": {
+        "count": 150,
+        "max": 527,
+        "min": 417,
+        "over_limit": 0,
+        "p50": 442,
+        "p95": 524
+      },
+      "redcanary_atomic_red_team": {
+        "count": 300,
+        "max": 989,
+        "min": 415,
+        "over_limit": 0,
+        "p50": 527,
+        "p95": 760
+      },
+      "zeek_non_pcap_test_logs": {
+        "count": 150,
+        "max": 659,
+        "min": 457,
+        "over_limit": 0,
+        "p50": 527,
+        "p95": 584
+      }
+    },
+    "overall": {
+      "count": 1500,
+      "max": 1021,
+      "min": 415,
+      "over_limit": 0,
+      "p50": 589,
+      "p95": 881
+    },
+    "splits": {
+      "train": {
+        "count": 1200,
+        "max": 1021,
+        "min": 415,
+        "over_limit": 0,
+        "p50": 611,
+        "p95": 897
+      },
+      "training-validation": {
+        "count": 300,
+        "max": 659,
+        "min": 417,
+        "over_limit": 0,
+        "p50": 492,
+        "p95": 580
+      }
+    },
+    "support_decisions": {
+      "supported": 750,
+      "unsupported_by_bound_pointer": 750
+    }
+  },
+  "execution_claims": {
+    "formal_inference_run": false,
+    "m3_runtime_integrated": false,
+    "model_config_downloaded": false,
+    "model_used": false,
+    "model_weight_downloaded": false,
+    "tokenizer_only_engine_used": true,
+    "tokenizer_used": true,
+    "training_run": false,
+    "training_runtime_installed": false
+  },
+  "gate": {
+    "examples_excluded": 0,
+    "examples_rewritten": 0,
+    "examples_truncated": 0,
+    "formal_data_gate_passed": true,
+    "max_pass": true,
+    "maximum_example_tokens": 1024,
+    "maximum_p95_tokens": 1024,
+    "over_limit_pass": true,
+    "p95_pass": true,
+    "percentile_definition": "nearest_rank_sorted_values_ceil_qn_minus_1",
+    "token_gate_passed": true
+  },
+  "schema_version": "project05-label-blind-token-length-audit-v0.1",
+  "serialization": {
+    "contract_sha256": "78BC7148E65AA8E8135C05AAD24D3FCA166E5B15BA77DE2A8502F51E050ACDC5",
+    "generator_identity_exposed": false,
+    "messages_per_example": 3,
+    "negative_proof_exposed": false,
+    "rendered_dataset_sha256": "869724CB5ECC0EA13A3E86010CC66978250D432D49916E3A08D2F8A0A5AD489E",
+    "role_counts": {
+      "assistant": 1500,
+      "system": 1500,
+      "user": 1500
+    },
+    "serialization_id": "project05-qwen25-pointer-support-chat-v0.2"
+  },
+  "status": "passed_tokenizer_length_gate",
+  "tokenizer_identity": {
+    "chat_template_sha256": "CD8E9439F0570856FD70470BF8889EBD8B5D1107207F67A5EFB46E342330527F",
+    "engine_package": "tokenizers",
+    "engine_version": "0.21.4",
+    "engine_wheel_sha256": "475D807A5C3EB72C59AD9B5FCDB254F6E17F53DFCBB9903233B0DFA9C943B597",
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "snapshot_manifest_sha256": "8015C1C25640349F518F286A4A0426329A2BFE5B81BCC73D74CE63AFB52B8232"
+  },
+  "tokenizer_lock_path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.2/generated/tokenizer-lock-v0.2.json",
+  "tokenizer_lock_sha256": "D2CC9220EBFFF8C6E47476FCBD6E5DB3A572571B039A5446FFF7D6912C109B26"
+}

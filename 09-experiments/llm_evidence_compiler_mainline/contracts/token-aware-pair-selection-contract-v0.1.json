@@ -1,0 +1,97 @@
+{
+  "contract_id": "project05-token-aware-pair-selection-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "authorized_token_aware_pair_selection_only",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.14.json",
+    "sha256": "934FCCB6A53C43203CF21576A17805910927EF5EC8CA17EF34BEBF7E76C6624A"
+  },
+  "tokenizer_lock": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.1/generated/tokenizer-lock-v0.1.json",
+    "sha256": "FD848D6ABCF5CF79537C41DFC81F371D2C98ED1B1E42707B4934A82654CCFBA8"
+  },
+  "tokenizer_identity": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "snapshot_manifest_sha256": "8015C1C25640349F518F286A4A0426329A2BFE5B81BCC73D74CE63AFB52B8232",
+    "engine_version": "0.21.4",
+    "engine_wheel_sha256": "475D807A5C3EB72C59AD9B5FCDB254F6E17F53DFCBB9903233B0DFA9C943B597"
+  },
+  "serialization": {
+    "serialization_id": "project05-qwen25-pointer-support-chat-v0.2",
+    "system_message": "Decide whether candidate is supported by the bound evidence. Use only the payload and pointer. Return only JSON. Unsupported means unsupported by this record, not false or benign.",
+    "user_field_sources": {
+      "source_modality": "source_modality",
+      "bound_pointer": "pointer",
+      "payload": "source_record.payload",
+      "candidate": "candidate"
+    },
+    "assistant_fields": [
+      "support_decision",
+      "normalized_edge",
+      "pointer"
+    ],
+    "forbidden_message_fields": [
+      "negative_proof",
+      "example_id",
+      "split_role",
+      "packet_key",
+      "reason_code",
+      "field_map_id",
+      "source_family_id",
+      "provenance",
+      "license_id",
+      "license_sha256",
+      "source_file_sha256"
+    ],
+    "json": {
+      "encoding": "utf-8",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [",", ":"]
+    },
+    "chat_turn_template": "<|im_start|>{role}\n{content}<|im_end|>\n",
+    "role_order": ["system", "user", "assistant"],
+    "add_special_tokens": false,
+    "truncation": false,
+    "padding": false
+  },
+  "maximum_example_tokens": 1024,
+  "selection_rule": {
+    "unit": "one_supported_and_one_pointer_unsupported_pair",
+    "both_pair_members_must_fit": true,
+    "candidate_order": "existing_example_id_order",
+    "negative_variant_order": "existing_deterministic_generator_order",
+    "retry_scope": "same_source_family_same_negative_generator",
+    "cross_family_substitution_allowed": false,
+    "cross_generator_substitution_allowed": false,
+    "quota_change_allowed": false,
+    "accepted_payload_shortening_allowed": false,
+    "accepted_example_rewrite_allowed": false,
+    "candidate_rejection_before_dataset_admission_allowed": true
+  },
+  "truncation_allowed": false,
+  "authorized_actions": [
+    "reuse_locked_tokenizer_snapshot_and_isolated_engine",
+    "render_v0_2_serialization_for_candidate_selection",
+    "reject_overlength_candidate_pairs_before_dataset_admission",
+    "continue_deterministically_within_same_family_and_generator",
+    "regenerate_git_ignored_pair_payload",
+    "rerun_non_token_protected_proof_token_and_determinism_audits"
+  ],
+  "not_authorized": [
+    "new_tokenizer_or_model_download",
+    "model_config_or_weight_use",
+    "transformers_torch_peft_or_bitsandbytes_install",
+    "payload_truncation_or_summarization",
+    "family_or_generator_quota_change",
+    "smoke_or_formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite"
+  ]
+}

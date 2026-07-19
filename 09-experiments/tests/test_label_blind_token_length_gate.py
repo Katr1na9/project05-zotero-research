@@ -13,6 +13,8 @@ CONTRACT_ROOT = MAINLINE_ROOT / "contracts"
 CONTRACT_PATH = CONTRACT_ROOT / "token-length-gate-contract-v0.1.json"
 AUTHORITY_PATH = CONTRACT_ROOT / "authority-lock-v0.13.json"
 RESULT_AUTHORITY_PATH = CONTRACT_ROOT / "authority-lock-v0.14.json"
+V02_CONTRACT_PATH = CONTRACT_ROOT / "token-length-gate-contract-v0.2.json"
+V016_AUTHORITY_PATH = CONTRACT_ROOT / "authority-lock-v0.16.json"
 
 
 def load_module(path: Path, name: str):
@@ -84,6 +86,29 @@ class TokenLengthAuthorityTests(unittest.TestCase):
                 with self.subTest(path=relative):
                     self.assertEqual(expected, sha256(REPO_ROOT / relative))
 
+    def test_v02_contract_matches_selection_serialization(self):
+        contract = load_json(V02_CONTRACT_PATH)
+        selection_path = REPO_ROOT / contract["inputs"]["selection_contract_path"]
+        selection = load_json(selection_path)
+        self.assertEqual(selection["serialization"], contract["serialization"])
+        self.assertEqual(1024, contract["gate"]["maximum_example_tokens"])
+        self.assertFalse(contract["gate"]["truncation_allowed"])
+        self.assertEqual(
+            contract["inputs"]["selection_contract_sha256"],
+            sha256(selection_path),
+        )
+
+    def test_v016_passes_exact_token_gate_but_keeps_training_closed(self):
+        authority = load_json(V016_AUTHORITY_PATH)
+        result = authority["tokenizer_gate_result"]
+        self.assertTrue(result["passed"])
+        self.assertEqual(881, result["overall_p95"])
+        self.assertEqual(1021, result["overall_max"])
+        self.assertEqual(0, result["over_1024"])
+        self.assertEqual(0, result["examples_truncated"])
+        self.assertTrue(result["byte_identical_reproduction"])
+        self.assertFalse(authority["next_gate"]["model_and_training_gate_open"])
+
 
 class TokenLengthImplementationTests(unittest.TestCase):
     @classmethod
@@ -150,6 +175,29 @@ class TokenLengthImplementationTests(unittest.TestCase):
         self.assertEqual(
             {"support_decision", "normalized_edge", "pointer"}, set(assistant)
         )
+
+    def test_v02_compact_serialization_keeps_payload_candidate_and_bound_pointer(self):
+        serialization = {
+            **self.contract["serialization"],
+            "serialization_id": "test-v0.2",
+            "user_field_sources": {
+                "source_modality": "source_modality",
+                "bound_pointer": "pointer",
+                "payload": "source_record.payload",
+                "candidate": "candidate",
+            },
+        }
+        serialization.pop("user_fields")
+        messages = self.module.build_messages(self.example(), serialization)
+        user = json.loads(messages[1]["content"])
+        self.assertEqual(
+            {"source_modality", "bound_pointer", "payload", "candidate"},
+            set(user),
+        )
+        self.assertEqual({"message": "process started"}, user["payload"])
+        self.assertEqual(self.example()["pointer"], user["bound_pointer"])
+        self.assertNotIn("provenance", user)
+        self.assertNotIn("source_family_id", user)
 
     def test_nearest_rank_percentiles_and_distribution(self):
         values = list(range(1, 101))

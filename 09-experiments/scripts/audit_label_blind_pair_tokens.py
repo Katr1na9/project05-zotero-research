@@ -96,6 +96,22 @@ def validate_contract_inputs(contract: dict[str, Any]) -> None:
         raise ValueError("tokenizer repository differs from fairness contract")
     if shared["revision"] != tokenizer["revision"]:
         raise ValueError("tokenizer revision differs from fairness contract")
+    if "selection_contract_path" in inputs:
+        require_file_hash(
+            REPO_ROOT / inputs["selection_contract_path"],
+            inputs["selection_contract_sha256"],
+            "token-aware selection contract",
+        )
+        selection = load_json(REPO_ROOT / inputs["selection_contract_path"])
+        if selection["serialization"] != contract["serialization"]:
+            raise ValueError("token audit serialization differs from pair selection")
+        identity = selection["tokenizer_identity"]
+        if identity["repository_id"] != tokenizer["repository_id"]:
+            raise ValueError("selection tokenizer repository differs from token Gate")
+        if identity["revision"] != tokenizer["revision"]:
+            raise ValueError("selection tokenizer revision differs from token Gate")
+        if selection["maximum_example_tokens"] != contract["gate"]["maximum_example_tokens"]:
+            raise ValueError("selection and audit token limits differ")
 
 
 def build_tokenizer_lock(
@@ -176,12 +192,28 @@ def walk_keys(value: Any) -> set[str]:
     return output
 
 
+def resolve_field_path(value: dict[str, Any], path: str) -> Any:
+    current: Any = value
+    for segment in path.split("."):
+        if not isinstance(current, dict) or segment not in current:
+            raise ValueError(f"serialization source field is missing: {path}")
+        current = current[segment]
+    return copy.deepcopy(current)
+
+
 def build_messages(
     example: dict[str, Any], serialization: dict[str, Any]
 ) -> list[dict[str, str]]:
-    user = {
-        field: copy.deepcopy(example[field]) for field in serialization["user_fields"]
-    }
+    if "user_field_sources" in serialization:
+        user = {
+            output_field: resolve_field_path(example, source_path)
+            for output_field, source_path in serialization["user_field_sources"].items()
+        }
+    else:
+        user = {
+            field: copy.deepcopy(example[field])
+            for field in serialization["user_fields"]
+        }
     assistant = {
         field: copy.deepcopy(example[field])
         for field in serialization["assistant_fields"]

@@ -1,6 +1,11 @@
 # LLM evidence compiler tokenizer-length Gate amendment v0.2 (proposed)
 
-Status: `pending_user_design_amendment_approval`
+Status: `superseded_by_user_approved_v0.2_authority`
+
+Decision note: the user approved this amendment on 2026-07-19. The operative
+authorization is recorded in
+`llm-evidence-compiler-token-length-gate-amendment-v0.2-20260719.md` and
+`authority-lock-v0.15.json`.
 
 Date: 2026-07-19
 

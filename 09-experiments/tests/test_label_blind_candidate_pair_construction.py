@@ -12,6 +12,8 @@ CEDGE_PATH = EXPERIMENT_ROOT / "scripts" / "build_candidate_edge_training.py"
 CONTRACT_ROOT = EXPERIMENT_ROOT / "llm_evidence_compiler_mainline" / "contracts"
 FIELD_MAP_ROOT = EXPERIMENT_ROOT / "llm_evidence_compiler_mainline" / "field_maps" / "v0.3"
 AUTHORITY_PATH = CONTRACT_ROOT / "authority-lock-v0.12.json"
+V015_AUTHORITY_PATH = CONTRACT_ROOT / "authority-lock-v0.15.json"
+V016_AUTHORITY_PATH = CONTRACT_ROOT / "authority-lock-v0.16.json"
 
 
 def load_module(path: Path, name: str):
@@ -106,6 +108,64 @@ class LabelBlindAuthorityTests(unittest.TestCase):
                     ),
                 )
 
+    def test_v015_authorizes_only_token_aware_reselection(self):
+        authority = load_json(V015_AUTHORITY_PATH)
+        self.assertEqual(
+            "tokenizer_v0_2_serialization_and_same_family_reselection_authorized_model_gate_closed",
+            authority["status"],
+        )
+        self.assertFalse(authority["preserved_constraints"]["truncation_allowed"])
+        self.assertFalse(
+            authority["preserved_constraints"]["cross_family_substitution_allowed"]
+        )
+        self.assertIn("model_config_or_weight_use", authority["not_authorized"])
+        parent = authority["parent_authority"]
+        self.assertEqual(parent["sha256"], sha256(REPO_ROOT / parent["path"]))
+        for group in (
+            "authoritative_documents",
+            "authoritative_contracts",
+            "authorized_implementation",
+        ):
+            for relative, expected in authority[group].items():
+                with self.subTest(path=relative):
+                    self.assertEqual(expected, sha256(REPO_ROOT / relative))
+
+    def test_v016_records_formal_data_gate_without_opening_model_gate(self):
+        authority = load_json(V016_AUTHORITY_PATH)
+        self.assertTrue(authority["formal_data_gate"]["passed"])
+        self.assertEqual(1500, authority["formal_data_gate"]["examples"])
+        self.assertTrue(authority["tokenizer_gate_result"]["passed"])
+        self.assertEqual(0, authority["tokenizer_gate_result"]["over_1024"])
+        self.assertFalse(authority["next_gate"]["model_and_training_gate_open"])
+        self.assertIn("formal_training", authority["not_authorized"])
+        parent = authority["parent_authority"]
+        self.assertEqual(parent["sha256"], sha256(REPO_ROOT / parent["path"]))
+        for group in (
+            "authoritative_contracts",
+            "authoritative_implementation",
+            "authoritative_evidence",
+        ):
+            for relative, expected in authority[group].items():
+                with self.subTest(path=relative):
+                    self.assertEqual(expected, sha256(REPO_ROOT / relative))
+
+    def test_v03_pair_contract_preserves_quotas_and_requires_token_selection(self):
+        contract = load_json(
+            CONTRACT_ROOT / "label-blind-pair-construction-contract-v0.3.json"
+        )
+        self.assertEqual(
+            "pending_independent_full_audit",
+            contract["data_gate"]["token_gate_status"],
+        )
+        self.assertFalse(contract["data_gate"]["truncation_allowed"])
+        self.assertEqual(1024, contract["data_gate"]["maximum_example_tokens"])
+        self.assertEqual(
+            {"N1": 36, "N2": 4, "N3": 35, "N4": 0},
+            contract["negative_generator_quotas"]["training-validation"]
+            ["zeek_non_pcap_test_logs"],
+        )
+        self.assertIn("token_aware_selection_contract_sha256", contract["inputs"])
+
 
 class LabelBlindConstructionTests(unittest.TestCase):
     @classmethod
@@ -163,13 +223,14 @@ class LabelBlindConstructionTests(unittest.TestCase):
 
     def test_family_constructor_meets_n1_n2_n3_quotas_with_valid_proofs(self):
         records = [self.beth_record(index) for index in range(12)]
-        examples, record_index = self.module.construct_family_pairs(
+        examples, record_index, selection = self.module.construct_family_pairs(
             records,
             positive_quota=6,
             generator_quotas={"N1": 2, "N2": 2, "N3": 2, "N4": 0},
             field_maps=self.maps,
         )
         self.assertEqual(12, len(examples))
+        self.assertFalse(selection["enabled"])
         supported = [
             row for row in examples if row["support_decision"] == "supported"
         ]
@@ -225,13 +286,14 @@ class LabelBlindConstructionTests(unittest.TestCase):
 
     def test_deterministic_gzip_is_byte_identical_and_refuses_overwrite(self):
         records = [self.beth_record(index) for index in range(6)]
-        examples, _ = self.module.construct_family_pairs(
+        examples, _, selection = self.module.construct_family_pairs(
             records,
             positive_quota=3,
             generator_quotas={"N1": 1, "N2": 1, "N3": 1, "N4": 0},
             field_maps=self.maps,
         )
         examples = sorted(examples, key=lambda row: row["example_id"])
+        self.assertEqual(0, selection["rejected_candidate_serializations"])
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             first = root / "first.jsonl.gz"

@@ -23,6 +23,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import audit_beth_source_gate as beth_gate  # noqa: E402
+import audit_label_blind_pair_tokens as token_gate  # noqa: E402
 import build_candidate_edge_training as cedge  # noqa: E402
 
 
@@ -73,6 +74,8 @@ def validate_authorized_inputs(
     beth_audit_path: Path,
     field_map_path: Path,
     protected_lock_path: Path,
+    selection_contract_path: Path | None = None,
+    tokenizer_lock_path: Path | None = None,
 ) -> None:
     inputs = contract["inputs"]
     for path, key, label in (
@@ -95,6 +98,19 @@ def validate_authorized_inputs(
         (protected_lock_path, "protected_lock_sha256", "protected lock"),
     ):
         _require_file_hash(path, inputs[key], label)
+    if "token_aware_selection_contract_sha256" in inputs:
+        if selection_contract_path is None or tokenizer_lock_path is None:
+            raise ValueError("token-aware selection inputs are required")
+        _require_file_hash(
+            selection_contract_path,
+            inputs["token_aware_selection_contract_sha256"],
+            "token-aware selection contract",
+        )
+        _require_file_hash(
+            tokenizer_lock_path,
+            inputs["tokenizer_lock_sha256"],
+            "tokenizer lock",
+        )
 
 
 def _origin_only_url(value: Any) -> str:
@@ -355,27 +371,30 @@ def _generator_plan(quotas: dict[str, int]) -> list[str]:
     return output
 
 
-def _try_negative(
+def _negative_candidates(
     generator: str,
     positive: dict[str, Any],
     positive_record: dict[str, Any],
     packet_records: list[dict[str, Any]],
     field_maps: dict[str, Any],
     used_negative_ids: set[str],
-) -> dict[str, Any] | None:
+) -> Iterable[dict[str, Any]]:
     if generator == "N3":
         family_map = field_maps["families"][positive["source_family_id"]]
         template = cedge._template_by_id(family_map, positive["field_map_id"])
         replacements = template.get("incompatible_predicates") or []
         if not replacements:
-            return None
-        try:
-            negative = cedge.generate_n3_predicate_incompatibility(
-                positive, replacements[0], field_maps
-            )
-            return None if negative["example_id"] in used_negative_ids else negative
-        except ValueError:
-            return None
+            return
+        for replacement in replacements:
+            try:
+                negative = cedge.generate_n3_predicate_incompatibility(
+                    positive, replacement, field_maps
+                )
+            except ValueError:
+                continue
+            if negative["example_id"] not in used_negative_ids:
+                yield negative
+        return
     function = GENERATOR_FUNCTIONS[generator]
     positive_hash = cedge.record_sha256(positive_record)
     donors = sorted(packet_records, key=cedge.record_sha256)
@@ -386,10 +405,46 @@ def _try_negative(
             negative = function(positive, donor, field_maps)
             if negative["example_id"] in used_negative_ids:
                 continue
-            return negative
+            yield negative
         except ValueError:
             continue
-    return None
+
+
+def _try_negative(
+    generator: str,
+    positive: dict[str, Any],
+    positive_record: dict[str, Any],
+    packet_records: list[dict[str, Any]],
+    field_maps: dict[str, Any],
+    used_negative_ids: set[str],
+) -> dict[str, Any] | None:
+    return next(
+        iter(
+            _negative_candidates(
+                generator,
+                positive,
+                positive_record,
+                packet_records,
+                field_maps,
+                used_negative_ids,
+            )
+        ),
+        None,
+    )
+
+
+def serialized_token_count(
+    example: dict[str, Any],
+    *,
+    tokenizer: Any,
+    serialization: dict[str, Any],
+) -> int:
+    messages = token_gate.build_messages(example, serialization)
+    rendered = token_gate.render_messages(messages, serialization)
+    count = len(tokenizer.encode(rendered, add_special_tokens=False).ids)
+    if count <= 0:
+        raise ValueError("tokenizer returned an empty encoding")
+    return count
 
 
 def construct_family_pairs(
@@ -398,7 +453,14 @@ def construct_family_pairs(
     positive_quota: int,
     generator_quotas: dict[str, int],
     field_maps: dict[str, Any],
-) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
+    tokenizer: Any | None = None,
+    serialization: dict[str, Any] | None = None,
+    maximum_example_tokens: int | None = None,
+) -> tuple[
+    list[dict[str, Any]],
+    dict[str, dict[str, Any]],
+    dict[str, Any],
+]:
     if sum(int(value) for value in generator_quotas.values()) != positive_quota:
         raise ValueError("negative-generator quotas do not equal the positive quota")
     record_index = {cedge.record_sha256(record): record for record in records}
@@ -415,12 +477,26 @@ def construct_family_pairs(
     used_positive_ids: set[str] = set()
     used_negative_ids: set[str] = set()
     examples: list[dict[str, Any]] = []
+    length_rejections = Counter()
+    length_aware = tokenizer is not None
+    if length_aware != (serialization is not None and maximum_example_tokens is not None):
+        raise ValueError("token-aware selection inputs must be supplied together")
     for generator in _generator_plan(generator_quotas):
         selected = None
         for record, positive in entries:
             if positive["example_id"] in used_positive_ids:
                 continue
-            negative = _try_negative(
+            positive_tokens = None
+            if length_aware:
+                positive_tokens = serialized_token_count(
+                    positive,
+                    tokenizer=tokenizer,
+                    serialization=serialization,
+                )
+                if positive_tokens > maximum_example_tokens:
+                    length_rejections[f"{generator}:positive"] += 1
+                    continue
+            negatives = _negative_candidates(
                 generator,
                 positive,
                 record,
@@ -428,28 +504,52 @@ def construct_family_pairs(
                 field_maps,
                 used_negative_ids,
             )
-            if negative is None:
-                continue
-            validation = cedge.validate_negative_example(
-                negative, record_index, field_maps
-            )
-            if not validation["valid"]:
-                raise ValueError(
-                    f"generated {generator} proof failed: {validation['reason_codes']}"
+            for negative in negatives:
+                validation = cedge.validate_negative_example(
+                    negative, record_index, field_maps
                 )
-            selected = (positive, negative)
+                if not validation["valid"]:
+                    raise ValueError(
+                        f"generated {generator} proof failed: {validation['reason_codes']}"
+                    )
+                negative_tokens = None
+                if length_aware:
+                    negative_tokens = serialized_token_count(
+                        negative,
+                        tokenizer=tokenizer,
+                        serialization=serialization,
+                    )
+                    if negative_tokens > maximum_example_tokens:
+                        length_rejections[f"{generator}:negative"] += 1
+                        continue
+                selected = (
+                    positive,
+                    negative,
+                    positive_tokens,
+                    negative_tokens,
+                )
+                break
+            if selected is None:
+                continue
             break
         if selected is None:
             raise ValueError(
                 f"source family cannot satisfy the frozen {generator} quota"
             )
-        positive, negative = selected
+        positive, negative, _, _ = selected
         used_positive_ids.add(positive["example_id"])
         used_negative_ids.add(negative["example_id"])
         examples.extend((positive, negative))
     if len(used_positive_ids) != positive_quota:
         raise ValueError("source family positive quota is incomplete")
-    return examples, record_index
+    return examples, record_index, {
+        "enabled": length_aware,
+        "maximum_example_tokens": maximum_example_tokens,
+        "rejected_candidate_serializations": sum(length_rejections.values()),
+        "rejections_by_generator_and_role": dict(sorted(length_rejections.items())),
+        "accepted_examples_truncated": 0,
+        "accepted_examples_rewritten": 0,
+    }
 
 
 def _walk_values(value: Any, keys: list[str], strings: set[str]) -> None:
@@ -462,6 +562,71 @@ def _walk_values(value: Any, keys: list[str], strings: set[str]) -> None:
             _walk_values(item, keys, strings)
     elif isinstance(value, str):
         strings.add(value)
+
+
+def load_tokenizer_for_selection(
+    *,
+    selection_contract_path: Path,
+    tokenizer_lock_path: Path,
+    tokenizer_snapshot_path: Path,
+    tokenizer_wheel_path: Path,
+) -> tuple[Any, dict[str, Any], dict[str, Any]]:
+    selection = load_json(selection_contract_path)
+    lock = load_json(tokenizer_lock_path)
+    if selection.get("status") != "authorized_token_aware_pair_selection_only":
+        raise ValueError("token-aware selection authority is absent")
+    if selection.get("truncation_allowed") is not False:
+        raise ValueError("token-aware selection contract permits truncation")
+    identity = selection["tokenizer_identity"]
+    for key in ("repository_id", "revision", "snapshot_manifest_sha256"):
+        if identity[key] != lock[key]:
+            raise ValueError(f"tokenizer selection identity mismatch: {key}")
+    engine = lock["engine"]
+    if identity["engine_version"] != engine["version"]:
+        raise ValueError("tokenizer engine version differs from the selection contract")
+    if identity["engine_wheel_sha256"] != engine["wheel_sha256"]:
+        raise ValueError("tokenizer wheel differs from the selection contract")
+    snapshot = Path(tokenizer_snapshot_path)
+    expected_files = sorted(entry["name"] for entry in lock["files"])
+    observed_files = sorted(path.name for path in snapshot.iterdir() if path.is_file())
+    if observed_files != expected_files:
+        raise ValueError("tokenizer snapshot differs from the locked allowlist")
+    for entry in lock["files"]:
+        path = snapshot / entry["name"]
+        if path.stat().st_size != entry["bytes"] or sha256_file(path) != entry["sha256"]:
+            raise ValueError(f"tokenizer snapshot file changed: {entry['name']}")
+    wheel = Path(tokenizer_wheel_path)
+    if (
+        not wheel.is_file()
+        or wheel.stat().st_size != engine["wheel_bytes"]
+        or sha256_file(wheel) != engine["wheel_sha256"]
+    ):
+        raise ValueError("isolated tokenizer wheel changed")
+    try:
+        import tokenizers
+        from tokenizers import Tokenizer
+    except ImportError as error:
+        raise RuntimeError(
+            "isolated tokenizers engine is unavailable; do not substitute a tokenizer"
+        ) from error
+    if tokenizers.__version__ != identity["engine_version"]:
+        raise ValueError("loaded tokenizer engine version differs from the contract")
+    tokenizer = Tokenizer.from_file(str(snapshot / "tokenizer.json"))
+    for marker in ("<|im_start|>", "<|im_end|>"):
+        if tokenizer.token_to_id(marker) is None:
+            raise ValueError(f"Qwen chat marker is absent: {marker}")
+        if len(tokenizer.encode(marker, add_special_tokens=False).ids) != 1:
+            raise ValueError(f"Qwen chat marker is not one token: {marker}")
+    return tokenizer, selection, {
+        "selection_contract_id": selection["contract_id"],
+        "selection_contract_sha256": sha256_file(selection_contract_path),
+        "tokenizer_lock_sha256": sha256_file(tokenizer_lock_path),
+        "repository_id": identity["repository_id"],
+        "revision": identity["revision"],
+        "engine_version": identity["engine_version"],
+        "maximum_example_tokens": selection["maximum_example_tokens"],
+        "truncation_allowed": False,
+    }
 
 
 def audit_examples(
@@ -645,7 +810,7 @@ def audit_examples(
         },
         "protected_scan": protected,
         "non_token_data_gate_passed": True,
-        "token_gate_status": "pending_not_authorized",
+        "token_gate_status": contract["data_gate"]["token_gate_status"],
         "formal_data_gate_passed": False,
     }
 
@@ -709,6 +874,10 @@ def construct_dataset(
     protected_lock_path: Path,
     pair_contract_path: Path,
     output_root: Path,
+    selection_contract_path: Path | None = None,
+    tokenizer_lock_path: Path | None = None,
+    tokenizer_snapshot_path: Path | None = None,
+    tokenizer_wheel_path: Path | None = None,
 ) -> dict[str, Any]:
     contract = load_json(pair_contract_path)
     validate_authorized_inputs(
@@ -718,9 +887,31 @@ def construct_dataset(
         beth_audit_path=beth_audit_path,
         field_map_path=field_map_path,
         protected_lock_path=protected_lock_path,
+        selection_contract_path=selection_contract_path,
+        tokenizer_lock_path=tokenizer_lock_path,
     )
     if contract.get("formal_candidate_pair_construction_allowed") is not True:
         raise ValueError("candidate-pair construction authority is absent")
+    selection = None
+    tokenizer = None
+    selection_runtime_audit = None
+    if "token_aware_selection_contract_sha256" in contract["inputs"]:
+        if any(
+            path is None
+            for path in (
+                selection_contract_path,
+                tokenizer_lock_path,
+                tokenizer_snapshot_path,
+                tokenizer_wheel_path,
+            )
+        ):
+            raise ValueError("token-aware selection runtime inputs are incomplete")
+        tokenizer, selection, selection_runtime_audit = load_tokenizer_for_selection(
+            selection_contract_path=selection_contract_path,
+            tokenizer_lock_path=tokenizer_lock_path,
+            tokenizer_snapshot_path=tokenizer_snapshot_path,
+            tokenizer_wheel_path=tokenizer_wheel_path,
+        )
     field_maps = cedge.load_field_maps(field_map_path, field_map_lock_path)
     expected_families = set(contract["positive_quotas"]["train"]) | set(
         contract["positive_quotas"]["training-validation"]
@@ -746,20 +937,30 @@ def construct_dataset(
         "training-validation": [],
     }
     record_index: dict[str, dict[str, Any]] = {}
+    selection_reports: dict[str, dict[str, Any]] = {
+        "train": {},
+        "training-validation": {},
+    }
     for split in ("train", "training-validation"):
         for family, quota in sorted(contract["positive_quotas"][split].items()):
             try:
-                family_examples, family_index = construct_family_pairs(
+                family_examples, family_index, selection_report = construct_family_pairs(
                     records[family],
                     positive_quota=int(quota),
                     generator_quotas=contract["negative_generator_quotas"][split][
                         family
                     ],
                     field_maps=field_maps,
+                    tokenizer=tokenizer,
+                    serialization=(selection or {}).get("serialization"),
+                    maximum_example_tokens=(selection or {}).get(
+                        "maximum_example_tokens"
+                    ),
                 )
             except ValueError as error:
                 raise ValueError(f"{split}/{family}: {error}") from error
             examples_by_split[split].extend(family_examples)
+            selection_reports[split][family] = selection_report
             for key, value in family_index.items():
                 if key in record_index:
                     raise ValueError("record SHA-256 collides across source families")
@@ -812,12 +1013,23 @@ def construct_dataset(
                 "candidate_pairs_constructed": True,
                 "pair_files_git_ignored": True,
                 "standalone_normalized_records_written": False,
-                "tokenizer_used": False,
+                "tokenizer_used": tokenizer is not None,
+                "tokenizer_used_for_length_aware_selection_only": tokenizer is not None,
                 "model_downloaded": False,
                 "model_used": False,
                 "training_run": False,
                 "formal_inference_run": False,
                 "m3_runtime_integrated": False,
+            },
+            "length_aware_selection": {
+                "enabled": tokenizer is not None,
+                "runtime": selection_runtime_audit,
+                "families": selection_reports,
+                "selection_scope": "same_family_same_negative_generator",
+                "cross_family_substitution": False,
+                "quota_change": False,
+                "accepted_examples_truncated": 0,
+                "accepted_examples_rewritten": 0,
             },
         }
     )
@@ -838,6 +1050,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--pair-contract", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--audit-output", type=Path, required=True)
+    parser.add_argument("--selection-contract", type=Path)
+    parser.add_argument("--tokenizer-lock", type=Path)
+    parser.add_argument("--tokenizer-snapshot", type=Path)
+    parser.add_argument("--tokenizer-wheel", type=Path)
     return parser.parse_args()
 
 
@@ -855,6 +1071,10 @@ def main() -> int:
         protected_lock_path=args.protected_lock,
         pair_contract_path=args.pair_contract,
         output_root=args.output_root,
+        selection_contract_path=args.selection_contract,
+        tokenizer_lock_path=args.tokenizer_lock,
+        tokenizer_snapshot_path=args.tokenizer_snapshot,
+        tokenizer_wheel_path=args.tokenizer_wheel,
     )
     write_json_no_overwrite(args.audit_output, audit)
     print(

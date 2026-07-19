@@ -1,0 +1,225 @@
+{
+  "beth_selection_pool": {
+    "eligible_rows_retained": 2000,
+    "label_values_read": false,
+    "label_values_used": false,
+    "rows_examined": 2000,
+    "standalone_normalized_records_written": false
+  },
+  "contract_id": "project05-label-blind-pair-construction-v0.3",
+  "created_date": "2026-07-19",
+  "dataset": {
+    "canonical_example_digest": "F515894481F21FA64DF662EE6FB510086030DA28E0A08ACEC8A89AB346D78EAA",
+    "duplicate_example_ids": 0,
+    "examples": 1500,
+    "supported": 750,
+    "train_validation_family_overlap": [],
+    "unsupported_by_bound_pointer": 750
+  },
+  "execution_claims": {
+    "candidate_pairs_constructed": true,
+    "formal_inference_run": false,
+    "m3_runtime_integrated": false,
+    "model_downloaded": false,
+    "model_used": false,
+    "pair_files_git_ignored": true,
+    "standalone_normalized_records_written": false,
+    "tokenizer_used": true,
+    "tokenizer_used_for_length_aware_selection_only": true,
+    "training_run": false
+  },
+  "field_map_version": "0.3.0",
+  "formal_data_gate_passed": false,
+  "historical_exact_duplicate_rows_removed": {
+    "ait_cam_lds_manifestations_filtered": 0,
+    "fkie_socbed_acsac2021_winlogbeat": 0,
+    "logpai_loghub_linux": 0,
+    "redcanary_atomic_red_team": 0,
+    "zeek_non_pcap_test_logs": 1
+  },
+  "length_aware_selection": {
+    "accepted_examples_rewritten": 0,
+    "accepted_examples_truncated": 0,
+    "cross_family_substitution": false,
+    "enabled": true,
+    "families": {
+      "train": {
+        "ait_cam_lds_manifestations_filtered": {
+          "accepted_examples_rewritten": 0,
+          "accepted_examples_truncated": 0,
+          "enabled": true,
+          "maximum_example_tokens": 1024,
+          "rejected_candidate_serializations": 0,
+          "rejections_by_generator_and_role": {}
+        },
+        "beth_process_events": {
+          "accepted_examples_rewritten": 0,
+          "accepted_examples_truncated": 0,
+          "enabled": true,
+          "maximum_example_tokens": 1024,
+          "rejected_candidate_serializations": 0,
+          "rejections_by_generator_and_role": {}
+        },
+        "fkie_socbed_acsac2021_winlogbeat": {
+          "accepted_examples_rewritten": 0,
+          "accepted_examples_truncated": 0,
+          "enabled": true,
+          "maximum_example_tokens": 1024,
+          "rejected_candidate_serializations": 1136,
+          "rejections_by_generator_and_role": {
+            "N1:positive": 379,
+            "N2:positive": 376,
+            "N3:positive": 381
+          }
+        },
+        "redcanary_atomic_red_team": {
+          "accepted_examples_rewritten": 0,
+          "accepted_examples_truncated": 0,
+          "enabled": true,
+          "maximum_example_tokens": 1024,
+          "rejected_candidate_serializations": 405,
+          "rejections_by_generator_and_role": {
+            "N1:positive": 132,
+            "N2:positive": 136,
+            "N3:positive": 137
+          }
+        }
+      },
+      "training-validation": {
+        "logpai_loghub_linux": {
+          "accepted_examples_rewritten": 0,
+          "accepted_examples_truncated": 0,
+          "enabled": true,
+          "maximum_example_tokens": 1024,
+          "rejected_candidate_serializations": 0,
+          "rejections_by_generator_and_role": {}
+        },
+        "zeek_non_pcap_test_logs": {
+          "accepted_examples_rewritten": 0,
+          "accepted_examples_truncated": 0,
+          "enabled": true,
+          "maximum_example_tokens": 1024,
+          "rejected_candidate_serializations": 0,
+          "rejections_by_generator_and_role": {}
+        }
+      }
+    },
+    "quota_change": false,
+    "runtime": {
+      "engine_version": "0.21.4",
+      "maximum_example_tokens": 1024,
+      "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "selection_contract_id": "project05-token-aware-pair-selection-v0.1",
+      "selection_contract_sha256": "CA268DEB793C2269EF75A584873A73C2598C9F22C099BF1C98AF751C2105DE35",
+      "tokenizer_lock_sha256": "FD848D6ABCF5CF79537C41DFC81F371D2C98ED1B1E42707B4934A82654CCFBA8",
+      "truncation_allowed": false
+    },
+    "selection_scope": "same_family_same_negative_generator"
+  },
+  "modality_audit": {
+    "pass_fraction": 1.0,
+    "passed_examples": 1500
+  },
+  "non_token_data_gate_passed": true,
+  "pair_file_manifest": [
+    {
+      "bytes": 361192,
+      "relative_name": "train.jsonl.gz",
+      "sha256": "61B9F3C724CB65A3A2ED8839ED36881A717DC906F32267D7CDED510C2F01B82B",
+      "split_role": "train"
+    },
+    {
+      "bytes": 38030,
+      "relative_name": "training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552",
+      "split_role": "training-validation"
+    }
+  ],
+  "pair_file_manifest_sha256": "2508B29882070329A0DF050467E914C08E6FA651063E3E657A733296FE475363",
+  "pointer_audit": {
+    "pass_fraction": 1.0,
+    "passed_examples": 1500
+  },
+  "proof_audit": {
+    "pass_fraction": 1.0,
+    "passed_negatives": 750,
+    "validated_negatives": 750
+  },
+  "protected_scan": {
+    "contains_raw_protected_payload": false,
+    "exact_matches": 0,
+    "matched_normalized_hashes": [],
+    "maximum_jaccard": 0.5869565217391305,
+    "near_matches": 0,
+    "raw_matches": [],
+    "status": "passed_clean",
+    "threshold": 0.85
+  },
+  "schema_version": "project05-label-blind-candidate-pairs-v0.1",
+  "splits": {
+    "train": {
+      "examples": 1200,
+      "families": {
+        "ait_cam_lds_manifestations_filtered": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        },
+        "beth_process_events": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        },
+        "fkie_socbed_acsac2021_winlogbeat": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        },
+        "redcanary_atomic_red_team": {
+          "supported": 150,
+          "unsupported_by_bound_pointer": 150
+        }
+      },
+      "maximum_single_negative_generator_fraction": 0.25,
+      "negative_generators": {
+        "N1": 150,
+        "N2": 150,
+        "N3": 150,
+        "N4": 150
+      },
+      "same_packet_negative_fraction": 1.0,
+      "supported": 600,
+      "supported_fraction": 0.5,
+      "unsupported_by_bound_pointer": 600
+    },
+    "training-validation": {
+      "examples": 300,
+      "families": {
+        "logpai_loghub_linux": {
+          "supported": 75,
+          "unsupported_by_bound_pointer": 75
+        },
+        "zeek_non_pcap_test_logs": {
+          "supported": 75,
+          "unsupported_by_bound_pointer": 75
+        }
+      },
+      "maximum_single_negative_generator_fraction": 0.4066666666666667,
+      "negative_generators": {
+        "N1": 61,
+        "N2": 29,
+        "N3": 60
+      },
+      "same_packet_negative_fraction": 1.0,
+      "supported": 150,
+      "supported_fraction": 0.5,
+      "unsupported_by_bound_pointer": 150
+    }
+  },
+  "status": "passed_non_token_data_gate_token_gate_pending",
+  "supervision_audit": {
+    "beth_label_values_read": false,
+    "beth_label_values_used": false,
+    "forbidden_keys_observed": [],
+    "ttp_identifier_values_observed": []
+  },
+  "token_gate_status": "pending_independent_full_audit"
+}
