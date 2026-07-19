@@ -80,17 +80,17 @@ class FinalBlindReadinessAuditTests(unittest.TestCase):
             report["authoritative_artifact_verified_candidate_surplus_over_target"],
         )
         self.assertEqual(
-            "awaiting_independent_curator_phase_1_report",
+            "qualification_checkpoint_continue_acquisition",
             report["candidate_qualification_status"],
         )
         self.assertFalse(report["candidate_qualification_gate_pass"])
         self.assertEqual(95, report["candidate_upper_bound_after_resource_amendment"])
-        self.assertEqual(0, report["audited_candidate_count"])
-        self.assertEqual(95, report["unaudited_reserve_count"])
-        self.assertIsNone(report["actual_qualified_case_count"])
-        self.assertIsNone(report["qualification_acquisition_complete"])
+        self.assertEqual(81, report["audited_candidate_count"])
+        self.assertEqual(14, report["unaudited_reserve_count"])
+        self.assertEqual(47, report["actual_qualified_case_count"])
+        self.assertFalse(report["qualification_acquisition_complete"])
         self.assertIsNone(report["source_search_required_after_qualification"])
-        self.assertTrue(report["source_discovery_paused_pending_qualification"])
+        self.assertIsNone(report["source_discovery_paused_pending_qualification"])
         self.assertFalse(report["current_protocol_count_gate_met"])
         self.assertFalse(report["protocol_count_gate_amendment_required"])
         self.assertEqual(4, len(report["blockers"]))

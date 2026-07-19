@@ -117,9 +117,12 @@ The staged return contract is frozen by
 `m3star_blind_staged_candidate_qualification.schema.json` and
 `audit_m3star_blind_staged_candidate_qualification.py`; both SHA-256 values are
 anchored inside the amendment. The curator starts from
-`curator-staged-candidate-qualification-report.template.json`. The current
-readiness state is `awaiting_independent_curator_phase_1_report`: zero slots
-have been audited, all 95 remain unaudited, and none is counted as a failure.
+`curator-staged-candidate-qualification-report.template.json`. Phase 1 is now
+complete: all 81 frozen slots were audited, 47 qualified and 34 did not. The
+current readiness state is `qualification_checkpoint_continue_acquisition`;
+14 reserve slots remain unaudited and none is counted as a failure. The frozen
+auditor selected Phase 2 index 1, `russellmitchell_no-pcaps.zip`, as the sole
+permitted next candidate.
 
 Before any payload access, final-blind protocol v0.2 also replaced the legacy
 fixed 96-case preflight target with an outcome-free dynamic gate: the final
