@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 import tempfile
 import unittest
@@ -51,11 +52,16 @@ def write_json(path: Path, value):
     )
 
 
+def digest(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
 def build_preflight_fixture(runner, root: Path, case_count: int = 96):
     cases_root = root / "cases"
     case_ids = [f"C{index:03d}-blind" for index in range(13, 13 + case_count)]
     file_hashes = {}
     cost_actions = []
+    case_provenance = []
     for case_id in case_ids:
         case_dir = cases_root / case_id
         action_id = f"{case_id}-AA-001"
@@ -82,6 +88,49 @@ def build_preflight_fixture(runner, root: Path, case_count: int = 96):
                 "measured_cost": 1.0,
             }
         )
+        case_provenance.append(
+            {
+                "case_id": case_id,
+                "source_cluster_id": f"source-cluster-{case_id}",
+                "source_release_id": f"source-release-{case_id}",
+                "source_record_locator": f"sealed-record/{case_id}",
+                "source_artifact_sha256": digest(f"source-artifact-{case_id}"),
+                "scenario_family_id": f"scenario-family-{case_id}",
+                "attack_chain_definition_sha256": digest(
+                    f"attack-chain-{case_id}"
+                ),
+                "campaign_execution_id": f"campaign-execution-{case_id}",
+                "campaign_execution_sha256": digest(
+                    f"campaign-execution-{case_id}"
+                ),
+                "telemetry_capture_id": f"telemetry-capture-{case_id}",
+                "telemetry_capture_sha256": digest(
+                    f"telemetry-capture-{case_id}"
+                ),
+                "event_namespace_id": f"event-namespace-{case_id}",
+                "independent_unit": "whole_campaign_execution",
+                "independence_basis": (
+                    "unique_attack_chain_definition_and_execution"
+                ),
+                "original_telemetry_present": True,
+                "multi_stage_attack_chain_present": True,
+                "full_campaign_time_window_included": True,
+                "all_in_scope_campaign_hosts_combined": True,
+                "not_a_host_slice": True,
+                "not_a_time_slice": True,
+                "not_a_mask_variant": True,
+                "not_a_parameter_only_variant": True,
+                "not_used_in_model_development": True,
+                "ground_truth_sealed": True,
+                "cost_values_sealed_from_model_development": True,
+                "ground_truth_seal_id": f"ground-truth-seal-{case_id}",
+                "cost_measurement_seal_id": f"cost-seal-{case_id}",
+                "parent_campaign_execution_id": None,
+                "derived_from_case_id": None,
+                "mask_variant_of_case_id": None,
+                "parameter_variant_of_scenario_family_id": None,
+            }
+        )
     dataset_manifest = root / "dataset_manifest.json"
     write_json(
         dataset_manifest,
@@ -91,9 +140,32 @@ def build_preflight_fixture(runner, root: Path, case_count: int = 96):
             "ground_truth_sealed_until_execution": True,
             "all_cases_new_and_unseen": True,
             "source_and_attack_chain_deduplication_complete": True,
+            "intake_contract_version": "0.1.0",
             "case_count": len(case_ids),
             "case_ids": case_ids,
             "case_files_sha256": file_hashes,
+            "curation_and_seal_separation": {
+                "curation_team_id": "fixture-curation-team",
+                "model_development_team_id": "fixture-model-team",
+                "ground_truth_custodian_id": "fixture-ground-truth-custodian",
+                "teams_are_disjoint": True,
+                "curators_blind_to_model_outputs": True,
+                "model_developers_blind_to_c13_plus_contents": True,
+                "ground_truth_custodian_not_a_model_developer": True,
+                "cost_measurement_completed_without_model_output_access": True,
+            },
+            "independence_review": {
+                "whole_campaign_execution_is_the_counting_unit": True,
+                "host_time_mask_and_parameter_slices_forbidden": True,
+                "same_scenario_family_counted_once": True,
+                "prior_campaign_overlap_review_complete": True,
+                "source_cluster_recorded_for_sensitivity_analysis": True,
+                "used_campaign_registry_sha256": runner.sha256(
+                    runner.REPO_ROOT
+                    / runner.USED_CAMPAIGN_REGISTRY_RELATIVE_PATH
+                ),
+            },
+            "case_provenance": case_provenance,
         },
     )
     evaluation_cost_profile = root / "evaluation_cost_profile.json"
@@ -210,6 +282,11 @@ class FinalBlindRunnerTests(unittest.TestCase):
 
         self.assertEqual("ready_for_one_shot_execution", checked["status"])
         self.assertEqual(96, checked["case_count"])
+        self.assertEqual(
+            96,
+            checked["intake_identity_audit"]["unique_campaign_execution_count"],
+        )
+        self.assertFalse(checked["intake_identity_audit"]["ground_truth_opened"])
 
     def test_preflight_rejects_dataset_file_hash_mismatch(self):
         runner = load_runner(self)
@@ -236,6 +313,65 @@ class FinalBlindRunnerTests(unittest.TestCase):
             fixture.ledger.write_text("already consumed\n", encoding="utf-8")
 
             with self.assertRaisesRegex(ValueError, "already been consumed"):
+                run_preflight(runner, fixture)
+
+    def test_preflight_rejects_same_scenario_parameter_variants(self):
+        runner = load_runner(self)
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = build_preflight_fixture(runner, Path(temporary))
+            manifest = json.loads(
+                fixture.dataset_manifest.read_text(encoding="utf-8")
+            )
+            manifest["case_provenance"][1]["scenario_family_id"] = manifest[
+                "case_provenance"
+            ][0]["scenario_family_id"]
+            write_json(fixture.dataset_manifest, manifest)
+
+            with self.assertRaisesRegex(ValueError, "Duplicate scenario family"):
+                run_preflight(runner, fixture)
+
+    def test_preflight_rejects_host_or_time_slice(self):
+        runner = load_runner(self)
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = build_preflight_fixture(runner, Path(temporary))
+            manifest = json.loads(
+                fixture.dataset_manifest.read_text(encoding="utf-8")
+            )
+            manifest["case_provenance"][0]["not_a_host_slice"] = False
+            write_json(fixture.dataset_manifest, manifest)
+
+            with self.assertRaisesRegex(ValueError, "not_a_host_slice must be true"):
+                run_preflight(runner, fixture)
+
+    def test_preflight_rejects_prior_development_campaign(self):
+        runner = load_runner(self)
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = build_preflight_fixture(runner, Path(temporary))
+            manifest = json.loads(
+                fixture.dataset_manifest.read_text(encoding="utf-8")
+            )
+            manifest["case_provenance"][0][
+                "campaign_execution_id"
+            ] = "darpa-tc-e3-2018"
+            write_json(fixture.dataset_manifest, manifest)
+
+            with self.assertRaisesRegex(ValueError, "used in model development"):
+                run_preflight(runner, fixture)
+
+    def test_preflight_rejects_curation_model_team_overlap(self):
+        runner = load_runner(self)
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = build_preflight_fixture(runner, Path(temporary))
+            manifest = json.loads(
+                fixture.dataset_manifest.read_text(encoding="utf-8")
+            )
+            separation = manifest["curation_and_seal_separation"]
+            separation["curation_team_id"] = separation[
+                "model_development_team_id"
+            ]
+            write_json(fixture.dataset_manifest, manifest)
+
+            with self.assertRaisesRegex(ValueError, "identities must be distinct"):
                 run_preflight(runner, fixture)
 
     def test_preflight_rejects_missing_frozen_model(self):

@@ -1,0 +1,103 @@
+{
+  "audit_id": "project05-m3star-final-blind-official-source-evidence-v0.1",
+  "access_date": "2026-07-19",
+  "scope": "Public metadata and official repository/catalog evidence only; no C13+ ground truth or model outcomes accessed.",
+  "sources": [
+    {
+      "source_id": "otrf-security-datasets",
+      "official_url": "https://github.com/OTRF/Security-Datasets",
+      "version_or_commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "observations": [
+        "104 atomic metadata entries are technique-level and are not independent attack chains.",
+        "Nine compound metadata entries were identified: GoldenSAML, seven LSASS campaigns, and Log4Shell.",
+        "The existing OTRF APT29 Day 1 development campaign remains separately excluded by the used-campaign registry."
+      ]
+    },
+    {
+      "source_id": "splunk-attack-data",
+      "official_url": "https://github.com/splunk/attack_data",
+      "version_or_commit": "1c8397622034c4231aa4ac75077b4296f393ede0",
+      "observations": [
+        "Technique and malware metadata entries are not automatically campaign executions.",
+        "One apt_simulations scenario was identified: ActiveMQ exploitation followed by LockBit."
+      ]
+    },
+    {
+      "source_id": "ait-log-data-set-v2.1",
+      "official_url": "https://doi.org/10.5281/zenodo.19483937",
+      "version_or_commit": "Zenodo record 19483937",
+      "observations": [
+        "The release documents eight testbeds with multi-stage attack sequences, host logs, PCAP, and separate ground truth.",
+        "The eight testbeds are fox, harrison, russellmitchell, santos, shaw, wardbeck, wheeler, and wilson.",
+        "AIT Alert Data Set and Kyoushi derivatives do not add independent campaign executions."
+      ]
+    },
+    {
+      "source_id": "cam-lds",
+      "official_url": "https://doi.org/10.5281/zenodo.18861762",
+      "version_or_commit": "Zenodo record 18861762",
+      "observations": [
+        "The release reports seven scenario families and 34 simulation archives.",
+        "The 34 archives are parameterized runs of seven scenario families and therefore count as at most seven chains."
+      ]
+    },
+    {
+      "source_id": "mscad",
+      "official_url": "https://www.kaggle.com/datasets/drjamailalsawwa/mscad",
+      "version_or_commit": "Kaggle DSV 3830715; DOI 10.34740/KAGGLE/DSV/3830715",
+      "observations": [
+        "The author dataset contains six PCAP files but explicitly defines only two multi-step attack scenarios.",
+        "The files and attack stages are components of those two scenarios, not six independent chains."
+      ]
+    },
+    {
+      "source_id": "atlasv2",
+      "official_url": "https://arxiv.org/abs/2401.01341",
+      "version_or_commit": "arXiv:2401.01341v1",
+      "observations": [
+        "The abstract states that ATLASv2 replicates ten attack scenarios.",
+        "A publisher-controlled raw data artifact was not verified during this audit; third-party mirrors are insufficient for hash-bound intake."
+      ]
+    },
+    {
+      "source_id": "cicapt-iiot",
+      "official_url": "https://arxiv.org/abs/2407.11278",
+      "catalog_url": "https://www.unb.ca/cic/datasets/index.html",
+      "version_or_commit": "arXiv:2407.11278v1",
+      "observations": [
+        "The paper describes one seven-day IIoT collection spanning multiple APT phases and more than 20 techniques.",
+        "Attack techniques and phases within that collection are not separate independent campaigns."
+      ]
+    },
+    {
+      "source_id": "dapt2020",
+      "official_url": "https://www.kaggle.com/datasets/sowmyamyneni/dapt2020",
+      "publication_url": "https://doi.org/10.1007/978-3-030-59621-7_8",
+      "version_or_commit": "Kaggle author release",
+      "observations": [
+        "The author metadata describes network traffic collected over five days as an accelerated APT timeline.",
+        "The five days are stages of one campaign, not five independent campaign cases."
+      ]
+    },
+    {
+      "source_id": "multi-source-attack-logs-2026",
+      "official_url": "https://arxiv.org/abs/2606.18190",
+      "version_or_commit": "arXiv:2606.18190v1",
+      "observations": [
+        "The paper reports 70 attack sessions designed from 50 different scenarios.",
+        "A session is a 20-minute capture; repeated sessions do not increase the unique scenario-family count beyond 50.",
+        "No verifiable public data artifact was linked from the article page during this audit, so its current hash-bound intake contribution is zero."
+      ]
+    },
+    {
+      "source_id": "darpa-transparent-computing-and-optc",
+      "official_url": "https://github.com/darpa-i2o/Transparent-Computing",
+      "version_or_commit": "master at repository metadata inspection",
+      "observations": [
+        "DARPA E3 and E5 each describe one engagement observed by multiple TA1 performers.",
+        "Performer streams, hosts, and time slices are repeated views of an engagement, not independent campaigns.",
+        "E3, E5, and OpTC were already used in Project05 development cases and are excluded from C13+ intake."
+      ]
+    }
+  ]
+}

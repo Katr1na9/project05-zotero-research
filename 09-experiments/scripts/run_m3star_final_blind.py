@@ -30,6 +30,7 @@ def load_script(name: str) -> Any:
 m3_runner = load_script("run_m3star_experiment")
 afa_runner = load_script("run_afa_voi_baselines")
 depth_runner = load_script("run_lightweight_nonmyopic_real")
+intake_validator = load_script("validate_m3star_final_blind_intake")
 run_mvp = m3_runner.run_mvp
 
 CONFIRMATION_PHRASE = "EXECUTE_PROJECT05_M3STAR_FINAL_BLIND_ONCE"
@@ -39,6 +40,13 @@ POWER_DESIGN_RELATIVE_PATH = Path(
 )
 CONSUMPTION_LEDGER_RELATIVE_PATH = Path(
     "09-experiments/governance/locks/m3star-final-blind-consumed-v0.1.json"
+)
+INTAKE_SCHEMA_RELATIVE_PATH = Path(
+    "09-experiments/data_schema/m3star_final_blind_intake_manifest.schema.json"
+)
+USED_CAMPAIGN_REGISTRY_RELATIVE_PATH = Path(
+    "09-experiments/governance/registries/"
+    "preblind-used-campaign-registry-v0.1.json"
 )
 MINIMUM_VALID_COMPLETE_CASES = 79
 OPERATIONAL_RECRUITMENT_TARGET = 96
@@ -117,7 +125,7 @@ def discover_final_case_dirs(cases_root: Path) -> list[Path]:
 def validate_dataset_manifest(
     manifest_path: Path,
     case_dirs: list[Path],
-) -> dict[str, Any]:
+) -> tuple[dict[str, Any], dict[str, Any]]:
     manifest = load_json(manifest_path)
     if manifest.get("status") != "frozen":
         raise ValueError("Final-blind dataset manifest is not frozen")
@@ -146,7 +154,12 @@ def validate_dataset_manifest(
             path = case_dir / filename
             if expected.get(filename) != sha256(path):
                 raise ValueError(f"Dataset file hash mismatch: {case_id}/{filename}")
-    return manifest
+    intake_audit = intake_validator.validate_manifest(
+        manifest,
+        case_ids,
+        REPO_ROOT / USED_CAMPAIGN_REGISTRY_RELATIVE_PATH,
+    )
+    return manifest, intake_audit
 
 
 def validate_protocol_document(protocol: dict[str, Any]) -> None:
@@ -200,6 +213,25 @@ def validate_protocol_document(protocol: dict[str, Any]) -> None:
     ):
         if cost_seal.get(field) is not True:
             raise ValueError(f"Final-blind cost seal is missing {field}")
+
+    intake_contract = protocol.get("intake_contract", {})
+    if intake_contract.get("version") != intake_validator.INTAKE_CONTRACT_VERSION:
+        raise ValueError("Final-blind intake contract version differs from validator")
+    if intake_contract.get("independent_unit") != intake_validator.INDEPENDENT_UNIT:
+        raise ValueError("Final-blind intake independent unit differs from validator")
+    for field, expected_relative_path in (
+        ("schema", INTAKE_SCHEMA_RELATIVE_PATH),
+        ("used_campaign_registry", USED_CAMPAIGN_REGISTRY_RELATIVE_PATH),
+    ):
+        path = resolve_repo_relative_path(
+            str(intake_contract.get(f"{field}_path", "")),
+            f"intake_contract.{field}_path",
+        )
+        expected_path = (REPO_ROOT / expected_relative_path).resolve()
+        if path != expected_path:
+            raise ValueError(f"Final-blind intake {field} path differs from runner")
+        if not path.is_file() or intake_contract.get(f"{field}_sha256") != sha256(path):
+            raise ValueError(f"Final-blind intake {field} hash mismatch")
 
     design = protocol.get("frozen_design", {})
     design_path = resolve_repo_relative_path(
@@ -293,7 +325,10 @@ def preflight(
         raise ValueError("Duplicate final-blind case ids")
     if any((case_number(case_id) or 0) < 13 for case_id in case_ids):
         raise ValueError("Final-blind cohort contains a pre-C13 case")
-    dataset_manifest = validate_dataset_manifest(dataset_manifest_path, case_dirs)
+    dataset_manifest, intake_identity_audit = validate_dataset_manifest(
+        dataset_manifest_path,
+        case_dirs,
+    )
     evaluation_profile = run_mvp.load_cost_profile(evaluation_cost_profile_path)
     if evaluation_profile["document"].get("status") != "frozen":
         raise ValueError("Final-blind evaluation cost profile is not frozen")
@@ -330,6 +365,7 @@ def preflight(
         "case_ids": case_ids,
         "case_dirs": case_dirs,
         "dataset_manifest": dataset_manifest,
+        "intake_identity_audit": intake_identity_audit,
     }
 
 

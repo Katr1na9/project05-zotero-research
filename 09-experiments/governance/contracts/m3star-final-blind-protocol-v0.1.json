@@ -1,8 +1,10 @@
 {
   "protocol_id": "project05-m3star-final-blind-protocol-v0.1",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "status": "frozen_before_final_blind_data_access",
   "created_utc": "2026-07-19T04:00:00Z",
+  "last_amended_utc": "2026-07-19T04:41:35Z",
+  "amendment_reason": "Added label-free campaign-execution identity, prior-campaign exclusion, curator separation, and pseudoreplication gates before any C13+ data access.",
   "paper_or_patent_updated": false,
   "final_blind_data_loaded": false,
   "method_name": "M3*",
@@ -11,7 +13,7 @@
     "runtime_contract_path": "09-experiments/governance/contracts/planner-runtime-contract-m3star-v0.9.json",
     "runtime_contract_sha256": "34d8dd3b1e466125e35b144ceee60f3987f6ad5fa723194907061283d6baa6ee",
     "final_blind_runner_path": "09-experiments/scripts/run_m3star_final_blind.py",
-    "final_blind_runner_sha256": "eec2ae61e92c51042fb19ddafb991e31f3b805f5cca752f5c8a6dbf19ba7cc41",
+    "final_blind_runner_sha256": "ce4677e51aeb6b3b05a52b4a84cd2d6454424d07344cfefe5d29ac8c08068f98",
     "frozen_model_result_dir": "09-experiments/results/m3star_measured_replay_majority_sixcase_v0.9",
     "experiment_report_sha256": "0f1b5d5db2fcbd0d0c76e6f0bfe012d53be6c4497dc831380c8022932fb2458f",
     "evaluation_manifest_sha256": "5f0c1e756c13fb2b03dd327e90e7fe208d066abe4df490072f9b6fd51eeb0140",
@@ -59,6 +61,21 @@
     "dataset_manifest_status_required": "frozen",
     "dataset_manifest_must_hash_every_case_file": true,
     "ground_truth_sealed_until_one_shot_execution": true
+  },
+  "intake_contract": {
+    "version": "0.1.0",
+    "independent_unit": "whole_campaign_execution",
+    "schema_path": "09-experiments/data_schema/m3star_final_blind_intake_manifest.schema.json",
+    "schema_sha256": "ec3fe48580a09c591a8b2c962a79c82dcaea85839f6aa6496ba1c7c891023c49",
+    "used_campaign_registry_path": "09-experiments/governance/registries/preblind-used-campaign-registry-v0.1.json",
+    "used_campaign_registry_sha256": "7858345cc53d2f8db338d13bde6960a1dde05f73895f18613e02f2c0e27cb962",
+    "one_case_per_unique_scenario_family": true,
+    "one_case_per_unique_campaign_execution": true,
+    "one_case_per_unique_telemetry_capture": true,
+    "host_time_mask_and_parameter_slices_forbidden": true,
+    "curation_model_development_and_ground_truth_roles_must_be_distinct": true,
+    "validation_opens_ground_truth": false,
+    "validation_opens_cost_values": false
   },
   "cost_seal": {
     "cost_regime": "measured",

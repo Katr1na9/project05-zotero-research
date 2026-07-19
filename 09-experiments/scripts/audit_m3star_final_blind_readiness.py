@@ -21,6 +21,10 @@ def load_runner() -> Any:
 
 
 runner = load_runner()
+SOURCE_CANDIDATE_MATRIX_RELATIVE_PATH = Path(
+    "04-progress/m3star-final-blind-data-intake-v0.1-20260719/"
+    "source-candidate-matrix-v0.1.json"
+)
 
 
 def utc_now() -> str:
@@ -83,6 +87,10 @@ def audit_readiness(
         )
     )
     static_gate_pass = static_error is None and ledger_absent
+    source_matrix_path = runner.REPO_ROOT / SOURCE_CANDIDATE_MATRIX_RELATIVE_PATH
+    source_summary: dict[str, Any] = {}
+    if source_matrix_path.is_file():
+        source_summary = runner.load_json(source_matrix_path).get("summary", {})
     return {
         "audit_id": "project05-m3star-final-blind-readiness-audit-v0.1",
         "status": (
@@ -99,6 +107,20 @@ def audit_readiness(
         "cases_root_present": cases_root_present,
         "observable_recruitment_count": 0 if not cases_root_present else None,
         "operational_recruitment_target": runner.OPERATIONAL_RECRUITMENT_TARGET,
+        "candidate_source_audit_path": str(SOURCE_CANDIDATE_MATRIX_RELATIVE_PATH),
+        "current_public_metadata_candidate_upper_bound": source_summary.get(
+            "current_public_metadata_candidate_upper_bound_before_download_hashing_and_overlap_audit"
+        ),
+        "current_hash_bound_intake_case_count": source_summary.get(
+            "current_hash_bound_intake_case_count"
+        ),
+        "candidate_gap_to_operational_target": source_summary.get(
+            "current_candidate_gap_to_target"
+        ),
+        "paper_only_additional_scenario_upper_bound": source_summary.get(
+            "paper_only_additional_scenario_upper_bound"
+        ),
+        "candidate_counts_are_not_recruited_cases": True,
         "dataset_manifest_present": dataset_manifest_present,
         "evaluation_cost_profile_present": evaluation_cost_profile_present,
         "external_inputs_present": external_inputs_present,
