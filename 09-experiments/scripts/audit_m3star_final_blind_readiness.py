@@ -25,6 +25,10 @@ SOURCE_CANDIDATE_MATRIX_RELATIVE_PATH = Path(
     "04-progress/m3star-final-blind-data-intake-v0.1-20260719/"
     "source-candidate-matrix-v0.1.json"
 )
+QUALIFICATION_READINESS_RELATIVE_PATH = Path(
+    "09-experiments/results/"
+    "m3star_blind_candidate_qualification_readiness_v0.1/readiness_audit.json"
+)
 
 
 def utc_now() -> str:
@@ -91,11 +95,24 @@ def audit_readiness(
     source_summary: dict[str, Any] = {}
     if source_matrix_path.is_file():
         source_summary = runner.load_json(source_matrix_path).get("summary", {})
+    qualification_path = runner.REPO_ROOT / QUALIFICATION_READINESS_RELATIVE_PATH
+    qualification_summary: dict[str, Any] = {}
+    if qualification_path.is_file():
+        qualification_summary = runner.load_json(qualification_path)
+    qualification_gate_pass = (
+        qualification_summary.get("status") == "qualification_complete"
+    )
+    if not qualification_gate_pass:
+        blockers.append(
+            "The frozen 102-candidate pool has no completed, role-separated "
+            "qualification report."
+        )
+    preflight_input_gate_pass = external_inputs_present and qualification_gate_pass
     return {
         "audit_id": "project05-m3star-final-blind-readiness-audit-v0.1",
         "status": (
             "external_inputs_present_preflight_required"
-            if static_gate_pass and external_inputs_present
+            if static_gate_pass and preflight_input_gate_pass
             else "blocked_before_preflight"
         ),
         "checked_utc": utc_now(),
@@ -139,10 +156,26 @@ def audit_readiness(
             "paper_only_additional_scenario_upper_bound"
         ),
         "candidate_counts_are_not_recruited_cases": True,
+        "candidate_qualification_readiness_path": str(
+            QUALIFICATION_READINESS_RELATIVE_PATH
+        ),
+        "candidate_qualification_status": qualification_summary.get("status"),
+        "candidate_qualification_gate_pass": qualification_gate_pass,
+        "actual_qualified_case_count": qualification_summary.get(
+            "actual_qualified_case_count"
+        ),
+        "source_search_required_after_qualification": qualification_summary.get(
+            "source_search_required"
+        ),
+        "source_discovery_paused_pending_qualification": qualification_summary.get(
+            "source_discovery_paused"
+        ),
         "dataset_manifest_present": dataset_manifest_present,
         "evaluation_cost_profile_present": evaluation_cost_profile_present,
         "external_inputs_present": external_inputs_present,
-        "ready_for_non_consuming_preflight": static_gate_pass and external_inputs_present,
+        "ready_for_non_consuming_preflight": (
+            static_gate_pass and preflight_input_gate_pass
+        ),
         "ready_for_one_shot_execution": False,
         "why_execution_is_false": (
             "The full hash, C13+ boundary, 96-case, exact cost-coverage, and seal checks "

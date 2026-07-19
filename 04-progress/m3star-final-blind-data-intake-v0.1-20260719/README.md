@@ -82,9 +82,29 @@ The metadata gap is closed with a headline surplus of 16, but the verified-
 artifact surplus is only six and the hash-bound intake count remains zero. The
 next valid step is isolated, non-consuming download/hash intake, independent
 case-identity construction, and cross-source chain-definition and capture-
-overlap auditing. Source acquisition continues as a reserve against expected
-attrition. No C13+ outcome may be opened, and pseudoreplication cannot be used
-to fill the cohort.
+overlap auditing. Additional source discovery and acquisition are now paused
+until the fixed-pool qualification result is available. No C13+ outcome may be
+opened, and pseudoreplication cannot be used to fill the cohort.
+
+## Qualification-first decision
+
+Source discovery is now paused. The 102 Tier-A plus Tier-B candidates are frozen
+as an independent-curator qualification pool in
+`candidate-qualification-pool-v0.1.json`; the ten Tier-C ATLASv2 metadata-only
+candidates are not included. The qualification result, not the current upper
+bound, decides whether searching resumes:
+
+- at least 96 qualified: retain all qualified cases and do not search;
+- 79 through 95 qualified: retain all, do not search solely to reach 96, and
+  amend the count gate before any outcome or cost value is opened;
+- fewer than 79 qualified: resume source discovery only for the shortfall to
+  the frozen power-design minimum.
+
+The current qualification readiness result is
+`awaiting_independent_curator_report`. No independent curator report exists yet,
+so the observed qualified-case count is unknown rather than zero. The model-
+development role cannot convert the 102 upper-bound slots into qualification
+claims by opening candidate payloads itself.
 
 `source-artifact-access-boundary-v0.1.json` freezes which source artifacts may
 be inspected as public non-label metadata, which telemetry may only be

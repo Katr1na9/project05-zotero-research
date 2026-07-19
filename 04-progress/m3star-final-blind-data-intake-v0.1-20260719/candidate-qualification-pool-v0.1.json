@@ -1,0 +1,131 @@
+{
+  "pool_id": "project05-m3star-blind-candidate-qualification-pool-v0.1",
+  "status": "frozen_before_independent_curator_access",
+  "frozen_date": "2026-07-19",
+  "source_discovery_status": "paused_pending_qualification_result",
+  "model_development_team_id": "project05-model-development",
+  "source_candidate_matrix_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/source-candidate-matrix-v0.1.json",
+  "source_candidate_matrix_sha256": "25d1a24d20d58e915d6dee58183f39423d2f3da929809bfc14c1fbf048dd3738",
+  "source_access_boundary_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/source-artifact-access-boundary-v0.1.json",
+  "source_access_boundary_sha256": "69d7fe15a9470e35cd0835ff2a54eac68a1e7f7dc8926374e333f7d64e2ebd18",
+  "qualification_schema_path": "09-experiments/data_schema/m3star_blind_candidate_qualification.schema.json",
+  "qualification_schema_sha256": "5870f6b4c9db32e91f37477ecaaa4c97e28bcc405a61a3d1ff06f52c4bca6ca3",
+  "qualification_auditor_path": "09-experiments/scripts/audit_m3star_blind_candidate_qualification.py",
+  "qualification_auditor_sha256": "d9ed5312695de29ae20c35bedbc5dc5bb1666726d3a557a81eee89e05f2a54e1",
+  "qualification_counting_unit": "unique_attack_chain_definition_and_whole_campaign_execution",
+  "included_risk_tiers": [
+    "A",
+    "B"
+  ],
+  "excluded_risk_tiers": [
+    "C",
+    "EXCLUDED"
+  ],
+  "candidate_upper_bound": 102,
+  "minimum_valid_complete_cases_for_frozen_power_design": 79,
+  "current_protocol_operational_target": 96,
+  "all_qualified_cases_must_be_retained": true,
+  "outcome_based_case_selection_forbidden": true,
+  "source_quotas": [
+    {
+      "source_id": "splunk-attack-data-apt-simulations",
+      "risk_tier": "A",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "mscad",
+      "risk_tier": "A",
+      "candidate_upper_bound": 2
+    },
+    {
+      "source_id": "cicapt-iiot",
+      "risk_tier": "A",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "dapt2020",
+      "risk_tier": "A",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "apt-sandworm-dataset",
+      "risk_tier": "A",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "goose-power-substation-apt",
+      "risk_tier": "A",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "cyber-czech-2019",
+      "risk_tier": "A",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "ainception-storylines",
+      "risk_tier": "A",
+      "candidate_upper_bound": 3
+    },
+    {
+      "source_id": "otrf-security-datasets-compound",
+      "risk_tier": "B",
+      "candidate_upper_bound": 9
+    },
+    {
+      "source_id": "ait-log-data-set-v2.1",
+      "risk_tier": "B",
+      "candidate_upper_bound": 8
+    },
+    {
+      "source_id": "cam-lds",
+      "risk_tier": "B",
+      "candidate_upper_bound": 7
+    },
+    {
+      "source_id": "capd",
+      "risk_tier": "B",
+      "candidate_upper_bound": 23
+    },
+    {
+      "source_id": "aviator",
+      "risk_tier": "B",
+      "candidate_upper_bound": 7
+    },
+    {
+      "source_id": "windows-apt-2025",
+      "risk_tier": "B",
+      "candidate_upper_bound": 31
+    },
+    {
+      "source_id": "attackmate-evaluation-data",
+      "risk_tier": "B",
+      "candidate_upper_bound": 3
+    },
+    {
+      "source_id": "attackmate-robotdog",
+      "risk_tier": "B",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "locked-shields-partners-run-23",
+      "risk_tier": "B",
+      "candidate_upper_bound": 1
+    },
+    {
+      "source_id": "locked-shields-partners-run-24",
+      "risk_tier": "B",
+      "candidate_upper_bound": 1
+    }
+  ],
+  "decision_rule_after_curator_qualification": {
+    "if_qualified_count_at_least_96": "Do not resume source discovery; retain and evaluate every qualified case under the current count gate after all remaining manifest, cost, and seal gates pass.",
+    "if_qualified_count_between_79_and_95": "Do not resume source discovery solely for power; retain every qualified case and amend the intake minimum before any outcome or cost value is opened.",
+    "if_qualified_count_below_79": "Resume source discovery only for the shortfall to at least 79 independently qualified complete cases, then repeat qualification for the added pool.",
+    "interim_qualification_results_must_not_be_used_to_change_source_eligibility_rules": true
+  },
+  "ground_truth_opened": false,
+  "cost_values_opened": false,
+  "model_outputs_used_for_qualification": false,
+  "qualification_complete": false
+}

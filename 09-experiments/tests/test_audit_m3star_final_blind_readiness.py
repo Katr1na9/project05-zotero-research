@@ -77,7 +77,15 @@ class FinalBlindReadinessAuditTests(unittest.TestCase):
             6,
             report["authoritative_artifact_verified_candidate_surplus_over_target"],
         )
-        self.assertEqual(3, len(report["blockers"]))
+        self.assertEqual(
+            "awaiting_independent_curator_report",
+            report["candidate_qualification_status"],
+        )
+        self.assertFalse(report["candidate_qualification_gate_pass"])
+        self.assertIsNone(report["actual_qualified_case_count"])
+        self.assertIsNone(report["source_search_required_after_qualification"])
+        self.assertTrue(report["source_discovery_paused_pending_qualification"])
+        self.assertEqual(4, len(report["blockers"]))
 
 
 if __name__ == "__main__":
