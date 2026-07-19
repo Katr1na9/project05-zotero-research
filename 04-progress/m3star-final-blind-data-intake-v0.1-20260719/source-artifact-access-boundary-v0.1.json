@@ -1,0 +1,99 @@
+{
+  "boundary_id": "project05-m3star-final-blind-source-artifact-access-boundary-v0.1",
+  "status": "frozen_before_candidate_payload_intake",
+  "created_date": "2026-07-19",
+  "purpose": "Permit source acquisition and hashing without exposing C13+ labels, costs, ground truth, or telemetry contents to the model-development role.",
+  "global_rules": {
+    "metadata_candidate_is_not_a_recruited_case": true,
+    "downloaded_source_artifact_is_not_a_recruited_case": true,
+    "hash_bound_case_requires_whole_campaign_execution_identity": true,
+    "model_developers_must_not_open_candidate_telemetry": true,
+    "model_developers_must_not_open_candidate_labels_or_ground_truth": true,
+    "curator_must_not_access_model_outputs": true,
+    "ground_truth_custodian_must_be_distinct_from_curator_and_model_developer": true
+  },
+  "access_classes": {
+    "public_non_label_metadata": "May be inspected for source identity, licensing, scenario-counting, and download planning.",
+    "sealed_telemetry_payload": "May be downloaded and hashed by an isolated curator but not opened by the model-development role.",
+    "curator_only_boundary_material": "May be inspected only by the isolated curator to prove complete execution boundaries and deduplicate cases.",
+    "ground_truth_custodian_only": "Contains labels, expected-versus-observed validation, outcomes, or adjudication material and remains sealed until authorized one-shot execution.",
+    "duplicate_or_noncase_view": "Must not create an additional case or artifact-derived pseudo-case."
+  },
+  "source_rules": [
+    {
+      "source_id": "windows-apt-2025",
+      "public_non_label_metadata": [
+        "Mendeley public API file names, sizes, and SHA-256 values",
+        "README.md",
+        "scenario_mapping_supplement/README_supplement_v4.md"
+      ],
+      "sealed_telemetry_payload": [
+        "16 per-period CSV files"
+      ],
+      "curator_only_boundary_material": [
+        "scenario_manifest.csv",
+        "scenario_mapping_supplement/build_scenario_mapping_v4.py",
+        "scenario_mapping_supplement/scenario_mapping_walkthrough.ipynb"
+      ],
+      "ground_truth_custodian_only": [
+        "validation_summary.csv",
+        "scenario_mapping_supplement/log_to_scenario_mapping.csv"
+      ],
+      "duplicate_or_noncase_view": [
+        "combined.csv",
+        "ten repeated executions per scenario",
+        "three Wazuh agent views",
+        "rows and time slices"
+      ],
+      "required_before_any_case_credit": "An isolated curator must prove a unique complete execution boundary, all-host capture, unique chain definition, and unique telemetry hash for each retained scenario; subset-masked definitions receive no credit until separability is proven."
+    },
+    {
+      "source_id": "attackmate-evaluation-data",
+      "public_non_label_metadata": [
+        "Zenodo record and file checksums",
+        "playbooks.zip"
+      ],
+      "sealed_telemetry_payload": [
+        "scenario-specific AttackMate and Caldera log/traffic archives"
+      ],
+      "curator_only_boundary_material": [
+        "execution logs needed to bind one complete capture to each scenario definition"
+      ],
+      "ground_truth_custodian_only": [],
+      "duplicate_or_noncase_view": [
+        "AttackMate versus Caldera implementation",
+        "SCP versus SSH alternative",
+        "timeout variant"
+      ],
+      "required_before_any_case_credit": "The curator must retain at most one preselected complete execution per scenario family and prove no definition or capture overlap with AIT Log Data Set or CAM-LDS."
+    },
+    {
+      "source_id": "locked-shields-partners-run-series",
+      "public_non_label_metadata": [
+        "Zenodo record, annual release relation, file names, sizes, and checksums"
+      ],
+      "sealed_telemetry_payload": [
+        "LSPR23 flow archive",
+        "LSPR24 flow and host-log artifacts"
+      ],
+      "curator_only_boundary_material": [
+        "annual exercise execution boundary and full-host coverage material"
+      ],
+      "ground_truth_custodian_only": [
+        "attack narratives",
+        "availability events",
+        "malicious flow labels"
+      ],
+      "duplicate_or_noncase_view": [
+        "flows",
+        "packets",
+        "hosts",
+        "sectors",
+        "attack-narrative entries"
+      ],
+      "required_before_any_case_credit": "The curator may credit at most one complete case per annual exercise capture and must keep LSPR23 and LSPR24 in one source cluster for dependence sensitivity analysis."
+    }
+  ],
+  "current_hash_bound_case_count": 0,
+  "one_shot_authorized": false
+}

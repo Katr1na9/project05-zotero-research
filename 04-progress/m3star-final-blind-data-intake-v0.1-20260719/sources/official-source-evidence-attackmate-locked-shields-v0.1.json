@@ -1,0 +1,86 @@
+{
+  "evidence_id": "project05-attackmate-locked-shields-official-source-audit-v0.1",
+  "access_date": "2026-07-19",
+  "inspection_boundary": {
+    "public_metadata_and_non_label_playbooks_only": true,
+    "candidate_ground_truth_opened": false,
+    "candidate_labels_opened": false,
+    "candidate_costs_opened": false,
+    "candidate_model_outputs_opened": false,
+    "attack_narratives_opened": false,
+    "pcap_flow_or_log_payloads_opened": false
+  },
+  "attackmate_evaluation_data": {
+    "dataset_doi": "10.5281/zenodo.18834219",
+    "zenodo_record": 18834219,
+    "publisher": "Austrian Institute of Technology",
+    "playbook_archive": "playbooks.zip",
+    "playbook_archive_size_bytes": 6988,
+    "playbook_archive_zenodo_md5": "6a1dd5cf1a89d85915065124ab8ee08a",
+    "playbook_archive_locally_verified_sha256": "1e28d9ed0939009631e8c37b3c77213f4a89bac1feb3ffd4c64ba6ef4282abd7",
+    "scenario_definitions": [
+      {
+        "name": "Privilege Escalation",
+        "ordered_stage_summary": "public-facing application exploitation; command execution; persistence and privilege escalation; account discovery"
+      },
+      {
+        "name": "Information Gathering (tcpdump)",
+        "ordered_stage_summary": "valid-account initial access; network sniffing"
+      },
+      {
+        "name": "Lateral Movement",
+        "ordered_stage_summary": "valid-account initial access; second-host lateral movement; account discovery"
+      }
+    ],
+    "attackmate_and_caldera_are_alternate_implementations": true,
+    "implementation_and_timeout_variants_not_counted": true,
+    "cross_source_overlap_pending": [
+      "ait-log-data-set-v2.1",
+      "cam-lds"
+    ],
+    "conservative_upper_bound": 3
+  },
+  "locked_shields_partners_run_series": {
+    "source_cluster_id": "locked-shields-partners-run",
+    "annual_releases": [
+      {
+        "release": "LSPR23",
+        "dataset_doi": "10.5281/zenodo.8042347",
+        "publication_doi": "10.1016/j.jisa.2024.103847",
+        "flow_archive": "ls23pr_flows.zip",
+        "flow_archive_size_bytes": 1925103715,
+        "flow_archive_zenodo_md5": "f3f5bf9f7cecf2186511eabb38f7accc",
+        "conservative_upper_bound": 1
+      },
+      {
+        "release": "LSPR24",
+        "dataset_doi": "10.5281/zenodo.14900873",
+        "documented_capture_hours": 31.6,
+        "flow_file": "lspr24_v2.parquet",
+        "flow_file_size_bytes": 2775972952,
+        "flow_file_zenodo_md5": "a407011e9edbe615ce58a1e625c0a340",
+        "conservative_upper_bound": 1
+      },
+      {
+        "release": "LSPR25",
+        "dataset_doi": "10.5281/zenodo.17093949",
+        "public_file_count": 0,
+        "conservative_upper_bound": 0
+      }
+    ],
+    "counting_decision": "one candidate per annual complete exercise capture; flows, packets, hosts, attack-narrative entries, and labels are within-case views",
+    "conservative_upper_bound": 2
+  },
+  "count_delta": {
+    "prior_public_metadata_upper_bound": 103,
+    "added_attackmate": 3,
+    "added_lspr23": 1,
+    "added_lspr24": 1,
+    "added_lspr25": 0,
+    "updated_public_metadata_upper_bound": 108,
+    "frozen_operational_target": 96,
+    "metadata_surplus_before_hashing_and_overlap_audit": 12,
+    "remaining_metadata_gap": 0,
+    "hash_bound_intake_cases": 0
+  }
+}
