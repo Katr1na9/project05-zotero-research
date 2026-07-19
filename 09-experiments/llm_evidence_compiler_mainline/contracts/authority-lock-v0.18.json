@@ -1,0 +1,63 @@
+{
+  "authority_id": "project05-qwen25-qlora-4090-cache-boundary-amendment-v0.18",
+  "version": "0.18.0",
+  "status": "portable_4090_smoke_package_ready_with_pip_cache_boundary",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_task_schema_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.17.json",
+    "sha256": "28F26C48D5EACAADD8C84CC270E6091FC66E8D63BD420160C06A75A2FAA51359",
+    "disposition": "changes_only_the_server_launcher_cache_location_before_execution"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-smoke-contract-v0.1.json": "65EBB73CCFBB3485B0942C36D7F5D1BFA3FB520F862A8FD77FC2E9EFF33DC290",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/training-config-v0.1.json": "FD1551788BE2AB11131F94DD73967002ED09F0C2EF4611EDB88A15FB19D22D38",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/requirements-linux-cu121-v0.1.txt": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+  },
+  "authoritative_implementation": {
+    "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.1/run-server-smoke-v0.1.sh": "ED523BE94E7821BE9E0C394CCAAB92B28B90032E6ED33D777F4849462095A9A6"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_smoke.py": "CD87F6C7D2426E71DFC3AC180290A7242C4EA2202764CF403F1D6AE10799788F"
+  },
+  "cache_boundary_amendment": {
+    "reason": "server_default_python_was_3_8_and_user_local_python_3_11_bootstrap_was_required",
+    "allowed_home": "/home/myy",
+    "run_root": "/home/myy/project05-qwen25-smoke-v0.1",
+    "pip_cache": "/home/myy/project05-qwen25-smoke-v0.1/local-cache/pip",
+    "pip_cache_outside_run_root_allowed": false,
+    "system_python_modification_allowed": false,
+    "system_package_installation_allowed": false
+  },
+  "smoke_gate": {
+    "user_authorized": true,
+    "server_hardware_observed": "8x NVIDIA GeForce RTX 4090 24564 MiB compute_capability_8.9",
+    "python_3_11_user_local_bootstrap_completed": true,
+    "server_execution_completed": false,
+    "legacy_2080ti_memory_gate_blocking": false
+  },
+  "next_gate": {
+    "status": "run_server_smoke_then_hard_stop_for_result_review",
+    "server_runtime_install_authorized": true,
+    "fixed_revision_model_download_authorized": true,
+    "one_step_smoke_authorized": true,
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "not_authorized": [
+    "primary_or_multi_epoch_training",
+    "hyperparameter_search",
+    "merged_model_save",
+    "hub_upload",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

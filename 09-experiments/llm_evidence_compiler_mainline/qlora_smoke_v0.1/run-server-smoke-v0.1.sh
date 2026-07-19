@@ -31,6 +31,8 @@ if [[ "$(id -un)" != "myy" ]]; then
 fi
 
 mkdir -p "${RUN_ROOT}/local-runtime" "${RUN_ROOT}/local-cache" "${RUN_ROOT}/local-output"
+export PIP_CACHE_DIR="${RUN_ROOT}/local-cache/pip"
+export PIP_DISABLE_PIP_VERSION_CHECK="1"
 python3 -m venv "${VENV_ROOT}"
 "${VENV_ROOT}/bin/python" -m pip install --disable-pip-version-check --no-input --upgrade "pip==24.2"
 "${VENV_ROOT}/bin/python" -m pip install --disable-pip-version-check --no-input -r "${REQUIREMENTS}"

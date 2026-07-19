@@ -15,7 +15,7 @@ CONFIG_PATH = MAINLINE_ROOT / "qlora_smoke_v0.1" / "training-config-v0.1.json"
 REQUIREMENTS_PATH = (
     MAINLINE_ROOT / "qlora_smoke_v0.1" / "requirements-linux-cu121-v0.1.txt"
 )
-AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.17.json"
+AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.18.json"
 
 
 def load_module(path: Path, name: str):
@@ -206,6 +206,17 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
         self.assertNotIn("merge_and_unload", source)
         self.assertNotIn("push_to_hub", source)
         self.assertNotIn("import run_mvp", source)
+
+    def test_server_launcher_keeps_pip_cache_inside_run_root(self):
+        launcher = (
+            MAINLINE_ROOT
+            / "qlora_smoke_v0.1"
+            / "run-server-smoke-v0.1.sh"
+        ).read_text(encoding="utf-8")
+        self.assertIn(
+            'export PIP_CACHE_DIR="${RUN_ROOT}/local-cache/pip"', launcher
+        )
+        self.assertNotIn("rm -", launcher)
 
     def test_authority_hash_chain_and_closed_primary_gate(self):
         authority = load_json(AUTHORITY_PATH)
