@@ -2751,10 +2751,10 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
         metadata = runner.runtime_contract_metadata()
 
         self.assertEqual(
-            "project05-m3star-runtime-contract-v0.8",
+            "project05-m3star-runtime-contract-v0.9",
             metadata["contract_id"],
         )
-        self.assertEqual("0.8.0", metadata["version"])
+        self.assertEqual("0.9.0", metadata["version"])
         self.assertEqual(64, len(metadata["sha256"]))
         self.assertTrue(metadata["runtime_allowlist_enforced"])
 
@@ -2782,12 +2782,13 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
 
         self.assertEqual(
             [
-                ("project05_m3star_h3_dual", 3, True, True, True),
+                ("project05_m3star_h3_dual", 3, True, True, True, True),
                 (
                     "project05_m3star_h3_no_dominance_dual",
                     3,
                     True,
                     True,
+                    False,
                     False,
                 ),
                 (
@@ -2796,6 +2797,7 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
                     True,
                     False,
                     True,
+                    False,
                 ),
                 (
                     "project05_m3star_h3_transition_only",
@@ -2803,12 +2805,13 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
                     False,
                     True,
                     True,
+                    False,
                 ),
-                ("project05_m3star_h1_dual", 1, True, True, True),
-                ("project05_xgboost_policy", None, None, None, None),
-                ("project05_m3b_policy", None, None, None, None),
-                ("project05_m2", None, None, None, None),
-                ("oracle_optimal", None, None, None, None),
+                ("project05_m3star_h1_dual", 1, True, True, True, False),
+                ("project05_xgboost_policy", None, None, None, None, None),
+                ("project05_m3b_policy", None, None, None, None, None),
+                ("project05_m2", None, None, None, None, None),
+                ("oracle_optimal", None, None, None, None, None),
             ],
             [
                 (
@@ -2817,6 +2820,7 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
                     spec.get("use_action_value"),
                     spec.get("myopic_safety_shield"),
                     spec.get("stochastic_dominance_shield"),
+                    spec.get("learned_head_majority_shield"),
                 )
                 for spec in runner.METHOD_SPECS
             ],
@@ -2825,6 +2829,31 @@ class M3StarExperimentRunnerTests(unittest.TestCase):
             ("C07-", "C08-", "C09-", "C10-", "C11-", "C12-"),
             runner.DEVELOPMENT_EVALUATION_PREFIXES,
         )
+
+    def test_confirmatory_method_subset_keeps_required_methods_in_frozen_order(self):
+        runner = load_m3star_experiment(self)
+        requested = (
+            "oracle_optimal",
+            "project05_m2",
+            "project05_m3b_policy",
+            "project05_xgboost_policy",
+            "project05_m3star_h3_dual",
+        )
+
+        selected = runner.select_method_specs(requested)
+
+        self.assertEqual(
+            [
+                "project05_m3star_h3_dual",
+                "project05_xgboost_policy",
+                "project05_m3b_policy",
+                "project05_m2",
+                "oracle_optimal",
+            ],
+            [spec["planner_id"] for spec in selected],
+        )
+        with self.assertRaisesRegex(ValueError, "missing required"):
+            runner.select_method_specs(("project05_m3star_h3_dual",))
 
     def test_case_partition_rejects_training_evaluation_overlap(self):
         runner = load_m3star_experiment(self)
@@ -3151,6 +3180,11 @@ class M3StarRuntimeContractTests(unittest.TestCase):
                 "multi_head_consensus_shield"
             ]
         )
+        self.assertTrue(
+            selection["reference_configuration"][
+                "learned_head_majority_shield"
+            ]
+        )
         self.assertIn(
             "multi_head_consensus_shield",
             selection["frozen_components"],
@@ -3210,6 +3244,13 @@ class M3StarRuntimeContractTests(unittest.TestCase):
                 "expert_consensus_candidate_reachability",
                 "expert_consensus_applied",
                 "expert_consensus_reason",
+                "myopic_action_id",
+                "nonmyopic_action_id",
+                "horizon_selection_reason",
+                "learned_head_majority_shield",
+                "action_value_probability",
+                "action_reachability_probability",
+                "action_cost_to_go",
             },
             set(contract["audit_contract"]["decision_fields"]),
         )

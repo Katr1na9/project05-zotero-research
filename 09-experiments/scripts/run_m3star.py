@@ -34,7 +34,7 @@ CONTRACT_PATH = (
     Path(__file__).resolve().parents[1]
     / "governance"
     / "contracts"
-    / "planner-runtime-contract-m3star-v0.8.json"
+    / "planner-runtime-contract-m3star-v0.9.json"
 )
 RUNTIME_CONTRACT = runtime_adapter.load_contract(CONTRACT_PATH)
 FORBIDDEN_RUNTIME_KEYS = set(
@@ -516,14 +516,20 @@ def _oracle_action_cost_labels(
     }
 
 
-def build_reachable_transition_rows(
+def enumerate_reachable_decision_states(
     config: dict[str, Any],
     claims: list[dict[str, Any]],
     actions: list[dict[str, Any]],
     *,
     max_depth: int = 3,
 ) -> list[dict[str, Any]]:
-    """Breadth-first label all actions at decision states up to depth three."""
+    """Enumerate the exact decision states used by the M3* BFS dataset.
+
+    ``max_depth`` is the number of action layers represented by the dataset, so
+    returned decision states have depths ``0`` through ``max_depth - 1``.  Raw
+    hidden/visible sets are retained only for offline labelling and auditing;
+    runtime planners continue to receive ``planner_state_view`` objects.
+    """
 
     if (
         not isinstance(max_depth, int)
@@ -537,7 +543,7 @@ def build_reachable_transition_rows(
         config,
         config["target_granularity"],
     )
-    rows: list[dict[str, Any]] = []
+    decision_states: list[dict[str, Any]] = []
 
     for mask_strategy, mask_intensity, seed in run_mvp.experiment_conditions(config):
         hidden_ids = run_mvp.build_hidden_claims(
@@ -634,31 +640,8 @@ def build_reachable_transition_rows(
 
             path_label = ">".join(action_path) if action_path else "root"
             state_id = f"{condition_id}|d{depth}|{path_label}"
-            state_rows = build_node_transition_rows_for_state(
-                config,
-                claims,
-                actions,
-                visible_ids=set(current_visible),
-                hidden_ids=set(current_hidden),
-                seed=seed,
-                actions_taken=list(actions_taken),
-                budget_used=float(budget_used),
-                action_feedback=list(action_feedback),
-            )
-            oracle_labels = _oracle_action_cost_labels(
-                config,
-                actions,
-                available,
-                visible_ids=set(current_visible),
-                hidden_ids=set(current_hidden),
-                seed=seed,
-                budget_remaining=float(state["budget"]["budget_remaining"]),
-                actions_taken=list(actions_taken),
-            )
-            rows.extend(
+            decision_states.append(
                 {
-                    **row,
-                    **oracle_labels[row["action_id"]],
                     "condition_id": condition_id,
                     "mask_strategy": mask_strategy,
                     "mask_intensity": mask_intensity,
@@ -666,8 +649,17 @@ def build_reachable_transition_rows(
                     "state_id": state_id,
                     "state_depth": depth,
                     "action_path": list(action_path),
+                    "state": state,
+                    "visible_ids": set(current_visible),
+                    "hidden_ids": set(current_hidden),
+                    "recovered_ids": (
+                        all_claim_ids - set(current_hidden) - visible_ids
+                    ),
+                    "actions_taken": list(actions_taken),
+                    "budget_used": float(budget_used),
+                    "action_feedback": list(action_feedback),
+                    "available_actions": available,
                 }
-                for row in state_rows
             )
 
             if depth + 1 >= max_depth:
@@ -698,6 +690,62 @@ def build_reachable_transition_rows(
                     )
                 )
 
+    return decision_states
+
+
+def build_reachable_transition_rows(
+    config: dict[str, Any],
+    claims: list[dict[str, Any]],
+    actions: list[dict[str, Any]],
+    *,
+    max_depth: int = 3,
+) -> list[dict[str, Any]]:
+    """Breadth-first label all actions at the shared reachable states."""
+
+    rows: list[dict[str, Any]] = []
+    for decision in enumerate_reachable_decision_states(
+        config,
+        claims,
+        actions,
+        max_depth=max_depth,
+    ):
+        state_rows = build_node_transition_rows_for_state(
+            config,
+            claims,
+            actions,
+            visible_ids=decision["visible_ids"],
+            hidden_ids=decision["hidden_ids"],
+            seed=decision["seed"],
+            actions_taken=decision["actions_taken"],
+            budget_used=decision["budget_used"],
+            action_feedback=decision["action_feedback"],
+        )
+        oracle_labels = _oracle_action_cost_labels(
+            config,
+            actions,
+            decision["available_actions"],
+            visible_ids=decision["visible_ids"],
+            hidden_ids=decision["hidden_ids"],
+            seed=decision["seed"],
+            budget_remaining=float(
+                decision["state"]["budget"]["budget_remaining"]
+            ),
+            actions_taken=decision["actions_taken"],
+        )
+        rows.extend(
+            {
+                **row,
+                **oracle_labels[row["action_id"]],
+                "condition_id": decision["condition_id"],
+                "mask_strategy": decision["mask_strategy"],
+                "mask_intensity": decision["mask_intensity"],
+                "seed": decision["seed"],
+                "state_id": decision["state_id"],
+                "state_depth": decision["state_depth"],
+                "action_path": decision["action_path"],
+            }
+            for row in state_rows
+        )
     return rows
 
 
@@ -2066,6 +2114,36 @@ def _learned_heads_pareto_dominate(
     )
 
 
+def _learned_head_majority_prefers(
+    candidate: dict[str, Any],
+    baseline: dict[str, Any],
+    tolerance: float = 1e-9,
+) -> bool:
+    """Whether at least two of value/reachability/cost prefer candidate."""
+
+    candidate_votes = sum(
+        (
+            float(candidate["action_value_probability"])
+            > float(baseline["action_value_probability"]) + tolerance,
+            float(candidate["action_reachability_probability"])
+            > float(baseline["action_reachability_probability"]) + tolerance,
+            float(candidate["action_cost_to_go"])
+            < float(baseline["action_cost_to_go"]) - tolerance,
+        )
+    )
+    baseline_votes = sum(
+        (
+            float(baseline["action_value_probability"])
+            > float(candidate["action_value_probability"]) + tolerance,
+            float(baseline["action_reachability_probability"])
+            > float(candidate["action_reachability_probability"]) + tolerance,
+            float(baseline["action_cost_to_go"])
+            < float(candidate["action_cost_to_go"]) - tolerance,
+        )
+    )
+    return candidate_votes >= 2 and candidate_votes > baseline_votes
+
+
 def _filter_learned_head_dominated_plans(
     plans: list[dict[str, Any]],
     target_reach_threshold: float,
@@ -2444,6 +2522,7 @@ def plan_m3star_action(
     action_cost_predictor: ActionCostPredictor | None = None,
     myopic_safety_shield: bool = True,
     stochastic_dominance_shield: bool = True,
+    learned_head_majority_shield: bool = False,
 ) -> dict[str, Any]:
     """Choose the first action of the best learned finite-horizon plan."""
 
@@ -2453,6 +2532,8 @@ def plan_m3star_action(
         raise ValueError("M3* myopic_safety_shield must be a boolean")
     if not isinstance(stochastic_dominance_shield, bool):
         raise ValueError("M3* stochastic_dominance_shield must be a boolean")
+    if not isinstance(learned_head_majority_shield, bool):
+        raise ValueError("M3* learned_head_majority_shield must be a boolean")
     if (
         isinstance(target_reach_threshold, bool)
         or not isinstance(target_reach_threshold, (int, float))
@@ -2585,7 +2666,13 @@ def plan_m3star_action(
             and action_value_predictor is not None
             and action_reachability_predictor is not None
             and action_cost_predictor is not None
-            and _learned_heads_pareto_dominate(one_step, plan)
+            and (
+                _learned_heads_pareto_dominate(one_step, plan)
+                or (
+                    learned_head_majority_shield
+                    and _learned_head_majority_prefers(one_step, plan)
+                )
+            )
         )
         if nonmyopic_dominates and not multi_head_disagreement:
             return {
@@ -2647,6 +2734,7 @@ def run_m3star_episode(
     action_cost_predictor: ActionCostPredictor | None = None,
     myopic_safety_shield: bool = True,
     stochastic_dominance_shield: bool = True,
+    learned_head_majority_shield: bool = False,
     policy_expert_advisor: PolicyExpertAdvisor | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Execute M3* as an auditable receding-horizon learned controller."""
@@ -2671,6 +2759,7 @@ def run_m3star_episode(
             action_cost_predictor=action_cost_predictor,
             myopic_safety_shield=myopic_safety_shield,
             stochastic_dominance_shield=stochastic_dominance_shield,
+            learned_head_majority_shield=learned_head_majority_shield,
         )
         selected_action_id = plan["action_id"] or run_mvp.STOP_ACTION_ID
         by_id = run_mvp.action_by_id(public_actions)
@@ -2868,6 +2957,9 @@ def run_m3star_episode(
                 "stochastic_dominance_shield": int(
                     stochastic_dominance_shield
                 ),
+                "learned_head_majority_shield": int(
+                    learned_head_majority_shield
+                ),
                 "planning_horizon": horizon,
                 "effective_horizon": int(plan["effective_horizon"]),
                 "target_reach_threshold": float(target_reach_threshold),
@@ -2906,6 +2998,9 @@ def run_m3star_episode(
             "M3* audit decision count does not match executed action count"
         )
     result["stochastic_dominance_shield"] = int(stochastic_dominance_shield)
+    result["learned_head_majority_shield"] = int(
+        learned_head_majority_shield
+    )
     result["dominance_substitution_count"] = sum(
         int(decision["dominance_substitution_applied"])
         for decision in decisions
@@ -2960,6 +3055,7 @@ def run_m3star_model_episode(
     target_reach_threshold: float = DEFAULT_TARGET_REACH_THRESHOLD,
     myopic_safety_shield: bool = True,
     stochastic_dominance_shield: bool = True,
+    learned_head_majority_shield: bool = False,
     policy_expert_advisor: PolicyExpertAdvisor | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Connect fitted transition/value heads to the M3* controller."""
@@ -2997,6 +3093,7 @@ def run_m3star_model_episode(
         ),
         myopic_safety_shield=myopic_safety_shield,
         stochastic_dominance_shield=stochastic_dominance_shield,
+        learned_head_majority_shield=learned_head_majority_shield,
         policy_expert_advisor=policy_expert_advisor,
     )
     model_family = str(model.get("model_family", "unknown"))
@@ -3036,6 +3133,9 @@ def run_m3star_model_episode(
     result["stochastic_dominance_shield"] = int(
         stochastic_dominance_shield
     )
+    result["learned_head_majority_shield"] = int(
+        learned_head_majority_shield
+    )
     result["policy_expert_consensus_enabled"] = int(
         policy_expert_advisor is not None
     )
@@ -3068,5 +3168,8 @@ def run_m3star_model_episode(
         event["m3star_decision"]["max_outcome_nodes"] = max_outcome_nodes
         event["m3star_decision"]["max_explicit_outcomes"] = (
             None if max_explicit_outcomes is None else max_explicit_outcomes
+        )
+        event["m3star_decision"]["learned_head_majority_shield"] = int(
+            learned_head_majority_shield
         )
     return result, trace

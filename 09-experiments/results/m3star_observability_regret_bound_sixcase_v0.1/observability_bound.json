@@ -1,0 +1,829 @@
+{
+  "audit_id": "project05-m3star-observability-regret-lower-bound-v0.1",
+  "status": "frozen_model_internal_method_development_audit",
+  "paper_or_patent_updated": false,
+  "formal_external_claim_allowed": false,
+  "policy_class": "deterministic_public_state_policies",
+  "bound_construction": "minimise over common public first actions; maximise regret over aliased hidden states; allow exact clairvoyant Oracle continuation",
+  "why_lower_bound": "Oracle continuation after the common first action is at least as powerful as any implementable public continuation policy",
+  "summary": {
+    "overall": {
+      "observation_group_count": 751,
+      "state_count": 2400,
+      "oracle_first_action_conflict_group_count": 78,
+      "positive_lower_bound_group_count": 38,
+      "deterministic_public_policy_worst_regret_lower_bound": 1.0,
+      "observed_m3star_worst_regret": 2.0,
+      "observed_excess_above_information_lower_bound": 1.0,
+      "zero_worst_regret_information_theoretically_impossible": true
+    },
+    "by_case": {
+      "C07-darpa-e5-theia-0515": {
+        "observation_group_count": 96,
+        "aliased_state_count": 308,
+        "oracle_first_action_conflict_group_count": 16,
+        "positive_lower_bound_group_count": 9,
+        "max_deterministic_public_policy_lower_bound": 1.0,
+        "observed_m3star_max_regret": 1.0
+      },
+      "C08-darpa-e5-clearscope-0515": {
+        "observation_group_count": 113,
+        "aliased_state_count": 333,
+        "oracle_first_action_conflict_group_count": 20,
+        "positive_lower_bound_group_count": 11,
+        "max_deterministic_public_policy_lower_bound": 1.0,
+        "observed_m3star_max_regret": 1.0
+      },
+      "C09-darpa-optc-sysclient0201-0923": {
+        "observation_group_count": 186,
+        "aliased_state_count": 476,
+        "oracle_first_action_conflict_group_count": 28,
+        "positive_lower_bound_group_count": 12,
+        "max_deterministic_public_policy_lower_bound": 1.0,
+        "observed_m3star_max_regret": 1.0
+      },
+      "C10-darpa-optc-sysclient0351-0925": {
+        "observation_group_count": 179,
+        "aliased_state_count": 508,
+        "oracle_first_action_conflict_group_count": 7,
+        "positive_lower_bound_group_count": 1,
+        "max_deterministic_public_policy_lower_bound": 1.0,
+        "observed_m3star_max_regret": 2.0
+      },
+      "C11-otrf-apt29-day1-scranton-nashua": {
+        "observation_group_count": 167,
+        "aliased_state_count": 360,
+        "oracle_first_action_conflict_group_count": 7,
+        "positive_lower_bound_group_count": 5,
+        "max_deterministic_public_policy_lower_bound": 1.0,
+        "observed_m3star_max_regret": 1.0
+      },
+      "C12-witfoo-precinct6-f10c7270": {
+        "observation_group_count": 10,
+        "aliased_state_count": 38,
+        "oracle_first_action_conflict_group_count": 0,
+        "positive_lower_bound_group_count": 0,
+        "max_deterministic_public_policy_lower_bound": 0.0,
+        "observed_m3star_max_regret": 1.0
+      }
+    },
+    "worst_observation_groups": [
+      {
+        "case_id": "C07-darpa-e5-theia-0515",
+        "observation_sha256": "fb62561aa4ed0cf5443d93c997b1b021cb9e1f14f93ffb0fda851c463b6cd2cf",
+        "state_count": 10,
+        "state_depth": 2,
+        "state_ids": [
+          "C07-darpa-e5-theia-0515|stage|m020|11|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m020|23|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m020|37|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m020|41|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m020|53|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m020|11|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m020|23|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m020|37|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m020|41|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m020|53|d2|C07-AA-003>C07-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C07-AA-001": 1.0,
+          "C07-AA-002": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C07-AA-001",
+          "C07-AA-001>C07-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "deba313ee663c5d4ff07ec9ba70c29e5c92d3121db4a7087731a7503cc3ac0f3",
+        "state_count": 2,
+        "state_depth": 1,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|random|m060|23|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|random|m060|37|d1|C08-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002",
+          "C08-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0,
+          "C08-AA-003": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "dca1f76444ed84a2ef2629974f28395bc8277c5c6af09bd2d158f65af14de00b",
+        "state_count": 10,
+        "state_depth": 0,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|11|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|23|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|37|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|41|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|53|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|11|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|23|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|37|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|41|d0|root",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|53|d0|root"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002",
+          "C09-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-003": 1.0,
+          "C09-AA-004": 2.0,
+          "C09-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C07-darpa-e5-theia-0515",
+        "observation_sha256": "cb9494bccf122bf8969c32bd9df45f8c3f3ff01af4d45e23f50c4413e69a1699",
+        "state_count": 10,
+        "state_depth": 2,
+        "state_ids": [
+          "C07-darpa-e5-theia-0515|stage|m040|11|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m040|23|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m040|37|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m040|41|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|stage|m040|53|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m040|11|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m040|23|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m040|37|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m040|41|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|discriminative|m040|53|d2|C07-AA-003>C07-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C07-AA-001": 1.0,
+          "C07-AA-002": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C07-AA-001",
+          "C07-AA-001>C07-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "c940b187fafa1f5844d603e37d226e845074926efdb3106c3a267f5a23106b75",
+        "state_count": 10,
+        "state_depth": 2,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|stage|m040|11|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m040|23|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m040|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m040|41|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m040|53|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m040|11|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m040|23|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m040|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m040|41|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m040|53|d2|C08-AA-003>C08-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C11-otrf-apt29-day1-scranton-nashua",
+        "observation_sha256": "c0f195e74b332c479a08f542e2c90918b673d0a8340b8afe371932faa3738ef5",
+        "state_count": 2,
+        "state_depth": 1,
+        "state_ids": [
+          "C11-otrf-apt29-day1-scranton-nashua|random|m040|23|d1|C11-AA-004",
+          "C11-otrf-apt29-day1-scranton-nashua|random|m040|37|d1|C11-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C11-AA-001",
+          "C11-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C11-AA-001"
+        ],
+        "worst_regret_by_first_action": {
+          "C11-AA-001": 1.0,
+          "C11-AA-002": 2.0,
+          "C11-AA-003": 2.0,
+          "C11-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C11-AA-001",
+          "C11-AA-001>C11-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "b98409833cdaf184c456d2e04e66d320a298a87a56954e7824d596547156dcd8",
+        "state_count": 11,
+        "state_depth": 1,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|random|m020|37|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|stage|m020|11|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|stage|m020|23|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|stage|m020|37|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|stage|m020|41|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|stage|m020|53|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|11|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|23|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|37|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|41|d1|C08-AA-003",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|53|d1|C08-AA-003"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0,
+          "C08-AA-004": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C07-darpa-e5-theia-0515",
+        "observation_sha256": "b983a937d424e78aff447feaf505544cdce5dd1a014dea58f4c8fe31072c002f",
+        "state_count": 10,
+        "state_depth": 1,
+        "state_ids": [
+          "C07-darpa-e5-theia-0515|stage|m020|11|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|stage|m020|23|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|stage|m020|37|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|stage|m020|41|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|stage|m020|53|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|discriminative|m020|11|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|discriminative|m020|23|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|discriminative|m020|37|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|discriminative|m020|41|d1|C07-AA-003",
+          "C07-darpa-e5-theia-0515|discriminative|m020|53|d1|C07-AA-003"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C07-AA-001": 1.0,
+          "C07-AA-002": 1.0,
+          "C07-AA-004": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C07-AA-001",
+          "C07-AA-001>C07-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "ab5cb857ad77cd2d01a4e84d8f977e97d40045fa7bdc649abb3173694017da72",
+        "state_count": 11,
+        "state_depth": 0,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|random|m020|37|d0|root",
+          "C08-darpa-e5-clearscope-0515|stage|m020|11|d0|root",
+          "C08-darpa-e5-clearscope-0515|stage|m020|23|d0|root",
+          "C08-darpa-e5-clearscope-0515|stage|m020|37|d0|root",
+          "C08-darpa-e5-clearscope-0515|stage|m020|41|d0|root",
+          "C08-darpa-e5-clearscope-0515|stage|m020|53|d0|root",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|11|d0|root",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|23|d0|root",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|37|d0|root",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|41|d0|root",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|53|d0|root"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002",
+          "C08-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0,
+          "C08-AA-003": 1.0,
+          "C08-AA-004": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "aadd7744e0595089b7e91870fca03e16904242ea047d65fbd16034732f979eee",
+        "state_count": 11,
+        "state_depth": 2,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|random|m020|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|11|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|23|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|41|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|53|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|11|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|23|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|41|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|53|d2|C08-AA-003>C08-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "aa208166ef4444380895e7c1c1a8ec510174fb80f3d1c56f371e2fb018ae9726",
+        "state_count": 11,
+        "state_depth": 1,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|random|m020|37|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|11|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|23|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|37|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|41|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m020|53|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|11|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|23|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|37|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|41|d1|C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m020|53|d1|C08-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002",
+          "C08-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0,
+          "C08-AA-003": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "a85d92b6a3faa364fd71aa3dffa81ed4f793bd0537d3787e74378a638f60fb68",
+        "state_count": 10,
+        "state_depth": 1,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|11|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|23|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|37|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|41|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|53|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|11|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|23|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|37|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|41|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|53|d1|C09-AA-003"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-004": 2.0,
+          "C09-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "a815d4cf62218eb48f39a2649b7623ce9f473278a47621846db8d9020061c9db",
+        "state_count": 10,
+        "state_depth": 1,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|11|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|23|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|37|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|41|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|53|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|11|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|23|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|37|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|41|d1|C09-AA-005",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|53|d1|C09-AA-005"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002",
+          "C09-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-003": 1.0,
+          "C09-AA-004": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "a4e1c67277f65400c43aba21c8089921b677a72a749fe9c294e50cd72322bfd8",
+        "state_count": 10,
+        "state_depth": 1,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|11|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|23|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|37|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|41|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|53|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|11|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|23|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|37|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|41|d1|C09-AA-003",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|53|d1|C09-AA-003"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-004": 2.0,
+          "C09-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "a23107f1fd1d170db7e496d6ee5c1b0e8aef56822abae90e74a0e240752eb444",
+        "state_count": 10,
+        "state_depth": 2,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|11|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|23|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|37|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|41|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|53|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|11|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|23|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|37|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|41|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|53|d2|C09-AA-003>C09-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "961d248052c4e76e7005decbddfdb5e69cf047b632e943fd647e1fb178eec5a4",
+        "state_count": 10,
+        "state_depth": 1,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|11|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|23|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|37|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|41|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m020|53|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|11|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|23|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|37|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|41|d1|C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m020|53|d1|C09-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002",
+          "C09-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-003": 1.0,
+          "C09-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C09-darpa-optc-sysclient0201-0923",
+        "observation_sha256": "8c01a72a8574451874899518e55dfd3c86a46410ec182f4accce7b034d72c236",
+        "state_count": 10,
+        "state_depth": 2,
+        "state_ids": [
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|11|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|23|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|37|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|41|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|stage|m040|53|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|11|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|23|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|37|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|41|d2|C09-AA-003>C09-AA-004",
+          "C09-darpa-optc-sysclient0201-0923|discriminative|m040|53|d2|C09-AA-003>C09-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C09-AA-001",
+          "C09-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C09-AA-001": 1.0,
+          "C09-AA-002": 1.0,
+          "C09-AA-005": 2.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C09-AA-001",
+          "C09-AA-001>C09-AA-002"
+        ]
+      },
+      {
+        "case_id": "C08-darpa-e5-clearscope-0515",
+        "observation_sha256": "88c2b47256b50da9ebfd929dfbf21fc4e6b8c9dc49219fbc41e81e1e53c9eb82",
+        "state_count": 10,
+        "state_depth": 2,
+        "state_ids": [
+          "C08-darpa-e5-clearscope-0515|stage|m060|11|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m060|23|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m060|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m060|41|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|stage|m060|53|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m060|11|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m060|23|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m060|37|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m060|41|d2|C08-AA-003>C08-AA-004",
+          "C08-darpa-e5-clearscope-0515|discriminative|m060|53|d2|C08-AA-003>C08-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C08-AA-001",
+          "C08-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C08-AA-001": 1.0,
+          "C08-AA-002": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C08-AA-001",
+          "C08-AA-001>C08-AA-002"
+        ]
+      },
+      {
+        "case_id": "C07-darpa-e5-theia-0515",
+        "observation_sha256": "889cd4c922b24eef19f30e64d568bc43f091a5050a87642fb36eed8d9af1bf86",
+        "state_count": 3,
+        "state_depth": 1,
+        "state_ids": [
+          "C07-darpa-e5-theia-0515|random|m060|23|d1|C07-AA-004",
+          "C07-darpa-e5-theia-0515|random|m060|37|d1|C07-AA-004",
+          "C07-darpa-e5-theia-0515|random|m060|41|d1|C07-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002",
+          "C07-AA-003"
+        ],
+        "worst_regret_by_first_action": {
+          "C07-AA-001": 1.0,
+          "C07-AA-002": 1.0,
+          "C07-AA-003": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C07-AA-001",
+          "C07-AA-001>C07-AA-002"
+        ]
+      },
+      {
+        "case_id": "C07-darpa-e5-theia-0515",
+        "observation_sha256": "87f86d48a0e932643cbd969deeab397bbae0e0ef8b96916e52a4ab8d6861b4f9",
+        "state_count": 3,
+        "state_depth": 2,
+        "state_ids": [
+          "C07-darpa-e5-theia-0515|random|m060|23|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|random|m060|37|d2|C07-AA-003>C07-AA-004",
+          "C07-darpa-e5-theia-0515|random|m060|41|d2|C07-AA-003>C07-AA-004"
+        ],
+        "distinct_oracle_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "oracle_first_action_conflict": 1,
+        "deterministic_public_policy_lower_bound": 1.0,
+        "minimax_first_action_ids": [
+          "C07-AA-001",
+          "C07-AA-002"
+        ],
+        "worst_regret_by_first_action": {
+          "C07-AA-001": 1.0,
+          "C07-AA-002": 1.0
+        },
+        "observed_m3star_max_regret": 1.0,
+        "observed_m3star_action_paths": [
+          "C07-AA-001",
+          "C07-AA-001>C07-AA-002"
+        ]
+      }
+    ]
+  },
+  "frozen_inputs": {
+    "experiment_report_sha256": "de948bf197f180e5137a36b9a4237285da5b207fbf0b669ba3730f60359f86e3",
+    "state_oracle_regret_sha256": "e9eb4480169e0c0ab0e2d35b0f9e90cd5d49f298063bb7cf8e5c4f4d080c04cd",
+    "cost_profile_sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+    "runtime_contract": {
+      "contract_id": "project05-m3star-runtime-contract-v0.8",
+      "version": "0.8.0",
+      "sha256": "e1d6d08bf93f3ff400361ad947d95002dcf97cc68957c58c831e6a4fdb5c2953",
+      "runtime_allowlist_enforced": true
+    },
+    "audit_runner_sha256": "2af74c1b3b32af540c60841c37518062d28852a94c0a1e36ec35dfe862a7884e"
+  },
+  "observation_group_csv": "observation_groups.csv",
+  "observation_group_csv_sha256": "a1158d9383e6570d22ae19acf1be195b1020cf21b25b1108c7ac8d690efbaab2"
+}

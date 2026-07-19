@@ -1,0 +1,133 @@
+{
+  "design_id": "project05-m3star-final-blind-power-design-v0.1",
+  "status": "preregistration_candidate_not_yet_frozen",
+  "paper_or_patent_updated": false,
+  "final_blind_data_loaded": false,
+  "c13_plus_boundary": "sealed",
+  "independent_statistical_unit": "attack_chain_case_id",
+  "within_case_conditions": {
+    "count": 45,
+    "role": "paired_repeated_measurements_only",
+    "never_counted_as_independent_n": true
+  },
+  "confirmatory_claim": "M3* passes success/safety gates and has lower case-mean measured cost than every prespecified primary baseline",
+  "primary_baselines": [
+    "project05_m2",
+    "project05_xgboost_policy",
+    "project05_m3b_policy",
+    "afa_voi_myopic",
+    "afa_voi_rollout_h3",
+    "project05_depth2_public"
+  ],
+  "oracle_role": "ceiling_reference_not_a_baseline_to_outperform",
+  "multiplicity": {
+    "global_claim_structure": "intersection_union",
+    "rule": "every baseline comparison must pass",
+    "per_comparison_one_sided_alpha": 0.05,
+    "why_no_alpha_split_for_global_claim": "the global null is the union of baseline-specific nulls and the superiority claim is made only if all are rejected",
+    "separate_baseline_specific_claims": "secondary_only_and_Holm_adjusted_if_reported_confirmatorily"
+  },
+  "cost_power_model": {
+    "test": "one_sample_paired_case_mean_t_lower_tail",
+    "null": "mean(M3star_cost_minus_baseline_cost) >= 0",
+    "design_alternative": "mean(M3star_cost_minus_baseline_cost) <= -0.05",
+    "sesoi_measured_cost_units": 0.05,
+    "target_power": 0.9,
+    "case_level_standard_deviation_sensitivity": [
+      0.1,
+      0.125,
+      0.15
+    ],
+    "conservative_design_standard_deviation": 0.15,
+    "invalid_case_reserve_fraction": 0.15,
+    "sensitivity": [
+      {
+        "case_level_standard_deviation": 0.1,
+        "global_conjunction": {
+          "complete_independent_case_count": 36,
+          "achieved_power": 0.9025745508140972,
+          "standardized_effect": 0.5,
+          "recruitment_case_count_with_invalid_reserve": 43
+        },
+        "six_separate_holm_claims_worst_threshold": {
+          "complete_independent_case_count": 57,
+          "achieved_power": 0.9003376264899055,
+          "standardized_effect": 0.5,
+          "alpha": 0.008333333333333333,
+          "recruitment_case_count_with_invalid_reserve": 68
+        }
+      },
+      {
+        "case_level_standard_deviation": 0.125,
+        "global_conjunction": {
+          "complete_independent_case_count": 55,
+          "achieved_power": 0.9004524434126125,
+          "standardized_effect": 0.4,
+          "recruitment_case_count_with_invalid_reserve": 65
+        },
+        "six_separate_holm_claims_worst_threshold": {
+          "complete_independent_case_count": 88,
+          "achieved_power": 0.902544620456687,
+          "standardized_effect": 0.4,
+          "alpha": 0.008333333333333333,
+          "recruitment_case_count_with_invalid_reserve": 104
+        }
+      },
+      {
+        "case_level_standard_deviation": 0.15,
+        "global_conjunction": {
+          "complete_independent_case_count": 79,
+          "achieved_power": 0.9018257443689728,
+          "standardized_effect": 0.33333333333333337,
+          "recruitment_case_count_with_invalid_reserve": 93
+        },
+        "six_separate_holm_claims_worst_threshold": {
+          "complete_independent_case_count": 125,
+          "achieved_power": 0.9013979185229745,
+          "standardized_effect": 0.33333333333333337,
+          "alpha": 0.008333333333333333,
+          "recruitment_case_count_with_invalid_reserve": 148
+        }
+      }
+    ]
+  },
+  "sample_size_decision": {
+    "minimum_valid_complete_independent_cases": 79,
+    "minimum_recruitment_cases": 93,
+    "operational_recruitment_target": 96,
+    "all_cases_must_be_new_and_unseen": true,
+    "minimum_case_id_boundary": "C13+",
+    "source_and_attack_chain_deduplication_required": true,
+    "no_sample_size_reestimation_using_unblinded_outcomes": true
+  },
+  "success_safety_gate": {
+    "case_success_loss_definition": "case-level M3* success rate is lower than the baseline over the frozen 45 paired conditions",
+    "required_case_success_loss_count_per_baseline": 0,
+    "one_sided_95_percent_upper_probability_after_zero_losses_at_n": {
+      "n": 79,
+      "upper_bound": 0.03721067606158024
+    },
+    "maximum_allowed_upper_probability": 0.05,
+    "budget_or_safety_violation_count_required": 0
+  },
+  "analysis_gate": {
+    "all_primary_baselines_must_pass": true,
+    "cost_test_uses_case_means": true,
+    "case_mean_cost_uses_only_frozen_joint_success_conditions": true,
+    "minimum_joint_success_conditions_per_valid_case": 30,
+    "effect_and_confidence_interval_reported_for_every_baseline": true,
+    "permutation_or_wilcoxon_sensitivity_is_secondary": true,
+    "failure_of_any_primary_gate_forbids_global_superiority_claim": true
+  },
+  "development_context_not_used_as_independent_confirmation": {
+    "case_count": 6,
+    "m2_case_mean_cost_delta": -0.09629629629629628,
+    "m2_case_mean_cost_delta_sd": 0.09904897570635128,
+    "raw_development_effect_used_as_power_alternative": false,
+    "reason": "small reused development cohort; fixed SESOI and SD sensitivity govern N"
+  },
+  "input_sha256": {
+    "development_analysis": "b2444834437a4460669646a17a538a7f3bd383f9116059baf4e323467faa8080",
+    "design_script": "0e68e9288b6ce99745e491c2f20b349c913a3604c1487118a44ed2aeaf767386"
+  }
+}

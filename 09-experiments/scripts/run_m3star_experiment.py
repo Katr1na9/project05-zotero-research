@@ -52,6 +52,7 @@ METHOD_SPECS: tuple[dict[str, Any], ...] = (
         "use_action_value": True,
         "myopic_safety_shield": True,
         "stochastic_dominance_shield": True,
+        "learned_head_majority_shield": True,
         "use_policy_expert_consensus": True,
     },
     {
@@ -61,6 +62,7 @@ METHOD_SPECS: tuple[dict[str, Any], ...] = (
         "use_action_value": True,
         "myopic_safety_shield": True,
         "stochastic_dominance_shield": False,
+        "learned_head_majority_shield": False,
     },
     {
         "planner_id": "project05_m3star_h3_unshielded_dual",
@@ -69,6 +71,7 @@ METHOD_SPECS: tuple[dict[str, Any], ...] = (
         "use_action_value": True,
         "myopic_safety_shield": False,
         "stochastic_dominance_shield": True,
+        "learned_head_majority_shield": False,
     },
     {
         "planner_id": "project05_m3star_h3_transition_only",
@@ -77,6 +80,7 @@ METHOD_SPECS: tuple[dict[str, Any], ...] = (
         "use_action_value": False,
         "myopic_safety_shield": True,
         "stochastic_dominance_shield": True,
+        "learned_head_majority_shield": False,
     },
     {
         "planner_id": "project05_m3star_h1_dual",
@@ -85,6 +89,7 @@ METHOD_SPECS: tuple[dict[str, Any], ...] = (
         "use_action_value": True,
         "myopic_safety_shield": True,
         "stochastic_dominance_shield": True,
+        "learned_head_majority_shield": False,
     },
     {
         "planner_id": "project05_xgboost_policy",
@@ -109,6 +114,29 @@ CORE_BASELINES = (
     "project05_xgboost_policy",
     "project05_m3b_policy",
 )
+
+
+def select_method_specs(
+    method_ids: tuple[str, ...] | None,
+) -> tuple[dict[str, Any], ...]:
+    if method_ids is None:
+        return METHOD_SPECS
+    if not method_ids or len(set(method_ids)) != len(method_ids):
+        raise ValueError("Method ids must be nonempty and unique")
+    known = {spec["planner_id"] for spec in METHOD_SPECS}
+    unknown = set(method_ids) - known
+    if unknown:
+        raise ValueError(f"Unknown M3* experiment methods: {sorted(unknown)}")
+    required = {CORE_METHOD, *CORE_BASELINES, "oracle_optimal"}
+    missing = required - set(method_ids)
+    if missing:
+        raise ValueError(
+            f"Confirmatory method subset is missing required methods: {sorted(missing)}"
+        )
+    selected = tuple(
+        spec for spec in METHOD_SPECS if spec["planner_id"] in set(method_ids)
+    )
+    return selected
 
 
 def runtime_contract_metadata() -> dict[str, Any]:
@@ -682,6 +710,10 @@ def _run_method(
                 "stochastic_dominance_shield",
                 True,
             ),
+            learned_head_majority_shield=spec.get(
+                "learned_head_majority_shield",
+                False,
+            ),
             policy_expert_advisor=(
                 build_policy_expert_advisor(models)
                 if spec.get("use_policy_expert_consensus", False)
@@ -696,6 +728,9 @@ def _run_method(
         )
         row["m3star_stochastic_dominance_shield"] = int(
             spec.get("stochastic_dominance_shield", True)
+        )
+        row["m3star_learned_head_majority_shield"] = int(
+            spec.get("learned_head_majority_shield", False)
         )
         row["m3star_uses_policy_expert_consensus"] = int(
             spec.get("use_policy_expert_consensus", False)
@@ -747,6 +782,7 @@ def evaluate_partition(
     target_reach_threshold: float,
     max_outcome_nodes: int,
     max_explicit_outcomes: int | None,
+    method_specs: tuple[dict[str, Any], ...] = METHOD_SPECS,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     all_rows: list[dict[str, Any]] = []
     all_traces: list[dict[str, Any]] = []
@@ -765,7 +801,7 @@ def evaluate_partition(
             flush=True,
         )
         for condition_index, condition in enumerate(conditions, start=1):
-            for spec in METHOD_SPECS:
+            for spec in method_specs:
                 row, trace = _run_method(
                     spec,
                     config,
@@ -1126,6 +1162,76 @@ def _save_models(output_dir: Path, models: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _load_booster(path: Path) -> Any:
+    booster = run_m3star.xgb.Booster()
+    booster.load_model(path)
+    booster.set_param({"nthread": 1})
+    return booster
+
+
+def load_frozen_models(result_dir: Path) -> dict[str, Any]:
+    model_dir = result_dir / "models"
+    metadata_path = model_dir / "model_metadata.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    required_metadata = {
+        "transition",
+        "action_value",
+        "action_rank",
+        "xgboost",
+        "logistic",
+    }
+    missing = required_metadata - set(metadata)
+    if missing:
+        raise ValueError(f"Frozen model metadata is incomplete: {sorted(missing)}")
+    action_value = {
+        **metadata["action_value"],
+        "booster": _load_booster(model_dir / "action_value.json"),
+        "reachability_booster": _load_booster(
+            model_dir / "action_reachability.json"
+        ),
+        "cost_booster": _load_booster(model_dir / "action_cost.json"),
+    }
+    return {
+        "transition": {
+            **metadata["transition"],
+            "booster": _load_booster(model_dir / "transition.json"),
+        },
+        "action_value": action_value,
+        "action_rank": {
+            **metadata["action_rank"],
+            "booster": _load_booster(model_dir / "action_rank.json"),
+        },
+        "xgboost": {
+            **metadata["xgboost"],
+            "booster": _load_booster(model_dir / "xgboost.json"),
+        },
+        "logistic": metadata["logistic"],
+    }
+
+
+def frozen_model_source_metadata(result_dir: Path) -> dict[str, Any]:
+    report_path = result_dir / "experiment_report.json"
+    manifest_path = result_dir / "evaluation_manifest.json"
+    training_path = result_dir / "training_dataset_summary.json"
+    metadata_path = result_dir / "models" / "model_metadata.json"
+    for path in (report_path, manifest_path, training_path, metadata_path):
+        if not path.is_file():
+            raise ValueError(f"Frozen model source is incomplete: {path}")
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    training = json.loads(training_path.read_text(encoding="utf-8"))
+    return {
+        "result_dir": str(result_dir.resolve()),
+        "experiment_report_sha256": sha256(report_path),
+        "evaluation_manifest_sha256": sha256(manifest_path),
+        "training_dataset_summary_sha256": sha256(training_path),
+        "model_metadata_sha256": sha256(metadata_path),
+        "train_case_ids": list(report["train_case_ids"]),
+        "cost_profile_identity": report["cost_profile_identity"],
+        "runtime_contract": report["runtime_contract"],
+        "training_dataset_summary": training,
+    }
+
+
 def _output_hashes(output_dir: Path) -> dict[str, str]:
     return {
         str(path.relative_to(output_dir)).replace("\\", "/"): sha256(path)
@@ -1152,6 +1258,9 @@ def run_experiment(
     target_reach_threshold: float = run_m3star.DEFAULT_TARGET_REACH_THRESHOLD,
     max_outcome_nodes: int = 8,
     max_explicit_outcomes: int | None = None,
+    method_ids: tuple[str, ...] | None = None,
+    frozen_model_result_dir: Path | None = None,
+    evaluation_cost_profile: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     validate_evaluation_scope(
         evaluation_prefixes,
@@ -1165,9 +1274,18 @@ def run_experiment(
     unknown_partitions = set(partitions) - {"train", "development"}
     if unknown_partitions or not partitions:
         raise ValueError(f"Invalid evaluation partitions: {partitions}")
+    if evaluation_role == "final_blind" and frozen_model_result_dir is None:
+        raise ValueError(
+            "final_blind evaluation must load frozen model artifacts; retraining is forbidden"
+        )
+    if evaluation_role == "final_blind" and evaluation_cost_profile is None:
+        raise ValueError(
+            "final_blind evaluation requires a separately frozen evaluation cost profile"
+        )
     if output_dir.exists() and any(output_dir.iterdir()):
         raise ValueError(f"Output directory must be new or empty: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
+    method_specs = select_method_specs(method_ids)
 
     train_dirs, evaluation_dirs = select_experiment_case_dirs(
         examples_root,
@@ -1183,7 +1301,7 @@ def run_experiment(
     held_out_cases = run_xgboost.load_cases(
         evaluation_dirs,
         cost_regime,
-        cost_profile,
+        evaluation_cost_profile or cost_profile,
     )
     train_case_ids = [config["case_id"] for config, _, _ in train_cases]
     held_out_case_ids = [
@@ -1200,19 +1318,39 @@ def run_experiment(
     print(
         f"[design] train_cases={len(train_cases)} "
         f"held_out_cases={len(held_out_cases)} "
-        f"evaluation_cases={len(evaluation_cases)} methods={len(METHOD_SPECS)} "
+        f"evaluation_cases={len(evaluation_cases)} methods={len(method_specs)} "
         f"cost_regime={cost_regime}",
         flush=True,
     )
 
-    models, dataset = train_models(
-        train_dirs,
-        train_cases,
-        max_depth,
-        boost_rounds,
-        cost_regime,
-        cost_profile,
-    )
+    frozen_source = None
+    if frozen_model_result_dir is None:
+        models, dataset = train_models(
+            train_dirs,
+            train_cases,
+            max_depth,
+            boost_rounds,
+            cost_regime,
+            cost_profile,
+        )
+    else:
+        frozen_source = frozen_model_source_metadata(frozen_model_result_dir)
+        if frozen_source["train_case_ids"] != train_case_ids:
+            raise ValueError(
+                "Frozen model training cases differ from the selected training split"
+            )
+        expected_profile = cost_profile_identity(cost_regime, cost_profile)
+        if frozen_source["cost_profile_identity"]["sha256"] != expected_profile["sha256"]:
+            raise ValueError("Frozen model cost profile differs from this run")
+        current_contract = runtime_contract_metadata()
+        if frozen_source["runtime_contract"]["sha256"] != current_contract["sha256"]:
+            raise ValueError("Frozen model runtime contract differs from this run")
+        models = load_frozen_models(frozen_model_result_dir)
+        dataset = {"summary": frozen_source["training_dataset_summary"]}
+        print(
+            f"[models] loaded frozen artifacts from {frozen_model_result_dir}",
+            flush=True,
+        )
     model_manifest = _save_models(output_dir, models)
     write_json(
         output_dir / "training_dataset_summary.json",
@@ -1228,7 +1366,11 @@ def run_experiment(
         "train": train_cases,
         "development": evaluation_cases,
     }
-    profile_identity = cost_profile_identity(cost_regime, cost_profile)
+    training_profile_identity = cost_profile_identity(cost_regime, cost_profile)
+    profile_identity = cost_profile_identity(
+        cost_regime,
+        evaluation_cost_profile or cost_profile,
+    )
     partition_reports: dict[str, Any] = {}
     for partition in partitions:
         rows, traces = evaluate_partition(
@@ -1239,6 +1381,7 @@ def run_experiment(
             target_reach_threshold,
             max_outcome_nodes,
             max_explicit_outcomes,
+            method_specs,
         )
         summary = summarize_results(
             rows,
@@ -1257,13 +1400,14 @@ def run_experiment(
 
     report = {
         "experiment_id": (
-            "project05-m3star-post-selection-dominance-method-development-v0.8"
+            "project05-m3star-post-selection-dominance-method-development-v0.9"
         ),
         "status": "method_development_only",
         "paper_or_patent_updated": False,
         "formal_cost_claim_allowed": False,
         "cost_regime": cost_regime,
         "cost_profile_identity": profile_identity,
+        "training_cost_profile_identity": training_profile_identity,
         "training_scope": training_scope,
         "train_case_ids": train_case_ids,
         "held_out_case_ids": held_out_case_ids,
@@ -1275,7 +1419,7 @@ def run_experiment(
         ),
         "evaluation_role": evaluation_role,
         "partitions": list(partitions),
-        "method_specs": list(METHOD_SPECS),
+        "method_specs": list(method_specs),
         "configuration": {
             "max_depth": max_depth,
             "boost_rounds": boost_rounds,
@@ -1286,6 +1430,11 @@ def run_experiment(
         "runtime_contract": runtime_contract_metadata(),
         "training_dataset": dataset["summary"],
         "models": model_manifest,
+        "model_source": (
+            {"mode": "trained_in_run"}
+            if frozen_source is None
+            else {"mode": "frozen_artifacts", **frozen_source}
+        ),
         "partition_reports": partition_reports,
         "final_blind_gate": {
             "c13_plus_used": any(
@@ -1352,6 +1501,14 @@ def main() -> None:
     )
     parser.add_argument("--cost-profile", type=Path)
     parser.add_argument(
+        "--evaluation-cost-profile",
+        type=Path,
+        help=(
+            "Separately frozen profile for evaluation cases; mandatory for "
+            "final_blind so the training profile remains unchanged."
+        ),
+    )
+    parser.add_argument(
         "--training-scope",
         choices=("legacy_six", "real_only_three"),
         default="legacy_six",
@@ -1365,6 +1522,22 @@ def main() -> None:
     )
     parser.add_argument("--max-outcome-nodes", type=int, default=8)
     parser.add_argument("--max-explicit-outcomes", type=int)
+    parser.add_argument(
+        "--method-ids",
+        nargs="+",
+        help=(
+            "Frozen subset of methods; must include core M3*, M2, XGBoost, "
+            "M3b, and Oracle. Defaults to the full ablation matrix."
+        ),
+    )
+    parser.add_argument(
+        "--frozen-model-result-dir",
+        type=Path,
+        help=(
+            "Load every fitted model from this completed result instead of "
+            "training; mandatory for final_blind."
+        ),
+    )
     args = parser.parse_args()
     if args.cost_regime in {"rubric", "measured"} and args.cost_profile is None:
         parser.error(f"--cost-profile is required for {args.cost_regime}")
@@ -1373,6 +1546,11 @@ def main() -> None:
     cost_profile = (
         run_mvp.load_cost_profile(args.cost_profile)
         if args.cost_profile is not None
+        else None
+    )
+    evaluation_cost_profile = (
+        run_mvp.load_cost_profile(args.evaluation_cost_profile)
+        if args.evaluation_cost_profile is not None
         else None
     )
     partitions = (
@@ -1401,6 +1579,9 @@ def main() -> None:
         target_reach_threshold=args.target_reach_threshold,
         max_outcome_nodes=args.max_outcome_nodes,
         max_explicit_outcomes=args.max_explicit_outcomes,
+        method_ids=(tuple(args.method_ids) if args.method_ids else None),
+        frozen_model_result_dir=args.frozen_model_result_dir,
+        evaluation_cost_profile=evaluation_cost_profile,
     )
     print(
         json.dumps(
