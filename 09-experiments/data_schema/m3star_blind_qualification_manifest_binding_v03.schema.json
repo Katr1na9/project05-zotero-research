@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/m3star-blind-qualification-manifest-binding-v0.3.json",
+  "title": "Project05 M3* v0.3 Qualified-Case to Final-Manifest Binding Audit",
+  "type": "object",
+  "required": [
+    "audit_id",
+    "status",
+    "checked_utc",
+    "staged_amendment_id",
+    "staged_amendment_sha256",
+    "stopping_amendment_id",
+    "stopping_amendment_sha256",
+    "qualification_report_sha256",
+    "qualification_readiness_sha256",
+    "dataset_manifest_sha256",
+    "qualified_case_count",
+    "final_manifest_case_count",
+    "qualified_case_identity_commitment_sha256",
+    "manifest_case_identity_commitment_sha256",
+    "identity_sets_match_exactly",
+    "all_qualified_cases_retained",
+    "unaudited_reserve_slots_counted_as_failures",
+    "telemetry_contents_opened_by_binding_audit",
+    "ground_truth_opened",
+    "cost_values_opened",
+    "model_outputs_opened",
+    "one_shot_evaluation_consumed"
+  ],
+  "properties": {
+    "audit_id": {
+      "const": "project05-m3star-blind-qualification-manifest-binding-v0.3"
+    },
+    "status": {
+      "const": "qualification_manifest_binding_complete"
+    },
+    "checked_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "staged_amendment_id": {
+      "const": "project05-m3star-blind-staged-acquisition-amendment-v0.2"
+    },
+    "staged_amendment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "stopping_amendment_id": {
+      "const": "project05-m3star-final-blind-sample-size-and-stopping-amendment-v0.3"
+    },
+    "stopping_amendment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "qualification_report_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "qualification_readiness_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "dataset_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "qualified_case_count": {
+      "type": "integer",
+      "minimum": 59,
+      "maximum": 95
+    },
+    "final_manifest_case_count": {
+      "type": "integer",
+      "minimum": 59,
+      "maximum": 95
+    },
+    "qualified_case_identity_commitment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "manifest_case_identity_commitment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "identity_sets_match_exactly": {"const": true},
+    "all_qualified_cases_retained": {"const": true},
+    "unaudited_reserve_slots_counted_as_failures": {"const": false},
+    "telemetry_contents_opened_by_binding_audit": {"const": false},
+    "ground_truth_opened": {"const": false},
+    "cost_values_opened": {"const": false},
+    "model_outputs_opened": {"const": false},
+    "one_shot_evaluation_consumed": {"const": false}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

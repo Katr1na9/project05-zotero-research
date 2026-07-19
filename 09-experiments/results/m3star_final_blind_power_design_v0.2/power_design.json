@@ -1,0 +1,78 @@
+{
+  "design_id": "project05-m3star-final-blind-power-design-v0.2",
+  "status": "frozen_before_additional_candidate_payload_access",
+  "paper_or_patent_updated": false,
+  "final_blind_outcomes_opened": false,
+  "independent_statistical_unit": "attack_chain_case_id",
+  "within_case_conditions": {
+    "count": 45,
+    "role": "paired_repeated_measurements_only",
+    "never_counted_as_independent_n": true
+  },
+  "confirmatory_claim": "M3* passes success/safety gates and has lower case-mean measured cost than every prespecified primary baseline",
+  "primary_baselines": [
+    "project05_m2",
+    "project05_xgboost_policy",
+    "project05_m3b_policy",
+    "afa_voi_myopic",
+    "afa_voi_rollout_h3",
+    "project05_depth2_public"
+  ],
+  "oracle_role": "ceiling_reference_not_a_baseline_to_outperform",
+  "multiplicity": {
+    "global_claim_structure": "intersection_union",
+    "rule": "every baseline comparison must pass",
+    "per_comparison_one_sided_alpha": 0.05,
+    "separate_baseline_specific_claims": "secondary_only_and_Holm_adjusted_if_reported_confirmatorily"
+  },
+  "cost_power_model": {
+    "test": "one_sample_paired_case_mean_t_lower_tail",
+    "null": "mean(M3star_cost_minus_baseline_cost) >= 0",
+    "design_alternative": "mean(M3star_cost_minus_baseline_cost) <= -0.05",
+    "sesoi_measured_cost_units": 0.05,
+    "cost_unit": "case_replay_full_scan_equivalent",
+    "one_sided_alpha": 0.05,
+    "target_power": 0.8,
+    "conservative_design_standard_deviation": 0.15,
+    "standardized_effect": 0.33333333333333337,
+    "minimum_complete_independent_cases": 58,
+    "achieved_power_at_58": 0.8060460227742401,
+    "achieved_power_at_59": 0.8120499033944197
+  },
+  "success_safety_precision": {
+    "case_success_loss_definition": "case-level M3* success rate is lower than the baseline over the frozen 45 paired conditions",
+    "required_case_success_loss_count_per_baseline": 0,
+    "maximum_one_sided_95_percent_upper_probability_after_zero_losses": 0.05,
+    "minimum_complete_independent_cases": 59,
+    "upper_probability_at_59": 0.049507609888227,
+    "budget_or_safety_violation_count_required": 0
+  },
+  "sample_size_decision": {
+    "minimum_valid_complete_independent_cases": 59,
+    "binding_component": "max(cost_power_minimum_58,zero_loss_precision_minimum_59)",
+    "ninety_percent_power_reference_independent_cases": 79,
+    "ninety_percent_power_reference_is_not_an_active_acquisition_target": true,
+    "all_cases_must_be_new_and_unseen": true,
+    "minimum_case_id_boundary": "C13+",
+    "source_and_attack_chain_deduplication_required": true,
+    "no_sample_size_reestimation_using_unblinded_outcomes": true
+  },
+  "analysis_gate": {
+    "all_primary_baselines_must_pass": true,
+    "cost_test_uses_case_means": true,
+    "case_mean_cost_uses_only_frozen_joint_success_conditions": true,
+    "minimum_joint_success_conditions_per_valid_case": 30,
+    "effect_and_confidence_interval_reported_for_every_baseline": true,
+    "permutation_or_wilcoxon_sensitivity_is_secondary": true,
+    "failure_of_any_primary_gate_forbids_global_superiority_claim": true
+  },
+  "amendment_basis": {
+    "previous_power_design_path": "09-experiments/results/m3star_final_blind_power_design_v0.1/power_design.json",
+    "previous_power_design_sha256": "048960fa10ddf98a8c948b1d7d9e1a7a843cea0457678fcdd4c3994d057c4b9f",
+    "sample_size_review_path": "09-experiments/results/m3star_final_blind_sample_size_review_v0.1/sample_size_review.json",
+    "sample_size_review_sha256": "3b29abe064da4286dcbde1ae0b481a4d9e28fdc9d7e28094961f2bfc213b3dd0",
+    "stopping_amendment_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/sample-size-and-stopping-amendment-v0.3.json",
+    "change_used_model_or_baseline_outcomes": false,
+    "qualification_rules_changed": false
+  }
+}

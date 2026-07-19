@@ -1,0 +1,82 @@
+{
+  "amendment_id": "project05-m3star-final-blind-sample-size-and-stopping-amendment-v0.3",
+  "status": "frozen_before_next_candidate_payload_access",
+  "authorized_date": "2026-07-19",
+  "authorization_basis": "User authorized continuation under the outcome-free review that replaces the 90% acquisition minimum with the conventional 80% cost-power plus 5% zero-loss precision minimum.",
+  "paper_or_patent_updated": false,
+  "scope": "sample_size_and_stopping_threshold_only",
+  "base_staged_acquisition_amendment": {
+    "path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/staged-acquisition-protocol-amendment-v0.2.json",
+    "sha256": "e893c7e764d96ce1ac095d3b60d922b5f24ae9b14577f314ee13b5805df5747f"
+  },
+  "outcome_free_sample_size_review": {
+    "path": "09-experiments/results/m3star_final_blind_sample_size_review_v0.1/sample_size_review.json",
+    "sha256": "3b29abe064da4286dcbde1ae0b481a4d9e28fdc9d7e28094961f2bfc213b3dd0"
+  },
+  "pre_amendment_checkpoint": {
+    "qualification_report_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/curator-staged-candidate-qualification-report-v0.6.json",
+    "qualification_report_sha256": "bd1486cbda02f32271eb22553e84f8bdbf04ef88eefeb62d661d794515f3d1b1",
+    "qualification_audit_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/curator-staged-candidate-qualification-audit-v0.6.json",
+    "qualification_audit_sha256": "6eec48f8f018fd46c009dfa7e47c31a12f23a90c8ce86dcf6651e3b65ff1e933",
+    "audited_candidate_count": 86,
+    "qualified_independent_case_count": 52,
+    "not_qualified_count": 34,
+    "unaudited_reserve_count": 9,
+    "next_frozen_candidate": {
+      "phase": 2,
+      "phase_candidate_index": 6,
+      "source_id": "ait-log-data-set-v2.1",
+      "candidate_key": "wardbeck",
+      "file": "wardbeck_no-pcaps.zip",
+      "bytes": 818462147
+    }
+  },
+  "blinding_attestation": {
+    "candidate_payloads_after_checkpoint_opened": false,
+    "final_blind_model_outputs_opened": false,
+    "baseline_outputs_opened": false,
+    "ground_truth_opened": false,
+    "cost_values_opened": false,
+    "success_or_failure_results_opened": false,
+    "action_sequences_opened": false,
+    "one_shot_evaluation_consumed": false
+  },
+  "effective_design": {
+    "independent_statistical_unit": "unique_attack_chain_definition_and_whole_campaign_execution",
+    "within_case_condition_count": 45,
+    "within_case_conditions_are_paired_repeated_measurements_only": true,
+    "one_sided_alpha": 0.05,
+    "sesoi_case_replay_full_scan_equivalent": 0.05,
+    "conservative_case_level_standard_deviation": 0.15,
+    "cost_test_target_power": 0.8,
+    "cost_power_minimum_independent_cases": 58,
+    "zero_success_loss_upper_probability_target": 0.05,
+    "zero_success_loss_precision_minimum_independent_cases": 59,
+    "combined_minimum_valid_complete_independent_cases": 59,
+    "power_at_combined_minimum": 0.8120499033944197,
+    "zero_success_loss_one_sided_95_percent_upper_probability_at_combined_minimum": 0.049507609888227,
+    "ninety_percent_power_reference_independent_cases": 79,
+    "power_at_ninety_percent_reference": 0.9018257443689728,
+    "ninety_percent_reference_is_not_an_active_acquisition_target": true
+  },
+  "effective_stopping_rule": {
+    "resume_from_exact_frozen_candidate_prefix": true,
+    "next_candidate_must_be": "wardbeck",
+    "stop_immediately_when_qualified_count_reaches_59": true,
+    "auditing_any_later_candidate_after_first_reaching_59_is_forbidden": true,
+    "retain_every_qualified_case_from_every_audited_slot": true,
+    "if_all_95_frozen_slots_are_audited_below_59": "resume metadata-only source discovery only for the shortfall to 59",
+    "no_sample_size_reestimation_using_unblinded_outcomes": true
+  },
+  "unchanged_frozen_components": {
+    "candidate_identity_and_order": true,
+    "qualification_eligibility_rules": true,
+    "curator_model_developer_and_ground_truth_role_separation": true,
+    "payload_disclosure_boundary": true,
+    "all_qualified_cases_retained": true,
+    "primary_baselines": true,
+    "cost_unit_and_sesoi": true,
+    "success_safety_and_budget_gate_definitions": true,
+    "one_shot_final_blind_execution": true
+  }
+}

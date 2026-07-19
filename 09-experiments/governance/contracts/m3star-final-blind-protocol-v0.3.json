@@ -1,0 +1,159 @@
+{
+  "protocol_id": "project05-m3star-final-blind-protocol-v0.3",
+  "version": "0.3.0",
+  "status": "frozen_before_final_blind_data_access",
+  "created_utc": "2026-07-19T10:40:00Z",
+  "last_amended_utc": "2026-07-19T14:00:00Z",
+  "amendment_reason": "Before accessing the next frozen candidate and without opening any model, baseline, ground-truth, cost, success, or action-sequence outcome, replaced the active 90% power acquisition minimum of 79 with the combined conventional 80% cost-power and zero-loss safety-precision minimum of 59. Candidate order, eligibility, retained-case, identity-binding, and one-shot rules are unchanged.",
+  "paper_or_patent_updated": false,
+  "final_blind_data_loaded": false,
+  "method_name": "M3*",
+  "confirmatory_claim": "M3* passes the frozen success, safety, budget, sample-size, and measured-cost superiority gates against every prespecified primary baseline on every independently qualified new C13+ attack-chain case",
+  "frozen_implementation": {
+    "runtime_contract_path": "09-experiments/governance/contracts/planner-runtime-contract-m3star-v0.9.json",
+    "runtime_contract_sha256": "34d8dd3b1e466125e35b144ceee60f3987f6ad5fa723194907061283d6baa6ee",
+    "final_blind_runner_path": "09-experiments/scripts/run_m3star_final_blind_v03.py",
+    "final_blind_runner_sha256": "b9a9012780cc85f5e2c8f87b90be086600e9c20bb5bddda6abde694272b285b0",
+    "readiness_auditor_path": "09-experiments/scripts/audit_m3star_final_blind_readiness_v03.py",
+    "readiness_auditor_sha256": "32a493b099a20fa5c7137d73d7ac3c7cde9ec41fa271c087e389375a4987cc3d",
+    "frozen_model_result_dir": "09-experiments/results/m3star_measured_replay_majority_sixcase_v0.9",
+    "experiment_report_sha256": "0f1b5d5db2fcbd0d0c76e6f0bfe012d53be6c4497dc831380c8022932fb2458f",
+    "evaluation_manifest_sha256": "5f0c1e756c13fb2b03dd327e90e7fe208d066abe4df490072f9b6fd51eeb0140",
+    "training_dataset_summary_sha256": "7157c6affdd4f3d8411d0b16d3e501db5afa79afcb2d949debce3bc4f20fabcc",
+    "model_metadata_sha256": "5f58fc3a990c10e8bcab2ae545ccf17b85ae0d6fdb134c6f3ebde0dd0f223292",
+    "training_cost_profile_path": "09-experiments/governance/profiles/cost-replay-scan-equivalent-v0.1.json",
+    "training_cost_profile_sha256": "6ce386b7910ce3c1db2dbd72161d3921c25b7b51e6eb9dfcfa016b051625bc2b",
+    "retraining_during_final_blind_forbidden": true
+  },
+  "frozen_design": {
+    "power_design_path": "09-experiments/results/m3star_final_blind_power_design_v0.2/power_design.json",
+    "power_design_sha256": "6c349411f768fe0ba99df66177fb26c8d4fdec8e88d36d12e478a1a0d4e554b2",
+    "sesoi_measured_cost_units": 0.05,
+    "target_power": 0.8,
+    "ninety_percent_power_reference_cases": 79,
+    "ninety_percent_reference_is_not_an_active_acquisition_target": true,
+    "one_sided_alpha": 0.05,
+    "conservative_case_level_standard_deviation": 0.15
+  },
+  "independent_statistical_unit": "attack_chain_case_id",
+  "within_case_conditions": {
+    "count": 45,
+    "role": "paired_repeated_measurements_only",
+    "never_counted_as_independent_n": true
+  },
+  "sample_size": {
+    "minimum_valid_complete_cases": 59,
+    "sample_size_and_stopping_amendment_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/sample-size-and-stopping-amendment-v0.3.json",
+    "sample_size_and_stopping_amendment_sha256": "bc72cb30b8f59fc092074c508c6293ac64afd67d88f2aadafbd24c543d908c16",
+    "stop_at_first_checkpoint_reaching_minimum": true,
+    "ninety_percent_power_reference_cases": 79,
+    "ninety_percent_reference_is_not_an_active_acquisition_target": true,
+    "maximum_staged_candidate_slots": 95,
+    "operational_recruitment_rule": "all_independently_qualified_cases_from_frozen_staged_pool",
+    "legacy_fixed_96_target_superseded": true,
+    "no_sample_size_reestimation_using_unblinded_outcomes": true
+  },
+  "qualification_gate": {
+    "staged_acquisition_amendment_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/staged-acquisition-protocol-amendment-v0.2.json",
+    "staged_acquisition_amendment_sha256": "e893c7e764d96ce1ac095d3b60d922b5f24ae9b14577f314ee13b5805df5747f",
+    "stopping_amendment_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/sample-size-and-stopping-amendment-v0.3.json",
+    "stopping_amendment_sha256": "bc72cb30b8f59fc092074c508c6293ac64afd67d88f2aadafbd24c543d908c16",
+    "staged_auditor_path": "09-experiments/scripts/audit_m3star_blind_staged_candidate_qualification_v03.py",
+    "staged_auditor_sha256": "c1d3def34d609858041dd6401a5be4cc2adb5fc8abf8b44c7a661e3d7aabb559",
+    "binding_schema_path": "09-experiments/data_schema/m3star_blind_qualification_manifest_binding_v03.schema.json",
+    "binding_schema_sha256": "107b3c64eb02867a33fcbc11b7e4c2de9501b156aab9132792cce4d1c2f795ee",
+    "binding_auditor_path": "09-experiments/scripts/audit_m3star_blind_qualification_manifest_binding_v03.py",
+    "binding_auditor_sha256": "b12cbbe986259542df9f61f67c2e1ef032dd82f3ec0651ff631a9ba81cc5c333",
+    "minimum_qualified_cases": 59,
+    "maximum_qualified_cases": 95,
+    "qualification_must_be_complete": true,
+    "source_search_must_not_be_required": true,
+    "final_manifest_must_equal_all_qualified_cases": true,
+    "identity_hash_sets_must_match_exactly": true,
+    "unaudited_reserve_slots_are_not_failures": true
+  },
+  "primary_baselines": [
+    "project05_m2",
+    "project05_xgboost_policy",
+    "project05_m3b_policy",
+    "afa_voi_myopic",
+    "afa_voi_rollout_h3",
+    "project05_depth2_public"
+  ],
+  "oracle_role": "ceiling_reference_not_a_baseline_to_outperform",
+  "data_seal": {
+    "c13_plus_only": true,
+    "all_cases_new_and_unseen": true,
+    "curation_blind_to_model_development": true,
+    "source_and_attack_chain_deduplication_required": true,
+    "dataset_manifest_status_required": "frozen",
+    "dataset_manifest_must_hash_every_case_file": true,
+    "ground_truth_sealed_until_one_shot_execution": true
+  },
+  "intake_contract": {
+    "version": "0.1.0",
+    "independent_unit": "whole_campaign_execution",
+    "schema_path": "09-experiments/data_schema/m3star_final_blind_intake_manifest.schema.json",
+    "schema_sha256": "ec3fe48580a09c591a8b2c962a79c82dcaea85839f6aa6496ba1c7c891023c49",
+    "used_campaign_registry_path": "09-experiments/governance/registries/preblind-used-campaign-registry-v0.1.json",
+    "used_campaign_registry_sha256": "7858345cc53d2f8db338d13bde6960a1dde05f73895f18613e02f2c0e27cb962",
+    "one_case_per_unique_scenario_family": true,
+    "one_case_per_unique_campaign_execution": true,
+    "one_case_per_unique_telemetry_capture": true,
+    "host_time_mask_and_parameter_slices_forbidden": true,
+    "curation_model_development_and_ground_truth_roles_must_be_distinct": true,
+    "validation_opens_ground_truth": false,
+    "validation_opens_cost_values": false
+  },
+  "cost_seal": {
+    "cost_regime": "measured",
+    "training_and_evaluation_profiles_must_be_distinct": true,
+    "evaluation_profile_frozen_before_execution": true,
+    "evaluation_profile_scope_exactly_matches_final_cases": true,
+    "evaluation_costs_measured_without_model_output_access": true,
+    "evaluation_profile_hash_recorded_at_preflight": true
+  },
+  "expected_input_locations": {
+    "cases_root": "09-experiments/final_blind/cases",
+    "dataset_manifest_path": "09-experiments/final_blind/dataset-manifest-v0.3.json",
+    "qualification_readiness_path": "09-experiments/results/m3star_blind_staged_candidate_qualification_readiness_v0.3/readiness_audit.json",
+    "qualification_binding_path": "09-experiments/final_blind/qualification-manifest-binding-v0.3.json",
+    "evaluation_cost_profile_path": "09-experiments/final_blind/measured-cost-profile-v0.3.json",
+    "output_dir": "09-experiments/results/m3star_final_blind_v0.3"
+  },
+  "analysis_gate": {
+    "all_primary_baselines_must_pass": true,
+    "multiplicity_structure": "intersection_union",
+    "per_comparison_one_sided_alpha": 0.05,
+    "cost_test": "one_sample_case_mean_t_lower_tail",
+    "cost_delta": "M3star_cost_minus_baseline_cost",
+    "case_mean_cost_uses_only_frozen_joint_success_conditions": true,
+    "minimum_joint_success_conditions_per_case": 30,
+    "minimum_valid_complete_cases_per_baseline": 59,
+    "cost_superiority_rule": "one_sided_95_percent_upper_mean_delta_below_zero",
+    "case_success_loss_count_required_per_baseline": 0,
+    "m3star_budget_violation_count_required": 0,
+    "m3star_safety_violation_count_required": 0,
+    "failure_of_any_gate_forbids_global_superiority_claim": true,
+    "separate_baseline_specific_confirmatory_claims_require_Holm_adjustment": true
+  },
+  "one_shot_gate": {
+    "consumption_ledger_path": "09-experiments/governance/locks/m3star-final-blind-consumed-v0.3.json",
+    "confirmation_phrase_sha256": "d24cdcda396169104ecb3759ea9b9fa55954c1f1c7d789c8d62229086d0854e1",
+    "preflight_does_not_consume": true,
+    "execution_start_atomically_consumes": true,
+    "failed_execution_is_consumed": true,
+    "rerun_after_consumption_forbidden": true
+  },
+  "current_readiness": {
+    "ready_for_preflight": false,
+    "ready_for_one_shot_execution": false,
+    "blocking_conditions": [
+      "No completed staged qualification report demonstrating at least 59 cases is present.",
+      "No exact qualification-to-manifest identity binding is present.",
+      "No frozen C13+ final-blind dataset manifest is present.",
+      "No distinct frozen measured-cost profile covering exactly all qualified C13+ cases is present."
+    ],
+    "consumption_ledger_must_not_exist_before_execution": true
+  }
+}
