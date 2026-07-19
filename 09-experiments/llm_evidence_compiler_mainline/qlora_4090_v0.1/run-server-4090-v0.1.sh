@@ -8,6 +8,9 @@ readonly BUNDLE_ROOT="${RUN_ROOT}/bundle"
 readonly VENV_ROOT="${RUN_ROOT}/local-runtime/venv"
 readonly UV_ROOT="${RUN_ROOT}/local-runtime/uv-0.4.29"
 readonly UV_BIN="${UV_ROOT}/uv-x86_64-unknown-linux-gnu/uv"
+readonly MINICONDA_ROOT="${RUN_ROOT}/local-runtime/miniconda3-py311-24.7.1-0"
+readonly MINICONDA_INSTALLER="${RUN_ROOT}/local-runtime/Miniconda3-py311_24.7.1-0-Linux-x86_64.sh"
+readonly MINICONDA_SHA256="a098a5b1581d8fd078c430b82e27106602223e335efef708a124e723814d120c"
 readonly CONTRACT="${BUNDLE_ROOT}/09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.1.json"
 readonly CONFIG="${BUNDLE_ROOT}/09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.1/training-config-v0.1.json"
 readonly AUTHORITY="${BUNDLE_ROOT}/09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.30.json"
@@ -79,7 +82,6 @@ export XDG_CACHE_HOME="${RUN_ROOT}/local-cache/xdg"
 export PYTHONPYCACHEPREFIX="${RUN_ROOT}/local-cache/pycache"
 export PIP_CACHE_DIR="${RUN_ROOT}/local-cache/pip"
 export UV_CACHE_DIR="${RUN_ROOT}/local-cache/uv"
-export UV_PYTHON_INSTALL_DIR="${RUN_ROOT}/local-runtime/uv-python"
 export TOKENIZERS_PARALLELISM="false"
 export PYTORCH_CUDA_ALLOC_CONF="max_split_size_mb:128,garbage_collection_threshold:0.8"
 export PIP_DISABLE_PIP_VERSION_CHECK="1"
@@ -111,8 +113,19 @@ prepare_runtime() {
       echo "uv version Gate failed" >&2
       exit 4
     fi
-    "${UV_BIN}" python install 3.11.10
-    "${UV_BIN}" venv --python 3.11.10 "${VENV_ROOT}"
+    if [[ ! -x "${MINICONDA_ROOT}/bin/python" ]]; then
+      curl --fail --location --silent --show-error \
+        "https://repo.anaconda.com/miniconda/Miniconda3-py311_24.7.1-0-Linux-x86_64.sh" \
+        --output "${MINICONDA_INSTALLER}"
+      observed_miniconda_sha256="$(sha256sum "${MINICONDA_INSTALLER}" | awk '{print $1}')"
+      if [[ "${observed_miniconda_sha256}" != "${MINICONDA_SHA256}" ]]; then
+        echo "Miniconda installer SHA-256 Gate failed" >&2
+        exit 4
+      fi
+      bash "${MINICONDA_INSTALLER}" -b -p "${MINICONDA_ROOT}"
+      rm -f "${MINICONDA_INSTALLER}"
+    fi
+    "${MINICONDA_ROOT}/bin/python" -m venv "${VENV_ROOT}"
     "${UV_BIN}" pip install --python "${VENV_ROOT}/bin/python" -r "${REQUIREMENTS}"
   fi
 
