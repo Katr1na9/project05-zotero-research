@@ -157,6 +157,8 @@ def test_launcher_discards_pathological_login_environment_and_binds_uuid():
     assert "nvidia-smi --query-gpu=index,uuid,name,memory.free,memory.used" in text
     assert "memory.free" in text
     assert "memory.used" in text
+    assert "runtime-ready-v0.1" in text
+    assert "--index-strategy unsafe-best-match" in text
 
 
 def test_downstream_scopes_remain_closed():

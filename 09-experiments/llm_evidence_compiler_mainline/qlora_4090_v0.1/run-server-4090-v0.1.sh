@@ -11,6 +11,7 @@ readonly UV_BIN="${UV_ROOT}/uv-x86_64-unknown-linux-gnu/uv"
 readonly MINICONDA_ROOT="${RUN_ROOT}/local-runtime/miniconda3-py311-24.7.1-0"
 readonly MINICONDA_INSTALLER="${RUN_ROOT}/local-runtime/Miniconda3-py311_24.7.1-0-Linux-x86_64.sh"
 readonly MINICONDA_SHA256="a098a5b1581d8fd078c430b82e27106602223e335efef708a124e723814d120c"
+readonly RUNTIME_READY_MARKER="${RUN_ROOT}/local-runtime/runtime-ready-v0.1"
 readonly CONTRACT="${BUNDLE_ROOT}/09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.1.json"
 readonly CONFIG="${BUNDLE_ROOT}/09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.1/training-config-v0.1.json"
 readonly AUTHORITY="${BUNDLE_ROOT}/09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.30.json"
@@ -95,7 +96,7 @@ if [[ "${phase}" != "all" && "${phase}" != "prepare" && "${phase}" != "smoke" &&
 fi
 
 prepare_runtime() {
-  if [[ ! -x "${VENV_ROOT}/bin/python" ]]; then
+  if [[ ! -f "${RUNTIME_READY_MARKER}" ]]; then
     available_bytes="$(df --output=avail -B1 "${RUN_ROOT}" | tail -n 1 | tr -d ' ')"
     if [[ "${available_bytes}" -lt 32000000000 ]]; then
       echo "initial disk-free Gate failed: ${available_bytes}" >&2
@@ -125,8 +126,12 @@ prepare_runtime() {
       bash "${MINICONDA_INSTALLER}" -b -p "${MINICONDA_ROOT}"
       rm -f "${MINICONDA_INSTALLER}"
     fi
-    "${MINICONDA_ROOT}/bin/python" -m venv "${VENV_ROOT}"
-    "${UV_BIN}" pip install --python "${VENV_ROOT}/bin/python" -r "${REQUIREMENTS}"
+    if [[ ! -x "${VENV_ROOT}/bin/python" ]]; then
+      "${MINICONDA_ROOT}/bin/python" -m venv "${VENV_ROOT}"
+    fi
+    "${UV_BIN}" pip install --index-strategy unsafe-best-match \
+      --python "${VENV_ROOT}/bin/python" -r "${REQUIREMENTS}"
+    touch "${RUNTIME_READY_MARKER}"
   fi
 
   if [[ ! -f "${PREPARATION_AUDIT}" ]]; then
