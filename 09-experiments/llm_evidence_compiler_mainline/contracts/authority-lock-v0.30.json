@@ -1,0 +1,96 @@
+{
+  "authority_id": "project05-qwen25-rtx4090-migration-and-primary-training-v0.30",
+  "version": "0.30.0",
+  "status": "user_authorized_prepare_smoke_then_single_primary_training",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "transfer_to_4090_server_and_start_training_continue_persistently",
+    "interpreted_scope": "prepare_isolated_linux_runtime_and_fixed_model_then_run_one_smoke_and_if_passed_one_three_epoch_primary_run",
+    "single_gpu_baseline": true,
+    "multi_gpu_training_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.28.json",
+    "sha256": "F7147ADFD18ACC98F33C0D750A5A1014A10D324BF24112EE713C11D9A7624A6C",
+    "disposition": "retains_the_local_failure_record_and_reopens_only_a_fresh_rtx4090_route"
+  },
+  "authoritative_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.1.json",
+    "sha256": "8D242D577A577968C198E559C6DFFF36EBDE8695AD55157464407027C254C758"
+  },
+  "authoritative_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-4090-training-amendment-v0.30-20260719.md",
+    "sha256": "A4FBF7ED67B7D034E4610C474768B7531210B121ED96B7AB2B2DD86DE262A4BC"
+  },
+  "authoritative_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.1/training-config-v0.1.json",
+    "sha256": "4BA3FACAD0D73B0A1AA3FD0629699B01974F5820DC3F1B0D8DEF93F4B8BB9103"
+  },
+  "rtx4090_execution_gate": {
+    "authorized": true,
+    "contract_sha256": "8D242D577A577968C198E559C6DFFF36EBDE8695AD55157464407027C254C758",
+    "training_config_sha256": "4BA3FACAD0D73B0A1AA3FD0629699B01974F5820DC3F1B0D8DEF93F4B8BB9103",
+    "environment_and_weight_preparation_authorized": true,
+    "longest_sequence_smoke_authorized": true,
+    "primary_training_after_passed_smoke_authorized": true,
+    "maximum_smoke_executions": 1,
+    "maximum_primary_executions": 1,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "run_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "single_visible_idle_rtx4090_required": true,
+    "clean_login_environment_required": true
+  },
+  "frozen_scientific_configuration": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "method": "4bit_nf4_double_quant_fp16_qlora",
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "sequence_length": 1024,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "micro_batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "epochs": 3,
+    "optimizer_steps": 225,
+    "seed": 2026071601,
+    "adapter_only": true
+  },
+  "failure_policy": {
+    "write_sanitized_failure_manifest": true,
+    "automatic_restart_allowed": false,
+    "automatic_hyperparameter_or_data_change_allowed": false,
+    "resume_requires_new_authority": true,
+    "checkpoint_selection_after_incomplete_training_allowed": false
+  },
+  "next_gate": {
+    "status": "rtx4090_prepare_smoke_and_conditional_primary_open_downstream_closed",
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "multi_gpu_training",
+    "second_smoke_or_primary_execution",
+    "automatic_resume_after_failure",
+    "hyperparameter_or_data_change",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
