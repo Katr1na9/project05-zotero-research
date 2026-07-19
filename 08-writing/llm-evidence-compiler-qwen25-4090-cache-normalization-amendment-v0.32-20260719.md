@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-状态：`implementation_ready_pending_explicit_retry_authorization`
+状态：`user_authorized_single_fresh_cache_normalized_primary_v0_2`
 
 适用范围：Project05 主线前端 LLM evidence compiler 的单卡 Qwen2.5-7B-Instruct QLoRA。本文只处理第一次 4090 primary 在显存安全 Gate 上的停止，不授权自动重跑、resume、checkpoint 选择、正式推理或 M3 接入。
 
@@ -61,7 +61,7 @@
 
 ## 5. 重新执行边界
 
-若用户另行显式批准，只允许一次全新 primary v0.2：
+用户已以“批准 v0.32 单次 cache-normalized primary v0.2”显式批准，只允许一次全新 primary v0.2：
 
 - 输出到全新 `server-output/primary-v0.2`，不得覆盖或 resume `primary-v0.1`；
 - 从同一固定底座重新初始化 adapter、optimizer 和 scheduler；
@@ -69,7 +69,7 @@
 - 失败 manifest 必须额外保存触发时 cache 释放前诊断样本、规范化后阻塞样本和最终 Gate 汇总；
 - 第二次失败后不自动重跑、不再临时改阈值。
 
-当前文件本身不是执行授权。执行前必须有新的 authority lock 明确允许一次 v0.2 primary。
+执行授权由 `authority-lock-v0.32.json` 锁定；该授权不覆盖第二次 v0.2、resume 或任何后续评价。
 
 ## 6. 结论边界
 

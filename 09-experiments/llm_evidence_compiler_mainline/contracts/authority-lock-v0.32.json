@@ -1,12 +1,12 @@
 {
   "authority_id": "project05-qwen25-rtx4090-cache-normalized-primary-v0.32",
   "version": "0.32.0",
-  "status": "implementation_ready_pending_explicit_retry_authorization",
+  "status": "user_authorized_single_fresh_cache_normalized_primary_v0_2",
   "created_date": "2026-07-19",
   "user_decision": {
-    "decision": "pending",
-    "interpreted_scope": "no_second_primary_execution_is_authorized_by_this_file",
-    "explicit_retry_authorization_received": false,
+    "decision": "批准 v0.32 单次 cache-normalized primary v0.2",
+    "interpreted_scope": "one_fresh_three_epoch_225_step_primary_v0_2_without_new_smoke",
+    "explicit_retry_authorization_received": true,
     "multi_gpu_training_authorized": false
   },
   "parent_authority": {
@@ -16,11 +16,11 @@
   },
   "authoritative_contract": {
     "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.2.json",
-    "sha256": "82A5B7430460065FFD6DC6D56449D7E16C9D66EC36198570F3619ADC08404F52"
+    "sha256": "8130FCB529EA6D08A8B07320382489B40442780B928408D019290829296A3386"
   },
-  "proposed_amendment": {
+  "approved_capacity_amendment": {
     "path": "08-writing/llm-evidence-compiler-qwen25-4090-cache-normalization-amendment-v0.32-20260719.md",
-    "sha256": "272D412AD904097BC455E865FC7526D0CFF7D267EB9744F22C8ECE66BBC7798E"
+    "sha256": "11594CCAF78946BCFCE4C602C05ECDB497AC2503E9C1C7EAC0280A942F31321E"
   },
   "authoritative_config": {
     "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.2/training-config-v0.2.json",
@@ -37,14 +37,14 @@
     "automatic_restart_authorized": false
   },
   "rtx4090_execution_gate": {
-    "authorized": false,
-    "contract_sha256": "82A5B7430460065FFD6DC6D56449D7E16C9D66EC36198570F3619ADC08404F52",
+    "authorized": true,
+    "contract_sha256": "8130FCB529EA6D08A8B07320382489B40442780B928408D019290829296A3386",
     "training_config_sha256": "161733CE73E02E4FD1D91033DEBE2907F6C1D1C005B54E86CE8333E7DD6F501A",
     "environment_and_weight_preparation_authorized": false,
     "existing_preparation_reuse_authorized": true,
     "longest_sequence_smoke_authorized": false,
     "compatible_prior_smoke_reuse_authorized": true,
-    "primary_training_after_passed_smoke_authorized": false,
+    "primary_training_after_passed_smoke_authorized": true,
     "maximum_smoke_executions": 0,
     "maximum_primary_executions": 1,
     "automatic_retry_authorized": false,
@@ -77,13 +77,13 @@
     "cache_normalized_free_memory_gate": true,
     "scientific_configuration_changed": false
   },
-  "required_next_user_decision": {
-    "decision": "approve_or_reject_one_fresh_cache_normalized_primary_v0_2",
-    "approval_would_authorize": "one_fresh_three_epoch_225_step_primary_without_new_smoke",
-    "approval_would_not_authorize": "any_additional_retry_resume_hyperparameter_change_or_downstream_evaluation"
+  "current_user_authorization": {
+    "authorized_execution": "one_fresh_three_epoch_225_step_primary_without_new_smoke",
+    "maximum_executions": 1,
+    "does_not_authorize": "any_additional_retry_resume_hyperparameter_change_or_downstream_evaluation"
   },
   "next_gate": {
-    "status": "closed_pending_explicit_retry_authorization",
+    "status": "single_primary_v0_2_open_downstream_closed",
     "checkpoint_selection_authorized": false,
     "paired_runner_authorized": false,
     "formal_inference_authorized": false,
@@ -93,7 +93,6 @@
     "paper_positive_claim_authorized": false
   },
   "not_authorized": [
-    "primary_v0_2_execution_before_explicit_user_authorization",
     "additional_optimizer_bearing_smoke",
     "multi_gpu_training",
     "automatic_retry_or_resume",

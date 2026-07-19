@@ -60,7 +60,7 @@ def test_contract_and_authority_hash_chain_is_closed():
     authority = load_json(AUTHORITY_PATH)
     assert raw_contract["version"] == "0.2.0"
     assert raw_contract["extends_contract"]["sha256"] == sha256(LEGACY_CONTRACT_PATH)
-    assert authority["status"] == "implementation_ready_pending_explicit_retry_authorization"
+    assert authority["status"] == "user_authorized_single_fresh_cache_normalized_primary_v0_2"
     assert authority["authoritative_contract"]["sha256"] == sha256(CONTRACT_PATH)
     assert authority["rtx4090_execution_gate"]["contract_sha256"] == sha256(CONTRACT_PATH)
     assert contract["training_config"]["sha256"] == sha256(CONFIG_PATH)
@@ -69,8 +69,8 @@ def test_contract_and_authority_hash_chain_is_closed():
         assert sha256(REPO_ROOT / record["path"]) == record["sha256"]
     for record in contract["implementation"].values():
         assert sha256(REPO_ROOT / record["path"]) == record["sha256"]
-    assert sha256(REPO_ROOT / raw_contract["proposed_amendment"]["path"]) == (
-        raw_contract["proposed_amendment"]["sha256"]
+    assert sha256(REPO_ROOT / raw_contract["approved_capacity_amendment"]["path"]) == (
+        raw_contract["approved_capacity_amendment"]["sha256"]
     )
     for record in raw_contract["attempt_history"].values():
         assert sha256(REPO_ROOT / record["path"]) == record["sha256"]
@@ -138,12 +138,14 @@ def test_smoke_must_pass_before_one_primary_execution():
         "optimizer_steps": 0,
         "adapter_or_checkpoint_save": False,
     }
-    assert contract["phase_gate"]["primary"]["authorized_after_explicit_user_reauthorization"] is False
+    assert contract["phase_gate"]["primary"]["authorized_after_explicit_user_reauthorization"] is True
     assert contract["phase_gate"]["primary"]["maximum_executions"] == 1
     assert contract["phase_gate"]["primary"]["resume_authorized"] is False
     assert authority["rtx4090_execution_gate"]["maximum_smoke_executions"] == 0
     assert authority["rtx4090_execution_gate"]["maximum_primary_executions"] == 1
-    assert authority["rtx4090_execution_gate"]["primary_training_after_passed_smoke_authorized"] is False
+    assert authority["rtx4090_execution_gate"]["primary_training_after_passed_smoke_authorized"] is True
+    assert authority["rtx4090_execution_gate"]["automatic_retry_authorized"] is False
+    assert authority["current_user_authorization"]["maximum_executions"] == 1
 
 
 def test_corrected_smoke_authority_preserves_single_optimizer_bearing_execution():

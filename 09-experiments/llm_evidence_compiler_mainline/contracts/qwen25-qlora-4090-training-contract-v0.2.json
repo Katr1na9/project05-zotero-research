@@ -2,16 +2,16 @@
   "contract_id": "project05-qwen25-qlora-4090-training-v0.2",
   "version": "0.2.0",
   "created_date": "2026-07-19",
-  "status": "implementation_ready_pending_explicit_retry_authorization",
+  "status": "user_authorized_single_fresh_cache_normalized_primary_v0_2",
   "contract_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.2.json",
   "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.32.json",
   "extends_contract": {
     "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.1.json",
     "sha256": "CD027724554185150D7A636F3EC905B4CA58DDFB559DB70D0D5087B73B3802E1"
   },
-  "proposed_amendment": {
+  "approved_capacity_amendment": {
     "path": "08-writing/llm-evidence-compiler-qwen25-4090-cache-normalization-amendment-v0.32-20260719.md",
-    "sha256": "272D412AD904097BC455E865FC7526D0CFF7D267EB9744F22C8ECE66BBC7798E"
+    "sha256": "11594CCAF78946BCFCE4C602C05ECDB497AC2503E9C1C7EAC0280A942F31321E"
   },
   "training_config": {
     "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.2/training-config-v0.2.json",
@@ -81,7 +81,7 @@
     },
     "primary": {
       "authorized_after_passed_smoke": false,
-      "authorized_after_explicit_user_reauthorization": false,
+      "authorized_after_explicit_user_reauthorization": true,
       "maximum_executions": 1,
       "epochs": 3,
       "optimizer_steps": 225,
@@ -90,7 +90,6 @@
     }
   },
   "not_authorized": [
-    "execution_before_explicit_user_reauthorization",
     "additional_optimizer_bearing_smoke",
     "multi_gpu_training",
     "hyperparameter_search",
