@@ -1,0 +1,126 @@
+{
+  "contract_id": "project05-qwen25-primary-preflight-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "user_authorized_task3_preflight_only",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.22.json",
+    "sha256": "A9F8FDBF60B0F7CD475D1957EDC11BCFBD1DA665F75B22268F050302032886D4"
+  },
+  "primary_training_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json",
+    "sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE"
+  },
+  "training_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json",
+    "sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "tracked_inputs": {
+    "smoke_result_authority": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.21.json",
+      "sha256": "26FB7FDF300496FB56FC4F33D7A1DF1FD508508959BBC22BBF63BD77CE1188CE"
+    },
+    "smoke_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-local-smoke-contract-v0.2.json",
+      "sha256": "F37984ADCABA6B19A7FFFFED8F7E5CE91DCF9F994A31416929842B92C43209EF"
+    },
+    "smoke_result": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-qlora-local-smoke-result-v0.2.json",
+      "sha256": "5AB4B06FCE642722B376B00243C4AE8012CE62B552AE99595463555BE20C37C4"
+    },
+    "runtime_requirements": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/qlora_smoke_v0.2/requirements-windows-cu121-v0.2.txt",
+      "sha256": "A3D9E5C9AA0E7C88A6512C1948EC507ADFFA43753034F8F00046D4EB39A25EDF"
+    },
+    "snapshot_verifier": {
+      "path": "09-experiments/scripts/prepare_qwen_qlora_smoke.py",
+      "sha256": "3AF88EAA22D4D62DCECB71BCA6DB768C3898456D0B7A91531E0E1C666FB20A8D"
+    },
+    "primary_trainer_skeleton": {
+      "path": "09-experiments/scripts/train_qwen_qlora_primary.py",
+      "sha256": "ED55B62D4C99842E7234EFE1D97EDF7F4FED39C355B690686EF061046A159CB8"
+    }
+  },
+  "local_inputs": {
+    "smoke_preparation_audit": {
+      "path": ".local-qwen25-smoke/local-output/preparation-audit-v0.2.json",
+      "sha256": "315837270E84C020D097B471D44A63E1C933B7534E52831882F575D3401F206A"
+    },
+    "train_pairs": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data/train.jsonl.gz",
+      "sha256": "61B9F3C724CB65A3A2ED8839ED36881A717DC906F32267D7CDED510C2F01B82B"
+    },
+    "training_validation_pairs": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data/training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552"
+    }
+  },
+  "execution_boundary": {
+    "mode": "repository_relative_local_windows",
+    "run_directory_name": ".local-qwen25-smoke",
+    "runtime_python": "local-runtime/venv/Scripts/python.exe",
+    "output_path": "local-output/primary-preflight-v0.1.json",
+    "reuse_existing_runtime_and_snapshot_only": true,
+    "network_allowed": false,
+    "install_or_upgrade_allowed": false,
+    "server_connection_allowed": false
+  },
+  "preflight_checks": {
+    "rehash_all_allowlisted_model_files": true,
+    "verify_runtime_package_versions": true,
+    "verify_cuda_nf4_and_gpu_identity": true,
+    "read_and_revalidate_exact_pair_payloads": true,
+    "load_fixed_snapshot_local_files_only": true,
+    "apply_in_memory_lora_for_inventory_only": true,
+    "verify_all_seven_target_module_families": true,
+    "verify_trainable_ratio_strictly_below": 0.01,
+    "verify_peak_reserved_vram_gib_at_most": 10.5,
+    "verify_projected_wall_hours_at_most": 24,
+    "verify_resource_bytes_with_reserve_at_most": 30000000000
+  },
+  "time_projection": {
+    "smoke_optimizer_step_seconds": 82.78099999999904,
+    "primary_optimizer_steps": 225,
+    "conservative_multiplier": 2.0,
+    "validation_and_checkpoint_io_reserve_hours": 6.0,
+    "maximum_projected_hours": 24.0
+  },
+  "resource_projection": {
+    "checkpoint_and_result_reserve_bytes": 2000000000,
+    "maximum_total_bytes": 30000000000
+  },
+  "allowed_model_operations": [
+    "load_fixed_4bit_snapshot_with_local_files_only",
+    "prepare_model_for_kbit_training_without_forward_or_backward",
+    "attach_in_memory_lora_without_saving",
+    "enumerate_modules_and_parameters",
+    "measure_cuda_memory",
+    "release_model_and_empty_cuda_cache"
+  ],
+  "authorized_actions": [
+    "implement_and_test_preflight",
+    "read_existing_locked_runtime_snapshot_and_pair_payloads",
+    "execute_one_preflight_under_the_exact_contract",
+    "write_sanitized_local_and_tracked_result",
+    "record_result_authority_and_push"
+  ],
+  "not_authorized": [
+    "network_access_or_download",
+    "runtime_install_or_change",
+    "model_forward_or_generation",
+    "loss_computation_or_backward",
+    "optimizer_or_scheduler_creation",
+    "adapter_or_checkpoint_save",
+    "primary_training",
+    "checkpoint_selection",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ]
+}
