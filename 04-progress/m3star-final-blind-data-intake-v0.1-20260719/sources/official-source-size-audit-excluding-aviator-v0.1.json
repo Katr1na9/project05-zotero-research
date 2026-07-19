@@ -1,0 +1,279 @@
+{
+  "audit_id": "project05-m3star-official-source-size-audit-excluding-aviator-v0.1",
+  "status": "official_metadata_size_audit_complete_except_registration_gated_cicapt_iiot",
+  "audit_date": "2026-07-19",
+  "inspection_boundary": {
+    "official_file_metadata_only": true,
+    "candidate_payloads_downloaded": false,
+    "candidate_payloads_opened": false,
+    "ground_truth_opened": false,
+    "cost_values_opened": false,
+    "model_outputs_used": false
+  },
+  "counting_scope": {
+    "original_a_plus_b_candidate_upper_bound": 102,
+    "excluded_source_id": "aviator",
+    "excluded_candidate_upper_bound": 7,
+    "remaining_candidate_upper_bound": 95,
+    "remaining_fully_size_quantified_candidate_upper_bound": 94,
+    "remaining_size_unknown_candidate_upper_bound": 1
+  },
+  "excluded_aviator": {
+    "official_archive_bytes": 109261265408,
+    "official_archive_decimal_gb": 109.261265408,
+    "candidate_upper_bound": 7,
+    "exclusion_basis": "resource_feasibility_only_before_candidate_payload access"
+  },
+  "sources": [
+    {
+      "source_id": "otrf-security-datasets-compound",
+      "candidate_upper_bound": 9,
+      "official_locator": "https://github.com/OTRF/Security-Datasets/tree/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "all_repository_blob_bytes": 623025038,
+      "all_candidate_related_blob_bytes": 299416857,
+      "minimum_planned_bytes": 21429333,
+      "minimum_selection": "GoldenSAML telemetry, seven LSASS host-log archives, Log4Shell telemetry, and their frozen metadata; omit optional duplicate PCAP/Zeek views for the LSASS campaigns",
+      "selection_requires_curator_confirmation": true
+    },
+    {
+      "source_id": "splunk-attack-data-apt-simulations",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://github.com/splunk/attack_data/tree/1c8397622034c4231aa4ac75077b4296f393ede0/datasets/apt_simulations/ActiveMQ_exploit_Lockbit_Ransomware",
+      "all_candidate_related_bytes": 99309815,
+      "minimum_planned_bytes": 99309815,
+      "minimum_selection": "three Git-LFS Windows event-log payloads plus the scenario YAML"
+    },
+    {
+      "source_id": "ait-log-data-set-v2.1",
+      "candidate_upper_bound": 8,
+      "official_locator": "https://zenodo.org/api/records/19483937",
+      "all_official_file_bytes": 137088718752,
+      "minimum_planned_bytes": 6444190699,
+      "minimum_selection": [
+        {"case": "russellmitchell", "file": "russellmitchell_no-pcaps.zip", "bytes": 522084364},
+        {"case": "santos", "file": "santos_no-pcaps.zip", "bytes": 576734274},
+        {"case": "harrison", "file": "harrison_no-pcaps.zip", "bytes": 667985140},
+        {"case": "fox", "file": "fox_no-pcaps.zip", "bytes": 688586900},
+        {"case": "wheeler", "file": "wheeler_no-pcaps.zip", "bytes": 767673839},
+        {"case": "wardbeck", "file": "wardbeck_no-pcaps.zip", "bytes": 818462147},
+        {"case": "wilson", "file": "wilson_no-pcaps.zip", "bytes": 1083526183},
+        {"case": "shaw", "file": "shaw_no-pcaps.zip", "bytes": 1319137852}
+      ],
+      "selection_requires_curator_confirmation": true,
+      "qualification_caveat": "The curator must confirm that each no-pcaps package preserves the complete campaign window and all in-scope host logs required by the frozen intake contract."
+    },
+    {
+      "source_id": "cam-lds",
+      "candidate_upper_bound": 7,
+      "official_locator": "https://zenodo.org/api/records/18861762",
+      "all_official_file_bytes": 7410964762,
+      "minimum_planned_bytes": 1294139980,
+      "minimum_selection": [
+        {"scenario_family": 1, "file": "scenario_1_validaccount_pam.zip", "bytes": 172879344},
+        {"scenario_family": 2, "file": "scenario_2_cron.zip", "bytes": 160486494},
+        {"scenario_family": 3, "file": "scenario_3_ssh_puppet.zip", "bytes": 197830161},
+        {"scenario_family": 4, "file": "scenario_4.zip", "bytes": 201474676},
+        {"scenario_family": 5, "file": "scenario_5.zip", "bytes": 202788200},
+        {"scenario_family": 6, "file": "scenario_6_macro_cron.zip", "bytes": 198574204},
+        {"scenario_family": 7, "file": "scenario_7.zip", "bytes": 160106901}
+      ],
+      "selection_rule": "one preselected execution per frozen scenario family; selection is by smallest official archive before payload access"
+    },
+    {
+      "source_id": "mscad",
+      "candidate_upper_bound": 2,
+      "official_locator": "https://www.kaggle.com/api/v1/datasets/list/drjamailalsawwa/mscad",
+      "all_official_file_bytes": 853758098,
+      "minimum_planned_bytes": 788594814,
+      "minimum_selection": "six PCAP components plus one copy of MSCAD.csv; omit two duplicate CSV copies"
+    },
+    {
+      "source_id": "cicapt-iiot",
+      "candidate_upper_bound": 1,
+      "official_locator": "http://cicresearch.ca/IOTDataset/CICAPT-IIoT%20Dataset/",
+      "all_official_file_bytes": null,
+      "minimum_planned_bytes": null,
+      "size_status": "unknown_registration_required",
+      "blocking_reason": "The official UNB CIC download directory requires identity and organization registration before its file index is shown; no form was submitted during this audit."
+    },
+    {
+      "source_id": "dapt2020",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://www.kaggle.com/api/v1/datasets/list/sowmyamyneni/dapt2020",
+      "all_official_file_bytes": 17305501503,
+      "official_pcap_bytes": 17090098612,
+      "official_non_pcap_bytes": 215402891,
+      "minimum_planned_bytes": 215402891,
+      "minimum_selection": "all non-PCAP flow CSV and original host-log material; defer the ten PCAP files",
+      "selection_requires_curator_confirmation": true,
+      "qualification_caveat": "If the non-PCAP material cannot prove the complete five-day campaign boundary and original telemetry requirement, the source must either download the necessary PCAP files or receive no case credit."
+    },
+    {
+      "source_id": "capd",
+      "candidate_upper_bound": 23,
+      "official_locator": "https://github.com/AbSamad99/APTsDataset/tree/cb74048ea76b286f9c63efcbd8e795c3de7f7543",
+      "all_official_repository_blob_bytes": 9060025,
+      "minimum_planned_bytes": 9060025,
+      "minimum_selection": "entire fixed repository commit because all campaign logs and definitions are small"
+    },
+    {
+      "source_id": "apt-sandworm-dataset",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://zenodo.org/api/records/16911636",
+      "all_official_file_bytes": 1816085762,
+      "minimum_planned_bytes": 1814743122,
+      "minimum_selection": "SandwormAPT.pcap plus APT_Dataset_Readme.pdf; omit the labelled flow CSV from curator/model-development access"
+    },
+    {
+      "source_id": "goose-power-substation-apt",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://zenodo.org/api/records/13912758",
+      "all_official_file_bytes": 8291677,
+      "minimum_planned_bytes": 8291677,
+      "minimum_selection": "APT.zip"
+    },
+    {
+      "source_id": "cyber-czech-2019",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://zenodo.org/api/records/3746129",
+      "all_official_file_bytes": 274453474,
+      "minimum_planned_bytes": 274453474,
+      "minimum_selection": "all four official telemetry and auxiliary archives to preserve the exercise boundary and sensor coverage"
+    },
+    {
+      "source_id": "windows-apt-2025",
+      "candidate_upper_bound": 31,
+      "official_locator": "https://data.mendeley.com/public-api/datasets/b8fmtzvpy8/files?folder_id=root&version=4",
+      "all_known_root_file_bytes": 480859935,
+      "minimum_planned_bytes": 232917800,
+      "minimum_selection": "all 16 period CSV files, README.md, checksums.sha256, and scenario_manifest.csv; omit combined.csv and validation_summary.csv",
+      "period_csv_bytes": 232878507,
+      "duplicate_combined_csv_bytes_omitted": 247934817,
+      "ground_truth_validation_bytes_omitted": 7318,
+      "supplement_folder_size_status": "not_in_root_file_total_and_expected_to_be_metadata_scale"
+    },
+    {
+      "source_id": "attackmate-evaluation-data",
+      "candidate_upper_bound": 3,
+      "official_locator": "https://zenodo.org/api/records/19810174",
+      "all_official_file_bytes": 790843222,
+      "minimum_planned_bytes": 163037421,
+      "minimum_selection": [
+        {"scenario_family": "Lateral Movement", "file": "lateral_movement_atomic.zip", "bytes": 59664849},
+        {"scenario_family": "Information Gathering", "file": "tcpdump_atomic.zip", "bytes": 36619397},
+        {"scenario_family": "Privilege Escalation", "file": "privilege_escalation_attackmate.zip", "bytes": 66746187},
+        {"role": "definitions", "file": "playbooks.zip", "bytes": 6988}
+      ],
+      "selection_rule": "one smallest official implementation per scenario family fixed before payload access; omit Caldera/Atomic/timeout alternatives"
+    },
+    {
+      "source_id": "attackmate-robotdog",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://zenodo.org/api/records/18482763",
+      "all_official_file_bytes": 7281133,
+      "minimum_planned_bytes": 7281133,
+      "minimum_selection": "attack_audit.log and clean_audit.log because the pair defines one scenario rather than two cases",
+      "selection_requires_curator_confirmation": true
+    },
+    {
+      "source_id": "ainception-storylines",
+      "candidate_upper_bound": 3,
+      "official_locator": "https://zenodo.org/api/records/17659656",
+      "all_official_file_bytes": 133570505552,
+      "minimum_planned_bytes": 13126119847,
+      "shared_definition_pdf_bytes": 792228,
+      "minimum_selection": [
+        {"storyline": "SL100", "file": "SL100.zip", "bytes": 31592162},
+        {"storyline": "SL300", "file": "SL300_variant_7.zip", "bytes": 9735245693},
+        {"storyline": "SL700", "file": "SL700_variant_f_a.zip", "bytes": 3358489764},
+        {"role": "storyline definitions", "file": "The AInception datasets.pdf", "bytes": 792228}
+      ],
+      "selection_rule": "one smallest official execution per storyline fixed before payload access"
+    },
+    {
+      "source_id": "locked-shields-partners-run-23",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://zenodo.org/api/records/8042347",
+      "all_official_file_bytes": 1940509448,
+      "minimum_planned_bytes": 1940509448,
+      "minimum_selection": "all official files; small narrative and index files are required for curator-only boundary proof"
+    },
+    {
+      "source_id": "locked-shields-partners-run-24",
+      "candidate_upper_bound": 1,
+      "official_locator": "https://zenodo.org/api/records/14900873",
+      "all_official_file_bytes": 7973355651,
+      "minimum_planned_bytes": 7973355651,
+      "minimum_selection": "all official files to preserve flow, host, alert, and exercise-boundary coverage"
+    }
+  ],
+  "size_summary_excluding_aviator": {
+    "known_source_count": 16,
+    "registration_gated_unknown_source_count": 1,
+    "known_candidate_upper_bound": 94,
+    "unknown_size_candidate_upper_bound": 1,
+    "download_every_known_official_file_bytes": 309928915666,
+    "download_every_known_official_file_decimal_gb": 309.928915666,
+    "minimum_planned_download_for_all_94_quantified_candidates_bytes": 34412837130,
+    "minimum_planned_download_for_all_94_quantified_candidates_decimal_gb": 34.41283713,
+    "minimum_planned_download_for_all_94_quantified_candidates_gib": 32.0494520757,
+    "cicapt_iiot_bytes_to_add": null,
+    "windows_supplement_metadata_bytes_to_add": null
+  },
+  "staged_minimum_download_plan": {
+    "principle": "Freeze ordering using public size metadata only; stop or add reserve cases using qualification count, never model outcomes, costs, or ground truth.",
+    "phase_1": {
+      "candidate_upper_bound": 81,
+      "planned_download_bytes": 3146302753,
+      "planned_download_decimal_gb": 3.146302753,
+      "sources": [
+        "otrf-security-datasets-compound",
+        "splunk-attack-data-apt-simulations",
+        "cam-lds",
+        "mscad",
+        "dapt2020",
+        "capd",
+        "goose-power-substation-apt",
+        "cyber-czech-2019",
+        "windows-apt-2025",
+        "attackmate-evaluation-data",
+        "attackmate-robotdog",
+        "ainception-storylines/SL100"
+      ],
+      "stop_rule": "If at least 79 cases qualify, stop payload acquisition and retain every qualified case.",
+      "recommended_free_disk_gb_with_streaming_and_temporary_overhead": 10
+    },
+    "phase_2": {
+      "trigger": "Phase 1 produces fewer than 79 qualified cases.",
+      "addition": "Add AIT no-pcaps testbeds one at a time in the frozen ascending-size order recorded above until 79 qualify or all eight are exhausted.",
+      "cumulative_candidate_upper_bound_if_all_eight_added": 89,
+      "cumulative_planned_download_bytes_if_all_eight_added": 9590493452,
+      "cumulative_planned_download_decimal_gb_if_all_eight_added": 9.590493452,
+      "recommended_free_disk_gb_with_streaming_and_temporary_overhead": 25
+    },
+    "phase_3_reserve_order": [
+      {"candidate": "apt-sandworm-dataset", "incremental_bytes": 1814743122},
+      {"candidate": "locked-shields-partners-run-23", "incremental_bytes": 1940509448},
+      {"candidate": "ainception-storylines/SL700", "incremental_bytes": 3358489764},
+      {"candidate": "locked-shields-partners-run-24", "incremental_bytes": 7973355651},
+      {"candidate": "ainception-storylines/SL300", "incremental_bytes": 9735245693},
+      {"candidate": "cicapt-iiot", "incremental_bytes": null, "ordering_deferred_until_official_size_is_known" : true}
+    ],
+    "theoretical_zero_reserve_79_candidate_plan": {
+      "planned_download_bytes": 2357707939,
+      "planned_download_decimal_gb": 2.357707939,
+      "derivation": "Phase 1 without the two MSCAD candidates",
+      "recommended": false,
+      "reason": "Any single qualification loss would put the cohort below the frozen 79-case power minimum."
+    }
+  },
+  "storage_policy": {
+    "download_archives_sequentially": true,
+    "verify_publisher_checksum_before_opening": true,
+    "hash_compressed_archives_without_full_extraction": true,
+    "stream_parse_when_supported": true,
+    "never_download_duplicate_aggregate_views": true,
+    "never_download_ground_truth_or_label_files_into_model_development_storage": true,
+    "retain_only_frozen_selected_execution_per_scenario_family": true
+  }
+}
