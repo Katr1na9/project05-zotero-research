@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
-$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")).Path
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
 $RunRoot = Join-Path $RepoRoot ".local-qwen25-smoke"
 $Python = Join-Path $RunRoot "local-runtime\venv\Scripts\python.exe"
 $CacheRoot = Join-Path $RunRoot "local-cache"
