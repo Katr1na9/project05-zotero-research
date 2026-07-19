@@ -111,8 +111,8 @@ prepare_runtime() {
       echo "uv version Gate failed" >&2
       exit 4
     fi
-    "${UV_BIN}" python install 3.11.15
-    "${UV_BIN}" venv --python 3.11.15 "${VENV_ROOT}"
+    "${UV_BIN}" python install 3.11.10
+    "${UV_BIN}" venv --python 3.11.10 "${VENV_ROOT}"
     "${UV_BIN}" pip install --python "${VENV_ROOT}/bin/python" -r "${REQUIREMENTS}"
   fi
 
