@@ -18,7 +18,7 @@ PROTOCOL = (
     / "09-experiments"
     / "governance"
     / "contracts"
-    / "m3star-final-blind-protocol-v0.1.json"
+    / "m3star-final-blind-protocol-v0.2.json"
 )
 TRAINING_COST_PROFILE = (
     REPO_ROOT
@@ -56,7 +56,7 @@ def digest(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
-def build_preflight_fixture(runner, root: Path, case_count: int = 96):
+def build_preflight_fixture(runner, root: Path, case_count: int = 79):
     cases_root = root / "cases"
     case_ids = [f"C{index:03d}-blind" for index in range(13, 13 + case_count)]
     file_hashes = {}
@@ -181,11 +181,66 @@ def build_preflight_fixture(runner, root: Path, case_count: int = 96):
             "actions": cost_actions,
         },
     )
+    amendment_path = runner.REPO_ROOT / runner.STAGED_ACQUISITION_AMENDMENT_RELATIVE_PATH
+    amendment = json.loads(amendment_path.read_text(encoding="utf-8"))
+    audited_count = max(81, case_count)
+    qualification_readiness = root / "qualification_readiness.json"
+    write_json(
+        qualification_readiness,
+        {
+            "status": "qualification_complete",
+            "acquisition_complete": True,
+            "source_search_required": False,
+            "candidate_upper_bound": 95,
+            "audited_candidate_count": audited_count,
+            "actual_qualified_case_count": case_count,
+            "actual_not_qualified_count": audited_count - case_count,
+            "unaudited_reserve_count": 95 - audited_count,
+            "decision_basis": "stop_after_phase_1_minimum_reached",
+            "all_qualified_cases_to_be_retained": True,
+            "unaudited_reserve_slots_counted_as_failures": False,
+            "amendment_id": amendment["amendment_id"],
+            "amendment_sha256": runner.sha256(amendment_path),
+            "file_contents_returned_to_model_development": False,
+            "ground_truth_opened": False,
+            "cost_values_opened": False,
+            "model_outputs_opened_during_qualification": False,
+            "one_shot_evaluation_consumed": False,
+        },
+    )
+    commitment = digest("fixture-qualified-case-identity-commitment")
+    qualification_binding = root / "qualification_binding.json"
+    write_json(
+        qualification_binding,
+        {
+            "status": "qualification_manifest_binding_complete",
+            "staged_amendment_id": amendment["amendment_id"],
+            "staged_amendment_sha256": runner.sha256(amendment_path),
+            "qualification_readiness_sha256": runner.sha256(
+                qualification_readiness
+            ),
+            "dataset_manifest_sha256": runner.sha256(dataset_manifest),
+            "qualified_case_count": case_count,
+            "final_manifest_case_count": case_count,
+            "qualified_case_identity_commitment_sha256": commitment,
+            "manifest_case_identity_commitment_sha256": commitment,
+            "identity_sets_match_exactly": True,
+            "all_qualified_cases_retained": True,
+            "unaudited_reserve_slots_counted_as_failures": False,
+            "telemetry_contents_opened_by_binding_audit": False,
+            "ground_truth_opened": False,
+            "cost_values_opened": False,
+            "model_outputs_opened": False,
+            "one_shot_evaluation_consumed": False,
+        },
+    )
     return SimpleNamespace(
         cases_root=cases_root,
         case_ids=case_ids,
         dataset_manifest=dataset_manifest,
         evaluation_cost_profile=evaluation_cost_profile,
+        qualification_readiness=qualification_readiness,
+        qualification_binding=qualification_binding,
         output_dir=root / "output",
         ledger=root / "consumed.json",
     )
@@ -201,6 +256,8 @@ def run_preflight(runner, fixture, **overrides):
         "frozen_model_result_dir": FROZEN_MODEL_RESULT,
         "output_dir": fixture.output_dir,
         "consumption_ledger": fixture.ledger,
+        "qualification_readiness_path": fixture.qualification_readiness,
+        "qualification_binding_path": fixture.qualification_binding,
     }
     arguments.update(overrides)
     return runner.preflight(**arguments)
@@ -281,9 +338,9 @@ class FinalBlindRunnerTests(unittest.TestCase):
             checked = run_preflight(runner, fixture)
 
         self.assertEqual("ready_for_one_shot_execution", checked["status"])
-        self.assertEqual(96, checked["case_count"])
+        self.assertEqual(79, checked["case_count"])
         self.assertEqual(
-            96,
+            79,
             checked["intake_identity_audit"]["unique_campaign_execution_count"],
         )
         self.assertFalse(checked["intake_identity_audit"]["ground_truth_opened"])
@@ -298,12 +355,39 @@ class FinalBlindRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Dataset file hash mismatch"):
                 run_preflight(runner, fixture)
 
-    def test_preflight_rejects_fewer_than_operational_target(self):
+    def test_preflight_rejects_fewer_than_power_minimum(self):
         runner = load_runner(self)
         with tempfile.TemporaryDirectory() as temporary:
-            fixture = build_preflight_fixture(runner, Path(temporary), case_count=95)
+            fixture = build_preflight_fixture(runner, Path(temporary), case_count=78)
 
-            with self.assertRaisesRegex(ValueError, "95 cases; 96 are required"):
+            with self.assertRaisesRegex(ValueError, "between 79 and 95"):
+                run_preflight(runner, fixture)
+
+    def test_preflight_rejects_manifest_that_drops_a_qualified_case(self):
+        runner = load_runner(self)
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = build_preflight_fixture(runner, Path(temporary))
+            readiness = json.loads(
+                fixture.qualification_readiness.read_text(encoding="utf-8")
+            )
+            readiness["actual_qualified_case_count"] = 80
+            readiness["actual_not_qualified_count"] = 1
+            write_json(fixture.qualification_readiness, readiness)
+
+            with self.assertRaisesRegex(ValueError, "exactly all qualified cases"):
+                run_preflight(runner, fixture)
+
+    def test_preflight_rejects_unmatched_identity_binding(self):
+        runner = load_runner(self)
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = build_preflight_fixture(runner, Path(temporary))
+            binding = json.loads(
+                fixture.qualification_binding.read_text(encoding="utf-8")
+            )
+            binding["identity_sets_match_exactly"] = False
+            write_json(fixture.qualification_binding, binding)
+
+            with self.assertRaisesRegex(ValueError, "identity_sets_match_exactly"):
                 run_preflight(runner, fixture)
 
     def test_preflight_rejects_existing_consumption_ledger(self):

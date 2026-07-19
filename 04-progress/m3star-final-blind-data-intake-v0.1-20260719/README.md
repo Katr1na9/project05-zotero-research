@@ -76,7 +76,8 @@ verifiable public data artifact from its article page, so those scenarios
 remain excluded from the current metadata count. If all 50 later became
 available and all 162 metadata candidates survived download, identity,
 isolation, and overlap checks, the upper bound would exceed the target by 66.
-That hypothetical surplus does not replace the frozen 96-case intake gate.
+That hypothetical surplus does not replace the frozen staged qualification
+and identity-binding gates.
 
 The metadata gap is closed with a headline surplus of 16, but the verified-
 artifact surplus is only six and the hash-bound intake count remains zero. The
@@ -119,6 +120,13 @@ anchored inside the amendment. The curator starts from
 `curator-staged-candidate-qualification-report.template.json`. The current
 readiness state is `awaiting_independent_curator_phase_1_report`: zero slots
 have been audited, all 95 remain unaudited, and none is counted as a failure.
+
+Before any payload access, final-blind protocol v0.2 also replaced the legacy
+fixed 96-case preflight target with an outcome-free dynamic gate: the final
+manifest must contain every independently qualified case, no more and no less;
+the exact four-hash case-identity set must match; and the resulting independent
+case count must be between 79 and 95. The gate is therefore fixed before the
+qualified count is known and cannot be tuned after observing it.
 
 `source-artifact-access-boundary-v0.1.json` freezes which source artifacts may
 be inspected as public non-label metadata, which telemetry may only be

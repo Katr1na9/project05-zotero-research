@@ -72,7 +72,8 @@ def audit_readiness(
     if not cases_root_present:
         blockers.append(
             "No C13+ final-blind cases directory is present at the frozen input location; "
-            "the current observable recruitment count is 0 of 96."
+            f"the current observable recruitment count is 0 of at least "
+            f"{runner.MINIMUM_VALID_COMPLETE_CASES}."
         )
     if not dataset_manifest_present:
         blockers.append("No frozen C13+ dataset manifest is present.")
@@ -121,8 +122,8 @@ def audit_readiness(
     )
     if protocol_count_gate_amendment_required:
         blockers.append(
-            "The staged qualification minimum is met, but the legacy 96-case "
-            "preflight gate requires a recorded pre-outcome protocol amendment."
+            "The staged qualification minimum is met, but the frozen protocol "
+            "recruitment gate is not aligned with the qualified count."
         )
     preflight_input_gate_pass = (
         external_inputs_present
@@ -145,6 +146,8 @@ def audit_readiness(
         "cases_root_present": cases_root_present,
         "observable_recruitment_count": 0 if not cases_root_present else None,
         "operational_recruitment_target": runner.OPERATIONAL_RECRUITMENT_TARGET,
+        "maximum_staged_candidate_slots": runner.MAXIMUM_STAGED_CANDIDATE_SLOTS,
+        "operational_recruitment_rule": "retain_all_independently_qualified_cases",
         "candidate_source_audit_path": str(SOURCE_CANDIDATE_MATRIX_RELATIVE_PATH),
         "current_public_metadata_candidate_upper_bound": source_summary.get(
             "current_public_metadata_candidate_upper_bound_before_download_hashing_and_overlap_audit"
@@ -213,8 +216,9 @@ def audit_readiness(
         ),
         "ready_for_one_shot_execution": False,
         "why_execution_is_false": (
-            "The full hash, C13+ boundary, 96-case, exact cost-coverage, and seal checks "
-            "must pass the non-consuming preflight before one-shot authorization."
+            "The staged qualification, exact qualification-to-manifest identity binding, "
+            "C13+ boundary, at-least-79 case, exact cost-coverage, and seal checks must "
+            "pass the non-consuming preflight before one-shot authorization."
         ),
         "c13_plus_case_contents_opened": False,
         "ground_truth_opened": False,

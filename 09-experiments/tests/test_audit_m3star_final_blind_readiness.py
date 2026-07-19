@@ -16,7 +16,7 @@ PROTOCOL = (
     / "09-experiments"
     / "governance"
     / "contracts"
-    / "m3star-final-blind-protocol-v0.1.json"
+    / "m3star-final-blind-protocol-v0.2.json"
 )
 TRAINING_COST_PROFILE = (
     REPO_ROOT
@@ -68,6 +68,8 @@ class FinalBlindReadinessAuditTests(unittest.TestCase):
         self.assertFalse(report["ground_truth_opened"])
         self.assertFalse(report["consumption_ledger_created"])
         self.assertEqual(112, report["current_public_metadata_candidate_upper_bound"])
+        self.assertEqual(79, report["operational_recruitment_target"])
+        self.assertEqual(95, report["maximum_staged_candidate_slots"])
         self.assertEqual(11, report["tier_a_high_confidence_candidate_upper_bound"])
         self.assertEqual(
             102,

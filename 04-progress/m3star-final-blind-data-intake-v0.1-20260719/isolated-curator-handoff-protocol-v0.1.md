@@ -85,6 +85,22 @@ python 09-experiments/scripts/audit_m3star_blind_staged_candidate_qualification.
 
 This audit does not consume the final blind evaluation.
 
+After the final frozen intake manifest is constructed, bind it to the complete
+qualification report with the label-free identity auditor:
+
+```text
+python 09-experiments/scripts/audit_m3star_blind_qualification_manifest_binding.py \
+  --amendment 04-progress/m3star-final-blind-data-intake-v0.1-20260719/staged-acquisition-protocol-amendment-v0.2.json \
+  --qualification-report <curator-completed-report.json> \
+  --qualification-readiness 09-experiments/results/m3star_blind_staged_candidate_qualification_readiness_v0.2/readiness_audit.json \
+  --dataset-manifest <frozen-final-dataset-manifest.json> \
+  --output <qualification-manifest-binding-v0.2.json>
+```
+
+This auditor compares only the source-artifact, chain-definition,
+campaign-execution, and telemetry-capture SHA-256 sets. It does not open event
+contents, labels, ground truth, costs, action sequences, or model outputs.
+
 Before case construction, the curator may run
 `09-experiments/scripts/verify_m3star_blind_source_artifacts.py` against a
 curator-prepared catalog conforming to
@@ -140,12 +156,11 @@ Each checkpoint has exactly one allowed transition:
 - Fewer than 79 after all 95 amended slots are audited: resume metadata-only
   source discovery only for the shortfall to 79.
 
-The staged acquisition amendment does not silently rewrite the legacy
-execution runner's 96-case preflight gate. Because the amended candidate upper
-bound is 95, a separately hashed, pre-outcome count-gate amendment must be
-frozen before preflight whenever staged qualification succeeds. This is a
-known governance step, not permission to reopen acquisition or inspect model
-outcomes. In every branch, the dataset manifest must hash every retained case
+Final-blind protocol v0.2 was frozen before payload access and supersedes the
+legacy fixed 96-case gate. It requires the final manifest to contain every
+qualified case, no more and no less, with an exact identity-hash-set match and
+an independent count from 79 through 95. No post-result sample-size choice is
+permitted. In every branch, the dataset manifest must hash every retained case
 file and an independently measured cost profile must cover exactly the same
 case identifiers. Preflight does not consume the one-shot evaluation;
 execution does.

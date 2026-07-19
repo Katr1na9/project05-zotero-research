@@ -39,7 +39,7 @@ POWER_DESIGN_RELATIVE_PATH = Path(
     "09-experiments/results/m3star_final_blind_power_design_v0.1/power_design.json"
 )
 CONSUMPTION_LEDGER_RELATIVE_PATH = Path(
-    "09-experiments/governance/locks/m3star-final-blind-consumed-v0.1.json"
+    "09-experiments/governance/locks/m3star-final-blind-consumed-v0.2.json"
 )
 INTAKE_SCHEMA_RELATIVE_PATH = Path(
     "09-experiments/data_schema/m3star_final_blind_intake_manifest.schema.json"
@@ -48,8 +48,20 @@ USED_CAMPAIGN_REGISTRY_RELATIVE_PATH = Path(
     "09-experiments/governance/registries/"
     "preblind-used-campaign-registry-v0.1.json"
 )
+STAGED_ACQUISITION_AMENDMENT_RELATIVE_PATH = Path(
+    "04-progress/m3star-final-blind-data-intake-v0.1-20260719/"
+    "staged-acquisition-protocol-amendment-v0.2.json"
+)
+QUALIFICATION_BINDING_SCHEMA_RELATIVE_PATH = Path(
+    "09-experiments/data_schema/"
+    "m3star_blind_qualification_manifest_binding.schema.json"
+)
+QUALIFICATION_BINDING_AUDITOR_RELATIVE_PATH = Path(
+    "09-experiments/scripts/audit_m3star_blind_qualification_manifest_binding.py"
+)
 MINIMUM_VALID_COMPLETE_CASES = 79
-OPERATIONAL_RECRUITMENT_TARGET = 96
+MAXIMUM_STAGED_CANDIDATE_SLOTS = 95
+OPERATIONAL_RECRUITMENT_TARGET = MINIMUM_VALID_COMPLETE_CASES
 MINIMUM_JOINT_SUCCESS_CONDITIONS_PER_CASE = 30
 PRIMARY_BASELINES = (
     "project05_m2",
@@ -163,6 +175,8 @@ def validate_dataset_manifest(
 
 
 def validate_protocol_document(protocol: dict[str, Any]) -> None:
+    if protocol.get("protocol_id") != "project05-m3star-final-blind-protocol-v0.2":
+        raise ValueError("Final-blind protocol v0.2 is required")
     if protocol.get("status") != "frozen_before_final_blind_data_access":
         raise ValueError("Final-blind protocol is not frozen")
     if protocol.get("independent_statistical_unit") != "attack_chain_case_id":
@@ -182,8 +196,44 @@ def validate_protocol_document(protocol: dict[str, Any]) -> None:
     sample_size = protocol.get("sample_size", {})
     if sample_size.get("minimum_valid_complete_cases") != MINIMUM_VALID_COMPLETE_CASES:
         raise ValueError("Minimum valid independent-case count differs from 79")
-    if sample_size.get("operational_recruitment_target") != OPERATIONAL_RECRUITMENT_TARGET:
-        raise ValueError("Operational recruitment target differs from 96")
+    if sample_size.get("maximum_staged_candidate_slots") != MAXIMUM_STAGED_CANDIDATE_SLOTS:
+        raise ValueError("Maximum staged candidate count differs from 95")
+    if sample_size.get("operational_recruitment_rule") != (
+        "all_independently_qualified_cases_from_frozen_staged_pool"
+    ):
+        raise ValueError("Operational recruitment must retain all staged-qualified cases")
+    if sample_size.get("legacy_fixed_96_target_superseded") is not True:
+        raise ValueError("Legacy fixed 96-case target is not explicitly superseded")
+    if sample_size.get("no_sample_size_reestimation_using_unblinded_outcomes") is not True:
+        raise ValueError("Outcome-driven sample-size reestimation must remain forbidden")
+
+    qualification_gate = protocol.get("qualification_gate", {})
+    for field, expected_relative_path in (
+        ("staged_acquisition_amendment", STAGED_ACQUISITION_AMENDMENT_RELATIVE_PATH),
+        ("binding_schema", QUALIFICATION_BINDING_SCHEMA_RELATIVE_PATH),
+        ("binding_auditor", QUALIFICATION_BINDING_AUDITOR_RELATIVE_PATH),
+    ):
+        path = resolve_repo_relative_path(
+            str(qualification_gate.get(f"{field}_path", "")),
+            f"qualification_gate.{field}_path",
+        )
+        if path != (REPO_ROOT / expected_relative_path).resolve():
+            raise ValueError(f"Qualification-gate {field} path differs from runner")
+        if not path.is_file() or qualification_gate.get(f"{field}_sha256") != sha256(path):
+            raise ValueError(f"Qualification-gate {field} hash mismatch")
+    if qualification_gate.get("minimum_qualified_cases") != MINIMUM_VALID_COMPLETE_CASES:
+        raise ValueError("Qualification-gate minimum differs from 79")
+    if qualification_gate.get("maximum_qualified_cases") != MAXIMUM_STAGED_CANDIDATE_SLOTS:
+        raise ValueError("Qualification-gate maximum differs from 95")
+    for field in (
+        "qualification_must_be_complete",
+        "source_search_must_not_be_required",
+        "final_manifest_must_equal_all_qualified_cases",
+        "identity_hash_sets_must_match_exactly",
+        "unaudited_reserve_slots_are_not_failures",
+    ):
+        if qualification_gate.get(field) is not True:
+            raise ValueError(f"Qualification gate is missing {field}")
     analysis_gate = protocol.get("analysis_gate", {})
     if analysis_gate.get("minimum_joint_success_conditions_per_case") != (
         MINIMUM_JOINT_SUCCESS_CONDITIONS_PER_CASE
@@ -287,6 +337,113 @@ def static_protocol_checks(
     return {"protocol": protocol, "model_source": source}
 
 
+def validate_qualification_artifacts(
+    protocol: dict[str, Any],
+    qualification_readiness_path: Path,
+    qualification_binding_path: Path,
+    dataset_manifest_path: Path,
+    observed_case_count: int,
+) -> dict[str, Any]:
+    readiness = load_json(qualification_readiness_path)
+    binding = load_json(qualification_binding_path)
+    gate = protocol["qualification_gate"]
+    amendment_path = resolve_repo_relative_path(
+        gate["staged_acquisition_amendment_path"],
+        "qualification_gate.staged_acquisition_amendment_path",
+    )
+    amendment = load_json(amendment_path)
+    if readiness.get("status") != "qualification_complete":
+        raise ValueError("Staged qualification readiness is not complete")
+    if readiness.get("acquisition_complete") is not True:
+        raise ValueError("Staged acquisition is not complete")
+    if readiness.get("source_search_required") is not False:
+        raise ValueError("Staged qualification still requires source discovery")
+    qualified_count = readiness.get("actual_qualified_case_count")
+    if (
+        not isinstance(qualified_count, int)
+        or isinstance(qualified_count, bool)
+        or not MINIMUM_VALID_COMPLETE_CASES
+        <= qualified_count
+        <= MAXIMUM_STAGED_CANDIDATE_SLOTS
+    ):
+        raise ValueError("Qualified independent-case count must be between 79 and 95")
+    if readiness.get("candidate_upper_bound") != MAXIMUM_STAGED_CANDIDATE_SLOTS:
+        raise ValueError("Qualification readiness candidate upper bound differs from 95")
+    if readiness.get("all_qualified_cases_to_be_retained") is not True:
+        raise ValueError("Qualification readiness does not retain every qualified case")
+    if readiness.get("unaudited_reserve_slots_counted_as_failures") is not False:
+        raise ValueError("Unaudited reserve slots were counted as failures")
+    if readiness.get("amendment_id") != amendment.get("amendment_id"):
+        raise ValueError("Qualification readiness amendment identity mismatch")
+    if readiness.get("amendment_sha256") != sha256(amendment_path):
+        raise ValueError("Qualification readiness amendment SHA-256 mismatch")
+    for field in (
+        "file_contents_returned_to_model_development",
+        "ground_truth_opened",
+        "cost_values_opened",
+        "model_outputs_opened_during_qualification",
+        "one_shot_evaluation_consumed",
+    ):
+        if readiness.get(field) is not False:
+            raise ValueError(f"Qualification readiness disclosure flag {field} is not false")
+    if observed_case_count != qualified_count:
+        raise ValueError(
+            "Final-blind cohort must contain exactly all qualified cases: "
+            f"observed {observed_case_count}, qualified {qualified_count}"
+        )
+
+    if binding.get("status") != "qualification_manifest_binding_complete":
+        raise ValueError("Qualification-to-manifest binding is not complete")
+    if binding.get("staged_amendment_id") != amendment.get("amendment_id"):
+        raise ValueError("Binding staged amendment identity mismatch")
+    if binding.get("staged_amendment_sha256") != sha256(amendment_path):
+        raise ValueError("Binding staged amendment SHA-256 mismatch")
+    if binding.get("qualification_readiness_sha256") != sha256(
+        qualification_readiness_path
+    ):
+        raise ValueError("Binding qualification readiness SHA-256 mismatch")
+    if binding.get("dataset_manifest_sha256") != sha256(dataset_manifest_path):
+        raise ValueError("Binding dataset manifest SHA-256 mismatch")
+    if binding.get("qualified_case_count") != qualified_count:
+        raise ValueError("Binding qualified-case count mismatch")
+    if binding.get("final_manifest_case_count") != observed_case_count:
+        raise ValueError("Binding final-manifest case count mismatch")
+    for field in (
+        "identity_sets_match_exactly",
+        "all_qualified_cases_retained",
+    ):
+        if binding.get(field) is not True:
+            raise ValueError(f"Binding gate {field} is not true")
+    if binding.get("unaudited_reserve_slots_counted_as_failures") is not False:
+        raise ValueError("Binding counted unaudited reserve slots as failures")
+    qualified_commitment = str(
+        binding.get("qualified_case_identity_commitment_sha256", "")
+    )
+    manifest_commitment = str(
+        binding.get("manifest_case_identity_commitment_sha256", "")
+    )
+    if (
+        not re.fullmatch(r"[0-9a-f]{64}", qualified_commitment)
+        or qualified_commitment != manifest_commitment
+    ):
+        raise ValueError("Binding identity commitments are invalid or unequal")
+    for field in (
+        "telemetry_contents_opened_by_binding_audit",
+        "ground_truth_opened",
+        "cost_values_opened",
+        "model_outputs_opened",
+        "one_shot_evaluation_consumed",
+    ):
+        if binding.get(field) is not False:
+            raise ValueError(f"Binding disclosure flag {field} is not false")
+    return {
+        "qualified_case_count": qualified_count,
+        "qualification_readiness_sha256": sha256(qualification_readiness_path),
+        "qualification_binding_sha256": sha256(qualification_binding_path),
+        "qualified_case_identity_commitment_sha256": qualified_commitment,
+    }
+
+
 def preflight(
     protocol_path: Path,
     cases_root: Path,
@@ -296,6 +453,8 @@ def preflight(
     frozen_model_result_dir: Path,
     output_dir: Path,
     consumption_ledger: Path,
+    qualification_readiness_path: Path,
+    qualification_binding_path: Path,
 ) -> dict[str, Any]:
     static = static_protocol_checks(
         protocol_path,
@@ -312,11 +471,6 @@ def preflight(
     if output_dir.exists() and any(output_dir.iterdir()):
         raise ValueError(f"Final-blind output directory is not empty: {output_dir}")
     case_dirs = discover_final_case_dirs(cases_root)
-    target = int(protocol["sample_size"]["operational_recruitment_target"])
-    if len(case_dirs) < target:
-        raise ValueError(
-            f"Final-blind cohort has {len(case_dirs)} cases; {target} are required"
-        )
     case_ids = [
         str(load_json(case_dir / "case_config.json")["case_id"])
         for case_dir in case_dirs
@@ -328,6 +482,13 @@ def preflight(
     dataset_manifest, intake_identity_audit = validate_dataset_manifest(
         dataset_manifest_path,
         case_dirs,
+    )
+    qualification = validate_qualification_artifacts(
+        protocol,
+        qualification_readiness_path,
+        qualification_binding_path,
+        dataset_manifest_path,
+        len(case_dirs),
     )
     evaluation_profile = run_mvp.load_cost_profile(evaluation_cost_profile_path)
     if evaluation_profile["document"].get("status") != "frozen":
@@ -361,6 +522,15 @@ def preflight(
             "frozen_implementation"
         ]["training_cost_profile_sha256"],
         "evaluation_cost_profile_sha256": evaluation_profile["sha256"],
+        "qualification_readiness_sha256": qualification[
+            "qualification_readiness_sha256"
+        ],
+        "qualification_binding_sha256": qualification[
+            "qualification_binding_sha256"
+        ],
+        "qualified_case_identity_commitment_sha256": qualification[
+            "qualified_case_identity_commitment_sha256"
+        ],
         "case_count": len(case_dirs),
         "case_ids": case_ids,
         "case_dirs": case_dirs,
@@ -543,6 +713,12 @@ def execute_once(args: argparse.Namespace, checked: dict[str, Any]) -> dict[str,
         "evaluation_cost_profile_sha256": checked[
             "evaluation_cost_profile_sha256"
         ],
+        "qualification_readiness_sha256": checked[
+            "qualification_readiness_sha256"
+        ],
+        "qualification_binding_sha256": checked[
+            "qualification_binding_sha256"
+        ],
         "case_count": checked["case_count"],
     }
     with ledger.open("x", encoding="utf-8", newline="\n") as handle:
@@ -600,13 +776,19 @@ def execute_once(args: argparse.Namespace, checked: dict[str, Any]) -> dict[str,
             )
         analysis = analyze_final_rows(merged, protocol)
         report = {
-            "evaluation_id": "project05-m3star-final-blind-v0.1",
+            "evaluation_id": "project05-m3star-final-blind-v0.2",
             "status": "one_shot_final_blind_complete",
             "completed_utc": utc_now(),
             "protocol_sha256": checked["protocol_sha256"],
             "dataset_manifest_sha256": checked["dataset_manifest_sha256"],
             "evaluation_cost_profile_sha256": checked[
                 "evaluation_cost_profile_sha256"
+            ],
+            "qualification_readiness_sha256": checked[
+                "qualification_readiness_sha256"
+            ],
+            "qualification_binding_sha256": checked[
+                "qualification_binding_sha256"
             ],
             "analysis": analysis,
         }
@@ -644,6 +826,8 @@ def main() -> None:
     parser.add_argument("--dataset-manifest", type=Path, required=True)
     parser.add_argument("--training-cost-profile", type=Path, required=True)
     parser.add_argument("--evaluation-cost-profile", type=Path, required=True)
+    parser.add_argument("--qualification-readiness", type=Path, required=True)
+    parser.add_argument("--qualification-binding", type=Path, required=True)
     parser.add_argument("--frozen-model-result-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--preflight-only", action="store_true")
@@ -664,6 +848,8 @@ def main() -> None:
         args.frozen_model_result_dir,
         args.output_dir,
         ledger,
+        args.qualification_readiness,
+        args.qualification_binding,
     )
     public_preflight = {
         key: value
