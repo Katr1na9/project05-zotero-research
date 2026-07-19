@@ -80,6 +80,42 @@
       ]
     },
     {
+      "source_id": "capd",
+      "official_url": "https://github.com/AbSamad99/APTsDataset",
+      "publication_url": "https://doi.org/10.1109/LNET.2025.3551989",
+      "version_or_commit": "cb74048ea76b286f9c63efcbd8e795c3de7f7543",
+      "observations": [
+        "The IEEE Networking Letters paper reports 23 campaigns for 12 APTs and exposes adversary profiles, abilities, low-level telemetry, and MITRE techniques.",
+        "The repository owner profile identifies Abdussamad Syed, matching the paper's first author, and the fixed commit contains a non-truncated tree with 24 explicit Campaign directories.",
+        "Each Campaign directory contains a sequence JSON, profile YAML, logs archive, and README; APT19 and FIN5 are separate configuration-only directories and are not counted.",
+        "The repository README says 24 campaigns whereas the peer-reviewed paper says 23, so the conservative metadata upper bound remains 23 pending version reconciliation; no campaign contents or labels were opened."
+      ]
+    },
+    {
+      "source_id": "aviator",
+      "official_url": "https://doi.org/10.35097/8s5b0u5yqgfs2y0d",
+      "repository_url": "https://gitlab.kit.edu/kit/iai/rsa/aviator",
+      "publication_url": "https://doi.org/10.1109/BigData62323.2024.10826006",
+      "version_or_commit": "RADAR archive version 1; GitLab commit 4a8a815ee723ee7c6dec871409be67fef272da6b",
+      "observations": [
+        "KIT RADAR publishes a 109261265408-byte CC BY 4.0 archive with MD5 4d03f85f6d65b6e3849646fac4b5d734 and a stable per-file Ro-Crate manifest.",
+        "The Ro-Crate lists 16 ZIP files as eight ex_/ra_ pairs; the paired files are alternate representations of the same named scenario and are not 16 independent cases.",
+        "The official GitLab tree identifies seven unique chain definitions: two APT29 scenarios plus OilRig, OilRig-extended, Sandworm, Sandworm-extended, and Wizard Spider.",
+        "APT29 scenario2_automated is an implementation variant of scenario2 and is not an eighth chain; only tree paths and public README metadata were inspected, not ground-truth file contents."
+      ]
+    },
+    {
+      "source_id": "apt-sandworm-dataset",
+      "official_url": "https://doi.org/10.5281/zenodo.16911636",
+      "version_or_commit": "Zenodo record 16911636",
+      "observations": [
+        "The official release contains one 1814217841-byte PCAP, one labelled-flow CSV, and one README; the PCAP and labelled CSV were not opened.",
+        "The non-label README has SHA-256 a9e0dc3f1b45b249dc4f4c69ef0facc58f961e68d81c0499f0b3a829a29cf7f1 and describes one continuous emulation from 2025-02-18T11:05:59Z to 2025-02-18T11:23:12Z.",
+        "The campaign moves from a Linux PDC database through Windows PDC #1 to Active Directory and culminates in NotPetya execution, supporting exactly one multi-stage chain upper bound.",
+        "Flow rows, labels, hosts, attack steps, and time slices are within-case observations and are not independent blind cases."
+      ]
+    },
+    {
       "source_id": "multi-source-attack-logs-2026",
       "official_url": "https://arxiv.org/abs/2606.18190",
       "version_or_commit": "arXiv:2606.18190v1",
