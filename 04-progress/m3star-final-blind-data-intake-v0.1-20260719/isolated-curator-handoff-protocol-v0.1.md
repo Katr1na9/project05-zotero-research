@@ -45,6 +45,15 @@ The access classification for each prioritized source is frozen in
    Run `09-experiments/scripts/validate_m3star_final_blind_intake.py` without
    opening ground truth or cost values.
 
+Before case construction, the curator may run
+`09-experiments/scripts/verify_m3star_blind_source_artifacts.py` against a
+curator-prepared catalog conforming to
+`09-experiments/data_schema/m3star_blind_source_artifact_catalog.schema.json`.
+The verifier streams opaque bytes only, checks byte size and publisher
+MD5/SHA-256, computes local SHA-256, rejects path escape and role overlap, and
+always returns `case_credit_claimed: false`. It refuses ground-truth-custodian-
+only artifacts.
+
 ## Source-specific hard gates
 
 - Windows-APT receives no case credit from its 16 period files alone. For each

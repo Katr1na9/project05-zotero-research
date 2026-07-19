@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/m3star-blind-source-artifact-catalog-v0.1.json",
+  "title": "Project05 M3* Blind Source Artifact Catalog",
+  "type": "object",
+  "required": [
+    "catalog_id",
+    "status",
+    "curation_team_id",
+    "model_development_team_id",
+    "teams_are_disjoint",
+    "curator_blind_to_model_outputs",
+    "model_developers_blind_to_candidate_payloads",
+    "case_credit_claimed",
+    "artifacts"
+  ],
+  "properties": {
+    "catalog_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "curator_prepared"
+    },
+    "curation_team_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_development_team_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "teams_are_disjoint": {
+      "const": true
+    },
+    "curator_blind_to_model_outputs": {
+      "const": true
+    },
+    "model_developers_blind_to_candidate_payloads": {
+      "const": true
+    },
+    "case_credit_claimed": {
+      "const": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "artifact_id",
+        "relative_path",
+        "access_class",
+        "expected_size_bytes",
+        "publisher_checksum",
+        "opened_by_model_development",
+        "case_credit_claimed"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relative_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "access_class": {
+          "enum": [
+            "public_non_label_metadata",
+            "sealed_telemetry_payload",
+            "curator_only_boundary_material"
+          ]
+        },
+        "expected_size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "publisher_checksum": {
+          "type": "object",
+          "required": [
+            "algorithm",
+            "value"
+          ],
+          "properties": {
+            "algorithm": {
+              "enum": [
+                "md5",
+                "sha256"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[0-9a-f]+$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "opened_by_model_development": {
+          "const": false
+        },
+        "case_credit_claimed": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
