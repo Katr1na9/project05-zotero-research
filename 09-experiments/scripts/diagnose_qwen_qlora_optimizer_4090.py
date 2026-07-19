@@ -76,6 +76,18 @@ def summarize(values: list[float], label: str) -> dict[str, Any]:
     }
 
 
+def load_contract_chain(contract_path: Path) -> dict[str, Any]:
+    """Load and hash-verify every contract ancestor before applying overrides."""
+    contract_path = CORE.require_within(contract_path, REPO_ROOT, "contract chain")
+    raw = CORE.load_json(contract_path)
+    parent_record = raw.get("extends_contract")
+    if parent_record is None:
+        return raw
+    parent_path = CORE._verify_hash_record(parent_record, "parent contract")
+    parent = load_contract_chain(parent_path)
+    return CORE._deep_merge(parent, raw)
+
+
 def build_torch_adamw(stack: dict[str, Any], parameters: list[Any], config: dict[str, Any]):
     if config.get("optimizer") != "adamw_torch":
         raise ValueError("optimizer stability diagnostic requires adamw_torch")
@@ -107,7 +119,7 @@ def verify_static_authority(
     contract_path = CORE.require_within(contract_path, REPO_ROOT, "diagnostic contract")
     config_path = CORE.require_within(config_path, REPO_ROOT, "diagnostic config")
     authority_path = CORE.require_within(authority_path, REPO_ROOT, "diagnostic authority")
-    contract = CORE.load_contract_with_parent(contract_path)
+    contract = load_contract_chain(contract_path)
     config = CORE.load_json(config_path)
     authority = CORE.load_json(authority_path)
     boundary = CORE.validate_server_boundary(contract, run_root, repo_root=REPO_ROOT)

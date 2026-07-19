@@ -72,6 +72,13 @@ def test_v033_hash_chain_and_single_diagnostic_authority_are_closed():
         assert sha256(REPO_ROOT / record["path"]) == record["sha256"]
 
 
+def test_recursive_contract_loader_reaches_server_boundary():
+    merged = load_script().load_contract_chain(CONTRACT_PATH)
+    assert merged["server_execution_boundary"]["allowed_home"] == "/home/myy"
+    assert merged["pair_payloads"]["train"]["examples"] == 1200
+    assert merged["training_config"]["path"].endswith("training-config-v0.3.json")
+
+
 def test_optimizer_change_is_isolated_from_scientific_configuration():
     previous = load_json(V02_CONFIG_PATH)
     revised = load_json(CONFIG_PATH)

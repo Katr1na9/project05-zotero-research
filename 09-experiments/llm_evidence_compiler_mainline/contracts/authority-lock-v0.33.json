@@ -1,6 +1,6 @@
 {
   "authority_id": "project05-qwen25-rtx4090-optimizer-stability-v0.33",
-  "version": "0.33.0",
+  "version": "0.33.1",
   "status": "user_authorized_single_torch_adamw_stability_diagnostic",
   "created_date": "2026-07-19",
   "user_decision": {
@@ -10,6 +10,16 @@
     "checkpoint_selection_authorized": false,
     "multi_gpu_training_authorized": false
   },
+  "launcher_preflight_correction": {
+    "first_attempt_failure": "nested_contract_inheritance_was_only_loaded_one_level",
+    "first_attempt_model_loaded": false,
+    "first_attempt_forward_calls": 0,
+    "first_attempt_backward_calls": 0,
+    "first_attempt_optimizer_steps": 0,
+    "first_attempt_adapter_or_checkpoint_writes": 0,
+    "counts_as_optimizer_stability_execution": false,
+    "correction": "recursively_hash_verify_and_merge_all_contract_ancestors"
+  },
   "parent_authority": {
     "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.32.json",
     "sha256": "E11C1EB0F0B9FEB8811073DD012734992442E0806944A7FB039555C2CF8D7AB3",
@@ -17,7 +27,7 @@
   },
   "authoritative_contract": {
     "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.3.json",
-    "sha256": "EFA114061D80C4C28C12BEE15AC3A4EC96D556F31164721934241E3D5468E575"
+    "sha256": "369F73F6DE02748A8AA985829382BCDD43ACA1A62E4B4EC696BC7347D5D2D151"
   },
   "approved_optimizer_amendment": {
     "path": "08-writing/llm-evidence-compiler-qwen25-4090-optimizer-stability-amendment-v0.33-20260719.md",
@@ -29,7 +39,7 @@
   },
   "optimizer_stability_gate": {
     "authorized": true,
-    "contract_sha256": "EFA114061D80C4C28C12BEE15AC3A4EC96D556F31164721934241E3D5468E575",
+    "contract_sha256": "369F73F6DE02748A8AA985829382BCDD43ACA1A62E4B4EC696BC7347D5D2D151",
     "training_config_sha256": "783217674EEF9FF6E7B1FD93344F2E4C9E7AB655A5AABF019B8D858B1312883D",
     "existing_preparation_reuse_authorized": true,
     "passed_smoke_reuse_for_gpu_uuid_binding_authorized": true,
