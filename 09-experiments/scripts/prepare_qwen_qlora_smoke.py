@@ -77,9 +77,23 @@ def require_within(path: Path, root: Path, label: str) -> Path:
     return resolved
 
 
-def validate_server_boundary(
+def validate_execution_boundary(
     contract: dict[str, Any], run_root: Path, repo_root: Path = REPO_ROOT
 ) -> tuple[Path, Path]:
+    local = contract.get("execution_boundary")
+    if local is not None:
+        if local["mode"] != "repository_relative_local_windows":
+            raise ValueError("unsupported local execution boundary mode")
+        observed_repo = Path(repo_root).resolve()
+        expected_root = (observed_repo / local["run_directory_name"]).resolve()
+        observed_root = Path(run_root).resolve()
+        if os.name != "nt":
+            raise ValueError("the local QLoRA preparation command is Windows-only")
+        if observed_root != expected_root:
+            raise ValueError("run root differs from the repository-relative local path")
+        require_within(observed_root, observed_repo, "local run root")
+        return observed_repo, observed_root
+
     boundary = contract["server_execution_boundary"]
     allowed_home = Path(boundary["allowed_home"]).resolve()
     expected_root = (allowed_home / boundary["run_directory_name"]).resolve()
@@ -93,6 +107,9 @@ def validate_server_boundary(
     if observed_root == allowed_home:
         raise ValueError("run root must be a dedicated child of /home/myy")
     return allowed_home, observed_root
+
+
+validate_server_boundary = validate_execution_boundary
 
 
 def unique_physical_bytes(paths: Iterable[Path]) -> int:
@@ -147,7 +164,9 @@ def probe_runtime(contract: dict[str, Any]) -> dict[str, Any]:
     if not torch.cuda.is_available():
         raise ValueError("CUDA is unavailable")
     gpu_name = torch.cuda.get_device_name(0)
-    hardware = contract["execution_host_amendment"]
+    hardware = contract.get("execution_host", contract.get("execution_host_amendment"))
+    if hardware is None:
+        raise ValueError("execution host contract is missing")
     if gpu_name != hardware["gpu_name_required"]:
         raise ValueError("GPU identity differs from the contracted RTX 4090")
     capability = torch.cuda.get_device_capability(0)
@@ -265,7 +284,7 @@ def verify_snapshot(
 
 def prepare(contract_path: Path, run_root: Path, output: Path) -> dict[str, Any]:
     contract = load_json(contract_path)
-    _, run_root = validate_server_boundary(contract, run_root)
+    _, run_root = validate_execution_boundary(contract, run_root)
     output = Path(output).resolve()
     require_within(output, run_root, "preparation audit")
     runtime = probe_runtime(contract)

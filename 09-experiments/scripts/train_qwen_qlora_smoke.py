@@ -94,9 +94,24 @@ def write_json_no_overwrite(path: Path, value: Any) -> None:
         raise
 
 
-def validate_server_boundary(
+def validate_execution_boundary(
     contract: dict[str, Any], run_root: Path, repo_root: Path = REPO_ROOT
 ) -> tuple[Path, Path]:
+    local = contract.get("execution_boundary")
+    if local is not None:
+        if local["mode"] != "repository_relative_local_windows":
+            raise ValueError("unsupported local execution boundary mode")
+        observed_repo = Path(repo_root).resolve()
+        expected_root = (observed_repo / local["run_directory_name"]).resolve()
+        run_root = Path(run_root).resolve()
+        if os.name != "nt":
+            raise ValueError("the local QLoRA smoke command is Windows-only")
+        if run_root != expected_root:
+            raise ValueError("run root differs from the repository-relative local path")
+        if not is_within(run_root, observed_repo):
+            raise ValueError("local run root escapes the repository")
+        return observed_repo, run_root
+
     boundary = contract["server_execution_boundary"]
     allowed_home = Path(boundary["allowed_home"]).resolve()
     expected_root = (allowed_home / boundary["run_directory_name"]).resolve()
@@ -108,6 +123,9 @@ def validate_server_boundary(
     if not is_within(repo_root, allowed_home):
         raise ValueError("repository is outside /home/myy")
     return allowed_home, run_root
+
+
+validate_server_boundary = validate_execution_boundary
 
 
 def resolve_field_path(value: dict[str, Any], path: str) -> Any:
@@ -291,7 +309,7 @@ def run_smoke(
     started = time.monotonic()
     contract = load_json(contract_path)
     config = load_json(config_path)
-    _, run_root = validate_server_boundary(contract, run_root)
+    allowed_root, run_root = validate_execution_boundary(contract, run_root)
     for path, label in (
         (contract_path, "contract"),
         (config_path, "training config"),
@@ -299,7 +317,7 @@ def run_smoke(
         (pair_root, "pair root"),
         (output_path, "smoke audit"),
     ):
-        require_within(path, Path("/home/myy"), label)
+        require_within(path, allowed_root, label)
     if sha256_file(config_path) != contract["training_config"]["sha256"]:
         raise ValueError("training configuration SHA-256 mismatch")
 

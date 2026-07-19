@@ -15,7 +15,19 @@ CONFIG_PATH = MAINLINE_ROOT / "qlora_smoke_v0.1" / "training-config-v0.1.json"
 REQUIREMENTS_PATH = (
     MAINLINE_ROOT / "qlora_smoke_v0.1" / "requirements-linux-cu121-v0.1.txt"
 )
-AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.18.json"
+LOCAL_CONTRACT_PATH = (
+    MAINLINE_ROOT / "contracts" / "qwen25-qlora-local-smoke-contract-v0.2.json"
+)
+LOCAL_CONFIG_PATH = (
+    MAINLINE_ROOT / "qlora_smoke_v0.2" / "training-config-v0.2-local.json"
+)
+LOCAL_REQUIREMENTS_PATH = (
+    MAINLINE_ROOT / "qlora_smoke_v0.2" / "requirements-windows-cu121-v0.2.txt"
+)
+LOCAL_LAUNCHER_PATH = (
+    MAINLINE_ROOT / "qlora_smoke_v0.2" / "run-local-smoke-v0.2.ps1"
+)
+AUTHORITY_PATH = MAINLINE_ROOT / "contracts" / "authority-lock-v0.19.json"
 
 
 def load_module(path: Path, name: str):
@@ -50,6 +62,8 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
         cls.train = load_module(TRAIN_PATH, "train_qwen_smoke")
         cls.contract = load_json(CONTRACT_PATH)
         cls.config = load_json(CONFIG_PATH)
+        cls.local_contract = load_json(LOCAL_CONTRACT_PATH)
+        cls.local_config = load_json(LOCAL_CONFIG_PATH)
 
     def test_import_is_lazy_and_does_not_require_model_runtime(self):
         for module in (self.prepare, self.train):
@@ -114,6 +128,60 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
             if key != "python"
         }
         self.assertEqual(expected, observed)
+
+    def test_local_route_abandons_server_and_pins_repository_boundary(self):
+        disposition = self.local_contract["server_route_disposition"]
+        self.assertEqual("abandoned_by_user", disposition["status"])
+        self.assertFalse(disposition["further_server_connection_authorized"])
+        self.assertFalse(disposition["server_training_authorized"])
+        boundary = self.local_contract["execution_boundary"]
+        self.assertEqual("repository_relative_local_windows", boundary["mode"])
+        self.assertEqual(".local-qwen25-smoke", boundary["run_directory_name"])
+        self.assertEqual(
+            self.local_contract["training_config"]["sha256"],
+            sha256(LOCAL_CONFIG_PATH),
+        )
+        self.assertEqual(
+            self.local_contract["runtime_requirements"]["sha256"],
+            sha256(LOCAL_REQUIREMENTS_PATH),
+        )
+
+    def test_local_boundary_accepts_only_exact_repository_child(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "repo"
+            repo.mkdir()
+            expected = repo / ".local-qwen25-smoke"
+            allowed, observed = self.prepare.validate_execution_boundary(
+                self.local_contract, expected, repo
+            )
+            self.assertEqual(repo.resolve(), allowed)
+            self.assertEqual(expected.resolve(), observed)
+            with self.assertRaisesRegex(ValueError, "repository-relative"):
+                self.prepare.validate_execution_boundary(
+                    self.local_contract, repo / "another-root", repo
+                )
+
+    def test_local_config_restores_blocking_2080ti_memory_gate(self):
+        hardware = self.local_config["hardware"]
+        self.assertEqual("NVIDIA GeForce RTX 2080 Ti", hardware["execution_target"])
+        self.assertEqual(10.5, hardware["maximum_operational_peak_vram_gib"])
+        self.assertTrue(hardware["local_memory_gate_is_blocking"])
+        self.assertEqual("float16", self.local_config["quantization"]["compute_dtype"])
+        self.assertFalse(self.local_config["allow_truncation"])
+
+    def test_local_launcher_confines_all_caches_and_contains_no_delete(self):
+        launcher = LOCAL_LAUNCHER_PATH.read_text(encoding="utf-8")
+        for name in (
+            "PIP_CACHE_DIR",
+            "HF_HOME",
+            "HF_HUB_CACHE",
+            "TRANSFORMERS_CACHE",
+            "XDG_CACHE_HOME",
+            "PYTHONPYCACHEPREFIX",
+        ):
+            self.assertIn(name, launcher)
+        self.assertNotIn("Remove-Item", launcher)
+        self.assertNotIn("rm -", launcher)
 
     def test_path_guard_rejects_escape(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -232,6 +300,8 @@ class QwenQloraSmokeContractTests(unittest.TestCase):
                     self.assertEqual(expected, sha256(REPO_ROOT / relative))
         self.assertTrue(authority["smoke_gate"]["user_authorized"])
         self.assertFalse(authority["next_gate"]["primary_training_authorized"])
+        self.assertEqual("abandoned_by_user", authority["server_route"]["status"])
+        self.assertFalse(authority["server_route"]["further_connection_authorized"])
 
 
 if __name__ == "__main__":
