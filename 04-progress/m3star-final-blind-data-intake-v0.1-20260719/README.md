@@ -26,6 +26,12 @@ private acquisition ledgers. The content-free public record is
 `reconstruction-material-readiness-summary-v0.3.json`. No further download is
 required for the frozen 59-case cohort.
 
+The OTRF reconstruction subset has a separate pre-execution record-anchor
+contract in 'otrf-anchor-audit-curator-run-contract-v0.3.json'. It freezes the
+rare-anchor threshold, comparison-only scope, script hashes, role separation,
+and the exact redacted return boundary. The contract does not authorize the
+model-development role to inspect or scan source records.
+
 This does not consume the final blind evaluation. The next valid step is an
 isolated reconstruction of exactly 59 complete, unique case directories, a
 manifest bound to the frozen identity commitment, and a measured-cost profile.
