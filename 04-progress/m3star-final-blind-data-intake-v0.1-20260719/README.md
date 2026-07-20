@@ -4,6 +4,27 @@ This directory is an input-governance artifact, not a paper or patent draft.
 It records only public source metadata and candidate counts. No C13+ labels,
 cost values, model outputs, or ground truth were opened or stored here.
 
+## Current frozen checkpoint (2026-07-20)
+
+The staged qualification phase is complete. The isolated curator audited 93
+frozen candidates: 59 qualified and 34 did not qualify. Two reserve candidates
+remain unaudited because the amended stopping gate was met; they are not
+failures and must not be acquired merely to increase the count. Additional
+source search is stopped.
+
+All artifacts on the frozen missing-reacquisition allowlist have now been
+reconstructed and independently preflighted: 15 of 15 files are complete,
+18,308,224,167 of 18,308,224,167 bytes are present, all publisher MD5 checks
+pass, the private SHA-256 completion ledger is complete, and no partial or
+invalid file remains. The public, content-free completion record is
+`final-blind-missing-reacquisition-completion-v0.3.json`.
+
+This does not consume the final blind evaluation. The next valid step is an
+isolated reconstruction of exactly 59 complete, unique case directories, a
+manifest bound to the frozen identity commitment, and a measured-cost profile.
+The model-development role may not open final-blind payloads, labels, costs,
+action sequences, or outcomes, and may not train or tune on these cases.
+
 ## Counting rule
 
 One independent case means one complete campaign execution with a unique
@@ -117,21 +138,20 @@ The staged return contract is frozen by
 `m3star_blind_staged_candidate_qualification.schema.json` and
 `audit_m3star_blind_staged_candidate_qualification.py`; both SHA-256 values are
 anchored inside the amendment. The curator starts from
-`curator-staged-candidate-qualification-report.template.json`. Phase 1 is now
-complete: all 81 frozen slots were audited, 47 qualified and 34 did not. The
-first five Phase-2 candidates also qualified, so the current readiness state
-is `qualification_checkpoint_continue_acquisition`: 86 slots have been
-audited, 52 qualified, 34 did not, and 9 reserve slots remain unaudited. None
-is counted as a failure. The frozen auditor selected Phase 2 index 6,
-`wardbeck_no-pcaps.zip`, as the sole permitted next candidate. Acquisition is
-paused at this checkpoint for an outcome-free sample-size design review.
+`curator-staged-candidate-qualification-report.template.json`. The completed
+staged audit contains 93 audited slots: 59 qualified and 34 did not qualify.
+Two reserve slots remain unaudited under the frozen stopping rule. None is
+counted as a model failure. Acquisition is complete, additional source search
+is not required, and no further SL300 or CICAPT acquisition is permitted.
 
-Before any payload access, final-blind protocol v0.2 also replaced the legacy
-fixed 96-case preflight target with an outcome-free dynamic gate: the final
-manifest must contain every independently qualified case, no more and no less;
-the exact four-hash case-identity set must match; and the resulting independent
-case count must be between 79 and 95. The gate is therefore fixed before the
-qualified count is known and cannot be tuned after observing it.
+Before any outcome access, the original final-blind protocol v0.2 replaced the
+legacy fixed 96-case preflight target with an outcome-free dynamic gate.
+Amendment v0.3 subsequently froze 59 as the executable minimum and retained 79
+only as a non-executing 90% power reference. The final manifest must contain
+every independently qualified case, no more and no less; the exact four-hash
+case-identity set must match; and the resulting independent case count must be
+between 59 and 95. This gate was fixed without model or baseline outcomes and
+cannot be tuned after opening them.
 
 `source-artifact-access-boundary-v0.1.json` freezes which source artifacts may
 be inspected as public non-label metadata, which telemetry may only be
