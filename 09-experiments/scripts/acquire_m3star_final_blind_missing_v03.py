@@ -9,7 +9,9 @@ import json
 import os
 import re
 import shutil
+import threading
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -378,10 +380,156 @@ def inspect_local_state(
     }
 
 
+def split_ranges(start: int, end: int, connections: int) -> list[tuple[int, int]]:
+    if start > end:
+        return []
+    total = end - start + 1
+    count = min(connections, total)
+    base, remainder = divmod(total, count)
+    ranges: list[tuple[int, int]] = []
+    cursor = start
+    for index in range(count):
+        length = base + (1 if index < remainder else 0)
+        ranges.append((cursor, cursor + length - 1))
+        cursor += length
+    return ranges
+
+
+def download_range(
+    *,
+    url: str,
+    item: dict[str, Any],
+    range_start: int,
+    range_end: int,
+    segment_path: Path,
+    on_chunk: Any,
+) -> None:
+    expected_length = range_end - range_start + 1
+    existing = segment_path.stat().st_size if segment_path.exists() else 0
+    if existing > expected_length:
+        raise ValueError(f"Range segment exceeds its frozen length: {item['key']}")
+    if existing == expected_length:
+        return
+    request_start = range_start + existing
+    request = urllib.request.Request(
+        item["download_url"],
+        headers={
+            "User-Agent": "Project05-final-blind-reconstruction-v0.3",
+            "Accept": "*/*",
+            "Range": f"bytes={request_start}-{range_end}",
+        },
+    )
+    with urllib.request.urlopen(request, timeout=120) as response:
+        status = getattr(response, "status", response.getcode())
+        if status != 206:
+            raise ValueError(
+                f"Range request returned HTTP {status} for {item['key']}"
+            )
+        expected_content_range = (
+            f"bytes {request_start}-{range_end}/{item['size']}"
+        )
+        if response.headers.get("Content-Range") != expected_content_range:
+            raise ValueError(f"Content-Range mismatch for {item['key']}")
+        with segment_path.open("ab") as handle:
+            while True:
+                chunk = response.read(8 * 1024 * 1024)
+                if not chunk:
+                    break
+                handle.write(chunk)
+                existing += len(chunk)
+                if existing > expected_length:
+                    raise ValueError(
+                        f"Range segment exceeds allowlisted size: {item['key']}"
+                    )
+                on_chunk(len(chunk))
+    if segment_path.stat().st_size != expected_length:
+        raise ValueError(f"Range segment size mismatch: {item['key']}")
+
+
+def download_parallel_ranges(
+    *,
+    partial: Path,
+    current: int,
+    item: dict[str, Any],
+    record: dict[str, Any],
+    connections: int,
+) -> None:
+    ranges = split_ranges(current, item["size"] - 1, connections)
+    segments = [
+        partial.with_name(f"{partial.name}.segment{index:03d}")
+        for index in range(1, len(ranges) + 1)
+    ]
+    existing_segment_bytes = sum(
+        path.stat().st_size for path in segments if path.exists()
+    )
+    lock = threading.Lock()
+    progress = {"downloaded": current + existing_segment_bytes}
+    next_progress = {
+        "bytes": (
+            ((progress["downloaded"] // PROGRESS_INTERVAL_BYTES) + 1)
+            * PROGRESS_INTERVAL_BYTES
+        )
+    }
+
+    def on_chunk(length: int) -> None:
+        with lock:
+            progress["downloaded"] += length
+            if progress["downloaded"] >= next_progress["bytes"]:
+                print(
+                    json.dumps(
+                        {
+                            "status": "download_progress",
+                            "record_id": record["record_id"],
+                            "key": item["key"],
+                            "downloaded_bytes": progress["downloaded"],
+                            "expected_bytes": item["size"],
+                            "range_connections": connections,
+                        }
+                    ),
+                    flush=True,
+                )
+                while progress["downloaded"] >= next_progress["bytes"]:
+                    next_progress["bytes"] += PROGRESS_INTERVAL_BYTES
+
+    with ThreadPoolExecutor(max_workers=connections) as executor:
+        futures = [
+            executor.submit(
+                download_range,
+                url=item["download_url"],
+                item=item,
+                range_start=range_start,
+                range_end=range_end,
+                segment_path=segment,
+                on_chunk=on_chunk,
+            )
+            for (range_start, range_end), segment in zip(ranges, segments)
+        ]
+        for future in futures:
+            future.result()
+
+    assembled = partial.with_suffix(partial.suffix + ".assembled")
+    if assembled.exists():
+        assembled.unlink()
+    with assembled.open("wb") as output:
+        if partial.exists():
+            with partial.open("rb") as prefix:
+                shutil.copyfileobj(prefix, output, length=8 * 1024 * 1024)
+        for segment in segments:
+            with segment.open("rb") as source:
+                shutil.copyfileobj(source, output, length=8 * 1024 * 1024)
+    if assembled.stat().st_size != item["size"]:
+        raise ValueError(f"Parallel assembly size mismatch: {item['key']}")
+    os.replace(assembled, partial)
+    for segment in segments:
+        segment.unlink()
+
+
 def download_one(
     record: dict[str, Any],
     item: dict[str, Any],
     destination_root: Path,
+    *,
+    connections: int = 1,
 ) -> dict[str, Any]:
     path = destination_path(destination_root, record, item)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -405,52 +553,67 @@ def download_one(
     current = partial.stat().st_size if partial.exists() else 0
     if current > item["size"]:
         raise ValueError(f"Partial file exceeds allowlisted size: {partial.name}")
+    if connections > 1 and current < item["size"]:
+        download_parallel_ranges(
+            partial=partial,
+            current=current,
+            item=item,
+            record=record,
+            connections=connections,
+        )
+        current = item["size"]
     headers = {
         "User-Agent": "Project05-final-blind-reconstruction-v0.3",
         "Accept": "*/*",
     }
     if current:
         headers["Range"] = f"bytes={current}-"
-    request = urllib.request.Request(item["download_url"], headers=headers)
-    with urllib.request.urlopen(request, timeout=120) as response:
-        status = getattr(response, "status", response.getcode())
-        if current and status == 206:
-            mode = "ab"
-        elif current and status == 200:
-            current = 0
-            mode = "wb"
-        elif not current and status == 200:
-            mode = "wb"
-        else:
-            raise ValueError(f"Unexpected HTTP status {status} for {item['key']}")
-        downloaded = current
-        next_progress = (
-            ((downloaded // PROGRESS_INTERVAL_BYTES) + 1)
-            * PROGRESS_INTERVAL_BYTES
-        )
-        with partial.open(mode) as handle:
-            while True:
-                chunk = response.read(8 * 1024 * 1024)
-                if not chunk:
-                    break
-                handle.write(chunk)
-                downloaded += len(chunk)
-                if downloaded > item["size"]:
-                    raise ValueError(f"Download exceeds allowlisted size: {item['key']}")
-                if downloaded >= next_progress:
-                    print(
-                        json.dumps(
-                            {
-                                "status": "download_progress",
-                                "record_id": record["record_id"],
-                                "key": item["key"],
-                                "downloaded_bytes": downloaded,
-                                "expected_bytes": item["size"],
-                            }
-                        ),
-                        flush=True,
-                    )
-                    next_progress += PROGRESS_INTERVAL_BYTES
+    if current < item["size"]:
+        request = urllib.request.Request(item["download_url"], headers=headers)
+        with urllib.request.urlopen(request, timeout=120) as response:
+            status = getattr(response, "status", response.getcode())
+            if current and status == 206:
+                mode = "ab"
+            elif current and status == 200:
+                current = 0
+                mode = "wb"
+            elif not current and status == 200:
+                mode = "wb"
+            else:
+                raise ValueError(
+                    f"Unexpected HTTP status {status} for {item['key']}"
+                )
+            downloaded = current
+            next_progress = (
+                ((downloaded // PROGRESS_INTERVAL_BYTES) + 1)
+                * PROGRESS_INTERVAL_BYTES
+            )
+            with partial.open(mode) as handle:
+                while True:
+                    chunk = response.read(8 * 1024 * 1024)
+                    if not chunk:
+                        break
+                    handle.write(chunk)
+                    downloaded += len(chunk)
+                    if downloaded > item["size"]:
+                        raise ValueError(
+                            f"Download exceeds allowlisted size: {item['key']}"
+                        )
+                    if downloaded >= next_progress:
+                        print(
+                            json.dumps(
+                                {
+                                    "status": "download_progress",
+                                    "record_id": record["record_id"],
+                                    "key": item["key"],
+                                    "downloaded_bytes": downloaded,
+                                    "expected_bytes": item["size"],
+                                    "range_connections": 1,
+                                }
+                            ),
+                            flush=True,
+                        )
+                        next_progress += PROGRESS_INTERVAL_BYTES
     if partial.stat().st_size != item["size"]:
         raise ValueError(f"Downloaded size mismatch: {item['key']}")
     observed_md5, observed_sha256 = md5_and_sha256(partial)
@@ -476,6 +639,7 @@ def execute(
     private_ledger_path: Path,
     *,
     max_files: int | None,
+    connections: int,
 ) -> dict[str, Any]:
     entries: list[dict[str, Any]] = []
     selected = list(iter_files(plan))
@@ -497,7 +661,12 @@ def execute(
             ),
             flush=True,
         )
-        entry = download_one(record, item, destination_root)
+        entry = download_one(
+            record,
+            item,
+            destination_root,
+            connections=connections,
+        )
         entries.append(entry)
         ledger = {
             "ledger_id": "project05-m3star-final-blind-missing-reacquisition-private-v0.3",
@@ -558,12 +727,15 @@ def main() -> None:
     parser.add_argument("--preflight-only", action="store_true")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--max-files", type=int)
+    parser.add_argument("--connections", type=int, default=1)
     args = parser.parse_args()
     if args.preflight_only == args.execute:
         parser.error("Choose exactly one of --preflight-only or --execute")
     plan_path = args.allowlist.resolve(strict=True)
     plan = load_json(plan_path)
     validation = validate_plan(plan)
+    if not 1 <= args.connections <= 8:
+        parser.error("--connections must be between 1 and 8")
     args.destination_root.mkdir(parents=True, exist_ok=True)
     if args.preflight_only:
         report = {
@@ -577,6 +749,7 @@ def main() -> None:
             args.destination_root,
             args.private_ledger,
             max_files=args.max_files,
+            connections=args.connections,
         )
     print(json.dumps(report, indent=2, ensure_ascii=False), flush=True)
 

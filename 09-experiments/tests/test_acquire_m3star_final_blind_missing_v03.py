@@ -106,6 +106,58 @@ class MissingBlindArtifactAcquisitionTests(unittest.TestCase):
         self.assertTrue(result["publisher_md5_verified"])
         self.assertEqual(hashlib.sha256(content).hexdigest(), result["sha256"])
 
+    def test_parallel_range_assembly_preserves_existing_prefix(self):
+        content = bytes(range(251)) * 100
+        prefix_size = 1234
+        with tempfile.TemporaryDirectory() as temporary:
+            partial = Path(temporary) / "payload.bin.part"
+            partial.write_bytes(content[:prefix_size])
+            item = {
+                "key": "payload.bin",
+                "size": len(content),
+                "download_url": "https://example.invalid/not-used",
+            }
+            record = {"record_id": "fixture"}
+            original = ACQUIRE.download_range
+
+            def fake_download_range(
+                *,
+                url,
+                item,
+                range_start,
+                range_end,
+                segment_path,
+                on_chunk,
+            ):
+                chunk = content[range_start : range_end + 1]
+                segment_path.write_bytes(chunk)
+                on_chunk(len(chunk))
+
+            ACQUIRE.download_range = fake_download_range
+            try:
+                ACQUIRE.download_parallel_ranges(
+                    partial=partial,
+                    current=prefix_size,
+                    item=item,
+                    record=record,
+                    connections=4,
+                )
+            finally:
+                ACQUIRE.download_range = original
+            observed = partial.read_bytes()
+        self.assertEqual(content, observed)
+
+    def test_split_ranges_are_contiguous_and_exhaustive(self):
+        ranges = ACQUIRE.split_ranges(100, 999, 4)
+        self.assertEqual(100, ranges[0][0])
+        self.assertEqual(999, ranges[-1][1])
+        self.assertEqual(
+            900,
+            sum(end - start + 1 for start, end in ranges),
+        )
+        for left, right in zip(ranges, ranges[1:]):
+            self.assertEqual(left[1] + 1, right[0])
+
 
 if __name__ == "__main__":
     unittest.main()
