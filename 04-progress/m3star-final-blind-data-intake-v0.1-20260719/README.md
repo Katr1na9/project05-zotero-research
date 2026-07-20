@@ -19,6 +19,13 @@ pass, the private SHA-256 completion ledger is complete, and no partial or
 invalid file remains. The public, content-free completion record is
 `final-blind-missing-reacquisition-completion-v0.3.json`.
 
+The subsequent reconstruction-material gate also passes. All 59 frozen case
+assignments bind to 14 locally available source-release batches; 370 of 370
+required artifacts and 24,437,392,504 of 24,437,392,504 bytes match their
+private acquisition ledgers. The content-free public record is
+`reconstruction-material-readiness-summary-v0.3.json`. No further download is
+required for the frozen 59-case cohort.
+
 This does not consume the final blind evaluation. The next valid step is an
 isolated reconstruction of exactly 59 complete, unique case directories, a
 manifest bound to the frozen identity commitment, and a measured-cost profile.
