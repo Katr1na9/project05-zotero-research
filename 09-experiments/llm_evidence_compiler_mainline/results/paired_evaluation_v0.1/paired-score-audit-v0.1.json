@@ -1,0 +1,164 @@
+{
+  "config_sha256": "447759AA1B56760E92F52F4F6C9874E08E30111CE4EB6503524D41C811FA3DCE",
+  "contract_sha256": "D8D651C9FB7292A9B0B713320D94397CC50ADCAFAC457CC8F55AD47245F76211",
+  "execution_authority_sha256": "66E6086EC723A56EE02489ED73FD8EF246E91B1B847B159E066A15C5A7C8BF22",
+  "generation_audit": {
+    "path": "paired-generation-audit-v0.1.json",
+    "sha256": "52881BE8E76FC41D5B3BA82F3F6FD94A0D1AA62C3B5E5574FFA664B60A3D9A98"
+  },
+  "next_gate": {
+    "automatic_development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "development_or_test_access_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false,
+    "status": "hard_stop_for_user_review"
+  },
+  "raw_generation": {
+    "download_authorized": false,
+    "included_in_sanitized_metrics": false,
+    "server_only": true
+  },
+  "sanitized_metrics": {
+    "file": "paired-sanitized-metrics-v0.1.jsonl",
+    "rows": 32,
+    "sha256": "D851450B2181E34E73A712BC74E129C23B6E8C179E2F47BE3977DC17EAAC78F0"
+  },
+  "schema_version": "project05-paired-score-audit-v0.1",
+  "scores": {
+    "adapted_minus_general": {
+      "ceiling_violation_rate": 0.0,
+      "family_macro_support_decision_f1": 0.5,
+      "invalid_rate": -0.5,
+      "normalized_edge_exact_rate": 0.5,
+      "overall_supported_class_f1": 0.0,
+      "overall_unsupported_class_f1": 1.0,
+      "pointer_exact_rate": 0.5,
+      "supported_output_rate": 0.0
+    },
+    "adapter_diagnostic_gate": {
+      "checks": {
+        "adapted_supported_f1_nonzero_each_family": false,
+        "adapted_supported_f1_nonzero_overall": false,
+        "ceiling_not_higher": true,
+        "coverage_guardrail": true,
+        "family_macro_f1_not_lower": true,
+        "invalid_rate_not_higher": true,
+        "pointer_exact_not_lower": true,
+        "unsupported_f1_guardrail": true
+      },
+      "may_change_checkpoint": false,
+      "may_select_adapter_for_mainline": false,
+      "passed": false,
+      "status": "failed_or_collapsed_training_validation_diagnostic"
+    },
+    "conditions": {
+      "QWEN-ADAPTED": {
+        "ceiling_violation_rate": 0.0,
+        "examples": 16,
+        "families": {
+          "logpai_loghub_linux": {
+            "examples": 8,
+            "gold": {
+              "supported": 4,
+              "unsupported_by_bound_pointer": 4
+            },
+            "macro_support_decision_f1": 0.5,
+            "predicted": {
+              "invalid": 4,
+              "unsupported_by_bound_pointer": 4
+            },
+            "support_decision_f1": {
+              "supported": 0.0,
+              "unsupported_by_bound_pointer": 1.0
+            }
+          },
+          "zeek_non_pcap_test_logs": {
+            "examples": 8,
+            "gold": {
+              "supported": 4,
+              "unsupported_by_bound_pointer": 4
+            },
+            "macro_support_decision_f1": 0.5,
+            "predicted": {
+              "invalid": 4,
+              "unsupported_by_bound_pointer": 4
+            },
+            "support_decision_f1": {
+              "supported": 0.0,
+              "unsupported_by_bound_pointer": 1.0
+            }
+          }
+        },
+        "family_macro_support_decision_f1": 0.5,
+        "invalid_rate": 0.5,
+        "maximum_peak_allocated_bytes": 5974477312,
+        "mean_latency_seconds": 10.691832938115112,
+        "normalized_edge_exact_rate": 0.5,
+        "overall_supported_class_f1": 0.0,
+        "overall_unsupported_class_f1": 1.0,
+        "pointer_exact_rate": 0.5,
+        "schema_valid_rate": 0.5,
+        "supported_output_rate": 0.0
+      },
+      "QWEN-GENERAL": {
+        "ceiling_violation_rate": 0.0,
+        "examples": 16,
+        "families": {
+          "logpai_loghub_linux": {
+            "examples": 8,
+            "gold": {
+              "supported": 4,
+              "unsupported_by_bound_pointer": 4
+            },
+            "macro_support_decision_f1": 0.0,
+            "predicted": {
+              "invalid": 8
+            },
+            "support_decision_f1": {
+              "supported": 0.0,
+              "unsupported_by_bound_pointer": 0.0
+            }
+          },
+          "zeek_non_pcap_test_logs": {
+            "examples": 8,
+            "gold": {
+              "supported": 4,
+              "unsupported_by_bound_pointer": 4
+            },
+            "macro_support_decision_f1": 0.0,
+            "predicted": {
+              "invalid": 8
+            },
+            "support_decision_f1": {
+              "supported": 0.0,
+              "unsupported_by_bound_pointer": 0.0
+            }
+          }
+        },
+        "family_macro_support_decision_f1": 0.0,
+        "invalid_rate": 1.0,
+        "maximum_peak_allocated_bytes": 5974477312,
+        "mean_latency_seconds": 0.237543759169057,
+        "normalized_edge_exact_rate": 0.0,
+        "overall_supported_class_f1": 0.0,
+        "overall_unsupported_class_f1": 0.0,
+        "pointer_exact_rate": 0.0,
+        "schema_valid_rate": 0.0,
+        "supported_output_rate": 0.0
+      }
+    },
+    "scientific_scope": {
+      "general_vs_adapted_final_gate_evaluated": false,
+      "independent_test_result": false,
+      "paper_positive_claim_authorized": false,
+      "split": "training-validation",
+      "supported_class_collapse_reported": true
+    },
+    "technical_gate": {
+      "passed": true,
+      "status": "passed_atomic_execution_integrity"
+    }
+  },
+  "status": "paired_training_validation_atomic_scoring_complete"
+}
