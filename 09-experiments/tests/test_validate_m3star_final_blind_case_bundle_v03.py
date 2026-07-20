@@ -19,6 +19,11 @@ SPEC = importlib.util.spec_from_file_location(
 VALIDATOR = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(VALIDATOR)
+MVP_PATH = REPO_ROOT / "09-experiments" / "scripts" / "run_mvp.py"
+MVP_SPEC = importlib.util.spec_from_file_location("run_mvp_for_bundle_test", MVP_PATH)
+MVP = importlib.util.module_from_spec(MVP_SPEC)
+assert MVP_SPEC.loader is not None
+MVP_SPEC.loader.exec_module(MVP)
 
 
 def write_json(path, value):
@@ -29,7 +34,10 @@ def valid_bundle(case_id="C013-final-blind"):
     config = {
         "case_id": case_id,
         "development_only": False,
-        "budget_total": 10,
+        "budget_total": None,
+        "budget_status": "pending_sealed_measurement",
+        "cost_regime_required": "measured",
+        "measured_cost_profile_required": True,
         "mask_intensities": [0.2, 0.4, 0.6],
         "mask_strategies": ["random", "stage", "discriminative"],
         "random_seeds": [11, 23, 37, 41, 53],
@@ -91,7 +99,7 @@ def valid_bundle(case_id="C013-final-blind"):
             "action_type": "query_host_subgraph",
             "acquisition_channel": "host",
             "target": {"target_type": "host", "target_value": "sealed-host"},
-            "cost": 1,
+            "cost": None,
             "recoverable_claim_ids": ["Q1"],
             "intended_cti_node_ids": ["N1"],
             "expected_effects": base_effects,
@@ -103,7 +111,7 @@ def valid_bundle(case_id="C013-final-blind"):
             "action_type": "recover_network_summary",
             "acquisition_channel": "network",
             "target": {"target_type": "capture", "target_value": "sealed-capture"},
-            "cost": 2,
+            "cost": None,
             "recoverable_claim_ids": ["Q2"],
             "intended_cti_node_ids": ["N2"],
             "expected_effects": base_effects,
@@ -129,6 +137,10 @@ class FinalBlindCaseBundleValidatorTests(unittest.TestCase):
             report = VALIDATOR.validate_case_bundle(case_dir, config["case_id"])
         self.assertEqual("C013-final-blind", report["case_id"])
         self.assertEqual(45, report["condition_count"])
+        self.assertEqual(0, report["embedded_action_cost_count"])
+        self.assertTrue(report["measured_cost_profile_required"])
+        self.assertFalse(report["frozen_measured_budget_present"])
+        self.assertEqual("pending_sealed_measurement", report["budget_status"])
         self.assertTrue(report["reference_closure_pass"])
         self.assertTrue(report["case_contents_opened_for_structural_validation"])
         self.assertFalse(report["case_contents_returned_in_report"])
@@ -159,6 +171,70 @@ class FinalBlindCaseBundleValidatorTests(unittest.TestCase):
             case_dir = self.write_bundle(Path(temporary), config, claims, actions)
             with self.assertRaisesRegex(ValueError, "exactly 45"):
                 VALIDATOR.validate_case_bundle(case_dir)
+
+    def test_embedded_numeric_cost_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            config, claims, actions = valid_bundle()
+            actions[0]["cost"] = 1
+            case_dir = self.write_bundle(Path(temporary), config, claims, actions)
+            with self.assertRaisesRegex(ValueError, "separately sealed"):
+                VALIDATOR.validate_case_bundle(case_dir)
+
+    def test_measured_profile_populates_sealed_null_costs_before_execution(self):
+        config, _claims, actions = valid_bundle()
+        profile = {
+            "document": {
+                "profile_id": "test-final-blind-measured-cost",
+                "version": "0.3.0",
+                "status": "frozen",
+                "regime": "measured",
+                "scope": {"case_ids": [config["case_id"]]},
+                "scoring": {},
+                "actions": [
+                    {
+                        "case_id": config["case_id"],
+                        "action_id": "A1",
+                        "measured_cost": 1.25,
+                    },
+                    {
+                        "case_id": config["case_id"],
+                        "action_id": "A2",
+                        "measured_cost": 2.5,
+                    },
+                ],
+            },
+            "sha256": "0" * 64,
+        }
+        updated, metadata = MVP.apply_cost_regime(
+            actions,
+            config["case_id"],
+            "measured",
+            profile,
+        )
+        self.assertEqual([1.25, 2.5], [action["cost"] for action in updated])
+        self.assertEqual("measured", metadata["cost_regime"])
+
+    def test_final_gate_rejects_pending_budget(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            config, claims, actions = valid_bundle()
+            case_dir = self.write_bundle(Path(temporary), config, claims, actions)
+            with self.assertRaisesRegex(ValueError, "still pending"):
+                VALIDATOR.validate_case_bundle(
+                    case_dir,
+                    require_frozen_budget=True,
+                )
+
+    def test_final_gate_accepts_frozen_measured_budget(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            config, claims, actions = valid_bundle()
+            config["budget_total"] = 10
+            config["budget_status"] = "frozen_measured_budget"
+            case_dir = self.write_bundle(Path(temporary), config, claims, actions)
+            report = VALIDATOR.validate_case_bundle(
+                case_dir,
+                require_frozen_budget=True,
+            )
+        self.assertTrue(report["frozen_measured_budget_present"])
 
     def test_case_directory_must_match_case_id(self):
         with tempfile.TemporaryDirectory() as temporary:

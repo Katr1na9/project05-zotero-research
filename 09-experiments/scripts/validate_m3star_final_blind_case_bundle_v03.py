@@ -118,6 +118,8 @@ def ensure_acyclic(node_ids: set[str], edges: list[dict[str, Any]]) -> None:
 def validate_case_bundle(
     case_dir: Path,
     expected_case_id: str | None = None,
+    *,
+    require_frozen_budget: bool = False,
 ) -> dict[str, Any]:
     case_dir = case_dir.resolve()
     for filename in CASE_FILENAMES:
@@ -175,7 +177,37 @@ def validate_case_bundle(
             f"Final-blind case must define exactly {EXPECTED_CONDITION_COUNT} "
             f"within-case conditions, observed {condition_count}"
         )
-    require_finite_number(config.get("budget_total"), "case_config.budget_total", positive=True)
+    if config.get("cost_regime_required") != "measured":
+        raise ValueError("Final-blind case_config.cost_regime_required must be measured")
+    if config.get("measured_cost_profile_required") is not True:
+        raise ValueError(
+            "Final-blind case_config.measured_cost_profile_required must be true"
+        )
+    budget_total = config.get("budget_total")
+    budget_status = config.get("budget_status")
+    if budget_total is None:
+        if budget_status != "pending_sealed_measurement":
+            raise ValueError(
+                "A null final-blind budget_total requires "
+                "budget_status='pending_sealed_measurement'"
+            )
+        if require_frozen_budget:
+            raise ValueError(
+                "Final-blind budget is still pending sealed measurement"
+            )
+        frozen_budget_present = False
+    else:
+        require_finite_number(
+            budget_total,
+            "case_config.budget_total",
+            positive=True,
+        )
+        if budget_status != "frozen_measured_budget":
+            raise ValueError(
+                "A numeric final-blind budget_total requires "
+                "budget_status='frozen_measured_budget'"
+            )
+        frozen_budget_present = True
 
     claim_ids: list[str] = []
     hideable_claim_count = 0
@@ -292,11 +324,12 @@ def validate_case_bundle(
             f"acquisition_actions[{index}].acquisition_channel",
         )
         action_channels.add(channel)
-        require_finite_number(
-            action.get("cost"),
-            f"acquisition_actions[{index}].cost",
-            positive=True,
-        )
+        if action.get("cost") is not None:
+            raise ValueError(
+                f"acquisition_actions[{index}].cost must be omitted or null; "
+                "final-blind measured costs belong only in the separately sealed "
+                "evaluation cost profile"
+            )
         recoverable = require_unique_strings(
             action.get("recoverable_claim_ids"),
             f"acquisition_actions[{index}].recoverable_claim_ids",
@@ -401,6 +434,10 @@ def validate_case_bundle(
         "critical_cti_node_count": critical_node_count,
         "cti_edge_count": len(edge_ids),
         "action_count": len(action_ids),
+        "embedded_action_cost_count": 0,
+        "measured_cost_profile_required": True,
+        "frozen_measured_budget_present": frozen_budget_present,
+        "budget_status": budget_status,
         "claims_referenced_by_required_nodes_count": len(referenced_claim_ids),
         "all_claims_recoverable": True,
         "reference_closure_pass": True,
@@ -419,6 +456,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--case-dir", type=Path, action="append", required=True)
     parser.add_argument("--expected-case-id", action="append")
+    parser.add_argument("--require-frozen-budget", action="store_true")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     expected = args.expected_case_id
@@ -428,6 +466,7 @@ def main() -> None:
         validate_case_bundle(
             case_dir,
             None if expected is None else expected[index],
+            require_frozen_budget=args.require_frozen_budget,
         )
         for index, case_dir in enumerate(args.case_dir)
     ]
@@ -437,6 +476,10 @@ def main() -> None:
         "case_ids": [item["case_id"] for item in case_reports],
         "cases": case_reports,
         "all_reference_closures_pass": True,
+        "all_frozen_measured_budgets_present": all(
+            item["frozen_measured_budget_present"] for item in case_reports
+        ),
+        "frozen_budget_required_by_this_run": args.require_frozen_budget,
         "case_contents_opened_for_structural_validation": True,
         "case_contents_returned_in_report": False,
         "planner_or_model_executed": False,
