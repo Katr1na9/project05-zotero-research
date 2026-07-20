@@ -140,7 +140,7 @@ def build_preflight_fixture(runner, root: Path, case_count: int = 79):
             "ground_truth_sealed_until_execution": True,
             "all_cases_new_and_unseen": True,
             "source_and_attack_chain_deduplication_complete": True,
-            "intake_contract_version": "0.1.0",
+            "intake_contract_version": runner.intake_validator.INTAKE_CONTRACT_VERSION,
             "case_count": len(case_ids),
             "case_ids": case_ids,
             "case_files_sha256": file_hashes,

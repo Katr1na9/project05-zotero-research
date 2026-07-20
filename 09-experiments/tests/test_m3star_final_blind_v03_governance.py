@@ -45,8 +45,12 @@ FROZEN_MODEL_RESULT = (
     / "results"
     / "m3star_measured_replay_majority_sixcase_v0.9"
 )
-
-
+LEGACY_INTAKE_SCHEMA = (
+    REPO_ROOT
+    / "09-experiments"
+    / "data_schema"
+    / "m3star_final_blind_intake_manifest.schema.json"
+)
 def load_module(name: str, path: Path):
     spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
@@ -69,6 +73,7 @@ RUNNER = load_module(
     / "scripts"
     / "run_m3star_final_blind_v03.py",
 )
+V03_INTAKE_SCHEMA = REPO_ROOT / RUNNER.INTAKE_SCHEMA_RELATIVE_PATH
 
 
 def digest(value: str) -> str:
@@ -210,6 +215,64 @@ class M3StarFinalBlindV03GovernanceTests(unittest.TestCase):
             checked["protocol"]["protocol_id"],
         )
         self.assertEqual(59, RUNNER.MINIMUM_VALID_COMPLETE_CASES)
+
+    def test_v03_schema_versions_the_59_to_95_range_without_rewriting_legacy(self):
+        legacy = json.loads(LEGACY_INTAKE_SCHEMA.read_text(encoding="utf-8"))
+        v03 = json.loads(V03_INTAKE_SCHEMA.read_text(encoding="utf-8"))
+        self.assertEqual(96, legacy["properties"]["case_count"]["minimum"])
+        self.assertEqual(
+            "https://project05.local/schema/m3star-final-blind-intake-manifest-v0.1.json",
+            legacy["$id"],
+        )
+        self.assertEqual(59, v03["properties"]["case_count"]["minimum"])
+        self.assertEqual(95, v03["properties"]["case_count"]["maximum"])
+        self.assertEqual(59, v03["properties"]["case_ids"]["minItems"])
+        self.assertEqual(95, v03["properties"]["case_ids"]["maxItems"])
+        self.assertEqual("0.3.0", RUNNER.intake_validator.INTAKE_CONTRACT_VERSION)
+
+    def test_v03_intake_rejects_58_cases_before_any_model_execution(self):
+        helpers = load_module(
+            "test_run_m3star_final_blind_helpers_for_v03_58",
+            REPO_ROOT
+            / "09-experiments"
+            / "tests"
+            / "test_run_m3star_final_blind.py",
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = helpers.build_preflight_fixture(
+                RUNNER, Path(temporary), case_count=58
+            )
+            case_dirs = RUNNER.discover_final_case_dirs(fixture.cases_root)
+            with self.assertRaisesRegex(ValueError, "59"):
+                RUNNER.validate_dataset_manifest(
+                    fixture.dataset_manifest,
+                    case_dirs,
+                )
+
+    def test_v03_intake_rejects_declared_count_identity_mismatch(self):
+        helpers = load_module(
+            "test_run_m3star_final_blind_helpers_for_v03_count_mismatch",
+            REPO_ROOT
+            / "09-experiments"
+            / "tests"
+            / "test_run_m3star_final_blind.py",
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = helpers.build_preflight_fixture(
+                RUNNER, Path(temporary), case_count=59
+            )
+            manifest = json.loads(
+                fixture.dataset_manifest.read_text(encoding="utf-8")
+            )
+            manifest["case_count"] = 60
+            helpers.write_json(fixture.dataset_manifest, manifest)
+            with self.assertRaisesRegex(ValueError, "case_count differs"):
+                RUNNER.intake_validator.validate_manifest(
+                    manifest,
+                    manifest["case_ids"],
+                    RUNNER.REPO_ROOT / RUNNER.USED_CAMPAIGN_REGISTRY_RELATIVE_PATH,
+                    V03_INTAKE_SCHEMA,
+                )
 
     def test_v03_non_consuming_preflight_accepts_exactly_59_bound_cases(self):
         helpers = load_module(

@@ -30,7 +30,7 @@ def load_script(name: str) -> Any:
 m3_runner = load_script("run_m3star_experiment")
 afa_runner = load_script("run_afa_voi_baselines")
 depth_runner = load_script("run_lightweight_nonmyopic_real")
-intake_validator = load_script("validate_m3star_final_blind_intake")
+intake_validator = load_script("validate_m3star_final_blind_intake_v03")
 run_mvp = m3_runner.run_mvp
 
 CONFIRMATION_PHRASE = "EXECUTE_PROJECT05_M3STAR_FINAL_BLIND_ONCE"
@@ -42,7 +42,15 @@ CONSUMPTION_LEDGER_RELATIVE_PATH = Path(
     "09-experiments/governance/locks/m3star-final-blind-consumed-v0.3.json"
 )
 INTAKE_SCHEMA_RELATIVE_PATH = Path(
-    "09-experiments/data_schema/m3star_final_blind_intake_manifest.schema.json"
+    "09-experiments/data_schema/"
+    "m3star_final_blind_intake_manifest_v03.schema.json"
+)
+INTAKE_VALIDATOR_RELATIVE_PATH = Path(
+    "09-experiments/scripts/validate_m3star_final_blind_intake_v03.py"
+)
+INTAKE_ALIGNMENT_AMENDMENT_RELATIVE_PATH = Path(
+    "04-progress/m3star-final-blind-data-intake-v0.1-20260719/"
+    "intake-contract-alignment-amendment-v0.3.json"
 )
 USED_CAMPAIGN_REGISTRY_RELATIVE_PATH = Path(
     "09-experiments/governance/registries/"
@@ -178,6 +186,7 @@ def validate_dataset_manifest(
         manifest,
         case_ids,
         REPO_ROOT / USED_CAMPAIGN_REGISTRY_RELATIVE_PATH,
+        REPO_ROOT / INTAKE_SCHEMA_RELATIVE_PATH,
     )
     return manifest, intake_audit
 
@@ -281,6 +290,8 @@ def validate_protocol_document(protocol: dict[str, Any]) -> None:
         raise ValueError("Final-blind intake independent unit differs from validator")
     for field, expected_relative_path in (
         ("schema", INTAKE_SCHEMA_RELATIVE_PATH),
+        ("validator", INTAKE_VALIDATOR_RELATIVE_PATH),
+        ("alignment_amendment", INTAKE_ALIGNMENT_AMENDMENT_RELATIVE_PATH),
         ("used_campaign_registry", USED_CAMPAIGN_REGISTRY_RELATIVE_PATH),
     ):
         path = resolve_repo_relative_path(

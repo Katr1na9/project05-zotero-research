@@ -1,0 +1,60 @@
+{
+  "amendment_id": "project05-m3star-final-blind-intake-contract-alignment-v0.3",
+  "status": "frozen_before_final_blind_case_reacquisition",
+  "authorized_utc": "2026-07-20T07:57:22Z",
+  "scope": "intake_schema_and_validator_alignment_only",
+  "reason": "The v0.3 sample-size amendment explicitly superseded the legacy fixed 96-case target with a 59-case minimum, but the preserved v0.1 intake schema still declared a 96-case minimum and the executable intake validator did not enforce that schema. This outcome-free amendment creates a versioned v0.3 schema and validator that agree with the already frozen 59-to-95 qualified-case range.",
+  "paper_or_patent_updated": false,
+  "pre_amendment_protocol": {
+    "path": "09-experiments/governance/contracts/m3star-final-blind-protocol-v0.3.json",
+    "sha256": "62acf3ccecfb6bf9a9c2d4bca1431b95256e954c700801eaedc7f1fbbf4ee39f"
+  },
+  "authority": {
+    "sample_size_and_stopping_amendment_path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/sample-size-and-stopping-amendment-v0.3.json",
+    "sample_size_and_stopping_amendment_sha256": "bc72cb30b8f59fc092074c508c6293ac64afd67d88f2aadafbd24c543d908c16",
+    "minimum_valid_complete_independent_cases": 59,
+    "maximum_staged_candidate_slots": 95,
+    "retain_all_independently_qualified_cases": true,
+    "legacy_fixed_96_target_superseded": true
+  },
+  "preserved_legacy_contract": {
+    "schema_path": "09-experiments/data_schema/m3star_final_blind_intake_manifest.schema.json",
+    "schema_sha256": "ec3fe48580a09c591a8b2c962a79c82dcaea85839f6aa6496ba1c7c891023c49",
+    "validator_path": "09-experiments/scripts/validate_m3star_final_blind_intake.py",
+    "validator_sha256": "bc04d3d29da4099db5f3d6e5a73cec935be110e1059cd92a01fd5d32acf06116",
+    "contract_version": "0.1.0",
+    "legacy_schema_minimum": 96,
+    "files_modified": false
+  },
+  "effective_v0_3_contract": {
+    "schema_path": "09-experiments/data_schema/m3star_final_blind_intake_manifest_v03.schema.json",
+    "schema_sha256": "b84decfc605d1d8a378aef3407cad558236b72366ef9f7c0685ba84d7628f9cd",
+    "validator_path": "09-experiments/scripts/validate_m3star_final_blind_intake_v03.py",
+    "validator_sha256": "4699b5cb4313d7fb5f034c4630c8558dcd92e976d1847313b139c11e4a21895c",
+    "contract_version": "0.3.0",
+    "minimum_case_count": 59,
+    "maximum_case_count": 95,
+    "case_count_must_equal_case_ids_and_provenance_counts": true,
+    "case_file_hash_keys_must_exactly_equal_case_ids": true,
+    "schema_validation_is_executable": true
+  },
+  "unchanged_frozen_components": {
+    "qualified_case_identity_set": true,
+    "qualification_rules": true,
+    "sample_size_and_stopping_rule": true,
+    "primary_baselines": true,
+    "model_and_planner_parameters": true,
+    "cost_definition_and_sesoi": true,
+    "analysis_gates": true,
+    "one_shot_consumption_rule": true
+  },
+  "blinding_attestation": {
+    "final_blind_case_payloads_reacquired_or_opened": false,
+    "ground_truth_opened": false,
+    "measured_cost_values_opened": false,
+    "model_or_baseline_outputs_opened": false,
+    "success_or_action_sequence_outcomes_opened": false,
+    "one_shot_evaluation_consumed": false,
+    "consumption_ledger_created": false
+  }
+}

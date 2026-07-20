@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/m3star-final-blind-intake-manifest-v0.3.json",
+  "title": "Project05 M3* Final-Blind Intake Manifest v0.3",
+  "description": "Outcome-free intake contract aligned with the frozen 59-case minimum and 95-slot staged-pool maximum. The legacy v0.1 schema remains preserved as historical evidence.",
+  "type": "object",
+  "required": [
+    "status",
+    "curation_blind_to_model_development",
+    "ground_truth_sealed_until_execution",
+    "all_cases_new_and_unseen",
+    "source_and_attack_chain_deduplication_complete",
+    "intake_contract_version",
+    "case_count",
+    "case_ids",
+    "case_files_sha256",
+    "curation_and_seal_separation",
+    "independence_review",
+    "case_provenance"
+  ],
+  "properties": {
+    "status": {"const": "frozen"},
+    "curation_blind_to_model_development": {"const": true},
+    "ground_truth_sealed_until_execution": {"const": true},
+    "all_cases_new_and_unseen": {"const": true},
+    "source_and_attack_chain_deduplication_complete": {"const": true},
+    "intake_contract_version": {"const": "0.3.0"},
+    "case_count": {
+      "type": "integer",
+      "minimum": 59,
+      "maximum": 95
+    },
+    "case_ids": {
+      "type": "array",
+      "minItems": 59,
+      "maxItems": 95,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/caseId"}
+    },
+    "case_files_sha256": {
+      "type": "object",
+      "minProperties": 59,
+      "maxProperties": 95,
+      "propertyNames": {"$ref": "#/$defs/caseId"},
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "case_config.json",
+          "evidence_claims.json",
+          "acquisition_actions.json"
+        ],
+        "properties": {
+          "case_config.json": {"$ref": "#/$defs/sha256"},
+          "evidence_claims.json": {"$ref": "#/$defs/sha256"},
+          "acquisition_actions.json": {"$ref": "#/$defs/sha256"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "curation_and_seal_separation": {
+      "type": "object",
+      "required": [
+        "curation_team_id",
+        "model_development_team_id",
+        "ground_truth_custodian_id",
+        "teams_are_disjoint",
+        "curators_blind_to_model_outputs",
+        "model_developers_blind_to_c13_plus_contents",
+        "ground_truth_custodian_not_a_model_developer",
+        "cost_measurement_completed_without_model_output_access"
+      ],
+      "properties": {
+        "curation_team_id": {"type": "string", "minLength": 1},
+        "model_development_team_id": {"type": "string", "minLength": 1},
+        "ground_truth_custodian_id": {"type": "string", "minLength": 1},
+        "teams_are_disjoint": {"const": true},
+        "curators_blind_to_model_outputs": {"const": true},
+        "model_developers_blind_to_c13_plus_contents": {"const": true},
+        "ground_truth_custodian_not_a_model_developer": {"const": true},
+        "cost_measurement_completed_without_model_output_access": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "independence_review": {
+      "type": "object",
+      "required": [
+        "whole_campaign_execution_is_the_counting_unit",
+        "host_time_mask_and_parameter_slices_forbidden",
+        "same_scenario_family_counted_once",
+        "prior_campaign_overlap_review_complete",
+        "source_cluster_recorded_for_sensitivity_analysis",
+        "used_campaign_registry_sha256"
+      ],
+      "properties": {
+        "whole_campaign_execution_is_the_counting_unit": {"const": true},
+        "host_time_mask_and_parameter_slices_forbidden": {"const": true},
+        "same_scenario_family_counted_once": {"const": true},
+        "prior_campaign_overlap_review_complete": {"const": true},
+        "source_cluster_recorded_for_sensitivity_analysis": {"const": true},
+        "used_campaign_registry_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "case_provenance": {
+      "type": "array",
+      "minItems": 59,
+      "maxItems": 95,
+      "items": {"$ref": "#/$defs/caseProvenance"}
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "caseId": {
+      "type": "string",
+      "pattern": "^C0*(?:1[3-9]|[2-9][0-9]|[1-9][0-9]{2,})(?:-|$)"
+    },
+    "caseProvenance": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "source_cluster_id",
+        "source_release_id",
+        "source_record_locator",
+        "source_artifact_sha256",
+        "scenario_family_id",
+        "attack_chain_definition_sha256",
+        "campaign_execution_id",
+        "campaign_execution_sha256",
+        "telemetry_capture_id",
+        "telemetry_capture_sha256",
+        "event_namespace_id",
+        "independent_unit",
+        "independence_basis",
+        "original_telemetry_present",
+        "multi_stage_attack_chain_present",
+        "full_campaign_time_window_included",
+        "all_in_scope_campaign_hosts_combined",
+        "not_a_host_slice",
+        "not_a_time_slice",
+        "not_a_mask_variant",
+        "not_a_parameter_only_variant",
+        "not_used_in_model_development",
+        "ground_truth_sealed",
+        "cost_values_sealed_from_model_development",
+        "ground_truth_seal_id",
+        "cost_measurement_seal_id",
+        "parent_campaign_execution_id",
+        "derived_from_case_id",
+        "mask_variant_of_case_id",
+        "parameter_variant_of_scenario_family_id"
+      ],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/caseId"},
+        "source_cluster_id": {"type": "string", "minLength": 1},
+        "source_release_id": {"type": "string", "minLength": 1},
+        "source_record_locator": {"type": "string", "minLength": 1},
+        "source_artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "scenario_family_id": {"type": "string", "minLength": 1},
+        "attack_chain_definition_sha256": {"$ref": "#/$defs/sha256"},
+        "campaign_execution_id": {"type": "string", "minLength": 1},
+        "campaign_execution_sha256": {"$ref": "#/$defs/sha256"},
+        "telemetry_capture_id": {"type": "string", "minLength": 1},
+        "telemetry_capture_sha256": {"$ref": "#/$defs/sha256"},
+        "event_namespace_id": {"type": "string", "minLength": 1},
+        "independent_unit": {"const": "whole_campaign_execution"},
+        "independence_basis": {"const": "unique_attack_chain_definition_and_execution"},
+        "original_telemetry_present": {"const": true},
+        "multi_stage_attack_chain_present": {"const": true},
+        "full_campaign_time_window_included": {"const": true},
+        "all_in_scope_campaign_hosts_combined": {"const": true},
+        "not_a_host_slice": {"const": true},
+        "not_a_time_slice": {"const": true},
+        "not_a_mask_variant": {"const": true},
+        "not_a_parameter_only_variant": {"const": true},
+        "not_used_in_model_development": {"const": true},
+        "ground_truth_sealed": {"const": true},
+        "cost_values_sealed_from_model_development": {"const": true},
+        "ground_truth_seal_id": {"type": "string", "minLength": 1},
+        "cost_measurement_seal_id": {"type": "string", "minLength": 1},
+        "parent_campaign_execution_id": {"type": "null"},
+        "derived_from_case_id": {"type": "null"},
+        "mask_variant_of_case_id": {"type": "null"},
+        "parameter_variant_of_scenario_family_id": {"type": "null"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
