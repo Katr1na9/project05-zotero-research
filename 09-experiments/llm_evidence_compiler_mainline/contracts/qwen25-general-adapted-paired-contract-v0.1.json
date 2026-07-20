@@ -1,0 +1,141 @@
+{
+  "contract_id": "project05-qwen25-general-adapted-paired-atomic-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-20",
+  "status": "implementation_frozen_model_execution_closed",
+  "contract_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-general-adapted-paired-contract-v0.1.json",
+  "implementation_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.41.json"
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.40.json",
+    "sha256": "98031F9E6E3469A703193769199379ACE847CEF3B7C75744921DCE5E1FE3BA3A"
+  },
+  "approved_amendment": {
+    "path": "08-writing/llm-evidence-compiler-general-adapted-paired-implementation-amendment-v0.41-20260720.md",
+    "sha256": "452192D32916956B19E54713720A128257843446DF400AD4CF2E2C6902B667F0"
+  },
+  "paired_fairness_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen-paired-fairness-contract-v0.1.json",
+    "sha256": "AC570A99C275706C715937F30E4B80B788E68257FB793C509C1CFAB158558AB9"
+  },
+  "checkpoint_selection_audit": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/results/checkpoint_selection_v0.1/checkpoint-selection-audit-v0.1.json",
+    "sha256": "2E0EFF92CFF06D70317C87E63922881C082338CB9C4141BB761255B9BE0CB1EC"
+  },
+  "serialization_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.2.json",
+    "sha256": "47C6BDFCCBC4693102D4FF225CFFFB081473BDC78749779D2B52B41B7851E385"
+  },
+  "training_validation_payload_lock": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json",
+    "sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE"
+  },
+  "model_preparation_audit": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-preparation-audit-v0.1.json",
+    "sha256": "12F73CE159E72F08C08533B8CA8A79BBF79ECAF7FEF118CB24F702FA1BDDC38A"
+  },
+  "paired_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/paired_evaluation_v0.1/paired-evaluation-config-v0.1.json",
+    "sha256": "447759AA1B56760E92F52F4F6C9874E08E30111CE4EB6503524D41C811FA3DCE"
+  },
+  "pair_payload": {
+    "root_relative_to_server_run": "repository/09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data",
+    "file": "training-validation.jsonl.gz",
+    "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552",
+    "examples": 300,
+    "split": "training-validation",
+    "train_access_allowed": false
+  },
+  "selected_adapter": {
+    "epoch": 2,
+    "optimizer_step": 150,
+    "adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11",
+    "server_relative_path": "server-output/primary-adamw-detached-v0.37/checkpoint-epoch-002/adapter",
+    "adapter_name": "project05_obs_compiler",
+    "server_only": true,
+    "checkpoint_selection_may_not_be_repeated": true
+  },
+  "model": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "same_loaded_base_process_required": true,
+    "base_parameters_frozen": true,
+    "only_allowed_condition_difference": "adapter_state"
+  },
+  "server_execution_boundary": {
+    "allowed_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "read_or_write_outside_allowed_root": false,
+    "single_gpu": true,
+    "execution_gpu": "NVIDIA GeForce RTX 4090"
+  },
+  "implementation": {
+    "paired_runner": {
+      "path": "09-experiments/scripts/run_qwen_general_adapted_paired.py",
+      "sha256": "068BC08F805B93DFC9FBA211A38E0BE2A8D490ABD312F0E89CB5CBEFBB6DD505"
+    },
+    "paired_scorer": {
+      "path": "09-experiments/scripts/score_qwen_general_adapted_paired.py",
+      "sha256": "D35DE62CB86327E7EB36E3C1A576A5A02154F0B72A2BD4BB689F0A9E6DFB8A66"
+    },
+    "model_free_tests": {
+      "path": "09-experiments/tests/test_qwen_general_adapted_paired.py",
+      "sha256": "51AA7ED2A54A49FD237782C1284B9A6D19143A9EF3DBB578A277138B86D2CAD0"
+    },
+    "frozen_strict_parser": {
+      "path": "09-experiments/scripts/select_qwen_qlora_checkpoint_4090.py",
+      "sha256": "58B0CFB049874AC9C0FE87A53B48293CE7FA004A9E78CE2C6A33FFBD21D31321"
+    }
+  },
+  "atomic_panel": {
+    "split": "training-validation",
+    "exact_examples": 16,
+    "exact_model_calls": 32,
+    "examples_per_family_decision": 4,
+    "selection_seed": 2026072001,
+    "condition_order_seed": 2026071801,
+    "panel_identity_server_only": true,
+    "independent_test_result": false
+  },
+  "artifact_policy": {
+    "raw_generations": "server_only",
+    "adapter_and_checkpoint": "server_only",
+    "sanitized_metrics_download_only_after_complete_hash_lock": true,
+    "raw_generation_download_authorized": false,
+    "controller_eligible": false
+  },
+  "execution_authority_requirement": {
+    "new_authority_file_required": true,
+    "exact_contract_and_config_sha256_required": true,
+    "maximum_executions": 1,
+    "automatic_retry_or_resume_allowed": false,
+    "current_implementation_authority_is_not_execution_authority": true
+  },
+  "scientific_boundary": {
+    "checkpoint_effectiveness_proven": false,
+    "supported_class_collapse_must_be_reported": true,
+    "training_validation_metrics_are_diagnostic_only": true,
+    "adapter_mainline_selection_allowed": false,
+    "paper_positive_claim_authorized": false
+  },
+  "implementation_authorized": true,
+  "model_execution_authorized": false,
+  "not_authorized": [
+    "model_or_tokenizer_loading_under_v0_41",
+    "paired_model_execution_without_new_authority",
+    "automatic_retry_or_resume",
+    "checkpoint_reselection_or_adapter_substitution",
+    "train_split_access",
+    "development_or_test_access",
+    "c07_c12_model_execution",
+    "formal_controller_inference",
+    "m3_runtime_integration",
+    "raw_generation_checkpoint_or_adapter_download",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ]
+}

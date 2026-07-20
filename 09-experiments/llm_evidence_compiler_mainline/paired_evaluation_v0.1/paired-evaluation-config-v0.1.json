@@ -1,0 +1,106 @@
+{
+  "config_id": "project05-qwen25-general-adapted-paired-atomic-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-20",
+  "conditions": [
+    "QWEN-GENERAL",
+    "QWEN-ADAPTED"
+  ],
+  "panel": {
+    "split": "training-validation",
+    "source_examples": 300,
+    "exact_examples": 16,
+    "families": {
+      "logpai_loghub_linux": 150,
+      "zeek_non_pcap_test_logs": 150
+    },
+    "decisions_per_family": {
+      "supported": 75,
+      "unsupported_by_bound_pointer": 75
+    },
+    "examples_per_family_decision": 4,
+    "selection_seed": 2026072001,
+    "without_replacement": true,
+    "panel_identity_server_only": true
+  },
+  "condition_order": {
+    "seed": 2026071801,
+    "blocking_factors": [
+      "source_family_id",
+      "support_decision"
+    ],
+    "exactly_balanced_within_block": true
+  },
+  "model": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "selected_adapter_epoch": 2,
+    "selected_adapter_optimizer_step": 150,
+    "selected_adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11"
+  },
+  "model_difference": {
+    "only_allowed_difference": "adapter_state",
+    "general": "off",
+    "adapted": "project05_obs_compiler:on",
+    "same_loaded_base_process_required": true
+  },
+  "quantization": {
+    "bits": 4,
+    "type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16"
+  },
+  "sequence_length": 1024,
+  "decode": {
+    "do_sample": false,
+    "maximum_new_tokens": 256,
+    "repair_invalid_output": false,
+    "require_eos_termination": true,
+    "batch_size": 1
+  },
+  "hardware": {
+    "execution_target": "NVIDIA GeForce RTX 4090",
+    "minimum_compute_capability": [
+      8,
+      9
+    ],
+    "minimum_total_vram_bytes": 24696061952,
+    "maximum_peak_allocated_bytes": 23622320128,
+    "minimum_synchronized_free_bytes": 1073741824,
+    "cache_normalized_free_memory_gate": true
+  },
+  "resource_limits": {
+    "maximum_wall_hours": 2,
+    "maximum_runtime_cache_checkpoint_output_bytes": 34000000000
+  },
+  "gates": {
+    "technical": {
+      "exact_examples": 16,
+      "exact_calls": 32,
+      "both_conditions_per_example": true,
+      "same_loaded_base_process": true,
+      "raw_generation_server_only": true,
+      "controller_eligible": false
+    },
+    "adapter_diagnostic": {
+      "minimum_exclusive_supported_class_f1": 0.0,
+      "minimum_family_macro_f1_delta": 0.0,
+      "maximum_invalid_rate_delta": 0.0,
+      "minimum_pointer_exact_rate_delta": 0.0,
+      "minimum_unsupported_class_f1_delta": -0.05,
+      "minimum_supported_output_rate_delta": -0.05,
+      "maximum_ceiling_violation_rate_delta": 0.0,
+      "training_validation_only": true,
+      "may_select_adapter_for_mainline": false
+    }
+  },
+  "output_policy": {
+    "run_subdirectory": "server-output/paired-general-adapted-v0.41",
+    "raw_generation": "server_only",
+    "raw_generation_download_authorized": false,
+    "sanitized_metrics_download_authorized_after_completion": true,
+    "allow_overwrite_or_resume": false,
+    "allow_automatic_retry": false,
+    "controller_eligible": false
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "authority_id": "project05-qwen25-general-adapted-paired-implementation-v0.41",
+  "version": "0.41.0",
+  "status": "paired_implementation_complete_model_execution_closed",
+  "created_date": "2026-07-20",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.41.json",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.40.json",
+    "sha256": "98031F9E6E3469A703193769199379ACE847CEF3B7C75744921DCE5E1FE3BA3A",
+    "disposition": "checkpoint_selection_is_complete_and_epoch_2_is_the_only_permitted_adapted_condition"
+  },
+  "approved_amendment": {
+    "path": "08-writing/llm-evidence-compiler-general-adapted-paired-implementation-amendment-v0.41-20260720.md",
+    "sha256": "452192D32916956B19E54713720A128257843446DF400AD4CF2E2C6902B667F0"
+  },
+  "authoritative_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-general-adapted-paired-contract-v0.1.json",
+    "sha256": "D8D651C9FB7292A9B0B713320D94397CC50ADCAFAC457CC8F55AD47245F76211"
+  },
+  "paired_gate": {
+    "implementation_authorized": true,
+    "contract_sha256": "D8D651C9FB7292A9B0B713320D94397CC50ADCAFAC457CC8F55AD47245F76211",
+    "config_sha256": "447759AA1B56760E92F52F4F6C9874E08E30111CE4EB6503524D41C811FA3DCE",
+    "model_execution_authorized": false,
+    "maximum_model_executions": 0,
+    "training_validation_source_read_authorized": false,
+    "train_access_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "automatic_retry_authorized": false
+  },
+  "frozen_comparison": {
+    "control": "QWEN-GENERAL_adapter_off",
+    "treatment": "QWEN-ADAPTED_epoch_2_adapter_on",
+    "only_allowed_model_difference": "adapter_state",
+    "selected_epoch": 2,
+    "selected_optimizer_step": 150,
+    "selected_adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11",
+    "supported_class_collapse_must_be_reported": true,
+    "checkpoint_reselection_allowed": false
+  },
+  "authorized_actions": [
+    "retain_the_v0_41_amendment_contract_config_runner_scorer_and_tests",
+    "run_model_free_unit_negative_and_hash_chain_tests",
+    "run_validate_only_without_loading_torch_transformers_peft_or_model_weights",
+    "commit_and_push_only_sanitized_implementation_artifacts",
+    "prepare_a_separate_exact_hash_execution_authority_for_user_review"
+  ],
+  "artifact_policy": {
+    "current_committable": [
+      "amendment",
+      "contract",
+      "config",
+      "model_lazy_runner",
+      "server_side_scorer",
+      "model_free_tests",
+      "implementation_authority"
+    ],
+    "future_raw_generations": "server_only",
+    "future_checkpoint_and_adapter": "server_only",
+    "raw_generation_download_authorized": false,
+    "checkpoint_or_adapter_download_authorized": false
+  },
+  "next_gate": {
+    "status": "hard_stop_for_single_training_validation_paired_execution_authority",
+    "new_authority_required": true,
+    "maximum_future_examples": 16,
+    "maximum_future_model_calls": 32,
+    "future_execution_must_remain_within": "/home/myy/project05-qwen25-4090-v0.1",
+    "future_execution_may_access_split": "training-validation",
+    "development_or_test_access_may_be_opened": false,
+    "paper_positive_claim_may_be_opened": false
+  },
+  "not_authorized": [
+    "model_tokenizer_or_adapter_loading",
+    "paired_model_execution",
+    "training_validation_payload_access",
+    "automatic_retry_or_resume",
+    "checkpoint_reselection_or_adapter_substitution",
+    "train_split_access",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_controller_inference",
+    "m3_runtime_integration",
+    "raw_generation_checkpoint_or_adapter_download",
+    "merged_model_save",
+    "hub_upload",
+    "runtime_install_or_upgrade",
+    "model_or_tokenizer_download",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
