@@ -158,6 +158,65 @@ class MissingBlindArtifactAcquisitionTests(unittest.TestCase):
         for left, right in zip(ranges, ranges[1:]):
             self.assertEqual(left[1] + 1, right[0])
 
+    def test_short_range_response_retries_from_preserved_segment_length(self):
+        content = b"abcdefghij"
+        calls = []
+
+        class FakeResponse:
+            status = 206
+
+            def __init__(self, start, chunk):
+                self.headers = {"Content-Range": f"bytes {start}-9/10"}
+                self.chunk = chunk
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, traceback):
+                return False
+
+            def getcode(self):
+                return self.status
+
+            def read(self, size):
+                if self.chunk is None:
+                    return b""
+                chunk, self.chunk = self.chunk, None
+                return chunk
+
+        def fake_urlopen(request, timeout):
+            range_header = request.get_header("Range")
+            calls.append(range_header)
+            start = int(range_header.split("=")[1].split("-")[0])
+            end = 5 if len(calls) == 1 else 10
+            return FakeResponse(start, content[start:end])
+
+        original_urlopen = ACQUIRE.urllib.request.urlopen
+        original_sleep = ACQUIRE.time.sleep
+        ACQUIRE.urllib.request.urlopen = fake_urlopen
+        ACQUIRE.time.sleep = lambda seconds: None
+        try:
+            with tempfile.TemporaryDirectory() as temporary:
+                segment = Path(temporary) / "segment.part"
+                ACQUIRE.download_range(
+                    url="https://example.invalid/not-used",
+                    item={
+                        "key": "payload.bin",
+                        "size": len(content),
+                        "download_url": "https://example.invalid/not-used",
+                    },
+                    range_start=0,
+                    range_end=9,
+                    segment_path=segment,
+                    on_chunk=lambda length: None,
+                )
+                observed = segment.read_bytes()
+        finally:
+            ACQUIRE.urllib.request.urlopen = original_urlopen
+            ACQUIRE.time.sleep = original_sleep
+        self.assertEqual(content, observed)
+        self.assertEqual(["bytes=0-9", "bytes=5-9"], calls)
+
 
 if __name__ == "__main__":
     unittest.main()

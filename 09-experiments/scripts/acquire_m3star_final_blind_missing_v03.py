@@ -5,11 +5,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import json
 import os
 import re
 import shutil
 import threading
+import time
+import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -24,6 +27,7 @@ EXPECTED_RECORD_COUNT = 5
 EXPECTED_FILE_COUNT = 15
 EXPECTED_DOWNLOAD_BYTES = 18_308_224_167
 PROGRESS_INTERVAL_BYTES = 256 * 1024 * 1024
+MAX_RANGE_ATTEMPTS = 6
 MD5_PATTERN = re.compile(r"^[0-9a-f]{32}$")
 ALLOWED_ACCESS_CLASSES = {
     "sealed_mixed_container_curator_only_until_split",
@@ -405,45 +409,74 @@ def download_range(
     on_chunk: Any,
 ) -> None:
     expected_length = range_end - range_start + 1
-    existing = segment_path.stat().st_size if segment_path.exists() else 0
-    if existing > expected_length:
-        raise ValueError(f"Range segment exceeds its frozen length: {item['key']}")
-    if existing == expected_length:
-        return
-    request_start = range_start + existing
-    request = urllib.request.Request(
-        item["download_url"],
-        headers={
-            "User-Agent": "Project05-final-blind-reconstruction-v0.3",
-            "Accept": "*/*",
-            "Range": f"bytes={request_start}-{range_end}",
-        },
-    )
-    with urllib.request.urlopen(request, timeout=120) as response:
-        status = getattr(response, "status", response.getcode())
-        if status != 206:
+    for attempt in range(1, MAX_RANGE_ATTEMPTS + 1):
+        existing = segment_path.stat().st_size if segment_path.exists() else 0
+        if existing > expected_length:
             raise ValueError(
-                f"Range request returned HTTP {status} for {item['key']}"
+                f"Range segment exceeds its frozen length: {item['key']}"
             )
-        expected_content_range = (
-            f"bytes {request_start}-{range_end}/{item['size']}"
+        if existing == expected_length:
+            return
+        request_start = range_start + existing
+        request = urllib.request.Request(
+            item["download_url"],
+            headers={
+                "User-Agent": "Project05-final-blind-reconstruction-v0.3",
+                "Accept": "*/*",
+                "Range": f"bytes={request_start}-{range_end}",
+            },
         )
-        if response.headers.get("Content-Range") != expected_content_range:
-            raise ValueError(f"Content-Range mismatch for {item['key']}")
-        with segment_path.open("ab") as handle:
-            while True:
-                chunk = response.read(8 * 1024 * 1024)
-                if not chunk:
-                    break
-                handle.write(chunk)
-                existing += len(chunk)
-                if existing > expected_length:
+        try:
+            with urllib.request.urlopen(request, timeout=120) as response:
+                status = getattr(response, "status", response.getcode())
+                if status != 206:
                     raise ValueError(
-                        f"Range segment exceeds allowlisted size: {item['key']}"
+                        f"Range request returned HTTP {status} for {item['key']}"
                     )
-                on_chunk(len(chunk))
-    if segment_path.stat().st_size != expected_length:
-        raise ValueError(f"Range segment size mismatch: {item['key']}")
+                expected_content_range = (
+                    f"bytes {request_start}-{range_end}/{item['size']}"
+                )
+                if response.headers.get("Content-Range") != expected_content_range:
+                    raise ValueError(f"Content-Range mismatch for {item['key']}")
+                with segment_path.open("ab") as handle:
+                    while True:
+                        chunk = response.read(8 * 1024 * 1024)
+                        if not chunk:
+                            break
+                        handle.write(chunk)
+                        existing += len(chunk)
+                        if existing > expected_length:
+                            raise ValueError(
+                                "Range segment exceeds allowlisted size: "
+                                f"{item['key']}"
+                            )
+                        on_chunk(len(chunk))
+        except (
+            TimeoutError,
+            OSError,
+            urllib.error.URLError,
+            http.client.HTTPException,
+        ):
+            if attempt == MAX_RANGE_ATTEMPTS:
+                raise
+        observed = segment_path.stat().st_size if segment_path.exists() else 0
+        if observed == expected_length:
+            return
+        if attempt == MAX_RANGE_ATTEMPTS:
+            raise ValueError(f"Range segment size mismatch: {item['key']}")
+        print(
+            json.dumps(
+                {
+                    "status": "range_retry",
+                    "key": item["key"],
+                    "attempt_completed": attempt,
+                    "segment_bytes": observed,
+                    "expected_segment_bytes": expected_length,
+                }
+            ),
+            flush=True,
+        )
+        time.sleep(min(5 * attempt, 30))
 
 
 def download_parallel_ranges(
