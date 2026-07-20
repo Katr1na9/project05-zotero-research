@@ -1,0 +1,173 @@
+{
+  "contract_id": "project05-cam-lds-action-construction-contract-v0.3",
+  "status": "frozen_before_case_reconstruction",
+  "purpose": "Construct a fixed planner-visible CAM-LDS acquisition inventory before hidden outcome binding, so action existence, intent, priors, and wording cannot encode recoverable claims, command anchors, source-native ATT&CK mappings, archive members, or telemetry record locators.",
+  "case_scope": {
+    "eligible_case_ids": [
+      "C021-final-blind",
+      "C022-final-blind",
+      "C023-final-blind",
+      "C024-final-blind",
+      "C025-final-blind",
+      "C026-final-blind"
+    ],
+    "blocked_case_ids": [
+      "C027-final-blind"
+    ]
+  },
+  "role_separation": {
+    "isolated_curator_required": true,
+    "model_development_role_must_not_open_case_payloads": true,
+    "private_executor_map_must_not_be_returned": true,
+    "planner_or_model_execution_forbidden_during_construction": true
+  },
+  "pinned_scripts": [
+    {
+      "path": "09-experiments/scripts/m3star_final_blind_action_contract_v03.py",
+      "sha256": "e2843a2810090e0bad449694ff9a5a3f7892dfaa79ce91ff9a739be487dda7ce"
+    },
+    {
+      "path": "09-experiments/scripts/validate_m3star_final_blind_case_bundle_v03.py",
+      "sha256": "de48676e16e9107934217f64196dd70e540c138266aec67bba0eb8adbea50509"
+    }
+  ],
+  "construction_order": [
+    "instantiate_the_fixed_eight_public_slot_rows_from_case_id_and_public_cti_topology",
+    "seal_the_canonical_planner_visible_inventory_sha256",
+    "seal_the_private_slot_to_query_executor_map_sha256",
+    "bind_only_recoverable_claim_ids_from_private_query_results",
+    "verify_the_planner_visible_inventory_sha256_is_unchanged",
+    "run_static_case_bundle_validation_without_a_planner_or_model"
+  ],
+  "fixed_public_slot_templates": [
+    {
+      "slot": 1,
+      "action_type": "ttp_local_probe",
+      "acquisition_channel": "cam_lds_structured_command_replay",
+      "expected_evidence_types": [
+        "local_log"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS structured-command replay scope 01."
+    },
+    {
+      "slot": 2,
+      "action_type": "ttp_local_probe",
+      "acquisition_channel": "cam_lds_structured_command_replay",
+      "expected_evidence_types": [
+        "local_log"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS structured-command replay scope 02."
+    },
+    {
+      "slot": 3,
+      "action_type": "ttp_local_probe",
+      "acquisition_channel": "cam_lds_structured_command_replay",
+      "expected_evidence_types": [
+        "local_log"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS structured-command replay scope 03."
+    },
+    {
+      "slot": 4,
+      "action_type": "ttp_local_probe",
+      "acquisition_channel": "cam_lds_structured_command_replay",
+      "expected_evidence_types": [
+        "local_log"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS structured-command replay scope 04."
+    },
+    {
+      "slot": 5,
+      "action_type": "query_host_subgraph",
+      "acquisition_channel": "cam_lds_process_context_replay",
+      "expected_evidence_types": [
+        "provenance_graph"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS process-context replay scope 05."
+    },
+    {
+      "slot": 6,
+      "action_type": "query_host_subgraph",
+      "acquisition_channel": "cam_lds_process_context_replay",
+      "expected_evidence_types": [
+        "provenance_graph"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS process-context replay scope 06."
+    },
+    {
+      "slot": 7,
+      "action_type": "query_host_subgraph",
+      "acquisition_channel": "cam_lds_process_context_replay",
+      "expected_evidence_types": [
+        "provenance_graph"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS process-context replay scope 07."
+    },
+    {
+      "slot": 8,
+      "action_type": "extend_log_window",
+      "acquisition_channel": "cam_lds_adjacent_window_control",
+      "expected_evidence_types": [
+        "local_log"
+      ],
+      "natural_language_request": "Execute preregistered CAM-LDS adjacent-window control scope 08."
+    }
+  ],
+  "planner_visible_field_policy": {
+    "target_value_is_case_and_slot_only": true,
+    "intended_cti_node_ids_rule": "all_public_cti_node_ids_sorted",
+    "command_or_executable_values_forbidden": true,
+    "archive_or_member_locators_forbidden": true,
+    "telemetry_record_locators_forbidden": true,
+    "source_native_attack_mapping_values_forbidden": true,
+    "mapping_commitments_forbidden": true
+  },
+  "outcome_binding_policy": {
+    "only_mutable_field_after_public_seal": "recoverable_claim_ids",
+    "recoverable_claim_ids_are_executor_only": true,
+    "changing_recoverable_claim_ids_must_not_change_any_planner_visible_row": true
+  },
+  "outcome_binding_gates": {
+    "minimum_positive_actions": 2,
+    "minimum_zero_yield_actions": 2,
+    "every_claim_must_be_recoverable": true,
+    "single_action_may_not_recover_the_entire_cti_node_set": true,
+    "declared_intended_node_set_may_not_equal_hidden_recovered_node_set": true
+  },
+  "expected_effects_policy": {
+    "rule_id": "outcome_agnostic_neutral_zero_v1",
+    "all_five_values": 0.0,
+    "legacy_expert_prior_forbidden": true,
+    "case_outcomes_or_mapping_values_used": false,
+    "interpretation": "No uncalibrated benefit claim is supplied to any planner; empirical action value must be learned from development data or observed feedback."
+  },
+  "channel_reliability_policy": {
+    "construct": "probability_that_the_registered_executor_returns_a_structurally_valid_replay_result_for_a_syntactically_valid_query_against_the_frozen_archive",
+    "evidentiary_relevance_is_not_part_of_this_construct": true,
+    "pending_representation": null,
+    "pending_status": "pending_independent_executor_calibration",
+    "frozen_status": "frozen_independent_executor_calibration",
+    "minimum_independent_trials_per_channel": 30,
+    "frozen_estimator": "two_sided_95_percent_wilson_interval_lower_bound",
+    "calibration_must_use_a_separate_profile": true
+  },
+  "cost_and_budget_policy": {
+    "embedded_action_cost": null,
+    "budget_total": null,
+    "budget_status": "pending_sealed_measurement",
+    "numeric_values_forbidden_until_real_executor_measurement": true
+  },
+  "required_public_return": [
+    "case_id",
+    "three_case_file_sha256_values",
+    "claim_node_and_action_counts",
+    "planner_inventory_seal_match_boolean",
+    "zero_yield_action_count",
+    "reference_closure_boolean",
+    "fixed_blocker_codes"
+  ],
+  "payload_values_returned_to_model_development": false,
+  "planner_or_model_executed": false,
+  "one_shot_evaluation_consumed": false,
+  "one_shot_execution_authorized": false
+}

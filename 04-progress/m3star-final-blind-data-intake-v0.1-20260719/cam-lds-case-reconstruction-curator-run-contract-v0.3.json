@@ -1,0 +1,161 @@
+{
+  "contract_id": "project05-cam-lds-case-reconstruction-curator-run-contract-v0.3",
+  "status": "frozen_before_private_case_reconstruction",
+  "purpose": "Reconstruct C021-C026 as sealed three-file final-blind cases while preventing planner-visible action rows from encoding selected mappings, record anchors, or recovery outcomes.",
+  "case_scope": {
+    "required_case_ids": [
+      "C021-final-blind",
+      "C022-final-blind",
+      "C023-final-blind",
+      "C024-final-blind",
+      "C025-final-blind",
+      "C026-final-blind"
+    ],
+    "required_case_count": 6,
+    "C027_final_blind_remains_blocked": true
+  },
+  "role_boundary": {
+    "isolated_curator_required": true,
+    "model_development_role_may_receive_only_redacted_receipts": true,
+    "case_payloads_must_not_be_returned_to_model_development": true,
+    "private_executor_maps_must_not_be_returned": true,
+    "measured_cost_values_must_not_be_opened": true,
+    "planner_or_model_must_not_be_executed": true
+  },
+  "pinned_inputs": [
+    {
+      "path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/cam-lds-command-record-linkage-summary-v0.3.json",
+      "sha256": "374cc923cf4136ce032fefc25fb952c1ed38fb2f3f18592a9bf9c5f38d03b01f"
+    },
+    {
+      "path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/cam-lds-action-construction-contract-v0.3.json",
+      "sha256": "38d8927fbb832a909a1bd4c7289a6418dafa86c14bda1b3b54483f49b6e69ac4"
+    },
+    {
+      "path": "09-experiments/scripts/m3star_final_blind_action_contract_v03.py",
+      "sha256": "e2843a2810090e0bad449694ff9a5a3f7892dfaa79ce91ff9a739be487dda7ce"
+    },
+    {
+      "path": "09-experiments/scripts/validate_m3star_final_blind_case_bundle_v03.py",
+      "sha256": "de48676e16e9107934217f64196dd70e540c138266aec67bba0eb8adbea50509"
+    }
+  ],
+  "private_input_bindings": {
+    "cam_linkage_private_audit_sha256": "f87c1a8d6ba6b0b5e01476e40fda1804321a6f56d412335b6589a22b4bd0f706",
+    "private_case_to_archive_map_required": true,
+    "private_hmac_key_minimum_bytes": 32,
+    "private_inputs_must_remain_untracked": true
+  },
+  "claim_selection_policy": {
+    "candidate_unit": "one_representative_cross_case_unique_low_frequency_record_anchor_per_unambiguous_source_native_mapping_commitment",
+    "ranking": "ascending_HMAC_SHA256_over_the_canonical_private_candidate_descriptor",
+    "selected_claim_count": "min(3, distinct_anchored_mapping_count)",
+    "minimum_selected_claim_count": 2,
+    "same_private_HMAC_key_used_for_all_six_cases": true,
+    "manual_preference_or_post_selection_forbidden": true,
+    "record_timestamp_order_defines_selected_chain_order": true,
+    "source_pointer_must_bind_the_concrete_structured_telemetry_record": true
+  },
+  "action_slot_binding_policy": {
+    "public_rows_built_only_with_instantiate_public_actions": true,
+    "positive_slot_candidates": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "positive_slot_ranking": "ascending_HMAC_SHA256(case_id || ':positive-slot:' || two_digit_slot)",
+    "one_selected_claim_per_positive_slot": true,
+    "all_nonselected_slots_must_execute_a_syntactically_valid_decoy_or_adjacent_window_control_query": true,
+    "minimum_zero_yield_slots": 2,
+    "slot_8_is_always_an_adjacent_out_of_observed_window_control": true,
+    "private_slot_to_query_map_sealed_before_recoverable_claim_binding": true,
+    "only_recoverable_claim_ids_may_be_added_after_public_inventory_sealing": true,
+    "binding_must_use_bind_recoverable_claims": true
+  },
+  "case_config_policy": {
+    "development_only": false,
+    "mask_intensities": [
+      0.2,
+      0.4,
+      0.6
+    ],
+    "mask_strategies": [
+      "random",
+      "stage",
+      "discriminative"
+    ],
+    "random_seeds": [
+      11,
+      23,
+      37,
+      41,
+      53
+    ],
+    "condition_count": 45,
+    "cost_regime_required": "measured",
+    "measured_cost_profile_required": true,
+    "budget_total": null,
+    "budget_status": "pending_sealed_measurement",
+    "channel_reliability_status": "pending_independent_executor_calibration",
+    "channel_reliability_values": null
+  },
+  "required_private_validation": {
+    "command": "python 09-experiments/scripts/validate_m3star_final_blind_case_bundle_v03.py --case-dir <C021> --case-dir <C022> --case-dir <C023> --case-dir <C024> --case-dir <C025> --case-dir <C026>",
+    "require_frozen_budget_flag_forbidden_at_this_stage": true,
+    "require_frozen_action_calibration_flag_forbidden_at_this_stage": true,
+    "all_six_static_reference_closures_required": true,
+    "planner_visible_inventory_seal_match_required": true,
+    "zero_yield_gate_required": true,
+    "one_shot_evaluation_consumed_must_be_false": true
+  },
+  "redacted_public_summary": {
+    "path": "04-progress/m3star-final-blind-data-intake-v0.1-20260719/cam-lds-case-reconstruction-summary-v0.3.json",
+    "allowed_per_case_fields": [
+      "case_id",
+      "case_config_sha256",
+      "evidence_claims_sha256",
+      "acquisition_actions_sha256",
+      "claim_count",
+      "cti_node_count",
+      "cti_edge_count",
+      "action_count",
+      "positive_action_count",
+      "zero_yield_action_count",
+      "planner_visible_inventory_sha256",
+      "planner_visible_inventory_matches_prebinding_seal",
+      "reference_closure_pass",
+      "channel_reliability_status",
+      "budget_status",
+      "fixed_blocker_codes"
+    ],
+    "forbidden_fields": [
+      "claim_ids",
+      "node_ids",
+      "action_ids",
+      "source_pointers",
+      "record_locators",
+      "commands",
+      "executables",
+      "mapping_values",
+      "mapping_commitments",
+      "recoverable_claim_ids",
+      "private_executor_map",
+      "channel_reliability_values",
+      "cost_values",
+      "planner_outputs",
+      "model_outputs"
+    ],
+    "private_case_bundle_paths_must_not_be_in_git": true,
+    "private_case_bundle_sha256_receipts_required": true
+  },
+  "case_payloads_returned_to_model_development": false,
+  "ground_truth_opened_by_model_development": false,
+  "cost_values_opened": false,
+  "planner_or_model_executed": false,
+  "one_shot_evaluation_consumed": false,
+  "one_shot_execution_authorized": false
+}

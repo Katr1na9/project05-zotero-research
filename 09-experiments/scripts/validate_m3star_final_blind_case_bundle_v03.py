@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import math
 import re
@@ -26,6 +27,18 @@ EXPECTED_EFFECT_FIELDS = (
     "expected_conflict_resolution",
     "expected_coverage_delta",
 )
+
+
+def load_local_script(name: str) -> Any:
+    path = Path(__file__).with_name(f"{name}.py")
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
+action_contract = load_local_script("m3star_final_blind_action_contract_v03")
 
 
 def load_json(path: Path) -> Any:
@@ -120,6 +133,7 @@ def validate_case_bundle(
     expected_case_id: str | None = None,
     *,
     require_frozen_budget: bool = False,
+    require_frozen_action_calibration: bool = False,
 ) -> dict[str, Any]:
     case_dir = case_dir.resolve()
     for filename in CASE_FILENAMES:
@@ -401,13 +415,40 @@ def validate_case_bundle(
         raise ValueError(
             "case_config.channel_reliability keys must exactly match action channels"
         )
+    pending_reliability_channels: list[str] = []
     for channel, value in channel_reliability.items():
+        if value is None:
+            if config.get("channel_reliability_status") != (
+                action_contract.PENDING_RELIABILITY_STATUS
+            ):
+                raise ValueError(
+                    "Null channel reliability requires "
+                    "channel_reliability_status='pending_independent_executor_calibration'"
+                )
+            pending_reliability_channels.append(channel)
+            continue
         reliability = require_finite_number(
             value,
             f"case_config.channel_reliability.{channel}",
         )
         if not 0 <= reliability <= 1:
             raise ValueError("Channel reliability values must be between 0 and 1")
+
+    action_construction_report: dict[str, Any] = {}
+    construction = config.get("action_construction")
+    contract_document, _contract_path, _contract_sha256 = action_contract.load_contract()
+    cam_case_ids = set(contract_document["case_scope"]["eligible_case_ids"])
+    if case_id in cam_case_ids or construction is not None:
+        action_construction_report = (
+            action_contract.validate_cam_lds_action_construction(
+                config,
+                claims,
+                actions,
+                require_frozen_action_calibration=(
+                    require_frozen_action_calibration
+                ),
+            )
+        )
 
     discriminative_claim_ids = require_unique_strings(
         config.get("discriminative_claim_ids"),
@@ -425,7 +466,7 @@ def validate_case_bundle(
         "case_config.stage_mask_tags",
     )
 
-    return {
+    report = {
         "case_id": case_id,
         "condition_count": condition_count,
         "claim_count": len(claim_ids),
@@ -438,6 +479,7 @@ def validate_case_bundle(
         "measured_cost_profile_required": True,
         "frozen_measured_budget_present": frozen_budget_present,
         "budget_status": budget_status,
+        "pending_channel_reliability_count": len(pending_reliability_channels),
         "claims_referenced_by_required_nodes_count": len(referenced_claim_ids),
         "all_claims_recoverable": True,
         "reference_closure_pass": True,
@@ -450,6 +492,8 @@ def validate_case_bundle(
         "planner_or_model_outputs_opened": False,
         "one_shot_evaluation_consumed": False,
     }
+    report.update(action_construction_report)
+    return report
 
 
 def main() -> None:
@@ -457,6 +501,10 @@ def main() -> None:
     parser.add_argument("--case-dir", type=Path, action="append", required=True)
     parser.add_argument("--expected-case-id", action="append")
     parser.add_argument("--require-frozen-budget", action="store_true")
+    parser.add_argument(
+        "--require-frozen-action-calibration",
+        action="store_true",
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     expected = args.expected_case_id
@@ -467,6 +515,9 @@ def main() -> None:
             case_dir,
             None if expected is None else expected[index],
             require_frozen_budget=args.require_frozen_budget,
+            require_frozen_action_calibration=(
+                args.require_frozen_action_calibration
+            ),
         )
         for index, case_dir in enumerate(args.case_dir)
     ]
@@ -480,6 +531,9 @@ def main() -> None:
             item["frozen_measured_budget_present"] for item in case_reports
         ),
         "frozen_budget_required_by_this_run": args.require_frozen_budget,
+        "frozen_action_calibration_required_by_this_run": (
+            args.require_frozen_action_calibration
+        ),
         "case_contents_opened_for_structural_validation": True,
         "case_contents_returned_in_report": False,
         "planner_or_model_executed": False,
