@@ -1,0 +1,71 @@
+{
+  "authority_id": "project05-qwen25-rtx4090-detached-adamw-recovery-v0.37",
+  "version": "0.37.0",
+  "status": "user_authorized_single_fresh_detached_adamw_primary",
+  "created_date": "2026-07-20",
+  "user_decision": {
+    "decision": "批准恢复重新训练",
+    "interpreted_scope": "one_fresh_detached_225_step_three_epoch_adamw_primary",
+    "resume_from_v035_checkpoint_authorized": false,
+    "checkpoint_selection_or_evaluation_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.36.json",
+    "sha256": "72D5ED7306E1F1AA744F7D3EFD336ABCC1CFB034D7EDAF765BAB67B26DFC1E65",
+    "disposition": "consume_the_user_recovery_decision_after_v035_interruption_closure"
+  },
+  "authoritative_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.5.json",
+    "sha256": "B913202746F5729F535EFF3449461DF4F40432225B7A0F333A560501FF8EEACE"
+  },
+  "fresh_adamw_primary_gate": {
+    "authorized": true,
+    "contract_sha256": "B913202746F5729F535EFF3449461DF4F40432225B7A0F333A560501FF8EEACE",
+    "training_config_sha256": "FA821CC41AF16F2FE4D32A6A00041BAE13377046435A3A03A14FD4689C88E6BE",
+    "launcher_sha256": "F45F38ADDA2471F3A3624F949814775FC0F3E960D1ECB857934A7D3992683783",
+    "maximum_executions": 1,
+    "fresh_initialization_required": true,
+    "detached_worker_required": true,
+    "optimizer": "adamw_torch",
+    "epochs": 3,
+    "optimizer_steps": 225,
+    "microbatches": 3600,
+    "same_data_model_lora_seed_scheduler_required": true,
+    "same_cache_normalized_memory_gate_required": true,
+    "resume_authorized": false,
+    "automatic_retry_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "run_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "run_subdirectory": "server-output/primary-adamw-detached-v0.37",
+    "single_visible_smoke_bound_idle_rtx4090_required": true
+  },
+  "next_gate": {
+    "status": "detached_formal_primary_open_all_evaluation_and_downstream_scopes_closed",
+    "checkpoint_selection_authorized": false,
+    "training_validation_generation_authorized": false,
+    "formal_inference_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "additional_formal_primary",
+    "automatic_retry_or_resume",
+    "v035_checkpoint_selection_or_resume",
+    "optimizer_hyperparameter_search",
+    "memory_threshold_reduction",
+    "multi_gpu_training",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
