@@ -1,0 +1,88 @@
+{
+  "authority_id": "project05-qwen25-training-validation-checkpoint-selection-v0.39",
+  "version": "0.39.0",
+  "status": "single_checkpoint_selection_execution_authorized",
+  "created_date": "2026-07-20",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.38.json",
+    "sha256": "D6C734FF56DB0C6271F214EE405967BDDDDA8B3FCABE15AD1D1B67AC7492D0E7",
+    "disposition": "formal_training_is_complete_and_no_additional_training_or_resume_is_authorized"
+  },
+  "approved_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-checkpoint-selection-amendment-v0.39-20260720.md",
+    "sha256": "DA2F84B6679CE7EA158DF2E060F57964E1028C46C3C65CC682C8DF589C4851F2"
+  },
+  "authoritative_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-checkpoint-selection-contract-v0.1.json",
+    "sha256": "5FACF80824C6486203A7BEE990991042901115B2BDFDA79A70F9763E7820CD74"
+  },
+  "checkpoint_selection_gate": {
+    "authorized": true,
+    "maximum_executions": 1,
+    "contract_sha256": "5FACF80824C6486203A7BEE990991042901115B2BDFDA79A70F9763E7820CD74",
+    "selection_config_sha256": "BC15575AFE5CA3D30B61D9E1010934DABFE48BA5B85ED65B6BEEC076003AD22D",
+    "required_split": "training-validation",
+    "required_examples": 300,
+    "required_checkpoint_epochs": [1, 2, 3],
+    "detached_single_gpu_execution_required": true,
+    "automatic_retry_authorized": false,
+    "additional_training_or_resume_authorized": false,
+    "checkpoint_or_adapter_download_authorized": false,
+    "paired_evaluation_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "authorized_actions": [
+    "deploy_the_hash_locked_checkpoint_selection_bundle_below_home_myy",
+    "verify_all_twenty_one_formal_checkpoint_files_against_the_success_audit",
+    "reuse_the_existing_fixed_qwen_snapshot_and_runtime_without_download_or_install",
+    "evaluate_all_three_epoch_checkpoints_on_the_frozen_300_training_validation_examples",
+    "repeat_the_frozen_16_example_reproducibility_panel_per_checkpoint",
+    "write_server_only_raw_generations_and_sanitized_mechanical_metrics",
+    "select_exactly_one_checkpoint_by_the_frozen_metric_and_tie_breakers",
+    "retrieve_only_sanitized_audit_metrics_and_progress_records"
+  ],
+  "artifact_policy": {
+    "raw_generations": "server_only",
+    "checkpoint_and_adapter": "server_only",
+    "committable": [
+      "sanitized_checkpoint_selection_audit",
+      "sanitized_per_example_mechanical_metrics",
+      "sanitized_progress_record",
+      "checkpoint_selection_result_markdown"
+    ],
+    "raw_generation_download_authorized": false,
+    "checkpoint_or_adapter_download_authorized": false,
+    "hub_upload_authorized": false
+  },
+  "next_gate": {
+    "status": "hard_stop_for_general_vs_adapted_paired_evaluation_authorization",
+    "paired_general_vs_adapted_evaluation_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "additional_training_or_resume",
+    "selection_metric_or_tie_breaker_change",
+    "automatic_retry_or_output_resume",
+    "train_split_generation_or_scoring",
+    "paired_general_vs_adapted_evaluation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_controller_inference",
+    "m3_runtime_integration",
+    "checkpoint_adapter_or_raw_generation_download",
+    "merged_model_save",
+    "hub_upload",
+    "runtime_install_or_upgrade",
+    "model_or_tokenizer_download",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

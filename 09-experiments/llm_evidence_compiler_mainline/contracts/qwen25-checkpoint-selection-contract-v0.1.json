@@ -1,0 +1,94 @@
+{
+  "contract_id": "project05-qwen25-checkpoint-selection-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-20",
+  "status": "single_training_validation_checkpoint_selection_execution_contract",
+  "contract_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-checkpoint-selection-contract-v0.1.json",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.39.json",
+  "approved_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-checkpoint-selection-amendment-v0.39-20260720.md",
+    "sha256": "DA2F84B6679CE7EA158DF2E060F57964E1028C46C3C65CC682C8DF589C4851F2"
+  },
+  "formal_training_completion_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.38.json",
+    "sha256": "D6C734FF56DB0C6271F214EE405967BDDDDA8B3FCABE15AD1D1B67AC7492D0E7"
+  },
+  "formal_training_result": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-adamw-detached-primary-success-audit-v0.1.json",
+    "sha256": "EF46A654F741DD521DA7922E01A559B7545EB501047C3594D2F808F006AE7AE5"
+  },
+  "selection_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/checkpoint_selection_v0.1/selection-config-v0.1.json",
+    "sha256": "BC15575AFE5CA3D30B61D9E1010934DABFE48BA5B85ED65B6BEEC076003AD22D"
+  },
+  "server_execution_boundary": {
+    "allowed_home": "/home/myy",
+    "run_directory_name": "project05-qwen25-4090-v0.1",
+    "bundle_subdirectory": "bundle",
+    "read_or_write_outside_allowed_home": false,
+    "single_fixed_gpu_required": true,
+    "physical_gpu_uuid": "GPU-b0302acd-64e2-8218-7b5c-07a152007357",
+    "physical_gpu_index": 2
+  },
+  "selection_inputs": {
+    "preparation_audit_path": "server-output/preparation-audit-v0.1.json",
+    "preparation_audit_sha256": "12F73CE159E72F08C08533B8CA8A79BBF79ECAF7FEF118CB24F702FA1BDDC38A"
+  },
+  "pair_payloads": {
+    "root": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data",
+    "training_validation": {
+      "file": "training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552",
+      "examples": 300,
+      "supported": 150,
+      "unsupported_by_bound_pointer": 150,
+      "source_families": 2
+    },
+    "train_access_allowed": false,
+    "development_or_test_access_allowed": false
+  },
+  "checkpoint_source": {
+    "run_subdirectory": "server-output/primary-adamw-detached-v0.37",
+    "epochs": [1, 2, 3],
+    "exact_formal_result_inventory_required": true,
+    "download_allowed": false,
+    "merged_model_allowed": false
+  },
+  "frozen_inputs": {
+    "serialization_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.2.json",
+      "sha256": "47C6BDFCCBC4693102D4FF225CFFFB081473BDC78749779D2B52B41B7851E385"
+    }
+  },
+  "implementation": {
+    "checkpoint_selector": {
+      "path": "09-experiments/scripts/select_qwen_qlora_checkpoint_4090.py",
+      "sha256": "58B0CFB049874AC9C0FE87A53B48293CE7FA004A9E78CE2C6A33FFBD21D31321"
+    },
+    "checkpoint_selection_launcher": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/checkpoint_selection_v0.1/run-checkpoint-selection-detached-v0.1.sh",
+      "sha256": "FF063AF78C65DEC686434BF174BAD91F13A4544041807BB3D7F9BFFCDA4680EA"
+    }
+  },
+  "runtime_lock": {
+    "reuse_existing_environment_only": true,
+    "python": "3.11.9",
+    "torch": "2.3.1+cu121",
+    "transformers": "4.45.2",
+    "peft": "0.13.2",
+    "bitsandbytes": "0.43.1",
+    "new_install_or_upgrade_allowed": false,
+    "model_or_tokenizer_download_allowed": false
+  },
+  "execution_policy": {
+    "maximum_executions": 1,
+    "detached_worker_required": true,
+    "automatic_retry_allowed": false,
+    "output_overwrite_or_resume_allowed": false,
+    "raw_generation_server_only": true,
+    "paired_general_vs_adapted_allowed": false,
+    "development_or_test_allowed": false,
+    "c07_c12_allowed": false,
+    "m3_integration_allowed": false
+  }
+}
