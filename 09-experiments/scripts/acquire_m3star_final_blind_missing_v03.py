@@ -407,7 +407,7 @@ def download_one(
         raise ValueError(f"Partial file exceeds allowlisted size: {partial.name}")
     headers = {
         "User-Agent": "Project05-final-blind-reconstruction-v0.3",
-        "Accept": "application/octet-stream",
+        "Accept": "*/*",
     }
     if current:
         headers["Range"] = f"bytes={current}-"
