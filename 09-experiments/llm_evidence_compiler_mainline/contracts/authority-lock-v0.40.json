@@ -1,0 +1,107 @@
+{
+  "authority_id": "project05-qwen25-checkpoint-selection-completion-v0.40",
+  "version": "0.40.0",
+  "status": "checkpoint_selection_passed_paired_evaluation_implementation_authorized",
+  "created_date": "2026-07-20",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.39.json",
+    "sha256": "383DF614AC4F48EC2B175253244C2661FA24AC7AF11DF2BCD41064709181BF7D",
+    "disposition": "the_single_checkpoint_selection_execution_completed_and_its_execution_quota_is_consumed"
+  },
+  "selection_result": {
+    "audit": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/checkpoint_selection_v0.1/checkpoint-selection-audit-v0.1.json",
+      "sha256": "2E0EFF92CFF06D70317C87E63922881C082338CB9C4141BB761255B9BE0CB1EC"
+    },
+    "metrics": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/checkpoint_selection_v0.1/checkpoint-selection-metrics-v0.1.jsonl",
+      "sha256": "E2EE503E6AE0D543446215C0547FE1D5E388220A3107DDEECB19EFB62E4FBB20",
+      "rows": 900
+    },
+    "progress": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/checkpoint_selection_v0.1/checkpoint-selection-progress-v0.1.jsonl",
+      "sha256": "73E76F2867D1EC19F95B47A0509007ECBEDEAC68D6185E1B1A15CB82B40958A9",
+      "rows": 91
+    },
+    "record": {
+      "path": "08-writing/llm-evidence-compiler-qwen25-checkpoint-selection-result-v0.40-20260720.md",
+      "sha256": "0446E7DDD2AAD55E47BFD653EFABE47193B36A66D23EE7CF7F68F67100AB6A15"
+    }
+  },
+  "completion_gate": {
+    "passed": true,
+    "status": "passed_training_validation_checkpoint_selection",
+    "evaluated_checkpoints": [1, 2, 3],
+    "metrics_rows": 900,
+    "reproducibility_panel_examples_per_checkpoint": 16,
+    "all_reproducibility_panels_passed": true,
+    "memory_gate_passed": true,
+    "resource_gate_passed": true,
+    "failure_audit_present": false,
+    "selection_process_present_after_completion": false,
+    "gpu_released_after_completion": true,
+    "raw_generation_downloaded": false,
+    "checkpoint_or_adapter_downloaded": false
+  },
+  "selected_checkpoint": {
+    "epoch": 2,
+    "optimizer_step": 150,
+    "adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11",
+    "server_relative_path": "server-output/primary-adamw-detached-v0.37/checkpoint-epoch-002/adapter",
+    "family_macro_support_decision_f1": 0.4702158273381295,
+    "selection_was_strict_on_primary_metric": true,
+    "tie_breaker_required": false,
+    "server_only": true
+  },
+  "scientific_disposition": {
+    "adapter_effectiveness_proven": false,
+    "selected_checkpoint_is_only_relative_best_on_training_validation": true,
+    "supported_class_f1_is_zero_for_both_families_at_all_three_checkpoints": true,
+    "class_collapse_must_be_reported": true,
+    "selection_score_may_not_be_reported_as_test_performance": true,
+    "positive_paper_claim_authorized": false,
+    "paired_general_vs_adapted_evaluation_required": true,
+    "negative_or_harmful_adapter_result_must_remain_admissible": true
+  },
+  "user_continuation_authority": {
+    "recorded_date": "2026-07-20",
+    "instruction": "checkpoint_validation_completion_must_not_interrupt_subsequent_progress",
+    "paired_evaluation_implementation_may_continue_without_an_additional_pause": true,
+    "governance_and_data_boundaries_remain_binding": true
+  },
+  "next_gate": {
+    "status": "paired_evaluation_contract_and_model_free_implementation_authorized",
+    "paired_evaluation_plan_contract_runner_and_tests_authorized": true,
+    "paired_model_execution_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false,
+    "execution_requires_new_hash_locked_contract_and_authority": true
+  },
+  "authorized_actions": [
+    "write_the_paired_general_vs_selected_adapter_implementation_amendment",
+    "freeze_same_input_prompt_tokenizer_quantization_and_decode_conditions",
+    "create_a_hash_locked_paired_evaluation_contract_and_config",
+    "implement_model_lazy_runner_and_model_free_tests",
+    "test_selection_result_integrity_and_negative_result_routing",
+    "commit_and_push_sanitized_selection_results_and_paired_implementation"
+  ],
+  "not_authorized": [
+    "repeat_checkpoint_selection",
+    "change_checkpoint_selection_metrics_or_selected_epoch",
+    "download_raw_generations_checkpoint_or_adapter",
+    "paired_model_execution_before_new_authority",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_controller_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}
