@@ -1,0 +1,116 @@
+{
+  "contract_id": "project05-cam-lds-command-record-linkage-curator-run-contract-v0.3",
+  "status": "frozen_before_private_command_record_linkage_audit",
+  "purpose": "Test whether a source-native mapped CAM-LDS command can be bound to a concrete structured telemetry record without returning command, mapping, or telemetry values.",
+  "role_requirements": {
+    "isolated_curator_required": true,
+    "model_development_role_must_not_execute_private_scan": true,
+    "ground_truth_custodian_material_forbidden": true,
+    "model_or_planner_outputs_forbidden": true
+  },
+  "frozen_case_scope": {
+    "eligible_case_ids": [
+      "C021-final-blind",
+      "C022-final-blind",
+      "C023-final-blind",
+      "C024-final-blind",
+      "C025-final-blind",
+      "C026-final-blind",
+      "C027-final-blind"
+    ],
+    "eligible_case_count": 7,
+    "comparison_case_count": 0,
+    "all_seven_cases_participate_in_cross_case_uniqueness": true,
+    "private_case_to_archive_map_required": true,
+    "private_case_map_must_not_be_returned": true
+  },
+  "publisher_container_boundary_policy": {
+    "one_official_zip_per_frozen_case": true,
+    "archive_or_member_slicing_forbidden": true,
+    "outer_archive_sha256_binding_required": true,
+    "exact_archive_duplicates_permitted": false,
+    "shared_baseline_members_may_not_create_case_specific_claims": true,
+    "cross_case_unique_record_anchor_required_to_exclude_shared_baseline_evidence": true
+  },
+  "frozen_command_anchor_policy": {
+    "allowed_source_action_fields": [
+      "commands[].cmd",
+      "commands[].exe",
+      "commands[].commands[].cmd",
+      "commands[].commands[].exe"
+    ],
+    "source_native_mapping_must_share_the_same_command_parent_object": true,
+    "command_document_self_matching_forbidden": true,
+    "exact_token_boundaries_required": true,
+    "cross_case_uniqueness_required": true,
+    "maximum_records_per_anchor": 5,
+    "ambiguous_anchor_with_multiple_mapping_commitments_forbidden": true,
+    "minimum_distinct_record_anchored_mapping_commitments": 2,
+    "single_mapped_node_is_not_a_chain": true
+  },
+  "frozen_telemetry_policy": {
+    "json_and_newline_log_records_only": true,
+    "binary_journal_records_excluded": true,
+    "generic_unstructured_log_lines_excluded": true,
+    "allowed_structured_field_names_case_insensitive": [
+      "cmd",
+      "comm",
+      "command",
+      "command_shell",
+      "command_timeout",
+      "exe",
+      "execve",
+      "parent",
+      "process",
+      "program_name",
+      "proctitle"
+    ],
+    "generic_name_or_path_fields_forbidden": true
+  },
+  "private_inputs": {
+    "case_archive_map": "curator-supplied private mapping",
+    "commitment_key_file": "curator-supplied private binary file",
+    "minimum_commitment_key_bytes": 32
+  },
+  "pinned_scripts": [
+    {
+      "path": "09-experiments/scripts/audit_cam_lds_command_record_linkage_v03.py",
+      "sha256": "66554ff0fcaac94527df49fe62787607b5698abbee8c1388c8705d9f85e6e463"
+    },
+    {
+      "path": "09-experiments/scripts/summarize_cam_lds_command_record_linkage_v03.py",
+      "sha256": "fe228a4138526d1f26d3eff2cc88c21ed83583aadb04bdc21c73efd44167b867"
+    }
+  ],
+  "required_outputs": {
+    "private_audit": "curator-private, untracked, never returned to model development",
+    "public_summary": "cam-lds-command-record-linkage-summary-v0.3.json",
+    "public_summary_private_audit_sha256_binding_required": true,
+    "record_locators_in_public_summary_forbidden": true,
+    "command_or_anchor_values_in_public_summary_forbidden": true,
+    "mapping_commitments_in_public_summary_forbidden": true,
+    "telemetry_values_in_public_summary_forbidden": true,
+    "attack_mapping_values_in_public_summary_forbidden": true
+  },
+  "automatic_case_bundle_ready_definition": {
+    "source_native_mapping_gate_passed": true,
+    "command_record_anchor_gate_passed": true,
+    "minimum_chain_mapping_gate_passed": true,
+    "all_three_required": true
+  },
+  "allowed_public_return_fields": [
+    "case identifiers",
+    "counts",
+    "SHA-256 values",
+    "gate booleans",
+    "fixed source-specific blocker codes"
+  ],
+  "command_values_opened_by_model_development": false,
+  "telemetry_values_opened_by_model_development": false,
+  "ground_truth_opened": false,
+  "measured_cost_values_opened": false,
+  "model_outputs_opened": false,
+  "planner_or_model_executed": false,
+  "one_shot_evaluation_consumed": false,
+  "one_shot_execution_authorized": false
+}

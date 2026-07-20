@@ -32,6 +32,20 @@ rare-anchor threshold, comparison-only scope, script hashes, role separation,
 and the exact redacted return boundary. The contract does not authorize the
 model-development role to inspect or scan source records.
 
+That audit is now complete. It parsed 354,229 records across C013--C019, but
+none of the seven cases passed either the rare record-anchor gate or the
+explicit tool-to-mapping linkage gate. The content-free result is
+'otrf-record-anchor-audit-summary-v0.3.json'; those cases remain blocked rather
+than being reconstructed from broad token matches.
+
+The next frozen source subset, C021--C027, uses the stricter source-native
+command-to-record contract in
+'cam-lds-command-record-linkage-curator-run-contract-v0.3.json'. It requires a
+mapped command and matching record to share a publisher case container, rejects
+command-document self-matches and shared-baseline matches, and requires at
+least two distinct record-anchored mapping commitments before a case can be
+called an attack chain.
+
 This does not consume the final blind evaluation. The next valid step is an
 isolated reconstruction of exactly 59 complete, unique case directories, a
 manifest bound to the frozen identity commitment, and a measured-cost profile.
