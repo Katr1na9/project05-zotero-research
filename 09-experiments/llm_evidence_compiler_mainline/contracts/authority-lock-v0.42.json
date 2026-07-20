@@ -1,0 +1,129 @@
+{
+  "authority_id": "project05-qwen25-general-adapted-single-paired-execution-v0.42",
+  "version": "0.42.0",
+  "status": "single_training_validation_paired_execution_authorized",
+  "created_date": "2026-07-20",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.42.json",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.41.json",
+    "sha256": "98F4C1CBDA36F187B8FFD6337DFF836EEAF8829D409831365156E1D5D0B3A59F",
+    "disposition": "model_free_implementation_is_complete_and_the_execution_gate_is_now_narrowly_opened_by_the_active_user_goal"
+  },
+  "hash_locked_artifacts": {
+    "execution_amendment": {
+      "path": "08-writing/llm-evidence-compiler-general-adapted-paired-execution-amendment-v0.42-20260720.md",
+      "sha256": "07A6973344F48FDA06BA4FC9613D82A6A7FD2137D3645877BAAC3C524967B1C1"
+    },
+    "paired_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-general-adapted-paired-contract-v0.1.json",
+      "sha256": "D8D651C9FB7292A9B0B713320D94397CC50ADCAFAC457CC8F55AD47245F76211"
+    },
+    "paired_config": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/paired_evaluation_v0.1/paired-evaluation-config-v0.1.json",
+      "sha256": "447759AA1B56760E92F52F4F6C9874E08E30111CE4EB6503524D41C811FA3DCE"
+    },
+    "execution_preflight": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/paired_evaluation_v0.1/paired-execution-preflight-v0.1.json",
+      "sha256": "E63AA85F1F3DFBEEF5BF63AE2C6FCB42F366136240AD7143E3EFEA89F1884929"
+    },
+    "launcher": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/paired_evaluation_v0.1/run-paired-evaluation-4090-v0.1.sh",
+      "sha256": "AC1B7ECC36DF09F8AE42183EDAF741ADF9147C800FABFB50360AD84393A9AD56"
+    },
+    "paired_runner": {
+      "path": "09-experiments/scripts/run_qwen_general_adapted_paired.py",
+      "sha256": "068BC08F805B93DFC9FBA211A38E0BE2A8D490ABD312F0E89CB5CBEFBB6DD505"
+    },
+    "paired_scorer": {
+      "path": "09-experiments/scripts/score_qwen_general_adapted_paired.py",
+      "sha256": "D35DE62CB86327E7EB36E3C1A576A5A02154F0B72A2BD4BB689F0A9E6DFB8A66"
+    },
+    "execution_authority_tests": {
+      "path": "09-experiments/tests/test_qwen_general_adapted_paired_execution_authority.py",
+      "sha256": "3B98A4F38CF79519103682F2A7C8933D350AED8507EEE99F7E66A9A0C38BE4D2"
+    }
+  },
+  "paired_execution_gate": {
+    "authorized": true,
+    "maximum_executions": 1,
+    "contract_sha256": "D8D651C9FB7292A9B0B713320D94397CC50ADCAFAC457CC8F55AD47245F76211",
+    "config_sha256": "447759AA1B56760E92F52F4F6C9874E08E30111CE4EB6503524D41C811FA3DCE",
+    "split": "training-validation",
+    "examples": 16,
+    "model_calls": 32,
+    "conditions": [
+      "QWEN-GENERAL",
+      "QWEN-ADAPTED"
+    ],
+    "same_loaded_base_process_required": true,
+    "only_allowed_model_difference": "adapter_state",
+    "selected_epoch": 2,
+    "selected_optimizer_step": 150,
+    "selected_adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11",
+    "automatic_retry_authorized": false,
+    "train_access_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "raw_generation_download_authorized": false
+  },
+  "server_boundary": {
+    "allowed_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "physical_gpu_index": 2,
+    "physical_gpu_uuid": "GPU-b0302acd-64e2-8218-7b5c-07a152007357",
+    "read_or_write_other_server_directory_authorized": false,
+    "runtime_install_or_upgrade_authorized": false,
+    "model_tokenizer_or_adapter_download_authorized": false
+  },
+  "artifact_policy": {
+    "server_only": [
+      "paired_raw_generations",
+      "adapter",
+      "checkpoint",
+      "base_model",
+      "tokenizer_cache",
+      "raw_training_validation_payload"
+    ],
+    "retrieval_authorized_after_complete_hash_lock": [
+      "paired_generation_audit",
+      "paired_sanitized_metrics",
+      "paired_score_audit",
+      "detached_log",
+      "failure_audit_if_present"
+    ],
+    "raw_generation_download_authorized": false
+  },
+  "failure_policy": {
+    "automatic_retry_or_resume": false,
+    "checkpoint_substitution": false,
+    "prompt_parser_gate_or_panel_change": false,
+    "failure_audit_required": true
+  },
+  "next_gate": {
+    "status": "hard_stop_after_server_side_scoring_for_sanitized_result_retrieval_and_adapter_disposition",
+    "development_or_test_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "second_paired_execution",
+    "automatic_retry_or_resume",
+    "checkpoint_reselection_or_adapter_substitution",
+    "train_split_access",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_controller_inference",
+    "m3_runtime_integration",
+    "raw_generation_checkpoint_or_adapter_download",
+    "runtime_install_or_upgrade",
+    "model_tokenizer_or_adapter_download",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

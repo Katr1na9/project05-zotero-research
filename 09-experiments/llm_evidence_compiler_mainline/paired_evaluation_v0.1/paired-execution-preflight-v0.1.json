@@ -1,0 +1,63 @@
+{
+  "schema_version": "project05-qwen25-paired-execution-preflight-v0.1",
+  "status": "passed_hash_runtime_capacity_and_gpu_preflight",
+  "created_date": "2026-07-20",
+  "server_boundary": {
+    "allowed_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "other_server_directories_accessed": false
+  },
+  "inputs": {
+    "preparation_audit": {
+      "server_relative_path": "server-output/preparation-audit-v0.1.json",
+      "sha256": "12F73CE159E72F08C08533B8CA8A79BBF79ECAF7FEF118CB24F702FA1BDDC38A"
+    },
+    "selected_adapter": {
+      "server_relative_path": "server-output/primary-adamw-detached-v0.37/checkpoint-epoch-002/adapter/adapter_model.safetensors",
+      "sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11"
+    },
+    "training_validation_payload": {
+      "server_relative_path": "bundle/09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/local-data/training-validation.jsonl.gz",
+      "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552"
+    }
+  },
+  "runtime": {
+    "python_path": "local-runtime/venv/bin/python",
+    "torch": "2.3.1+cu121",
+    "transformers": "4.45.2",
+    "peft": "0.13.2",
+    "bitsandbytes": "0.43.1",
+    "new_install_or_download_required": false
+  },
+  "gpu": {
+    "physical_index": 2,
+    "uuid": "GPU-b0302acd-64e2-8218-7b5c-07a152007357",
+    "name": "NVIDIA GeForce RTX 4090",
+    "observed_memory_used_mib": 18,
+    "observed_memory_free_mib": 24094,
+    "observed_utilization_percent": 0
+  },
+  "capacity": {
+    "local_runtime_bytes": 6501865559,
+    "local_cache_bytes": 15376164199,
+    "server_output_bytes": 2911591499,
+    "bundle_bytes_before_v0_42_deployment": 1129596,
+    "estimated_total_before_v0_42_deployment_bytes": 24789581853,
+    "contract_maximum_bytes": 34000000000,
+    "passed": true
+  },
+  "output": {
+    "server_relative_path": "server-output/paired-general-adapted-v0.41",
+    "existed_at_preflight": false,
+    "overwrite_or_resume_allowed": false
+  },
+  "scope": {
+    "model_calls_authorized": 32,
+    "examples_authorized": 16,
+    "train_access_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_access_authorized": false,
+    "m3_integration_authorized": false,
+    "automatic_retry_authorized": false,
+    "raw_generation_download_authorized": false
+  }
+}
