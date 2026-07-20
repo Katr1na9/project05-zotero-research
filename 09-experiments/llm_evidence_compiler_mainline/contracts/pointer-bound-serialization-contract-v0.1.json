@@ -1,0 +1,71 @@
+{
+  "contract_id": "project05-qwen25-pointer-bound-constrained-serialization-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-20",
+  "status": "model_output_pointer_free_program_binding_required",
+  "serialization": {
+    "serialization_id": "project05-qwen25-pointer-bound-constrained-chat-v0.1",
+    "system_message": "Decide whether the candidate edge is supported by the bound evidence. Use only the payload, candidate, and bound pointer. Return only the constrained JSON object. Never emit, copy, alter, or invent an evidence pointer: trusted code binds the supplied pointer after generation. If supported, emit the five semantic edge fields. If unsupported by this record, emit edge_fields as null.",
+    "user_field_sources": {
+      "source_modality": "source_modality",
+      "bound_pointer": "pointer",
+      "payload": "source_record.payload",
+      "candidate": "candidate"
+    },
+    "model_output_fields": [
+      "support_decision",
+      "edge_fields"
+    ],
+    "program_bound_fields": [
+      "pointer",
+      "normalized_edge.source_pointer"
+    ],
+    "forbidden_model_output_fields": [
+      "pointer",
+      "source_pointer",
+      "normalized_edge"
+    ],
+    "forbidden_message_fields": [
+      "negative_proof",
+      "example_id",
+      "split_role",
+      "packet_key",
+      "reason_code",
+      "field_map_id",
+      "source_family_id",
+      "provenance",
+      "license_id",
+      "license_sha256",
+      "source_file_sha256",
+      "support_decision",
+      "normalized_edge"
+    ],
+    "json": {
+      "encoding": "utf-8",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [
+        ",",
+        ":"
+      ]
+    },
+    "chat_turn_template": "<|im_start|>{role}\n{content}<|im_end|>\n",
+    "role_order": [
+      "system",
+      "user",
+      "assistant"
+    ],
+    "add_special_tokens": false,
+    "truncation": false,
+    "padding": false
+  },
+  "admission_invariants": {
+    "model_output_must_not_contain_pointer": true,
+    "supported_requires_five_nonempty_string_edge_fields": true,
+    "unsupported_requires_null_edge_fields": true,
+    "top_level_pointer_is_deep_copy_of_bound_pointer": true,
+    "edge_source_pointer_is_deep_copy_of_bound_pointer": true,
+    "both_bound_pointer_canonical_sha256_values_must_match": true,
+    "repair_or_coercion_allowed": false
+  }
+}

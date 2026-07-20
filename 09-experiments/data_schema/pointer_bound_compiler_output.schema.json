@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/pointer_bound_compiler_output.schema.json",
+  "title": "Project05 pointer-free constrained compiler output",
+  "description": "Model-visible output only. Evidence pointers are bound by trusted code after generation.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "support_decision",
+        "edge_fields"
+      ],
+      "properties": {
+        "support_decision": {
+          "const": "supported"
+        },
+        "edge_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "subject_type",
+            "subject_value",
+            "predicate",
+            "object_type",
+            "object_value"
+          ],
+          "properties": {
+            "subject_type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subject_value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "predicate": {
+              "type": "string",
+              "minLength": 1
+            },
+            "object_type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "object_value": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "support_decision",
+        "edge_fields"
+      ],
+      "properties": {
+        "support_decision": {
+          "const": "unsupported_by_bound_pointer"
+        },
+        "edge_fields": {
+          "type": "null"
+        }
+      }
+    }
+  ]
+}
