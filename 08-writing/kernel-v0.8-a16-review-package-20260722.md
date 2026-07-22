@@ -1,56 +1,58 @@
 # Kernel v0.8 A16 人工评审包
 
-## Re-review supplement status (2026-07-22, uncommitted)
+## Re-review supplement status (2026-07-22, A16 GO closeout)
 
-This supplement addresses the NO-GO hard blocks but does not make the A16
-decision. The current Git index contains exactly 70 Kernel/fixture/test/review
-paths; forbidden LLM/training/Part B/`09-experiments` and local-junk scans
-return zero staged matches. Current evidence:
+This supplement records the engineering response to the earlier same-day NO-GO
+hard blocks and the subsequent scoped human A16 GO. Remediation landed in
+`a85b99a` (70 Kernel/fixture/test/review paths). Forbidden
+LLM/training/Part B/`09-experiments` and local-junk scans returned zero matches
+in that commit. Current evidence:
 
 | Required item | Current evidence | Re-review state |
 |---|---|---|
-| SI-010 policy authority | exact-hash APPROVED manifest, regenerated Γ/fixture/ceiling bindings, positive replay and negative tamper tests | **CLOSED; READY FOR RE-REVIEW** |
-| single Twin / toy Gamma | structurally different three-world supply-chain Γ/fixture, A003/A004 admission, full Part A path | engineering evidence complete |
-| formal ceiling | definition, schema, verifier, two frozen replay reports, outside-domain/resource/tamper fail-closed tests | engineering evidence complete |
-| 81-file review | `kernel-v0.8-81-file-diff-audit-20260722.md`, including two findings and remediations | engineering record complete; human acceptance pending |
-| SI-003/006/007/008 | authority/interface contracts plus explicit non-blocking scope exclusions | disposition recorded |
-| full regression | `python -m unittest discover -s tests -p "test_*.py" -v` | `131/131 PASS` |
+| SI-010 policy authority | exact-hash APPROVED manifest, regenerated Γ/fixture/ceiling bindings, positive replay and negative tamper tests | **CLOSED — APPROVED** |
+| single Twin / toy Gamma | structurally different three-world supply-chain Γ/fixture, A003/A004 admission, full Part A path | **accepted for scoped GO** |
+| formal ceiling | definition, schema, verifier, two frozen replay reports, outside-domain/resource/tamper fail-closed tests | **accepted as model-relative only** |
+| 81-file review | `kernel-v0.8-81-file-diff-audit-20260722.md`, including two findings and remediations | **accepted for Part A A16** |
+| SI-003/006/007/008 | authority/interface contracts plus explicit non-blocking scope exclusions | **disposition accepted** |
+| full regression | `python -m unittest discover -s tests -p "test_*.py" -v` | `131/131 PASS` (re-verify on closeout tip) |
 
 Material review findings were not waived: P6 previously treated two witnesses
 as an exhaustive world table, and P9 trusted caller-declared coverage counts.
-The current supplement fixes both and adds three-world and coverage-tamper
-regressions. Frozen ceiling reports now replay exactly from Γ/compiler/catalog.
+The supplement fixed both and added three-world and coverage-tamper
+regressions. Frozen ceiling reports replay exactly from Γ/compiler/catalog.
 
-Current decision remains:
+Current decision (supersedes earlier same-day NO-GO):
 
 ```text
-A16: NOT PASSED / NO-GO
-Push: NO
-PR: NO
+A16 Decision: PASSED / GO
+Scope: Kernel v0.8 Part A only
+Push: YES, after closeout commit and clean replay
+PR: YES, as a Kernel-only PR
 Part B: CLOSED
-CERTIFIED_STOP authority: NOT ESTABLISHED
+LLM integration: NOT AUTHORIZED by this ruling
+Legacy M3*: OUT OF SCOPE / NOT VALIDATED
+Broad-input evaluation: NOT AUTHORIZED
+CERTIFIED_STOP authority:
+ESTABLISHED FOR FROZEN KERNEL Γ ONLY
 ```
 
-The user approved policy hash
+Policy hash
 `sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671`.
-The APPROVED manifest hash is
+APPROVED manifest hash
 `sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b`.
-After final regression, the package is ready for a new human A16 ruling; no
-status above changes until that separate ruling occurs.
 
 **日期：** 2026-07-22
-**分支：** `feat/kernel-v0.8`
+**分支：** `feat/kernel-v0.8`（PR 使用从 `main` cherry-pick 的 Kernel-only 分支）
 **代码评审基线：** `d156b68`
-**代码评审 tip：** `5e9c0ba`
-**包状态：** `HUMAN_GATE_REVIEWED_NO_GO`（81 文件逐项 diff 审阅未完成）
-**A16 decision：** `NOT PASSED`
-**操作解释：** `NO-GO`
+**代码评审 tip：** `5e9c0ba`（P11）；remediation tip `a85b99a`
+**包状态：** `HUMAN_GATE_REVIEWED_GO_SCOPED`
+**A16 decision：** `PASSED`
+**操作解释：** `GO — Kernel Part A only`
 **Part B authority：** `CLOSED`
-**Push / PR：** `NOT AUTHORIZED`
+**Push / PR：** `AUTHORIZED` under GO 生效条件
 
-本文件最初只整理 A16 所需的 diff、测试证据和已知限制。用户于 2026-07-22
-已完成人工裁定并维持 NO-GO；下文 §8 记录该裁定与复审前硬阻塞项。自动测试
-通过不等于 A16 条件已全部满足。
+下文 §8 记录现行 GO 裁定；§8.0 保留同日 NO-GO 作为审计历史。
 
 ## 1. 评审范围与复现入口
 
@@ -153,9 +155,10 @@ policy authority；测试仍不证明外部有效性、持久化审计或 Part B
 | Γ/catalog/policy hash | canonical hash contracts + fixture replay | policy/manifest 已 exact-hash APPROVED；仍不等于 level certificate |
 | 一屏反例与 MinDiff | P2/P3 两套异构 fixture tests | 两套冻结有限域有证据 |
 | 形式 ceiling | model-relative 定义、验证器、两套可重放报告与域外 fail-closed 测试 | **冻结模型内证据完成；不外推为真实世界穷尽性** |
-| 所有 Go 条件均自动测试 | 历史 113 项；current supplement 131 项 | **工程补洞已完成；仍需人工 A16 新裁定** |
+| 所有 Go 条件均自动测试 | 历史 113 项；remediation 后 131 项 | **人工材料审查已接受为 scoped GO；最终 tip 须干净复验** |
 
-因此当前只能说“工程评审材料已齐”，不能说“A16 Go 条件全过”。
+工程条件已齐，且已获范围受限的人工 A16 GO。该 GO 不外推为广域真实世界、
+LLM、legacy M3* 或 Part B 通过。
 
 ## 6. 已知限制与未关闭事项
 
@@ -189,37 +192,70 @@ P11 的 P7 allow 或 P8 admit 只表示候选 case evidence 通过当前准入/�
       （本轮修复 / 明确延期且不影响 A16 / 构成阻塞）；
 - [x] 增加第二套非同构 Γ/fixture，并把 ceiling 声明限定为冻结模型内；
 - [x] 已冻结真实 admission-policy artifact/hash 并重算全部绑定引用；
-- [x] 单独决定是否允许 push：**不允许**；
-- [x] 单独决定是否创建 PR：**不允许**；
-- [x] Part B authority：**继续 CLOSED**（仅在未来明确 A16 Go 后另议）。
+- [x] 单独决定是否允许 push：**允许**（须最终 closeout + 干净复验；Kernel-only）；
+- [x] 单独决定是否创建 PR：**允许**（Kernel-only；不得混入 LLM/training/Part B）；
+- [x] Part B authority：**继续 CLOSED**（须另行明确授权）。
 
-> 注：检查表中未勾选项表示复审前仍须留下逐项书面结论；已勾选项记录本次
-> 2026-07-22 裁定结果，不表示对应工程工作已完成。
+> 注：已勾选项记录 2026-07-22 复审裁定结果。
 
-## 8. 人工裁定结论（2026-07-22）
+## 8. A16 人工复审裁定（2026-07-22）
+
+```text
+Decision: GO — Kernel v0.8 Part A only
+
+A16: PASSED
+Push: AUTHORIZED after final closeout commit and clean full replay
+PR: AUTHORIZED for Kernel-only scope
+
+Part B: CLOSED
+LLM integration: NOT AUTHORIZED by this ruling
+Legacy M3*: OUT OF SCOPE / NOT VALIDATED
+
+CERTIFIED_STOP authority:
+ESTABLISHED ONLY FOR THE FROZEN FINITE-DOMAIN KERNEL Γ,
+approved policy/catalog hashes, declared completeness assumptions,
+and the recorded solver/proof policy.
+```
+
+### 裁定依据
+
+1. SI-010 已通过 exact-hash policy/manifest 批准、重绑定、正向重放及篡改负例关闭；
+2. 已增加第二套非同构三世界 Γ/fixture，关闭单一 Twin 工程证据不足；
+3. formal catalog ceiling 已有模型相对定义、验证器、冻结重放报告及域外 fail-closed 测试；
+4. 15 提交、81 文件 diff 已有逐项工程审阅记录及修复记录；
+5. SI-003、SI-006、SI-007、SI-008 已作明确 disposition；
+6. 完整测试矩阵为 131/131 PASS；
+7. forbidden-scope 扫描未发现 LLM、training、Part B、09-experiments 或本地垃圾混入。
+
+### 范围限制
+
+本裁定仅证明 Kernel v0.8 在冻结有限域 Γ 下满足 A16。
+它不证明真实世界穷尽性、广域输入外部有效性、随机 observation、
+持久化审计、完整 M3* 或 Part B 性能。
+
+### GO 生效条件
+
+在 push/PR 前须：
+
+1. 提交本复审裁定及 supplement；
+2. 在最终 commit 上重新运行完整测试、compileall 和 diff check；
+3. 确认 working tree clean；
+4. 确认 PR diff 未混入任何未授权范围。
+
+上述检查失败时，GO 自动暂停，恢复为 HOLD，直到问题修复并重新复验。
+
+### 8.0 同日历史 NO-GO（已被本 §8 取代；保留审计）
 
 ```text
 Decision: 先停着
-
 Push: NO
 PR: NO
-
 A16: NOT PASSED / NO-GO
-
-Original requirements before re-review (historical ruling; engineering response is indexed above):
-1. 冻结并批准 admission-policy artifact 与真实绑定 hash，关闭 SI-010；
-2. 补足真实形式 ceiling 证据；
-3. 关闭单一 Twin / narrow compiler 的“玩具 Γ”外推问题；
-4. 完成 15 提交、81 文件的人工 diff 审阅；
-5. 对 SI-003、SI-006、SI-007、SI-008 分别作正式裁定；
-6. 重新生成评审包并复跑完整测试矩阵。
-
 Part B: CLOSED
 CERTIFIED_STOP authority: NOT ESTABLISHED
-
 Engineering implementation: P0–P11 PRESENT
-Automated regression at ruling time: 113/113 PASS
+Automated regression at first ruling: 113/113 PASS
 ```
 
-当前不应 push，也不应开 PR。上述工程补洞不自行推翻历史裁定；完整矩阵复跑后
-仍须一次新的 A16 人工复审。本裁定不授权 Part B 或任何未明确授权的后续切片。
+该 NO-GO 要求的复审材料已由 remediation commit `a85b99a` 与本文件提供；现行
+效力以本节 GO 为准。

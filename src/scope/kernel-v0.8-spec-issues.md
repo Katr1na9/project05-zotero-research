@@ -4,13 +4,15 @@ Status: lifecycle issue register for the P0--P11 Part A implementation. Each
 issue carries an explicit state; closing an issue here does not silently modify
 the normative v0.8 document.
 
-Implementation snapshot (`2026-07-22`): P0--P11 are locally implemented on
-`feat/kernel-v0.8 @ c3173ae` tip lineage (code tip `5e9c0ba` plus an uncommitted
-A16 remediation supplement), with 131/131 Kernel tests passing. Human A16
-ruling on `2026-07-22` remains:
-`NOT PASSED` / `NO-GO`; Push NO; PR NO; Part B CLOSED. Automatic tests do not
-establish formal certification or real-form ceiling. The controlling status
-entry is `08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md`.
+Implementation snapshot (`2026-07-22`): P0--P11 are implemented on
+`feat/kernel-v0.8` (code tip lineage through remediation `a85b99a`), with
+131/131 Kernel tests passing pending final closeout replay. Human A16
+re-review on `2026-07-22` is `PASSED` / `GO` for Kernel v0.8 Part A only.
+Push/PR are authorized only after closeout commit, clean replay, and a
+Kernel-only PR diff. Part B remains CLOSED. `CERTIFIED_STOP` is established
+only for the frozen finite-domain Kernel Γ with approved policy/catalog
+hashes and declared completeness / solver assumptions. The controlling
+status entry is `08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md`.
 
 ## SI-001 — CLOSED: normative v0.8 file is tracked
 
@@ -171,10 +173,16 @@ ends in `CONTINUE`. Neither path supplies level-complete authority.
 **Original human A16 ruling (`2026-07-22`):** `NOT PASSED` / `NO-GO`. Push NO.
 PR NO. Part B CLOSED. That ruling required closing SI-010, real-form ceiling
 evidence, resolving the single-Twin / narrow-compiler overclaim, an itemized
-81-file review record, and formal dispositions for SI-003/006/007/008. The
-current supplement supplies those engineering artifacts, including a second
-non-isomorphic fixture; their acceptance remains a new human A16 decision. Do
-not infer Go, push, PR, or Part B from engineering completeness alone.
+81-file review record, and formal dispositions for SI-003/006/007/008.
+
+**Superseding human A16 re-review (`2026-07-22`):** `PASSED` / `GO` —
+Kernel v0.8 Part A only. Push/PR authorized after closeout commit, clean
+replay, and Kernel-only PR scope. Part B remains CLOSED. LLM integration and
+legacy M3* are not authorized or validated by this ruling.
+`CERTIFIED_STOP` is established only for the frozen finite-domain Kernel Γ,
+approved policy/catalog hashes, declared completeness assumptions, and the
+recorded solver/proof policy. Do not infer Part B, LLM, or real-world
+exhaustiveness from this scoped GO.
 
 The opt-in P11 path adapts only observations actually emitted by P5, evaluates
 them through P7 and may admit Firewall-allowed claims through P8. It preserves

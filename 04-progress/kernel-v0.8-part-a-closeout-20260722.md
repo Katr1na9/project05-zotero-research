@@ -1,27 +1,30 @@
 # Kernel v0.8 Part A 收口纪要
 
-## A16 补洞进度快照（2026-07-22，未提交）
+## A16 收口快照（2026-07-22，scoped GO）
 
 - 第二套非同构 Γ/fixture `TWIN-SUPPLY-CHAIN-002` 已跑通 Part A 链路；
-- 形式 ceiling 已定义、实现并冻结两套可重算报告；
+- 形式 ceiling 已定义、实现并冻结两套可重算报告（仅模型相对）；
 - P6 已改为对编译器输出的全部合法世界做消元，三世界回归证明不会漏掉第三世界；
 - P9 certificate coverage 已绑定候选全集、合法世界数/hash 和笛卡尔枚举上界；
 - SI-003/006 已由版本化合同修复，SI-007/008 已作明确的非阻塞范围排除；
 - 15 commits / 81 files 的工程审阅结论见
   `08-writing/kernel-v0.8-81-file-diff-audit-20260722.md`；
-- 全量回归当前为 `131/131 PASS`。
+- SI-010 已由 exact-hash 批准关闭；policy
+  `sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671`，
+  APPROVED manifest
+  `sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b`；
+- remediation 提交 `a85b99a`；全量回归 `131/131 PASS`（最终 tip 须复验）。
 
-SI-010 已由用户对精确 policy hash 的明确批准关闭。Repository approval
-manifest 现为 `APPROVED`，manifest、两套 Γ、fixture 和 formal-ceiling hash
-均已重算并通过重放。该批准只建立 admission-policy authority，不签发正式
-level certificate，也不产生 `CERTIFIED_STOP`。A16 仍为
-`NOT_PASSED / NO-GO`；禁止 push/PR，Part B CLOSED。
+人工复审裁定：**A16 PASSED / GO — Kernel v0.8 Part A only**。同日较早的
+NO-GO 已被取代。Push/PR 在 closeout + 干净复验 + Kernel-only diff 条件下授权。
+Part B / LLM / legacy M3* / 广域评估仍 CLOSED / NOT AUTHORIZED。
+`CERTIFIED_STOP` 仅在冻结有限域 Kernel Γ 与批准 policy/catalog 等条件下成立。
 
 **日期：** 2026-07-22
 **分支：** `feat/kernel-v0.8`
-**本地 HEAD：** `c3173ae`
-**工程状态：** `PART_A_IMPLEMENTED_A16_NOT_PASSED`
-**A16 状态：** `NOT_PASSED` / `NO-GO`（2026-07-22 人工裁定：先停着）
+**本地开发 tip（裁定前）：** `a85b99a`
+**工程状态：** `PART_A_IMPLEMENTED_A16_PASSED_SCOPED`
+**A16 状态：** `PASSED` / `GO`（范围受限；2026-07-22 复审裁定）
 
 ## 1. 本轮结果
 
@@ -111,16 +114,21 @@ oracle/hidden 字段，也不能把 Firewall allow/admit 解释为 level certifi
 
 ## 5. 当前门禁与下一决定
 
-用户于 2026-07-22 人工裁定：**先停着。** A16 **没过**（`NOT PASSED` / `NO-GO`）；
-Push **不允许**；PR **不允许**；Part B **继续 CLOSED**；`CERTIFIED_STOP` 权威
-**未建立**。
+用户于 2026-07-22 复审裁定：**A16 PASSED / GO — Kernel v0.8 Part A only。**
+同日较早的「先停着 / NO-GO」裁定已被取代（见 A16 评审包 §8 / §8.0）。
 
-工程主链（P0–P11）的历史 `113/113` 回归仍然成立，但自动证据不构成 A16 Go。
-原裁定列出的 SI-010、形式 ceiling、单 Twin、81 文件审阅记录和
-SI-003/006/007/008 disposition 已具备工程复审材料；其是否满足 A16 仍须新的
-人工裁定。
+```text
+Push: AUTHORIZED after final closeout commit and clean full replay
+PR: AUTHORIZED for Kernel-only scope
+Part B: CLOSED
+LLM / legacy M3* / broad-input: NOT AUTHORIZED
+CERTIFIED_STOP: ESTABLISHED FOR FROZEN KERNEL Γ ONLY
+```
 
-**未获新的明确 A16 Go 前，不开始 Part B，不 push，不开 PR。**
+GO 生效前须：提交裁定文档、在最终 tip 复跑 131（或当时完整计数）测试与
+`compileall`/`diff --check`、working tree clean、PR diff 不含越界路径。
+开发分支若仍挂在含 LLM 的祖先谱系上，须从 `main` cherry-pick 仅 Kernel
+提交后再开 PR。
 
 轨道 authority 状态以
 `08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md` 为当前入口。

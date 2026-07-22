@@ -75,6 +75,9 @@ and its canonical hash is
 `sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b`.
 Both Gamma documents and all fixture/ceiling references were regenerated.
 
-This closes SI-010 policy authority only. It does not imply A16 Go, create a
-level-complete certificate, authorize `CERTIFIED_STOP`, or authorize push/PR.
-Those gates remain independent.
+This closes SI-010 policy authority only. The separate 2026-07-22 A16 re-review
+grants scoped Kernel Part A GO and establishes `CERTIFIED_STOP` only for the
+frozen finite-domain Kernel Γ with approved policy/catalog hashes and declared
+completeness / solver assumptions. It does not authorize Part B, LLM
+integration, legacy M3* validation, broad-input evaluation, or real-world
+exhaustiveness claims.
