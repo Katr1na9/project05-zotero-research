@@ -1,0 +1,518 @@
+{
+  "schema_version": "project05-llm-editor-l2-capacity-audit-metadata-only-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "266313f75f861995369443a71415c82dbce530b0",
+  "status": "metadata_capacity_audited_l2_gate_failed",
+  "scope": {
+    "payload_files_opened": false,
+    "archive_member_contents_read": false,
+    "archive_directory_metadata_read": true,
+    "private_gold_read": false,
+    "model_outputs_read": false,
+    "model_used": false,
+    "baseline_run": false,
+    "training_or_fine_tuning_run": false,
+    "kernel_schema_or_gamma_modified": false,
+    "m3_integrated": false,
+    "polarity_supervision_written": false
+  },
+  "capacity_semantics": {
+    "file_artifact_count": "Count of files or archive members visible in committed manifests, Git tree metadata, or archive central-directory metadata. It is not an independent replicate count.",
+    "lineage_candidate_count": "Count of directory, run-suffix, scenario, or source-artifact group keys that could support a future lineage rule. It is not accepted as an independent lineage until a versioned grouping rule is checked.",
+    "verified_independent_lineage_count": "Count that can already be defended as independent under the L2 contract without reading payload. Null means the metadata is insufficient, not zero.",
+    "historical_sample_proxy_count": "Count under the historical label-blind pair contract. It cannot be inherited as a v0.8 sample or quota pass.",
+    "trusted_modality_count": "Count under the v0.8 trusted modality vocabulary. All current values remain null because SI-LLM-005 is open."
+  },
+  "evidence_sources": [
+    {
+      "branch_commit": "266313f75f861995369443a71415c82dbce530b0",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-source-inventory-metadata-only-v0.1-20260722.json",
+      "sha256": "3AC71071CCAA0CAE9FD2B5B2047C63D2B1E8B2C25D1F6516BBB1DFB214D91289",
+      "evidence_kind": "known_family_identity_license_role_and_historical_counts"
+    },
+    {
+      "branch_commit": "266313f75f861995369443a71415c82dbce530b0",
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/data-gate-audit-v0.2.json",
+      "sha256": "008AA9C131C142862671FB1CDB27DB5133AE1C89F13CF29CCEC90A967BDCB370",
+      "evidence_kind": "historical_pair_counts_only"
+    },
+    {
+      "branch_commit": "266313f75f861995369443a71415c82dbce530b0",
+      "path": "09-experiments/llm_evidence_compiler_mainline/beth_source_gate_v0.1/generated/source-gate-audit-v0.1.json",
+      "sha256": "EF54A56C23BDA4988F49C4C2694F2C08EBD69A4664252CE1962C822DA13BDB5E",
+      "evidence_kind": "beth_single_file_host_and_record_count_metadata"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/source_catalog.json",
+      "sha256": "1C97F43FAA87D74C9209A77B8018992F4FFCAD398F0262A3A22D14B7AAF8DD04",
+      "evidence_kind": "legacy_source_revision_license_and_scope"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/generated/source-candidate-review.csv",
+      "sha256": "8B35373FB4C6847CC946F8252CED9B8A8EEF4A553B78BF40671F4B3E2B678F39",
+      "evidence_kind": "legacy_source_conditions_and_rejections"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/generated/train-null-source-candidate-review.csv",
+      "sha256": "6307D098AAF19C6D691238DD5409A8EF91E85EDD9759A3FE45B8F4C3EFEBD943",
+      "evidence_kind": "legacy_candidate_independence_and_rejection_metadata"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/redcanary_atomic_red_team/source-manifest.json",
+      "sha256": "B78DD061C93E662C24EEC61695B89F8B73B18A1DEDCF971A9DFA88E8E7ADB1C1",
+      "evidence_kind": "atomic_file_manifest_without_payload"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/redcanary_atomic_red_team/github-tree-metadata.json",
+      "sha256": "A5F8838B960444C951488079428E523F45129F2C5B2361A0CCFC0CCC1A8A2E38",
+      "evidence_kind": "atomic_directory_and_blob_metadata"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/ait_cam_lds_manifestations_filtered/source-manifest.json",
+      "sha256": "75FFE51D3D362001426029535699A621AE38A6EC40304B3A794A264275E6DBB8",
+      "evidence_kind": "cam_archive_identity_and_license"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/fkie_socbed_acsac2021_winlogbeat/source-manifest.json",
+      "sha256": "A90C35148F40C9CE994C345AE39515E99E4B37250A842A442E17230F352ED2D9",
+      "evidence_kind": "socbed_archive_identity_and_license"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/logpai_loghub_linux/source-manifest.json",
+      "sha256": "12D1E8918A9412DE97585BDB549FF9D2557A106E69A7F959F5D7874899889CBF",
+      "evidence_kind": "loghub_archive_identity_and_single_member_metadata"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/zeek_non_pcap_test_logs/source-manifest.json",
+      "sha256": "5448EF2267F7ADA59ED7D5B5E53BC9F914CE23EDA2BBA8EC04529D1A26177846",
+      "evidence_kind": "zeek_eligible_file_manifest_without_payload"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/public_sources/zeek_non_pcap_test_logs/github-tree-metadata.json",
+      "sha256": "80AA7DA4C7A0D10BD0C9A69DC90248DCEB462C254336A220A072DFCB29F16EC8",
+      "evidence_kind": "zeek_directory_and_blob_metadata"
+    }
+  ],
+  "method": {
+    "allowed_reads": [
+      "committed JSON and CSV audit metadata",
+      "source revision and license metadata",
+      "Git tree paths, blob hashes, and file sizes",
+      "ZIP central-directory member names, sizes, and CRC metadata",
+      "TAR member names and sizes"
+    ],
+    "forbidden_reads": [
+      "raw log or CTI record contents",
+      "archive member contents",
+      "historical pair payloads",
+      "private scorer gold",
+      "model generations"
+    ],
+    "lineage_rule": "A directory, run suffix, day, or file is only a candidate grouping key. Repeated views, rows, labels, or files from the same execution context do not create independent lineage.",
+    "sample_kind_rule": "Historical supported and unsupported counts are retained only as non-inheritable proxies. Every v0.8 sample-kind capacity remains unverified until a separately authorized conversion audit.",
+    "modality_rule": "Transport type is not trusted modality. SI-LLM-005 keeps all five v0.8 modality counts unverified.",
+    "polarity_rule": "SI-LLM-007 is open; polarity-supervised capacity is fixed at zero and excluded from every quota."
+  },
+  "families": [
+    {
+      "corpus_family_id": "redcanary_atomic_red_team",
+      "candidate_split_role": "train",
+      "l2_approval_status": "pending_reapproval",
+      "source_revision": "git:65d358aa47a7b0093290d486b1d8138bd208d1f6",
+      "metadata_artifacts": {
+        "manifest_entries": 356,
+        "unambiguous_git_tree_paths": 353,
+        "ambiguous_same_blob_path_entries": 3,
+        "unambiguous_parent_directories": 343,
+        "technique_directory_candidates": 341
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": "atomic YAML artifact or technique directory",
+        "lineage_candidate_count": 341,
+        "verified_independent_lineage_count": null,
+        "quota_demonstrated": false,
+        "reason": "Technique specifications are synthetic procedures, not independently executed audit runs. File and technique counts would be pseudoreplication if promoted to lineage without execution metadata."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 150,
+          "candidate_unsupported": 150
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "synthetic_security_procedure_text",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "blocked_by_si_llm_005"
+      }
+    },
+    {
+      "corpus_family_id": "ait_cam_lds_manifestations_filtered",
+      "candidate_split_role": "train",
+      "l2_approval_status": "pending_reapproval",
+      "source_revision": "zenodo:18861762:file:manifestations_filtered.zip:md5:cfc14140b2e396a60989b8379eafca1f",
+      "metadata_artifacts": {
+        "archive_members": 17242,
+        "steps_subtree_members": 4744,
+        "sequence_subtree_members_excluded_by_contract": 3522,
+        "step_directory_candidates": 883,
+        "step_host_pair_candidates": 2036,
+        "steps_unique_parent_directories": 2607
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": "steps directory, then host scope",
+        "lineage_candidate_count": 883,
+        "verified_independent_lineage_count": null,
+        "quota_demonstrated": false,
+        "reason": "Directory metadata distinguishes step artifacts but cannot establish whether steps share a scenario execution, host state, or time window. Sequence content remains excluded."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 150,
+          "candidate_unsupported": 150
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "system_log_artifacts",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "blocked_by_si_llm_005"
+      }
+    },
+    {
+      "corpus_family_id": "fkie_socbed_acsac2021_winlogbeat",
+      "candidate_split_role": "train",
+      "l2_approval_status": "pending_reapproval",
+      "source_revision": "git:c264060f0e65ea69c2d891525ae835a543f851ca:dataset.zip",
+      "metadata_artifacts": {
+        "archive_members": 240,
+        "winlogbeat_files": 40,
+        "parent_host_configuration_directories": 4,
+        "distinct_run_suffixes": 10,
+        "files_per_run_suffix": 4
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": "run suffix across four host/configuration directories",
+        "lineage_candidate_count": 10,
+        "verified_independent_lineage_count": null,
+        "quota_demonstrated": false,
+        "reason": "Filename metadata supports ten run keys, but independence and shared testbed state require a future versioned grouping audit. Four files with one suffix are one run candidate, not four replicates."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 150,
+          "candidate_unsupported": 150
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "synthetic_testbed_windows_events",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "blocked_by_si_llm_005"
+      }
+    },
+    {
+      "corpus_family_id": "beth_process_events",
+      "candidate_split_role": "train",
+      "l2_approval_status": "pending_reapproval",
+      "source_revision": "kaggle:katehighnam/beth-dataset:v3:file:labelled_2021may-ip-10-100-1-105.csv:sha256:528AD1F4813A9FBB839F3C4B37F7B1A861F0E33D998FB46E6D59CAEF119FB597",
+      "metadata_artifacts": {
+        "source_files": 1,
+        "host_scopes_visible_in_identity": 1,
+        "historical_record_count": 409931,
+        "historical_selection_pool_rows_examined": 2000
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": "single host file; future bounded time windows would require payload authority",
+        "lineage_candidate_count": 1,
+        "verified_independent_lineage_count": 1,
+        "quota_demonstrated": false,
+        "reason": "Rows and time windows inside one host file cannot be counted as independent lineages from file metadata. The per-family minimum of four is not met."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 150,
+          "candidate_unsupported": 150
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "synthetic_single_host_process_events",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "blocked_by_si_llm_005"
+      }
+    },
+    {
+      "corpus_family_id": "logpai_loghub_linux",
+      "candidate_split_role": "development",
+      "l2_approval_status": "pending_reapproval",
+      "source_revision": "git:dd61d0952749ee7963bde24220d1be5ede023033:zenodo:8196385:file:Linux.tar.gz:md5:6d1802d7778126f21c001c6aa7b6b106",
+      "metadata_artifacts": {
+        "archive_members": 1,
+        "member_name": "Linux.log",
+        "member_uncompressed_bytes": 2349686
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": "single archive member; future source-native session boundaries require payload authority",
+        "lineage_candidate_count": 1,
+        "verified_independent_lineage_count": 1,
+        "quota_demonstrated": false,
+        "reason": "Line-level rows inside one log file are not independent lineages. The per-family minimum of four is not met."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 75,
+          "candidate_unsupported": 75
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "linux_system_log",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "blocked_by_si_llm_005"
+      }
+    },
+    {
+      "corpus_family_id": "zeek_non_pcap_test_logs",
+      "candidate_split_role": "development",
+      "l2_approval_status": "pending_reapproval",
+      "source_revision": "git:dfa255b8e4d7f70a08e3aaea6722904329b94f3f",
+      "metadata_artifacts": {
+        "manifest_entries": 1119,
+        "unambiguous_git_tree_paths": 915,
+        "ambiguous_same_blob_path_entries": 204,
+        "unambiguous_parent_directories": 620
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": "Zeek btest parent directory",
+        "lineage_candidate_count": 620,
+        "verified_independent_lineage_count": null,
+        "quota_demonstrated": false,
+        "reason": "Parent directories are software test cases with repeated baseline artifacts, not independently captured provenance events. Shared fixtures and identical blobs require a future grouping audit."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 75,
+          "candidate_unsupported": 75
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "network_analysis_test_log",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "blocked_by_si_llm_005"
+      }
+    },
+    {
+      "corpus_family_id": "splunk_attack_data_manifests",
+      "candidate_split_role": "inactive_reserve",
+      "l2_approval_status": "insufficient_metadata_capacity",
+      "source_revision": "git:82315c9a40cd744d0c2fc8fa4538ec74493dcdf4",
+      "metadata_artifacts": {
+        "historical_exclusion_passed_records": 2,
+        "historical_selected_pairs": 0
+      },
+      "lineage_capacity": {
+        "candidate_grouping_key": null,
+        "lineage_candidate_count": 0,
+        "verified_independent_lineage_count": 0,
+        "quota_demonstrated": false,
+        "reason": "The two exclusion-passed records are insufficient and this reserve cannot count toward any active family quota."
+      },
+      "sample_kind_capacity": {
+        "historical_sample_proxy_count": {
+          "candidate_supported": 0,
+          "candidate_unsupported": 0
+        },
+        "v0_8_verified_counts": {
+          "candidate_supported": null,
+          "candidate_unsupported": null,
+          "pointer_absent": null,
+          "pointer_ambiguous": null,
+          "authority_injection": null,
+          "conflict_group": null,
+          "duplicate_retention": null
+        },
+        "quota_demonstrated": false
+      },
+      "trusted_modality_capacity": {
+        "transport_hint": "mixed_attack_data_manifests",
+        "observed": null,
+        "derived": null,
+        "reported": null,
+        "hypothesized": null,
+        "unknown": null,
+        "status": "inactive_not_counted"
+      }
+    }
+  ],
+  "split_capacity": {
+    "train": {
+      "candidate_family_count": 4,
+      "required_family_count": 4,
+      "family_quota_metadata_only": "candidate_count_met_roles_pending_reapproval",
+      "every_family_has_four_verified_lineages": false,
+      "blocking_families": [
+        "beth_process_events",
+        "redcanary_atomic_red_team",
+        "ait_cam_lds_manifestations_filtered",
+        "fkie_socbed_acsac2021_winlogbeat"
+      ],
+      "historical_row_proxy": 1200,
+      "historical_rows_inheritable": false,
+      "sample_kind_capacity_verified": false,
+      "trusted_modality_capacity_verified": false,
+      "quota_passed": false
+    },
+    "development": {
+      "candidate_family_count": 2,
+      "required_family_count": 2,
+      "family_quota_metadata_only": "candidate_count_met_roles_pending_reapproval",
+      "every_family_has_four_verified_lineages": false,
+      "blocking_families": [
+        "logpai_loghub_linux",
+        "zeek_non_pcap_test_logs"
+      ],
+      "historical_row_proxy": 300,
+      "historical_rows_inheritable": false,
+      "sample_kind_capacity_verified": false,
+      "trusted_modality_capacity_verified": false,
+      "quota_passed": false
+    },
+    "test": {
+      "approved_family_count": 0,
+      "required_family_count": 2,
+      "metadata_candidates_registered_separately": true,
+      "candidate_registration_changes_approved_count": false,
+      "verified_lineage_groups": 0,
+      "verified_rows": 0,
+      "sample_kind_capacity_verified": false,
+      "trusted_modality_capacity_verified": false,
+      "quota_passed": false
+    }
+  },
+  "global_sample_kind_capacity": {
+    "candidate_supported": "historical_proxy_only_not_inheritable",
+    "candidate_unsupported": "historical_proxy_only_not_inheritable",
+    "pointer_absent": "unknown",
+    "pointer_ambiguous": "unknown",
+    "authority_injection": "unknown",
+    "conflict_group": "unknown",
+    "duplicate_retention": "unknown",
+    "polarity_supervised": "blocked_not_applicable_si_llm_007",
+    "candidate_q": "blocked_not_applicable_si_llm_002",
+    "formal_temporal_normalization": "blocked_not_applicable_contract_missing"
+  },
+  "global_trusted_modality_capacity": {
+    "observed": null,
+    "derived": null,
+    "reported": null,
+    "hypothesized": null,
+    "unknown": null,
+    "status": "not_countable_while_si_llm_005_is_open",
+    "historical_modality_audit_examples": 1500,
+    "historical_modality_audit_inheritable": false
+  },
+  "gate": {
+    "capacity_audit_created": true,
+    "known_family_metadata_inventory_complete": true,
+    "lineage_capacity_known": false,
+    "sample_kind_capacity_known": false,
+    "trusted_modality_capacity_known": false,
+    "train_quota_passed": false,
+    "development_quota_passed": false,
+    "test_quota_passed": false,
+    "l2_gate_passed": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "next_action_requires_separate_authorization": true
+  }
+}
