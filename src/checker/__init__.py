@@ -1,7 +1,7 @@
-"""P1 finite-domain Checker API.
+"""Finite-domain Checker and P9 level-certificate APIs.
 
-This package intentionally exposes no MinDiff, Firewall, acquisition, planner,
-executor, or system-STOP implementation.
+This package exposes no MinDiff, Firewall, acquisition, planner, executor, or
+system-state derivation implementation.
 """
 
 from .finite_domain import (
@@ -14,6 +14,11 @@ from .finite_domain import (
     QueryStatus,
     classify_query_results,
 )
+from .level_certificate import (
+    IssuedLevelCertificate,
+    LevelCertificateIssuer,
+    LevelCertificateRejected,
+)
 
 __all__ = [
     "CheckerRun",
@@ -21,6 +26,9 @@ __all__ = [
     "FiniteDomainChecker",
     "FiniteDomainEnumerator",
     "FiniteDomainProblem",
+    "IssuedLevelCertificate",
+    "LevelCertificateIssuer",
+    "LevelCertificateRejected",
     "QueryResult",
     "QueryStatus",
     "classify_query_results",

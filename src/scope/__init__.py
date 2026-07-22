@@ -1,7 +1,7 @@
-"""P6 deterministic finite-world elimination and recertification API.
+"""Finite-world recertification and P9 pure system-state derivation APIs.
 
-No Firewall, promotion, level certification, planner, or system STOP authority
-is exposed from this package.
+No Firewall, promotion, planner, action execution, or certificate issuance is
+exposed from this package.
 """
 
 from .recertify import (
@@ -12,12 +12,22 @@ from .recertify import (
     RecertificationResult,
     WorldEliminationResult,
 )
+from .system_state import (
+    MAIN_STATE_ORDER,
+    SystemStateDecision,
+    SystemStateDeriver,
+    SystemStatus,
+)
 
 __all__ = [
     "DeterministicWorldEliminator",
     "FiniteArtifactWorld",
     "IgnoredObservation",
+    "MAIN_STATE_ORDER",
     "RecertificationOrchestrator",
     "RecertificationResult",
+    "SystemStateDecision",
+    "SystemStateDeriver",
+    "SystemStatus",
     "WorldEliminationResult",
 ]
