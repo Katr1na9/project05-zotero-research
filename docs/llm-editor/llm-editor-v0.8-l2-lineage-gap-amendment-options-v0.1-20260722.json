@@ -1,0 +1,224 @@
+{
+  "schema_version": "project05-llm-editor-l2-lineage-gap-amendment-options-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "5a2e27e6df8536bc2682f16e62771943a7397ec7",
+  "status": "options_only_no_role_change",
+  "scope": {
+    "metadata_only": true,
+    "payload_read": false,
+    "private_gold_read": false,
+    "model_output_read": false,
+    "role_changes_applied": false,
+    "source_replacements_applied": false,
+    "bounded_payload_audit_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "l2_gate_passed": false
+  },
+  "decision_rule": "Each family retains its current candidate role until a separate amendment is explicitly approved. Row, file, directory, technique, and prompt-view counts do not establish independent lineage.",
+  "families": [
+    {
+      "corpus_family_id": "beth_process_events",
+      "current_candidate_role": "train_candidate",
+      "role_changed": false,
+      "metadata_gap": "One source file and one host scope provide one verified artifact-level lineage, below the per-family minimum of four.",
+      "options": [
+        {
+          "option": "replace_family",
+          "pros": ["Removes the clearest pseudoreplication risk.", "Can add genuinely independent host or run lineages."],
+          "cons": ["Requires a new license/revision/source gate.", "May delay train-family quota recovery."],
+          "recommendation": "preferred"
+        },
+        {
+          "option": "downgrade_to_inactive",
+          "pros": ["Preserves scientific independence without payload work."],
+          "cons": ["Reduces active train candidates from four to three, so the train family quota remains failed."],
+          "recommendation": "acceptable_if_no_replacement"
+        },
+        {
+          "option": "future_bounded_payload_lineage_audit",
+          "pros": ["Could test whether source-native session or bounded-time clusters exist."],
+          "cons": ["A single host file cannot be converted into independent executions by arbitrary time-windowing.", "Low probability of satisfying the lineage quota without external run metadata."],
+          "recommendation": "low_yield_requires_separate_authorization"
+        }
+      ]
+    },
+    {
+      "corpus_family_id": "logpai_loghub_linux",
+      "current_candidate_role": "development_candidate",
+      "role_changed": false,
+      "metadata_gap": "The archive contains one Linux.log artifact; line or window counts cannot establish four independent lineages.",
+      "options": [
+        {
+          "option": "replace_family",
+          "pros": ["Adds a development source with explicit run/session provenance.", "Improves the defensibility of development-family macro evaluation."],
+          "cons": ["Requires a new source review and may change transport coverage."],
+          "recommendation": "preferred"
+        },
+        {
+          "option": "downgrade_to_inactive",
+          "pros": ["Avoids treating line-level variation as replication."],
+          "cons": ["Reduces active development candidates from two to one, so the development family quota remains failed."],
+          "recommendation": "acceptable_if_no_replacement"
+        },
+        {
+          "option": "future_bounded_payload_lineage_audit",
+          "pros": ["Could discover source-native boot, session, or collection boundaries if explicitly encoded."],
+          "cons": ["Internal time windows alone do not prove independent data-generating runs.", "Low probability of meeting the per-family lineage minimum."],
+          "recommendation": "low_yield_requires_separate_authorization"
+        }
+      ]
+    },
+    {
+      "corpus_family_id": "redcanary_atomic_red_team",
+      "current_candidate_role": "train_candidate",
+      "role_changed": false,
+      "metadata_gap": "Technique directories and YAML procedures measure specification coverage, not independently executed evidence runs.",
+      "options": [
+        {
+          "option": "replace_family",
+          "pros": ["Actual execution logs would align better with the evidence-editor target.", "Avoids equating technique-library breadth with experimental replication."],
+          "cons": ["A suitable replacement must preserve literal pointer-recoverable evidence and licensing."],
+          "recommendation": "preferred_for_scientific_claims"
+        },
+        {
+          "option": "downgrade_to_inactive",
+          "pros": ["Keeps Atomic available as an engineering fixture without counting it scientifically."],
+          "cons": ["Reduces active train candidates from four to three."],
+          "recommendation": "acceptable_if_no_execution_artifacts"
+        },
+        {
+          "option": "future_bounded_payload_lineage_audit",
+          "pros": ["Could bind specifications to independently produced run artifacts if such artifacts exist outside the current metadata."],
+          "cons": ["YAML content alone cannot establish execution independence.", "Without external run artifacts this option cannot repair the lineage gap."],
+          "recommendation": "conditional_requires_external_run_metadata"
+        }
+      ]
+    },
+    {
+      "corpus_family_id": "ait_cam_lds_manifestations_filtered",
+      "current_candidate_role": "train_candidate",
+      "role_changed": false,
+      "metadata_gap": "Step directories are plausible grouping keys, but shared sequence, host state, and time-window dependence remain unresolved.",
+      "options": [
+        {
+          "option": "replace_family",
+          "pros": ["Avoids ambiguity in scenario and run dependence."],
+          "cons": ["Discards the strongest endpoint/audit-shaped train candidate currently visible in metadata."],
+          "recommendation": "reserve_if_audit_fails"
+        },
+        {
+          "option": "downgrade_to_inactive",
+          "pros": ["Eliminates unresolved shared-sequence replication risk."],
+          "cons": ["Reduces active train candidates from four to three and removes substantial audit-log coverage."],
+          "recommendation": "only_if_audit_fails"
+        },
+        {
+          "option": "future_bounded_payload_lineage_audit",
+          "pros": ["Metadata exposes step, host, and directory structure that may support a defensible run-level grouping rule."],
+          "cons": ["Requires bounded payload authority and a frozen grouping algorithm.", "Sequence and technique labels must remain excluded from model view and supervision."],
+          "recommendation": "preferred_next_amendment_candidate"
+        }
+      ]
+    },
+    {
+      "corpus_family_id": "fkie_socbed_acsac2021_winlogbeat",
+      "current_candidate_role": "train_candidate",
+      "role_changed": false,
+      "metadata_gap": "Forty files map to ten run suffixes across four hosts/configurations; the four files sharing a suffix are at most one run candidate.",
+      "options": [
+        {
+          "option": "replace_family",
+          "pros": ["Could add non-testbed evidence and reduce synthetic-domain dependence."],
+          "cons": ["Requires a new source gate and loses structured Windows event coverage."],
+          "recommendation": "reserve_if_audit_fails"
+        },
+        {
+          "option": "downgrade_to_inactive",
+          "pros": ["Avoids overclaiming ten run suffixes as independent before verification."],
+          "cons": ["Reduces active train candidates from four to three."],
+          "recommendation": "only_if_audit_fails"
+        },
+        {
+          "option": "future_bounded_payload_lineage_audit",
+          "pros": ["Ten explicit run suffixes make a run-level audit plausible.", "A frozen rule can cluster four host/configuration views into one run."],
+          "cons": ["Requires nested-notice recheck and payload authority.", "Shared testbed state and run independence still need explicit verification."],
+          "recommendation": "preferred_next_amendment_candidate"
+        }
+      ]
+    },
+    {
+      "corpus_family_id": "zeek_non_pcap_test_logs",
+      "current_candidate_role": "development_candidate",
+      "role_changed": false,
+      "metadata_gap": "Software test fixtures and parent directories are not independent real captures; repeated blobs and shared fixture generation remain unresolved.",
+      "options": [
+        {
+          "option": "replace_family",
+          "pros": ["Provides a scientifically stronger development source with capture-level provenance.", "Reduces nuisance correlation with the proposed IoT-23 test candidate."],
+          "cons": ["Requires a new source gate and may reduce parser-compatibility coverage."],
+          "recommendation": "preferred_for_scientific_development"
+        },
+        {
+          "option": "downgrade_to_inactive",
+          "pros": ["Preserves useful parser fixtures without counting them as scientific lineages."],
+          "cons": ["Leaves development with at most one active candidate until a replacement is approved."],
+          "recommendation": "acceptable_engineering_posture"
+        },
+        {
+          "option": "future_bounded_payload_lineage_audit",
+          "pros": ["Can deduplicate shared blobs and group related btest artifacts."],
+          "cons": ["Cannot transform software fixtures into independent real-world captures.", "Even a clean audit may support engineering evaluation only."],
+          "recommendation": "diagnostic_only_requires_separate_authorization"
+        }
+      ]
+    }
+  ],
+  "portfolio_options": [
+    {
+      "portfolio_id": "replace_clear_failures_then_audit_promising_families",
+      "actions_if_separately_approved": [
+        "Replace BETH and Loghub with sources that have explicit independent run or capture lineage.",
+        "Audit CAM-LDS and SOCBED using bounded, versioned grouping rules.",
+        "Replace or demote Atomic and Zeek unless external execution/capture lineage is established."
+      ],
+      "pros": ["Strongest scientific independence posture.", "Focuses payload effort where metadata makes success plausible."],
+      "cons": ["Largest source-search and source-gate workload."],
+      "recommendation": "preferred"
+    },
+    {
+      "portfolio_id": "downgrade_unverified_families_and_accept_gate_failure",
+      "actions_if_separately_approved": [
+        "Move weak or unverified candidates to inactive or engineering-only status.",
+        "Keep L2 failed or smoke-only until replacement families exist."
+      ],
+      "pros": ["Lowest leakage and pseudoreplication risk.", "No payload audit needed immediately."],
+      "cons": ["Does not enable baseline, fine-tuning, or a full L2 evaluation."],
+      "recommendation": "clean_stop_option"
+    },
+    {
+      "portfolio_id": "bounded_audit_before_role_decisions",
+      "actions_if_separately_approved": [
+        "Open a narrowly scoped lineage-only payload audit for CAM-LDS and SOCBED first.",
+        "Optionally inspect BETH, Loghub, Atomic, and Zeek only for source-native lineage metadata, without model or label use.",
+        "Decide replace versus inactive after audit results are frozen."
+      ],
+      "pros": ["Minimizes premature role changes.", "Produces direct evidence about grouping feasibility."],
+      "cons": ["Requires new authority and may still end with the same failed Gate.", "Payload exposure and review cost are higher."],
+      "recommendation": "conservative_information_gathering_option"
+    }
+  ],
+  "gate": {
+    "family_roles_changed": false,
+    "test_candidates_approved": false,
+    "train_lineage_quota_passed": false,
+    "development_lineage_quota_passed": false,
+    "test_lineage_quota_passed": false,
+    "l2_gate_passed": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  }
+}
