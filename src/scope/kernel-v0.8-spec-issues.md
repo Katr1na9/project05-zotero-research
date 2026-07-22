@@ -1,11 +1,11 @@
 # Kernel v0.8 specification issues
 
-Status: lifecycle issue register for the P0--P10 Part A implementation. Each
+Status: lifecycle issue register for the P0--P11 Part A implementation. Each
 issue carries an explicit state; closing an issue here does not silently modify
 the normative v0.8 document.
 
-Implementation snapshot (`2026-07-22`): P0--P10 are locally implemented on
-`feat/kernel-v0.8 @ 93af889`, with 100/100 Kernel tests passing. This is an
+Implementation snapshot (`2026-07-22`): P0--P11 are locally implemented on
+`feat/kernel-v0.8 @ 5e9c0ba`, with 113/113 Kernel tests passing. This is an
 engineering closeout only. A16 remains `PENDING_HUMAN_REVIEW` and is treated as
 `NO-GO`; Part B, Planner/M3*, LLM, training, push and PR are not implied. The
 controlling status entry is
@@ -109,10 +109,13 @@ support a formal certificate, or appear in a formal certification claim. Any
 certificate depending on such a placeholder is invalid and must be rejected.
 Before formal freeze, the placeholders must be replaced by the actual hash of
 the approved admission-policy artifact and all bound references regenerated.
+P11's test-side adapter/lifecycle hashes likewise have no formal certification
+authority unless and until they are bound to that approved artifact; P7 allow
+or P8 admit is not a level certificate.
 
 ## Part A closeout note
 
-The P1--P10 implementations do not silently close SI-003, SI-006, SI-007,
+The P1--P11 implementations do not silently close SI-003, SI-006, SI-007,
 SI-008 or SI-010. In particular, schema-valid Twin placeholders remain
 non-certifying, the legacy stochastic Planner/runtime remains outside the
 Kernel boundary, and compiler ownership beyond the published candidate-only
@@ -123,6 +126,11 @@ explicit single-hit feedback path may reach `CANDIDATE_CERTIFIED` but still
 ends in `CONTINUE`. Neither path supplies level-complete authority. A future
 A16 ruling, push/PR decision or Part B slice must be separately recorded and
 must not be inferred from this closeout note.
+
+The opt-in P11 path adapts only observations actually emitted by P5, evaluates
+them through P7 and may admit Firewall-allowed claims through P8. It preserves
+`modality=observed`, leaves the existing feedback/recertification/state path
+unchanged, and cannot issue a level certificate or `CERTIFIED_STOP`.
 
 ## SI-011 — IMPLEMENTED — APPROVED SCOPE: Firewall reason-code collision
 

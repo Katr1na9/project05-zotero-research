@@ -3,15 +3,15 @@
 **状态日期：** 2026-07-22
 **适用轨道：** Part A Counterexample Kernel only
 **分支：** `feat/kernel-v0.8`
-**本地 HEAD：** `93af889`
+**本地 HEAD：** `5e9c0ba`
 **实现状态：** `PART_A_IMPLEMENTED_PENDING_A16_REVIEW`
 **A16 主门禁：** `PENDING_HUMAN_REVIEW`（按 `NO-GO` 执行）
-**远端状态：** 未 push；未创建 PR；当前没有远端分支包含 `93af889`
+**远端状态：** 未 push；未创建 PR；当前没有远端分支包含 `5e9c0ba`
 
 ## 1. 本文件的 authority 边界
 
 本文件是 Kernel v0.8 轨道的当前状态入口。它记录用户已经逐项授予并完成的
-P0–P10 实施权限，以及仍未授予的后续权限。它是描述性状态记录，不修改
+P0–P11 实施权限，以及仍未授予的后续权限。它是描述性状态记录，不修改
 `active-attribution-experiment-revision-plan-v0.8-20260721.md` 的规范语义，
 也不替代新的用户授权。
 
@@ -36,8 +36,10 @@ P0–P10 实施权限，以及仍未授予的后续权限。它是描述性状�
 - P7–P8：Epistemic Firewall admission、Promote/Revoke 审计生命周期；
 - P9：唯一系统状态推导与 level-complete certificate gate；
 - P10：不增加新算法的确定性 Twin E2E driver。
+- P11：P5 observation 到 Claim IR 的显式适配、P7 evaluate 与可选 P8 admit
+  接入 E2E；不改变 modality，不取得 STOP 或 level-certificate 权限。
 
-这些授权已经消耗完毕，不自动续展为重写 P0–P9 语义、增加算法或进入下一阶段
+这些授权已经消耗完毕，不自动续展为重写 P0–P10 语义、增加算法或进入下一阶段
 的权限。
 
 用户随后于 2026-07-22 明确追加并消耗一个收口债务修复授权：FW-016 拆码、
@@ -49,7 +51,7 @@ Part B、LLM 或训练权限。实现证据追加在 Part A 收口纪要第 6 �
 
 ### 当前允许
 
-- 对 P0–P10 做只读复核与自动回归；
+- 对 P0–P11 做只读复核与自动回归；
 - 修正文档中的状态、链接和非规范性实施记录；
 - 准备供人工审阅的 diff、测试清单和 PR 文案草案。
 
@@ -65,7 +67,7 @@ Part B、LLM 或训练权限。实现证据追加在 Part A 收口纪要第 6 �
 
 ## 4. A16 状态
 
-P0–P10 的实现和自动测试为 A16 评审提供了工程证据，但没有替代 A16 裁定。
+P0–P11 的实现和自动测试为 A16 评审提供了工程证据，但没有替代 A16 裁定。
 当前权威状态是：
 
 ```text
@@ -89,11 +91,14 @@ Part B authority: CLOSED
 |---|---|
 | 规范 | `08-writing/active-attribution-experiment-revision-plan-v0.8-20260721.md` |
 | 实施收口 | `04-progress/kernel-v0.8-part-a-closeout-20260722.md` |
+| A16 评审包 | `08-writing/kernel-v0.8-a16-review-package-20260722.md` |
 | Spec issues | `src/scope/kernel-v0.8-spec-issues.md` |
 | Γ hash 合同 | `contracts/gamma-hash-v0.8.md` |
 | Twin fixture | `tests/fixtures/TWIN-COUNTEREXAMPLE-001/` |
 | P10 driver | `src/cli/kernel_e2e.py` |
 | P10 integration test | `tests/integration/test_twin_kernel_e2e_p10.py` |
+| P11 adapter | `src/ir/observation_claim.py` |
+| P11 integration test | `tests/integration/test_twin_firewall_admit_driver_p11.py` |
 
 本状态记录完成后应停在人工评审门禁。push、PR 与 A16 Go 分别是独立决定；其中
 任何一个都不能由另一个默示产生。
@@ -104,8 +109,22 @@ Part B authority: CLOSED
 FW reason-code collision: SPLIT (FW-016 context / FW-017 kind)
 Twin finite constraints: COMPILED FROM GAMMA + ADMITTED CASE EVIDENCE
 Predicate projection: CALLER-SUPPLIED ACTION BINDING, CATALOG-RESOLVED
-Regression: 105/105 PASS
+Regression after P11: 113/113 PASS
 Review state: PENDING HUMAN DIFF REVIEW
 ```
 
 该状态不修改冻结 v0.8 规范字节，也不关闭 SI-010 或签发 level certificate。
+
+## 7. P11 Firewall/admit 接线状态
+
+P11 已在本地提交 `5e9c0ba` 完成。生产适配器只从本次 P5 实际输出、冻结
+action catalog 和显式调用方上下文构造 Claim IR；`pointer.record_id` 绑定
+`observation_id`，`modality` 固定保持 `observed`，oracle/hidden、未知 action、
+缺失 pointer 行和未实际执行的 observation ID 均 fail closed。
+
+Twin 默认可执行路径中的 OBS-001/002 经 Firewall 为 allow，启用 P8 时可 admit；
+OBS-003/004 在同一生产适配器的冻结行合同测试中分别因 control/heuristic 被
+deny。P11 仍沿既有 feedback/Recert/SystemState 路径，单 hit 结果为
+`CANDIDATE_CERTIFIED + CONTINUE`，不签发 level certificate，也不产生
+`CERTIFIED_STOP`。A16 评审包已经整理，但 A16 decision 仍为 `PENDING`，操作上
+继续按 `NO-GO` 执行。
