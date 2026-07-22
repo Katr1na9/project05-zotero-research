@@ -13,6 +13,7 @@ from tests.integration.twin_kernel_inputs import (
     twin_observation_admission_config,
     twin_observation_adapter_context,
 )
+from tests.unit.policy_test_helpers import approved_policy_authority
 
 
 class TwinFirewallAdmitDriverP11IntegrationTests(unittest.TestCase):
@@ -29,7 +30,9 @@ class TwinFirewallAdmitDriverP11IntegrationTests(unittest.TestCase):
             row["observation_id"]: row for row in self.inputs.observation_rows
         }
         decisions = {
-            claim["pointer"]["record_id"]: ECaseAdmissionFirewall().evaluate(
+            claim["pointer"]["record_id"]: ECaseAdmissionFirewall(
+                approved_policy_authority()
+            ).evaluate(
                 claim, rows[claim["pointer"]["record_id"]]
             )
             for claim in claims

@@ -1,0 +1,62 @@
+{
+  "schema_version": "0.8.0",
+  "counterexample_id": "CEX-SUPPLY-CHAIN-002",
+  "case_id": "TWIN-SUPPLY-CHAIN-002",
+  "gamma_hash": "sha256:c9131108991f4894a09d65ff9e47f5fafdb6eadb53f5bc51e0e5e6093d16076e",
+  "evidence_hash": "sha256:eb933d0929e8935c20feead9523b876cbb8d36dba48e3e8fb48725584a9526c6",
+  "target_level": "package_origin",
+  "candidate_q": {
+    "entity_id": "REGISTRY-A",
+    "entity_type": "repository_or_builder"
+  },
+  "checker_status": "COUNTEREXAMPLE_FOUND",
+  "core_query_results": {
+    "base": "SAT",
+    "support": "SAT",
+    "alternative": "SAT"
+  },
+  "support_world": {
+    "world_id": "W-REGISTRY",
+    "target_result": {
+      "entity_id": "REGISTRY-A",
+      "entity_type": "repository_or_builder"
+    },
+    "predicates": [
+      "registry_provenance",
+      "artifact_signature_state=valid"
+    ]
+  },
+  "alternative_world": {
+    "world_id": "W-MIRROR",
+    "target_result": {
+      "entity_id": "MIRROR-B",
+      "entity_type": "repository_or_builder"
+    },
+    "predicates": [
+      "mirror_publish_chain",
+      "artifact_signature_state=unknown"
+    ]
+  },
+  "shared_predicates": [
+    "package_installed:PKG-X"
+  ],
+  "support_only_predicates": [
+    "registry_provenance",
+    "artifact_signature_state=valid"
+  ],
+  "alternative_only_predicates": [
+    "mirror_publish_chain",
+    "artifact_signature_state=unknown"
+  ],
+  "distinguishing_predicates": [
+    "artifact_signature_state",
+    "mirror_publish_chain",
+    "registry_provenance"
+  ],
+  "critical_absence_semantics": [
+    "registry-attestation-PKG-X:bounded_completeness",
+    "mirror-publish-PKG-X:bounded_completeness"
+  ],
+  "minimization_status": "OPTIMAL",
+  "generation_basis": "kernel_checker"
+}

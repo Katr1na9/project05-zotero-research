@@ -1,12 +1,39 @@
 # Kernel v0.8 Authority Status
 
+## Current A16 remediation authority snapshot
+
+```text
+Branch: feat/kernel-v0.8
+Working state: uncommitted A16 remediation supplement
+Regression: 131/131 PASS
+A16 decision: NOT PASSED / NO-GO (unchanged)
+Push / PR: NOT AUTHORIZED
+Part B: CLOSED
+CERTIFIED_STOP authority: NOT ESTABLISHED
+```
+
+Engineering remediation is complete for the second non-isomorphic Gamma,
+model-relative formal ceiling, complete-world P6 recertification,
+ceiling-bound P9 coverage, SI-003/006/007/008 dispositions, and the historical
+15-commit/81-file review record. These facts prepare a new A16 re-review; they
+do not change the existing human NO-GO ruling.
+
+SI-010 is closed by the user's explicit exact-hash approval. The approved
+artifact is `configs/admission-policy-kernel-v0.8.yaml` with canonical hash
+`sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671`.
+The APPROVED manifest hash is
+`sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b`.
+Gamma/fixture/ceiling references have been regenerated. This authority change
+does not alter the existing A16 NO-GO, push/PR prohibition, Part B closure, or
+the requirement for a separate level-complete certificate.
+
 **状态日期：** 2026-07-22
 **适用轨道：** Part A Counterexample Kernel only
 **分支：** `feat/kernel-v0.8`
-**本地 HEAD：** `5e9c0ba`
-**实现状态：** `PART_A_IMPLEMENTED_PENDING_A16_REVIEW`
-**A16 主门禁：** `PENDING_HUMAN_REVIEW`（按 `NO-GO` 执行）
-**远端状态：** 未 push；未创建 PR；当前没有远端分支包含 `5e9c0ba`
+**本地 HEAD：** `c3173ae`
+**实现状态：** `PART_A_IMPLEMENTED_A16_NOT_PASSED`
+**A16 主门禁：** `NOT_PASSED` / `NO-GO`（2026-07-22 人工裁定）
+**远端状态：** Push **不允许**；PR **不允许**；未 push；未创建 PR
 
 ## 1. 本文件的 authority 边界
 
@@ -52,35 +79,49 @@ Part B、LLM 或训练权限。实现证据追加在 Part A 收口纪要第 6 �
 ### 当前允许
 
 - 对 P0–P11 做只读复核与自动回归；
-- 修正文档中的状态、链接和非规范性实施记录；
-- 准备供人工审阅的 diff、测试清单和 PR 文案草案。
+- 记录 A16 裁定、限制与复审清单等非规范性状态文档；
+- 在用户**另行授权某一补洞切片**后，才开始对应编码。
 
 ### 未授权
 
-- 宣布 A16 Go；
+- 把 A16 解释为 Go，或宣布正式 `CERTIFIED_STOP` / level certification；
 - Part B、随机 observation、机会约束或广域连接器；
 - Planner/M3* 策略、训练、LLM 运行时或 `09-experiments` 改动；
-- 修改 Γ/hash/action catalog/fixture expected 或 P0–P9 语义；
-- 由 driver、LLM、M3*、概率阈值或人工判断直接发
-  `CERTIFIED_STOP`；
-- push、PR、merge 或 release，除非用户明确选择该外部动作。
+- 未经授权启动 SI-010 / ceiling / 第二 Twin 等补洞实现；
+- 修改 Γ/hash/action catalog/fixture expected 或 P0–P11 语义（除非补洞切片明确授权）；
+- push、PR、merge 或 release。
 
-## 4. A16 状态
+## 4. A16 状态（人工裁定已落地）
 
-P0–P11 的实现和自动测试为 A16 评审提供了工程证据，但没有替代 A16 裁定。
-当前权威状态是：
+用户于 2026-07-22 作出明确人工裁定：**先停着；A16 没过。**
 
 ```text
-Part A implementation: COMPLETE
-A16 review package: READY FOR HUMAN REVIEW
-A16 decision: PENDING
-Operational interpretation: NO-GO
-Part B authority: CLOSED
+Decision: 先停着
+Push: NO
+PR: NO
+A16: NOT PASSED / NO-GO
+Part B: CLOSED
+CERTIFIED_STOP authority: NOT ESTABLISHED
 ```
 
-特别是 SI-010 仍明确禁止使用 fixture 的 policy-hash 占位进行正式认证。
-在实际 policy artifact、真实 hash 与所有绑定引用冻结前，不得把 Twin schema
-通过写成正式 level certification。
+工程实现（P0–P11）与 `113/113` 自动回归仍然成立，但评审裁定认定：自动证据
+不能证明真实形式 ceiling、外部有效性或正式 policy authority，也不能等同于
+A16 条件全部满足。
+
+**原 A16 裁定要求的复审材料（保留作审计历史）：**
+
+1. 冻结并批准 admission-policy artifact 与真实绑定 hash，关闭 SI-010；
+2. 补足真实形式 ceiling 的可审证据（定义、域、证明/测试边界、域外 fail-closed）；
+3. 关闭单一 Twin / narrow compiler 的“玩具 Γ”外推问题（第二非平凡 Γ/fixture
+   **或** 明确收窄声明范围并删除过度通用表述）；
+4. 完成 15 提交、81 文件的人工 diff 审阅并留下逐项结论；
+5. 对 SI-003、SI-006、SI-007、SI-008 分别作正式裁定
+   （本轮修复 / 明确延期且不影响 A16 / 构成阻塞）；
+6. 重新生成评审包并复跑完整测试矩阵。
+
+截至当前 supplement，上述 1–5 项已有工程证据，最终完整矩阵与评审包在批准
+policy 绑定后重放；这些材料仍须新的人工 A16 复审接受。在新的明确 Go 裁定前：
+**禁止推进 Part B，禁止 push/PR，禁止把工程完成解释为 A16 Go。**
 
 其他仍保留的 spec issues 见 `src/scope/kernel-v0.8-spec-issues.md`。这些 issue
 不得通过本状态文件静默关闭。
@@ -100,8 +141,8 @@ Part B authority: CLOSED
 | P11 adapter | `src/ir/observation_claim.py` |
 | P11 integration test | `tests/integration/test_twin_firewall_admit_driver_p11.py` |
 
-本状态记录完成后应停在人工评审门禁。push、PR 与 A16 Go 分别是独立决定；其中
-任何一个都不能由另一个默示产生。
+本状态记录以本节人工裁定为准。push、PR 与 A16 Go 分别是独立决定；其中
+任何一个都不能由另一个默示产生。当前三者均为 **不允许 / 没过**。
 
 ## 6. 收口债务修复状态
 
@@ -110,10 +151,11 @@ FW reason-code collision: SPLIT (FW-016 context / FW-017 kind)
 Twin finite constraints: COMPILED FROM GAMMA + ADMITTED CASE EVIDENCE
 Predicate projection: CALLER-SUPPLIED ACTION BINDING, CATALOG-RESOLVED
 Regression after P11: 113/113 PASS
-Review state: PENDING HUMAN DIFF REVIEW
+Human A16 ruling: NOT PASSED / NO-GO (2026-07-22)
 ```
 
-该状态不修改冻结 v0.8 规范字节，也不关闭 SI-010 或签发 level certificate。
+该债务修复状态不修改冻结 v0.8 规范字节，也不签发 level certificate。SI-010
+随后已由用户对精确 policy hash 的独立批准关闭；该关闭不追溯地产生 STOP 权威。
 
 ## 7. P11 Firewall/admit 接线状态
 
@@ -126,5 +168,6 @@ Twin 默认可执行路径中的 OBS-001/002 经 Firewall 为 allow，启用 P8 
 OBS-003/004 在同一生产适配器的冻结行合同测试中分别因 control/heuristic 被
 deny。P11 仍沿既有 feedback/Recert/SystemState 路径，单 hit 结果为
 `CANDIDATE_CERTIFIED + CONTINUE`，不签发 level certificate，也不产生
-`CERTIFIED_STOP`。A16 评审包已经整理，但 A16 decision 仍为 `PENDING`，操作上
-继续按 `NO-GO` 执行。
+`CERTIFIED_STOP`。
+
+P11 工程接线不改变 2026-07-22 的 A16 **NOT PASSED / NO-GO** 裁定。

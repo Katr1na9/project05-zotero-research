@@ -107,6 +107,11 @@ def _contains_oracle_field(value: object) -> bool:
     return False
 
 
+def _mapping_authority_policy_hash(claim: Mapping[str, object]) -> object:
+    authority = claim.get("certification_authority")
+    return authority.get("policy_hash") if isinstance(authority, Mapping) else None
+
+
 def _promotion_pointer_is_resolvable(pointer: object) -> bool:
     if not isinstance(pointer, Mapping):
         return False
@@ -134,6 +139,8 @@ class AuditEvent:
     claim_id: str
     operation: str
     rule_id: str
+    policy_hash: str
+    approval_manifest_hash: str | None
     timestamp: str
     previous_hash: str
     before_json: str
@@ -156,6 +163,8 @@ class AuditEvent:
             "claim_id": self.claim_id,
             "operation": self.operation,
             "rule_id": self.rule_id,
+            "policy_hash": self.policy_hash,
+            "approval_manifest_hash": self.approval_manifest_hash,
             "timestamp": self.timestamp,
             "previous_hash": self.previous_hash,
             "before": self.before,
@@ -187,6 +196,8 @@ class AppendOnlyAuditLedger:
         event_id: str,
         operation: str,
         rule_id: str,
+        policy_hash: str,
+        approval_manifest_hash: str | None,
         timestamp: str,
         before: Mapping[str, object],
         after: Mapping[str, object],
@@ -200,6 +211,19 @@ class AppendOnlyAuditLedger:
             or not _validate_timestamp(timestamp)
         ):
             _reject("P8-004_EVENT_METADATA_INVALID", "invalid audit event metadata")
+        if _SHA256.fullmatch(policy_hash) is None or (
+            approval_manifest_hash is not None
+            and _SHA256.fullmatch(approval_manifest_hash) is None
+        ):
+            _reject(
+                "P8-004_EVENT_METADATA_INVALID",
+                "audit policy bindings must be canonical SHA-256 values",
+            )
+        if operation == "ADMIT" and approval_manifest_hash is None:
+            _reject(
+                "P8-015_ADMISSION_POLICY_UNVERIFIED",
+                "ADMIT requires an approved policy-manifest binding",
+            )
 
         before_json = _canonical_json(before)
         after_json = _canonical_json(after)
@@ -223,6 +247,8 @@ class AppendOnlyAuditLedger:
             claim_id=claim_id,
             operation=operation,
             rule_id=rule_id,
+            policy_hash=policy_hash,
+            approval_manifest_hash=approval_manifest_hash,
             timestamp=timestamp,
             previous_hash=previous_hash,
             before_json=before_json,
@@ -235,6 +261,8 @@ class AppendOnlyAuditLedger:
             claim_id=claim_id,
             operation=operation,
             rule_id=rule_id,
+            policy_hash=policy_hash,
+            approval_manifest_hash=approval_manifest_hash,
             timestamp=timestamp,
             previous_hash=previous_hash,
             before_json=before_json,
@@ -345,6 +373,16 @@ class ClaimLifecycleManager:
             or firewall_decision.reason_codes != ("FW-000_ADMITTED",)
             or firewall_decision.resulting_admission_status != "admitted"
             or firewall_decision.preserved_modality != before.get("modality")
+            or firewall_decision.policy_hash
+            != _mapping_authority_policy_hash(before)
+            or not isinstance(firewall_decision.approval_manifest_hash, str)
+            or _SHA256.fullmatch(firewall_decision.approval_manifest_hash) is None
+            or rule_id
+            != (
+                before.get("certification_authority", {}).get("basis_rule_id")
+                if isinstance(before.get("certification_authority"), Mapping)
+                else None
+            )
         ):
             _reject(
                 "P8-002_CLAIM_DECISION_MISMATCH",
@@ -372,6 +410,8 @@ class ClaimLifecycleManager:
             rule_id=rule_id,
             timestamp=timestamp,
             recertification_required=False,
+            policy_hash=firewall_decision.policy_hash,
+            approval_manifest_hash=firewall_decision.approval_manifest_hash,
         )
 
     def promote(
@@ -482,6 +522,8 @@ class ClaimLifecycleManager:
             rule_id=rule_id,
             timestamp=timestamp,
             recertification_required=False,
+            policy_hash=self._promotion_policy_hash,
+            approval_manifest_hash=None,
         )
 
     def revoke(
@@ -531,6 +573,8 @@ class ClaimLifecycleManager:
             rule_id=rule_id,
             timestamp=timestamp,
             recertification_required=True,
+            policy_hash=self._promotion_policy_hash,
+            approval_manifest_hash=None,
         )
 
     @staticmethod
@@ -557,11 +601,15 @@ class ClaimLifecycleManager:
         rule_id: str,
         timestamp: str,
         recertification_required: bool,
+        policy_hash: str,
+        approval_manifest_hash: str | None,
     ) -> LifecycleTransition:
         event = self._ledger.append_transition(
             event_id=event_id,
             operation=operation,
             rule_id=rule_id,
+            policy_hash=policy_hash,
+            approval_manifest_hash=approval_manifest_hash,
             timestamp=timestamp,
             before=before,
             after=after,

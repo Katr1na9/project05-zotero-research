@@ -15,7 +15,7 @@ except (ImportError, ModuleNotFoundError):
 
 
 POLICY_HASH = (
-    "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a"
+    "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671"
 )
 RULE_HASH = "sha256:3b4bb0ed6f9221c5e71bedc50ce508710f693c0e28d84f77af7571ac85f94d3e"
 
@@ -63,9 +63,9 @@ def context():
                 source_family="identity",
                 source_schema="kernel.action-observation.v0.8",
                 admissible_levels=("initial_foothold",),
+                certification_basis_rule_id="A001",
             )
         },
-        certification_basis_rule_id="A-P5-OBSERVATION",
         certification_policy_hash=POLICY_HASH,
         parser_id="p5-observation-adapter",
         parser_version="0.8.0",
@@ -128,7 +128,6 @@ class ObservationClaimIRAdapterTests(unittest.TestCase):
             source_id="action_observations.jsonl",
             row_numbers={},
             action_bindings=context().action_bindings,
-            certification_basis_rule_id="A-P5-OBSERVATION",
             certification_policy_hash=POLICY_HASH,
             parser_id="p5-observation-adapter",
             parser_version="0.8.0",

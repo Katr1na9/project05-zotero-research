@@ -77,6 +77,11 @@ class SystemStateDerivationTests(unittest.TestCase):
             level_certificate=certificate,
             active_gamma_hash=document["gamma_hash"],
             active_evidence_hash=document["evidence_hash"],
+            active_admission_policy_hash=document["admission_policy_hash"],
+            active_admission_policy_approval_hash=document[
+                "admission_policy_approval_hash"
+            ],
+            active_formal_ceiling_hash=document["formal_ceiling_hash"],
         )
 
         self.assertEqual("CONTINUE", candidate_only.system_status.value)
@@ -91,6 +96,11 @@ class SystemStateDerivationTests(unittest.TestCase):
             level_certificate=certificate,
             active_gamma_hash=document["gamma_hash"],
             active_evidence_hash="sha256:" + "a0" * 32,
+            active_admission_policy_hash=document["admission_policy_hash"],
+            active_admission_policy_approval_hash=document[
+                "admission_policy_approval_hash"
+            ],
+            active_formal_ceiling_hash=document["formal_ceiling_hash"],
         )
         self.assertEqual("CONTINUE", stale.system_status.value)
 
@@ -111,6 +121,13 @@ class SystemStateDerivationTests(unittest.TestCase):
                     level_certificate=wrapped,
                     active_gamma_hash=valid["gamma_hash"],
                     active_evidence_hash=valid["evidence_hash"],
+                    active_admission_policy_hash=valid[
+                        "admission_policy_hash"
+                    ],
+                    active_admission_policy_approval_hash=valid[
+                        "admission_policy_approval_hash"
+                    ],
+                    active_formal_ceiling_hash=valid["formal_ceiling_hash"],
                 )
                 self.assertEqual("CONTINUE", decision.system_status.value)
 

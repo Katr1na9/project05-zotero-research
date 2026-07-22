@@ -13,6 +13,7 @@ from tests.integration.twin_kernel_inputs import (
     load_yaml,
     twin_observation_adapter_context,
 )
+from tests.unit.policy_test_helpers import approved_policy_authority
 
 
 try:
@@ -41,8 +42,9 @@ class TwinPromoteRevokeAuditP8IntegrationTests(unittest.TestCase):
             claim["pointer"]["record_id"]: claim for claim in adapted
         }
         rows = {row["observation_id"]: row for row in observations}
+        authority = approved_policy_authority()
         decisions = {
-            observation_id: ECaseAdmissionFirewall().evaluate(
+            observation_id: ECaseAdmissionFirewall(authority).evaluate(
                 claim, rows[observation_id]
             )
             for observation_id, claim in claims.items()
@@ -51,8 +53,7 @@ class TwinPromoteRevokeAuditP8IntegrationTests(unittest.TestCase):
         manager = lifecycle_api.ClaimLifecycleManager(
             ledger=ledger,
             promotion_policy={"version": "prom-0.8", "rules": []},
-            promotion_policy_hash=
-                "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a",
+            promotion_policy_hash=authority.policy_hash,
         )
 
         admitted = {}
@@ -61,7 +62,7 @@ class TwinPromoteRevokeAuditP8IntegrationTests(unittest.TestCase):
                 claims[observation_id],
                 decisions[observation_id],
                 event_id=f"TWIN-P8-ADMIT-{offset + 1:03d}",
-                rule_id="P7-FW-ADMISSION",
+                rule_id="A001",
                 timestamp=f"2026-01-01T10:16:0{offset}Z",
             ).claim
 
@@ -107,6 +108,14 @@ class TwinPromoteRevokeAuditP8IntegrationTests(unittest.TestCase):
         self.assertEqual(
             ledger.events[0].event_hash, ledger.events[1].previous_hash
         )
+        self.assertTrue(
+            all(
+                event.policy_hash == authority.policy_hash
+                and event.approval_manifest_hash
+                == authority.approval_manifest_hash
+                for event in ledger.events
+            )
+        )
         self.assertTrue(ledger.verify_integrity())
         serialized = json.dumps([event.to_dict() for event in ledger.events])
         self.assertNotIn("system_status", serialized)
@@ -118,8 +127,7 @@ class TwinPromoteRevokeAuditP8IntegrationTests(unittest.TestCase):
         manager = lifecycle_api.ClaimLifecycleManager(
             ledger=lifecycle_api.AppendOnlyAuditLedger(),
             promotion_policy={"version": "prom-0.8", "rules": []},
-            promotion_policy_hash=
-                "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a",
+            promotion_policy_hash=approved_policy_authority().policy_hash,
         )
 
         with self.assertRaises(lifecycle_api.LifecycleTransitionRejected) as caught:

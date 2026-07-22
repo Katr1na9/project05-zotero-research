@@ -12,6 +12,8 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 import re
 
+from .policy import AdmissionPolicyAuthority
+
 
 _SHA256 = re.compile(r"^sha256:[0-9a-f]{64}$")
 _ORACLE_FIELDS = frozenset(
@@ -23,11 +25,6 @@ _ORACLE_FIELDS = frozenset(
         "true_outcome",
     }
 )
-_ADMISSIBLE_OBSERVATION_KINDS = frozenset(
-    {"distinguishing_hit", "bounded_complete_zero_hit"}
-)
-
-
 @dataclass(frozen=True)
 class AdmissionDecision:
     claim_id: str
@@ -35,6 +32,8 @@ class AdmissionDecision:
     reason_codes: tuple[str, ...]
     resulting_admission_status: str
     preserved_modality: str | None
+    policy_hash: str | None
+    approval_manifest_hash: str | None
 
     def to_outcome_fields(self) -> dict[str, object]:
         """Return Firewall-owned decision fields without certificate or STOP."""
@@ -45,11 +44,23 @@ class AdmissionDecision:
             "reason_codes": list(self.reason_codes),
             "resulting_admission_status": self.resulting_admission_status,
             "preserved_modality": self.preserved_modality,
+            "policy_hash": self.policy_hash,
+            "approval_manifest_hash": self.approval_manifest_hash,
         }
 
 
 class ECaseAdmissionFirewall:
     """Fail-closed admission gate for observation-bound case evidence."""
+
+    def __init__(
+        self,
+        policy_authority: AdmissionPolicyAuthority | None = None,
+    ) -> None:
+        if policy_authority is not None and not isinstance(
+            policy_authority, AdmissionPolicyAuthority
+        ):
+            raise ValueError("policy_authority must be AdmissionPolicyAuthority")
+        self._policy_authority = policy_authority
 
     def evaluate(
         self,
@@ -72,8 +83,13 @@ class ECaseAdmissionFirewall:
             reasons.append("FW-003_TRUTH_STATUS_NOT_SUPPORTED")
         if claim.get("epistemic_role") != "case_evidence":
             reasons.append("FW-004_ROLE_NOT_CASE_EVIDENCE")
-        if not self._authority_is_valid(claim):
+        authority_shape_valid = self._authority_shape_is_valid(claim)
+        if not authority_shape_valid:
             reasons.append("FW-005_CERTIFICATION_AUTHORITY_INVALID")
+        if self._policy_authority is None:
+            reasons.append("FW-018_POLICY_AUTHORITY_UNVERIFIED")
+        elif authority_shape_valid and not self._authority_matches_policy(claim):
+            reasons.append("FW-019_POLICY_BINDING_MISMATCH")
 
         pointer = claim.get("pointer")
         pointer_complete = self._pointer_is_complete(pointer)
@@ -111,7 +127,11 @@ class ECaseAdmissionFirewall:
                 reasons.append("FW-010_HEURISTIC_OBSERVATION")
             elif observation_kind == "true_empty_control":
                 reasons.append("FW-011_CONTROL_OBSERVATION")
-            elif observation_kind not in _ADMISSIBLE_OBSERVATION_KINDS:
+            elif (
+                self._policy_authority is None
+                or observation_kind
+                not in self._policy_authority.admissible_observation_kinds
+            ):
                 reasons.append("FW-017_OBSERVATION_KIND_UNSUPPORTED")
 
             if observation.get("completeness_conditions_satisfied") is not True:
@@ -135,10 +155,20 @@ class ECaseAdmissionFirewall:
             reason_codes=("FW-000_ADMITTED",) if allowed else tuple(reasons),
             resulting_admission_status="admitted" if allowed else "rejected",
             preserved_modality=preserved_modality,
+            policy_hash=(
+                self._policy_authority.policy_hash
+                if self._policy_authority is not None
+                else None
+            ),
+            approval_manifest_hash=(
+                self._policy_authority.approval_manifest_hash
+                if self._policy_authority is not None
+                else None
+            ),
         )
 
     @staticmethod
-    def _authority_is_valid(claim: Mapping[str, object]) -> bool:
+    def _authority_shape_is_valid(claim: Mapping[str, object]) -> bool:
         authority = claim.get("certification_authority")
         if not isinstance(authority, Mapping) or authority.get("allowed") is not True:
             return False
@@ -158,6 +188,29 @@ class ECaseAdmissionFirewall:
         ):
             return False
         return set(levels).issubset(admissible_levels)
+
+    def _authority_matches_policy(self, claim: Mapping[str, object]) -> bool:
+        if self._policy_authority is None:
+            return False
+        authority = claim.get("certification_authority")
+        if not isinstance(authority, Mapping):
+            return False
+        rule_id = authority.get("basis_rule_id")
+        source_family = claim.get("source_family")
+        levels = authority.get("levels")
+        if (
+            authority.get("policy_hash") != self._policy_authority.policy_hash
+            or not isinstance(rule_id, str)
+            or not isinstance(source_family, str)
+            or not isinstance(levels, Sequence)
+            or isinstance(levels, (str, bytes))
+        ):
+            return False
+        return self._policy_authority.authorizes(
+            rule_id=rule_id,
+            source_family=source_family,
+            levels=levels,
+        )
 
     @staticmethod
     def _pointer_is_complete(pointer: object) -> bool:

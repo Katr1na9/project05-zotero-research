@@ -106,6 +106,7 @@ class ObservationClaimActionBinding:
     source_family: str
     source_schema: str
     admissible_levels: Sequence[str]
+    certification_basis_rule_id: str
 
     def __post_init__(self) -> None:
         _required_string(self.predicate, "predicate")
@@ -113,6 +114,9 @@ class ObservationClaimActionBinding:
         if source_family not in _SOURCE_FAMILIES:
             raise ValueError("source_family is outside the Claim IR finite domain")
         _required_string(self.source_schema, "source_schema")
+        _required_string(
+            self.certification_basis_rule_id, "certification_basis_rule_id"
+        )
         levels = _string_tuple(
             self.admissible_levels,
             "admissible_levels",
@@ -128,7 +132,6 @@ class ObservationClaimAdapterContext:
     source_id: str
     row_numbers: Mapping[str, int]
     action_bindings: Mapping[str, ObservationClaimActionBinding]
-    certification_basis_rule_id: str
     certification_policy_hash: str
     parser_id: str
     parser_version: str
@@ -138,7 +141,6 @@ class ObservationClaimAdapterContext:
     def __post_init__(self) -> None:
         for field in (
             "source_id",
-            "certification_basis_rule_id",
             "parser_id",
             "parser_version",
             "claim_id_prefix",
@@ -226,6 +228,7 @@ class ObservationClaimIRAdapter:
         ):
             raise ValueError("observation.observed_value must be a JSON scalar")
         levels = list(binding.admissible_levels)
+        basis_rule_id = binding.certification_basis_rule_id
         claim = {
             "schema_version": "0.8.0",
             "claim_id": f"{context.claim_id_prefix}-{observation_id}",
@@ -245,7 +248,7 @@ class ObservationClaimIRAdapter:
             "certification_authority": {
                 "allowed": True,
                 "levels": levels,
-                "basis_rule_id": context.certification_basis_rule_id,
+                "basis_rule_id": basis_rule_id,
                 "policy_hash": context.certification_policy_hash,
             },
             "source_family": binding.source_family,
@@ -269,7 +272,7 @@ class ObservationClaimIRAdapter:
             "admissible_levels": levels,
             "support_claim_ids": [],
             "contradict_claim_ids": [],
-            "rule_trace": [context.certification_basis_rule_id],
+            "rule_trace": [basis_rule_id],
             "confidence": {"extraction": 1.0, "source": 1.0, "model": None},
             "lifecycle_state": "bound",
         }

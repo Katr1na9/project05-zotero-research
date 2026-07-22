@@ -11,6 +11,7 @@ from tests.unit.test_epistemic_firewall_admission import (
     candidate_claim,
     observation,
 )
+from tests.unit.policy_test_helpers import approved_policy_authority
 
 
 try:
@@ -21,6 +22,7 @@ except (ImportError, ModuleNotFoundError):
 
 ROOT = Path(__file__).resolve().parents[2]
 POLICY_HASH = "sha256:" + "a" * 64
+ADMISSION_AUTHORITY = approved_policy_authority()
 
 
 def lifecycle_manager(ledger=None, *, rules=("PROM-CTI-001",)):
@@ -75,7 +77,9 @@ class PromoteRevokeAuditTests(unittest.TestCase):
     def test_admit_requires_firewall_allow_and_appends_immutable_event(self):
         claim = candidate_claim()
         original = copy.deepcopy(claim)
-        decision = ECaseAdmissionFirewall().evaluate(claim, observation())
+        decision = ECaseAdmissionFirewall(ADMISSION_AUTHORITY).evaluate(
+            claim, observation()
+        )
         ledger = lifecycle_api.AppendOnlyAuditLedger()
         manager = lifecycle_manager(ledger)
 
@@ -83,7 +87,7 @@ class PromoteRevokeAuditTests(unittest.TestCase):
             claim,
             decision,
             event_id="AUD-ADMIT-001",
-            rule_id="P7-FW-ADMISSION",
+            rule_id="A001",
             timestamp="2026-01-01T10:16:00Z",
         )
 
@@ -95,6 +99,11 @@ class PromoteRevokeAuditTests(unittest.TestCase):
         self.assertEqual("none", admitted["promotion_status"])
         self.assertEqual(1, len(ledger.events))
         self.assertEqual("ADMIT", ledger.events[0].operation)
+        self.assertEqual(ADMISSION_AUTHORITY.policy_hash, ledger.events[0].policy_hash)
+        self.assertEqual(
+            ADMISSION_AUTHORITY.approval_manifest_hash,
+            ledger.events[0].approval_manifest_hash,
+        )
         self.assertEqual("candidate", ledger.events[0].before["admission_status"])
         self.assertEqual("admitted", ledger.events[0].after["admission_status"])
         self.assertTrue(ledger.verify_integrity())
@@ -106,7 +115,7 @@ class PromoteRevokeAuditTests(unittest.TestCase):
 
     def test_firewall_denial_cannot_admit_or_append_audit(self):
         claim = candidate_claim()
-        decision = ECaseAdmissionFirewall().evaluate(
+        decision = ECaseAdmissionFirewall(ADMISSION_AUTHORITY).evaluate(
             claim,
             observation(
                 observation_kind="heuristic_only",
@@ -123,7 +132,7 @@ class PromoteRevokeAuditTests(unittest.TestCase):
                 claim,
                 decision,
                 event_id="AUD-DENIED-001",
-                rule_id="P7-FW-ADMISSION",
+                rule_id="A001",
                 timestamp="2026-01-01T10:16:00Z",
             ),
         )
@@ -252,7 +261,9 @@ class PromoteRevokeAuditTests(unittest.TestCase):
 
     def test_hash_chain_is_deterministic_and_event_ids_are_unique(self):
         claim = candidate_claim()
-        decision = ECaseAdmissionFirewall().evaluate(claim, observation())
+        decision = ECaseAdmissionFirewall(ADMISSION_AUTHORITY).evaluate(
+            claim, observation()
+        )
         event_hashes = []
         for _ in range(2):
             manager = lifecycle_manager()
@@ -260,7 +271,7 @@ class PromoteRevokeAuditTests(unittest.TestCase):
                 claim,
                 decision,
                 event_id="AUD-DETERMINISTIC-001",
-                rule_id="P7-FW-ADMISSION",
+                rule_id="A001",
                 timestamp="2026-01-01T10:16:00Z",
             )
             event_hashes.append(result.audit_event.event_hash)
@@ -271,7 +282,7 @@ class PromoteRevokeAuditTests(unittest.TestCase):
             claim,
             decision,
             event_id="AUD-DUPLICATE-001",
-            rule_id="P7-FW-ADMISSION",
+            rule_id="A001",
             timestamp="2026-01-01T10:16:00Z",
         ).claim
         self.assert_rejected(

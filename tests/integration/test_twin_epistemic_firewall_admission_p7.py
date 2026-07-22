@@ -12,6 +12,7 @@ from tests.integration.twin_kernel_inputs import (
     load_jsonl,
     twin_observation_adapter_context,
 )
+from tests.unit.policy_test_helpers import approved_policy_authority
 
 
 try:
@@ -44,7 +45,9 @@ class TwinEpistemicFirewallAdmissionP7IntegrationTests(unittest.TestCase):
         )
         schema = load_json(ROOT / "schemas" / "claim-ir-kernel.schema.json")
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
-        firewall = firewall_api.ECaseAdmissionFirewall()
+        firewall = firewall_api.ECaseAdmissionFirewall(
+            approved_policy_authority()
+        )
 
         decisions = {}
         claims = {}
@@ -86,7 +89,9 @@ class TwinEpistemicFirewallAdmissionP7IntegrationTests(unittest.TestCase):
         incomplete["completeness_conditions_satisfied"] = False
         oracle_claim = dict(claim)
         oracle_claim["true_outcome"] = "H1"
-        firewall = firewall_api.ECaseAdmissionFirewall()
+        firewall = firewall_api.ECaseAdmissionFirewall(
+            approved_policy_authority()
+        )
 
         incomplete_decision = firewall.evaluate(claim, incomplete)
         oracle_decision = firewall.evaluate(oracle_claim, row)

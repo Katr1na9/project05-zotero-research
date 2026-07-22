@@ -3,7 +3,11 @@ import json
 import unittest
 from pathlib import Path
 
+import yaml
+
 from jsonschema import Draft202012Validator, FormatChecker
+
+from src.ir.canonical_hash import canonical_document_hash
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -14,6 +18,9 @@ SCHEMA_NAMES = (
     "action-kernel.schema.json",
     "certificate.schema.json",
     "counterexample.schema.json",
+    "admission-policy.schema.json",
+    "policy-approval.schema.json",
+    "formal-ceiling.schema.json",
 )
 
 
@@ -85,7 +92,7 @@ def kernel_claim():
             "allowed": True,
             "levels": ["compromised_host"],
             "basis_rule_id": "A001",
-            "policy_hash": "sha256:" + "1" * 64,
+            "policy_hash": "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671",
         },
         "source_family": "identity",
         "source_schema": "twin.auth.v0.8",
@@ -183,6 +190,9 @@ def valid_certificate():
         "issued_by": "kernel_checker",
         "gamma_hash": "sha256:" + "1" * 64,
         "evidence_hash": "sha256:" + "2" * 64,
+        "admission_policy_hash": "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671",
+        "admission_policy_approval_hash": "sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b",
+        "formal_ceiling_hash": "sha256:9a91a99b1dfdf2c00d4a81761d1952e8f9113ce0cc841fbcaa19c2f0ae685cde",
         "level": "initial_foothold",
         "conclusion": {"entity_id": "H1", "entity_type": "host"},
         "certification_scope": "level_complete",
@@ -191,6 +201,10 @@ def valid_certificate():
             "mode": "exhaustive",
             "declared_domain_size": 2,
             "checked_count": 2,
+            "result_candidates": ["H1", "H3"],
+            "legal_world_count": 2,
+            "legal_worlds_hash": "sha256:6d4bbedd4bf705be0e6a0dce9cc5440948be163e496cf96c55ba2d33fd0a080c",
+            "cartesian_assignment_bound": 4,
             "omitted_known_candidates": [],
             "solver_seed_used": True,
         },
@@ -251,7 +265,7 @@ def counterexample_with_timeout_mindiff():
 
 
 class KernelSchemaTests(unittest.TestCase):
-    def test_all_five_p0_schemas_exist_and_are_valid_draft_2020_12(self):
+    def test_all_kernel_schemas_exist_and_are_valid_draft_2020_12(self):
         self.assertEqual(SCHEMA_NAMES, tuple(path.name for path in map(SCHEMA_DIR.__truediv__, SCHEMA_NAMES)))
         for name in SCHEMA_NAMES:
             path = SCHEMA_DIR / name
@@ -259,6 +273,39 @@ class KernelSchemaTests(unittest.TestCase):
             schema = load_json(path)
             self.assertEqual("https://json-schema.org/draft/2020-12/schema", schema["$schema"])
             Draft202012Validator.check_schema(schema)
+
+    def test_policy_and_approved_manifest_are_schema_valid_and_hashed(self):
+        vectors = (
+            (
+                "admission-policy.schema.json",
+                "admission-policy-kernel-v0.8.yaml",
+            ),
+            (
+                "policy-approval.schema.json",
+                "admission-policy-approval-kernel-v0.8.yaml",
+            ),
+        )
+        for schema_name, config_name in vectors:
+            with self.subTest(config=config_name):
+                schema = load_json(SCHEMA_DIR / schema_name)
+                document = yaml.safe_load(
+                    (ROOT / "configs" / config_name).read_text(encoding="utf-8")
+                )
+                validator = Draft202012Validator(
+                    schema, format_checker=FormatChecker()
+                )
+                self.assertEqual([], list(validator.iter_errors(document)))
+                self.assertEqual(document["hash"], canonical_document_hash(document))
+
+        manifest = yaml.safe_load(
+            (
+                ROOT
+                / "configs"
+                / "admission-policy-approval-kernel-v0.8.yaml"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual("APPROVED", manifest["decision"])
+        self.assertEqual("Project05 repository owner", manifest["approved_by"])
 
     def test_candidate_compiler_profile_accepts_candidate_only_output(self):
         schema = load_json(SCHEMA_DIR / "claim-ir-kernel.schema.json")

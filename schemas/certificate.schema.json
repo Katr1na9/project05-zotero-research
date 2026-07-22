@@ -11,6 +11,9 @@
     "issued_by",
     "gamma_hash",
     "evidence_hash",
+    "admission_policy_hash",
+    "admission_policy_approval_hash",
+    "formal_ceiling_hash",
     "level",
     "conclusion",
     "certification_scope",
@@ -31,6 +34,9 @@
     "issued_by": {"const": "kernel_checker"},
     "gamma_hash": {"$ref": "#/$defs/sha256"},
     "evidence_hash": {"$ref": "#/$defs/sha256"},
+    "admission_policy_hash": {"$ref": "#/$defs/sha256"},
+    "admission_policy_approval_hash": {"$ref": "#/$defs/sha256"},
+    "formal_ceiling_hash": {"$ref": "#/$defs/sha256"},
     "level": {"type": "string", "minLength": 1},
     "conclusion": {"$ref": "#/$defs/entityRef"},
     "certification_scope": {"enum": ["candidate_level", "level_complete"]},
@@ -127,12 +133,21 @@
     "candidateCoverage": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["level", "mode", "declared_domain_size", "checked_count", "omitted_known_candidates", "solver_seed_used"],
+      "required": ["level", "mode", "declared_domain_size", "checked_count", "result_candidates", "legal_world_count", "legal_worlds_hash", "cartesian_assignment_bound", "omitted_known_candidates", "solver_seed_used"],
       "properties": {
         "level": {"type": "string", "minLength": 1},
         "mode": {"enum": ["exhaustive", "solver_complete", "heuristic"]},
         "declared_domain_size": {"type": ["integer", "null"], "minimum": 0},
         "checked_count": {"type": "integer", "minimum": 0},
+        "result_candidates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "legal_world_count": {"type": "integer", "minimum": 1},
+        "legal_worlds_hash": {"$ref": "#/$defs/sha256"},
+        "cartesian_assignment_bound": {"type": "integer", "minimum": 1},
         "omitted_known_candidates": {
           "type": "array",
           "items": {"type": "string", "minLength": 1},

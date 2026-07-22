@@ -15,6 +15,7 @@ import json
 import re
 
 from .finite_domain import CheckerRun, CheckerStatus, QueryStatus
+from src.firewall.policy import AdmissionPolicyAuthority
 
 
 _SHA256 = re.compile(r"^sha256:[0-9a-f]{64}$")
@@ -34,6 +35,9 @@ _CERTIFICATE_FIELDS = frozenset(
         "issued_by",
         "gamma_hash",
         "evidence_hash",
+        "admission_policy_hash",
+        "admission_policy_approval_hash",
+        "formal_ceiling_hash",
         "level",
         "conclusion",
         "certification_scope",
@@ -54,6 +58,10 @@ _COVERAGE_FIELDS = frozenset(
         "mode",
         "declared_domain_size",
         "checked_count",
+        "result_candidates",
+        "legal_world_count",
+        "legal_worlds_hash",
+        "cartesian_assignment_bound",
         "omitted_known_candidates",
         "solver_seed_used",
     }
@@ -216,6 +224,16 @@ class IssuedLevelCertificate:
             and _canonical_hash(
                 document.get("evidence_hash"), reject_placeholder=True
             )
+            and _canonical_hash(
+                document.get("admission_policy_hash"), reject_placeholder=True
+            )
+            and _canonical_hash(
+                document.get("admission_policy_approval_hash"),
+                reject_placeholder=True,
+            )
+            and _canonical_hash(
+                document.get("formal_ceiling_hash"), reject_placeholder=True
+            )
             and _identifier(document.get("level"))
             and set(conclusion) == {"entity_id", "entity_type"}
             and _identifier(conclusion.get("entity_id"))
@@ -236,6 +254,21 @@ class IssuedLevelCertificate:
             and not isinstance(declared, bool)
             and declared > 0
             and coverage.get("checked_count") == coverage.get("declared_domain_size")
+            and self._valid_string_list(
+                coverage.get("result_candidates"), require_nonempty=True
+            )
+            and len(coverage.get("result_candidates")) == declared
+            and isinstance(coverage.get("legal_world_count"), int)
+            and not isinstance(coverage.get("legal_world_count"), bool)
+            and coverage.get("legal_world_count") > 0
+            and _canonical_hash(
+                coverage.get("legal_worlds_hash"), reject_placeholder=True
+            )
+            and isinstance(coverage.get("cartesian_assignment_bound"), int)
+            and not isinstance(coverage.get("cartesian_assignment_bound"), bool)
+            and coverage.get("cartesian_assignment_bound") > 0
+            and checker_run.alternative.assignments_examined
+            == coverage.get("cartesian_assignment_bound")
             and coverage.get("omitted_known_candidates") == []
             and isinstance(coverage.get("solver_seed_used"), bool)
             and all(
@@ -269,7 +302,14 @@ class IssuedLevelCertificate:
             == conclusion.get("entity_id")
         )
 
-    def binds_artifacts(self, gamma_hash: object, evidence_hash: object) -> bool:
+    def binds_artifacts(
+        self,
+        gamma_hash: object,
+        evidence_hash: object,
+        admission_policy_hash: object,
+        admission_policy_approval_hash: object,
+        formal_ceiling_hash: object,
+    ) -> bool:
         try:
             document = self.to_dict()
         except (json.JSONDecodeError, TypeError):
@@ -278,8 +318,18 @@ class IssuedLevelCertificate:
             isinstance(document, dict)
             and _canonical_hash(gamma_hash, reject_placeholder=True)
             and _canonical_hash(evidence_hash, reject_placeholder=True)
+            and _canonical_hash(admission_policy_hash, reject_placeholder=True)
+            and _canonical_hash(
+                admission_policy_approval_hash, reject_placeholder=True
+            )
+            and _canonical_hash(formal_ceiling_hash, reject_placeholder=True)
             and document.get("gamma_hash") == gamma_hash
             and document.get("evidence_hash") == evidence_hash
+            and document.get("admission_policy_hash")
+            == admission_policy_hash
+            and document.get("admission_policy_approval_hash")
+            == admission_policy_approval_hash
+            and document.get("formal_ceiling_hash") == formal_ceiling_hash
         )
 
     @staticmethod
@@ -316,6 +366,8 @@ class LevelCertificateIssuer:
         created_at: str,
         requested_issuer: str,
         formal_artifacts_verified: bool,
+        admission_policy_authority: AdmissionPolicyAuthority,
+        formal_ceiling: object,
     ) -> IssuedLevelCertificate:
         self._validate_checker_run(checker_run, level, conclusion)
         if requested_issuer != "kernel_checker":
@@ -333,6 +385,41 @@ class LevelCertificateIssuer:
             _reject(
                 "P9-CERT-005_FORMAL_HASHES_NOT_VERIFIED",
                 "formal non-placeholder artifact hashes are required",
+            )
+        if not isinstance(admission_policy_authority, AdmissionPolicyAuthority):
+            _reject(
+                "P9-CERT-007_ADMISSION_POLICY_UNVERIFIED",
+                "a verified and approved admission policy is required",
+            )
+        from src.scope.formal_ceiling import FormalCeilingAssessment
+
+        if not isinstance(formal_ceiling, FormalCeilingAssessment):
+            _reject(
+                "P9-CERT-008_FORMAL_CEILING_UNVERIFIED",
+                "certificate requires an exact verified formal ceiling",
+            )
+        ceiling_report = formal_ceiling.to_dict()
+        if not (
+            formal_ceiling.verified
+            and ceiling_report is not None
+            and formal_ceiling.binds(
+                gamma_hash=gamma_hash,
+                catalog_hash=ceiling_report.get("catalog_hash"),
+                target_level=level,
+                declared_domain_size=coverage["declared_domain_size"],
+                result_candidates=coverage["result_candidates"],
+                legal_world_count=coverage["legal_world_count"],
+                legal_worlds_hash=coverage["legal_worlds_hash"],
+                cartesian_assignment_bound=coverage[
+                    "cartesian_assignment_bound"
+                ],
+            )
+            and checker_run.alternative.assignments_examined
+            == ceiling_report.get("cartesian_assignment_bound")
+        ):
+            _reject(
+                "P9-CERT-008_FORMAL_CEILING_UNVERIFIED",
+                "certificate requires an exact verified formal ceiling",
             )
 
         if not all(_identifier(value) for value in (certificate_id, case_id, level)):
@@ -377,6 +464,11 @@ class LevelCertificateIssuer:
             "issued_by": "kernel_checker",
             "gamma_hash": gamma_hash,
             "evidence_hash": evidence_hash,
+            "admission_policy_hash": admission_policy_authority.policy_hash,
+            "admission_policy_approval_hash": (
+                admission_policy_authority.approval_manifest_hash
+            ),
+            "formal_ceiling_hash": formal_ceiling.ceiling_hash,
             "level": level,
             "conclusion": {
                 "entity_id": entity["entity_id"],
@@ -446,6 +538,10 @@ class LevelCertificateIssuer:
             )
         declared = coverage.get("declared_domain_size")
         checked = coverage.get("checked_count")
+        result_candidates = coverage.get("result_candidates")
+        legal_world_count = coverage.get("legal_world_count")
+        legal_worlds_hash = coverage.get("legal_worlds_hash")
+        assignment_bound = coverage.get("cartesian_assignment_bound")
         omitted = coverage.get("omitted_known_candidates")
         if (
             coverage.get("level") != level
@@ -455,6 +551,23 @@ class LevelCertificateIssuer:
             or isinstance(checked, bool)
             or not isinstance(checked, int)
             or checked != declared
+            or not isinstance(result_candidates, Sequence)
+            or isinstance(result_candidates, (str, bytes))
+            or len(result_candidates) != declared
+            or any(
+                not isinstance(candidate, str) or not candidate
+                for candidate in result_candidates
+            )
+            or len(set(result_candidates)) != len(result_candidates)
+            or isinstance(legal_world_count, bool)
+            or not isinstance(legal_world_count, int)
+            or legal_world_count <= 0
+            or not _canonical_hash(
+                legal_worlds_hash, reject_placeholder=True
+            )
+            or isinstance(assignment_bound, bool)
+            or not isinstance(assignment_bound, int)
+            or assignment_bound <= 0
             or omitted != []
             or not isinstance(coverage.get("solver_seed_used"), bool)
         ):
@@ -467,6 +580,10 @@ class LevelCertificateIssuer:
             "mode": "exhaustive",
             "declared_domain_size": declared,
             "checked_count": checked,
+            "result_candidates": list(result_candidates),
+            "legal_world_count": legal_world_count,
+            "legal_worlds_hash": legal_worlds_hash,
+            "cartesian_assignment_bound": assignment_bound,
             "omitted_known_candidates": [],
             "solver_seed_used": coverage["solver_seed_used"],
         }

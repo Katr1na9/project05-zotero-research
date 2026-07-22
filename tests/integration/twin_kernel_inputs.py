@@ -18,6 +18,7 @@ from src.scope.finite_problem import (
     CompiledFiniteProblem,
     EvidenceGammaFiniteProblemCompiler,
 )
+from tests.unit.policy_test_helpers import approved_policy_authority
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -95,12 +96,14 @@ def twin_observation_adapter_context() -> ObservationClaimAdapterContext:
         source_family="identity",
         source_schema="kernel.action-observation.v0.8",
         admissible_levels=("initial_foothold",),
+        certification_basis_rule_id="A001",
     )
     cti = ObservationClaimActionBinding(
         predicate="action_observation",
         source_family="external_intel",
         source_schema="kernel.action-observation.v0.8",
         admissible_levels=("initial_foothold",),
+        certification_basis_rule_id="A001",
     )
     return ObservationClaimAdapterContext(
         source_id="action_observations.jsonl",
@@ -116,10 +119,9 @@ def twin_observation_adapter_context() -> ObservationClaimAdapterContext:
             "query_auth_empty_control": identity,
             "analyst_cti_lookup": cti,
         },
-        certification_basis_rule_id="A-P5-OBSERVATION",
         certification_policy_hash=(
-            "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90"
-            "fc89b5dc2c5e2f0edafca32c6805399a"
+            "sha256:8f34a5e99c2cba3d79304667acd5bb01"
+            "0492af74b8b99425352375a796825671"
         ),
         parser_id="p5-observation-adapter",
         parser_version="0.8.0",
@@ -138,35 +140,36 @@ def twin_observation_admission_config(*, admit_observation_ids=()):
     event_rows = {
         "OBS-001": AdmissionAuditMetadata(
             event_id="TWIN-P11-ADMIT-001",
-            rule_id="P7-FW-ADMISSION",
+            rule_id="A001",
             timestamp="2026-01-01T10:16:00Z",
         ),
         "OBS-002": AdmissionAuditMetadata(
             event_id="TWIN-P11-ADMIT-002",
-            rule_id="P7-FW-ADMISSION",
+            rule_id="A001",
             timestamp="2026-01-01T10:16:01Z",
         ),
         "OBS-003": AdmissionAuditMetadata(
             event_id="TWIN-P11-ADMIT-003",
-            rule_id="P7-FW-ADMISSION",
+            rule_id="A001",
             timestamp="2026-01-01T10:16:02Z",
         ),
         "OBS-004": AdmissionAuditMetadata(
             event_id="TWIN-P11-ADMIT-004",
-            rule_id="P7-FW-ADMISSION",
+            rule_id="A001",
             timestamp="2026-01-01T10:16:03Z",
         ),
     }
     requested = tuple(admit_observation_ids)
     return ObservationAdmissionConfig(
         adapter_context=twin_observation_adapter_context(),
+        admission_policy_authority=approved_policy_authority(),
         admit_observation_ids=requested,
         audit_metadata={
             observation_id: event_rows[observation_id]
             for observation_id in requested
         },
         lifecycle_policy_hash=(
-            "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90"
-            "fc89b5dc2c5e2f0edafca32c6805399a"
+            "sha256:8f34a5e99c2cba3d79304667acd5bb01"
+            "0492af74b8b99425352375a796825671"
         ),
     )

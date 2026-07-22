@@ -72,7 +72,11 @@ class TwinSystemStateP9IntegrationTests(unittest.TestCase):
             ]
         )
         recertification = RecertificationOrchestrator().recertify(
-            self.artifact, origin_hit, self.catalog
+            self.artifact,
+            origin_hit,
+            self.catalog,
+            self.inputs.compiled,
+            predicate_projections=self.inputs.predicate_projections,
         )
 
         decision = state_api.SystemStateDeriver().derive(

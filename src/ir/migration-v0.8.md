@@ -12,6 +12,12 @@ epistemic role, authority, admission, promotion, confidence, rule trace and
 lifecycle state. The request may contain a Kernel-supplied pointer as source
 context, but the compiler response may neither copy nor manufacture it.
 
+The controlling ownership contract is
+`contracts/compiler-kernel-boundary-v0.8.md`. P11 observation adaptation is a
+Kernel-owned deterministic adapter, not a compiler privilege. Each action
+binding carries its own `certification_basis_rule_id`; there is no batch-wide
+fallback rule and the compiler cannot set this field.
+
 ## Required migration behavior
 
 - 旧 Claim/Action 数据不得静默适配；必须由显式、可测试且带版本的 adapter 转换。

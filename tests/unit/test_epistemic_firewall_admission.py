@@ -2,6 +2,11 @@ import copy
 import importlib
 import unittest
 
+from tests.unit.policy_test_helpers import approved_policy_authority
+
+
+POLICY_AUTHORITY = approved_policy_authority()
+
 
 try:
     firewall_api = importlib.import_module("src.firewall.admission")
@@ -25,8 +30,8 @@ def candidate_claim():
         "certification_authority": {
             "allowed": True,
             "levels": ["initial_foothold"],
-            "basis_rule_id": "A-OBS-001",
-            "policy_hash": "sha256:" + "1" * 64,
+            "basis_rule_id": "A001",
+            "policy_hash": POLICY_AUTHORITY.policy_hash,
         },
         "source_family": "identity",
         "source_schema": "kernel.action-observation.v0.8",
@@ -79,7 +84,7 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         claim = candidate_claim()
         original = copy.deepcopy(claim)
 
-        decision = firewall_api.ECaseAdmissionFirewall().evaluate(
+        decision = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY).evaluate(
             claim, observation()
         )
 
@@ -106,7 +111,7 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
             "policy_hash": None,
         }
 
-        decision = firewall_api.ECaseAdmissionFirewall().evaluate(
+        decision = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY).evaluate(
             claim, observation()
         )
 
@@ -126,7 +131,7 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         claim["pointer"]["record_id"] = "OBS-OTHER"
         claim["object"]["literal"] = "EXTERNAL"
 
-        decision = firewall_api.ECaseAdmissionFirewall().evaluate(
+        decision = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY).evaluate(
             claim, observation()
         )
 
@@ -138,7 +143,7 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         claim = candidate_claim()
         claim["pointer"]["content_hash"] = None
 
-        decision = firewall_api.ECaseAdmissionFirewall().evaluate(
+        decision = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY).evaluate(
             claim, observation()
         )
 
@@ -146,7 +151,7 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         self.assertEqual(("FW-006_POINTER_INCOMPLETE",), decision.reason_codes)
 
     def test_missing_context_and_unsupported_kind_have_distinct_codes(self):
-        firewall = firewall_api.ECaseAdmissionFirewall()
+        firewall = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY)
 
         missing = firewall.evaluate(candidate_claim(), None)
         unsupported = firewall.evaluate(
@@ -162,7 +167,7 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         self.assertNotEqual(missing.reason_codes, unsupported.reason_codes)
 
     def test_control_heuristic_incomplete_and_not_eligible_observations_deny(self):
-        firewall = firewall_api.ECaseAdmissionFirewall()
+        firewall = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY)
         cases = (
             (
                 observation(
@@ -204,13 +209,28 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         claim["promotion_status"] = "promoted"
         claim["promotion_event_id"] = "PROM-ILLEGAL"
 
-        decision = firewall_api.ECaseAdmissionFirewall().evaluate(
+        decision = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY).evaluate(
             claim, observation()
         )
 
         self.assertFalse(decision.allowed)
         self.assertIn("FW-001_ORACLE_OR_HIDDEN_FIELD", decision.reason_codes)
         self.assertIn("FW-009_PROMOTION_OUT_OF_SCOPE", decision.reason_codes)
+
+    def test_missing_or_mismatched_policy_authority_fails_closed(self):
+        missing = firewall_api.ECaseAdmissionFirewall().evaluate(
+            candidate_claim(), observation()
+        )
+        self.assertFalse(missing.allowed)
+        self.assertIn("FW-018_POLICY_AUTHORITY_UNVERIFIED", missing.reason_codes)
+
+        wrong = candidate_claim()
+        wrong["certification_authority"]["policy_hash"] = "sha256:" + "9" * 64
+        mismatch = firewall_api.ECaseAdmissionFirewall(POLICY_AUTHORITY).evaluate(
+            wrong, observation()
+        )
+        self.assertFalse(mismatch.allowed)
+        self.assertIn("FW-019_POLICY_BINDING_MISMATCH", mismatch.reason_codes)
 
 
 if __name__ == "__main__":

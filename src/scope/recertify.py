@@ -1,11 +1,13 @@
 """P6 deterministic world elimination and candidate recertification.
 
-Eligible P5 observations filter the finite support/alternative world table in
-a counterexample artifact. The surviving target values become an additional
-constraint on a new ``FiniteDomainProblem`` and the existing P1 Checker is run
-again. If ambiguity remains, the existing P2 MinDiff is rerun without
-inventing predicate projections. This module issues no certificate, changes
-no admission or authority, and emits no system state or STOP decision.
+Eligible P5 observations filter the complete legal-world table emitted by the
+frozen Gamma/evidence compiler.  The counterexample support/alternative pair
+is only an auditable witness projection; it is never treated as exhaustive.
+The surviving assignments constrain the original ``FiniteDomainProblem`` and
+the existing P1 Checker is run again. If ambiguity remains, the existing P2
+MinDiff is rerun without inventing predicate projections. This module issues
+no certificate, changes no admission or authority, and emits no system state
+or STOP decision.
 """
 
 from __future__ import annotations
@@ -23,6 +25,10 @@ from src.counterexample.mindiff import (
     FiniteWitnessMinDiff,
     MinDiffResult,
     PredicateProjectionContract,
+)
+from src.scope.finite_problem import (
+    CompiledFiniteProblem,
+    compiled_legal_worlds_hash,
 )
 
 
@@ -60,6 +66,7 @@ def _string_sequence(
 class FiniteArtifactWorld:
     world_id: str
     target_result: str
+    assignments: Mapping[str, object]
     predicates: frozenset[str]
 
 
@@ -94,6 +101,8 @@ class RecertificationResult:
     eliminated_world_ids: tuple[str, ...]
     applied_observation_ids: tuple[str, ...]
     ignored_observations: tuple[IgnoredObservation, ...]
+    legal_world_count: int
+    legal_worlds_hash: str
 
     def to_outcome_fields(self) -> dict[str, object]:
         """Return recertification fields without certificate or system state."""
@@ -108,6 +117,8 @@ class RecertificationResult:
                     observation.to_dict()
                     for observation in self.ignored_observations
                 ],
+                "legal_world_count": self.legal_world_count,
+                "legal_worlds_hash": self.legal_worlds_hash,
             }
         )
         if self.mindiff_result is not None:
@@ -124,18 +135,19 @@ class RecertificationResult:
 
 
 class DeterministicWorldEliminator:
-    """Filter the frozen world pair using eligible deterministic observations."""
+    """Filter every compiler-declared legal world using eligible observations."""
 
     def eliminate(
         self,
         counterexample_artifact: Mapping[str, object],
         observations: Sequence[Mapping[str, object]],
         action_catalog: Mapping[str, object],
+        compiled_problem: CompiledFiniteProblem,
     ) -> WorldEliminationResult:
         artifact = _required_mapping(counterexample_artifact, "counterexample")
         if artifact.get("checker_status") != "COUNTEREXAMPLE_FOUND":
             raise ValueError("world elimination requires COUNTEREXAMPLE_FOUND")
-        worlds = self._artifact_worlds(artifact)
+        worlds = self._compiled_worlds(artifact, compiled_problem)
         actions = self._catalog_actions(action_catalog)
         critical_absence = frozenset(
             _string_sequence(
@@ -325,17 +337,22 @@ class DeterministicWorldEliminator:
         return "absent"
 
     @staticmethod
-    def _artifact_worlds(
+    def _compiled_worlds(
         artifact: Mapping[str, object],
+        compiled: CompiledFiniteProblem,
     ) -> tuple[FiniteArtifactWorld, ...]:
-        shared = frozenset(
-            _string_sequence(
-                artifact.get("shared_predicates", ()),
-                "counterexample.shared_predicates",
-            )
+        if not isinstance(compiled, CompiledFiniteProblem):
+            raise ValueError("compiled_problem must be a CompiledFiniteProblem")
+        target_level = _required_string(
+            artifact.get("target_level"), "counterexample.target_level"
         )
-        worlds: list[FiniteArtifactWorld] = []
-        world_ids: set[str] = set()
+        if (
+            compiled.target_variable != target_level
+            or compiled.gamma_hash != artifact.get("gamma_hash")
+        ):
+            raise ValueError("compiled problem does not bind counterexample scope")
+
+        artifact_worlds: dict[str, tuple[str, frozenset[str]]] = {}
         for role in ("support_world", "alternative_world"):
             raw_world = _required_mapping(
                 artifact.get(role), f"counterexample.{role}"
@@ -343,9 +360,6 @@ class DeterministicWorldEliminator:
             world_id = _required_string(
                 raw_world.get("world_id"), f"counterexample.{role}.world_id"
             )
-            if world_id in world_ids:
-                raise ValueError(f"duplicate artifact world ID: {world_id!r}")
-            world_ids.add(world_id)
             target_result = _required_mapping(
                 raw_world.get("target_result"),
                 f"counterexample.{role}.target_result",
@@ -361,9 +375,53 @@ class DeterministicWorldEliminator:
                     nonempty=True,
                 )
             )
-            worlds.append(
-                FiniteArtifactWorld(world_id, target_id, predicates | shared)
+            if world_id in artifact_worlds:
+                raise ValueError(f"duplicate artifact world ID: {world_id!r}")
+            artifact_worlds[world_id] = (target_id, predicates)
+
+        worlds: list[FiniteArtifactWorld] = []
+        world_ids: set[str] = set()
+        variables = tuple(compiled.problem.domains)
+        for declared in compiled.legal_worlds:
+            world_id = _required_string(declared.world_id, "compiled world_id")
+            if world_id in world_ids:
+                raise ValueError(f"duplicate compiled world ID: {world_id!r}")
+            world_ids.add(world_id)
+            target_id = _required_string(
+                declared.assignments.get(target_level),
+                f"compiled world {world_id!r}.{target_level}",
             )
+            if set(declared.assignments) != set(variables):
+                raise ValueError("compiled world assignments are incomplete")
+            predicates = frozenset(
+                _string_sequence(
+                    declared.predicates,
+                    f"compiled world {world_id!r}.predicates",
+                    nonempty=False,
+                )
+            )
+            worlds.append(
+                FiniteArtifactWorld(
+                    world_id,
+                    target_id,
+                    declared.assignments,
+                    predicates,
+                )
+            )
+        for world_id, (target_id, predicates) in artifact_worlds.items():
+            matches = tuple(world for world in worlds if world.world_id == world_id)
+            if len(matches) != 1:
+                raise ValueError(
+                    f"artifact witness {world_id!r} is absent from compiled worlds"
+                )
+            compiled_world = matches[0]
+            if (
+                compiled_world.target_result != target_id
+                or not predicates.issubset(compiled_world.predicates)
+            ):
+                raise ValueError(
+                    f"artifact witness {world_id!r} disagrees with compiled world"
+                )
         return tuple(worlds)
 
     @staticmethod
@@ -402,10 +460,13 @@ class RecertificationOrchestrator:
         counterexample_artifact: Mapping[str, object],
         observations: Sequence[Mapping[str, object]],
         action_catalog: Mapping[str, object],
+        compiled_problem: CompiledFiniteProblem,
+        *,
+        predicate_projections: PredicateProjectionContract | None = None,
     ) -> RecertificationResult:
         artifact = _required_mapping(counterexample_artifact, "counterexample")
         elimination = self._eliminator.eliminate(
-            artifact, observations, action_catalog
+            artifact, observations, action_catalog, compiled_problem
         )
         target_level = _required_string(
             artifact.get("target_level"), "counterexample.target_level"
@@ -417,18 +478,18 @@ class RecertificationOrchestrator:
             candidate_ref.get("entity_id"), "counterexample.candidate_q.entity_id"
         )
 
-        finite_candidates = tuple(
-            dict.fromkeys(world.target_result for world in elimination.all_worlds)
+        variables = tuple(compiled_problem.problem.domains)
+        surviving_assignments = frozenset(
+            tuple(world.assignments[variable] for variable in variables)
+            for world in elimination.surviving_worlds
         )
-        surviving_targets = frozenset(
-            world.target_result for world in elimination.surviving_worlds
-        )
+
+        def survived(world: Mapping[str, object]) -> bool:
+            return tuple(world[variable] for variable in variables) in surviving_assignments
+
         problem = FiniteDomainProblem(
-            domains={target_level: finite_candidates},
-            constraints=(
-                lambda world, allowed=surviving_targets: world[target_level]
-                in allowed,
-            ),
+            domains=compiled_problem.problem.domains,
+            constraints=compiled_problem.problem.constraints + (survived,),
         )
         checker_run = FiniteDomainChecker().check_candidate(
             problem,
@@ -437,12 +498,15 @@ class RecertificationOrchestrator:
         )
         mindiff_result = None
         if checker_run.checker_status is CheckerStatus.COUNTEREXAMPLE_FOUND:
+            projections = predicate_projections
+            if projections is None:
+                projections = PredicateProjectionContract.empty(problem.domains)
+            else:
+                projections.validate_for_variables(problem.domains)
             mindiff_result = FiniteWitnessMinDiff().compare(
                 checker_run,
                 target_variable=target_level,
-                predicate_projections=PredicateProjectionContract.empty(
-                    problem.domains
-                ),
+                predicate_projections=projections,
             )
 
         return RecertificationResult(
@@ -456,4 +520,6 @@ class RecertificationOrchestrator:
             ),
             applied_observation_ids=elimination.applied_observation_ids,
             ignored_observations=elimination.ignored_observations,
+            legal_world_count=len(compiled_problem.legal_worlds),
+            legal_worlds_hash=compiled_legal_worlds_hash(compiled_problem),
         )

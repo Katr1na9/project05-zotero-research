@@ -3,7 +3,7 @@
 Status: **APPROVED**
 
 - Contract ID: `gamma-hash-v0.8`
-- Contract version: `0.8.0`
+- Contract version: `0.8.2`
 - Recorded: `2026-07-22`
 - Approved: `2026-07-22` by explicit user ruling
 
@@ -76,8 +76,10 @@ The P0 integration test currently binds these canonical values:
 
 | Document | Canonical hash |
 |---|---|
-| `gamma-kernel-v0.8.yaml` | `sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a` |
+| `gamma-kernel-v0.8.yaml` | `sha256:0bad34b682c0b4f79b2423a241880932d655b886ad539d90d53e37917cbf41d2` |
 | `action-catalog-kernel-v0.8.yaml` | `sha256:0cd3ee1331aef81ca955e973ae9bc30c364acd2a2f6c34247438f4dd94add8eb` |
+| `gamma-supply-chain-kernel-v0.8.yaml` | `sha256:c9131108991f4894a09d65ff9e47f5fafdb6eadb53f5bc51e0e5e6093d16076e` |
+| `action-catalog-supply-chain-kernel-v0.8.yaml` | `sha256:d6f67e2c74a406f729384a26a65905752f3e425ba8cc74b6702760d9d43f0dd5` |
 
 Replay coverage is located in
 `tests/integration/test_twin_counterexample_fixture.py`. Passing that test

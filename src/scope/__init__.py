@@ -5,7 +5,9 @@ exposed from this package.
 """
 
 from .finite_problem import (
+    CompiledLegalWorld,
     CompiledFiniteProblem,
+    DeclarativeFiniteWorldCompiler,
     EvidenceGammaFiniteProblemCompiler,
 )
 
@@ -23,11 +25,21 @@ from .system_state import (
     SystemStateDeriver,
     SystemStatus,
 )
+from .formal_ceiling import (
+    CeilingStatus,
+    FormalCeilingAssessment,
+    FormalCeilingVerifier,
+)
 
 __all__ = [
     "CompiledFiniteProblem",
+    "CompiledLegalWorld",
+    "CeilingStatus",
+    "DeclarativeFiniteWorldCompiler",
     "DeterministicWorldEliminator",
     "EvidenceGammaFiniteProblemCompiler",
+    "FormalCeilingAssessment",
+    "FormalCeilingVerifier",
     "FiniteArtifactWorld",
     "IgnoredObservation",
     "MAIN_STATE_ORDER",

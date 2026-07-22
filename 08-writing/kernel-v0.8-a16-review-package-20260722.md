@@ -1,17 +1,56 @@
 # Kernel v0.8 A16 人工评审包
 
+## Re-review supplement status (2026-07-22, uncommitted)
+
+This supplement addresses the NO-GO hard blocks but does not make the A16
+decision. The current Git index contains exactly 70 Kernel/fixture/test/review
+paths; forbidden LLM/training/Part B/`09-experiments` and local-junk scans
+return zero staged matches. Current evidence:
+
+| Required item | Current evidence | Re-review state |
+|---|---|---|
+| SI-010 policy authority | exact-hash APPROVED manifest, regenerated Γ/fixture/ceiling bindings, positive replay and negative tamper tests | **CLOSED; READY FOR RE-REVIEW** |
+| single Twin / toy Gamma | structurally different three-world supply-chain Γ/fixture, A003/A004 admission, full Part A path | engineering evidence complete |
+| formal ceiling | definition, schema, verifier, two frozen replay reports, outside-domain/resource/tamper fail-closed tests | engineering evidence complete |
+| 81-file review | `kernel-v0.8-81-file-diff-audit-20260722.md`, including two findings and remediations | engineering record complete; human acceptance pending |
+| SI-003/006/007/008 | authority/interface contracts plus explicit non-blocking scope exclusions | disposition recorded |
+| full regression | `python -m unittest discover -s tests -p "test_*.py" -v` | `131/131 PASS` |
+
+Material review findings were not waived: P6 previously treated two witnesses
+as an exhaustive world table, and P9 trusted caller-declared coverage counts.
+The current supplement fixes both and adds three-world and coverage-tamper
+regressions. Frozen ceiling reports now replay exactly from Γ/compiler/catalog.
+
+Current decision remains:
+
+```text
+A16: NOT PASSED / NO-GO
+Push: NO
+PR: NO
+Part B: CLOSED
+CERTIFIED_STOP authority: NOT ESTABLISHED
+```
+
+The user approved policy hash
+`sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671`.
+The APPROVED manifest hash is
+`sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b`.
+After final regression, the package is ready for a new human A16 ruling; no
+status above changes until that separate ruling occurs.
+
 **日期：** 2026-07-22
 **分支：** `feat/kernel-v0.8`
 **代码评审基线：** `d156b68`
 **代码评审 tip：** `5e9c0ba`
-**包状态：** `READY_FOR_HUMAN_REVIEW`
-**A16 decision：** `PENDING`
+**包状态：** `HUMAN_GATE_REVIEWED_NO_GO`（81 文件逐项 diff 审阅未完成）
+**A16 decision：** `NOT PASSED`
 **操作解释：** `NO-GO`
 **Part B authority：** `CLOSED`
+**Push / PR：** `NOT AUTHORIZED`
 
-本文件只整理 A16 所需的 diff、测试证据和已知限制，不裁定 Go，不授予 Part B、
-Planner/M3*、LLM、训练、push、PR、merge 或 release 权限。自动测试通过不等于
-A16 条件已全部满足。
+本文件最初只整理 A16 所需的 diff、测试证据和已知限制。用户于 2026-07-22
+已完成人工裁定并维持 NO-GO；下文 §8 记录该裁定与复审前硬阻塞项。自动测试
+通过不等于 A16 条件已全部满足。
 
 ## 1. 评审范围与复现入口
 
@@ -36,8 +75,9 @@ git diff --name-status d156b68..5e9c0ba
 | `tests/` | 46 | Twin fixture、unit/integration 合同和负例 |
 | **合计** | **81** | |
 
-本评审包及同步修改的状态文档属于 `5e9c0ba` 之后的文档 delta，应作为独立
-working-tree diff 审阅；它们不改变代码 tip，也不构成 A16 decision。
+预裁定评审包及状态文档已在 `c3173ae` 收口；当前 working-tree 文档 delta
+记录用户随后作出的人工 A16 决定。该文档 delta 不改变代码 tip；A16 decision
+来自用户裁定，而不是来自测试、代码提交或文档提交本身。
 
 ## 2. 提交清单
 
@@ -91,8 +131,8 @@ Planner/M3*、Part B、LLM、训练或 `09-experiments`。
 | Python 编译 | `python -m compileall -q src tests` | passed | 语法/import 可编译 |
 | 补丁格式 | `git diff --check`、`git diff --cached --check` | passed | 空白与补丁格式 |
 
-测试证明冻结合同与当前 Twin 代码一致；它不证明外部有效性、真实环境 ceiling、
-持久化审计、正式 policy authority 或 Part B 性能。
+该表是历史 P0–P11 快照。当前 supplement 已增加第二 Γ、形式 ceiling 与正式
+policy authority；测试仍不证明外部有效性、持久化审计或 Part B 性能。
 
 ## 5. A16 条件证据映射
 
@@ -110,10 +150,10 @@ Planner/M3*、Part B、LLM、训练或 `09-experiments`。
 | zero-hit 合法性 | P6 与 fixture tests | 有自动证据 |
 | No Evidence Laundering | P7/P8/P11 tests | 有自动证据 |
 | Checker 与 LLM 权限分离 | candidate-only schema/interface tests | Kernel 侧有证据；跨轨规范性仍见 SI-006 |
-| Γ/catalog 预冻 hash | canonical hash contract + fixture replay | Γ/catalog 有证据；policy artifact 仍见 SI-010 |
-| 一屏反例与 MinDiff | P2/P3 Twin tests | 单一 Twin 有证据 |
-| 真实形式 ceiling | 仅冻结有限 Twin 与 formal catalog eligibility | **尚不能据此认定真实 ceiling** |
-| 所有 Go 条件均自动测试 | 现有 113 项覆盖 Kernel 合同 | **SI-010、真实 ceiling、单 Twin 外推仍未闭合** |
+| Γ/catalog/policy hash | canonical hash contracts + fixture replay | policy/manifest 已 exact-hash APPROVED；仍不等于 level certificate |
+| 一屏反例与 MinDiff | P2/P3 两套异构 fixture tests | 两套冻结有限域有证据 |
+| 形式 ceiling | model-relative 定义、验证器、两套可重放报告与域外 fail-closed 测试 | **冻结模型内证据完成；不外推为真实世界穷尽性** |
+| 所有 Go 条件均自动测试 | 历史 113 项；current supplement 131 项 | **工程补洞已完成；仍需人工 A16 新裁定** |
 
 因此当前只能说“工程评审材料已齐”，不能说“A16 Go 条件全过”。
 
@@ -121,12 +161,12 @@ Planner/M3*、Part B、LLM、训练或 `09-experiments`。
 
 | 项 | 当前事实 | 对 A16 的影响 |
 |---|---|---|
-| SI-003 | Appendix Γ skeleton 不具完整 schema 字段 | 规范文本仍存在层级差异，需人工确认权威解释 |
-| SI-006 | Compiler/Kernel ownership 的共享 profile 尚非规范裁定 | LLM 轨接入前仍需共享接口裁定 |
-| SI-007 | legacy M3* runtime 与确定性 Kernel 边界冲突 | 不能把当前 Kernel 结果外推为 M3* 已接入或已验证 |
-| SI-008 | 旧 M3* CSV 对 CRLF/LF 敏感 | 历史 artifact reproducibility debt 未解决 |
-| **SI-010** | 无获批 admission-policy artifact 及真实绑定 hash | **禁止正式 certification；禁止由此发 `CERTIFIED_STOP`** |
-| 单一 Twin | 当前只有一个完整 Twin 反例链 | 不足以自动消除 A16 的“玩具 Γ/外推性”担忧 |
+| SI-003 | 已由 `gamma-schema-authority-v0.8.md` 冻结完整 schema 对 Appendix skeleton 的权威关系 | 工程修复完成；不静默改写规范正文 |
+| SI-006 | 已由 `compiler-kernel-boundary-v0.8.md` 冻结 Compiler/Kernel ownership 共享接口 | Kernel 侧合同完成；LLM 轨接入仍须独立授权 |
+| SI-007 | legacy M3* runtime 与确定性 Kernel 明确作范围隔离 | 延期且不阻塞 Part A；不得声称 M3* 已接入或验证 |
+| SI-008 | 旧 M3* CSV 对 CRLF/LF 敏感且排除在本次可复现范围外 | 延期且不阻塞 Part A；历史 artifact debt 保留 |
+| **SI-010** | exact-hash policy/manifest 已批准并重绑定 | **已关闭；但单独不足以发 level certificate/`CERTIFIED_STOP`** |
+| fixture 外推边界 | 已有 endpoint 与三世界 supply-chain 两套非同构完整链 | 关闭单一 Twin 工程缺口；仍不声称广域或真实世界穷尽性 |
 | Narrow compiler | `EvidenceGammaFiniteProblemCompiler` 针对冻结 Twin 机制规则 | 不是通用规则引擎或真实广域 ceiling 证明 |
 | P11 执行覆盖 | 默认 P4/P5 实际产生 OBS-001/002；OBS-003/004 的 deny 由同一生产 adapter 在冻结 evaluator rows 上合同测试 | 不能声称默认 E2E 实际执行了 control/heuristic 动作 |
 | Runtime schema | adapter 输出经测试验证 schema-valid，但生产 adapter 内部不调用通用 JSON Schema validator | 部署边界若要求运行时验证，需新授权设计 |
@@ -139,29 +179,47 @@ P11 的 P7 allow 或 P8 admit 只表示候选 case evidence 通过当前准入/�
 
 ## 7. 人工评审检查表
 
-- [ ] 核对 15 个提交均在逐切片授权范围内；
-- [ ] 核对 81 文件总 diff，确认无 LLM、训练、Part B 或 `09-experiments` 混入；
-- [ ] 核对 P11 的 9 文件 diff，确认默认 P10 行为与 STOP gate 未改变；
-- [ ] 核对 OBS-001/002 allow/admit 与 OBS-003/004 deny 的证据边界；
-- [ ] 核对 P11 adapter 的 pointer、modality、oracle/hidden fail-closed 不变量；
-- [ ] 对 SI-003、SI-006、SI-007、SI-008、SI-010 分别作保留/修复裁定；
-- [ ] 明确判断单一 Twin 与 narrow compiler 是否触发 A16“玩具 Γ”No-Go 条款；
-- [ ] 在任何 Go 前冻结真实 admission-policy artifact/hash 及全部绑定引用；
-- [ ] 单独决定是否允许 push；
-- [ ] 单独决定是否创建 PR；
-- [ ] 若且仅若人工明确裁定 A16 Go，再另行讨论 Part B authority。
+- [x] 工程审阅记录核对 15 个提交均在逐切片授权范围内（待 A16 人工接受）；
+- [x] 工程审阅记录覆盖 81 文件总 diff，未发现 LLM、训练、Part B 或 `09-experiments` 混入（待 A16 人工接受）；
+- [x] 工程审阅记录核对 P11 diff，默认 P10 行为与 STOP gate 未改变（待 A16 人工接受）；
+- [x] 工程审阅记录核对 OBS-001/002 allow/admit 与 OBS-003/004 deny 的证据边界（待 A16 人工接受）；
+- [x] 工程审阅记录核对 P11 adapter 的 pointer、modality、oracle/hidden fail-closed 不变量（待 A16 人工接受）；
+- [x] SI-010 已由用户 exact-hash 批准关闭，绑定与负例均已复验；
+- [x] 对 SI-003、SI-006、SI-007、SI-008 分别作正式 disposition
+      （本轮修复 / 明确延期且不影响 A16 / 构成阻塞）；
+- [x] 增加第二套非同构 Γ/fixture，并把 ceiling 声明限定为冻结模型内；
+- [x] 已冻结真实 admission-policy artifact/hash 并重算全部绑定引用；
+- [x] 单独决定是否允许 push：**不允许**；
+- [x] 单独决定是否创建 PR：**不允许**；
+- [x] Part B authority：**继续 CLOSED**（仅在未来明确 A16 Go 后另议）。
 
-## 8. 当前结论
+> 注：检查表中未勾选项表示复审前仍须留下逐项书面结论；已勾选项记录本次
+> 2026-07-22 裁定结果，不表示对应工程工作已完成。
+
+## 8. 人工裁定结论（2026-07-22）
 
 ```text
+Decision: 先停着
+
+Push: NO
+PR: NO
+
+A16: NOT PASSED / NO-GO
+
+Original requirements before re-review (historical ruling; engineering response is indexed above):
+1. 冻结并批准 admission-policy artifact 与真实绑定 hash，关闭 SI-010；
+2. 补足真实形式 ceiling 证据；
+3. 关闭单一 Twin / narrow compiler 的“玩具 Γ”外推问题；
+4. 完成 15 提交、81 文件的人工 diff 审阅；
+5. 对 SI-003、SI-006、SI-007、SI-008 分别作正式裁定；
+6. 重新生成评审包并复跑完整测试矩阵。
+
+Part B: CLOSED
+CERTIFIED_STOP authority: NOT ESTABLISHED
+
 Engineering implementation: P0–P11 PRESENT
-Automated regression: 113/113 PASS
-A16 review package: READY FOR HUMAN REVIEW
-A16 decision: PENDING
-Operational interpretation: NO-GO
-Formal level certificate authority: NOT ESTABLISHED
-Part B authority: CLOSED
-Push / PR: NOT AUTHORIZED
+Automated regression at ruling time: 113/113 PASS
 ```
 
-本文件到此停止，不作 Go/No-Go 最终裁定。
+当前不应 push，也不应开 PR。上述工程补洞不自行推翻历史裁定；完整矩阵复跑后
+仍须一次新的 A16 人工复审。本裁定不授权 Part B 或任何未明确授权的后续切片。

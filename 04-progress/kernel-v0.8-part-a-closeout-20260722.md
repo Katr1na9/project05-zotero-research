@@ -1,10 +1,27 @@
 # Kernel v0.8 Part A 收口纪要
 
+## A16 补洞进度快照（2026-07-22，未提交）
+
+- 第二套非同构 Γ/fixture `TWIN-SUPPLY-CHAIN-002` 已跑通 Part A 链路；
+- 形式 ceiling 已定义、实现并冻结两套可重算报告；
+- P6 已改为对编译器输出的全部合法世界做消元，三世界回归证明不会漏掉第三世界；
+- P9 certificate coverage 已绑定候选全集、合法世界数/hash 和笛卡尔枚举上界；
+- SI-003/006 已由版本化合同修复，SI-007/008 已作明确的非阻塞范围排除；
+- 15 commits / 81 files 的工程审阅结论见
+  `08-writing/kernel-v0.8-81-file-diff-audit-20260722.md`；
+- 全量回归当前为 `131/131 PASS`。
+
+SI-010 已由用户对精确 policy hash 的明确批准关闭。Repository approval
+manifest 现为 `APPROVED`，manifest、两套 Γ、fixture 和 formal-ceiling hash
+均已重算并通过重放。该批准只建立 admission-policy authority，不签发正式
+level certificate，也不产生 `CERTIFIED_STOP`。A16 仍为
+`NOT_PASSED / NO-GO`；禁止 push/PR，Part B CLOSED。
+
 **日期：** 2026-07-22
 **分支：** `feat/kernel-v0.8`
-**本地 HEAD：** `5e9c0ba`
-**工程状态：** `PART_A_IMPLEMENTED_PENDING_A16_REVIEW`
-**A16 状态：** `PENDING_HUMAN_REVIEW`，在明确 Go 裁定前按 `NO-GO` 处理
+**本地 HEAD：** `c3173ae`
+**工程状态：** `PART_A_IMPLEMENTED_A16_NOT_PASSED`
+**A16 状态：** `NOT_PASSED` / `NO-GO`（2026-07-22 人工裁定：先停着）
 
 ## 1. 本轮结果
 
@@ -94,19 +111,21 @@ oracle/hidden 字段，也不能把 Firewall allow/admit 解释为 level certifi
 
 ## 5. 当前门禁与下一决定
 
-Part A 的**工程主链**可以视为闭合，但 A16 的**权威裁定**尚未闭合。当前只允许
-文档收口、代码评审和准备合并材料。以下事项仍需新的明确授权：
+用户于 2026-07-22 人工裁定：**先停着。** A16 **没过**（`NOT PASSED` / `NO-GO`）；
+Push **不允许**；PR **不允许**；Part B **继续 CLOSED**；`CERTIFIED_STOP` 权威
+**未建立**。
 
-1. 裁定 A16 Go / No-Go；
-2. 替换 SI-010 的 fixture policy-hash 占位并形成正式认证材料；
-3. push `feat/kernel-v0.8`；
-4. 创建 PR 或合并；
-5. 开始任何 Part B、Planner/M3*、LLM、训练或实验切片。
+工程主链（P0–P11）的历史 `113/113` 回归仍然成立，但自动证据不构成 A16 Go。
+原裁定列出的 SI-010、形式 ceiling、单 Twin、81 文件审阅记录和
+SI-003/006/007/008 disposition 已具备工程复审材料；其是否满足 A16 仍须新的
+人工裁定。
+
+**未获新的明确 A16 Go 前，不开始 Part B，不 push，不开 PR。**
 
 轨道 authority 状态以
 `08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md` 为当前入口。
-A16 的 diff 清单、测试矩阵和已知限制见
-`08-writing/kernel-v0.8-a16-review-package-20260722.md`；该评审包不构成 Go。
+A16 评审记录见
+`08-writing/kernel-v0.8-a16-review-package-20260722.md`。
 
 ## 6. 人工批准的收口债务修复
 
@@ -125,7 +144,7 @@ A16 的 diff 清单、测试矩阵和已知限制见
 本切片 RED 为 5 个预期失败；实现和迁移后全套为 105/105 passed。静态扫描确认
 Twin 集成测试中无 H1/H3 手写世界约束、无两个历史 ghost predicate 字面量。
 Γ、canonical hash、action catalog 与 fixture expected 均未修改。该切片仍等待
-人工 diff 评审，不改变 A16 `PENDING_HUMAN_REVIEW` / `NO-GO` 状态。
+81 文件人工 diff 总审阅；当前 A16 已人工裁定为 `NOT_PASSED` / `NO-GO`。
 
 ## 7. P11 observation Firewall/admit 收口
 
@@ -141,4 +160,4 @@ P11 的 RED 阶段在生产适配器不存在时按预期失败。实现后：
    权限。
 
 当前全量回归为 113/113 passed。P11 本地提交为 `5e9c0ba`；未 push、未创建 PR。
-A16 仍是 `PENDING_HUMAN_REVIEW`，操作上继续 `NO-GO`。
+A16 已裁定为 `NOT_PASSED`，操作上继续 `NO-GO`。

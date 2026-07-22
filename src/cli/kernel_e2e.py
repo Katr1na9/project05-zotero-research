@@ -12,6 +12,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from dataclasses import dataclass
+from math import prod
 import re
 from types import MappingProxyType
 
@@ -44,11 +45,16 @@ from src.firewall.lifecycle import (
     ClaimLifecycleManager,
     LifecycleTransition,
 )
+from src.firewall.policy import AdmissionPolicyAuthority
 from src.ir.observation_claim import (
     ObservationClaimAdapterContext,
     ObservationClaimIRAdapter,
 )
 from src.scope.recertify import RecertificationOrchestrator, RecertificationResult
+from src.scope.finite_problem import (
+    CompiledFiniteProblem,
+    compiled_legal_worlds_hash,
+)
 from src.scope.system_state import SystemStateDecision, SystemStateDeriver
 
 
@@ -99,6 +105,7 @@ class ObservationAdmissionConfig:
     """Opt-in P11 Firewall/admit configuration; absent means exact P10 flow."""
 
     adapter_context: ObservationClaimAdapterContext
+    admission_policy_authority: AdmissionPolicyAuthority
     lifecycle_policy_hash: str
     admit_observation_ids: Sequence[str] = ()
     audit_metadata: Mapping[str, AdmissionAuditMetadata] | None = None
@@ -108,6 +115,19 @@ class ObservationAdmissionConfig:
         if not isinstance(self.adapter_context, ObservationClaimAdapterContext):
             raise ValueError(
                 "adapter_context must be an ObservationClaimAdapterContext"
+            )
+        if not isinstance(
+            self.admission_policy_authority, AdmissionPolicyAuthority
+        ):
+            raise ValueError(
+                "admission_policy_authority must be AdmissionPolicyAuthority"
+            )
+        if (
+            self.adapter_context.certification_policy_hash
+            != self.admission_policy_authority.policy_hash
+        ):
+            raise ValueError(
+                "adapter policy hash must match verified admission authority"
             )
         admit_ids = _string_tuple(
             self.admit_observation_ids, "admit_observation_ids"
@@ -160,6 +180,8 @@ class KernelE2ERunRequest:
     level_certificate: IssuedLevelCertificate | None = None
     active_evidence_hash: str | None = None
     observation_admission: ObservationAdmissionConfig | None = None
+    formal_ceiling: object | None = None
+    compiled_problem: CompiledFiniteProblem | None = None
 
     def __post_init__(self) -> None:
         gamma = _mapping(self.gamma_contract, "gamma_contract")
@@ -193,6 +215,41 @@ class KernelE2ERunRequest:
             raise ValueError(
                 "observation_admission must be an ObservationAdmissionConfig"
             )
+        if self.formal_ceiling is not None:
+            from src.scope.formal_ceiling import FormalCeilingAssessment
+
+            compiled = self.compiled_problem
+            if not isinstance(self.formal_ceiling, FormalCeilingAssessment) or not (
+                isinstance(compiled, CompiledFiniteProblem)
+                and self.formal_ceiling.verified
+                and self.formal_ceiling.binds(
+                    gamma_hash=gamma.get("hash"),
+                    catalog_hash=catalog.get("hash"),
+                    target_level=self.target_variable,
+                    declared_domain_size=len(
+                        self.problem.domains[self.target_variable]
+                    ),
+                    result_candidates=list(
+                        self.problem.domains[self.target_variable]
+                    ),
+                    legal_world_count=len(compiled.legal_worlds),
+                    legal_worlds_hash=compiled_legal_worlds_hash(compiled),
+                    cartesian_assignment_bound=prod(
+                        len(domain) for domain in self.problem.domains.values()
+                    ),
+                )
+            ):
+                raise ValueError("formal_ceiling does not bind this E2E request")
+        if self.compiled_problem is not None:
+            compiled = self.compiled_problem
+            if not isinstance(compiled, CompiledFiniteProblem) or (
+                compiled.problem is not self.problem
+                or compiled.target_variable != self.target_variable
+                or compiled.gamma_hash != gamma.get("hash")
+            ):
+                raise ValueError(
+                    "compiled_problem does not bind the E2E problem/Gamma/target"
+                )
 
         if not isinstance(
             self.predicate_projections, PredicateProjectionContract
@@ -229,6 +286,10 @@ class KernelE2ERunRequest:
         feedback = _string_tuple(
             self.feedback_observation_ids, "feedback_observation_ids"
         )
+        if feedback and self.compiled_problem is None:
+            raise ValueError(
+                "feedback recertification requires the complete compiled legal-world table"
+            )
         object.__setattr__(
             self,
             "gamma_contract",
@@ -322,7 +383,6 @@ class DeterministicKernelE2EDriver:
         self._action_selector = DistinguishingActionSelector()
         self._executor = DeterministicObservationExecutor()
         self._observation_adapter = ObservationClaimIRAdapter()
-        self._firewall = ECaseAdmissionFirewall()
         self._recertifier = RecertificationOrchestrator()
         self._state_deriver = SystemStateDeriver()
 
@@ -374,7 +434,11 @@ class DeterministicKernelE2EDriver:
         recertification = None
         if feedback:
             recertification = self._recertifier.recertify(
-                artifact, feedback, request.action_catalog
+                artifact,
+                feedback,
+                request.action_catalog,
+                request.compiled_problem,
+                predicate_projections=request.predicate_projections,
             )
         system_state = self._state_deriver.derive(
             checker_run,
@@ -384,6 +448,17 @@ class DeterministicKernelE2EDriver:
             level_certificate=request.level_certificate,
             active_gamma_hash=request.gamma_contract["hash"],
             active_evidence_hash=request.active_evidence_hash,
+            active_admission_policy_hash=request.gamma_contract[
+                "admission_policy"
+            ].get("policy_hash"),
+            active_admission_policy_approval_hash=request.gamma_contract[
+                "admission_policy"
+            ].get("approval_manifest_hash"),
+            active_formal_ceiling_hash=(
+                request.formal_ceiling.ceiling_hash
+                if request.formal_ceiling is not None
+                else None
+            ),
         )
         return KernelE2ERunResult(
             checker_run=checker_run,
@@ -431,8 +506,9 @@ class DeterministicKernelE2EDriver:
                 + ", ".join(missing)
             )
 
+        firewall = ECaseAdmissionFirewall(config.admission_policy_authority)
         decisions = tuple(
-            self._firewall.evaluate(
+            firewall.evaluate(
                 claim,
                 observations_by_id[claim["pointer"]["record_id"]],
             )

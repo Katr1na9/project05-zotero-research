@@ -52,6 +52,7 @@ def twin_request(*, feedback_observation_ids=(), observation_admission=None):
         execution_tables=tables,
         feedback_observation_ids=feedback_observation_ids,
         observation_admission=observation_admission,
+        compiled_problem=inputs.compiled,
     )
 
 

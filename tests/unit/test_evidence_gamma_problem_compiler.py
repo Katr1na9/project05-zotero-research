@@ -2,6 +2,7 @@ import copy
 import unittest
 
 from src.checker.finite_domain import CheckerStatus, FiniteDomainChecker
+from src.ir.canonical_hash import canonical_document_hash
 
 
 try:
@@ -11,7 +12,7 @@ except (ImportError, ModuleNotFoundError):
 
 
 def gamma_contract():
-    return {
+    gamma = {
         "schema_version": "0.8.0",
         "attribution_levels": ["entry_host"],
         "result_domains": {
@@ -27,6 +28,8 @@ def gamma_contract():
             "lateral_movement_requires_prior_compromise",
         ],
     }
+    gamma["hash"] = canonical_document_hash(gamma)
+    return gamma
 
 
 def admitted_claim(claim_id, predicate, host):

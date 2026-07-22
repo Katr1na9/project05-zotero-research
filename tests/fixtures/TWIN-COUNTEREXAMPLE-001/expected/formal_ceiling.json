@@ -1,0 +1,49 @@
+{
+  "cartesian_assignment_bound": 4,
+  "catalog_hash": "sha256:0cd3ee1331aef81ca955e973ae9bc30c364acd2a2f6c34247438f4dd94add8eb",
+  "ceiling_id": "gamma-kernel-v0.8:initial_foothold:formal-ceiling-v0.8",
+  "compilation_profile": "evidence_bound_initial_foothold_v0.8",
+  "deterministic_observable_ids": [
+    "kerberos_auth",
+    "logon_origin",
+    "process_execution",
+    "historical_auth_origin"
+  ],
+  "excluded_action_reasons": {
+    "analyst_cti_lookup": "NO_OBSERVATION_MODEL",
+    "query_auth_H3_replay": "NO_WORLD_ELIMINATION_RULE",
+    "query_auth_empty_control": "NO_WORLD_ELIMINATION_RULE",
+    "query_network_summary_H1_H3": "NO_WORLD_ELIMINATION_RULE"
+  },
+  "formal_action_ids": [
+    "query_auth_H1_1000_1015",
+    "query_logon_origin_H3",
+    "query_endpoint_process_H1",
+    "acquire_identity_archive_H3"
+  ],
+  "gamma_hash": "sha256:0bad34b682c0b4f79b2423a241880932d655b886ad539d90d53e37917cbf41d2",
+  "guarantees": [
+    "all declared finite assignments enumerated",
+    "all declared result candidates represented by legal worlds",
+    "formal actions have deterministic observation models and elimination rules",
+    "resource exhaustion and timeout are not UNSAT"
+  ],
+  "hash": "sha256:b774c330b1df0d3e7bfabd9ada03dca0b465d2ae26bc5dfb606dba4fea83a0b4",
+  "legal_world_count": 2,
+  "legal_worlds_hash": "sha256:6d4bbedd4bf705be0e6a0dce9cc5440948be163e496cf96c55ba2d33fd0a080c",
+  "limitations": [
+    "model-relative to the exact Gamma hash",
+    "does not cover unmodeled real-world hypotheses or future algorithms",
+    "does not establish external validity or action-effect correctness",
+    "does not itself authorize CERTIFIED_STOP"
+  ],
+  "reason_code": "CEILING-000_EXHAUSTIVE_FINITE_DOMAIN_VERIFIED",
+  "result_candidates": ["H1", "H3"],
+  "schema_version": "0.8.0",
+  "status": "VERIFIED",
+  "target_level": "initial_foothold",
+  "variable_domains": {
+    "authentication_mode": ["lateral", "direct"],
+    "initial_foothold": ["H1", "H3"]
+  }
+}

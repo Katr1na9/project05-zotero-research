@@ -12,9 +12,17 @@ from .lifecycle import (
     LifecycleTransition,
     LifecycleTransitionRejected,
 )
+from .policy import (
+    AdmissionPolicyAuthority,
+    AdmissionPolicyRejected,
+    AdmissionRule,
+)
 
 __all__ = [
     "AdmissionDecision",
+    "AdmissionPolicyAuthority",
+    "AdmissionPolicyRejected",
+    "AdmissionRule",
     "AppendOnlyAuditLedger",
     "AuditEvent",
     "ClaimLifecycleManager",

@@ -10,6 +10,7 @@ from src.executor.deterministic import (
     DeterministicObservationExecutor,
     FrozenExecutionTables,
 )
+from tests.integration.twin_kernel_inputs import load_twin_kernel_inputs
 
 
 try:
@@ -45,8 +46,9 @@ class TwinWorldEliminationRecertifyP6IntegrationTests(unittest.TestCase):
         )
 
     def p5_result(self):
-        artifact = load_json(FIXTURE / "expected" / "counterexample.json")
-        catalog = load_yaml(ROOT / "configs" / "action-catalog-kernel-v0.8.yaml")
+        inputs = load_twin_kernel_inputs()
+        artifact = inputs.frozen_counterexample
+        catalog = inputs.catalog
         selection = DistinguishingActionSelector().select(artifact, catalog)
         tables = FrozenExecutionTables(
             observation_rows=tuple(
@@ -59,13 +61,17 @@ class TwinWorldEliminationRecertifyP6IntegrationTests(unittest.TestCase):
         execution = DeterministicObservationExecutor().execute(
             selection, catalog, tables
         )
-        return artifact, catalog, execution
+        return inputs, artifact, catalog, execution
 
     def test_full_p5_observation_batch_exposes_scope_mismatch_without_stop(self):
-        artifact, catalog, execution = self.p5_result()
+        inputs, artifact, catalog, execution = self.p5_result()
 
         result = recert_api.RecertificationOrchestrator().recertify(
-            artifact, execution.observations, catalog
+            artifact,
+            execution.observations,
+            catalog,
+            inputs.compiled,
+            predicate_projections=inputs.predicate_projections,
         )
 
         self.assertEqual(
@@ -81,7 +87,7 @@ class TwinWorldEliminationRecertifyP6IntegrationTests(unittest.TestCase):
         self.assertNotIn("CERTIFIED_STOP", json.dumps(fields))
 
     def test_single_distinguishing_hit_recertifies_candidate_only(self):
-        artifact, catalog, execution = self.p5_result()
+        inputs, artifact, catalog, execution = self.p5_result()
         origin_hit = tuple(
             row
             for row in execution.observations
@@ -89,7 +95,11 @@ class TwinWorldEliminationRecertifyP6IntegrationTests(unittest.TestCase):
         )
 
         result = recert_api.RecertificationOrchestrator().recertify(
-            artifact, origin_hit, catalog
+            artifact,
+            origin_hit,
+            catalog,
+            inputs.compiled,
+            predicate_projections=inputs.predicate_projections,
         )
 
         self.assertEqual(("W-SUPPORT-H1",), result.surviving_world_ids)

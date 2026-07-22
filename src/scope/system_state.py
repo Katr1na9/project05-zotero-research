@@ -68,6 +68,9 @@ class SystemStateDeriver:
         level_certificate: IssuedLevelCertificate | None = None,
         active_gamma_hash: str | None = None,
         active_evidence_hash: str | None = None,
+        active_admission_policy_hash: str | None = None,
+        active_admission_policy_approval_hash: str | None = None,
+        active_formal_ceiling_hash: str | None = None,
     ) -> SystemStateDecision:
         if not isinstance(checker_run, CheckerRun):
             raise ValueError("checker_run must be a CheckerRun")
@@ -119,7 +122,11 @@ class SystemStateDeriver:
             isinstance(level_certificate, IssuedLevelCertificate)
             and level_certificate.binds_checker_run(effective_run)
             and level_certificate.binds_artifacts(
-                active_gamma_hash, active_evidence_hash
+                active_gamma_hash,
+                active_evidence_hash,
+                active_admission_policy_hash,
+                active_admission_policy_approval_hash,
+                active_formal_ceiling_hash,
             )
         ):
             return self._decision(

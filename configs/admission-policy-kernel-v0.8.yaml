@@ -1,0 +1,42 @@
+schema_version: "0.8.0"
+policy_id: admission-policy-kernel-v0.8
+policy_version: "0.8.0"
+authority_source:
+  normative_artifact: 08-writing/active-attribution-experiment-revision-plan-v0.8-20260721.md
+  sections: [A5.5, A6, A6.5, A6.6.2]
+  artifact_sha256: "sha256:99fa98b9489cfe49d4da6fe02e06b457201a59d9024ca62233c5dd82f7b7baa9"
+default_decision: deny
+admission_requirements:
+  modality: observed
+  truth_status: supported
+  epistemic_role: case_evidence
+  binding_status: bound
+  admission_status: candidate
+  promotion_status: none
+  lifecycle_states: [bound, generated]
+  authority_allowed: true
+  pointer_complete: true
+  pointer_matches_observation: true
+  literal_matches_observation: true
+  observation_kinds: [distinguishing_hit, bounded_complete_zero_hit]
+  completeness_conditions_satisfied: true
+  used_for_world_elimination: true
+  oracle_hidden_fields_forbidden: true
+rules:
+  - rule_id: A001
+    decision: allow_when_all_requirements_hold
+    source_families: [identity]
+    admissible_levels: [compromised_host, initial_foothold]
+  - rule_id: A002
+    decision: allow_when_all_requirements_hold
+    source_families: [execution]
+    admissible_levels: [compromised_host]
+  - rule_id: A003
+    decision: allow_when_all_requirements_hold
+    source_families: [software_supply_chain]
+    admissible_levels: [package_origin]
+  - rule_id: A004
+    decision: allow_when_all_requirements_hold
+    source_families: [system_provenance]
+    admissible_levels: [package_origin]
+hash: "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671"

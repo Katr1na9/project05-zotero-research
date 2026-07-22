@@ -1,6 +1,6 @@
 schema_version: "0.8.0"
 gamma_id: gamma-kernel-v0.8
-gamma_version: "0.8.0"
+gamma_version: "0.8.2"
 entity_types: [host, account, process, ip]
 event_types: [process_execute, authenticate, network_connect]
 relation_types: [executes, authenticates_to, connects_to]
@@ -82,13 +82,17 @@ threat_assumptions:
   log_forgery: none
   sensor_compromise: none
 admission_policy:
-  version: adm-0.8
+  policy_id: admission-policy-kernel-v0.8
+  version: "0.8.0"
   rules: [A001, A002]
+  policy_hash: "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671"
+  approval_manifest_id: admission-policy-approval-kernel-v0.8
+  approval_manifest_hash: "sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b"
 promotion_policy:
   version: prom-0.8
   rules: []
 action_catalog:
-  version: act-0.8
+  version: "0.8.0"
   actions:
     - query_auth_H1_1000_1015
     - query_logon_origin_H3
@@ -117,4 +121,4 @@ solver_semantics:
   proof_policy: reproducible_run
 closed_world_fields: [process_execution]
 open_world_fields: [network_link, cti_report]
-hash: "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a"
+hash: "sha256:0bad34b682c0b4f79b2423a241880932d655b886ad539d90d53e37917cbf41d2"

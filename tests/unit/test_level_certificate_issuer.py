@@ -12,6 +12,9 @@ from src.checker.finite_domain import (
     QueryResult,
     QueryStatus,
 )
+from tests.unit.policy_test_helpers import approved_policy_authority
+from src.scope.formal_ceiling import FormalCeilingVerifier
+from tests.integration.twin_kernel_inputs import load_twin_kernel_inputs
 
 
 try:
@@ -39,9 +42,22 @@ def candidate_certified_run():
             assignments_examined=1,
             witness={"initial_foothold": "H1"},
         ),
-        alternative=QueryResult(QueryStatus.UNSAT, assignments_examined=2),
+        alternative=QueryResult(QueryStatus.UNSAT, assignments_examined=4),
         checker_status=CheckerStatus.CANDIDATE_CERTIFIED,
     )
+
+
+def verified_formal_ceiling():
+    inputs = load_twin_kernel_inputs()
+    result = FormalCeilingVerifier().assess(
+        inputs.gamma,
+        inputs.compiled,
+        inputs.catalog,
+        requested_target="initial_foothold",
+    )
+    if not result.verified:
+        raise AssertionError(result.reason_code)
+    return result
 
 
 def counterexample_run():
@@ -56,18 +72,26 @@ def counterexample_run():
 
 
 def valid_issue_kwargs():
+    ceiling = verified_formal_ceiling()
+    ceiling_report = ceiling.to_dict()
     return {
         "certificate_id": "CERT-LEVEL-001",
         "case_id": "CASE-LEVEL-001",
-        "gamma_hash": sha256("approved-gamma"),
+        "gamma_hash": ceiling_report["gamma_hash"],
         "evidence_hash": sha256("admitted-evidence"),
         "level": "initial_foothold",
         "conclusion": {"entity_id": "H1", "entity_type": "host"},
         "candidate_coverage": {
             "level": "initial_foothold",
             "mode": "exhaustive",
-            "declared_domain_size": 2,
-            "checked_count": 2,
+            "declared_domain_size": len(ceiling_report["result_candidates"]),
+            "checked_count": len(ceiling_report["result_candidates"]),
+            "result_candidates": ceiling_report["result_candidates"],
+            "legal_world_count": ceiling_report["legal_world_count"],
+            "legal_worlds_hash": ceiling_report["legal_worlds_hash"],
+            "cartesian_assignment_bound": ceiling_report[
+                "cartesian_assignment_bound"
+            ],
             "omitted_known_candidates": [],
             "solver_seed_used": True,
         },
@@ -89,6 +113,8 @@ def valid_issue_kwargs():
         "created_at": "2026-01-01T10:20:00Z",
         "requested_issuer": "kernel_checker",
         "formal_artifacts_verified": True,
+        "admission_policy_authority": approved_policy_authority(),
+        "formal_ceiling": ceiling,
     }
 
 
@@ -200,12 +226,64 @@ class LevelCertificateIssuerTests(unittest.TestCase):
             ),
         )
 
+    def test_missing_verified_admission_policy_cannot_support_certificate(self):
+        kwargs = valid_issue_kwargs()
+        kwargs["admission_policy_authority"] = None
+        self.assert_rejected(
+            "P9-CERT-007_ADMISSION_POLICY_UNVERIFIED",
+            lambda: certificate_api.LevelCertificateIssuer().issue(
+                candidate_certified_run(), **kwargs
+            ),
+        )
+
+    def test_unverified_or_mismatched_formal_ceiling_cannot_support_certificate(self):
+        kwargs = valid_issue_kwargs()
+        kwargs["formal_ceiling"] = None
+        self.assert_rejected(
+            "P9-CERT-008_FORMAL_CEILING_UNVERIFIED",
+            lambda: certificate_api.LevelCertificateIssuer().issue(
+                candidate_certified_run(), **kwargs
+            ),
+        )
+
         placeholder = valid_issue_kwargs()
         placeholder["gamma_hash"] = "sha256:" + "1" * 64
         self.assert_rejected(
             "P9-CERT-005_FORMAL_HASHES_NOT_VERIFIED",
             lambda: certificate_api.LevelCertificateIssuer().issue(
                 candidate_certified_run(), **placeholder
+            ),
+        )
+
+    def test_coverage_must_machine_bind_exact_ceiling_worlds_and_assignment_bound(self):
+        for field, replacement in (
+            ("result_candidates", ["H1", "H9"]),
+            ("legal_world_count", 1),
+            ("legal_worlds_hash", sha256("different-world-table")),
+            ("cartesian_assignment_bound", 3),
+        ):
+            with self.subTest(field=field):
+                kwargs = valid_issue_kwargs()
+                kwargs["candidate_coverage"] = dict(kwargs["candidate_coverage"])
+                kwargs["candidate_coverage"][field] = replacement
+                self.assert_rejected(
+                    "P9-CERT-008_FORMAL_CEILING_UNVERIFIED",
+                    lambda kwargs=kwargs: certificate_api.LevelCertificateIssuer().issue(
+                        candidate_certified_run(), **kwargs
+                    ),
+                )
+
+        run = candidate_certified_run()
+        incomplete_enumeration = CheckerRun(
+            base=run.base,
+            support=run.support,
+            alternative=QueryResult(QueryStatus.UNSAT, assignments_examined=3),
+            checker_status=run.checker_status,
+        )
+        self.assert_rejected(
+            "P9-CERT-008_FORMAL_CEILING_UNVERIFIED",
+            lambda: certificate_api.LevelCertificateIssuer().issue(
+                incomplete_enumeration, **valid_issue_kwargs()
             ),
         )
 

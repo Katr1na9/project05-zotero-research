@@ -1,6 +1,10 @@
 import copy
 import importlib
 import unittest
+from types import MappingProxyType
+
+from src.checker.finite_domain import FiniteDomainProblem
+from src.scope.finite_problem import CompiledFiniteProblem, CompiledLegalWorld
 
 
 try:
@@ -9,9 +13,13 @@ except (ImportError, ModuleNotFoundError):
     recert_api = None
 
 
+UNIT_GAMMA_HASH = "sha256:" + "a" * 64
+
+
 def artifact(*, include_absence_semantics=True):
     return {
         "schema_version": "0.8.0",
+        "gamma_hash": UNIT_GAMMA_HASH,
         "target_level": "initial_foothold",
         "candidate_q": {"entity_id": "H1", "entity_type": "host"},
         "checker_status": "COUNTEREXAMPLE_FOUND",
@@ -40,6 +48,58 @@ def artifact(*, include_absence_semantics=True):
             else []
         ),
     }
+
+
+def compiled_problem():
+    def legal(world):
+        return (
+            world["initial_foothold"] == "H1" and world["scenario"] == "support"
+        ) or (
+            world["initial_foothold"] == "H3"
+            and world["scenario"] == "alternative"
+        )
+
+    problem = FiniteDomainProblem(
+        domains={
+            "initial_foothold": ("H1", "H3"),
+            "scenario": ("support", "alternative"),
+        },
+        constraints=(legal,),
+    )
+    return CompiledFiniteProblem(
+        problem=problem,
+        target_variable="initial_foothold",
+        mode_variable="scenario",
+        possible_lateral_source="H1",
+        destination_host="H3",
+        source_claim_ids=("CLAIM-UNIT-001",),
+        gamma_hash=UNIT_GAMMA_HASH,
+        compilation_profile="unit_test_v0.8",
+        legal_worlds=(
+            CompiledLegalWorld(
+                "W-SUPPORT-H1",
+                MappingProxyType(
+                    {"initial_foothold": "H1", "scenario": "support"}
+                ),
+                (
+                    "credential_activity:H1",
+                    "authentication_origin:H3=H1",
+                    "compromised:H3",
+                ),
+            ),
+            CompiledLegalWorld(
+                "W-ALTERNATIVE-H3",
+                MappingProxyType(
+                    {"initial_foothold": "H3", "scenario": "alternative"}
+                ),
+                (
+                    "external_credential_login:H3",
+                    "authentication_origin:H3=EXTERNAL",
+                    "compromised:H3",
+                ),
+            ),
+        ),
+    )
 
 
 def catalog():
@@ -115,6 +175,7 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
             artifact(),
             [observation("query_logon_origin_H3", "H1")],
             catalog(),
+            compiled_problem(),
         )
 
         self.assertEqual(("W-SUPPORT-H1",), result.surviving_world_ids)
@@ -140,6 +201,7 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
                 )
             ],
             catalog(),
+            compiled_problem(),
         )
 
         self.assertEqual(("W-ALTERNATIVE-H3",), result.surviving_world_ids)
@@ -153,6 +215,7 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
                 observation("query_auth_H1_1000_1015", "absent"),
             ],
             catalog(),
+            compiled_problem(),
         )
 
         self.assertEqual((), result.surviving_world_ids)
@@ -173,6 +236,7 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
                 ),
             ],
             catalog(),
+            compiled_problem(),
         )
 
         self.assertEqual((), result.applied_observation_ids)
@@ -181,7 +245,8 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
         self.assertIsNotNone(result.mindiff_result)
         self.assertEqual((), result.mindiff_result.distinguishing_predicates)
         self.assertEqual(
-            ("initial_foothold",), result.mindiff_result.unprojected_variables
+            ("initial_foothold", "scenario"),
+            result.mindiff_result.unprojected_variables,
         )
 
     def test_zero_hit_without_frozen_absence_semantics_is_ignored(self):
@@ -189,6 +254,7 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
             artifact(include_absence_semantics=False),
             [observation("query_auth_H1_1000_1015", "absent")],
             catalog(),
+            compiled_problem(),
         )
 
         self.assertEqual((), result.applied_observation_ids)
@@ -209,6 +275,7 @@ class WorldEliminationRecertificationTests(unittest.TestCase):
                 artifact(),
                 [observation("query_logon_origin_H3", "H1")],
                 invalid_catalog,
+                compiled_problem(),
             )
 
 
