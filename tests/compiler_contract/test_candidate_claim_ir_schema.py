@@ -76,6 +76,17 @@ class CandidateClaimIRSchemaTests(unittest.TestCase):
         with self.assertRaisesRegex(CandidateClaimIRValidationError, "binding_status"):
             validate_candidate_claim_ir(document)
 
+    def test_rejects_noncanonical_epistemic_role_and_truth_status(self):
+        for field, value in (
+            ("epistemic_role", "model_selected_case_fact"),
+            ("truth_status", "certain"),
+        ):
+            with self.subTest(field=field):
+                document = load_fixture("valid_candidate_unbound.json")
+                document[field] = value
+                with self.assertRaisesRegex(CandidateClaimIRValidationError, field):
+                    validate_candidate_claim_ir(document)
+
     def test_validator_source_has_no_model_runtime_dependency(self):
         module_path = SRC_ROOT / "compiler" / "constrained_decoder" / "canonical_validator.py"
         self.assertTrue(module_path.exists(), "canonical validator has not been implemented")

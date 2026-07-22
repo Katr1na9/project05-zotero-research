@@ -13,6 +13,8 @@ _TOP_LEVEL_FIELDS = frozenset(
         "candidate_id",
         "claim",
         "modality",
+        "epistemic_role",
+        "truth_status",
         "admission_status",
         "certification_authority",
         "promotion_status",
@@ -26,6 +28,21 @@ _CLAIM_FIELDS = frozenset(
 )
 _REQUIRED_CLAIM_FIELDS = frozenset({"subject", "predicate", "object"})
 _MODALITIES = ("observed", "derived", "reported", "hypothesized", "unknown")
+_EPISTEMIC_ROLES = (
+    "case_evidence",
+    "mechanism_knowledge",
+    "background_intelligence",
+    "model_hypothesis",
+    "analyst_hypothesis",
+    "unknown",
+)
+_TRUTH_STATUSES = (
+    "unassessed",
+    "supported",
+    "contradicted",
+    "conflicted",
+    "retracted",
+)
 
 def _build_candidate_claim_ir_schema() -> dict[str, Any]:
     """Build the contract from immutable literals, never an exported schema dict."""
@@ -76,6 +93,11 @@ def _build_candidate_claim_ir_schema() -> dict[str, Any]:
                 },
             },
             "modality": {"type": "string", "enum": list(_MODALITIES)},
+            "epistemic_role": {
+                "type": "string",
+                "enum": list(_EPISTEMIC_ROLES),
+            },
+            "truth_status": {"type": "string", "enum": list(_TRUTH_STATUSES)},
             "admission_status": {"const": "candidate"},
             "certification_authority": {
                 "type": "object",
@@ -139,6 +161,10 @@ def validate_candidate_claim_ir(document: Document) -> Document:
     _require_nonempty_string(document["candidate_id"], "candidate_id")
     _validate_claim(document["claim"])
     _require_member(document["modality"], _MODALITIES, "modality")
+    _require_member(
+        document["epistemic_role"], _EPISTEMIC_ROLES, "epistemic_role"
+    )
+    _require_member(document["truth_status"], _TRUTH_STATUSES, "truth_status")
     _require_constant(document["admission_status"], "candidate", "admission_status")
     _validate_authority(document["certification_authority"])
     _require_constant(document["promotion_status"], "none", "promotion_status")

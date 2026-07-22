@@ -11,12 +11,15 @@ from .candidate_only_guard import (
     materialize_pointer_suggestion,
     reject_model_controlled_fields,
 )
+from .source_semantics import preserve_trusted_source_semantics
 
 
 class CandidateClaimIRProjection(TypedDict, total=False):
     """A local, candidate-only claim mapping without Kernel-schema authority."""
 
     modality: Required[Any]
+    epistemic_role: Required[str]
+    truth_status: Required[str]
     admission_status: Required[str]
     certification_authority: Required[dict[str, Any]]
     promotion_status: Required[str]
@@ -45,11 +48,12 @@ def project_candidate_claim(
         for field in ALLOWED_RAW_PROPOSAL_FIELDS
         if field in raw_semantic_proposal
     }
-    projection["modality"] = copy.deepcopy(trusted_source_metadata["modality"])
     projection["admission_status"] = "candidate"
     projection["certification_authority"] = {"allowed": False, "levels": []}
     projection["promotion_status"] = "none"
     projection["binding_status"] = pointer_suggestion["status"]
     projection["pointer_suggestion"] = pointer_suggestion
     projection["compatibility_status"] = "pending_kernel_schema"
-    return projection
+    return preserve_trusted_source_semantics(
+        projection, trusted_source_metadata
+    )  # type: ignore[return-value]
