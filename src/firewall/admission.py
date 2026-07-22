@@ -112,7 +112,7 @@ class ECaseAdmissionFirewall:
             elif observation_kind == "true_empty_control":
                 reasons.append("FW-011_CONTROL_OBSERVATION")
             elif observation_kind not in _ADMISSIBLE_OBSERVATION_KINDS:
-                reasons.append("FW-016_OBSERVATION_KIND_UNSUPPORTED")
+                reasons.append("FW-017_OBSERVATION_KIND_UNSUPPORTED")
 
             if observation.get("completeness_conditions_satisfied") is not True:
                 reasons.append("FW-012_COMPLETENESS_NOT_SATISFIED")

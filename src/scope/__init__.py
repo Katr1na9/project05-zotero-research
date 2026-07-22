@@ -1,8 +1,13 @@
-"""Finite-world recertification and P9 pure system-state derivation APIs.
+"""Finite compilation, recertification, and pure system-state APIs.
 
 No Firewall, promotion, planner, action execution, or certificate issuance is
 exposed from this package.
 """
+
+from .finite_problem import (
+    CompiledFiniteProblem,
+    EvidenceGammaFiniteProblemCompiler,
+)
 
 from .recertify import (
     DeterministicWorldEliminator,
@@ -20,7 +25,9 @@ from .system_state import (
 )
 
 __all__ = [
+    "CompiledFiniteProblem",
     "DeterministicWorldEliminator",
+    "EvidenceGammaFiniteProblemCompiler",
     "FiniteArtifactWorld",
     "IgnoredObservation",
     "MAIN_STATE_ORDER",

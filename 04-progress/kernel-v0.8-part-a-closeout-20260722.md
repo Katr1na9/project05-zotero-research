@@ -92,3 +92,22 @@ Part A 的**工程主链**可以视为闭合，但 A16 的**权威裁定**尚未
 
 轨道 authority 状态以
 `08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md` 为当前入口。
+
+## 6. 人工批准的收口债务修复
+
+用户于 2026-07-22 明确批准以下三个窄修复；它们不构成新的 Part A 算法：
+
+1. Firewall 将缺 observation context 保留为
+   `FW-016_OBSERVATION_CONTEXT_REQUIRED`，不支持的 observation kind 拆为
+   `FW-017_OBSERVATION_KIND_UNSUPPORTED`；
+2. 新增 `EvidenceGammaFiniteProblemCompiler`，P1/P2/P3/P9/P10 的 Twin
+   `FiniteDomainProblem` 从冻结 Γ 与 admitted case evidence 重算，不再在测试里
+   手写 H1/H3 世界约束；
+3. 新增 `PredicateProjectionContract`，调用方通过 action ID 提供变量绑定，
+   predicate 只能解析自冻结 catalog 的唯一 `world_dependencies`；MinDiff 拒绝
+   裸 mapping 和 ghost predicate。
+
+本切片 RED 为 5 个预期失败；实现和迁移后全套为 105/105 passed。静态扫描确认
+Twin 集成测试中无 H1/H3 手写世界约束、无两个历史 ghost predicate 字面量。
+Γ、canonical hash、action catalog 与 fixture expected 均未修改。该切片仍等待
+人工 diff 评审，不改变 A16 `PENDING_HUMAN_REVIEW` / `NO-GO` 状态。

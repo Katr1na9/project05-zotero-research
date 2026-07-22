@@ -19,7 +19,11 @@ from src.checker.finite_domain import (
     FiniteDomainChecker,
     FiniteDomainProblem,
 )
-from src.counterexample.mindiff import FiniteWitnessMinDiff, MinDiffResult
+from src.counterexample.mindiff import (
+    FiniteWitnessMinDiff,
+    MinDiffResult,
+    PredicateProjectionContract,
+)
 
 
 def _required_mapping(value: object, field_name: str) -> Mapping[str, object]:
@@ -436,7 +440,9 @@ class RecertificationOrchestrator:
             mindiff_result = FiniteWitnessMinDiff().compare(
                 checker_run,
                 target_variable=target_level,
-                predicate_projections={},
+                predicate_projections=PredicateProjectionContract.empty(
+                    problem.domains
+                ),
             )
 
         return RecertificationResult(

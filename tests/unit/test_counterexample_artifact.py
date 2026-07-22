@@ -4,6 +4,7 @@ import unittest
 
 from src.checker.finite_domain import FiniteDomainChecker, FiniteDomainProblem
 from src.counterexample.mindiff import FiniteWitnessMinDiff
+from tests.unit.kernel_contract_helpers import projection_contract
 
 
 try:
@@ -68,10 +69,13 @@ class CounterexampleArtifactAssemblerTests(unittest.TestCase):
         mindiff = FiniteWitnessMinDiff().compare(
             checker_run,
             target_variable="initial_foothold",
-            predicate_projections={
-                "authentication_mode": "authentication_origin:H3",
-                "initial_foothold": "credential_activity:H1",
-            },
+            predicate_projections=projection_contract(
+                {
+                    "authentication_mode": "authentication_origin:H3",
+                    "initial_foothold": "credential_activity:H1",
+                },
+                checker_run.support.witness,
+            ),
         )
 
         assembler = artifact_api.CounterexampleArtifactAssembler()
@@ -107,10 +111,13 @@ class CounterexampleArtifactAssemblerTests(unittest.TestCase):
         mindiff = FiniteWitnessMinDiff(max_comparisons=1).compare(
             checker_run,
             target_variable="initial_foothold",
-            predicate_projections={
-                "authentication_mode": "authentication_origin:H3",
-                "initial_foothold": "credential_activity:H1",
-            },
+            predicate_projections=projection_contract(
+                {
+                    "authentication_mode": "authentication_origin:H3",
+                    "initial_foothold": "credential_activity:H1",
+                },
+                checker_run.support.witness,
+            ),
         )
 
         artifact = artifact_api.CounterexampleArtifactAssembler().assemble(
@@ -143,10 +150,13 @@ class CounterexampleArtifactAssemblerTests(unittest.TestCase):
         other_mindiff = FiniteWitnessMinDiff().compare(
             other_run,
             target_variable="initial_foothold",
-            predicate_projections={
-                "authentication_mode": "authentication_origin:H4",
-                "initial_foothold": "credential_activity:H2",
-            },
+            predicate_projections=projection_contract(
+                {
+                    "authentication_mode": "authentication_origin:H4",
+                    "initial_foothold": "credential_activity:H2",
+                },
+                other_run.support.witness,
+            ),
         )
 
         with self.assertRaises(ValueError):

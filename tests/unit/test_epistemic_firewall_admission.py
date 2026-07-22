@@ -145,6 +145,22 @@ class EpistemicFirewallAdmissionTests(unittest.TestCase):
         self.assertFalse(decision.allowed)
         self.assertEqual(("FW-006_POINTER_INCOMPLETE",), decision.reason_codes)
 
+    def test_missing_context_and_unsupported_kind_have_distinct_codes(self):
+        firewall = firewall_api.ECaseAdmissionFirewall()
+
+        missing = firewall.evaluate(candidate_claim(), None)
+        unsupported = firewall.evaluate(
+            candidate_claim(), observation(observation_kind="future_kind")
+        )
+
+        self.assertEqual(
+            ("FW-016_OBSERVATION_CONTEXT_REQUIRED",), missing.reason_codes
+        )
+        self.assertEqual(
+            ("FW-017_OBSERVATION_KIND_UNSUPPORTED",), unsupported.reason_codes
+        )
+        self.assertNotEqual(missing.reason_codes, unsupported.reason_codes)
+
     def test_control_heuristic_incomplete_and_not_eligible_observations_deny(self):
         firewall = firewall_api.ECaseAdmissionFirewall()
         cases = (

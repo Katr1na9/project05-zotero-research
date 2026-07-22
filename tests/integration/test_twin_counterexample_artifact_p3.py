@@ -3,11 +3,11 @@ import json
 import unittest
 from pathlib import Path
 
-import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
-from src.checker.finite_domain import FiniteDomainChecker, FiniteDomainProblem
+from src.checker.finite_domain import FiniteDomainChecker
 from src.counterexample.mindiff import FiniteWitnessMinDiff
+from tests.integration.twin_kernel_inputs import load_twin_kernel_inputs
 
 
 try:
@@ -17,35 +17,8 @@ except (ImportError, ModuleNotFoundError):
 
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURE = ROOT / "tests" / "fixtures" / "TWIN-COUNTEREXAMPLE-001"
-
-
 def load_json(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
-
-
-def load_yaml(path):
-    return yaml.safe_load(Path(path).read_text(encoding="utf-8"))
-
-
-def load_jsonl(path):
-    return [
-        json.loads(line)
-        for line in Path(path).read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
-
-
-def admitted_case_evidence(claims):
-    return [
-        claim
-        for claim in claims
-        if claim["epistemic_role"] == "case_evidence"
-        and claim["modality"] == "observed"
-        and claim["truth_status"] == "supported"
-        and claim["admission_status"] == "admitted"
-        and claim["certification_authority"]["allowed"]
-    ]
 
 
 class TwinCounterexampleArtifactP3IntegrationTests(unittest.TestCase):
@@ -55,55 +28,19 @@ class TwinCounterexampleArtifactP3IntegrationTests(unittest.TestCase):
         )
 
     def test_twin_assembly_matches_fixture_contract_and_validates_schema(self):
-        gamma = load_yaml(ROOT / "configs" / "gamma-kernel-v0.8.yaml")
-        frozen = load_json(FIXTURE / "expected" / "counterexample.json")
-        claims = admitted_case_evidence(
-            load_jsonl(FIXTURE / "claims" / "case_evidence.jsonl")
-        )
+        inputs = load_twin_kernel_inputs()
+        frozen = inputs.frozen_counterexample
+        compiled = inputs.compiled
         target_level = frozen["target_level"]
-        authenticated_hosts = {
-            claim["subject"]["entity_id"]
-            for claim in claims
-            if claim["predicate"] == "authenticated_account"
-        }
-        execution_hosts = {
-            claim["subject"]["entity_id"]
-            for claim in claims
-            if claim["predicate"] == "executed_process"
-        }
-        destination_host = next(iter(authenticated_hosts))
-        possible_lateral_source = next(iter(execution_hosts))
-
-        problem = FiniteDomainProblem(
-            domains={
-                target_level: tuple(
-                    gamma["result_domains"][target_level]["finite_candidates"]
-                ),
-                "authentication_mode": ("lateral", "direct"),
-            },
-            constraints=(
-                lambda world: (
-                    world[target_level] == possible_lateral_source
-                    and world["authentication_mode"] == "lateral"
-                )
-                or (
-                    world[target_level] == destination_host
-                    and world["authentication_mode"] == "direct"
-                ),
-            ),
-        )
         checker_run = FiniteDomainChecker().check_candidate(
-            problem,
+            compiled.problem,
             target_variable=target_level,
             candidate=frozen["candidate_q"]["entity_id"],
         )
         mindiff = FiniteWitnessMinDiff().compare(
             checker_run,
             target_variable=target_level,
-            predicate_projections={
-                "authentication_mode": f"authentication_origin:{destination_host}",
-                target_level: f"credential_activity:{possible_lateral_source}",
-            },
+            predicate_projections=inputs.predicate_projections,
         )
         metadata = artifact_api.CounterexampleArtifactMetadata(
             counterexample_id=frozen["counterexample_id"],

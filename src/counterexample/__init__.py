@@ -9,7 +9,12 @@ from .artifact import (
     CounterexampleArtifactAssembler,
     CounterexampleArtifactMetadata,
 )
-from .mindiff import FiniteWitnessMinDiff, MinDiffResult, MinimizationStatus
+from .mindiff import (
+    FiniteWitnessMinDiff,
+    MinDiffResult,
+    MinimizationStatus,
+    PredicateProjectionContract,
+)
 
 __all__ = [
     "CounterexampleArtifactAssembler",
@@ -17,4 +22,5 @@ __all__ = [
     "FiniteWitnessMinDiff",
     "MinDiffResult",
     "MinimizationStatus",
+    "PredicateProjectionContract",
 ]

@@ -1,13 +1,9 @@
 import importlib
-import json
 import unittest
-from pathlib import Path
 
-import yaml
-
-from src.checker.finite_domain import FiniteDomainProblem
 from src.counterexample.artifact import CounterexampleArtifactMetadata
 from src.executor.deterministic import FrozenExecutionTables
+from tests.integration.twin_kernel_inputs import load_twin_kernel_inputs
 
 
 try:
@@ -16,50 +12,13 @@ except (ImportError, ModuleNotFoundError):
     driver_api = None
 
 
-ROOT = Path(__file__).resolve().parents[2]
-FIXTURE = ROOT / "tests" / "fixtures" / "TWIN-COUNTEREXAMPLE-001"
-
-
-def load_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))
-
-
-def load_jsonl(path):
-    return [
-        json.loads(line)
-        for line in Path(path).read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
-
-
-def load_yaml(path):
-    return yaml.safe_load(Path(path).read_text(encoding="utf-8"))
-
-
 def twin_request(*, feedback_observation_ids=()):
-    gamma = load_yaml(ROOT / "configs" / "gamma-kernel-v0.8.yaml")
-    catalog = load_yaml(ROOT / "configs" / "action-catalog-kernel-v0.8.yaml")
-    frozen = load_json(FIXTURE / "expected" / "counterexample.json")
-    expected = load_yaml(FIXTURE / "expected" / "outcome.yaml")
-    target_level = expected["target_level"]
-    problem = FiniteDomainProblem(
-        domains={
-            target_level: tuple(
-                gamma["result_domains"][target_level]["finite_candidates"]
-            ),
-            "authentication_mode": ("lateral", "direct"),
-        },
-        constraints=(
-            lambda world: (
-                world[target_level] == "H1"
-                and world["authentication_mode"] == "lateral"
-            )
-            or (
-                world[target_level] == "H3"
-                and world["authentication_mode"] == "direct"
-            ),
-        ),
-    )
+    inputs = load_twin_kernel_inputs()
+    gamma = inputs.gamma
+    catalog = inputs.catalog
+    frozen = inputs.frozen_counterexample
+    expected = inputs.expected
+    target_level = inputs.compiled.target_variable
     metadata = CounterexampleArtifactMetadata(
         counterexample_id=frozen["counterexample_id"],
         case_id=frozen["case_id"],
@@ -79,22 +38,15 @@ def twin_request(*, feedback_observation_ids=()):
         ),
     )
     tables = FrozenExecutionTables(
-        observation_rows=tuple(
-            load_jsonl(FIXTURE / "expected" / "action_observations.jsonl")
-        ),
-        resource_rows=tuple(
-            load_jsonl(FIXTURE / "expected" / "resource_trace.jsonl")
-        ),
+        observation_rows=inputs.observation_rows,
+        resource_rows=inputs.resource_rows,
     )
     return driver_api.KernelE2ERunRequest(
         gamma_contract=gamma,
-        problem=problem,
+        problem=inputs.compiled.problem,
         target_variable=target_level,
         candidate=expected["candidate_q"],
-        predicate_projections={
-            target_level: "credential_activity:H1",
-            "authentication_mode": "authentication_origin:H3",
-        },
+        predicate_projections=inputs.predicate_projections,
         artifact_metadata=metadata,
         action_catalog=catalog,
         execution_tables=tables,
@@ -105,7 +57,7 @@ def twin_request(*, feedback_observation_ids=()):
 class TwinKernelE2EP10IntegrationTests(unittest.TestCase):
     def setUp(self):
         self.assertIsNotNone(driver_api, "P10 deterministic E2E driver is missing")
-        self.expected = load_yaml(FIXTURE / "expected" / "outcome.yaml")
+        self.expected = load_twin_kernel_inputs().expected
 
     def test_twin_default_path_closes_counterexample_to_continue_chain(self):
         result = driver_api.DeterministicKernelE2EDriver().run(twin_request())

@@ -40,6 +40,11 @@ P0–P10 实施权限，以及仍未授予的后续权限。它是描述性状�
 这些授权已经消耗完毕，不自动续展为重写 P0–P9 语义、增加算法或进入下一阶段
 的权限。
 
+用户随后于 2026-07-22 明确追加并消耗一个收口债务修复授权：FW-016 拆码、
+Twin 从 case evidence/Γ 重算有限域约束，以及 catalog-bound predicate
+projection 合同。该授权只覆盖上述三项，不续展为新的 Checker、Planner、M3*、
+Part B、LLM 或训练权限。实现证据追加在 Part A 收口纪要第 6 节。
+
 ## 3. 当前允许与禁止
 
 ### 当前允许
@@ -92,3 +97,15 @@ Part B authority: CLOSED
 
 本状态记录完成后应停在人工评审门禁。push、PR 与 A16 Go 分别是独立决定；其中
 任何一个都不能由另一个默示产生。
+
+## 6. 收口债务修复状态
+
+```text
+FW reason-code collision: SPLIT (FW-016 context / FW-017 kind)
+Twin finite constraints: COMPILED FROM GAMMA + ADMITTED CASE EVIDENCE
+Predicate projection: CALLER-SUPPLIED ACTION BINDING, CATALOG-RESOLVED
+Regression: 105/105 PASS
+Review state: PENDING HUMAN DIFF REVIEW
+```
+
+该状态不修改冻结 v0.8 规范字节，也不关闭 SI-010 或签发 level certificate。

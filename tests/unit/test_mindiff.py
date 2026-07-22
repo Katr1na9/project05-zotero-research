@@ -2,6 +2,8 @@ import importlib
 import unittest
 
 from src.checker.finite_domain import FiniteDomainChecker, FiniteDomainProblem
+from src.counterexample.mindiff import PredicateProjectionContract
+from tests.unit.kernel_contract_helpers import projection_contract
 
 
 try:
@@ -35,13 +37,17 @@ class FiniteWitnessMinDiffTests(unittest.TestCase):
         self.assertIsNotNone(mindiff_api, "P2 finite-witness MinDiff API is missing")
 
     def test_complete_comparison_emits_deterministic_minimal_difference(self):
+        checker_run = counterexample_run()
         result = mindiff_api.FiniteWitnessMinDiff().compare(
-            counterexample_run(),
+            checker_run,
             target_variable="initial_foothold",
-            predicate_projections={
-                "authentication_mode": "authentication_origin:H3",
-                "initial_foothold": "credential_activity:H1",
-            },
+            predicate_projections=projection_contract(
+                {
+                    "authentication_mode": "authentication_origin:H3",
+                    "initial_foothold": "credential_activity:H1",
+                },
+                checker_run.support.witness,
+            ),
         )
 
         self.assertEqual("COUNTEREXAMPLE_FOUND", result.checker_status.value)
@@ -62,13 +68,17 @@ class FiniteWitnessMinDiffTests(unittest.TestCase):
         self.assertEqual(2, result.comparisons_examined)
 
     def test_timeout_preserves_counterexample_and_never_emits_system_state(self):
+        checker_run = counterexample_run()
         result = mindiff_api.FiniteWitnessMinDiff(max_comparisons=1).compare(
-            counterexample_run(),
+            checker_run,
             target_variable="initial_foothold",
-            predicate_projections={
-                "authentication_mode": "authentication_origin:H3",
-                "initial_foothold": "credential_activity:H1",
-            },
+            predicate_projections=projection_contract(
+                {
+                    "authentication_mode": "authentication_origin:H3",
+                    "initial_foothold": "credential_activity:H1",
+                },
+                checker_run.support.witness,
+            ),
         )
 
         fields = result.to_outcome_fields()
@@ -78,12 +88,14 @@ class FiniteWitnessMinDiffTests(unittest.TestCase):
         self.assertNotIn("CERTIFIED_STOP", fields.values())
 
     def test_unprojected_differences_remain_auditable(self):
+        checker_run = counterexample_run()
         result = mindiff_api.FiniteWitnessMinDiff().compare(
-            counterexample_run(),
+            checker_run,
             target_variable="initial_foothold",
-            predicate_projections={
-                "initial_foothold": "credential_activity:H1",
-            },
+            predicate_projections=projection_contract(
+                {"initial_foothold": "credential_activity:H1"},
+                checker_run.support.witness,
+            ),
         )
 
         self.assertEqual(("authentication_mode",), result.unprojected_variables)
@@ -106,7 +118,9 @@ class FiniteWitnessMinDiffTests(unittest.TestCase):
             mindiff_api.FiniteWitnessMinDiff().compare(
                 candidate_certified,
                 target_variable="initial_foothold",
-                predicate_projections={},
+                predicate_projections=PredicateProjectionContract.empty(
+                    problem.domains
+                ),
             )
 
     def test_invalid_comparison_budget_is_rejected(self):

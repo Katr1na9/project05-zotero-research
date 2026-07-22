@@ -10,9 +10,16 @@ Expected Checker rows are `base=SAT`, `support=SAT`, `alternative=SAT`, hence
 distinguishes the worlds, the expected main system state is `CONTINUE`.
 
 From P1, `base`, `support`, `alternative`, and `checker_status` are recomputed
-by `test_twin_checker_p1.py` from the frozen finite Γ domain and admitted case
-evidence. `system_status=CONTINUE` remains a non-Checker fixture expectation;
-the P1 Checker neither derives nor emits a system state.
+by `EvidenceGammaFiniteProblemCompiler` from the frozen finite Γ domain and
+admitted case evidence. P1/P2/P3/P9/P10 share that compiled problem instead of
+embedding H1/H3 world constraints in tests. `system_status=CONTINUE` remains a
+non-Checker fixture expectation; the P1 Checker neither derives nor emits a
+system state.
+
+`predicate_projections.yaml` is the caller-supplied projection contract. It
+binds witness variables to frozen catalog action IDs; the actual predicate is
+resolved from each action's declared `world_dependencies`. Twin tests do not
+inject predicate strings outside the action catalog.
 
 The fixture is a contract artifact only. The counterexample is an expected
 solver-side world pair, not external ground truth. Action observations and

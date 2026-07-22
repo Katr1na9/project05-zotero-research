@@ -27,7 +27,11 @@ from src.counterexample.artifact import (
     CounterexampleArtifactAssembler,
     CounterexampleArtifactMetadata,
 )
-from src.counterexample.mindiff import FiniteWitnessMinDiff, MinDiffResult
+from src.counterexample.mindiff import (
+    FiniteWitnessMinDiff,
+    MinDiffResult,
+    PredicateProjectionContract,
+)
 from src.executor.deterministic import (
     DeterministicObservationExecutor,
     ExecutionBatchResult,
@@ -69,7 +73,7 @@ class KernelE2ERunRequest:
     problem: FiniteDomainProblem
     target_variable: str
     candidate: WorldValue
-    predicate_projections: Mapping[str, str]
+    predicate_projections: PredicateProjectionContract
     artifact_metadata: CounterexampleArtifactMetadata
     action_catalog: Mapping[str, object]
     execution_tables: FrozenExecutionTables
@@ -104,21 +108,13 @@ class KernelE2ERunRequest:
         ):
             raise ValueError("active_evidence_hash must be a non-empty string")
 
-        projections = _mapping(
-            self.predicate_projections, "predicate_projections"
-        )
-        frozen_projections: dict[str, str] = {}
-        for variable, predicate in projections.items():
-            if (
-                not isinstance(variable, str)
-                or not variable
-                or not isinstance(predicate, str)
-                or not predicate
-            ):
-                raise ValueError(
-                    "predicate_projections must map non-empty strings to strings"
-                )
-            frozen_projections[variable] = predicate
+        if not isinstance(
+            self.predicate_projections, PredicateProjectionContract
+        ):
+            raise ValueError(
+                "predicate_projections must be a PredicateProjectionContract"
+            )
+        self.predicate_projections.validate_for_variables(self.problem.domains)
 
         gamma_hash = gamma.get("hash")
         if gamma.get("schema_version") != "0.8.0" or (
@@ -156,11 +152,6 @@ class KernelE2ERunRequest:
             self,
             "action_catalog",
             MappingProxyType(deepcopy(dict(catalog))),
-        )
-        object.__setattr__(
-            self,
-            "predicate_projections",
-            MappingProxyType(frozen_projections),
         )
         object.__setattr__(self, "feedback_observation_ids", feedback)
 

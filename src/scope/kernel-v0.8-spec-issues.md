@@ -123,3 +123,39 @@ explicit single-hit feedback path may reach `CANDIDATE_CERTIFIED` but still
 ends in `CONTINUE`. Neither path supplies level-complete authority. A future
 A16 ruling, push/PR decision or Part B slice must be separately recorded and
 must not be inferred from this closeout note.
+
+## SI-011 — IMPLEMENTED — APPROVED SCOPE: Firewall reason-code collision
+
+**State:** `IMPLEMENTED — PENDING HUMAN DIFF REVIEW` under explicit user
+authorization on `2026-07-22`.
+
+The old P7 implementation assigned `FW-016` both to a missing observation
+context and to an unsupported observation kind. The repair preserves
+`FW-016_OBSERVATION_CONTEXT_REQUIRED` and assigns
+`FW-017_OBSERVATION_KIND_UNSUPPORTED` to the second condition. Unit tests bind
+the two conditions independently so downstream audit consumers can distinguish
+them.
+
+## SI-012 — IMPLEMENTED — APPROVED SCOPE: compiled Twin worlds and projections
+
+**State:** `IMPLEMENTED — PENDING HUMAN DIFF REVIEW` under explicit user
+authorization on `2026-07-22`.
+
+P1/P2/P3/P9/P10 previously reconstructed the Twin worlds in test-owned lambdas;
+P9/P10 directly embedded H1/H3, while predicate projections were caller strings
+with no catalog provenance check. The repair adds:
+
+- a narrow `EvidenceGammaFiniteProblemCompiler` that reads the explicit finite
+  result domain and required mechanism-rule IDs from Γ, then binds the source
+  and destination only from admitted, observed, supported case evidence;
+- a caller-supplied variable-to-action binding document whose predicates are
+  resolved only from the matched action's single catalog
+  `world_dependencies` entry; and
+- rejection of raw MinDiff projection mappings, unknown variables/actions and
+  ambiguous catalog dependencies.
+
+The normative Γ, Γ hash, action catalog and fixture expected outputs remain
+unchanged. The projection contract is documented at
+`contracts/predicate-projection-v0.8.md`. This repair does not make the narrow
+mechanism compiler a generic rule engine and does not grant certificate or STOP
+authority.
