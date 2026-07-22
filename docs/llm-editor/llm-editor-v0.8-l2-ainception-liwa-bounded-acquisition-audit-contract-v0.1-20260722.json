@@ -1,0 +1,363 @@
+{
+  "schema_version": "project05-llm-editor-l2-ainception-liwa-bounded-acquisition-audit-contract-v0.1",
+  "frozen_date": "2026-07-22",
+  "authority_base_commit": "8d090a6c54a2251328e37bcf76097e79a2627116",
+  "status": "frozen_before_payload_acquisition",
+  "purpose": "Retrieve only a preregistered AInception four-archive subset and the single Liwa archive, then perform a manifest-first, label-blind lineage and evidence-shape audit without assigning train roles or quota credit.",
+  "scope": {
+    "authorized_families": [
+      "ainception_zenodo_2025",
+      "liwa_ad_endpoint_telemetry_30run_2026"
+    ],
+    "exact_archive_download_authorized": true,
+    "archive_central_directory_read_authorized": true,
+    "bounded_notice_read_authorized": true,
+    "bounded_schema_and_pointer_probe_authorized": true,
+    "label_value_read_authorized": false,
+    "ground_truth_read_authorized": false,
+    "semantic_claim_generation_authorized": false,
+    "supervision_generation_authorized": false,
+    "normalization_generation_authorized": false,
+    "family_role_change_authorized": false,
+    "quota_status_change_authorized": false,
+    "train_admission_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "cert_or_iot23_download_authorized": false,
+    "protected_family_payload_read_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false
+  },
+  "acquisition": {
+    "local_root": "datasets/llm/local_audit_cache/ainception-liwa-bounded-v0.1/raw",
+    "maximum_total_download_bytes": 16771966630,
+    "maximum_total_download_gib_approx": 15.62,
+    "resume_partial_download_allowed": true,
+    "automatic_substitution_allowed": false,
+    "automatic_retry_after_terminal_failure_allowed": false,
+    "redirects_allowed_only_from_frozen_zenodo_urls": true,
+    "files": [
+      {
+        "source_family_id": "ainception_zenodo_2025",
+        "source_record_id": 17659656,
+        "source_record_revision": 4,
+        "source_key": "SL100.zip",
+        "local_relative_path": "ainception/SL100.zip",
+        "download_url": "https://zenodo.org/api/records/17659656/files/SL100.zip/content",
+        "expected_bytes": 31592162,
+        "expected_md5": "3d7841d3eaf6d4e297cc75aa9a33fe3d",
+        "selection_stratum": "SL100_single_declared_simulation"
+      },
+      {
+        "source_family_id": "ainception_zenodo_2025",
+        "source_record_id": 17659656,
+        "source_record_revision": 4,
+        "source_key": "SL300_variant_7.zip",
+        "local_relative_path": "ainception/SL300_variant_7.zip",
+        "download_url": "https://zenodo.org/api/records/17659656/files/SL300_variant_7.zip/content",
+        "expected_bytes": 9735245693,
+        "expected_md5": "13a2fcba6a4690ca514278ce6ad2d4cf",
+        "selection_stratum": "SL300_storyline_smallest_archive_after_storyline_coverage_lock"
+      },
+      {
+        "source_family_id": "ainception_zenodo_2025",
+        "source_record_id": 17659656,
+        "source_record_revision": 4,
+        "source_key": "SL700_variant_f_a.zip",
+        "local_relative_path": "ainception/SL700_variant_f_a.zip",
+        "download_url": "https://zenodo.org/api/records/17659656/files/SL700_variant_f_a.zip/content",
+        "expected_bytes": 3358489764,
+        "expected_md5": "8852767f1bc07b4f308483c448a31849",
+        "selection_stratum": "SL700_first_distinct_declared_variant"
+      },
+      {
+        "source_family_id": "ainception_zenodo_2025",
+        "source_record_id": 17659656,
+        "source_record_revision": 4,
+        "source_key": "SL700_variant_b_a.zip",
+        "local_relative_path": "ainception/SL700_variant_b_a.zip",
+        "download_url": "https://zenodo.org/api/records/17659656/files/SL700_variant_b_a.zip/content",
+        "expected_bytes": 3639281826,
+        "expected_md5": "e81e2819cbb1ccda76fda080293385be",
+        "selection_stratum": "SL700_second_distinct_declared_variant"
+      },
+      {
+        "source_family_id": "liwa_ad_endpoint_telemetry_30run_2026",
+        "source_record_id": 20618083,
+        "source_record_revision": 7,
+        "source_key": "Forensic Value of Enhanced Endpoint Telemetry in Active Directory Attack Detection A Controlled Co.zip",
+        "local_relative_path": "liwa/liwa_ad_endpoint_telemetry.zip",
+        "download_url": "https://zenodo.org/api/records/20618083/files/Forensic%20Value%20of%20Enhanced%20Endpoint%20Telemetry%20in%20Active%20Directory%20Attack%20Detection%20A%20Controlled%20Co.zip/content",
+        "expected_bytes": 7357185,
+        "expected_md5": "94f2af6a756a0841126d51a55bd8fe85",
+        "selection_stratum": "only_archive_in_frozen_revision"
+      }
+    ]
+  },
+  "selection_rationale": {
+    "ainception_subset_rule": "First require representation of all three metadata-declared storylines, then add one second declared SL700 variant while minimizing bytes within each locked stratum. The subset was frozen before any archive member or payload was read.",
+    "selection_is_size_only": false,
+    "selected_ainception_archive_count": 4,
+    "selected_ainception_bytes": 16764609445,
+    "selected_storyline_strata": [
+      "SL100",
+      "SL300",
+      "SL700"
+    ],
+    "selection_labels_may_enter_model_or_supervision": false,
+    "unselected_archive_substitution_after_content_observation_allowed": false,
+    "liwa_rule": "The exact single archive in Zenodo revision 7 is the only authorized Liwa object. No other record, revision, attachment, or related artifact is authorized."
+  },
+  "global_manifest_policy": {
+    "allowed_persisted_central_directory_fields": [
+      "member_count",
+      "directory_count",
+      "compressed_bytes",
+      "uncompressed_bytes",
+      "crc32_aggregate_hash",
+      "member_path_aggregate_hash",
+      "suffix_counts",
+      "excluded_category_counts",
+      "notice_member_count",
+      "eligible_raw_member_count"
+    ],
+    "raw_member_paths_may_be_persisted": false,
+    "raw_member_path_hashes_may_be_persisted": true,
+    "maximum_persisted_member_path_hashes_per_archive": 64,
+    "forbidden_path_tokens": [
+      "label",
+      "labels",
+      "answer",
+      "answers",
+      "ground_truth",
+      "ground-truth",
+      "attackmate",
+      "timeline",
+      "timelines",
+      "technique",
+      "techniques",
+      "tactic",
+      "actor",
+      "mitre",
+      "stix",
+      "ioc",
+      "indicator",
+      "knowledge_graph",
+      "attack_graph",
+      "defence_graph",
+      "defense_graph",
+      "bloodhound",
+      "screenshot",
+      "statistics",
+      "analysis",
+      "rule",
+      "rules",
+      "config",
+      "configuration"
+    ],
+    "excluded_binary_suffixes": [
+      ".pcap",
+      ".pcapng",
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".gif",
+      ".pdf",
+      ".doc",
+      ".docx",
+      ".ppt",
+      ".pptx"
+    ],
+    "raw_evidence_manifest_suffixes": [
+      ".csv",
+      ".json",
+      ".jsonl",
+      ".ndjson",
+      ".log",
+      ".txt",
+      ".xml",
+      ".evtx"
+    ],
+    "text_probe_suffixes": [
+      ".csv",
+      ".json",
+      ".jsonl",
+      ".ndjson",
+      ".log",
+      ".txt",
+      ".xml"
+    ],
+    "notice_name_tokens": [
+      "license",
+      "licence",
+      "notice",
+      "copying",
+      "readme"
+    ],
+    "maximum_notice_members_read_per_archive": 16,
+    "maximum_notice_bytes_read_per_member": 131072,
+    "conflicting_notice_tokens": [
+      "cc-by-nc",
+      "non-commercial",
+      "noncommercial",
+      "no redistribution",
+      "no-redistribution",
+      "confidential",
+      "proprietary"
+    ],
+    "fail_closed_rules": [
+      "Reject an archive before opening if byte size or MD5 differs from the frozen contract.",
+      "Reject unsafe archive paths that are absolute or contain parent traversal.",
+      "Do not extract archives to disk; inspect central directories and bounded member streams only.",
+      "Never open excluded binary suffixes or members whose normalized path contains a forbidden token, except bounded notice-name members for license conflict scanning.",
+      "Do not persist raw paths, record values, event text, labels, timestamps below day precision, hostnames, user names, IP addresses, commands, file paths, or registry values.",
+      "Do not widen suffix, field, record, member, or byte limits after observing archive contents.",
+      "Do not infer independent lineage from row count, member count, host count, path count, attack type, logging view, or arbitrary time windows."
+    ]
+  },
+  "bounded_probe_policy": {
+    "maximum_text_members_read_per_ainception_archive": 8,
+    "maximum_text_members_read_liwa": 40,
+    "maximum_bytes_read_per_text_member": 2097152,
+    "maximum_records_read_per_text_member": 128,
+    "maximum_total_text_probe_bytes_per_ainception_archive": 16777216,
+    "maximum_total_text_probe_bytes_liwa": 83886080,
+    "deterministic_member_selection": {
+      "ainception": "For each eligible text suffix, select the lexicographically first and last normalized member path, deduplicate, then fill remaining slots in lexicographic path order up to the frozen per-archive cap.",
+      "liwa": "Select every eligible CSV member in lexicographic normalized-path order and fail closed if the frozen member cap would be exceeded."
+    },
+    "persist_raw_values": false,
+    "persist_only": [
+      "safe schema-category booleans",
+      "safe field-category counts",
+      "sampled record counts",
+      "day-level timestamp range",
+      "hashed host and run cardinalities",
+      "member content hashes",
+      "raw-versus-summary classification",
+      "pointer-shape classification",
+      "verdicts and reasons"
+    ],
+    "safe_field_categories": {
+      "timestamp": [
+        "timestamp",
+        "timecreated",
+        "datetime",
+        "date",
+        "@timestamp",
+        "utc_time"
+      ],
+      "record_id": [
+        "eventrecordid",
+        "event_record_id",
+        "record_id",
+        "recordid",
+        "row_id",
+        "sequence",
+        "event_id"
+      ],
+      "host": [
+        "computer",
+        "hostname",
+        "host",
+        "agent_name",
+        "agent.hostname"
+      ],
+      "channel_or_provider": [
+        "channel",
+        "provider",
+        "providername",
+        "source",
+        "log_name"
+      ],
+      "raw_event_payload": [
+        "message",
+        "event_data",
+        "event.original",
+        "xml",
+        "payload"
+      ],
+      "detector_summary": [
+        "alert",
+        "rule",
+        "detection",
+        "score",
+        "precision",
+        "recall",
+        "accuracy",
+        "true_positive",
+        "false_positive",
+        "statistic",
+        "mean",
+        "median"
+      ],
+      "forbidden_supervision": [
+        "label",
+        "class",
+        "target",
+        "ground_truth",
+        "answer",
+        "attack",
+        "technique",
+        "tactic",
+        "actor",
+        "malware",
+        "supported",
+        "gold"
+      ]
+    }
+  },
+  "lineage_policy": {
+    "ainception": {
+      "candidate_key": "exact selected archive key",
+      "maximum_lineage_credit_per_archive": 1,
+      "structural_gate": "Archive passes only if its checksum is valid, its central directory is safe, and at least one non-forbidden raw-evidence member is present.",
+      "duplicate_gate": "No pair of selected archives may have an identical aggregate manifest signature or identical archive content hash.",
+      "source_native_gate": "The official record declares every selected ZIP to be one complete simulation; after structural and duplicate gates pass, the audit may report a source-native lineage candidate but not statistical independence.",
+      "minimum_source_native_lineage_candidates_for_future_role_review": 4,
+      "statistical_independence_may_be_claimed": false
+    },
+    "liwa": {
+      "candidate_key": "source-native run token derived from a CSV member name after removing logging-view tokens; if no stable run token is detectable, lineage remains unverified",
+      "logging_view_tokens_removed_before_grouping": [
+        "native",
+        "windows",
+        "security",
+        "sysmon",
+        "wazuh",
+        "enhanced",
+        "channel",
+        "telemetry",
+        "event",
+        "events",
+        "log",
+        "logs",
+        "csv"
+      ],
+      "maximum_lineage_credit_per_run_key": 1,
+      "paired_view_rule": "Native, Sysmon, Wazuh, enhanced, Windows, or security-channel views sharing one run token remain one lineage candidate.",
+      "structural_gate": "At least four stable run groups must be present, each backed by a CSV member with a raw-event schema rather than detector-only summary fields.",
+      "duplicate_gate": "Run groups with identical bounded content hashes or identical schema-and-day signatures are not counted independently.",
+      "minimum_source_native_lineage_candidates_for_future_role_review": 4,
+      "statistical_independence_may_be_claimed": false,
+      "null_or_benign_lineage_may_be_claimed": false
+    }
+  },
+  "output_contract": {
+    "audit_script_path": "datasets/llm/audit_ainception_liwa_bounded.py",
+    "machine_report_path": "docs/llm-editor/llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.json",
+    "human_report_path": "docs/llm-editor/llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.md",
+    "download_progress_path": "datasets/llm/local_audit_cache/ainception-liwa-bounded-v0.1/download-progress.json",
+    "raw_payload_excerpt_allowed": false,
+    "raw_member_path_allowed": false,
+    "raw_field_value_allowed": false,
+    "raw_generation_output_allowed": false,
+    "role_change_allowed": false,
+    "quota_change_allowed": false,
+    "train_admission_allowed": false,
+    "l2_gate_change_allowed": false,
+    "git_push_allowed": false
+  }
+}
