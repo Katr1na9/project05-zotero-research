@@ -6,6 +6,8 @@ import copy
 from collections.abc import Iterable, Mapping
 from typing import Any
 
+from ..constrained_decoder.canonical_validator import validate_candidate_claim_ir
+
 
 _POINTER_FIELDS = ("record_id", "source_id", "content_hash")
 
@@ -19,6 +21,8 @@ def preserve_candidate_conflicts(
     """Retain every candidate and symmetrically annotate source-backed conflicts."""
 
     outputs = [copy.deepcopy(dict(candidate)) for candidate in candidates]
+    for output in outputs:
+        validate_candidate_claim_ir(output)
     candidate_ids = [_candidate_id(candidate) for candidate in outputs]
     if len(set(candidate_ids)) != len(candidate_ids):
         raise ValueError("candidate_id values must be unique")
@@ -62,6 +66,7 @@ def preserve_candidate_conflicts(
         )
         if links[candidate_id]:
             output["truth_status"] = "conflicted"
+        validate_candidate_claim_ir(output)
     return outputs
 
 

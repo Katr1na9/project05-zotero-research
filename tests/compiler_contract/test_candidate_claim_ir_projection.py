@@ -77,6 +77,31 @@ class CandidateClaimIRProjectionTests(unittest.TestCase):
                         {"modality": "observed"},
                     )
 
+    def test_rejects_missing_candidate_identity_or_claim(self):
+        for proposal, missing in (
+            ({"claim": {"subject": "a", "predicate": "saw", "object": "b"}}, "candidate_id"),
+            ({"candidate_id": "candidate-001"}, "claim"),
+        ):
+            with self.subTest(missing=missing):
+                with self.assertRaisesRegex(CandidateOnlyViolationError, missing):
+                    project_candidate_claim(proposal, {"modality": "reported"})
+
+    def test_rejects_malformed_pointer_suggestion_shapes_before_materialization(self):
+        malformed = (
+            {"status": "unbound", "candidates": ["REC-1"]},
+            {"status": "ambiguous", "candidates": ["REC-1"]},
+            {"status": "ambiguous", "candidates": ["REC-1", "REC-1"]},
+            {"status": "ambiguous", "candidates": ["REC-1", 2]},
+        )
+
+        for pointer_suggestion in malformed:
+            with self.subTest(pointer_suggestion=pointer_suggestion):
+                with self.assertRaisesRegex(CandidateOnlyViolationError, "pointer_suggestion"):
+                    project_candidate_claim(
+                        semantic_proposal(pointer_suggestion=pointer_suggestion),
+                        {"modality": "observed"},
+                    )
+
     def test_rejects_model_controlled_authority_fields_at_any_depth(self):
         for field in (
             "admission_status",

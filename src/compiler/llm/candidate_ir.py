@@ -11,6 +11,7 @@ from .candidate_only_guard import (
     materialize_pointer_suggestion,
     reject_model_controlled_fields,
 )
+from .exceptions import CandidateOnlyViolationError
 from .source_semantics import preserve_trusted_source_semantics
 
 
@@ -45,6 +46,7 @@ def project_candidate_claim(
         raise ValueError("trusted_source_metadata must contain modality")
 
     reject_model_controlled_fields(raw_semantic_proposal)
+    _require_candidate_identity_and_claim(raw_semantic_proposal)
     pointer_suggestion = materialize_pointer_suggestion(raw_semantic_proposal)
     projection: CandidateClaimIRProjection = {
         field: copy.deepcopy(raw_semantic_proposal[field])
@@ -62,3 +64,13 @@ def project_candidate_claim(
         CandidateClaimIRProjection,
         preserve_trusted_source_semantics(projection, trusted_source_metadata),
     )
+
+
+def _require_candidate_identity_and_claim(proposal: Mapping[str, Any]) -> None:
+    candidate_id = proposal.get("candidate_id")
+    if not isinstance(candidate_id, str) or not candidate_id:
+        raise CandidateOnlyViolationError(
+            "model proposal requires a non-empty candidate_id"
+        )
+    if not isinstance(proposal.get("claim"), Mapping):
+        raise CandidateOnlyViolationError("model proposal requires a claim mapping")

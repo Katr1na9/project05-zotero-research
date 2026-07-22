@@ -62,12 +62,34 @@ def materialize_pointer_suggestion(proposal: Mapping[str, Any]) -> dict[str, Any
         raise CandidateOnlyViolationError("pointer_suggestion must be a mapping")
 
     materialized = copy.deepcopy(dict(suggestion))
-    status = materialized.get("status", "unbound")
+    status = materialized.get("status")
     if status not in PRODUCER_POINTER_STATES:
         raise CandidateOnlyViolationError(
             f"pointer_suggestion status {status!r} is not a producer state"
         )
-    materialized["status"] = status
+    if status == "unbound":
+        if set(materialized) != {"status"}:
+            raise CandidateOnlyViolationError(
+                "unbound pointer_suggestion must contain only status"
+            )
+    else:
+        if set(materialized) != {"status", "candidates"}:
+            raise CandidateOnlyViolationError(
+                "ambiguous pointer_suggestion requires only status and candidates"
+            )
+        candidates = materialized["candidates"]
+        if (
+            not isinstance(candidates, list)
+            or len(candidates) < 2
+            or any(
+                not isinstance(candidate, str) or not candidate
+                for candidate in candidates
+            )
+            or len(set(candidates)) != len(candidates)
+        ):
+            raise CandidateOnlyViolationError(
+                "ambiguous pointer_suggestion requires at least two unique strings"
+            )
     return materialized
 
 

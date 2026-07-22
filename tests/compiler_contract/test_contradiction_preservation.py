@@ -139,12 +139,20 @@ class ContradictionPreservationTests(unittest.TestCase):
     def test_existing_one_sided_conflict_reference_is_made_symmetric(self):
         inputs = [candidate("candidate-1", "evil.example"), candidate("candidate-2", "evil.example")]
         inputs[0]["contradict_claim_ids"] = ["candidate-2"]
+        inputs[0]["truth_status"] = "conflicted"
 
         outputs = preserve_candidate_conflicts(inputs, POINTERS)
 
         self.assertEqual(["candidate-2"], outputs[0]["contradict_claim_ids"])
         self.assertEqual(["candidate-1"], outputs[1]["contradict_claim_ids"])
         self.assertEqual(["conflicted", "conflicted"], [item["truth_status"] for item in outputs])
+
+    def test_rejects_input_that_already_leaks_authority(self):
+        inputs = [candidate("candidate-1", "evil.example")]
+        inputs[0]["certification_authority"] = {"allowed": True, "levels": ["case"]}
+
+        with self.assertRaisesRegex(ValueError, "certification_authority"):
+            preserve_candidate_conflicts(inputs, {"candidate-1": POINTERS["candidate-1"]})
 
     def test_missing_or_same_pointer_identity_does_not_infer_a_conflict(self):
         inputs = [candidate("candidate-1", "benign.example"), candidate("candidate-2", "evil.example")]
