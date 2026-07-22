@@ -1,0 +1,176 @@
+{
+  "schema_version": "project05-llm-editor-l2-test-source-catalog-approved-candidates-v0.2",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "5d6f90cd0526ded26bf14ce2ee00f7b190eb97d3",
+  "supersedes": "docs/llm-editor/llm-editor-v0.8-l2-test-source-catalog-pending-v0.1-20260722.json",
+  "status": "approved_test_candidates_metadata_only_payload_closed",
+  "approval_semantics": {
+    "approved_level": "test_candidate_identity_and_metadata_conditions",
+    "candidate_approval_is_source_gate_approval": false,
+    "candidate_approval_authorizes_download": false,
+    "candidate_approval_authorizes_payload_access": false,
+    "candidate_approval_satisfies_lineage_or_sample_quota": false,
+    "candidate_approval_opens_l2_gate": false
+  },
+  "authorization": {
+    "approved_test_candidates": true,
+    "approved_test_candidate_count": 2,
+    "source_gate_approved": false,
+    "download_authorized": false,
+    "payload_access_authorized": false,
+    "archive_member_read_authorized": false,
+    "private_gold_access_authorized": false,
+    "normalization_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_change_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "approved_test_candidates": [
+    {
+      "source_id": "cmu_cert_insider_threat_test_dataset_r6_2",
+      "display_name": "CMU CERT Insider Threat Test Dataset r6.2",
+      "publisher": "Carnegie Mellon University Software Engineering Institute CERT Division, ExactData LLC, and DARPA I2O",
+      "candidate_status": "approved_test_candidate",
+      "candidate_approval": true,
+      "source_gate_approved": false,
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "normalization_authorized": false,
+      "proposed_split_role": "test_candidate",
+      "active_split_role": null,
+      "source_identity": {
+        "official_api": "https://api.figshare.com/v2/articles/12841247",
+        "public_page": "https://kilthub.cmu.edu/articles/dataset/Insider_Threat_Test_Dataset/12841247",
+        "figshare_article_id": 12841247,
+        "doi": "10.1184/R1/12841247.v1",
+        "doi_version": 1,
+        "license_id": "CC-BY-4.0"
+      },
+      "release_lock": {
+        "policy": "exactly_one_release",
+        "selected_release": "r6.2",
+        "file_id": 24844280,
+        "artifact": "r6.2.tar.bz2",
+        "bytes": 23811144737,
+        "checksum_algorithm": "md5",
+        "checksum": "2f99ec7dfa3e17a29691cbf80c8a662b",
+        "other_release_archives_allowed": false,
+        "mixed_release_use_allowed": false
+      },
+      "answer_and_label_exclusion": {
+        "excluded_answer_artifact": {
+          "file_id": 24857828,
+          "artifact": "answers.tar.bz2",
+          "bytes": 1254678,
+          "checksum_algorithm": "md5",
+          "checksum": "c0c96eaa06915e417504f932756f58d8"
+        },
+        "answer_artifact_download_allowed": false,
+        "prohibited_in_model_view": [
+          "answer-key content",
+          "scenario label",
+          "malicious-user label",
+          "insider identity label",
+          "answer-derived path or filename hint"
+        ],
+        "prohibited_in_normalization_or_supervision": [
+          "answers.tar.bz2",
+          "answer-derived joins",
+          "scenario or malicious-user labels"
+        ],
+        "future_private_gold_use_requires_separate_authorization": true,
+        "fail_closed_action": "quarantine_candidate_source"
+      },
+      "future_source_gate_conditions": [
+        "Obtain separate download and payload-access authorization.",
+        "Verify the publisher MD5 before processing.",
+        "Keep answers.tar.bz2 physically absent from the source workspace.",
+        "Freeze a label-blind scenario/user/time lineage rule.",
+        "Pass nested-notice, protected-exclusion, duplicate, sample-kind, and trusted-modality audits.",
+        "Report the corpus as synthetic."
+      ],
+      "payload_downloaded": false,
+      "payload_opened": false,
+      "counts_toward_l2_quota": false
+    },
+    {
+      "source_id": "stratosphere_iot23_v1_0_0",
+      "display_name": "Stratosphere IoT-23 v1.0.0",
+      "publisher": "Stratosphere Laboratory / Czech Technical University",
+      "candidate_status": "approved_test_candidate",
+      "candidate_approval": true,
+      "source_gate_approved": false,
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "normalization_authorized": false,
+      "proposed_split_role": "test_candidate",
+      "active_split_role": null,
+      "source_identity": {
+        "official_record_api": "https://zenodo.org/api/records/4743746",
+        "official_page": "https://www.stratosphereips.org/datasets-iot23",
+        "zenodo_record_id": 4743746,
+        "doi": "10.5281/zenodo.4743746",
+        "version": "1.0.0",
+        "license_id": "CC-BY-4.0"
+      },
+      "release_lock": {
+        "policy": "single_zenodo_record_version",
+        "selected_release": "1.0.0",
+        "artifact": "iot_23_datasets_full.tar.gz",
+        "bytes": 21510801277,
+        "checksum_algorithm": "md5",
+        "checksum": "7132e603f9750b8580b6cebdbcd43e9c",
+        "unverified_light_archive_allowed": false
+      },
+      "payload_and_label_exclusion": {
+        "future_eligible_scope": "non-PCAP flow or log artifacts only",
+        "pcap_allowed": false,
+        "pcapng_allowed": false,
+        "reported_capture_count": 23,
+        "maximum_lineage_groups_per_capture": 1,
+        "flow_rows_create_independent_lineages": false,
+        "prohibited_in_model_view": [
+          "malware family name",
+          "device or scenario label",
+          "label column or label spreadsheet",
+          "labeled path or filename suffix"
+        ],
+        "prohibited_in_normalization_or_supervision": [
+          "PCAP or PCAPNG payload",
+          "label spreadsheet",
+          "label-derived joins or path hints",
+          "malware, benign/malicious, device, or scenario labels"
+        ],
+        "future_private_gold_use_requires_separate_authorization": true,
+        "fail_closed_action": "quarantine_candidate_source"
+      },
+      "future_source_gate_conditions": [
+        "Obtain separate download and payload-access authorization.",
+        "Verify the full archive against the publisher MD5.",
+        "Materialize only non-PCAP flow or log artifacts.",
+        "Strip all malware, device, scenario, and label-derived information before model-view construction.",
+        "Treat each capture as at most one lineage group.",
+        "Measure Zeek-format nuisance correlation with any development source.",
+        "Pass nested-notice, protected-exclusion, duplicate, sample-kind, and trusted-modality audits."
+      ],
+      "payload_downloaded": false,
+      "payload_opened": false,
+      "counts_toward_l2_quota": false
+    }
+  ],
+  "gate": {
+    "approved_test_candidate_count": 2,
+    "approved_test_family_count": 0,
+    "download_authorized": false,
+    "payload_access_authorized": false,
+    "test_family_quota_passed": false,
+    "lineage_quota_passed": false,
+    "sample_kind_quota_passed": false,
+    "trusted_modality_quota_passed": false,
+    "l2_gate_passed": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  }
+}

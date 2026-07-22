@@ -1,0 +1,318 @@
+{
+  "schema_version": "project05-llm-editor-l2-portfolio-a-replacement-candidates-metadata-only-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "5d6f90cd0526ded26bf14ce2ee00f7b190eb97d3",
+  "status": "metadata_research_complete_no_replacement_approved",
+  "scope": {
+    "public_metadata_and_publication_text_read": true,
+    "dataset_payload_downloaded": false,
+    "dataset_payload_opened": false,
+    "archive_member_contents_read": false,
+    "private_gold_read": false,
+    "model_output_read": false,
+    "role_changes_applied": false,
+    "replacement_sources_approved": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "l2_gate_passed": false
+  },
+  "research_limitations": [
+    "Exa and parallel-cli were unavailable because their API keys and CLIs were not present.",
+    "The audit therefore used committed prior search evidence plus official Zenodo, GitHub, UCO Cyber, and LANL metadata endpoints.",
+    "Metadata can establish identity, license statements, release hashes, and plausible lineage keys, but not payload-level pointer or sample-kind capacity.",
+    "No candidate is promoted to an active split role by this inventory."
+  ],
+  "replacement_candidates": [
+    {
+      "candidate_id": "provsec_2023",
+      "possible_replacements": ["beth_process_events", "redcanary_atomic_red_team"],
+      "candidate_status": "conditional_scientific_preference_artifact_gate_blocked",
+      "recommended_priority": "first_for_beth_then_atomic_if_available",
+      "source_identity": {
+        "article_doi": "10.1007/s44227-023-00014-9",
+        "publication_date": "2023-11-15",
+        "official_research_page": "https://uco-cyber.github.io/research/",
+        "official_download_gate": "https://forms.gle/2P7SpEhceZZn1PyT7",
+        "official_page_etag": "\"69404bf8-69c1\"",
+        "official_page_last_modified": "Mon, 15 Dec 2025 17:57:12 GMT"
+      },
+      "license_and_revision": {
+        "article_license": "CC-BY-4.0",
+        "dataset_artifact_license_verified": false,
+        "immutable_dataset_artifact_revision_verified": false,
+        "dataset_artifact_checksum_verified": false
+      },
+      "lineage_metadata": {
+        "reported_attack_cases": 11,
+        "reported_runtime_recordings_per_case": 2,
+        "candidate_runtime_lineages": 22,
+        "verified_independent_lineages": null,
+        "caution": "Benign/adversary filenames and case identities are labels and must be stripped from model-visible paths."
+      },
+      "scientific_fit": [
+        "Full system-call details and parameters support process, file, and network candidate relations.",
+        "Separate recorded runtime instances are closer to the evidence-editor target than BETH's single selected host file or Atomic YAML specifications."
+      ],
+      "blocking_reasons": [
+        "The article's CC-BY-4.0 license does not automatically license supplementary data.",
+        "The official page exposes a Google Form rather than an immutable artifact revision and checksum.",
+        "Recorder-side supplemented fields require a provenance flag and cannot be silently treated as raw observed fields."
+      ],
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "counts_toward_l2_quota": false
+    },
+    {
+      "candidate_id": "lid_ds_2021",
+      "possible_replacements": ["beth_process_events", "redcanary_atomic_red_team"],
+      "candidate_status": "conditional_scientific_candidate_artifact_gate_blocked",
+      "recommended_priority": "alternate_for_beth_or_atomic_not_both_without_portfolio_assignment",
+      "source_identity": {
+        "article_doi": "10.1007/978-3-031-35190-7_6",
+        "official_repository": "https://github.com/LID-DS/LID-DS",
+        "repository_commit": "587d15870843961acb78fbb4b8fcd0ede28eabcc",
+        "dataset_delivery": "Proton Drive link from the official repository"
+      },
+      "license_and_revision": {
+        "github_api_spdx": "NOASSERTION",
+        "repository_license_text": "GPL-3.0-or-later",
+        "separate_dataset_artifact_license_verified": false,
+        "immutable_dataset_artifact_revision_verified": false,
+        "dataset_artifact_checksum_verified": false
+      },
+      "lineage_metadata": {
+        "scenario_recording_framework_reported": true,
+        "source_native_run_identity_plausible": true,
+        "candidate_lineage_count": null,
+        "verified_independent_lineages": null
+      },
+      "scientific_fit": [
+        "System-call HIDS records and scenario executions are closer to actual evidence generation than Atomic specifications.",
+        "Process, timestamp, thread, argument, return-value, and buffer metadata are suitable for pointer-recoverable candidate relations if the artifact passes a future audit."
+      ],
+      "blocking_reasons": [
+        "The repository license cannot be assumed to cover the separately hosted dataset artifact.",
+        "The Proton-hosted artifact lacks a metadata-visible immutable checksum and byte size.",
+        "Scenario and attack labels must be physically separated from model-visible paths and targets."
+      ],
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "counts_toward_l2_quota": false
+    },
+    {
+      "candidate_id": "loghub_hdfs_v1",
+      "possible_replacements": ["logpai_loghub_linux"],
+      "candidate_status": "metadata_candidate_same_curator_lineage_unverified",
+      "recommended_priority": "first_metadata_ready_loghub_linux_alternative",
+      "source_identity": {
+        "zenodo_record_id": 8196385,
+        "doi": "10.5281/zenodo.8196385",
+        "concept_doi": "10.5281/zenodo.1144100",
+        "publication_date": "2023-07-31",
+        "license_id": "CC-BY-4.0",
+        "repository": "https://github.com/logpai/loghub",
+        "repository_commit": "dd61d0952749ee7963bde24220d1be5ede023033",
+        "artifact": "HDFS_v1.zip",
+        "bytes": 186645559,
+        "checksum_algorithm": "md5",
+        "checksum": "76a24b4d9a6164d543fb275f89773260"
+      },
+      "lineage_metadata": {
+        "reported_collection_hours": 38.7,
+        "reported_hdfs_nodes": 203,
+        "reported_log_lines": 11175629,
+        "documented_trace_key": "HDFS block ID",
+        "candidate_lineage_count": null,
+        "verified_independent_lineages": null,
+        "caution": "Block traces are clusters inside one benchmark collection and cannot be promoted to independent runs without a bounded lineage audit."
+      },
+      "label_exclusion": {
+        "anomaly_labels_allowed_in_model_view": false,
+        "normal_or_abnormal_ground_truth_allowed_in_supervision": false,
+        "label_files_or_labeled_paths_allowed": false
+      },
+      "scientific_fit": [
+        "Block and node identifiers can support literal entity and relation candidates.",
+        "The archive has an immutable DOI, explicit license, size, and checksum."
+      ],
+      "blocking_reasons": [
+        "It shares the LogPAI curator and Zenodo record family with Loghub Linux, so curator-level independence is not achieved.",
+        "A block ID is a lineage candidate, not proof of independent data-generating runs.",
+        "Security-evidence relevance is weaker than ProvSec or LANL host events."
+      ],
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "counts_toward_l2_quota": false
+    },
+    {
+      "candidate_id": "loghub_hadoop_mapreduce",
+      "possible_replacements": ["logpai_loghub_linux"],
+      "candidate_status": "metadata_reserve_same_curator_lineage_unverified",
+      "recommended_priority": "reserve_after_hdfs_v1",
+      "source_identity": {
+        "zenodo_record_id": 8196385,
+        "doi": "10.5281/zenodo.8196385",
+        "license_id": "CC-BY-4.0",
+        "artifact": "Hadoop.zip",
+        "bytes": 3416419,
+        "checksum_algorithm": "md5",
+        "checksum": "34e28a9943704fd54933e2b455829fcc"
+      },
+      "lineage_metadata": {
+        "reported_log_lines": 394308,
+        "candidate_grouping_key": "application or MapReduce job identifier",
+        "candidate_lineage_count": null,
+        "verified_independent_lineages": null
+      },
+      "label_exclusion": {
+        "anomaly_or_job_outcome_labels_allowed_in_model_view": false,
+        "label_files_or_labeled_paths_allowed": false
+      },
+      "blocking_reasons": [
+        "Same LogPAI curator and record-level nuisance correlation as HDFS-v1.",
+        "Application/run grouping cannot be verified without a separately authorized bounded audit.",
+        "Operational-log semantics may not cover security evidence."
+      ],
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "counts_toward_l2_quota": false
+    },
+    {
+      "candidate_id": "lanl_comprehensive_cyber_events_2015",
+      "possible_replacements": ["beth_process_events", "logpai_loghub_linux", "zeek_non_pcap_test_logs"],
+      "candidate_status": "conditional_cross_role_reserve_checksum_gate_blocked",
+      "recommended_priority": "single_future_role_only",
+      "source_identity": {
+        "official_page": "https://csr.lanl.gov/data/cyber1/",
+        "dataset_doi": "10.17021/1179829",
+        "public_release_id": "LA-UR-15-23810",
+        "license_id": "CC0-1.0",
+        "official_page_etag": "\"6a0b6de4-2c7b\"",
+        "official_page_last_modified": "Mon, 18 May 2026 19:52:04 GMT"
+      },
+      "lineage_metadata": {
+        "reported_collection_days": 58,
+        "reported_source_types": 5,
+        "reported_compressed_bytes_text": "approximately 12 GB",
+        "reported_events": 1648275307,
+        "reported_users": 12425,
+        "reported_computers": 17684,
+        "reported_processes": 62974,
+        "candidate_grouping_key": "day, host, and source type",
+        "verified_independent_lineages": null,
+        "caution": "Fifty-eight days are correlated observations from one enterprise, not fifty-eight independent enterprises."
+      },
+      "label_exclusion": {
+        "red_team_event_file_allowed_in_model_view": false,
+        "red_team_identity_or_time_window_hints_allowed": false,
+        "future_private_gold_use_requires_separate_authorization": true
+      },
+      "scientific_fit": [
+        "Authentication, process, DNS, and network-flow sources support multi-modal literal relations.",
+        "Real enterprise collection is scientifically stronger than software fixtures for development."
+      ],
+      "blocking_reasons": [
+        "No immutable per-file checksum manifest was available from the examined public page.",
+        "One LANL corpus may fill only one active split role unless cross-corpus and cross-period independence is separately proven.",
+        "The red-team event set must remain physically separate from the model view."
+      ],
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "counts_toward_l2_quota": false
+    },
+    {
+      "candidate_id": "lanl_unified_host_network_2017",
+      "possible_replacements": ["beth_process_events", "logpai_loghub_linux", "zeek_non_pcap_test_logs"],
+      "candidate_status": "conditional_cross_role_reserve_registration_and_checksum_blocked",
+      "recommended_priority": "zeek_or_loghub_replacement_reserve_single_role_only",
+      "source_identity": {
+        "official_page": "https://csr.lanl.gov/data/2017/",
+        "publication_doi": "10.1142/9781786345646_001",
+        "public_release_id": "LA-UR-17-20763",
+        "license_id": "CC0-1.0",
+        "official_page_etag": "\"6a0b6de4-45dd\"",
+        "official_page_last_modified": "Mon, 18 May 2026 19:52:04 GMT"
+      },
+      "lineage_metadata": {
+        "reported_collection_days": 90,
+        "host_daily_file_count": 90,
+        "network_daily_file_count": 89,
+        "candidate_grouping_key": "day, host scope, and host/network source",
+        "verified_independent_lineages": null,
+        "caution": "Daily files are correlated observations from one enterprise and are not independent enterprises."
+      },
+      "scientific_fit": [
+        "Host records expose process and parent-process fields.",
+        "Network flows expose source, destination, protocol, ports, packet counts, and byte counts."
+      ],
+      "blocking_reasons": [
+        "Data-fence registration is required.",
+        "No immutable per-file checksum manifest was available from the examined public page.",
+        "It must not be activated together with another LANL corpus across splits without a nuisance and overlap audit."
+      ],
+      "download_authorized": false,
+      "payload_access_authorized": false,
+      "counts_toward_l2_quota": false
+    }
+  ],
+  "screened_out_or_not_ready": [
+    {
+      "candidate_id": "djpasco_awsctd",
+      "repository": "https://github.com/DjPasco/AWSCTD",
+      "repository_commit": "3620c0d0d5f4d82c1dbc9b855ad63789e7f74caa",
+      "decision": "reject_license_unverified",
+      "reason": "GitHub metadata declares no license; repository identity alone cannot authorize dataset use."
+    },
+    {
+      "candidate_id": "saga_synthetic_audit_logs",
+      "article": "https://arxiv.org/abs/2411.13138",
+      "decision": "hold_no_official_artifact_metadata_found",
+      "reason": "No official repository or immutable dataset artifact was located in the examined metadata."
+    },
+    {
+      "candidate_id": "full_beth_multi_host",
+      "decision": "not_a_replacement_same_corpus_family",
+      "reason": "The full BETH collection may repair lineage coverage but cannot satisfy Portfolio A's independent replacement-family objective."
+    },
+    {
+      "candidate_id": "otrf_or_mordor_execution_logs",
+      "decision": "blocked_existing_test_or_prior_exposure_family",
+      "reason": "OTRF is in the protected exclusion set and cannot be introduced as train or development data."
+    }
+  ],
+  "portfolio_a_assessment": {
+    "beth_replacement_preference": ["provsec_2023", "lid_ds_2021"],
+    "loghub_replacement_preference": ["loghub_hdfs_v1", "lanl_comprehensive_cyber_events_2015"],
+    "atomic_replacement_preference": ["provsec_2023", "lid_ds_2021"],
+    "zeek_replacement_preference": ["lanl_comprehensive_cyber_events_2015", "lanl_unified_host_network_2017"],
+    "allocation_constraints": [
+      "One candidate family cannot replace two active families or appear in two splits.",
+      "ProvSec or LID-DS must be assigned once; the same artifact cannot independently replace both BETH and Atomic.",
+      "Only one LANL corpus should be active unless cross-period and cross-corpus independence is separately demonstrated.",
+      "HDFS-v1 and Hadoop are alternatives within the same LogPAI-curated record, not two independent replacement families."
+    ],
+    "metadata_ready_for_separate_candidate_review": ["loghub_hdfs_v1"],
+    "scientifically_preferred_but_metadata_blocked": ["provsec_2023", "lid_ds_2021"],
+    "conditional_cross_role_reserves": ["lanl_comprehensive_cyber_events_2015", "lanl_unified_host_network_2017"],
+    "approved_replacement_count": 0,
+    "roles_changed": false,
+    "portfolio_a_gate_passed": false
+  },
+  "gate": {
+    "metadata_research_complete": true,
+    "replacement_sources_approved": false,
+    "approved_replacement_count": 0,
+    "role_changes_applied": false,
+    "download_authorized": false,
+    "payload_access_authorized": false,
+    "train_lineage_quota_passed": false,
+    "development_lineage_quota_passed": false,
+    "test_lineage_quota_passed": false,
+    "l2_gate_passed": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  }
+}

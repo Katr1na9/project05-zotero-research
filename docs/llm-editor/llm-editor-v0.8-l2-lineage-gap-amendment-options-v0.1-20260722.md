@@ -120,7 +120,9 @@
 
 ```yaml
 family_roles_changed: false
-test_candidates_approved: false
+test_candidates_approved: true
+test_candidate_approval_level: metadata_identity_and_conditions_only
+test_source_gate_approved: false
 bounded_payload_audit_authorized: false
 train_lineage_quota_passed: false
 development_lineage_quota_passed: false
