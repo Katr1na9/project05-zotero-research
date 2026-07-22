@@ -1,9 +1,10 @@
+import copy
 import json
 import sys
 import unittest
 from pathlib import Path
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, ValidationError
 
 
 SRC_ROOT = Path(__file__).resolve().parents[2] / "src"
@@ -71,26 +72,64 @@ class ConstrainedSchemaEquivalenceTests(unittest.TestCase):
         for fixture_name in INVALID_FIXTURES:
             with self.subTest(fixture=fixture_name):
                 document = load_fixture(fixture_name)
-                with self.assertRaises(Exception):
+                with self.assertRaises(ValidationError):
                     self.decoder_validator.validate(document)
                 with self.assertRaises(CandidateClaimIRValidationError):
                     validate_candidate_claim_ir(document)
 
-    def test_every_decoder_accepted_boundary_document_is_canonical(self):
+    def test_boundary_matrix_has_matching_canonical_and_decoder_results(self):
         valid = load_fixture("valid_candidate_unbound.json")
-        boundary_documents = [
-            valid,
-            {**valid, "binding_status": "ambiguous"},
-            {**valid, "modality": "observed"},
-            {**valid, "modality": "invented"},
-            {**valid, "compatibility_status": "kernel_compatible"},
-            {**valid, "extra": True},
-        ]
+        wrong_allowed = copy.deepcopy(valid)
+        wrong_allowed["certification_authority"]["allowed"] = True
+        wrong_levels = copy.deepcopy(valid)
+        wrong_levels["certification_authority"]["levels"] = ["case"]
+        inconsistent_pointer = copy.deepcopy(valid)
+        inconsistent_pointer["binding_status"] = "ambiguous"
+        nested_unknown = copy.deepcopy(valid)
+        nested_unknown["claim"]["modality"] = "observed"
+        boundary_documents = {
+            "valid": (valid, True),
+            "unknown top-level": ({**valid, "extra": True}, False),
+            "wrong candidate constant": (
+                {**valid, "admission_status": "admitted"},
+                False,
+            ),
+            "authority allowed": (wrong_allowed, False),
+            "authority levels": (wrong_levels, False),
+            "invalid binding state": ({**valid, "binding_status": "bound"}, False),
+            "pointer inconsistency": (inconsistent_pointer, False),
+            "nested unknown claim field": (nested_unknown, False),
+        }
 
-        for index, document in enumerate(boundary_documents):
-            with self.subTest(index=index):
-                if self.decoder_validator.is_valid(document):
-                    self.assertIs(document, validate_candidate_claim_ir(document))
+        for case, (document, expected) in boundary_documents.items():
+            with self.subTest(case=case):
+                decoder_accepts = self.decoder_validator.is_valid(document)
+                try:
+                    validate_candidate_claim_ir(document)
+                    canonical_accepts = True
+                except CandidateClaimIRValidationError:
+                    canonical_accepts = False
+                self.assertEqual(expected, decoder_accepts)
+                self.assertEqual(expected, canonical_accepts)
+
+    def test_mutating_exported_canonical_schema_cannot_widen_new_decoder_views(self):
+        original = copy.deepcopy(CANDIDATE_CLAIM_IR_SCHEMA)
+        document = load_fixture("valid_candidate_unbound.json")
+        document["extra"] = True
+        try:
+            CANDIDATE_CLAIM_IR_SCHEMA["additionalProperties"] = True
+
+            fresh_schema = build_decoder_compatibility_schema()
+            fresh_validator = Draft202012Validator(fresh_schema)
+
+            self.assertFalse(fresh_schema["additionalProperties"])
+            with self.assertRaises(ValidationError):
+                fresh_validator.validate(document)
+            with self.assertRaises(CandidateClaimIRValidationError):
+                validate_candidate_claim_ir(document)
+        finally:
+            CANDIDATE_CLAIM_IR_SCHEMA.clear()
+            CANDIDATE_CLAIM_IR_SCHEMA.update(original)
 
 
 if __name__ == "__main__":

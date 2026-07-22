@@ -27,85 +27,88 @@ _CLAIM_FIELDS = frozenset(
 _REQUIRED_CLAIM_FIELDS = frozenset({"subject", "predicate", "object"})
 _MODALITIES = ("observed", "derived", "reported", "hypothesized", "unknown")
 
-_STRING_SCHEMA = {"type": "string", "minLength": 1}
-_CLAIM_SCHEMA: dict[str, Any] = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": sorted(_REQUIRED_CLAIM_FIELDS),
-    "properties": {
-        "subject": dict(_STRING_SCHEMA),
-        "predicate": dict(_STRING_SCHEMA),
-        "object": dict(_STRING_SCHEMA),
-        "polarity": {"type": "boolean"},
-        "literal": {"type": "string"},
-        "quote": {"type": "string"},
-    },
-}
-_AUTHORITY_SCHEMA: dict[str, Any] = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": ["allowed", "levels"],
-    "properties": {
-        "allowed": {"const": False},
-        "levels": {"type": "array", "maxItems": 0},
-    },
-}
-_UNBOUND_POINTER_SCHEMA: dict[str, Any] = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": ["status"],
-    "properties": {"status": {"const": "unbound"}},
-}
-_AMBIGUOUS_POINTER_SCHEMA: dict[str, Any] = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": ["status", "candidates"],
-    "properties": {
-        "status": {"const": "ambiguous"},
-        "candidates": {
-            "type": "array",
-            "items": dict(_STRING_SCHEMA),
-            "minItems": 2,
-            "uniqueItems": True,
-        },
-    },
-}
+def _build_candidate_claim_ir_schema() -> dict[str, Any]:
+    """Build the contract from immutable literals, never an exported schema dict."""
 
-CANDIDATE_CLAIM_IR_SCHEMA: dict[str, Any] = {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "urn:project05:local:candidate-claim-ir:pending-kernel-schema",
-    "title": "Local Candidate Claim IR Projection",
-    "type": "object",
-    "additionalProperties": False,
-    "required": sorted(_TOP_LEVEL_FIELDS),
-    "properties": {
-        "candidate_id": dict(_STRING_SCHEMA),
-        "claim": _CLAIM_SCHEMA,
-        "modality": {"type": "string", "enum": list(_MODALITIES)},
-        "admission_status": {"const": "candidate"},
-        "certification_authority": _AUTHORITY_SCHEMA,
-        "promotion_status": {"const": "none"},
-        "binding_status": {"enum": ["unbound", "ambiguous"]},
-        "pointer_suggestion": {
-            "oneOf": [_UNBOUND_POINTER_SCHEMA, _AMBIGUOUS_POINTER_SCHEMA]
+    def string_schema() -> dict[str, Any]:
+        return {"type": "string", "minLength": 1}
+
+    unbound_pointer: dict[str, Any] = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["status"],
+        "properties": {"status": {"const": "unbound"}},
+    }
+    ambiguous_pointer: dict[str, Any] = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["status", "candidates"],
+        "properties": {
+            "status": {"const": "ambiguous"},
+            "candidates": {
+                "type": "array",
+                "items": string_schema(),
+                "minItems": 2,
+                "uniqueItems": True,
+            },
         },
-        "compatibility_status": {"const": "pending_kernel_schema"},
-    },
-    "allOf": [
-        {
-            "if": {
-                "properties": {"binding_status": {"const": "unbound"}},
-                "required": ["binding_status"],
+    }
+    return {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:project05:local:candidate-claim-ir:pending-kernel-schema",
+        "title": "Local Candidate Claim IR Projection",
+        "type": "object",
+        "additionalProperties": False,
+        "required": sorted(_TOP_LEVEL_FIELDS),
+        "properties": {
+            "candidate_id": string_schema(),
+            "claim": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": sorted(_REQUIRED_CLAIM_FIELDS),
+                "properties": {
+                    "subject": string_schema(),
+                    "predicate": string_schema(),
+                    "object": string_schema(),
+                    "polarity": {"type": "boolean"},
+                    "literal": {"type": "string"},
+                    "quote": {"type": "string"},
+                },
             },
-            "then": {
-                "properties": {"pointer_suggestion": _UNBOUND_POINTER_SCHEMA}
+            "modality": {"type": "string", "enum": list(_MODALITIES)},
+            "admission_status": {"const": "candidate"},
+            "certification_authority": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["allowed", "levels"],
+                "properties": {
+                    "allowed": {"const": False},
+                    "levels": {"type": "array", "maxItems": 0},
+                },
             },
-            "else": {
-                "properties": {"pointer_suggestion": _AMBIGUOUS_POINTER_SCHEMA}
+            "promotion_status": {"const": "none"},
+            "binding_status": {"enum": ["unbound", "ambiguous"]},
+            "pointer_suggestion": {
+                "oneOf": [unbound_pointer, ambiguous_pointer]
             },
-        }
-    ],
-}
+            "compatibility_status": {"const": "pending_kernel_schema"},
+        },
+        "allOf": [
+            {
+                "if": {
+                    "properties": {"binding_status": {"const": "unbound"}},
+                    "required": ["binding_status"],
+                },
+                "then": {"properties": {"pointer_suggestion": unbound_pointer}},
+                "else": {
+                    "properties": {"pointer_suggestion": ambiguous_pointer}
+                },
+            }
+        ],
+    }
+
+
+CANDIDATE_CLAIM_IR_SCHEMA = _build_candidate_claim_ir_schema()
 
 # Descriptive alias for callers that prefer an explicit canonical name.
 CANONICAL_CANDIDATE_CLAIM_IR_SCHEMA = CANDIDATE_CLAIM_IR_SCHEMA
