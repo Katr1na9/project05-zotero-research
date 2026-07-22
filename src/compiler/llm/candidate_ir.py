@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import copy
 from collections.abc import Mapping
-from typing import Any, TypedDict
+from typing import Any, Required, TypedDict
 
 from .candidate_only_guard import (
     materialize_pointer_suggestion,
@@ -15,13 +15,13 @@ from .candidate_only_guard import (
 class CandidateClaimIRProjection(TypedDict, total=False):
     """A local, candidate-only claim mapping without Kernel-schema authority."""
 
-    modality: Any
-    admission_status: str
-    certification_authority: dict[str, Any]
-    promotion_status: str
-    binding_status: str
-    pointer_suggestion: dict[str, Any]
-    compatibility_status: str
+    modality: Required[Any]
+    admission_status: Required[str]
+    certification_authority: Required[dict[str, Any]]
+    promotion_status: Required[str]
+    binding_status: Required[str]
+    pointer_suggestion: Required[dict[str, Any]]
+    compatibility_status: Required[str]
 
 
 def project_candidate_claim(

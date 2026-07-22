@@ -96,6 +96,37 @@ class CandidateClaimIRProjectionTests(unittest.TestCase):
                 {"modality": "reported"},
             )
 
+    def test_rejects_globally_forbidden_control_surfaces_before_projection(self):
+        forbidden_proposals = {
+            "E_case write": semantic_proposal(E_case={"write": "claim-1"}),
+            "nested Checker": semantic_proposal(control={"Checker": "run"}),
+            "SAT decision": semantic_proposal(decision="SAT"),
+            "nested UNSAT declaration": semantic_proposal(
+                claim={"predicate": "wrote", "verification": "UNSAT"}
+            ),
+            "CERTIFIED declaration": semantic_proposal(declaration="CERTIFIED"),
+            "nested STOP declaration": semantic_proposal(
+                control={"state": "STOP"}
+            ),
+            "UNRESOLVABLE declaration": semantic_proposal(state="UNRESOLVABLE"),
+            "Promote operation": semantic_proposal(operation="Promote"),
+            "nested Revoke operation": semantic_proposal(
+                control={"operation": "Revoke"}
+            ),
+            "Gamma mutation": semantic_proposal(Gamma_update={"add": "x"}),
+            "action catalog mutation": semantic_proposal(
+                action_catalog_mutation={"add": "x"}
+            ),
+            "absence semantics mutation": semantic_proposal(
+                absence_semantics_update={"mode": "changed"}
+            ),
+        }
+
+        for surface, proposal in forbidden_proposals.items():
+            with self.subTest(surface=surface):
+                with self.assertRaises(CandidateOnlyViolationError):
+                    project_candidate_claim(proposal, {"modality": "reported"})
+
     def test_projection_is_pure_and_does_not_mutate_its_inputs(self):
         proposal = semantic_proposal(pointer_suggestion={"status": "unbound"})
         metadata = {"modality": "hypothesized"}

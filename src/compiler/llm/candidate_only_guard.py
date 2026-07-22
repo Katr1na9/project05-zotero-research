@@ -19,6 +19,16 @@ MODEL_CONTROLLED_FIELDS = frozenset(
     }
 )
 PRODUCER_POINTER_STATES = frozenset({"unbound", "ambiguous"})
+FORBIDDEN_CONTROL_FIELD_PREFIXES = (
+    "e_case",
+    "checker",
+    "gamma",
+    "action_catalog",
+    "absence_semantics",
+)
+FORBIDDEN_CONTROL_DECLARATIONS = frozenset(
+    {"sat", "unsat", "certified", "stop", "unresolvable", "promote", "revoke"}
+)
 
 
 def reject_model_controlled_fields(proposal: Mapping[str, Any]) -> None:
@@ -50,15 +60,31 @@ def _reject_control_fields(value: Any, path: tuple[str, ...]) -> None:
     if isinstance(value, Mapping):
         for key, nested_value in value.items():
             field_path = ".".join((*path, str(key)))
-            if key in MODEL_CONTROLLED_FIELDS:
+            normalized_key = _normalized_control_token(key)
+            if normalized_key in MODEL_CONTROLLED_FIELDS:
                 raise CandidateOnlyViolationError(
                     f"model proposal contains controlled field {field_path}"
                 )
-            if key == "modality":
+            if normalized_key == "modality":
                 raise CandidateOnlyViolationError(
                     f"model proposal contains modality override at {field_path}"
+                )
+            if normalized_key.startswith(FORBIDDEN_CONTROL_FIELD_PREFIXES):
+                raise CandidateOnlyViolationError(
+                    f"model proposal contains forbidden control field {field_path}"
                 )
             _reject_control_fields(nested_value, (*path, str(key)))
     elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
         for index, nested_value in enumerate(value):
             _reject_control_fields(nested_value, (*path, str(index)))
+    elif isinstance(value, str):
+        declaration = _normalized_control_token(value)
+        if declaration in FORBIDDEN_CONTROL_DECLARATIONS:
+            field_path = ".".join(path) or "<root>"
+            raise CandidateOnlyViolationError(
+                f"model proposal contains forbidden control declaration {value!r} at {field_path}"
+            )
+
+
+def _normalized_control_token(value: object) -> str:
+    return str(value).strip().casefold().replace("-", "_").replace(" ", "_")
