@@ -1,0 +1,274 @@
+{
+  "schema_version": "project05-llm-editor-l2-source-inventory-metadata-only-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "7f94a2a",
+  "status": "metadata_only_not_l2_approved",
+  "scope": {
+    "payload_files_read": false,
+    "payload_files_written": false,
+    "private_gold_read": false,
+    "model_used": false,
+    "baseline_run": false,
+    "training_run": false,
+    "kernel_schema_modified": false,
+    "m3_integrated": false
+  },
+  "evidence_sources": [
+    {
+      "branch_commit": "7f94a2a",
+      "path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/data-gate-audit-v0.2.json",
+      "sha256": "008AA9C131C142862671FB1CDB27DB5133AE1C89F13CF29CCEC90A967BDCB370",
+      "evidence_kind": "historical_pair_counts_and_split_roles"
+    },
+    {
+      "branch_commit": "7f94a2a",
+      "path": "09-experiments/llm_evidence_compiler_mainline/beth_source_gate_v0.1/generated/source-gate-audit-v0.1.json",
+      "sha256": "EF54A56C23BDA4988F49C4C2694F2C08EBD69A4664252CE1962C822DA13BDB5E",
+      "evidence_kind": "beth_source_identity_license_and_counts"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/source_catalog.json",
+      "sha256": "1C97F43FAA87D74C9209A77B8018992F4FFCAD398F0262A3A22D14B7AAF8DD04",
+      "evidence_kind": "pinned_source_revision_license_and_legacy_role"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/generated/source-candidate-review.csv",
+      "sha256": "8B35373FB4C6847CC946F8252CED9B8A8EEF4A553B78BF40671F4B3E2B678F39",
+      "evidence_kind": "legacy_conditional_approval_and_filtering_conditions"
+    },
+    {
+      "branch_commit": "dc9dbc0942fe912df2d57b9c24b2601a9f5ea60a",
+      "path": "09-experiments/llm_finetuning_v0.3/generated/payload-exclusion-audit.json",
+      "sha256": "DCDA9065A3A7B7AC77A272858C320CA14EEC4DB1D592A188B4D3CA47E3887A7C",
+      "evidence_kind": "historical_exclusion_passed_record_counts_only"
+    }
+  ],
+  "historical_pair_summary": {
+    "examples": 1500,
+    "supported": 750,
+    "unsupported_by_bound_pointer": 750,
+    "train_examples": 1200,
+    "development_examples": 300,
+    "train_development_family_overlap": [],
+    "formal_l2_gate_passed": false,
+    "pair_payloads_available_in_clean_checkout": false,
+    "inheritance_policy": "counts_and_hashes_only_no_automatic_l2_reuse"
+  },
+  "families": [
+    {
+      "corpus_family_id": "redcanary_atomic_red_team",
+      "display_name": "Atomic Red Team literal observations",
+      "publisher": "Red Canary",
+      "source_revision": "git:65d358aa47a7b0093290d486b1d8138bd208d1f6",
+      "source_scope": "atomics YAML literal command/path/network fragments only",
+      "declared_bytes": 55573573,
+      "license_id": "MIT",
+      "license_sha256": "65AF6027045D23175366EAB50E460AB3EE7790E591CB84CC32C78AC63A4C90E1",
+      "legacy_split_role": "train",
+      "legacy_approval": "conditional_approve_conditions_1_to_6",
+      "historical_exclusion_passed_records": 799,
+      "historical_selected_pairs": 300,
+      "historical_selected_supported": 150,
+      "historical_selected_unsupported": 150,
+      "l2_candidate_role": "train_candidate",
+      "l2_approval_status": "pending_reapproval",
+      "lineage_metadata_status": "not_audited_for_l2",
+      "limitations": [
+        "synthetic_detection_procedures_not_endpoint_audit_logs",
+        "ttp_actor_malware_title_description_and_path_labels_prohibited",
+        "historical_pair_counts_do_not_establish_v0_8_sample_kind_coverage"
+      ]
+    },
+    {
+      "corpus_family_id": "splunk_attack_data_manifests",
+      "display_name": "Splunk Attack Data recoverable text observations",
+      "publisher": "Splunk",
+      "source_revision": "git:82315c9a40cd744d0c2fc8fa4538ec74493dcdf4",
+      "source_scope": "locally materialized recoverable text spans under datasets only",
+      "declared_bytes": 1263433,
+      "license_id": "Apache-2.0",
+      "license_sha256": "8505946B2464FA90223996D99EECBC7639A86648CA071F0CAC21695BE2623A0A",
+      "legacy_split_role": "train",
+      "legacy_approval": "conditional_approve_conditions_1_to_6",
+      "historical_exclusion_passed_records": 2,
+      "historical_selected_pairs": 0,
+      "historical_selected_supported": 0,
+      "historical_selected_unsupported": 0,
+      "l2_candidate_role": "inactive_reserve",
+      "l2_approval_status": "insufficient_metadata_capacity",
+      "lineage_metadata_status": "not_audited_for_l2",
+      "limitations": [
+        "only_two_historical_exclusion_passed_records",
+        "external_payload_links_and_unresolved_references_prohibited",
+        "cannot_count_toward_train_family_quota_without_new_amendment"
+      ]
+    },
+    {
+      "corpus_family_id": "ait_cam_lds_manifestations_filtered",
+      "display_name": "CAM-LDS filtered system-log manifestations",
+      "publisher": "AIT Austrian Institute of Technology",
+      "source_revision": "zenodo:18861762:file:manifestations_filtered.zip:md5:cfc14140b2e396a60989b8379eafca1f",
+      "source_scope": "steps-subtree literal audit/auth/syslog/application records only",
+      "declared_bytes": 213771977,
+      "license_id": "CC-BY-4.0",
+      "license_sha256": "9BA9550AD48438D0836DDAB3DA480B3B69FFA0AAC7B7878B5A0039E7AB429411",
+      "legacy_split_role": "train",
+      "legacy_approval": "conditional_approve_conditions_1_to_6",
+      "historical_exclusion_passed_records": 800,
+      "historical_selected_pairs": 300,
+      "historical_selected_supported": 150,
+      "historical_selected_unsupported": 150,
+      "l2_candidate_role": "train_candidate",
+      "l2_approval_status": "pending_reapproval",
+      "lineage_metadata_status": "not_audited_for_l2",
+      "limitations": [
+        "positive_observation_material_only",
+        "must_not_create_null_from_missing_attack_manifestation",
+        "sequence_technique_config_fact_and_alert_subtrees_prohibited"
+      ]
+    },
+    {
+      "corpus_family_id": "fkie_socbed_acsac2021_winlogbeat",
+      "display_name": "SOCBED ACSAC 2021 Windows event logs",
+      "publisher": "Fraunhofer FKIE",
+      "source_revision": "git:c264060f0e65ea69c2d891525ae835a543f851ca:blob:270ea757ade54a9fe6f6cf730658c053a04f4460",
+      "source_scope": "winlogbeat_##.jsonl literal Windows events only",
+      "declared_bytes": 77984817,
+      "license_id": "MIT",
+      "license_sha256": "D803EBF02537C98D99EEB33ABA9223C86FC6D3882E5107B57B1FA4AEFAA4E936",
+      "legacy_split_role": "train",
+      "legacy_approval": "conditional_approve_conditions_1_to_6",
+      "historical_exclusion_passed_records": 795,
+      "historical_selected_pairs": 300,
+      "historical_selected_supported": 150,
+      "historical_selected_unsupported": 150,
+      "l2_candidate_role": "train_candidate",
+      "l2_approval_status": "pending_reapproval",
+      "lineage_metadata_status": "forty_runs_reported_not_yet_grouped",
+      "limitations": [
+        "synthetic_testbed_not_independent_real_attacks",
+        "sigma_suricata_rules_true_positive_sheet_and_run_labels_prohibited",
+        "nested_notices_require_recheck_under_future_payload_authority"
+      ]
+    },
+    {
+      "corpus_family_id": "beth_process_events",
+      "display_name": "BETH v3 single-host process events",
+      "publisher": "Kate Highnam et al. via Kaggle",
+      "source_revision": "kaggle:katehighnam/beth-dataset:v3:file:labelled_2021may-ip-10-100-1-105.csv:sha256:528AD1F4813A9FBB839F3C4B37F7B1A861F0E33D998FB46E6D59CAEF119FB597",
+      "source_scope": "one exact per-host process-event CSV with sus/evil labels stripped",
+      "declared_bytes": 99560489,
+      "license_id": "CC0-1.0",
+      "license_sha256": "A2010F343487D3F7618AFFE54F789F5487602331C0A8D03F49E9A7C547CF0499",
+      "legacy_split_role": "train",
+      "legacy_approval": "passed_candidate_fourth_family_source_gate",
+      "historical_eligible_source_records": 409931,
+      "historical_selection_pool_rows_examined": 2000,
+      "historical_exclusion_passed_records": null,
+      "historical_selected_pairs": 300,
+      "historical_selected_supported": 150,
+      "historical_selected_unsupported": 150,
+      "l2_candidate_role": "train_candidate",
+      "l2_approval_status": "pending_reapproval",
+      "lineage_metadata_status": "single_host_file_not_yet_partitioned_into_independent_groups",
+      "limitations": [
+        "single_host_file_can_create_severe_pseudoreplication",
+        "sus_and_evil_fields_must_remain unread_for_supervision",
+        "historical_parent_process_template_does_not_cover_v0_8_sample_kinds"
+      ]
+    },
+    {
+      "corpus_family_id": "logpai_loghub_linux",
+      "display_name": "Loghub Linux logs",
+      "publisher": "LogPAI / Zenodo depositor",
+      "source_revision": "git:dd61d0952749ee7963bde24220d1be5ede023033:zenodo:8196385:file:Linux.tar.gz:md5:6d1802d7778126f21c001c6aa7b6b106",
+      "source_scope": "held-out Linux system observations and null candidates",
+      "declared_bytes": 232039,
+      "license_id": "CC-BY-4.0",
+      "license_sha256": "9BA9550AD48438D0836DDAB3DA480B3B69FFA0AAC7B7878B5A0039E7AB429411",
+      "legacy_split_role": "training-validation",
+      "legacy_approval": "approve_with_attribution_conditions_1_to_6",
+      "historical_exclusion_passed_records": 500,
+      "historical_selected_pairs": 300,
+      "historical_selected_supported": 150,
+      "historical_selected_unsupported": 150,
+      "l2_candidate_role": "development_candidate",
+      "l2_approval_status": "pending_reapproval",
+      "lineage_metadata_status": "not_audited_for_l2",
+      "limitations": [
+        "must_remain_held_out_from_train",
+        "attribution_required",
+        "line_level_count_does_not_prove_independent_lineage_groups"
+      ]
+    },
+    {
+      "corpus_family_id": "zeek_non_pcap_test_logs",
+      "display_name": "Zeek non-PCAP test logs",
+      "publisher": "Zeek Project / Regents of the University of California",
+      "source_revision": "git:dfa255b8e4d7f70a08e3aaea6722904329b94f3f",
+      "source_scope": "non-PCAP LOG/JSON blobs under testing only",
+      "declared_bytes": 33107237,
+      "license_id": "BSD-3-Clause",
+      "license_sha256": "1F984ADB6B5CD93D5035C2A87C2DF5F38922649FBEA90C7BD79FF321D17333AA",
+      "legacy_split_role": "training-validation",
+      "legacy_approval": "conditional_approve_conditions_1_to_6",
+      "historical_exclusion_passed_records": 500,
+      "historical_selected_pairs": 300,
+      "historical_selected_supported": 150,
+      "historical_selected_unsupported": 150,
+      "l2_candidate_role": "development_candidate",
+      "l2_approval_status": "pending_reapproval",
+      "lineage_metadata_status": "test_file_level_groups_possible_not_audited",
+      "limitations": [
+        "must_remain_held_out_from_train",
+        "pcap_and_pcapng_prohibited",
+        "individual_file_notices_require_recheck_under_future_payload_authority"
+      ]
+    }
+  ],
+  "split_readiness": {
+    "train": {
+      "candidate_families": [
+        "redcanary_atomic_red_team",
+        "ait_cam_lds_manifestations_filtered",
+        "fkie_socbed_acsac2021_winlogbeat",
+        "beth_process_events"
+      ],
+      "family_count": 4,
+      "status": "metadata_capacity_only_pending_l2_reapproval_and_lineage_audit"
+    },
+    "development": {
+      "candidate_families": [
+        "logpai_loghub_linux",
+        "zeek_non_pcap_test_logs"
+      ],
+      "family_count": 2,
+      "status": "metadata_capacity_only_pending_l2_reapproval_and_lineage_audit"
+    },
+    "test": {
+      "candidate_families": [],
+      "family_count": 0,
+      "status": "hard_blocked_no_independent_test_family"
+    },
+    "inactive_reserve": {
+      "candidate_families": [
+        "splunk_attack_data_manifests"
+      ],
+      "family_count": 1,
+      "status": "does_not_count_toward_any_quota"
+    }
+  },
+  "inventory_conclusion": {
+    "l2_source_gate_passed": false,
+    "quota_gate_passed": false,
+    "baseline_permitted": false,
+    "next_metadata_only_need": [
+      "user_reapproval_of_l2_roles",
+      "lineage_group_capacity_by_family",
+      "sample_kind_and_modality_capacity_by_family",
+      "at_least_two_independent_test_family_candidates"
+    ]
+  }
+}

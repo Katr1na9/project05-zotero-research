@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:project05:llm-editor:candidate-sample-envelope:provisional:v0.1",
+  "title": "Project05 L2 provisional candidate editor sample envelope",
+  "description": "Metadata envelope only. Payload, trusted material and private scorer gold remain in separate referenced objects.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "sample_id",
+    "sample_kind",
+    "split_role",
+    "corpus_family_id",
+    "lineage_group_id",
+    "source_revision",
+    "source_license_id",
+    "source_notice_sha256",
+    "normalizer_id",
+    "normalizer_version",
+    "model_view",
+    "trusted_view",
+    "model_target_class",
+    "program_expected",
+    "private_scorer",
+    "audit"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "project05-llm-editor-l2-provisional-v0.1"
+    },
+    "sample_id": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "sample_kind": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "candidate_supported",
+          "candidate_unsupported",
+          "pointer_absent",
+          "pointer_ambiguous",
+          "modality_preservation",
+          "authority_injection",
+          "conflict_group",
+          "duplicate_retention"
+        ]
+      }
+    },
+    "split_role": {
+      "enum": [
+        "train",
+        "development",
+        "test",
+        "quarantine"
+      ]
+    },
+    "corpus_family_id": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "lineage_group_id": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source_revision": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "source_license_id": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "source_notice_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "normalizer_id": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "normalizer_version": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "model_view": {
+      "$ref": "#/$defs/detachedObjectRef"
+    },
+    "trusted_view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_ref",
+        "sha256",
+        "transport_modality",
+        "modality",
+        "epistemic_role",
+        "initial_truth_status",
+        "pointer_catalog_sha256",
+        "polarity_contract_status",
+        "polarity_supervision"
+      ],
+      "properties": {
+        "object_ref": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "transport_modality": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "modality": {
+          "enum": [
+            "observed",
+            "derived",
+            "reported",
+            "hypothesized",
+            "unknown"
+          ]
+        },
+        "epistemic_role": {
+          "enum": [
+            "case_evidence",
+            "mechanism_knowledge",
+            "background_intelligence",
+            "model_hypothesis",
+            "analyst_hypothesis",
+            "unknown"
+          ]
+        },
+        "initial_truth_status": {
+          "enum": [
+            "unassessed",
+            "supported",
+            "contradicted",
+            "conflicted",
+            "retracted"
+          ]
+        },
+        "pointer_catalog_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "polarity_contract_status": {
+          "enum": [
+            "pending_si_llm_007",
+            "explicit_adapter"
+          ]
+        },
+        "polarity_supervision": {
+          "type": "boolean"
+        }
+      }
+    },
+    "model_target_class": {
+      "enum": [
+        "candidate_emitted",
+        "abstained_or_rejected"
+      ]
+    },
+    "program_expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "admission_status",
+        "certification_authority",
+        "promotion_status",
+        "binding_status",
+        "compatibility_status",
+        "conflict_group_id"
+      ],
+      "properties": {
+        "admission_status": {
+          "const": "candidate"
+        },
+        "certification_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowed",
+            "levels"
+          ],
+          "properties": {
+            "allowed": {
+              "const": false
+            },
+            "levels": {
+              "type": "array",
+              "maxItems": 0
+            }
+          }
+        },
+        "promotion_status": {
+          "const": "none"
+        },
+        "binding_status": {
+          "enum": [
+            "unbound",
+            "ambiguous"
+          ]
+        },
+        "compatibility_status": {
+          "const": "pending_kernel_schema"
+        },
+        "conflict_group_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonemptyString"
+            }
+          ]
+        }
+      }
+    },
+    "private_scorer": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/detachedObjectRef"
+        },
+        {
+          "type": "object",
+          "required": [
+            "model_visible"
+          ],
+          "properties": {
+            "model_visible": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conversion_rule_ids",
+        "source_span_hashes",
+        "exclusion_scan_status",
+        "human_semantic_judgment_used"
+      ],
+      "properties": {
+        "conversion_rule_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonemptyString"
+          }
+        },
+        "source_span_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sha256"
+          }
+        },
+        "exclusion_scan_status": {
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        },
+        "human_semantic_judgment_used": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "trusted_view": {
+            "properties": {
+              "polarity_contract_status": {
+                "const": "pending_si_llm_007"
+              }
+            },
+            "required": [
+              "polarity_contract_status"
+            ]
+          }
+        },
+        "required": [
+          "trusted_view"
+        ]
+      },
+      "then": {
+        "properties": {
+          "trusted_view": {
+            "properties": {
+              "polarity_supervision": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "detachedObjectRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_ref",
+        "sha256",
+        "model_visible"
+      ],
+      "properties": {
+        "object_ref": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "model_visible": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
