@@ -1,10 +1,17 @@
-import hashlib
 import importlib
 import json
 import unittest
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
+import yaml
+
+from src.ir.observation_claim import ObservationClaimIRAdapter
+from tests.integration.twin_kernel_inputs import (
+    load_json,
+    load_jsonl,
+    twin_observation_adapter_context,
+)
 
 
 try:
@@ -17,70 +24,6 @@ ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / "tests" / "fixtures" / "TWIN-COUNTEREXAMPLE-001"
 
 
-def load_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))
-
-
-def load_jsonl(path):
-    return [
-        json.loads(line)
-        for line in Path(path).read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
-
-
-def observation_claim(row, row_number):
-    content = json.dumps(row, sort_keys=True, separators=(",", ":")).encode()
-    subject_host = "H3" if "H3" in row["action_id"] else "H1"
-    return {
-        "schema_version": "0.8.0",
-        "claim_id": f"P7-{row['observation_id']}",
-        "subject": {"entity_id": subject_host, "entity_type": "host"},
-        "predicate": "action_observation",
-        "object": {
-            "entity_id": None,
-            "literal": row["observed_value"],
-            "entity_type": None,
-        },
-        "time": {"start": None, "end": None, "precision": "bounded"},
-        "location": {"host": subject_host, "tenant": "T1", "zone": None},
-        "polarity": "positive",
-        "modality": "observed",
-        "truth_status": "supported",
-        "epistemic_role": "case_evidence",
-        "certification_authority": {
-            "allowed": True,
-            "levels": ["initial_foothold"],
-            "basis_rule_id": "A-P5-OBSERVATION",
-            "policy_hash": "sha256:" + "7" * 64,
-        },
-        "source_family": "identity",
-        "source_schema": "kernel.action-observation.v0.8",
-        "pointer": {
-            "source_id": "action_observations.jsonl",
-            "record_id": row["observation_id"],
-            "byte_or_row_range": [row_number, row_number],
-            "content_hash": "sha256:" + hashlib.sha256(content).hexdigest(),
-        },
-        "compiler": {
-            "parser_id": "p5-observation-adapter",
-            "parser_version": "0.8.0",
-            "model_id": None,
-            "prompt_or_rule_hash": "sha256:" + "8" * 64,
-        },
-        "binding_status": "bound",
-        "admission_status": "candidate",
-        "promotion_status": "none",
-        "promotion_event_id": None,
-        "admissible_levels": ["initial_foothold"],
-        "support_claim_ids": [],
-        "contradict_claim_ids": [],
-        "rule_trace": ["P5-OBSERVATION-BINDING"],
-        "confidence": {"extraction": 1.0, "source": 1.0, "model": None},
-        "lifecycle_state": "bound",
-    }
-
-
 class TwinEpistemicFirewallAdmissionP7IntegrationTests(unittest.TestCase):
     def setUp(self):
         self.assertIsNotNone(
@@ -91,14 +34,21 @@ class TwinEpistemicFirewallAdmissionP7IntegrationTests(unittest.TestCase):
         observations = load_jsonl(
             FIXTURE / "expected" / "action_observations.jsonl"
         )
+        catalog = yaml.safe_load(
+            (ROOT / "configs" / "action-catalog-kernel-v0.8.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+        adapted = ObservationClaimIRAdapter().adapt_batch(
+            observations, catalog, twin_observation_adapter_context()
+        )
         schema = load_json(ROOT / "schemas" / "claim-ir-kernel.schema.json")
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
         firewall = firewall_api.ECaseAdmissionFirewall()
 
         decisions = {}
         claims = {}
-        for row_number, row in enumerate(observations, start=1):
-            claim = observation_claim(row, row_number)
+        for row, claim in zip(observations, adapted, strict=True):
             self.assertEqual([], list(validator.iter_errors(claim)))
             claims[row["observation_id"]] = claim
             decisions[row["observation_id"]] = firewall.evaluate(claim, row)
@@ -124,7 +74,14 @@ class TwinEpistemicFirewallAdmissionP7IntegrationTests(unittest.TestCase):
         row = load_jsonl(
             FIXTURE / "expected" / "action_observations.jsonl"
         )[0]
-        claim = observation_claim(row, 1)
+        catalog = yaml.safe_load(
+            (ROOT / "configs" / "action-catalog-kernel-v0.8.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+        claim = ObservationClaimIRAdapter().adapt(
+            row, catalog, twin_observation_adapter_context()
+        )
         incomplete = dict(row)
         incomplete["completeness_conditions_satisfied"] = False
         oracle_claim = dict(claim)

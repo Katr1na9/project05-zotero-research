@@ -12,7 +12,7 @@ except (ImportError, ModuleNotFoundError):
     driver_api = None
 
 
-def twin_request(*, feedback_observation_ids=()):
+def twin_request(*, feedback_observation_ids=(), observation_admission=None):
     inputs = load_twin_kernel_inputs()
     gamma = inputs.gamma
     catalog = inputs.catalog
@@ -51,6 +51,7 @@ def twin_request(*, feedback_observation_ids=()):
         action_catalog=catalog,
         execution_tables=tables,
         feedback_observation_ids=feedback_observation_ids,
+        observation_admission=observation_admission,
     )
 
 

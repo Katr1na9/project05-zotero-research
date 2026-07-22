@@ -6,10 +6,12 @@ from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 
 from src.firewall.admission import ECaseAdmissionFirewall
-from tests.integration.test_twin_epistemic_firewall_admission_p7 import (
+from src.ir.observation_claim import ObservationClaimIRAdapter
+from tests.integration.twin_kernel_inputs import (
     load_json,
     load_jsonl,
-    observation_claim,
+    load_yaml,
+    twin_observation_adapter_context,
 )
 
 
@@ -31,9 +33,12 @@ class TwinPromoteRevokeAuditP8IntegrationTests(unittest.TestCase):
         observations = load_jsonl(
             FIXTURE / "expected" / "action_observations.jsonl"
         )
+        catalog = load_yaml(ROOT / "configs" / "action-catalog-kernel-v0.8.yaml")
+        adapted = ObservationClaimIRAdapter().adapt_batch(
+            observations, catalog, twin_observation_adapter_context()
+        )
         claims = {
-            row["observation_id"]: observation_claim(row, row_number)
-            for row_number, row in enumerate(observations, start=1)
+            claim["pointer"]["record_id"]: claim for claim in adapted
         }
         rows = {row["observation_id"]: row for row in observations}
         decisions = {
