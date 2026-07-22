@@ -99,19 +99,26 @@ class CandidateClaimIRProjectionTests(unittest.TestCase):
     def test_rejects_globally_forbidden_control_surfaces_before_projection(self):
         forbidden_proposals = {
             "E_case write": semantic_proposal(E_case={"write": "claim-1"}),
-            "nested Checker": semantic_proposal(control={"Checker": "run"}),
-            "SAT decision": semantic_proposal(decision="SAT"),
+            "nested Checker": semantic_proposal(
+                claim={"predicate": "wrote", "Checker": {"run": True}}
+            ),
             "nested UNSAT declaration": semantic_proposal(
-                claim={"predicate": "wrote", "verification": "UNSAT"}
+                claim={"predicate": "wrote", "unsat": {"value": True}}
             ),
-            "CERTIFIED declaration": semantic_proposal(declaration="CERTIFIED"),
+            "nested CERTIFIED declaration": semantic_proposal(
+                claim={"predicate": "wrote", "certify": {"value": True}}
+            ),
             "nested STOP declaration": semantic_proposal(
-                control={"state": "STOP"}
+                claim={"predicate": "wrote", "stop": {"value": True}}
             ),
-            "UNRESOLVABLE declaration": semantic_proposal(state="UNRESOLVABLE"),
-            "Promote operation": semantic_proposal(operation="Promote"),
+            "nested UNRESOLVABLE declaration": semantic_proposal(
+                claim={"predicate": "wrote", "unresolvable": {"value": True}}
+            ),
+            "nested Promote operation": semantic_proposal(
+                claim={"predicate": "wrote", "promote": {"value": True}}
+            ),
             "nested Revoke operation": semantic_proposal(
-                control={"operation": "Revoke"}
+                claim={"predicate": "wrote", "revoke": {"value": True}}
             ),
             "Gamma mutation": semantic_proposal(Gamma_update={"add": "x"}),
             "action catalog mutation": semantic_proposal(
@@ -126,6 +133,39 @@ class CandidateClaimIRProjectionTests(unittest.TestCase):
             with self.subTest(surface=surface):
                 with self.assertRaises(CandidateOnlyViolationError):
                     project_candidate_claim(proposal, {"modality": "reported"})
+
+    def test_rejects_structured_control_bypasses_and_unknown_top_level_fields(self):
+        forbidden_proposals = {
+            "stop boolean": semantic_proposal(stop=True),
+            "promote object": semantic_proposal(promote={"claim": "candidate-001"}),
+            "revoke boolean": semantic_proposal(revoke=False),
+            "certify object": semantic_proposal(certify={"level": "case"}),
+            "checker object": semantic_proposal(checker={"run": True}),
+            "sat boolean": semantic_proposal(sat=True),
+            "unsat object": semantic_proposal(unsat={"result": True}),
+            "Checker operation": semantic_proposal(operation="run Checker"),
+            "unrecognized semantic field": semantic_proposal(unrecognized_field=True),
+        }
+
+        for surface, proposal in forbidden_proposals.items():
+            with self.subTest(surface=surface):
+                with self.assertRaises(CandidateOnlyViolationError):
+                    project_candidate_claim(proposal, {"modality": "reported"})
+
+    def test_allows_reserved_words_as_ordinary_claim_content(self):
+        proposal = semantic_proposal(
+            claim={
+                "subject": "STOP",
+                "predicate": "references",
+                "object": "Promote",
+                "literal": "Revoke",
+                "quote": "SAT",
+            }
+        )
+
+        projected = project_candidate_claim(proposal, {"modality": "reported"})
+
+        self.assertEqual(proposal["claim"], projected["claim"])
 
     def test_projection_is_pure_and_does_not_mutate_its_inputs(self):
         proposal = semantic_proposal(pointer_suggestion={"status": "unbound"})

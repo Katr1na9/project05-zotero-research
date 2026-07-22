@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any, Required, TypedDict
 
 from .candidate_only_guard import (
+    ALLOWED_RAW_PROPOSAL_FIELDS,
     materialize_pointer_suggestion,
     reject_model_controlled_fields,
 )
@@ -39,7 +40,11 @@ def project_candidate_claim(
 
     reject_model_controlled_fields(raw_semantic_proposal)
     pointer_suggestion = materialize_pointer_suggestion(raw_semantic_proposal)
-    projection: CandidateClaimIRProjection = copy.deepcopy(dict(raw_semantic_proposal))
+    projection: CandidateClaimIRProjection = {
+        field: copy.deepcopy(raw_semantic_proposal[field])
+        for field in ALLOWED_RAW_PROPOSAL_FIELDS
+        if field in raw_semantic_proposal
+    }
     projection["modality"] = copy.deepcopy(trusted_source_metadata["modality"])
     projection["admission_status"] = "candidate"
     projection["certification_authority"] = {"allowed": False, "levels": []}

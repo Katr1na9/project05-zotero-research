@@ -19,6 +19,9 @@ MODEL_CONTROLLED_FIELDS = frozenset(
     }
 )
 PRODUCER_POINTER_STATES = frozenset({"unbound", "ambiguous"})
+ALLOWED_RAW_PROPOSAL_FIELDS = frozenset(
+    {"candidate_id", "claim", "pointer_suggestion"}
+)
 FORBIDDEN_CONTROL_FIELD_PREFIXES = (
     "e_case",
     "checker",
@@ -26,14 +29,26 @@ FORBIDDEN_CONTROL_FIELD_PREFIXES = (
     "action_catalog",
     "absence_semantics",
 )
-FORBIDDEN_CONTROL_DECLARATIONS = frozenset(
-    {"sat", "unsat", "certified", "stop", "unresolvable", "promote", "revoke"}
+FORBIDDEN_CONTROL_FIELD_NAMES = frozenset(
+    {
+        "certify",
+        "certified",
+        "decision",
+        "operation",
+        "promote",
+        "revoke",
+        "sat",
+        "stop",
+        "unresolvable",
+        "unsat",
+    }
 )
 
 
 def reject_model_controlled_fields(proposal: Mapping[str, Any]) -> None:
     """Reject model-supplied authority, lifecycle, and modality controls."""
 
+    _reject_unknown_top_level_fields(proposal)
     _reject_control_fields(proposal, ())
 
 
@@ -69,7 +84,10 @@ def _reject_control_fields(value: Any, path: tuple[str, ...]) -> None:
                 raise CandidateOnlyViolationError(
                     f"model proposal contains modality override at {field_path}"
                 )
-            if normalized_key.startswith(FORBIDDEN_CONTROL_FIELD_PREFIXES):
+            if (
+                normalized_key in FORBIDDEN_CONTROL_FIELD_NAMES
+                or normalized_key.startswith(FORBIDDEN_CONTROL_FIELD_PREFIXES)
+            ):
                 raise CandidateOnlyViolationError(
                     f"model proposal contains forbidden control field {field_path}"
                 )
@@ -77,12 +95,13 @@ def _reject_control_fields(value: Any, path: tuple[str, ...]) -> None:
     elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
         for index, nested_value in enumerate(value):
             _reject_control_fields(nested_value, (*path, str(index)))
-    elif isinstance(value, str):
-        declaration = _normalized_control_token(value)
-        if declaration in FORBIDDEN_CONTROL_DECLARATIONS:
-            field_path = ".".join(path) or "<root>"
+
+
+def _reject_unknown_top_level_fields(proposal: Mapping[str, Any]) -> None:
+    for key in proposal:
+        if key not in ALLOWED_RAW_PROPOSAL_FIELDS:
             raise CandidateOnlyViolationError(
-                f"model proposal contains forbidden control declaration {value!r} at {field_path}"
+                f"model proposal contains unknown top-level field {key}"
             )
 
 
