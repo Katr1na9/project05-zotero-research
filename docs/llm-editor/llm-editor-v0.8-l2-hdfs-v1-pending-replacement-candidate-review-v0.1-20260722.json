@@ -1,0 +1,160 @@
+{
+  "schema_version": "project05-llm-editor-l2-hdfs-v1-pending-replacement-candidate-review-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "3f5ed665d20dc7051a0aa23d6d57f0592edcd39a",
+  "review_type": "single_family_metadata_only_replacement_candidate_review",
+  "candidate_status": "pending_replacement_candidate_review",
+  "candidate_id": "loghub_hdfs_v1",
+  "target_replacement": "logpai_loghub_linux",
+  "verdict": "approve_as_metadata_candidate",
+  "scope": {
+    "official_metadata_read": true,
+    "dataset_payload_downloaded": false,
+    "dataset_payload_opened": false,
+    "archive_member_contents_read": false,
+    "private_gold_read": false,
+    "model_output_read": false,
+    "family_role_changed": false,
+    "replacement_approved": false,
+    "counts_toward_l2_quota": false,
+    "hadoop_approved_as_second_independent_family": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "l2_gate_passed": false
+  },
+  "metadata_identity": {
+    "dataset_name": "HDFS-v1",
+    "zenodo_record_id": 8196385,
+    "record_title": "Loghub: A Large Collection of System Log Datasets for AI-driven Log Analytics",
+    "record_creator": "Curated by LOGPAI",
+    "doi": "10.5281/zenodo.8196385",
+    "concept_doi": "10.5281/zenodo.1144100",
+    "publication_date": "2023-07-31",
+    "license_id": "CC-BY-4.0",
+    "license_authority": "Zenodo release record 8196385",
+    "artifact": {
+      "filename": "HDFS_v1.zip",
+      "bytes": 186645559,
+      "checksum_algorithm": "md5",
+      "checksum": "76a24b4d9a6164d543fb275f89773260"
+    },
+    "repository": {
+      "url": "https://github.com/logpai/loghub",
+      "pinned_commit": "dd61d0952749ee7963bde24220d1be5ede023033",
+      "github_api_license_spdx": "NOASSERTION",
+      "license_interpretation": "The candidate artifact license is taken from the Zenodo release record; GitHub's repository-level license field does not supply an SPDX assertion."
+    }
+  },
+  "metadata_verification": {
+    "verified_on": "2026-07-22",
+    "official_sources": [
+      "https://zenodo.org/api/records/8196385",
+      "https://doi.org/10.5281/zenodo.8196385",
+      "https://api.github.com/repos/logpai/loghub",
+      "https://api.github.com/repos/logpai/loghub/commits/dd61d0952749ee7963bde24220d1be5ede023033"
+    ],
+    "doi_verified": true,
+    "concept_doi_verified": true,
+    "license_verified_at_release_record": true,
+    "artifact_filename_verified": true,
+    "artifact_size_verified": true,
+    "artifact_md5_verified": true,
+    "repository_commit_verified": true,
+    "payload_bytes_retrieved": false
+  },
+  "curator_record_overlap": {
+    "compared_with_family": "logpai_loghub_linux",
+    "same_curator": true,
+    "same_zenodo_record": true,
+    "shared_zenodo_record_id": 8196385,
+    "existing_family_artifact": {
+      "filename": "Linux.tar.gz",
+      "bytes": 232039,
+      "checksum_algorithm": "md5",
+      "checksum": "6d1802d7778126f21c001c6aa7b6b106"
+    },
+    "candidate_artifact_is_distinct_file": true,
+    "independent_curation_demonstrated": false,
+    "independent_collection_demonstrated_by_metadata": false,
+    "risk": "Shared curator and release record create packaging- and selection-level dependence; distinct artifacts do not by themselves establish independent scientific lineage.",
+    "replacement_implication": "HDFS-v1 may remain a replacement candidate, but it cannot be counted as an additional independent LogPAI family alongside Loghub Linux without a separately authorized lineage audit."
+  },
+  "lineage_assessment": {
+    "reported_collection": {
+      "system": "203-node HDFS benchmark",
+      "duration_hours": 38.7,
+      "log_line_count": 11175629
+    },
+    "documented_grouping_key": "HDFS block ID",
+    "block_id_classification": "causal_trace_or_grouping_candidate",
+    "block_id_allowed_as_visible_entity_or_cluster_key": true,
+    "block_id_verified_as_independent_run_or_replicate": false,
+    "block_id_counts_toward_independent_lineage_quota": false,
+    "verified_independent_lineage_count": null,
+    "lineage_quota_demonstrated": false,
+    "pseudoreplication_warning": "Many block traces from one benchmark collection must not be treated as many independent experiments, runs, hosts, or source families.",
+    "future_requirement": "A separately authorized bounded lineage audit must establish collection/run boundaries before any lineage or quota claim."
+  },
+  "label_exclusion_contract": {
+    "contract_status": "frozen_for_any_future_payload_authorization",
+    "normal_or_abnormal_label_allowed_in_model_view": false,
+    "anomaly_label_file_allowed_in_model_view": false,
+    "label_derived_filename_or_path_allowed_in_model_view": false,
+    "handcrafted_anomaly_rule_result_allowed_in_model_view": false,
+    "train_test_split_label_allowed_in_model_view": false,
+    "class_ratio_or_anomaly_prevalence_hint_allowed_in_model_view": false,
+    "label_allowed_in_normalization_supervision": false,
+    "label_allowed_in_training_target": false,
+    "label_allowed_as_pointer_or_path_hint": false,
+    "required_future_controls": [
+      "Physically isolate label artifacts before any payload inspection or normalization.",
+      "Treat block ID only as a visible entity or grouping key until lineage is separately verified.",
+      "Do not use labels, label-derived paths, split assignments, or anomaly proportions in prompts, inputs, normalization targets, or training targets.",
+      "Any use of excluded labels as private scorer gold requires separate explicit authorization and must never feed the model or admission path."
+    ]
+  },
+  "hadoop_sibling_guard": {
+    "candidate_id": "loghub_hadoop_mapreduce",
+    "artifact": "Hadoop.zip",
+    "bytes": 3416419,
+    "checksum_algorithm": "md5",
+    "checksum": "34e28a9943704fd54933e2b455829fcc",
+    "same_curator_and_zenodo_record_as_hdfs_v1": true,
+    "approved": false,
+    "approved_as_second_independent_family": false,
+    "counts_toward_l2_quota": false,
+    "role_changed": false,
+    "reason": "The current authorization explicitly excludes Hadoop as a second independent family, and shared LogPAI curation/record metadata cannot establish scientific independence."
+  },
+  "verdict_rationale": {
+    "positive": [
+      "The release DOI, concept DOI, publication date, CC-BY-4.0 license statement, artifact name, byte size, MD5, repository, and pinned repository commit are independently machine-checkable from official metadata.",
+      "The metadata is sufficient to retain HDFS-v1 as a named candidate for a future replacement decision."
+    ],
+    "limitations": [
+      "HDFS-v1 and Loghub Linux share the same LogPAI curator and Zenodo release record.",
+      "Block IDs identify traces inside one benchmark collection but do not establish independent runs or replicates.",
+      "Normal/abnormal labels are excluded from all model-visible and supervision paths.",
+      "No payload-level sample capacity, pointer quality, modality coverage, or scientific lineage has been demonstrated."
+    ],
+    "meaning": "approve_as_metadata_candidate is not replacement approval, download authorization, role assignment, quota credit, or L2 Gate passage."
+  },
+  "gate": {
+    "metadata_identity_gate_passed": true,
+    "metadata_candidate_approved": true,
+    "replacement_approved": false,
+    "role_change_applied": false,
+    "download_authorized": false,
+    "payload_access_authorized": false,
+    "lineage_audit_authorized": false,
+    "lineage_quota_demonstrated": false,
+    "counts_toward_l2_quota": false,
+    "hadoop_second_family_approved": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "next_action_requires_separate_user_authorization": true
+  }
+}
