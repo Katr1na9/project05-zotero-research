@@ -87,6 +87,8 @@ class ConstrainedSchemaEquivalenceTests(unittest.TestCase):
         inconsistent_pointer["binding_status"] = "ambiguous"
         nested_unknown = copy.deepcopy(valid)
         nested_unknown["claim"]["modality"] = "observed"
+        contradictory_without_status = copy.deepcopy(valid)
+        contradictory_without_status["contradict_claim_ids"] = ["candidate-002"]
         boundary_documents = {
             "valid": (valid, True),
             "unknown top-level": ({**valid, "extra": True}, False),
@@ -99,6 +101,10 @@ class ConstrainedSchemaEquivalenceTests(unittest.TestCase):
             "invalid binding state": ({**valid, "binding_status": "bound"}, False),
             "pointer inconsistency": (inconsistent_pointer, False),
             "nested unknown claim field": (nested_unknown, False),
+            "contradiction without conflicted status": (
+                contradictory_without_status,
+                False,
+            ),
         }
 
         for case, (document, expected) in boundary_documents.items():

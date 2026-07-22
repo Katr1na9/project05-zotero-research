@@ -20,6 +20,7 @@ _TOP_LEVEL_FIELDS = frozenset(
         "promotion_status",
         "binding_status",
         "pointer_suggestion",
+        "contradict_claim_ids",
         "compatibility_status",
     }
 )
@@ -113,6 +114,11 @@ def _build_candidate_claim_ir_schema() -> dict[str, Any]:
             "pointer_suggestion": {
                 "oneOf": [unbound_pointer, ambiguous_pointer]
             },
+            "contradict_claim_ids": {
+                "type": "array",
+                "items": string_schema(),
+                "uniqueItems": True,
+            },
             "compatibility_status": {"const": "pending_kernel_schema"},
         },
         "allOf": [
@@ -125,7 +131,16 @@ def _build_candidate_claim_ir_schema() -> dict[str, Any]:
                 "else": {
                     "properties": {"pointer_suggestion": ambiguous_pointer}
                 },
-            }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "contradict_claim_ids": {"minItems": 1}
+                    },
+                    "required": ["contradict_claim_ids"],
+                },
+                "then": {"properties": {"truth_status": {"const": "conflicted"}}},
+            },
         ],
     }
 
@@ -174,6 +189,11 @@ def validate_candidate_claim_ir(document: Document) -> Document:
         "compatibility_status",
     )
     pointer_status = _validate_pointer_suggestion(document["pointer_suggestion"])
+    _validate_contradict_claim_ids(document["contradict_claim_ids"])
+    if document["contradict_claim_ids"] and document["truth_status"] != "conflicted":
+        raise CandidateClaimIRValidationError(
+            "non-empty contradict_claim_ids require truth_status conflicted"
+        )
     _require_member(
         document["binding_status"], ("unbound", "ambiguous"), "binding_status"
     )
@@ -182,6 +202,17 @@ def validate_candidate_claim_ir(document: Document) -> Document:
             "binding_status must equal pointer_suggestion.status"
         )
     return document
+
+
+def _validate_contradict_claim_ids(value: Any) -> None:
+    if (
+        not isinstance(value, list)
+        or any(not isinstance(candidate_id, str) or not candidate_id for candidate_id in value)
+        or len(set(value)) != len(value)
+    ):
+        raise CandidateClaimIRValidationError(
+            "contradict_claim_ids must contain unique non-empty strings"
+        )
 
 
 def _validate_claim(value: Any) -> None:

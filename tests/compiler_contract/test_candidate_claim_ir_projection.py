@@ -50,6 +50,7 @@ class CandidateClaimIRProjectionTests(unittest.TestCase):
         self.assertEqual("none", projected["promotion_status"])
         self.assertEqual("unbound", projected["binding_status"])
         self.assertEqual({"status": "unbound"}, projected["pointer_suggestion"])
+        self.assertEqual([], projected["contradict_claim_ids"])
         self.assertEqual("pending_kernel_schema", projected["compatibility_status"])
         self.assertEqual(proposal, semantic_proposal())
 

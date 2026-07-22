@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import copy
 from collections.abc import Mapping
-from typing import Any, Required, TypedDict
+from typing import Any, Required, TypedDict, cast
 
 from .candidate_only_guard import (
     ALLOWED_RAW_PROPOSAL_FIELDS,
@@ -17,7 +17,9 @@ from .source_semantics import preserve_trusted_source_semantics
 class CandidateClaimIRProjection(TypedDict, total=False):
     """A local, candidate-only claim mapping without Kernel-schema authority."""
 
-    modality: Required[Any]
+    candidate_id: str
+    claim: dict[str, Any]
+    modality: Required[str]
     epistemic_role: Required[str]
     truth_status: Required[str]
     admission_status: Required[str]
@@ -25,6 +27,7 @@ class CandidateClaimIRProjection(TypedDict, total=False):
     promotion_status: Required[str]
     binding_status: Required[str]
     pointer_suggestion: Required[dict[str, Any]]
+    contradict_claim_ids: Required[list[str]]
     compatibility_status: Required[str]
 
 
@@ -53,7 +56,9 @@ def project_candidate_claim(
     projection["promotion_status"] = "none"
     projection["binding_status"] = pointer_suggestion["status"]
     projection["pointer_suggestion"] = pointer_suggestion
+    projection["contradict_claim_ids"] = []
     projection["compatibility_status"] = "pending_kernel_schema"
-    return preserve_trusted_source_semantics(
-        projection, trusted_source_metadata
-    )  # type: ignore[return-value]
+    return cast(
+        CandidateClaimIRProjection,
+        preserve_trusted_source_semantics(projection, trusted_source_metadata),
+    )
