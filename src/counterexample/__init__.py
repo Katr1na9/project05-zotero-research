@@ -1,9 +1,20 @@
-"""P2 counterexample post-processing API.
+"""P2/P3 deterministic counterexample post-processing API.
 
-Only deterministic finite-witness MinDiff is exposed. This package contains no
-Firewall, promotion, executor, planner, Part B, or system-state implementation.
+Only finite-witness MinDiff and schema-shaped artifact assembly are exposed.
+This package contains no Firewall, promotion, executor, planner, Part B, or
+system-state implementation.
 """
 
+from .artifact import (
+    CounterexampleArtifactAssembler,
+    CounterexampleArtifactMetadata,
+)
 from .mindiff import FiniteWitnessMinDiff, MinDiffResult, MinimizationStatus
 
-__all__ = ["FiniteWitnessMinDiff", "MinDiffResult", "MinimizationStatus"]
+__all__ = [
+    "CounterexampleArtifactAssembler",
+    "CounterexampleArtifactMetadata",
+    "FiniteWitnessMinDiff",
+    "MinDiffResult",
+    "MinimizationStatus",
+]
