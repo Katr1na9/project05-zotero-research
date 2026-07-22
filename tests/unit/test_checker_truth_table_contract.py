@@ -14,7 +14,7 @@ CHECKER_TRUTH_TABLE = (
 
 
 class CheckerTruthTableContractTests(unittest.TestCase):
-    """P0 freezes truth-table cases; P1 will bind them to checker code."""
+    """P0 freezes the table; P1 binds it in test_finite_domain_checker."""
 
     def test_v08_inherits_all_seven_v07_checker_rows(self):
         self.assertEqual(7, len(CHECKER_TRUTH_TABLE))

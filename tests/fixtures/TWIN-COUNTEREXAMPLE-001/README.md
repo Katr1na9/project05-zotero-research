@@ -9,6 +9,11 @@ Expected Checker rows are `base=SAT`, `support=SAT`, `alternative=SAT`, hence
 `COUNTEREXAMPLE_FOUND`. Because at least one deterministic, executable action
 distinguishes the worlds, the expected main system state is `CONTINUE`.
 
+From P1, `base`, `support`, `alternative`, and `checker_status` are recomputed
+by `test_twin_checker_p1.py` from the frozen finite Γ domain and admitted case
+evidence. `system_status=CONTINUE` remains a non-Checker fixture expectation;
+the P1 Checker neither derives nor emits a system state.
+
 The fixture is a contract artifact only. The counterexample is an expected
 solver-side world pair, not external ground truth. Action observations and
 resource traces are evaluator-side post-execution examples and are not inputs
