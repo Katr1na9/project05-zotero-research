@@ -1,8 +1,16 @@
 # Kernel v0.8 specification issues
 
-Status: issue register for P0 artifact implementation. Each issue carries an
-explicit state; closing an issue here does not silently modify the normative
-v0.8 document.
+Status: lifecycle issue register for the P0--P10 Part A implementation. Each
+issue carries an explicit state; closing an issue here does not silently modify
+the normative v0.8 document.
+
+Implementation snapshot (`2026-07-22`): P0--P10 are locally implemented on
+`feat/kernel-v0.8 @ 93af889`, with 100/100 Kernel tests passing. This is an
+engineering closeout only. A16 remains `PENDING_HUMAN_REVIEW` and is treated as
+`NO-GO`; Part B, Planner/M3*, LLM, training, push and PR are not implied. The
+controlling status entry is
+`08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md`, and the verification
+record is `04-progress/kernel-v0.8-part-a-closeout-20260722.md`.
 
 ## SI-001 — CLOSED: normative v0.8 file is tracked
 
@@ -101,3 +109,17 @@ support a formal certificate, or appear in a formal certification claim. Any
 certificate depending on such a placeholder is invalid and must be rejected.
 Before formal freeze, the placeholders must be replaced by the actual hash of
 the approved admission-policy artifact and all bound references regenerated.
+
+## Part A closeout note
+
+The P1--P10 implementations do not silently close SI-003, SI-006, SI-007,
+SI-008 or SI-010. In particular, schema-valid Twin placeholders remain
+non-certifying, the legacy stochastic Planner/runtime remains outside the
+Kernel boundary, and compiler ownership beyond the published candidate-only
+profiles still requires an explicit shared-interface ruling.
+
+The default P10 Twin path ends in `COUNTEREXAMPLE_FOUND` plus `CONTINUE`; an
+explicit single-hit feedback path may reach `CANDIDATE_CERTIFIED` but still
+ends in `CONTINUE`. Neither path supplies level-complete authority. A future
+A16 ruling, push/PR decision or Part B slice must be separately recorded and
+must not be inferred from this closeout note.
