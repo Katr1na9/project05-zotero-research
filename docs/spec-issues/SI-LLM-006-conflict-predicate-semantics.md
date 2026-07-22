@@ -1,6 +1,6 @@
 # SI-LLM-006：对象冲突依赖 canonical predicate 互斥语义
 
-**Owner**：Kernel/M3* 会话  
+**Owner**：Kernel/M3* 会话
 **LLM 轨道状态**：不阻塞 polarity 冲突保留；阻塞对象值冲突的真实集成
 
 ## 当前字段

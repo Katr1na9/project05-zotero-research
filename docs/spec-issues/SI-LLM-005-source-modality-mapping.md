@@ -1,6 +1,6 @@
 # SI-LLM-005：source_modality 与 epistemic modality/source_family 语义混淆
 
-**Owner**：Kernel/M3* 会话  
+**Owner**：Kernel/M3* 会话
 **LLM 轨道状态**：阻塞真实 source-family mapping；不阻塞拒绝越权测试
 
 ## 当前字段

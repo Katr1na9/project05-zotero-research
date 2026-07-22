@@ -1,6 +1,6 @@
 # SI-LLM-001：共享 Claim IR schema 工件缺失
 
-**Owner**：Kernel/M3* 会话  
+**Owner**：Kernel/M3* 会话
 **LLM 轨道状态**：阻塞 shared compatibility 声明，不阻塞本地 safety guard
 
 ## 当前字段

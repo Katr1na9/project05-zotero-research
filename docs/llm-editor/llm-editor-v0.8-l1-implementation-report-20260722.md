@@ -1,8 +1,8 @@
 # LLM Evidence-safe Semantic Editor v0.8：L1 实施报告
 
-**日期**：2026-07-22  
-**分支**：`feat/llm-editor-v0.8`  
-**基线**：`d156b68`  
+**日期**：2026-07-22
+**分支**：`feat/llm-editor-v0.8`
+**基线**：`d156b68`
 **范围**：仅模型无关 L1；未启动数据重建、模型 baseline、正式推理或微调
 
 ## 1. 结果裁断

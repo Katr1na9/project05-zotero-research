@@ -1,6 +1,6 @@
 # SI-LLM-004：Candidate-only 输出中的 lifecycle_state 边界
 
-**Owner**：Kernel/M3* 会话  
+**Owner**：Kernel/M3* 会话
 **LLM 轨道状态**：需要澄清；本轨道默认不让模型输出
 
 ## 当前字段

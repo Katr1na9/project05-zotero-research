@@ -1,6 +1,6 @@
 # SI-LLM-003：Legacy 与 Kernel pointer identity 不一致
 
-**Owner**：Kernel/M3* 会话  
+**Owner**：Kernel/M3* 会话
 **LLM 轨道状态**：阻塞真实 binder 集成
 
 ## 当前字段

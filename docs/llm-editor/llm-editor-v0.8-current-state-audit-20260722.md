@@ -1,9 +1,9 @@
 # LLM Evidence-safe Semantic Editor v0.8：L0 现状审计
 
-**日期**：2026-07-22  
-**分支**：`feat/llm-editor-v0.8`  
-**worktree**：`.worktrees/llm-editor-v0.8`  
-**基线提交**：`d156b68`  
+**日期**：2026-07-22
+**分支**：`feat/llm-editor-v0.8`
+**worktree**：`.worktrees/llm-editor-v0.8`
+**基线提交**：`d156b68`
 **状态**：L0 完成；L1 尚未编码；未开始数据重建、模型加载、推理或训练
 
 ## 1. 权威规格与版本关系

@@ -1,6 +1,6 @@
 # SI-LLM-002：Candidate-q 的机器合同未定义
 
-**Owner**：Kernel/M3* 会话  
+**Owner**：Kernel/M3* 会话
 **LLM 轨道状态**：阻塞 candidate-q proposer 与两项 q 指标
 
 ## 当前字段
