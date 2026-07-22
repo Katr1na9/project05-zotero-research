@@ -1,0 +1,309 @@
+schema_version: "0.8.0"
+catalog_id: action-catalog-kernel-v0.8
+catalog_version: "0.8.0"
+actions:
+  - action_id: query_auth_H1_1000_1015
+    actor: automated_tool
+    authority:
+      required_permissions: [read:identity]
+      current_status: executable
+    target: {entity_ids: [H1], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T10:00:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "tenant:T1/host:H1"
+      resolution: event
+    preconditions: [sensor_up:auth-H1, retention_ok]
+    invocation:
+      executor_id: identity-query-v0.8
+      query_template_id: auth-by-host-window
+      parameters: {host: H1, tenant: T1}
+    termination:
+      timeout_seconds: 30
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, malformed_output]
+    observation_model:
+      observable_id: kerberos_auth
+      output_schema: kernel.auth-presence.v0.8
+      projection_rule_id: auth-presence-by-origin-v1
+      noise_model: deterministic
+      output_domain: [present, absent]
+      absence_semantics_ref: auth-H1
+      world_dependencies: [credential_activity:H1]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [auth-observation-v1]
+      world_elimination_rule_ids: [zero-hit-auth-v1]
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+
+  - action_id: query_logon_origin_H3
+    actor: automated_tool
+    authority:
+      required_permissions: [read:identity]
+      current_status: executable
+    target: {entity_ids: [H3], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T10:00:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "tenant:T1/host:H3"
+      resolution: event
+    preconditions: [sensor_up:logon-origin-H3, retention_ok]
+    invocation:
+      executor_id: identity-query-v0.8
+      query_template_id: logon-origin-by-destination
+      parameters: {destination_host: H3, tenant: T1}
+    termination:
+      timeout_seconds: 30
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, malformed_output]
+    observation_model:
+      observable_id: logon_origin
+      output_schema: kernel.logon-origin.v0.8
+      projection_rule_id: frozen-logon-origin-v1
+      noise_model: deterministic
+      output_domain: [H1, EXTERNAL, absent]
+      absence_semantics_ref: logon-origin-H3
+      world_dependencies: [authentication_origin:H3]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [logon-origin-observation-v1]
+      world_elimination_rule_ids: [origin-mismatch-v1, zero-hit-origin-v1]
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+
+  - action_id: query_endpoint_process_H1
+    actor: automated_tool
+    authority:
+      required_permissions: [read:endpoint]
+      current_status: executable
+    target: {entity_ids: [H1], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T09:55:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "tenant:T1/host:H1"
+      resolution: event
+    preconditions: [sensor_up:endpoint-H1]
+    invocation:
+      executor_id: endpoint-query-v0.8
+      query_template_id: process-window
+      parameters: {host: H1, include_parent: true}
+    termination:
+      timeout_seconds: 90
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, malformed_output]
+    observation_model:
+      observable_id: process_execution
+      output_schema: kernel.process-presence.v0.8
+      projection_rule_id: credential-tool-presence-v1
+      noise_model: deterministic
+      output_domain: [credential_tool_present, absent]
+      absence_semantics_ref: endpoint-H1
+      world_dependencies: [credential_tool_execution:H1]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [process-observation-v1]
+      world_elimination_rule_ids: [zero-hit-process-v1]
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+
+  - action_id: query_network_summary_H1_H3
+    actor: automated_tool
+    authority:
+      required_permissions: [read:network-summary]
+      current_status: executable
+    target: {entity_ids: [H1, H3], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T10:00:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "tenant:T1/hosts:H1,H3"
+      resolution: flow_summary
+    preconditions: [network_summary_available]
+    invocation:
+      executor_id: network-summary-query-v0.8
+      query_template_id: host-pair-summary
+      parameters: {host_a: H1, host_b: H3}
+    termination:
+      timeout_seconds: 120
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, malformed_output]
+    observation_model:
+      observable_id: network_link
+      output_schema: kernel.network-link.v0.8
+      projection_rule_id: host-pair-link-presence-v1
+      noise_model: deterministic
+      output_domain: [present, absent]
+      absence_semantics_ref: network-H1-H3
+      world_dependencies: [network_link:H1:H3]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [network-summary-observation-v1]
+      world_elimination_rule_ids: []
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+
+  - action_id: acquire_identity_archive_H3
+    actor: external_service
+    authority:
+      required_permissions: [restore:identity-archive, read:identity-archive]
+      current_status: not_authorized
+    target: {entity_ids: [H3], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T10:00:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "tenant:T1/host:H3/archive"
+      resolution: event
+    preconditions: [archive_exists, restore_authorized]
+    invocation:
+      executor_id: identity-archive-query-v0.8
+      query_template_id: archived-origin-by-destination
+      parameters: {destination_host: H3, archive_tier: cold}
+    termination:
+      timeout_seconds: 600
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, archive_unavailable]
+    observation_model:
+      observable_id: historical_auth_origin
+      output_schema: kernel.logon-origin.v0.8
+      projection_rule_id: frozen-logon-origin-v1
+      noise_model: deterministic
+      output_domain: [H1, EXTERNAL, absent]
+      absence_semantics_ref: identity-archive-H3
+      world_dependencies: [authentication_origin:H3]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [logon-origin-observation-v1]
+      world_elimination_rule_ids: [origin-mismatch-v1, zero-hit-origin-v1]
+    feasibility: {status: not_authorized, reason_codes: [missing_archive_restore_approval]}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: false
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: true
+
+  - action_id: analyst_cti_lookup
+    actor: analyst
+    authority:
+      required_permissions: [read:cti]
+      current_status: executable
+    target: {entity_ids: [ACCOUNT-A], entity_type: account}
+    scope:
+      time_window: {start: "2025-12-01T00:00:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "external-intelligence/account:ACCOUNT-A"
+      resolution: report
+    preconditions: [analyst_available]
+    invocation:
+      executor_id: analyst-worklist-v0.8
+      query_template_id: cti-account-lookup
+      parameters: {account: ACCOUNT-A}
+    termination:
+      timeout_seconds: 1800
+      success_conditions: [analyst_response_recorded]
+      failure_conditions: [timeout, source_unavailable]
+    observation_model: null
+    formal_analysis_eligibility: heuristic_only
+    state_effect:
+      claim_template_ids: [cti-report-candidate-v1]
+      world_elimination_rule_ids: []
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: false
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: true
+
+  - action_id: query_auth_empty_control
+    actor: automated_tool
+    authority:
+      required_permissions: [read:identity]
+      current_status: executable
+    target: {entity_ids: [H1], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T09:00:00Z", end: "2026-01-01T09:05:00Z"}
+      spatial_scope: "tenant:T1/host:H1"
+      resolution: event
+    preconditions: [sensor_up:auth-H1, retention_ok]
+    invocation:
+      executor_id: identity-query-v0.8
+      query_template_id: auth-by-host-window
+      parameters: {host: H1, tenant: T1, control_window: true}
+    termination:
+      timeout_seconds: 30
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, malformed_output]
+    observation_model:
+      observable_id: kerberos_auth
+      output_schema: kernel.auth-presence.v0.8
+      projection_rule_id: auth-presence-by-origin-v1
+      noise_model: deterministic
+      output_domain: [present, absent]
+      absence_semantics_ref: auth-empty-control
+      world_dependencies: [credential_activity:H1]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [auth-observation-v1]
+      world_elimination_rule_ids: []
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+
+  - action_id: query_auth_H3_replay
+    actor: automated_tool
+    authority:
+      required_permissions: [read:identity]
+      current_status: executable
+    target: {entity_ids: [H3], entity_type: host}
+    scope:
+      time_window: {start: "2026-01-01T10:00:00Z", end: "2026-01-01T10:15:00Z"}
+      spatial_scope: "tenant:T1/host:H3"
+      resolution: event
+    preconditions: [sensor_up:auth-H3, retention_ok]
+    invocation:
+      executor_id: identity-query-v0.8
+      query_template_id: auth-by-destination-window
+      parameters: {destination_host: H3, tenant: T1}
+    termination:
+      timeout_seconds: 30
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied, malformed_output]
+    observation_model:
+      observable_id: kerberos_auth
+      output_schema: kernel.auth-presence.v0.8
+      projection_rule_id: destination-auth-presence-v1
+      noise_model: deterministic
+      output_domain: [present, absent]
+      absence_semantics_ref: auth-H3-replay
+      world_dependencies: [authentication_present:H3]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [auth-observation-v1]
+      world_elimination_rule_ids: []
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+hash: "sha256:0cd3ee1331aef81ca955e973ae9bc30c364acd2a2f6c34247438f4dd94add8eb"

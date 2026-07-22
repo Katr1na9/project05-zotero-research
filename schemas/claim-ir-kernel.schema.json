@@ -1,0 +1,426 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/claim-ir-kernel.schema.json",
+  "title": "Project05 v0.8 Kernel Claim IR",
+  "description": "Evidence-safe Kernel Claim IR plus the pointer-free Candidate Compiler exchange profiles.",
+  "$ref": "#/$defs/kernelClaim",
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "entityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "entity_type"],
+      "properties": {
+        "entity_id": {"type": "string", "minLength": 1},
+        "entity_type": {"type": "string", "minLength": 1}
+      }
+    },
+    "claimObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "literal", "entity_type"],
+      "properties": {
+        "entity_id": {"type": ["string", "null"], "minLength": 1},
+        "literal": {"type": ["string", "number", "boolean", "null"]},
+        "entity_type": {"type": ["string", "null"], "minLength": 1}
+      },
+      "anyOf": [
+        {"properties": {"entity_id": {"type": "string", "minLength": 1}}},
+        {"properties": {"literal": {"type": ["string", "number", "boolean"]}}}
+      ]
+    },
+    "claimTime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "precision"],
+      "properties": {
+        "start": {"type": ["string", "null"], "format": "date-time"},
+        "end": {"type": ["string", "null"], "format": "date-time"},
+        "precision": {
+          "enum": ["exact", "bounded", "approximate", "unknown"]
+        }
+      }
+    },
+    "claimLocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "tenant", "zone"],
+      "properties": {
+        "host": {"type": ["string", "null"], "minLength": 1},
+        "tenant": {"type": ["string", "null"], "minLength": 1},
+        "zone": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "record_id", "byte_or_row_range", "content_hash"],
+      "properties": {
+        "source_id": {"type": ["string", "null"], "minLength": 1},
+        "record_id": {"type": ["string", "null"], "minLength": 1},
+        "byte_or_row_range": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"type": "integer", "minimum": 0},
+                {"type": "integer", "minimum": 0}
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "content_hash": {
+          "oneOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parser_id", "parser_version", "model_id", "prompt_or_rule_hash"],
+      "properties": {
+        "parser_id": {"type": "string", "minLength": 1},
+        "parser_version": {"type": "string", "minLength": 1},
+        "model_id": {"type": ["string", "null"], "minLength": 1},
+        "prompt_or_rule_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "certificationAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "levels", "basis_rule_id", "policy_hash"],
+      "properties": {
+        "allowed": {"type": "boolean"},
+        "levels": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "basis_rule_id": {"type": ["string", "null"], "minLength": 1},
+        "policy_hash": {
+          "oneOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"allowed": {"const": false}}, "required": ["allowed"]},
+          "then": {
+            "properties": {
+              "levels": {"maxItems": 0},
+              "basis_rule_id": {"type": "null"},
+              "policy_hash": {"type": "null"}
+            }
+          },
+          "else": {
+            "properties": {
+              "levels": {"minItems": 1},
+              "basis_rule_id": {"type": "string", "minLength": 1},
+              "policy_hash": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      ]
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["extraction", "source", "model"],
+      "properties": {
+        "extraction": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "source": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "model": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "kernelClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "claim_id",
+        "subject",
+        "predicate",
+        "object",
+        "time",
+        "location",
+        "polarity",
+        "modality",
+        "truth_status",
+        "epistemic_role",
+        "certification_authority",
+        "source_family",
+        "source_schema",
+        "pointer",
+        "compiler",
+        "binding_status",
+        "admission_status",
+        "promotion_status",
+        "promotion_event_id",
+        "admissible_levels",
+        "support_claim_ids",
+        "contradict_claim_ids",
+        "rule_trace",
+        "confidence",
+        "lifecycle_state"
+      ],
+      "properties": {
+        "schema_version": {"const": "0.8.0"},
+        "claim_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"},
+        "subject": {"$ref": "#/$defs/entityRef"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/claimObject"},
+        "time": {"$ref": "#/$defs/claimTime"},
+        "location": {"$ref": "#/$defs/claimLocation"},
+        "polarity": {"enum": ["positive", "negative", "unknown"]},
+        "modality": {"enum": ["observed", "derived", "reported", "hypothesized", "unknown"]},
+        "truth_status": {"enum": ["unassessed", "supported", "contradicted", "conflicted", "retracted"]},
+        "epistemic_role": {
+          "enum": [
+            "case_evidence",
+            "mechanism_knowledge",
+            "background_intelligence",
+            "model_hypothesis",
+            "analyst_hypothesis",
+            "unknown"
+          ]
+        },
+        "certification_authority": {"$ref": "#/$defs/certificationAuthority"},
+        "source_family": {
+          "enum": [
+            "execution",
+            "identity",
+            "communication",
+            "data_access",
+            "control_plane",
+            "system_provenance",
+            "software_supply_chain",
+            "external_intel",
+            "human_investigation"
+          ]
+        },
+        "source_schema": {"type": "string", "minLength": 1},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "compiler": {"$ref": "#/$defs/compiler"},
+        "binding_status": {"enum": ["unbound", "bound", "ambiguous", "failed"]},
+        "admission_status": {"enum": ["candidate", "admitted", "rejected", "abstained"]},
+        "promotion_status": {"enum": ["none", "eligible", "promoted", "revoked"]},
+        "promotion_event_id": {"type": ["string", "null"], "minLength": 1},
+        "admissible_levels": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "support_claim_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "contradict_claim_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "rule_trace": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "lifecycle_state": {
+          "enum": ["generated", "bound", "admitted", "promoted", "revoked", "rejected", "abstained"],
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "modality": {"const": "observed"},
+              "epistemic_role": {"const": "case_evidence"},
+              "certification_authority": {
+                "properties": {"allowed": {"const": true}},
+                "required": ["allowed"]
+              }
+            },
+            "required": ["modality", "epistemic_role", "certification_authority"]
+          },
+          "then": {
+            "properties": {
+              "pointer": {
+                "properties": {
+                  "source_id": {"type": "string", "minLength": 1},
+                  "record_id": {"type": "string", "minLength": 1},
+                  "content_hash": {"$ref": "#/$defs/sha256"}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "promotion_status": {"const": "promoted"},
+              "modality": {"const": "reported"}
+            },
+            "required": ["promotion_status", "modality"]
+          },
+          "then": {
+            "properties": {
+              "promotion_event_id": {"type": "string", "minLength": 1},
+              "pointer": {
+                "properties": {"source_id": {"type": "string", "minLength": 1}},
+                "anyOf": [
+                  {"properties": {"record_id": {"type": "string", "minLength": 1}}},
+                  {"properties": {"content_hash": {"$ref": "#/$defs/sha256"}}}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"promotion_status": {"const": "promoted"}},
+            "required": ["promotion_status"]
+          },
+          "then": {"properties": {"promotion_event_id": {"type": "string", "minLength": 1}}}
+        }
+      ]
+    },
+    "candidateCompilerRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "request_id", "source_context", "source_excerpt"],
+      "properties": {
+        "schema_version": {"const": "0.8.0"},
+        "request_id": {"type": "string", "minLength": 1},
+        "source_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_id", "source_schema", "source_family", "modality", "epistemic_role", "pointer"],
+          "properties": {
+            "source_id": {"type": "string", "minLength": 1},
+            "source_schema": {"type": "string", "minLength": 1},
+            "source_family": {
+              "enum": [
+                "execution",
+                "identity",
+                "communication",
+                "data_access",
+                "control_plane",
+                "system_provenance",
+                "software_supply_chain",
+                "external_intel",
+                "human_investigation"
+              ]
+            },
+            "modality": {"enum": ["observed", "derived", "reported", "hypothesized", "unknown"]},
+            "epistemic_role": {
+              "enum": [
+                "case_evidence",
+                "mechanism_knowledge",
+                "background_intelligence",
+                "model_hypothesis",
+                "analyst_hypothesis",
+                "unknown"
+              ]
+            },
+            "pointer": {"$ref": "#/$defs/pointer"}
+          }
+        },
+        "source_excerpt": {"type": "string", "minLength": 1},
+        "allowed_predicates": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "allowed_entity_types": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    },
+    "bindingProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "entity_id"],
+      "properties": {
+        "field": {"enum": ["subject.entity_id", "object.entity_id", "location.host", "location.tenant", "location.zone"]},
+        "entity_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "candidateProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "subject",
+        "predicate",
+        "object",
+        "time",
+        "location",
+        "polarity",
+        "binding_proposals",
+        "abstention"
+      ],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "subject": {"$ref": "#/$defs/entityRef"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/claimObject"},
+        "time": {"$ref": "#/$defs/claimTime"},
+        "location": {"$ref": "#/$defs/claimLocation"},
+        "polarity": {"enum": ["positive", "negative", "unknown"]},
+        "binding_proposals": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/bindingProposal"},
+          "uniqueItems": true
+        },
+        "abstention": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["reason_code", "detail"],
+              "properties": {
+                "reason_code": {
+                  "enum": ["entity_unbound", "time_unresolved", "source_unsupported", "ambiguous_semantics"]
+                },
+                "detail": {"type": "string", "minLength": 1}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "candidateCompilerResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "request_id", "candidates"],
+      "properties": {
+        "schema_version": {"const": "0.8.0"},
+        "request_id": {"type": "string", "minLength": 1},
+        "candidates": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/candidateProposal"}
+        },
+        "response_abstention": {
+          "type": ["string", "null"],
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

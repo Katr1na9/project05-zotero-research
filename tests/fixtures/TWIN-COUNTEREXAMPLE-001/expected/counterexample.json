@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.8.0",
+  "counterexample_id": "CEX-TWIN-001",
+  "case_id": "TWIN-COUNTEREXAMPLE-001",
+  "gamma_hash": "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a",
+  "evidence_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+  "target_level": "initial_foothold",
+  "candidate_q": {
+    "entity_id": "H1",
+    "entity_type": "host"
+  },
+  "checker_status": "COUNTEREXAMPLE_FOUND",
+  "core_query_results": {
+    "base": "SAT",
+    "support": "SAT",
+    "alternative": "SAT"
+  },
+  "support_world": {
+    "world_id": "W-SUPPORT-H1",
+    "target_result": {
+      "entity_id": "H1",
+      "entity_type": "host"
+    },
+    "predicates": [
+      "credential_activity:H1",
+      "authentication_origin:H3=H1",
+      "compromised:H3"
+    ]
+  },
+  "alternative_world": {
+    "world_id": "W-ALTERNATIVE-H3",
+    "target_result": {
+      "entity_id": "H3",
+      "entity_type": "host"
+    },
+    "predicates": [
+      "external_credential_login:H3",
+      "authentication_origin:H3=EXTERNAL",
+      "compromised:H3"
+    ]
+  },
+  "shared_predicates": [
+    "compromised:H3",
+    "authenticated_account:H3=ACCOUNT-A"
+  ],
+  "support_only_predicates": [
+    "credential_activity:H1",
+    "authentication_origin:H3=H1"
+  ],
+  "alternative_only_predicates": [
+    "external_credential_login:H3",
+    "authentication_origin:H3=EXTERNAL"
+  ],
+  "distinguishing_predicates": [
+    "authentication_origin:H3",
+    "credential_activity:H1"
+  ],
+  "critical_absence_semantics": [
+    "auth-H1:bounded_completeness",
+    "logon-origin-H3:bounded_completeness"
+  ],
+  "minimization_status": "NOT_REQUESTED",
+  "generation_basis": "kernel_checker"
+}

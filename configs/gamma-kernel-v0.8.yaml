@@ -1,0 +1,120 @@
+schema_version: "0.8.0"
+gamma_id: gamma-kernel-v0.8
+gamma_version: "0.8.0"
+entity_types: [host, account, process, ip]
+event_types: [process_execute, authenticate, network_connect]
+relation_types: [executes, authenticates_to, connects_to]
+attribution_levels: [compromised_host, initial_foothold]
+result_domains:
+  compromised_host:
+    type: host_id
+    generator: from_case_entities
+    finite_candidates: null
+    coverage_mode: exhaustive
+    finiteness_basis: finite_case_entity_closure
+  initial_foothold:
+    type: host_id
+    generator: from_finite_candidate_list
+    finite_candidates: [H1, H3]
+    coverage_mode: exhaustive
+    finiteness_basis: explicit_finite_candidates
+mechanism_rules:
+  - credential_login_implies_authentication
+  - lateral_movement_requires_prior_compromise
+  - process_execution_precedes_outbound_authentication
+temporal_constraints:
+  ordering:
+    - process_execute_before_authenticate_when_lateral
+  clock_skew_seconds: 2
+sensor_coverage:
+  - sensor_id: auth-H1
+    observable_id: kerberos_auth
+    entities: [H1]
+    time_windows: ["2026-01-01T10:00:00Z/2026-01-01T10:15:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [retention_ok, sensor_online, query_authorized]
+  - sensor_id: logon-origin-H3
+    observable_id: logon_origin
+    entities: [H3]
+    time_windows: ["2026-01-01T10:00:00Z/2026-01-01T10:15:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [retention_ok, sensor_online, origin_field_complete]
+  - sensor_id: endpoint-H1
+    observable_id: process_execution
+    entities: [H1]
+    time_windows: ["2026-01-01T09:55:00Z/2026-01-01T10:15:00Z"]
+    absence_semantics: closed_world
+    completeness_conditions: [sensor_online]
+  - sensor_id: network-H1-H3
+    observable_id: network_link
+    entities: [H1, H3]
+    time_windows: ["2026-01-01T10:00:00Z/2026-01-01T10:15:00Z"]
+    absence_semantics: open_world
+    completeness_conditions: []
+  - sensor_id: identity-archive-H3
+    observable_id: historical_auth_origin
+    entities: [H3]
+    time_windows: ["2026-01-01T10:00:00Z/2026-01-01T10:15:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [archive_restored, query_authorized]
+  - sensor_id: auth-empty-control
+    observable_id: kerberos_auth
+    entities: [H1]
+    time_windows: ["2026-01-01T09:00:00Z/2026-01-01T09:05:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [retention_ok, sensor_online, query_authorized]
+  - sensor_id: auth-H3-replay
+    observable_id: kerberos_auth
+    entities: [H3]
+    time_windows: ["2026-01-01T10:00:00Z/2026-01-01T10:15:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [retention_ok, sensor_online, query_authorized]
+retention_assumptions:
+  - assumption_id: retention-auth-15m
+    statement: Identity records for the frozen window remain queryable.
+  - assumption_id: retention-endpoint-20m
+    statement: Endpoint records for the frozen window remain queryable.
+missingness_assumptions:
+  - assumption_id: no-known-auth-gap
+    statement: No known identity collection gap intersects the frozen window.
+threat_assumptions:
+  log_deletion: none
+  log_forgery: none
+  sensor_compromise: none
+admission_policy:
+  version: adm-0.8
+  rules: [A001, A002]
+promotion_policy:
+  version: prom-0.8
+  rules: []
+action_catalog:
+  version: act-0.8
+  actions:
+    - query_auth_H1_1000_1015
+    - query_logon_origin_H3
+    - query_endpoint_process_H1
+    - query_network_summary_H1_H3
+    - acquire_identity_archive_H3
+    - analyst_cti_lookup
+    - query_auth_empty_control
+    - query_auth_H3_replay
+candidate_protocol:
+  proposer_ids: [rule_seed, llm_candidate_compiler]
+  solver_seed_enabled: true
+  coverage_reporting_required: true
+min_diff:
+  config_version: md-0.8
+  lambda_event: 1.0
+  lambda_entity: 1.0
+  lambda_assumption: 1.0
+  tie_break: lexicographic
+  timeout_ms: 2000
+solver_semantics:
+  engine: finite_domain_enumerator
+  engine_version: "0.8.0"
+  timeout_ms: 5000
+  incomplete_search_policy: UNKNOWN_NOT_CERTIFIED
+  proof_policy: reproducible_run
+closed_world_fields: [process_execution]
+open_world_fields: [network_link, cti_report]
+hash: "sha256:0eb3cbb8be3cf51dc9952a447e4d1f90fc89b5dc2c5e2f0edafca32c6805399a"
