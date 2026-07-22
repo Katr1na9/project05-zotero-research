@@ -1,9 +1,24 @@
-"""P7 read-only Epistemic Firewall admission API.
+"""P7 admission gate and P8 audited Claim IR lifecycle APIs.
 
-No admission write, Promote/Revoke ledger, certificate, planner, or system STOP
-authority is exposed from this package.
+This package has no certificate issuance, level-complete certification,
+planner, system-state, or STOP authority.
 """
 
 from .admission import AdmissionDecision, ECaseAdmissionFirewall
+from .lifecycle import (
+    AppendOnlyAuditLedger,
+    AuditEvent,
+    ClaimLifecycleManager,
+    LifecycleTransition,
+    LifecycleTransitionRejected,
+)
 
-__all__ = ["AdmissionDecision", "ECaseAdmissionFirewall"]
+__all__ = [
+    "AdmissionDecision",
+    "AppendOnlyAuditLedger",
+    "AuditEvent",
+    "ClaimLifecycleManager",
+    "ECaseAdmissionFirewall",
+    "LifecycleTransition",
+    "LifecycleTransitionRejected",
+]
