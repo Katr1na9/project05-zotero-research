@@ -1,0 +1,402 @@
+{
+  "schema_version": "project05-llm-editor-l2-train-executed-evidence-candidates-metadata-only-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "64ba6d1546e59b133ef2a0f5230b1d821242775b",
+  "status": "two_pending_metadata_candidates_registered_l2_blocked",
+  "purpose": "Register, without downloading payloads or changing roles, two metadata-complete executed-evidence candidates for the two train-family slots left vacant by the CAM-LDS and SOCBED stop-loss amendment, while rechecking the ProvSec and LID-DS artifact gates.",
+  "scope": {
+    "metadata_only": true,
+    "official_landing_pages_and_metadata_apis_read": true,
+    "payload_downloaded": false,
+    "payload_opened": false,
+    "archive_members_opened": false,
+    "private_gold_read": false,
+    "model_output_read": false,
+    "family_roles_changed": false,
+    "quota_credit_awarded": false,
+    "baseline_run": false,
+    "fine_tuning_run": false,
+    "cert_or_iot23_downloaded": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  },
+  "selection_contract": {
+    "required_evidence_shape": "Executed endpoint, network, provenance, or security-telemetry evidence; specifications, rules, CTI knowledge bases, and technique YAML do not qualify.",
+    "artifact_requirements": [
+      "Artifact-level license is explicit.",
+      "A versioned or immutable official record is identifiable.",
+      "Artifact byte size and checksum are published by the official repository.",
+      "Metadata exposes at least four source-native run, simulation, or capture candidates without arbitrary time-windowing.",
+      "Labels, answers, timelines, scenario names, and ground truth can be physically excluded from the future model view.",
+      "The candidate is metadata-distinct from current train, development, and test families."
+    ],
+    "protected_families_not_eligible": [
+      "E3",
+      "E5",
+      "OpTC",
+      "OTRF",
+      "WitFoo"
+    ],
+    "forbidden_lineage_repairs": [
+      "row_count",
+      "directory_count",
+      "technique_count",
+      "arbitrary_time_window",
+      "host_view_count_without_independent_run_evidence"
+    ]
+  },
+  "pending_metadata_candidates": [
+    {
+      "candidate_id": "ainception_zenodo_2025",
+      "candidate_slot_intent": "one_of_two_vacant_train_slots",
+      "catalog_status": "pending_metadata_candidate_review",
+      "research_verdict": "approve_as_metadata_candidate_not_as_replacement",
+      "source_identity": {
+        "title": "The AInception Dataset",
+        "official_record": "https://zenodo.org/records/17659656",
+        "official_api_record": "https://zenodo.org/api/records/17659656",
+        "record_id": 17659656,
+        "doi": "10.5281/zenodo.17659656",
+        "concept_doi": "10.5281/zenodo.17659655",
+        "zenodo_record_revision": 4,
+        "publication_date": "2025-11-26",
+        "created_at": "2025-11-26T14:55:02.048283+00:00",
+        "updated_at": "2025-11-26T14:55:08.057787+00:00",
+        "creator": "The AInception Consortium",
+        "resource_type": "dataset",
+        "license": "CC-BY-4.0",
+        "license_verified_from_official_record": true,
+        "single_release_pinned": true,
+        "file_count": 16,
+        "dataset_file_count_excluding_pdf": 15,
+        "total_bytes": 133570505552,
+        "total_gib_approx": 124.39
+      },
+      "executed_evidence_declaration": {
+        "metadata_declared_complete_simulations": 15,
+        "metadata_declared_storylines": [
+          "SL100",
+          "SL300",
+          "SL700"
+        ],
+        "metadata_declared_modalities": [
+          "Windows Event Logs",
+          "Sysmon",
+          "Linux audit logs",
+          "application logs",
+          "Suricata alerts and NetFlow",
+          "PCAP fragments",
+          "cyber-physical mission logs"
+        ],
+        "metadata_declared_lineage_rule": "One exact Zenodo simulation ZIP key is at most one lineage candidate. Files, hosts, days, events, or windows inside one ZIP may not create additional lineage credit.",
+        "metadata_lineage_candidate_count": 15,
+        "verified_independent_lineage_count": null,
+        "minimum_lineage_candidates_available_from_metadata": 4,
+        "lineage_gate_passed": false,
+        "lineage_gate_reason": "Zenodo metadata explicitly calls the 15 archives complete simulations, but payload-level run identity and non-overlap have not been audited."
+      },
+      "pinned_artifacts": [
+        {
+          "key": "SL100.zip",
+          "bytes": 31592162,
+          "checksum": "md5:3d7841d3eaf6d4e297cc75aa9a33fe3d"
+        },
+        {
+          "key": "SL700_variant_f_a.zip",
+          "bytes": 3358489764,
+          "checksum": "md5:8852767f1bc07b4f308483c448a31849"
+        },
+        {
+          "key": "SL700_variant_b_a.zip",
+          "bytes": 3639281826,
+          "checksum": "md5:e81e2819cbb1ccda76fda080293385be"
+        },
+        {
+          "key": "SL700_variant_e_a.zip",
+          "bytes": 3654245097,
+          "checksum": "md5:4a14133c837cd26b540be5d65a04ed6f"
+        },
+        {
+          "key": "SL700_variant_a_b.zip",
+          "bytes": 3738335194,
+          "checksum": "md5:af983fcf543629166bc840944d9f5870"
+        },
+        {
+          "key": "SL700_variant_a_a.zip",
+          "bytes": 3888396295,
+          "checksum": "md5:90fbb9c4c94ba839bbdb84fc0d058a8c"
+        },
+        {
+          "key": "SL700_variant_a_c.zip",
+          "bytes": 3898428217,
+          "checksum": "md5:d95b3e5cd5c29536c75f6f8f91f39f60"
+        },
+        {
+          "key": "SL300_variant_7.zip",
+          "bytes": 9735245693,
+          "checksum": "md5:13a2fcba6a4690ca514278ce6ad2d4cf"
+        },
+        {
+          "key": "SL300_variant_6.zip",
+          "bytes": 11286683051,
+          "checksum": "md5:83a52d0eb98049c4f411159d92894bd3"
+        },
+        {
+          "key": "SL300_variant_4.zip",
+          "bytes": 12704655124,
+          "checksum": "md5:6c1b8ae1fc7397ef0546eeb36f840835"
+        },
+        {
+          "key": "SL300_variant_8.zip",
+          "bytes": 13527550594,
+          "checksum": "md5:482204971906b47e6b96449a8616f36a"
+        },
+        {
+          "key": "SL300_variant_5.zip",
+          "bytes": 13668391537,
+          "checksum": "md5:4930200a752c0a06e064325e6b7aca3a"
+        },
+        {
+          "key": "SL300_variant_9.zip",
+          "bytes": 14164042838,
+          "checksum": "md5:8b7a7eea81ff55db146c3a25ee5efe9c"
+        },
+        {
+          "key": "SL300_variant_10.zip",
+          "bytes": 15149275063,
+          "checksum": "md5:f786920d5d0f25b87ec874f52c5a9f09"
+        },
+        {
+          "key": "SL300_variant_2.zip",
+          "bytes": 21125100869,
+          "checksum": "md5:5e3f48ea5082ce050ea2b6fd45c250b6"
+        }
+      ],
+      "future_fail_closed_conditions": [
+        "A separate user authorization is required before downloading any archive.",
+        "A future bounded audit must verify that each selected ZIP is one independently executed simulation and does not duplicate another selected archive.",
+        "AttackMate timelines, labelled subsets, ATT&CK mappings, IOCs, STIX objects, alert graphs, knowledge graphs, attack-defence graphs, README/PDF narrative, and scenario or variant names must be excluded from the model view and supervision.",
+        "Model-visible family and lineage identifiers must be opaque; archive and path labels may not be used as target labels.",
+        "Only raw host, audit, application, or separately admitted network records may become source packets; PCAP remains excluded until a separate parser and pointer contract is approved.",
+        "A payload exclusion scan against protected test families is mandatory before any sample construction.",
+        "The full release is approximately 124.39 GiB; a future acquisition amendment must pin an explicitly bounded subset rather than silently materializing the full release."
+      ],
+      "quota": {
+        "counts_as_family_now": false,
+        "counts_as_lineage_now": false,
+        "counts_as_samples_now": false,
+        "maximum_future_family_credit": 1
+      }
+    },
+    {
+      "candidate_id": "liwa_ad_endpoint_telemetry_30run_2026",
+      "candidate_slot_intent": "one_of_two_vacant_train_slots",
+      "catalog_status": "pending_metadata_candidate_review",
+      "research_verdict": "approve_as_metadata_candidate_not_as_replacement",
+      "source_identity": {
+        "title": "Forensic Value of Enhanced Endpoint Telemetry in Active Directory Attack Detection: A Controlled Comparative Study",
+        "official_record": "https://zenodo.org/records/20618083",
+        "official_api_record": "https://zenodo.org/api/records/20618083",
+        "record_id": 20618083,
+        "doi": "10.5281/zenodo.20618083",
+        "concept_doi": "10.5281/zenodo.20618082",
+        "zenodo_record_revision": 7,
+        "publication_date": "2026-06-10",
+        "created_at": "2026-06-09T22:16:14.915614+00:00",
+        "updated_at": "2026-06-10T21:12:20.022083+00:00",
+        "creator": "Khan, Adil",
+        "creator_affiliation": "Liwa University",
+        "creator_orcid": "0000-0001-6269-1191",
+        "resource_type": "dataset",
+        "license": "CC-BY-4.0",
+        "license_verified_from_official_record": true,
+        "single_release_pinned": true,
+        "file_count": 1,
+        "archive_key": "Forensic Value of Enhanced Endpoint Telemetry in Active Directory Attack Detection A Controlled Co.zip",
+        "archive_bytes": 7357185,
+        "archive_checksum": "md5:94f2af6a756a0841126d51a55bd8fe85"
+      },
+      "executed_evidence_declaration": {
+        "metadata_declared_attack_run_csv_count": 30,
+        "metadata_declared_attack_types": [
+          "Kerberoasting",
+          "AS-REP Roasting",
+          "DCSync"
+        ],
+        "metadata_declared_logging_conditions": [
+          "native Windows Security channel",
+          "Sysmon plus Wazuh enhanced telemetry"
+        ],
+        "declared_additional_artifacts": [
+          "Wazuh alert screenshots",
+          "BloodHound pre/post-remediation graphs",
+          "custom detection rules",
+          "Sysmon configuration",
+          "statistical analysis"
+        ],
+        "metadata_declared_lineage_rule": "One source-declared attack-run CSV may be at most one lineage candidate. Rows, attack types, logging conditions, screenshots, and graph exports do not create additional lineage credit.",
+        "metadata_lineage_candidate_count": 30,
+        "verified_independent_lineage_count": null,
+        "minimum_lineage_candidates_available_from_metadata": 4,
+        "lineage_gate_passed": false,
+        "lineage_gate_reason": "The official record explicitly declares 30 attack-run CSVs, but the archive has not been opened to verify run identifiers, independence, or raw-versus-alert evidence shape."
+      },
+      "future_fail_closed_conditions": [
+        "A separate user authorization is required before downloading the archive.",
+        "A bounded manifest-only and lineage audit must verify the claimed 30 run files and select at least four independent runs before quota credit.",
+        "Screenshots, BloodHound graphs, detection rules, Sysmon configuration, statistical analysis, technique names, attack labels, and file/path labels must be excluded from the model view and supervision.",
+        "The audit must determine whether the CSVs contain pointer-recoverable executed telemetry or only detector summaries; detector-only aggregate rows do not qualify as raw evidence-editor inputs.",
+        "No benign runs are declared in the official metadata, so this candidate receives no abstention, null, or benign quota credit unless a future authorized audit establishes such evidence.",
+        "Three attack types under two logging conditions create nuisance-correlation risk; repeated rows or paired views of one execution must remain one lineage.",
+        "The Zenodo record exposes no related peer-reviewed publication identifier; external scientific validation remains unclosed.",
+        "A payload exclusion scan against protected test families is mandatory before any sample construction."
+      ],
+      "quota": {
+        "counts_as_family_now": false,
+        "counts_as_lineage_now": false,
+        "counts_as_samples_now": false,
+        "maximum_future_family_credit": 1
+      }
+    }
+  ],
+  "screened_but_not_registered_as_fill_candidates": [
+    {
+      "candidate_id": "provics_hf_2026",
+      "status": "hold_lineage_gate_failed_at_metadata",
+      "official_source": "https://huggingface.co/datasets/trucyberlab/multimodal-ICS-provenance",
+      "pinned_revision": "18b4b0e1359d3d02347301c55f97c3d98f5dab5c",
+      "reason": "The repository exposes LFS SHA-256 values and a CC-BY-NC-4.0 card, but it declares one 48-hour benign acquisition and one 22-hour attack acquisition. Four campaigns inside the single attack acquisition cannot be reinterpreted as four independent runs. The card's license_link also points to a LICENSE path absent from the pinned tree."
+    },
+    {
+      "candidate_id": "cicapt_iiot_2024",
+      "status": "hold_artifact_and_lineage_gate_unclosed",
+      "official_source": "https://www.unb.ca/cic/datasets/iiot-dataset-2024.html",
+      "reason": "The official page declares provenance and network evidence across only two experiment phases and publishes no dataset-specific license, immutable release identity, byte size, or checksum."
+    },
+    {
+      "candidate_id": "provcon_2025",
+      "status": "hold_public_artifact_not_located",
+      "paper_doi": "10.14722/wosoc.2025.23008",
+      "reason": "The paper identity is verifiable, but no official public dataset artifact with license, immutable revision, size, and checksum was located in the queried GitHub, Zenodo, Crossref, and OpenAlex metadata surfaces."
+    },
+    {
+      "candidate_id": "evtx_attack_samples",
+      "status": "reserve_lineage_independence_unverified",
+      "official_source": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES",
+      "pinned_revision": "4ceed2f4706daf601c212a8f91c113dd85349a2c",
+      "license": "GPL-3.0",
+      "metadata_evtx_file_count": 278,
+      "reason": "The repository contains executed Windows event samples with pinned git blobs, but its metadata maps samples to ATT&CK techniques and does not state that individual EVTX files are independent runs. File and technique counts therefore cannot satisfy lineage without a separate audit."
+    },
+    {
+      "candidate_id": "n_baiot_uci_442",
+      "status": "hold_license_and_checksum_unclosed",
+      "official_source": "https://archive.ics.uci.edu/dataset/442/detection+of+iot+botnet+attacks+n+baiot",
+      "dataset_doi": "10.24432/C5RC8J",
+      "reason": "The official UCI API declares real traffic from nine commercial IoT devices, but the same API exposes no artifact license or data URL and the official ZIP response publishes no checksum metadata. Device identity alone has not been audited as independent run lineage."
+    },
+    {
+      "candidate_id": "edge_iiotset_mendeley",
+      "status": "hold_unresolvable_artifact_identity",
+      "reason": "The investigated Mendeley identifier did not resolve to a current dataset record, and no exact DataCite record closed the artifact identity."
+    },
+    {
+      "candidate_id": "ctu_13",
+      "status": "reserve_cross_split_and_artifact_rights_open",
+      "reason": "Thirteen source scenarios are plausible executed-network lineages, but the located IMPACT/Kaggle metadata did not close artifact rights and official checksums. The Stratosphere curator relationship to the approved IoT-23 test candidate also requires a cross-split nuisance-independence decision."
+    }
+  ],
+  "artifact_closure_followup": [
+    {
+      "candidate_id": "provsec_2023",
+      "prior_status": "hold_artifact_gate_unclosed",
+      "current_status": "hold_artifact_gate_unclosed",
+      "newly_checked_official_records": [
+        {
+          "osti_id": 2431092,
+          "doi": "10.2172/2431092",
+          "title": "ProvSec: Cybersecurity System Provenance Analysis Benchmark Dataset",
+          "product_type": "Conference",
+          "links_exposed": [
+            "citation",
+            "fulltext"
+          ]
+        },
+        {
+          "osti_id": 2311396,
+          "doi": "10.1007/s44227-023-00014-9",
+          "title": "ProvSec: Open Cybersecurity System Provenance Analysis Benchmark Dataset with Labels",
+          "product_type": "Journal Article",
+          "links_exposed": [
+            "citation",
+            "fulltext",
+            "citation_doe_pages"
+          ]
+        },
+        {
+          "osti_id": 2431718,
+          "doi": "10.1109/SERA57763.2023.10197743",
+          "title": "ProvSec: Cybersecurity System Provenance Analysis Benchmark Dataset",
+          "product_type": "Conference",
+          "links_exposed": [
+            "citation",
+            "fulltext"
+          ]
+        }
+      ],
+      "official_osti_api": "https://www.osti.gov/api/v1/records/2431092",
+      "artifact_license_verified": false,
+      "immutable_artifact_revision_verified": false,
+      "artifact_size_verified": false,
+      "artifact_checksum_verified": false,
+      "closure_result": "The newly located DOE/OSTI records are publication/fulltext records, not a dataset release. They do not expose an artifact license, immutable dataset revision, byte size, or checksum. The UCO contact-form delivery remains insufficient."
+    },
+    {
+      "candidate_id": "lid_ds_2021",
+      "prior_status": "partial_license_closed_checksum_and_revision_open",
+      "current_status": "partial_license_closed_checksum_and_revision_open",
+      "official_repository": "https://github.com/LID-DS/LID-DS",
+      "repository_head": "587d15870843961acb78fbb4b8fcd0ede28eabcc",
+      "github_release_count": 0,
+      "github_tag_count": 0,
+      "dataset_license_statement_verified": true,
+      "dataset_license": "GPL-3.0-or-later",
+      "proton_delivery": "https://drive.proton.me/urls/BWKRGQK994#fCK9JKL93Sjm",
+      "immutable_artifact_revision_verified": false,
+      "artifact_size_verified": false,
+      "artifact_checksum_verified": false,
+      "closure_result": "The official repository still has no GitHub release or tag. The Proton public page exposes only the Drive application shell and no public dataset revision, byte size, or checksum. The repository Archiv.zip fixture remains excluded from substitution for the 2021 artifact."
+    }
+  ],
+  "portfolio_after_research": {
+    "vacant_train_slots_researched": 2,
+    "pending_metadata_candidates_registered": [
+      "ainception_zenodo_2025",
+      "liwa_ad_endpoint_telemetry_30run_2026"
+    ],
+    "replacement_sources_approved": 0,
+    "quota_eligible_train_families": 0,
+    "provsec_artifact_gate_closed": false,
+    "lid_ds_artifact_gate_closed": false,
+    "train_family_quota_passed": false,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "metadata_research_complete_for_this_authorization": true,
+    "two_pending_candidates_registered": true,
+    "candidate_download_authorized": false,
+    "candidate_payload_audit_authorized": false,
+    "candidate_role_change_authorized": false,
+    "candidate_quota_credit_authorized": false,
+    "provsec_or_lid_download_authorized": false,
+    "cert_or_iot23_download_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_m3_work_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  }
+}
