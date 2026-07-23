@@ -11,7 +11,8 @@ A16 Decision: PASSED / GO — Kernel v0.8 Part A only
 Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
 Part B: B0 APPROVED; B1_FEDERATION_SCHEMAS AUTHORIZED on 2026-07-23;
-B2–B9 CLOSED
+B2_STOCHASTIC_OBSERVATION CONTRACT-ONLY AUTHORIZED on 2026-07-23;
+B3–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -43,7 +44,7 @@ v0.8 Part B map:
 |---|---|---|
 | B0 | `B0_PLANNING_AND_CONTRACTS` | COMPLETED / APPROVED |
 | B1 | `B1_FEDERATION_SCHEMAS` | APPROVED / MERGED |
-| B2 | `B2_STOCHASTIC_OBSERVATION` | CLOSED |
+| B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED — CONTRACT ONLY / NO SAMPLING |
 | B3 | `B3_COST_INSTRUMENTATION` | CLOSED |
 | B4 | `B4_BASELINE_PREREG` | CLOSED |
 | B5 | `B5_PLANNER_INTERFACE` | CLOSED |
@@ -118,6 +119,66 @@ Local verification for the final seven-file decision slice passed `18/18`
 targeted B1 tests and `156/156` full repository tests. `compileall`,
 `git diff --check`, the exact allowlist audit and replay of the three frozen B1
 hashes also passed. These results do not expand the authority stated above.
+
+## Part B B2 stochastic-observation contract scope — 2026-07-23
+
+The user separately authorized `B2_STOCHASTIC_OBSERVATION` on an exact
+13-file contract-only allowlist based on `origin/main@0a6c841`.
+
+```text
+execution_authority=false
+sampling_authority=false
+PB-SI-003: OPEN — BLOCKS STOCHASTIC EXECUTION
+Stochastic runtime / sampler / empirical estimation: NOT AUTHORIZED
+Real connectors / downloads / datasets: NOT AUTHORIZED
+Cost instrumentation / Planner / M3*: NOT AUTHORIZED
+LLM / training: NOT AUTHORIZED
+B3–B9: CLOSED
+CERTIFIED_STOP: UNCHANGED / NO B2 AUTHORITY
+Commit / push / PR: NOT AUTHORIZED
+```
+
+B2 may freeze finite exact probability, catalog, TV-replay and future
+simulation-envelope contracts. Algebraic replay of frozen design tables in a
+contract test is not sampling or simulation. Production world-pair selection,
+threshold scope, multi-pair aggregation and estimated-model acceptance remain
+`UNRESOLVED_PB_SI_003` and fail closed.
+
+The B2 examples cannot execute, enter the Part A formal ceiling, produce case
+evidence, eliminate worlds, issue a certificate or emit `CERTIFIED_STOP`.
+Passing contract tests or approving hashes later would establish identity and
+internal consistency only, not empirical validity or execution authority.
+
+The approved local review state passed `15/15` B2 tests and `171/171` full repository
+tests. `compileall`, `git diff --check`, placeholder-hash scanning, canonical
+hash replay and the exact 13-file allowlist audit also passed. The approved
+contract artifact identities are:
+
+```text
+Catalog: sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5
+TV policy: sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8
+B2 manifest: sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed
+```
+
+Their approval does not close `PB-SI-003` or authorize push, PR, execution,
+sampling, B3–B9, LLM or any extension of `CERTIFIED_STOP`. The user authorized
+only a local commit of the exact 13 B2 files.
+
+The user subsequently ratified a naming-only correction to the B2 13-file
+allowlist:
+
+```text
+part-b-tv-acceptance-policy.schema.json
+  -> part-b-stochastic-tv-policy.schema.json
+part-b-tv-acceptance-policy-v0.8.yaml
+  -> part-b-stochastic-tv-policy-v0.8.yaml
+test_part_b_b2_tv_policy.py
+  -> test_part_b_b2_stochastic_observation.py
+```
+
+The right-hand paths are normative. This ratification changes no B2 semantics,
+authority boundary or artifact hash and is included in the approved B2
+contract slice.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.

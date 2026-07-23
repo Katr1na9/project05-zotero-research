@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-stochastic-observation-catalog.schema.json",
+  "title": "Project05 Part B B2 stochastic-observation catalog contract",
+  "description": "Finite exact, non-executable stochastic-observation examples. This schema grants no sampling or runtime authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "catalog_id",
+    "catalog_version",
+    "status",
+    "authorized_slice",
+    "execution_authority",
+    "sampling_authority",
+    "domain_kind",
+    "probability_encoding",
+    "entries",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "catalog_id": {"const": "part-b-stochastic-observation-catalog-v0.8"},
+    "catalog_version": {"const": "0.8.0"},
+    "status": {"const": "B2_CONTRACT_EXAMPLE_ONLY"},
+    "authorized_slice": {"const": "B2_STOCHASTIC_OBSERVATION"},
+    "execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "domain_kind": {"const": "FINITE_EXACT_CONTRACT_EXAMPLES"},
+    "probability_encoding": {"const": "EXACT_RATIONAL"},
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/stochasticEntry"}
+    },
+    "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 1}
+      }
+    },
+    "probabilityEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome_id", "probability"],
+      "properties": {
+        "outcome_id": {"type": "string", "minLength": 1},
+        "probability": {"$ref": "#/$defs/rational"}
+      }
+    },
+    "distributionRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["world_id", "probabilities"],
+      "properties": {
+        "world_id": {"type": "string", "minLength": 1},
+        "probabilities": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 32,
+          "items": {"$ref": "#/$defs/probabilityEntry"}
+        }
+      }
+    },
+    "designComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "left_world_id",
+        "right_world_id",
+        "registered_tv",
+        "status"
+      ],
+      "properties": {
+        "left_world_id": {"type": "string", "minLength": 1},
+        "right_world_id": {"type": "string", "minLength": 1},
+        "registered_tv": {"$ref": "#/$defs/rational"},
+        "status": {"const": "DESIGN_REPLAY_ONLY"}
+      }
+    },
+    "failureChannels": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {"const": "TIMEOUT_UNKNOWN"},
+        {"const": "RESOURCE_EXHAUSTED_UNKNOWN"},
+        {"const": "MODEL_INVALID_UNKNOWN"},
+        {"const": "INFEASIBLE_SEPARATE"}
+      ],
+      "items": false
+    },
+    "stochasticEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "entry_status",
+        "not_executable",
+        "catalog_ceiling_eligible",
+        "semantic_family_id",
+        "semantic_family_contract_hash",
+        "finite_worlds",
+        "finite_outcomes",
+        "conditional_distribution",
+        "design_tv_comparisons",
+        "failure_channels"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "pattern": "^B2-DESIGN-STOCHASTIC-[0-9]{3}$"
+        },
+        "entry_status": {"const": "NON_EXECUTABLE_CONTRACT_EXAMPLE"},
+        "not_executable": {"const": true},
+        "catalog_ceiling_eligible": {"const": false},
+        "semantic_family_id": {
+          "enum": [
+            "execution",
+            "identity",
+            "communication",
+            "data_access",
+            "control_plane",
+            "system_provenance",
+            "software_supply_chain",
+            "external_intel",
+            "human_investigation"
+          ]
+        },
+        "semantic_family_contract_hash": {"$ref": "#/$defs/sha256"},
+        "finite_worlds": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 16,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "finite_outcomes": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 32,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "conditional_distribution": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 16,
+          "items": {"$ref": "#/$defs/distributionRow"}
+        },
+        "design_tv_comparisons": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {"$ref": "#/$defs/designComparison"}
+        },
+        "failure_channels": {"$ref": "#/$defs/failureChannels"}
+      }
+    }
+  }
+}

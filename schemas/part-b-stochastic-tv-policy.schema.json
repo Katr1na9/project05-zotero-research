@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-stochastic-tv-policy.schema.json",
+  "title": "Project05 Part B B2 total-variation policy contract",
+  "description": "A non-executable representation and replay contract. PB-SI-003 remains open and blocks stochastic execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "execution_authority",
+    "sampling_authority",
+    "decision_rule_authority",
+    "pb_si_003_state",
+    "catalog_hash_binding",
+    "tv_representation",
+    "unresolved_production_semantics",
+    "missing_decision_behavior",
+    "design_replay",
+    "error_semantics",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-stochastic-tv-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B2_CONTRACT_ONLY_PB_SI_003_OPEN"},
+    "authorized_slice": {"const": "B2_STOCHASTIC_OBSERVATION"},
+    "execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "decision_rule_authority": {"const": false},
+    "pb_si_003_state": {"const": "OPEN_BLOCKS_STOCHASTIC_EXECUTION"},
+    "catalog_hash_binding": {"$ref": "#/$defs/sha256"},
+    "tv_representation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probability_encoding",
+        "formula",
+        "finite_outcome_domain_required",
+        "catalog_hash_binding_required",
+        "post_hoc_change_forbidden",
+        "production_decision_semantics"
+      ],
+      "properties": {
+        "probability_encoding": {"const": "EXACT_RATIONAL"},
+        "formula": {"const": "HALF_L1_OVER_FINITE_OUTCOMES"},
+        "finite_outcome_domain_required": {"const": true},
+        "catalog_hash_binding_required": {"const": true},
+        "post_hoc_change_forbidden": {"const": true},
+        "production_decision_semantics": {
+          "const": "UNRESOLVED_PB_SI_003"
+        }
+      }
+    },
+    "unresolved_production_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "world_pair_selection",
+        "threshold_scope",
+        "multi_pair_aggregation",
+        "estimated_model_acceptance"
+      ],
+      "properties": {
+        "world_pair_selection": {"const": "UNRESOLVED_PB_SI_003"},
+        "threshold_scope": {"const": "UNRESOLVED_PB_SI_003"},
+        "multi_pair_aggregation": {"const": "UNRESOLVED_PB_SI_003"},
+        "estimated_model_acceptance": {"const": "UNRESOLVED_PB_SI_003"}
+      }
+    },
+    "missing_decision_behavior": {"const": "FAIL_CLOSED_NO_SAMPLING"},
+    "design_replay": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/designReplay"}
+    },
+    "error_semantics": {"$ref": "#/$defs/errorSemantics"},
+    "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 1}
+      }
+    },
+    "designReplay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "left_world_id",
+        "right_world_id",
+        "expected_tv",
+        "result_authority"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "pattern": "^B2-DESIGN-STOCHASTIC-[0-9]{3}$"
+        },
+        "left_world_id": {"type": "string", "minLength": 1},
+        "right_world_id": {"type": "string", "minLength": 1},
+        "expected_tv": {"$ref": "#/$defs/rational"},
+        "result_authority": {"const": "REPRESENTATION_CHECK_ONLY"}
+      }
+    },
+    "errorSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unauthorized_execution",
+        "unauthorized_sampling",
+        "policy_unresolved",
+        "outside_finite_domain",
+        "non_normalized_distribution",
+        "timeout",
+        "resource_exhausted",
+        "model_invalid",
+        "infeasible",
+        "stop_or_certificate_attempt"
+      ],
+      "properties": {
+        "unauthorized_execution": {
+          "const": "B2-STOCH-001_NO_EXECUTION_AUTHORITY"
+        },
+        "unauthorized_sampling": {
+          "const": "B2-STOCH-002_NO_SAMPLING_AUTHORITY"
+        },
+        "policy_unresolved": {
+          "const": "B2-STOCH-003_PB_SI_003_OPEN"
+        },
+        "outside_finite_domain": {
+          "const": "B2-STOCH-004_OUTSIDE_FINITE_DOMAIN"
+        },
+        "non_normalized_distribution": {
+          "const": "B2-STOCH-005_NON_NORMALIZED_DISTRIBUTION"
+        },
+        "timeout": {"const": "B2-STOCH-006_TIMEOUT_UNKNOWN"},
+        "resource_exhausted": {
+          "const": "B2-STOCH-007_RESOURCE_EXHAUSTED_UNKNOWN"
+        },
+        "model_invalid": {
+          "const": "B2-STOCH-008_MODEL_INVALID_UNKNOWN"
+        },
+        "infeasible": {"const": "B2-STOCH-009_INFEASIBLE_SEPARATE"},
+        "stop_or_certificate_attempt": {
+          "const": "B2-STOCH-010_NO_STOP_AUTHORITY"
+        }
+      }
+    }
+  }
+}

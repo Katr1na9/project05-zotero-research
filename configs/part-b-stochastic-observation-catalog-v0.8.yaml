@@ -1,0 +1,90 @@
+schema_version: "0.8.0"
+catalog_id: part-b-stochastic-observation-catalog-v0.8
+catalog_version: "0.8.0"
+status: B2_CONTRACT_EXAMPLE_ONLY
+authorized_slice: B2_STOCHASTIC_OBSERVATION
+execution_authority: false
+sampling_authority: false
+domain_kind: FINITE_EXACT_CONTRACT_EXAMPLES
+probability_encoding: EXACT_RATIONAL
+entries:
+  - action_id: B2-DESIGN-STOCHASTIC-001
+    entry_status: NON_EXECUTABLE_CONTRACT_EXAMPLE
+    not_executable: true
+    catalog_ceiling_eligible: false
+    semantic_family_id: execution
+    semantic_family_contract_hash: "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"
+    finite_worlds: [WORLD-A, WORLD-B]
+    finite_outcomes: [HIT, MISS]
+    conditional_distribution:
+      - world_id: WORLD-A
+        probabilities:
+          - outcome_id: HIT
+            probability: {numerator: 9, denominator: 10}
+          - outcome_id: MISS
+            probability: {numerator: 1, denominator: 10}
+      - world_id: WORLD-B
+        probabilities:
+          - outcome_id: HIT
+            probability: {numerator: 1, denominator: 10}
+          - outcome_id: MISS
+            probability: {numerator: 9, denominator: 10}
+    design_tv_comparisons:
+      - left_world_id: WORLD-A
+        right_world_id: WORLD-B
+        registered_tv: {numerator: 4, denominator: 5}
+        status: DESIGN_REPLAY_ONLY
+    failure_channels:
+      - TIMEOUT_UNKNOWN
+      - RESOURCE_EXHAUSTED_UNKNOWN
+      - MODEL_INVALID_UNKNOWN
+      - INFEASIBLE_SEPARATE
+  - action_id: B2-DESIGN-STOCHASTIC-002
+    entry_status: NON_EXECUTABLE_CONTRACT_EXAMPLE
+    not_executable: true
+    catalog_ceiling_eligible: false
+    semantic_family_id: external_intel
+    semantic_family_contract_hash: "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"
+    finite_worlds: [REPORT-WORLD-A, REPORT-WORLD-B, REPORT-WORLD-C]
+    finite_outcomes: [CONFIRMED, NEGATIVE, INCONCLUSIVE]
+    conditional_distribution:
+      - world_id: REPORT-WORLD-A
+        probabilities:
+          - outcome_id: CONFIRMED
+            probability: {numerator: 1, denominator: 2}
+          - outcome_id: NEGATIVE
+            probability: {numerator: 1, denominator: 3}
+          - outcome_id: INCONCLUSIVE
+            probability: {numerator: 1, denominator: 6}
+      - world_id: REPORT-WORLD-B
+        probabilities:
+          - outcome_id: CONFIRMED
+            probability: {numerator: 1, denominator: 6}
+          - outcome_id: NEGATIVE
+            probability: {numerator: 1, denominator: 2}
+          - outcome_id: INCONCLUSIVE
+            probability: {numerator: 1, denominator: 3}
+      - world_id: REPORT-WORLD-C
+        probabilities:
+          - outcome_id: CONFIRMED
+            probability: {numerator: 1, denominator: 3}
+          - outcome_id: NEGATIVE
+            probability: {numerator: 1, denominator: 3}
+          - outcome_id: INCONCLUSIVE
+            probability: {numerator: 1, denominator: 3}
+    design_tv_comparisons:
+      - left_world_id: REPORT-WORLD-A
+        right_world_id: REPORT-WORLD-B
+        registered_tv: {numerator: 1, denominator: 3}
+        status: DESIGN_REPLAY_ONLY
+    failure_channels:
+      - TIMEOUT_UNKNOWN
+      - RESOURCE_EXHAUSTED_UNKNOWN
+      - MODEL_INVALID_UNKNOWN
+      - INFEASIBLE_SEPARATE
+limitations:
+  - Entries are representation examples and are not executable catalog actions.
+  - Design TV pairs do not select production world-pair or threshold semantics.
+  - No sampler, seed, trial count, estimator, connector, or observation runtime is defined.
+  - Part A deterministic certification and CERTIFIED_STOP authority remain unchanged.
+hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
