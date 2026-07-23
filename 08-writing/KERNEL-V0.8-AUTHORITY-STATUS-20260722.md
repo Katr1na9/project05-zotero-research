@@ -5,11 +5,13 @@
 ```text
 Branch: feat/kernel-v0.8
 Working state: A16 GO closeout (scoped Kernel Part A)
-Regression: 138/138 PASS at the B0 contract review tip (131 Part A + 7 B0)
+Regression: 155/155 PASS at the B1 contract review tip
+(138 pre-B1 + 17 B1)
 A16 Decision: PASSED / GO — Kernel v0.8 Part A only
 Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
-Part B: B0_PLANNING_AND_CONTRACTS AUTHORIZED on 2026-07-23; B1–B9 CLOSED
+Part B: B0 APPROVED; B1_FEDERATION_SCHEMAS AUTHORIZED on 2026-07-23;
+B2–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -40,7 +42,7 @@ v0.8 Part B map:
 | Slice | Normative name | Authority state |
 |---|---|---|
 | B0 | `B0_PLANNING_AND_CONTRACTS` | COMPLETED / APPROVED |
-| B1 | `B1_FEDERATION_SCHEMAS` | CLOSED |
+| B1 | `B1_FEDERATION_SCHEMAS` | IMPLEMENTED / PENDING HUMAN REVIEW |
 | B2 | `B2_STOCHASTIC_OBSERVATION` | CLOSED |
 | B3 | `B3_COST_INSTRUMENTATION` | CLOSED |
 | B4 | `B4_BASELINE_PREREG` | CLOSED |
@@ -50,11 +52,43 @@ v0.8 Part B map:
 | B8 | `B8_HOLDOUT_ANALYSIS` | CLOSED |
 | B9 | `B9_FREEZE_AND_CLAIMS` | CLOSED |
 
-This ruling freezes names and slice boundaries only. It authorizes no B1–B9
-runtime or implementation work, no LLM, and no push or PR. The v0.7 B1–B6
-stages remain reference lineage rather than direct number-equivalents; B7–B9
-are v0.8 extensions. Legacy `B0 no-acquisition` remains a different experiment
-arm and is not Part B B0.
+This map ruling froze names and slice boundaries only. The later explicit B1
+contract authorization is recorded below; it does not retroactively authorize
+runtime work, B2–B9, LLM, push or PR. The v0.7 B1–B6 stages remain reference
+lineage rather than direct number-equivalents; B7–B9 are v0.8 extensions.
+Legacy `B0 no-acquisition` remains a different experiment arm and is not Part
+B B0.
+
+## Part B B1 federation-Schemas scope update — 2026-07-23
+
+The user explicitly authorized `B1_FEDERATION_SCHEMAS` on the 13-file
+allowlist. The completed local slice contains only semantic-family federation
+Schemas, adapter-conformance contracts, non-executable abstract examples,
+their manifest/spec issues, contract tests, the implementation plan and this
+authority update.
+
+```text
+Execution authority: NO
+Federation runtime: NOT AUTHORIZED
+Real connectors / downloads / datasets: NOT AUTHORIZED
+Stochastic execution / cost instrumentation: NOT AUTHORIZED
+LLM / training / Planner / M3*: NOT AUTHORIZED
+B2–B9: CLOSED
+Push / PR: NOT AUTHORIZED
+CERTIFIED_STOP: UNCHANGED
+```
+
+B1 requires source/record/content/range pointer identity, separates
+`modality`, `truth_status`, `epistemic_role` and
+`certification_authority`, treats open-world zero-hit as unknown, and requires
+an explicit completeness declaration for closed-bounded absence semantics.
+These are representation and conformance contracts only. They do not prove
+that a real snapshot is complete, do not admit evidence, and do not issue a
+certificate or `CERTIFIED_STOP`.
+
+The local B1 review tip passed `17/17` B1 tests and `155/155` full repository
+tests. `compileall`, `git diff --check` and the exact 13-file allowlist audit
+also passed. These results do not authorize commit, push, PR or B2–B9.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.
