@@ -1,0 +1,152 @@
+{
+  "schema_version": "project05-llm-editor-l2-liwa-source-role-disposition-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "a4c1bb5e85f0239b672613c39e1825c32595d866",
+  "review_type": "independent_post_exclusion_source_role_disposition",
+  "candidate_id": "liwa_ad_endpoint_telemetry_30run_2026",
+  "status": "disposed_inactive_engineering_only_replacement_required",
+  "input_evidence": {
+    "result_path": "llm-editor-v0.8-l2-liwa-field-isolation-protected-exclusion-result-v0.1-20260723.json",
+    "result_sha256": "5C0B04CD767A5C765798A93634FEC6884651271E2B82C23B9DC7943AE95046F1",
+    "result_commit": "a4c1bb5e85f0239b672613c39e1825c32595d866",
+    "result_status": "passed_no_authority_transition",
+    "raw_record_count": 1109,
+    "normalized_exact_quarantined_record_count": 1047,
+    "near_duplicate_quarantined_record_count": 0,
+    "post_quarantine_clean_record_count": 62,
+    "pre_exclusion_stable_source_native_run_groups": 30,
+    "post_exclusion_stable_run_groups_with_clean_records": 3,
+    "frozen_minimum_stable_groups": 4,
+    "post_exclusion_lineage_capacity_gate_passed": false
+  },
+  "option_analysis": [
+    {
+      "option": "retain_train_candidate",
+      "decision": "reject",
+      "reason": "The protected-exclusion process passed only by quarantining 1,047 of 1,109 records. The remaining 62 records occupy three stable source-native run groups, below the frozen minimum of four; retaining an active candidate role would reserve a train slot for a source that cannot obtain quota under the current contract."
+    },
+    {
+      "option": "hold_train_candidate",
+      "decision": "reject_as_active_role",
+      "reason": "Hold is appropriate only when a bounded metadata or audit closure path remains. Here the frozen artifact has already been fully scanned, and the only apparent ways to recover the slot would be to alter exclusion, split views or windows, or fabricate lineage. All are forbidden."
+    },
+    {
+      "option": "downgrade_to_inactive_engineering_only",
+      "decision": "approve",
+      "reason": "The source can remain as a hash-only field-isolation and exclusion regression fixture under separate authority, but it is no longer eligible for train, development, sample, or lineage credit."
+    },
+    {
+      "option": "open_replacement_search_for_vacated_train_slot",
+      "decision": "approve",
+      "reason": "The independent train slot remains scientifically vacant and must be filled by a distinct executed-evidence family that retains at least four source-native run groups after field isolation and protected exclusion."
+    }
+  ],
+  "verdict": {
+    "decision": "downgrade_and_replace",
+    "effective_catalog_role_before": "train_candidate",
+    "effective_catalog_role_after": "inactive_engineering_only",
+    "scientific_use_status": "protected_overlap_capacity_failed_pending_replace",
+    "train_slot_occupied_after_disposition": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "l2_gate_passed": false,
+    "role_change_applied_by": "llm-editor-v0.8-l2-effective-source-catalog-role-amendment-v0.5-20260723.json"
+  },
+  "inactive_scope": {
+    "hash_only_audit_regression_may_be_considered_under_separate_authority": true,
+    "payload_may_enter_model_view": false,
+    "payload_may_enter_train_or_development": false,
+    "may_generate_training_samples_or_targets": false,
+    "may_supply_null_benign_unsupported_or_abstention": false,
+    "may_supply_temporal_candidate_q_or_polarity_supervision": false,
+    "may_be_rehabilitated_by_window_view_file_or_attack_type_split": false,
+    "second_exclusion_run_planned": false,
+    "exclusion_threshold_or_normalization_change_allowed": false
+  },
+  "replacement_slot": {
+    "slot_id": "train_executed_evidence_liwa_replacement_01",
+    "status": "vacant_pending_metadata_replacement",
+    "current_quota_credit": 0,
+    "required_evidence_shape": "A distinct executed endpoint, provenance, audit, or security-telemetry family; specifications, rules, technique mappings, detector summaries, and CTI knowledge bases do not qualify.",
+    "hard_requirements": [
+      "Artifact-level license, immutable revision, byte size, and checksum are independently verifiable.",
+      "At least four source-native run or capture groups exist before payload selection without row, file, host-view, technique, or arbitrary time-window inflation.",
+      "Labels, answers, scenario names, detector output, file names, and path-derived supervision can be physically isolated.",
+      "At least four stable groups remain after exact, normalized, and frozen near-duplicate exclusion against E3, E5, OpTC, OTRF, and WitFoo.",
+      "The family is curator-, artifact-, and nuisance-distinct from selected train, development, and test families.",
+      "No quota is awarded before a separately authorized bounded manifest, lineage, field-isolation, exclusion, and capacity audit."
+    ]
+  },
+  "replacement_priority_queue": [
+    {
+      "candidate_id": "evtx_attack_samples",
+      "priority": 1,
+      "current_status": "reserve_lineage_independence_unverified",
+      "why_consider": "The existing metadata inventory records executed Windows event samples, a pinned Git revision, GPL-3.0 licensing, and 278 EVTX files.",
+      "blocking_gates": [
+        "Repository metadata maps artifacts to ATT&CK techniques but does not establish that individual EVTX files are independent executions.",
+        "File and technique counts cannot be used as lineage.",
+        "A metadata review must first determine whether at least four source-native execution groups can be identified without reading payload.",
+        "Any later download or payload audit requires separate authorization."
+      ],
+      "approved_as_replacement_now": false,
+      "download_authorized": false
+    },
+    {
+      "candidate_id": "n_baiot_uci_442",
+      "priority": 2,
+      "current_status": "hold_license_and_checksum_unclosed",
+      "why_consider": "The existing inventory describes real traffic from nine commercial IoT devices and offers modality diversity from the endpoint-heavy portfolio.",
+      "blocking_gates": [
+        "Artifact license, stable data URL, byte size, and checksum are not closed in the existing metadata record.",
+        "Device count cannot substitute for source-native run or capture independence.",
+        "Cross-split curator and nuisance overlap with IoT-23 must be resolved before any role decision."
+      ],
+      "approved_as_replacement_now": false,
+      "download_authorized": false
+    },
+    {
+      "candidate_id": "new_distinct_endpoint_or_provenance_family",
+      "priority": 3,
+      "current_status": "metadata_search_required",
+      "why_consider": "A new family may be necessary if the two reserves cannot close their artifact or lineage gates.",
+      "blocking_gates": [
+        "No source identity, artifact license, checksum, or lineage metadata is registered yet.",
+        "Metadata-only review must precede any acquisition."
+      ],
+      "approved_as_replacement_now": false,
+      "download_authorized": false
+    }
+  ],
+  "explicit_non_candidates_for_this_slot": [
+    {
+      "candidate_id": "ainception_zenodo_2025",
+      "reason": "The bounded audit remains fail-closed because two SL700 archives exceeded the notice cap and the SL100/SL300 probes found no pointer-capable schema."
+    },
+    {
+      "candidate_id": "provics_hf_2026",
+      "reason": "The existing metadata audit found only one benign and one attack acquisition; campaigns cannot be reinterpreted as independent runs."
+    },
+    {
+      "candidate_id": "cicapt_iiot_2024",
+      "reason": "The existing metadata audit found only two experiment phases and no closed artifact license, immutable release, size, or checksum."
+    }
+  ],
+  "allocation_guard": {
+    "provsec_2023_and_lid_ds_2021_may_be_silently_reallocated_to_this_slot": false,
+    "reason": "Existing portfolio rules give these candidates priority for BETH/Atomic replacement and prohibit one artifact from filling two family roles. Any reallocation requires a separate portfolio amendment."
+  },
+  "scope_audit": {
+    "payload_read_for_disposition": false,
+    "protected_payload_read": false,
+    "exclusion_rerun": false,
+    "exclusion_parameter_changed": false,
+    "training_samples_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  },
+  "next_action": "Metadata-only source review of evtx_attack_samples for source-native execution-group evidence, or a new distinct executed-evidence family search, requires a separate scoped authorization before any download or payload access."
+}
