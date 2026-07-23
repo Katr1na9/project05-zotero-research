@@ -1,0 +1,43 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b2-manifest-v0.8
+manifest_version: "0.8.0"
+status: B2_CONTRACT_ONLY
+authorized_slice: B2_STOCHASTIC_OBSERVATION
+execution_authority: false
+sampling_authority: false
+pb_si_003_state: OPEN_BLOCKS_STOCHASTIC_EXECUTION
+llm_integration: FORBIDDEN
+stop_authority: NONE
+closed_slices: [B3, B4, B5, B6, B7, B8, B9]
+bindings:
+  b0_manifest_hash: "sha256:22601f9876ecc8b348a9a2d836b3b842576de4f1442124cb2e82807e30096b4f"
+  b1_manifest_hash: "sha256:cecc07466d0aec0dbc7b4d95127651546ba7eb895f98a56d7e37c6f753850f6e"
+  stochastic_catalog_hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+  tv_policy_hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
+runtime_authority:
+  stochastic_runtime: false
+  sampler: false
+  simulation_runtime: false
+  empirical_model_estimation: false
+  federation_runtime: false
+  real_connectors: false
+  data_downloads: false
+  real_data_access: false
+  cost_instrumentation: false
+  planner: false
+  m3star: false
+  llm: false
+allowed_outputs:
+  - stochastic_observation_catalog_schema
+  - tv_policy_schema
+  - non_executable_contract_example
+  - simulation_boundary_contract
+  - contract_manifest
+  - contract_test
+  - spec_issue_register
+  - authority_status
+next_gate:
+  requires_explicit_user_authorization: true
+  requires_pb_si_003_closure_for_execution: true
+  default: STOP_AFTER_B2_REVIEW
+hash: "sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed"

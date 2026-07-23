@@ -1,0 +1,51 @@
+schema_version: "0.8.0"
+policy_id: part-b-stochastic-tv-policy-v0.8
+policy_version: "0.8.0"
+status: B2_CONTRACT_ONLY_PB_SI_003_OPEN
+authorized_slice: B2_STOCHASTIC_OBSERVATION
+execution_authority: false
+sampling_authority: false
+decision_rule_authority: false
+pb_si_003_state: OPEN_BLOCKS_STOCHASTIC_EXECUTION
+catalog_hash_binding: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+tv_representation:
+  probability_encoding: EXACT_RATIONAL
+  formula: HALF_L1_OVER_FINITE_OUTCOMES
+  finite_outcome_domain_required: true
+  catalog_hash_binding_required: true
+  post_hoc_change_forbidden: true
+  production_decision_semantics: UNRESOLVED_PB_SI_003
+unresolved_production_semantics:
+  world_pair_selection: UNRESOLVED_PB_SI_003
+  threshold_scope: UNRESOLVED_PB_SI_003
+  multi_pair_aggregation: UNRESOLVED_PB_SI_003
+  estimated_model_acceptance: UNRESOLVED_PB_SI_003
+missing_decision_behavior: FAIL_CLOSED_NO_SAMPLING
+design_replay:
+  - action_id: B2-DESIGN-STOCHASTIC-001
+    left_world_id: WORLD-A
+    right_world_id: WORLD-B
+    expected_tv: {numerator: 4, denominator: 5}
+    result_authority: REPRESENTATION_CHECK_ONLY
+  - action_id: B2-DESIGN-STOCHASTIC-002
+    left_world_id: REPORT-WORLD-A
+    right_world_id: REPORT-WORLD-B
+    expected_tv: {numerator: 1, denominator: 3}
+    result_authority: REPRESENTATION_CHECK_ONLY
+error_semantics:
+  unauthorized_execution: B2-STOCH-001_NO_EXECUTION_AUTHORITY
+  unauthorized_sampling: B2-STOCH-002_NO_SAMPLING_AUTHORITY
+  policy_unresolved: B2-STOCH-003_PB_SI_003_OPEN
+  outside_finite_domain: B2-STOCH-004_OUTSIDE_FINITE_DOMAIN
+  non_normalized_distribution: B2-STOCH-005_NON_NORMALIZED_DISTRIBUTION
+  timeout: B2-STOCH-006_TIMEOUT_UNKNOWN
+  resource_exhausted: B2-STOCH-007_RESOURCE_EXHAUSTED_UNKNOWN
+  model_invalid: B2-STOCH-008_MODEL_INVALID_UNKNOWN
+  infeasible: B2-STOCH-009_INFEASIBLE_SEPARATE
+  stop_or_certificate_attempt: B2-STOCH-010_NO_STOP_AUTHORITY
+limitations:
+  - PB-SI-003 remains OPEN and blocks stochastic execution and sampling.
+  - Design replay checks representation only and is not an action-selection rule.
+  - Estimated observation-model acceptance and statistical calibration are undefined.
+  - This policy cannot issue a certificate, system state, or CERTIFIED_STOP.
+hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
