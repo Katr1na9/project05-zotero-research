@@ -87,6 +87,11 @@ Part A SI-007 excludes the legacy stochastic M3* runtime. B0 does not reuse or
 validate it and does not define a planner API. A later slice must specify a
 public-state, action-ID-only interface and preserve Checker-only STOP authority.
 
+B4 cross-reference: `B4_BASELINE_PREREG` registers legacy method identifiers,
+roles and future interface obligations only. It does not validate an
+implementation or define the B5 public-state adapter. Therefore B4 does not
+close this issue, grant Planner authority or make legacy M3* executable.
+
 ## PB-SI-006 — Broad connector and dataset scope is unselected
 
 **State:** `OPEN — BLOCKS CONNECTOR/DATA WORK`.
