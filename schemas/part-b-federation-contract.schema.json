@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-federation-contract.schema.json",
+  "title": "Project05 Part B B1 semantic-family federation contract",
+  "description": "Finite, contract-only semantic-family registry. It defines no connector or federation runtime.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "contract_version",
+    "status",
+    "authorized_slice",
+    "execution_authority",
+    "domain_kind",
+    "semantic_families",
+    "pointer_policy",
+    "epistemic_separation",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "contract_id": {"const": "part-b-federation-contract-v0.8"},
+    "contract_version": {"const": "0.8.0"},
+    "status": {"const": "B1_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B1_FEDERATION_SCHEMAS"},
+    "execution_authority": {"const": false},
+    "domain_kind": {"const": "FINITE_REGISTERED_FAMILIES"},
+    "semantic_families": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 9,
+      "items": {"$ref": "#/$defs/semanticFamily"}
+    },
+    "pointer_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_identity_required",
+        "record_identity_required",
+        "content_hash_required",
+        "range_semantics_required",
+        "provenance_rewrite"
+      ],
+      "properties": {
+        "source_identity_required": {"const": true},
+        "record_identity_required": {"const": true},
+        "content_hash_required": {"const": true},
+        "range_semantics_required": {"const": true},
+        "provenance_rewrite": {"const": "FORBIDDEN"}
+      }
+    },
+    "epistemic_separation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "separate_fields",
+        "adapter_may_assign_certification_authority",
+        "authority_gate"
+      ],
+      "properties": {
+        "separate_fields": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {"const": "modality"},
+            {"const": "truth_status"},
+            {"const": "epistemic_role"},
+            {"const": "certification_authority"}
+          ],
+          "items": false
+        },
+        "adapter_may_assign_certification_authority": {"const": false},
+        "authority_gate": {"const": "KERNEL_POLICY_OUTSIDE_ADAPTER"}
+      }
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "timeWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start_inclusive", "end_exclusive"],
+      "properties": {
+        "start_inclusive": {"type": "string", "format": "date-time"},
+        "end_exclusive": {"type": "string", "format": "date-time"}
+      }
+    },
+    "completenessContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "time_window",
+        "snapshot_identity",
+        "completeness_conditions",
+        "absence_semantics"
+      ],
+      "properties": {
+        "scope": {"type": "string", "minLength": 1},
+        "time_window": {"$ref": "#/$defs/timeWindow"},
+        "snapshot_identity": {"type": "string", "minLength": 1},
+        "completeness_conditions": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "absence_semantics": {
+          "const": "ZERO_HIT_EXCLUDES_IN_SCOPE_RECORD"
+        }
+      }
+    },
+    "worldSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "zero_hit_semantics", "completeness_contract"],
+      "properties": {
+        "mode": {"enum": ["OPEN_WORLD", "CLOSED_BOUNDED"]},
+        "zero_hit_semantics": {
+          "enum": [
+            "UNKNOWN_NOT_ABSENCE",
+            "ABSENCE_ONLY_WHEN_COMPLETE"
+          ]
+        },
+        "completeness_contract": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/completenessContract"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"mode": {"const": "OPEN_WORLD"}},
+            "required": ["mode"]
+          },
+          "then": {
+            "properties": {
+              "zero_hit_semantics": {"const": "UNKNOWN_NOT_ABSENCE"},
+              "completeness_contract": {"type": "null"}
+            }
+          },
+          "else": {
+            "properties": {
+              "zero_hit_semantics": {"const": "ABSENCE_ONLY_WHEN_COMPLETE"},
+              "completeness_contract": {
+                "$ref": "#/$defs/completenessContract"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "semanticFamily": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "family_version",
+        "source_schema_ids",
+        "allowed_predicates",
+        "default_modality",
+        "default_epistemic_role",
+        "world_semantics"
+      ],
+      "properties": {
+        "family_id": {
+          "enum": [
+            "execution",
+            "identity",
+            "communication",
+            "data_access",
+            "control_plane",
+            "system_provenance",
+            "software_supply_chain",
+            "external_intel",
+            "human_investigation"
+          ]
+        },
+        "family_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "source_schema_ids": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "allowed_predicates": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "default_modality": {
+          "enum": [
+            "observed",
+            "derived",
+            "reported",
+            "hypothesized",
+            "unknown"
+          ]
+        },
+        "default_epistemic_role": {
+          "enum": [
+            "case_evidence",
+            "mechanism_knowledge",
+            "background_intelligence",
+            "model_hypothesis",
+            "analyst_hypothesis",
+            "unknown"
+          ]
+        },
+        "world_semantics": {"$ref": "#/$defs/worldSemantics"}
+      }
+    }
+  }
+}

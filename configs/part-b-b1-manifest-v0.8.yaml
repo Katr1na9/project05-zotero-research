@@ -1,0 +1,36 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b1-manifest-v0.8
+manifest_version: "0.8.0"
+status: B1_CONTRACT_ONLY
+authorized_slice: B1_FEDERATION_SCHEMAS
+execution_authority: false
+llm_integration: FORBIDDEN
+stop_authority: NONE
+closed_slices: [B2, B3, B4, B5, B6, B7, B8, B9]
+bindings:
+  b0_manifest_hash: "sha256:22601f9876ecc8b348a9a2d836b3b842576de4f1442124cb2e82807e30096b4f"
+  federation_contract_hash: "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"
+  adapter_conformance_hash: "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a"
+runtime_authority:
+  federation_runtime: false
+  real_connectors: false
+  data_downloads: false
+  real_data_access: false
+  stochastic_execution: false
+  cost_instrumentation: false
+  planner: false
+  m3star: false
+  llm: false
+allowed_outputs:
+  - federation_schema
+  - adapter_conformance_schema
+  - non_executable_example
+  - contract_manifest
+  - boundary_contract
+  - contract_test
+  - spec_issue_register
+  - authority_status
+next_gate:
+  requires_explicit_user_authorization: true
+  default: STOP_AFTER_B1_REVIEW
+hash: "sha256:cecc07466d0aec0dbc7b4d95127651546ba7eb895f98a56d7e37c6f753850f6e"
