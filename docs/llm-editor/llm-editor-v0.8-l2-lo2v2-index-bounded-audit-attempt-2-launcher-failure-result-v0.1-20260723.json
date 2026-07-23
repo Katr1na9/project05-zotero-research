@@ -1,0 +1,102 @@
+{
+  "schema_version": "project05-llm-editor-l2-lo2v2-index-bounded-audit-attempt-2-launcher-failure-result-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "617d3ea0be53f030e6c331d5d15bcac6c377c88a",
+  "status": "powershell_execution_policy_blocked_before_launcher_body_attempt_exhausted",
+  "target_id": "lo2v2_index_json",
+  "result_kind": "sanitized_execution_launcher_failure_not_data_audit_result",
+  "attempt_2_authority": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-execute-attempt-2-authority-v0.1-20260723.json",
+    "sha256": "f140ab4500c3189dd9a135ff6df678ce925f028195da4339206fb253d50fbdcb",
+    "commit": "617d3ea0be53f030e6c331d5d15bcac6c377c88a",
+    "execution_count_authorized": 1,
+    "execution_count_exhausted_by_this_failure": 1,
+    "remaining_execution_count": 0,
+    "authority_may_be_reused": false
+  },
+  "corrected_launcher": {
+    "path": "datasets/llm/run_lo2v2_index_bounded_audit_once_v0_2.ps1",
+    "sha256": "1c9d613630794278518f285ec1a29bfb3638585d9fd22c8d1bf997c1c450d78f",
+    "commit": "85874cea2890b718a008d8a928adc7357d13f237",
+    "outer_invocation_started": true,
+    "launcher_file_loaded": false,
+    "launcher_body_executed": false,
+    "direct_python_invocation_reached": false
+  },
+  "prelaunch_recheck": {
+    "passed": true,
+    "attempt_2_authority_sha256_matched": true,
+    "corrected_launcher_bytes_sha256_and_git_blob_matched": true,
+    "corrected_launcher_amendment_sha256_matched": true,
+    "attempt_1_failure_result_sha256_matched": true,
+    "reader_amendment_sha256_matched": true,
+    "audit_contract_sha256_matched": true,
+    "audit_script_bytes_sha256_and_git_blob_matched": true,
+    "reader_component_count": 6,
+    "all_reader_component_paths_sizes_and_sha256_matched": true,
+    "reserved_result_json_absent": true,
+    "reserved_result_markdown_absent": true,
+    "target_statted_opened_read_parsed_or_hashed_during_prelaunch": false
+  },
+  "failure": {
+    "stage": "outer_powershell_script_load",
+    "reason_code": "windows_powershell_execution_policy_script_disabled",
+    "sanitized_error": "Windows PowerShell refused to load the committed corrected launcher because script execution is disabled by the active system execution policy.",
+    "outer_process_exit_code": 1,
+    "external_supervisor_limit_seconds": 300,
+    "external_supervisor_timeout_reached": false,
+    "launcher_body_executed": false,
+    "python_process_started": false,
+    "audit_script_started": false,
+    "target_statted_opened_read_parsed_or_hashed": false,
+    "reserved_result_json_written": false,
+    "reserved_result_markdown_written": false,
+    "raw_payload_or_json_observed": false,
+    "automatic_retry_performed": false,
+    "resume_performed": false,
+    "execution_policy_bypass_used": false,
+    "alternate_launcher_used": false
+  },
+  "attempt_disposition": {
+    "authority_consumption_rule_applied": true,
+    "attempt_2_exhausted": true,
+    "attempt_2_authority_revoked_for_future_use": true,
+    "second_invocation_under_attempt_2_authority_allowed": false,
+    "third_attempt_authorized": false,
+    "execution_policy_override_authorized": false,
+    "failure_does_not_establish_schema_notice_manifest_lineage_label_overlap_or_pointer_findings": true,
+    "failure_does_not_count_as_model_baseline_or_evaluation": true
+  },
+  "reserved_data_audit_result_boundary": {
+    "json_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-result-v0.1-20260723.json",
+    "markdown_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-result-v0.1-20260723.md",
+    "json_exists_after_failure": false,
+    "markdown_exists_after_failure": false,
+    "kept_absent_because_no_data_audit_process_started": true
+  },
+  "scientific_boundary": {
+    "data_audit_verdict": "not_run",
+    "source_role_approved": false,
+    "effective_catalog_written": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false
+  },
+  "authority": {
+    "failure_result_records_exhaustion_only": true,
+    "audit_execution_authorized_by_this_result": false,
+    "automatic_retry_or_resume_authorized": false,
+    "execution_policy_bypass_authorized": false,
+    "alternate_launcher_authorized": false,
+    "third_attempt_authorized": false,
+    "source_role_or_credit_change_authorized": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false,
+    "next_action": "Hard stop. Do not rerun attempt 2, add -ExecutionPolicy Bypass, use an alternate launcher, or infer a data-audit verdict. Review and optionally commit this sanitized failure record before considering any new amendment or authority."
+  }
+}
