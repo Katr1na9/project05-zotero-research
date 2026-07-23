@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-cost-contract.schema.json",
+  "title": "Project05 Part B full cost contract draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "contract_version",
+    "status",
+    "execution_authority",
+    "dimensions",
+    "feasibility_semantics",
+    "measurement_policy",
+    "scalarization",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "contract_id": {"const": "part-b-cost-contract-v0.8"},
+    "contract_version": {"const": "0.8.0"},
+    "status": {"const": "CONTRACT_DRAFT"},
+    "execution_authority": {"const": false},
+    "dimensions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        {"$ref": "#/$defs/T_human"},
+        {"$ref": "#/$defs/T_wall"},
+        {"$ref": "#/$defs/T_CPU"},
+        {"$ref": "#/$defs/M_byte_sec"},
+        {"$ref": "#/$defs/D_scan"},
+        {"$ref": "#/$defs/N_record"},
+        {"$ref": "#/$defs/C_money"},
+        {"$ref": "#/$defs/T_auth"}
+      ],
+      "items": false
+    },
+    "feasibility_semantics": {"const": "SEPARATE_NOT_HIGH_COST"},
+    "measurement_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executor_trace_required",
+        "missing_measurement_policy",
+        "unmeasured_action_claim_policy",
+        "volatility_model"
+      ],
+      "properties": {
+        "executor_trace_required": {"const": true},
+        "missing_measurement_policy": {"const": "UNKNOWN_NOT_ZERO"},
+        "unmeasured_action_claim_policy": {"const": "NO_COST_SUPERIORITY_CLAIM"},
+        "volatility_model": {"const": "DELAY_LOSS_OR_DEADLINE_SEPARATE"}
+      }
+    },
+    "scalarization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "preregistration_required", "weights", "sensitivity_required"],
+      "properties": {
+        "enabled": {"const": false},
+        "preregistration_required": {"const": true},
+        "weights": {"type": "null"},
+        "sensitivity_required": {"const": true}
+      }
+    },
+    "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "dimensionBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimension_id", "unit", "aggregation", "measurement_source"],
+      "properties": {
+        "dimension_id": {"type": "string"},
+        "unit": {"type": "string", "minLength": 1},
+        "aggregation": {"enum": ["sum", "elapsed", "integral"]},
+        "measurement_source": {"type": "string", "minLength": 1}
+      }
+    },
+    "T_human": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "T_human"}}}]},
+    "T_wall": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "T_wall"}}}]},
+    "T_CPU": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "T_CPU"}}}]},
+    "M_byte_sec": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "M_byte_sec"}}}]},
+    "D_scan": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "D_scan"}}}]},
+    "N_record": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "N_record"}}}]},
+    "C_money": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "C_money"}}}]},
+    "T_auth": {"allOf": [{"$ref": "#/$defs/dimensionBase"}, {"properties": {"dimension_id": {"const": "T_auth"}}}]}
+  }
+}
