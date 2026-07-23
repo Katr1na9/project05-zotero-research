@@ -1,0 +1,153 @@
+{
+  "schema_version": "project05-llm-editor-l2-lo2v2-index-bounded-audit-non-bypass-entry-amendment-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "7a08b56b3655e6e3ffe5cbc4c7ca54aaf5ef79a8",
+  "status": "non_bypass_python_entry_frozen_not_executed_attempt_3_not_yet_authorized",
+  "target_id": "lo2v2_index_json",
+  "purpose": "Freeze a non-Bypass invocation surface through the already pinned and trusted CPython reader executable. The entry performs fail-closed hash and authority checks and transfers control to the pinned audit script in the same process with runpy. It does not load a PowerShell script, alter host execution policy, use ExecutionPolicy Bypass, spawn a substitute process, expose plan mode, or grant attempt 3 by itself.",
+  "amends": {
+    "attempt_1": {
+      "failure_result_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-attempt-1-launcher-failure-result-v0.1-20260723.json",
+      "failure_result_sha256": "11e6cfc1c9fb61164c2650e96cf43efbe6892c0e6d2b7771da5805b55d61ea5c",
+      "failure_result_commit": "0a6659a0ab6d10ff3ee8f0500c78c20337f7a52e",
+      "disposition": "permanently_exhausted"
+    },
+    "attempt_2": {
+      "authority_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-execute-attempt-2-authority-v0.1-20260723.json",
+      "authority_sha256": "f140ab4500c3189dd9a135ff6df678ce925f028195da4339206fb253d50fbdcb",
+      "authority_commit": "617d3ea0be53f030e6c331d5d15bcac6c377c88a",
+      "failure_result_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-attempt-2-launcher-failure-result-v0.1-20260723.json",
+      "failure_result_sha256": "0347800539dc3ec4617d95af958f48351360f19ff9c6f18eaf7ebdddb29601bf",
+      "failure_result_commit": "7a08b56b3655e6e3ffe5cbc4c7ca54aaf5ef79a8",
+      "disposition": "permanently_exhausted"
+    }
+  },
+  "non_bypass_entry": {
+    "path": "datasets/llm/run_lo2v2_index_bounded_audit_once_v0_3.py",
+    "bytes": 6150,
+    "sha256": "f162a3a893bbadc019967860245af9afe56ca40aba1cf51fa9c0eaecdedfbdde",
+    "python_ast_parse_passed": true,
+    "executed_during_freeze": false,
+    "target_accessed_during_freeze": false,
+    "powershell_or_ps1_used": false,
+    "execution_policy_modified_or_bypassed": false,
+    "subprocess_or_shell_spawn_used": false,
+    "same_process_runpy_handoff_used": true,
+    "fixed_target_id": "lo2v2_index_json",
+    "fixed_future_authority_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-execute-attempt-3-authority-v0.1-20260723.json",
+    "fixed_audit_script_path": "datasets/llm/audit_lo2v2_index_v0_1.py",
+    "fixed_mode": "execute",
+    "plan_mode_available": false
+  },
+  "trusted_host_identity": {
+    "entry_host": "existing hash-pinned CPython reader executable",
+    "path_template": "%LOCALAPPDATA%\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "bytes": 45568,
+    "sha256": "0cf37e7be6ee71edef78e6c81f7dcef58237b204af36d6e83393c96538a52372",
+    "base_python_sha256": "ae7e969410d751d010c2ca03394fe5c53230fbf48ca7d368b897e455eca14fba",
+    "python311_dll_sha256": "e1b53c741751563eca9eac70378de5be36994adac8c27e8ec375971579e23b50",
+    "python_version": "3.11.15 (main, Jun 23 2026, 15:20:37) [MSC v.1944 64 bit (AMD64)]",
+    "installed_or_downloaded_for_this_amendment": false,
+    "identity_mismatch_action": "fail_closed_before_source_stat_or_open"
+  },
+  "pinned_inputs": {
+    "reader_amendment": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-json-reader-tool-amendment-v0.1-20260723.json",
+      "sha256": "725baaf4580fb11496d73a4b9b4ce6b35d414928a85dfb8f87841a5249ea76f8"
+    },
+    "audit_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-json-reader-privacy-notice-schema-manifest-lineage-label-v1-v2-pointer-audit-contract-v0.1-20260723.json",
+      "sha256": "055afec2d650a29f007f9ec6d20f61f3609e2992aa4b55bbf1c8f6672dc0ef26"
+    },
+    "audit_script": {
+      "path": "datasets/llm/audit_lo2v2_index_v0_1.py",
+      "bytes": 30574,
+      "sha256": "170a2d115e35c080ca3c64d4d01356a0046db5603d86f42d3b04335b288a8c85",
+      "git_blob": "193a641374fd6cd898654baaa447c0321e5dc4a9"
+    },
+    "acquisition_result": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-acquisition-result-v0.1-20260723.json",
+      "sha256": "ffb2798867cea93bd9c0d2a171d6aca78055579f531d5f51b03c48543af7f9f0",
+      "status": "verified_exact_size_and_md5_hard_stopped"
+    }
+  },
+  "invocation": {
+    "template": "<pinned-python> datasets/llm/run_lo2v2_index_bounded_audit_once_v0_3.py --target-id lo2v2_index_json --external-supervisor-seconds 300",
+    "host": "pinned_cpython_executable",
+    "powershell_script_load_required": false,
+    "execution_policy_override_required": false,
+    "execution_policy_override_allowed": false,
+    "shell_or_subprocess_required": false,
+    "outer_external_supervisor_required": true,
+    "outer_external_supervisor_wall_seconds": 300,
+    "entry_parameter_is_only_a_guard_not_the_supervisor": true,
+    "entry_invoked_during_amendment": false
+  },
+  "preentry_guards": {
+    "target_id_must_equal": "lo2v2_index_json",
+    "external_supervisor_seconds_parameter_must_equal": 300,
+    "attempt_3_authority_must_exist": true,
+    "attempt_3_authority_status_must_equal": "authorized_once",
+    "attempt_3_authority_number_must_equal": 3,
+    "attempt_3_execution_count_must_equal": 1,
+    "attempt_3_authority_must_pin_non_bypass_entry_sha256": true,
+    "attempt_3_authority_must_pin_audit_script_and_contract_sha256": true,
+    "automatic_retry_resume_and_execution_policy_bypass_must_be_false": true,
+    "reader_contract_script_and_attempt_1_and_2_failure_hashes_must_match": true,
+    "reserved_result_json_and_markdown_must_not_preexist": true,
+    "guard_failure_action": "fail_closed_without_retry_policy_override_or_alternate_entry"
+  },
+  "caps": {
+    "maximum_wall_seconds": 300,
+    "maximum_input_bytes": 31028530,
+    "maximum_json_depth": 32,
+    "maximum_total_nodes": 2000000,
+    "maximum_dict_keys_per_object": 4096,
+    "maximum_list_items_per_array": 200000,
+    "maximum_scalar_string_utf8_bytes": 262144,
+    "maximum_run_candidates": 4096,
+    "maximum_result_bytes": 262144,
+    "maximum_result_file_count": 2,
+    "maximum_new_execute_count": 1
+  },
+  "result_boundary": {
+    "json_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-result-v0.1-20260723.json",
+    "markdown_path": "docs/llm-editor/llm-editor-v0.8-l2-lo2v2-index-bounded-audit-result-v0.1-20260723.md",
+    "json_absent_at_amendment": true,
+    "markdown_absent_at_amendment": true,
+    "raw_json_key_value_run_test_path_timestamp_notice_or_pointer_allowed": false,
+    "aggregate_counts_digests_boolean_gates_and_non_sensitive_reason_codes_only": true
+  },
+  "attempt_boundary": {
+    "attempt_1_permanently_exhausted": true,
+    "attempt_2_permanently_exhausted": true,
+    "attempt_3_authorized_by_this_amendment": false,
+    "attempt_3_requires_separate_committed_authority": true,
+    "future_non_bypass_entry_process_start_consumes_attempt_3": true,
+    "success_guard_failure_python_failure_timeout_or_audit_failure_consumes_attempt_3": true,
+    "automatic_retry_or_resume_allowed": false,
+    "execution_policy_override_allowed": false,
+    "alternate_entry_allowed": false,
+    "attempt_4_authorized": false
+  },
+  "scientific_boundary": {
+    "source_role_approved": false,
+    "effective_catalog_write_authorized": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "training_sample_generation_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "kernel_gamma_or_m3_authorized": false,
+    "l2_gate_passed": false
+  },
+  "authority": {
+    "non_bypass_entry_frozen": true,
+    "non_bypass_entry_execution_authorized": false,
+    "attempt_3_authority_created": false,
+    "automatic_retry_resume_or_policy_override_authorized": false,
+    "git_push_authorized": false,
+    "next_action": "Commit the non-Bypass Python entry and amendment unchanged, then create a separate attempt-3 authority naming lo2v2_index_json and pinning the entry, trusted reader, audit script, contract, prior failure results, result absence, and all caps. Do not execute the entry in this step."
+  }
+}
