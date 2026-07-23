@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/admission-policy.schema.json",
+  "title": "Project05 v0.8 Kernel Admission Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "authority_source",
+    "default_decision",
+    "admission_requirements",
+    "rules",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"type": "string", "minLength": 1},
+    "policy_version": {"type": "string", "pattern": "^0\\.8\\.[0-9]+$"},
+    "authority_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normative_artifact", "sections", "artifact_sha256"],
+      "properties": {
+        "normative_artifact": {"type": "string", "minLength": 1},
+        "sections": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "default_decision": {"const": "deny"},
+    "admission_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modality",
+        "truth_status",
+        "epistemic_role",
+        "binding_status",
+        "admission_status",
+        "promotion_status",
+        "lifecycle_states",
+        "authority_allowed",
+        "pointer_complete",
+        "pointer_matches_observation",
+        "literal_matches_observation",
+        "observation_kinds",
+        "completeness_conditions_satisfied",
+        "used_for_world_elimination",
+        "oracle_hidden_fields_forbidden"
+      ],
+      "properties": {
+        "modality": {"const": "observed"},
+        "truth_status": {"const": "supported"},
+        "epistemic_role": {"const": "case_evidence"},
+        "binding_status": {"const": "bound"},
+        "admission_status": {"const": "candidate"},
+        "promotion_status": {"const": "none"},
+        "lifecycle_states": {
+          "type": "array",
+          "prefixItems": [{"const": "bound"}, {"const": "generated"}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "authority_allowed": {"const": true},
+        "pointer_complete": {"const": true},
+        "pointer_matches_observation": {"const": true},
+        "literal_matches_observation": {"const": true},
+        "observation_kinds": {
+          "type": "array",
+          "items": {"enum": ["distinguishing_hit", "bounded_complete_zero_hit"]},
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true
+        },
+        "completeness_conditions_satisfied": {"const": true},
+        "used_for_world_elimination": {"const": true},
+        "oracle_hidden_fields_forbidden": {"const": true}
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/rule"}
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule_id", "decision", "source_families", "admissible_levels"],
+      "properties": {
+        "rule_id": {"type": "string", "minLength": 1},
+        "decision": {"const": "allow_when_all_requirements_hold"},
+        "source_families": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "admissible_levels": {"$ref": "#/$defs/nonEmptyUniqueStrings"}
+      }
+    }
+  }
+}

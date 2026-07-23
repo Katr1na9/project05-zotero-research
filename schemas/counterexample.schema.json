@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/counterexample.schema.json",
+  "title": "Project05 v0.8 Kernel Counterexample",
+  "description": "A solver-generated alternative world pair. It is not an external ground-truth record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "counterexample_id",
+    "case_id",
+    "gamma_hash",
+    "evidence_hash",
+    "target_level",
+    "candidate_q",
+    "checker_status",
+    "core_query_results",
+    "support_world",
+    "alternative_world",
+    "shared_predicates",
+    "support_only_predicates",
+    "alternative_only_predicates",
+    "distinguishing_predicates",
+    "critical_absence_semantics",
+    "minimization_status",
+    "generation_basis"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "counterexample_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "gamma_hash": {"$ref": "#/$defs/sha256"},
+    "evidence_hash": {"$ref": "#/$defs/sha256"},
+    "target_level": {"type": "string", "minLength": 1},
+    "candidate_q": {"$ref": "#/$defs/entityRef"},
+    "checker_status": {"const": "COUNTEREXAMPLE_FOUND"},
+    "core_query_results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "support", "alternative"],
+      "properties": {
+        "base": {"const": "SAT"},
+        "support": {"const": "SAT"},
+        "alternative": {"const": "SAT"}
+      }
+    },
+    "support_world": {"$ref": "#/$defs/world"},
+    "alternative_world": {"$ref": "#/$defs/world"},
+    "shared_predicates": {"$ref": "#/$defs/predicates"},
+    "support_only_predicates": {"$ref": "#/$defs/predicates"},
+    "alternative_only_predicates": {"$ref": "#/$defs/predicates"},
+    "distinguishing_predicates": {"$ref": "#/$defs/nonEmptyPredicates"},
+    "critical_absence_semantics": {"$ref": "#/$defs/predicates"},
+    "minimization_status": {"enum": ["OPTIMAL", "BEST_EFFORT", "TIMEOUT", "NOT_REQUESTED"]},
+    "generation_basis": {"const": "kernel_checker"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "entityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "entity_type"],
+      "properties": {
+        "entity_id": {"type": "string", "minLength": 1},
+        "entity_type": {"type": "string", "minLength": 1}
+      }
+    },
+    "predicates": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "nonEmptyPredicates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "world": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["world_id", "target_result", "predicates"],
+      "properties": {
+        "world_id": {"type": "string", "minLength": 1},
+        "target_result": {"$ref": "#/$defs/entityRef"},
+        "predicates": {"$ref": "#/$defs/nonEmptyPredicates"}
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "cartesian_assignment_bound": 27,
+  "catalog_hash": "sha256:d6f67e2c74a406f729384a26a65905752f3e425ba8cc74b6702760d9d43f0dd5",
+  "ceiling_id": "gamma-supply-chain-kernel-v0.8:package_origin:formal-ceiling-v0.8",
+  "compilation_profile": "explicit_legal_worlds_v0.8:supply-chain-origin-worlds-v0.8",
+  "deterministic_observable_ids": [
+    "registry_attestation",
+    "mirror_publish_chain",
+    "artifact_signature_state"
+  ],
+  "excluded_action_reasons": {},
+  "formal_action_ids": [
+    "query_registry_attestation_PKG-X",
+    "query_mirror_publish_chain_PKG-X",
+    "verify_artifact_signature_PKG-X"
+  ],
+  "gamma_hash": "sha256:c9131108991f4894a09d65ff9e47f5fafdb6eadb53f5bc51e0e5e6093d16076e",
+  "guarantees": [
+    "all declared finite assignments enumerated",
+    "all declared result candidates represented by legal worlds",
+    "formal actions have deterministic observation models and elimination rules",
+    "resource exhaustion and timeout are not UNSAT"
+  ],
+  "hash": "sha256:83283e0c9a34af8f4903480f60d55f6cf9ad99995a53241caec0fd729af16804",
+  "legal_world_count": 3,
+  "legal_worlds_hash": "sha256:1ceb0edd7d9df3c34077af29b215842ca58956c04c7e1519a3adf9fc30bab1a1",
+  "limitations": [
+    "model-relative to the exact Gamma hash",
+    "does not cover unmodeled real-world hypotheses or future algorithms",
+    "does not establish external validity or action-effect correctness",
+    "does not itself authorize CERTIFIED_STOP"
+  ],
+  "reason_code": "CEILING-000_EXHAUSTIVE_FINITE_DOMAIN_VERIFIED",
+  "result_candidates": ["REGISTRY-A", "MIRROR-B", "BUILDER-C"],
+  "schema_version": "0.8.0",
+  "status": "VERIFIED",
+  "target_level": "package_origin",
+  "variable_domains": {
+    "delivery_path": ["signed_registry", "mirror_republish", "local_injection"],
+    "package_origin": ["REGISTRY-A", "MIRROR-B", "BUILDER-C"],
+    "signature_state": ["valid", "unknown", "invalid"]
+  }
+}
