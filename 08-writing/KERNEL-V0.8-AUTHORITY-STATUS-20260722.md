@@ -13,7 +13,8 @@ PR: AUTHORIZED for Kernel-only scope against main
 Part B: B0 APPROVED; B1_FEDERATION_SCHEMAS AUTHORIZED on 2026-07-23;
 B2_STOCHASTIC_OBSERVATION CONTRACT-ONLY AUTHORIZED on 2026-07-23;
 B3_COST_INSTRUMENTATION AUTHORIZED FOR LOCAL TRACE AGGREGATION on 2026-07-23;
-B4–B9 CLOSED
+B4_BASELINE_PREREG AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-23;
+B5–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -47,7 +48,7 @@ v0.8 Part B map:
 | B1 | `B1_FEDERATION_SCHEMAS` | APPROVED / MERGED |
 | B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED — CONTRACT ONLY / NO SAMPLING |
 | B3 | `B3_COST_INSTRUMENTATION` | LOCAL REVIEW — TRACE AGGREGATION ONLY |
-| B4 | `B4_BASELINE_PREREG` | CLOSED |
+| B4 | `B4_BASELINE_PREREG` | LOCAL REVIEW — CONTRACT ONLY / NO EXECUTION |
 | B5 | `B5_PLANNER_INTERFACE` | CLOSED |
 | B6 | `B6_CLOSED_LOOP_EVAL` | CLOSED |
 | B7 | `B7_BROAD_CONNECTORS` | CLOSED |
@@ -239,6 +240,64 @@ capture adapters, memory cadence, cross-currency FX normalization,
 scalarization, sensitivity analysis and any cost/performance superiority
 claim remain open in `src/scope/part-b-b3-spec-issues.md`. B3 cannot issue a
 certificate, system state or `CERTIFIED_STOP`.
+
+## Part B B4 baseline-preregistration scope — 2026-07-23
+
+The user separately authorized `B4_BASELINE_PREREG` on an exact 15-file
+contract-only allowlist based on `main@f47c118`:
+
+```text
+roster: finite 13-method preregistration
+isolation: TRAIN / TUNE / EVALUATION / HOLDOUT
+execution_authority=false
+sampling_authority=false
+planner_authority=false
+scalarization_authority=false
+performance_claim_authority=false
+stop_authority=NONE
+NO_BASELINE_EXECUTION
+NO_DATA_ACQUISITION
+NO_CONNECTOR_DOWNLOAD
+NO_STOCHASTIC_SAMPLER
+B5–B9: CLOSED
+LLM / 09-experiments: FORBIDDEN
+Commit / push / PR: NOT AUTHORIZED
+```
+
+B4 records baseline identities, public/evaluator roles, action-ID-only
+interface obligations, training/tuning declarations, deterministic tie-breaks
+and fail-closed failure semantics. It also freezes contractual isolation
+between train, tune, evaluation and holdout partitions. It implements no
+method, adapter, data split, connector, sampler, evaluator or experiment.
+
+`ORACLE_EVALUATION_ONLY` remains evaluator-only and cannot enter deployable
+ranking. `NO_ACQUISITION` remains a legacy experimental control distinct from
+Part B `B0_PLANNING_AND_CONTRACTS`. PB-SI-005 remains open: registration does
+not validate legacy M3* or grant a B5 Planner interface.
+
+The B4 local-review artifact identities are:
+
+```text
+Baseline preregistration:
+sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d
+
+Baseline isolation policy:
+sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f
+
+B4 manifest:
+sha256:2649b2a9067858d5fe2fa4c2f9d6386408384448910c97ee4eb89f1817893afc
+```
+
+These identities establish content consistency only. They do not authorize
+baseline execution, B2 sampling, B3 production capture, scalarization,
+performance superiority claims, B5–B9, LLM or any extension of
+`CERTIFIED_STOP`.
+
+The B4 local review passed `12/12` targeted tests and `208/208` full
+repository tests. `compileall`, tracked and untracked whitespace checks,
+canonical hash replay, the exact 15-file allowlist audit, zero-placeholder
+scan and zero-staged-file check also passed. These results do not authorize a
+commit, push, PR or any runtime behavior.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.

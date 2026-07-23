@@ -1,0 +1,457 @@
+schema_version: "0.8.0"
+registry_id: part-b-baseline-preregistration-v0.8
+registry_version: "0.8.0"
+status: B4_CONTRACT_ONLY
+authorized_slice: B4_BASELINE_PREREG
+roster_semantics: FINITE_COMPLETE_PREREGISTRATION
+roster_frozen: true
+part_b_phase_b0_identifier: B0_PLANNING_AND_CONTRACTS
+legacy_no_acquisition_baseline_id: NO_ACQUISITION
+execution_authority: false
+sampling_authority: false
+planner_authority: false
+performance_claim_authority: false
+baselines:
+  - baseline_id: NO_ACQUISITION
+    contract_version: v0.8
+    method_name: No acquisition control
+    method_family: ABSTENTION_CONTROL
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: CONTRACT_DEFINED_NOT_EXECUTABLE
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs: [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: false
+      freeze_state: NOT_APPLICABLE
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: ALWAYS_RETURN_NO_ACTION
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - This is the legacy experimental control arm, not Part B phase B0.
+
+  - baseline_id: RANDOM_FEASIBLE
+    contract_version: v0.8
+    method_name: Seeded random feasible action
+    method_family: SEEDED_RANDOM
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs: [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: false
+      freeze_state: NOT_APPLICABLE
+    decision_contract:
+      randomness_mode: SEEDED_STOCHASTIC
+      seed_policy: PREDECLARED_FIXED
+      seed_value: 1729
+      tie_break_rule: PREDECLARED_PRNG_DRAW_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - The seed schedule is not supplied or executable in B4.
+
+  - baseline_id: COVERAGE_GREEDY
+    contract_version: v0.8
+    method_name: Public coverage greedy
+    method_family: GREEDY_HEURISTIC
+    role: DEPLOYABLE
+    deployment_eligible: true
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, PUBLIC_COVERAGE_MAP]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: false
+      freeze_state: NOT_APPLICABLE
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_PUBLIC_COVERAGE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - Public coverage semantics require a later verified B5 adapter.
+
+  - baseline_id: CMI_PROXY
+    contract_version: v0.8
+    method_name: Conditional mutual-information proxy
+    method_family: INFORMATION_PROXY
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, PUBLIC_OBSERVATION_MODEL]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: false
+      freeze_state: NOT_APPLICABLE
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_CMI_PROXY_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - B4 does not authorize stochastic sampling or model estimation.
+
+  - baseline_id: M1_STATIC_EXPECTED_GAIN
+    contract_version: v0.8
+    method_name: M1 static expected gain
+    method_family: STATIC_EXPECTED_GAIN
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, FROZEN_PUBLIC_PRIORS]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: false
+      freeze_state: NOT_APPLICABLE
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_STATIC_EXPECTED_GAIN_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - Legacy priors are not imported or validated by B4.
+
+  - baseline_id: M2_TRANSPARENT
+    contract_version: v0.8
+    method_name: M2 transparent rule planner
+    method_family: TRANSPARENT_RULE_PLANNER
+    role: DEPLOYABLE
+    deployment_eligible: true
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, FROZEN_RULE_FEATURES]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_TRANSPARENT_SCORE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - B4 defines no rule weights, executable planner, or B5 adapter.
+
+  - baseline_id: M3A_GAP_COMPATIBILITY
+    contract_version: v0.8
+    method_name: Legacy M3a gap compatibility
+    method_family: LEGACY_GAP_MODEL
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, FROZEN_PUBLIC_FEATURES]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: true
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_COMPATIBILITY_SCORE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - Legacy M3a behavior is not imported, validated, or executable in B4.
+
+  - baseline_id: LOGISTIC_M3B
+    contract_version: v0.8
+    method_name: Logistic M3b action value
+    method_family: LOGISTIC_ACTION_VALUE
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, FROZEN_PUBLIC_FEATURES]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: true
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_LOGISTIC_SCORE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - No historical coefficient or legacy training artifact is admitted.
+
+  - baseline_id: XGBOOST_ACTION_VALUE
+    contract_version: v0.8
+    method_name: XGBoost action value
+    method_family: TREE_ACTION_VALUE
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, FROZEN_PUBLIC_FEATURES]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: true
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_TREE_SCORE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - No historical model, feature map, or tuned parameter is admitted.
+
+  - baseline_id: AFA_VOI_MYOPIC
+    contract_version: v0.8
+    method_name: AFA-VOI myopic
+    method_family: VALUE_OF_INFORMATION
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, PUBLIC_OBSERVATION_MODEL]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_ONE_STEP_VOI_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - B4 supplies neither a rollout implementation nor a stochastic executor.
+
+  - baseline_id: AFA_VOI_ROLLOUT_H3
+    contract_version: v0.8
+    method_name: AFA-VOI rollout H3
+    method_family: VALUE_OF_INFORMATION
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, PUBLIC_OBSERVATION_MODEL]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_H3_ROLLOUT_VALUE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - Horizon semantics are registered but no rollout may run in B4.
+
+  - baseline_id: DEPTH2_PUBLIC
+    contract_version: v0.8
+    method_name: Public-state depth-2 search
+    method_family: PUBLIC_DEPTH_SEARCH
+    role: REFERENCE_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: true
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: true
+      allowed_public_inputs:
+        [CASE_ID, PUBLIC_STATE, FEASIBLE_ACTION_IDS, PUBLIC_OBSERVATION_MODEL]
+      evaluator_only_inputs: []
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: true
+      freeze_state: FROZEN_BY_PREREGISTRATION
+    decision_contract:
+      randomness_mode: DETERMINISTIC
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MAX_DEPTH2_PUBLIC_VALUE_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - Search and observation expansion are not implemented or authorized.
+
+  - baseline_id: ORACLE_EVALUATION_ONLY
+    contract_version: v0.8
+    method_name: Exact evaluator-side oracle
+    method_family: EVALUATOR_ORACLE
+    role: EVALUATOR_ONLY
+    deployment_eligible: false
+    eligible_for_deployable_performance_ranking: false
+    implementation_status: UNVERIFIED_FAIL_CLOSED
+    interface_boundary:
+      public_state_only: false
+      allowed_public_inputs: [CASE_ID, FEASIBLE_ACTION_IDS]
+      evaluator_only_inputs: [ORACLE_WORLD_ID, REALIZED_ACTION_OUTCOME]
+      action_id_only_output: true
+      allows_no_action: true
+      forbidden_deployment_inputs:
+        [ORACLE_LABEL, HIDDEN_GROUND_TRUTH, HOLDOUT_LABEL, REALIZED_ACTION_OUTCOME]
+    training_and_tuning:
+      training_required: false
+      tuning_required: false
+      freeze_state: NOT_APPLICABLE
+    decision_contract:
+      randomness_mode: EVALUATOR_ONLY
+      seed_policy: NOT_APPLICABLE
+      seed_value: null
+      tie_break_rule: MIN_ORACLE_COST_THEN_ACTION_ID_ASC
+      failure_semantics:
+        timeout: UNKNOWN_NO_RANK
+        resource_exhaustion: UNKNOWN_NO_RANK
+        infeasible: SEPARATE_NO_ACTION
+        unknown: FAIL_CLOSED_NO_RANK
+    limitations:
+      - Oracle information is evaluator-only and cannot enter deployment ranking.
+limitations:
+  - B4 registers identities and boundaries only; it runs no baseline.
+  - Legacy implementations and historical result artifacts are not validated.
+  - Registration grants no Planner, sampling, performance-claim, or STOP authority.
+hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"

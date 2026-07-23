@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-baseline-preregistration.schema.json",
+  "title": "Project05 Part B B4 baseline preregistration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "registry_version",
+    "status",
+    "authorized_slice",
+    "roster_semantics",
+    "roster_frozen",
+    "part_b_phase_b0_identifier",
+    "legacy_no_acquisition_baseline_id",
+    "execution_authority",
+    "sampling_authority",
+    "planner_authority",
+    "performance_claim_authority",
+    "baselines",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "registry_id": {"const": "part-b-baseline-preregistration-v0.8"},
+    "registry_version": {"const": "0.8.0"},
+    "status": {"const": "B4_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B4_BASELINE_PREREG"},
+    "roster_semantics": {"const": "FINITE_COMPLETE_PREREGISTRATION"},
+    "roster_frozen": {"const": true},
+    "part_b_phase_b0_identifier": {
+      "const": "B0_PLANNING_AND_CONTRACTS"
+    },
+    "legacy_no_acquisition_baseline_id": {"const": "NO_ACQUISITION"},
+    "execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "planner_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "baselines": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {"$ref": "#/$defs/baseline"},
+      "uniqueItems": true
+    },
+    "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_id",
+        "contract_version",
+        "method_name",
+        "method_family",
+        "role",
+        "deployment_eligible",
+        "eligible_for_deployable_performance_ranking",
+        "implementation_status",
+        "interface_boundary",
+        "training_and_tuning",
+        "decision_contract",
+        "limitations"
+      ],
+      "properties": {
+        "baseline_id": {
+          "enum": [
+            "NO_ACQUISITION",
+            "RANDOM_FEASIBLE",
+            "COVERAGE_GREEDY",
+            "CMI_PROXY",
+            "M1_STATIC_EXPECTED_GAIN",
+            "M2_TRANSPARENT",
+            "M3A_GAP_COMPATIBILITY",
+            "LOGISTIC_M3B",
+            "XGBOOST_ACTION_VALUE",
+            "AFA_VOI_MYOPIC",
+            "AFA_VOI_ROLLOUT_H3",
+            "DEPTH2_PUBLIC",
+            "ORACLE_EVALUATION_ONLY"
+          ]
+        },
+        "contract_version": {"const": "v0.8"},
+        "method_name": {"type": "string", "minLength": 1},
+        "method_family": {
+          "enum": [
+            "ABSTENTION_CONTROL",
+            "SEEDED_RANDOM",
+            "GREEDY_HEURISTIC",
+            "INFORMATION_PROXY",
+            "STATIC_EXPECTED_GAIN",
+            "TRANSPARENT_RULE_PLANNER",
+            "LEGACY_GAP_MODEL",
+            "LOGISTIC_ACTION_VALUE",
+            "TREE_ACTION_VALUE",
+            "VALUE_OF_INFORMATION",
+            "PUBLIC_DEPTH_SEARCH",
+            "EVALUATOR_ORACLE"
+          ]
+        },
+        "role": {
+          "enum": ["DEPLOYABLE", "REFERENCE_ONLY", "EVALUATOR_ONLY"]
+        },
+        "deployment_eligible": {"type": "boolean"},
+        "eligible_for_deployable_performance_ranking": {"type": "boolean"},
+        "implementation_status": {
+          "enum": [
+            "UNVERIFIED_FAIL_CLOSED",
+            "CONTRACT_DEFINED_NOT_EXECUTABLE"
+          ]
+        },
+        "interface_boundary": {"$ref": "#/$defs/interfaceBoundary"},
+        "training_and_tuning": {"$ref": "#/$defs/trainingAndTuning"},
+        "decision_contract": {"$ref": "#/$defs/decisionContract"},
+        "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"}
+      }
+    },
+    "interfaceBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_state_only",
+        "allowed_public_inputs",
+        "evaluator_only_inputs",
+        "action_id_only_output",
+        "allows_no_action",
+        "forbidden_deployment_inputs"
+      ],
+      "properties": {
+        "public_state_only": {"type": "boolean"},
+        "allowed_public_inputs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "evaluator_only_inputs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "action_id_only_output": {"const": true},
+        "allows_no_action": {"const": true},
+        "forbidden_deployment_inputs": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "enum": [
+              "ORACLE_LABEL",
+              "HIDDEN_GROUND_TRUTH",
+              "HOLDOUT_LABEL",
+              "REALIZED_ACTION_OUTCOME"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "trainingAndTuning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "training_required",
+        "tuning_required",
+        "freeze_state"
+      ],
+      "properties": {
+        "training_required": {"type": "boolean"},
+        "tuning_required": {"type": "boolean"},
+        "freeze_state": {
+          "enum": ["FROZEN_BY_PREREGISTRATION", "NOT_APPLICABLE"]
+        }
+      }
+    },
+    "decisionContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "randomness_mode",
+        "seed_policy",
+        "seed_value",
+        "tie_break_rule",
+        "failure_semantics"
+      ],
+      "properties": {
+        "randomness_mode": {
+          "enum": ["DETERMINISTIC", "SEEDED_STOCHASTIC", "EVALUATOR_ONLY"]
+        },
+        "seed_policy": {
+          "enum": ["NOT_APPLICABLE", "PREDECLARED_FIXED"]
+        },
+        "seed_value": {
+          "anyOf": [
+            {"type": "integer", "minimum": 0},
+            {"type": "null"}
+          ]
+        },
+        "tie_break_rule": {"type": "string", "minLength": 1},
+        "failure_semantics": {"$ref": "#/$defs/failureSemantics"}
+      }
+    },
+    "failureSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeout",
+        "resource_exhaustion",
+        "infeasible",
+        "unknown"
+      ],
+      "properties": {
+        "timeout": {"const": "UNKNOWN_NO_RANK"},
+        "resource_exhaustion": {"const": "UNKNOWN_NO_RANK"},
+        "infeasible": {"const": "SEPARATE_NO_ACTION"},
+        "unknown": {"const": "FAIL_CLOSED_NO_RANK"}
+      }
+    }
+  }
+}
