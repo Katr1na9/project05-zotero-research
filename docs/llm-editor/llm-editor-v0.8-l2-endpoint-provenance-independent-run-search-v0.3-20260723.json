@@ -1,0 +1,469 @@
+{
+  "schema_version": "project05-llm-editor-l2-endpoint-provenance-independent-run-search-v0.3",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "36db116895879d70e9ac170340cf2b17c7fa3ab4",
+  "review_type": "metadata_only_search_for_one_additional_endpoint_or_provenance_family",
+  "status": "complete_one_reviewable_direction_found",
+  "extends": "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.2-20260723.json",
+  "purpose": "Find one additional endpoint or provenance family whose curator declares at least four label-independent execution or capture units, while keeping the live REPROD dots.zip acquisition untouched and granting at most a separate metadata-candidate review.",
+  "scope": {
+    "official_registry_metadata_read": true,
+    "official_repository_metadata_read": true,
+    "official_readme_and_license_text_read": true,
+    "crossref_publication_metadata_read": true,
+    "payload_or_archive_downloaded": false,
+    "archive_central_directory_or_member_names_read": false,
+    "archive_member_content_read": false,
+    "dataset_blob_content_read": false,
+    "paper_full_text_downloaded_or_read": false,
+    "labels_or_ground_truth_read": false,
+    "model_output_read": false,
+    "training_sample_generated": false,
+    "reprod_download_process_or_target_read": false,
+    "reprod_download_interfered_with": false,
+    "kernel_driver_or_cuckoo_reopened": false,
+    "liwa_reopened": false,
+    "evtx_reopened": false,
+    "cert_or_iot23_downloaded": false,
+    "protected_e3_e5_optc_otrf_or_witfoo_advanced": false,
+    "effective_catalog_written": false,
+    "family_role_changed": false,
+    "quota_credit_awarded": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  },
+  "search_contract": {
+    "required_modality": [
+      "endpoint_execution_evidence",
+      "host_execution_trace",
+      "system_provenance_capture"
+    ],
+    "minimum_curator_declared_execution_or_capture_groups": 4,
+    "grouping_must_not_require": [
+      "attack class",
+      "malware family",
+      "technique label",
+      "verdict",
+      "row count",
+      "file count",
+      "directory count",
+      "host count",
+      "sensor-view count",
+      "date window"
+    ],
+    "record_scope_license_required": true,
+    "immutable_artifact_identity_required": true,
+    "source_native_grouping_declaration_required": true,
+    "metadata_level_distinctness_required": true,
+    "maximum_search_verdict": "approve_for_separate_metadata_candidate_review_not_source_role"
+  },
+  "search_surfaces": [
+    {
+      "surface": "Zenodo Records API",
+      "base_url": "https://zenodo.org/api/records",
+      "access": "metadata_only"
+    },
+    {
+      "surface": "DataCite DOI API",
+      "base_url": "https://api.datacite.org/dois/",
+      "access": "metadata_only"
+    },
+    {
+      "surface": "Crossref Works API",
+      "base_url": "https://api.crossref.org/works/",
+      "access": "metadata_only"
+    },
+    {
+      "surface": "GitHub REST API",
+      "base_url": "https://api.github.com/",
+      "access": "repository_metadata_and_named_documentation_only"
+    }
+  ],
+  "reproducible_query_terms": [
+    "\"system call\" malware dataset",
+    "sysmon cybersecurity dataset",
+    "\"provenance graph\" cybersecurity dataset",
+    "auditd intrusion dataset",
+    "\"endpoint telemetry\" attack dataset",
+    "eBPF security dataset",
+    "\"each execution\" malware",
+    "\"each run\" \"system call\"",
+    "\"independent runs\" cybersecurity",
+    "\"execution traces\" malware dataset",
+    "\"provenance graphs\" attack dataset",
+    "\"flow graphs\" attack dataset",
+    "StreamSpot provenance dataset",
+    "host intrusion system call dataset",
+    "provenance graph intrusion dataset"
+  ],
+  "reviewable_direction": {
+    "candidate_id": "pandacap_ssh_honeypot_full_system_traces_2020",
+    "candidate_slot": "train_executed_evidence_additional_family_search_01",
+    "search_verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "why_it_is_reviewable": "The curator explicitly declares 63 PANDA traces and defines the source-native capture boundary: each SSH session triggers one 30-second full-system recording. The four Zenodo objects have fixed byte sizes and MD5 values under a versioned CC-BY-4.0 dataset record.",
+    "source_identity": {
+      "title": "PANDAcap SSH Honeypot Dataset",
+      "official_record": "https://zenodo.org/records/3759652",
+      "official_api_record": "https://zenodo.org/api/records/3759652",
+      "record_id": 3759652,
+      "record_revision": 4,
+      "record_created_at": "2020-04-22T08:02:38.765203+00:00",
+      "record_updated_at": "2020-04-22T11:02:06.062690+00:00",
+      "doi": "10.5281/zenodo.3759652",
+      "concept_doi": "10.5281/zenodo.3759651",
+      "publication_date": "2020-04-21",
+      "declared_version": "1.0",
+      "resource_type": "dataset",
+      "access_right": "open",
+      "license": "CC-BY-4.0",
+      "creators": [
+        {
+          "name": "Manolis Stamatogiannakis",
+          "affiliation": "Vrije Universiteit Amsterdam",
+          "orcid": "0000-0002-5527-8726"
+        },
+        {
+          "name": "Herbert Bos",
+          "affiliation": "Vrije Universiteit Amsterdam",
+          "orcid": "0000-0001-6179-1510"
+        },
+        {
+          "name": "Paul Groth",
+          "affiliation": "Universiteit van Amsterdam",
+          "orcid": "0000-0003-0183-6910"
+        }
+      ],
+      "datacite_state": "findable",
+      "datacite_title_creator_version_type_and_rights_match": true
+    },
+    "artifact_identity": {
+      "official_file_count": 4,
+      "official_total_bytes": 22433496290,
+      "official_total_gib_approx": 20.89,
+      "all_files_have_md5": true,
+      "files": [
+        {
+          "key": "eurosec2020-pandacap-rr.zip",
+          "bytes": 14897472844,
+          "checksum": "md5:1624d475a6bb337451f0ce201fb17456",
+          "view": "63_full_system_panda_record_replay_traces"
+        },
+        {
+          "key": "ubuntu16-planb-kernelinfo.conf",
+          "bytes": 1572,
+          "checksum": "md5:0e1a09969f7bc166592c35d19c336ee6",
+          "view": "linux_kernel_profile_for_trace_analysis"
+        },
+        {
+          "key": "eurosec2020-pandacap-qcow.zip",
+          "bytes": 6429700473,
+          "checksum": "md5:440b9366558fee903ace80677bd41af4",
+          "view": "base_image_and_disk_deltas_for_the_same_63_sessions"
+        },
+        {
+          "key": "eurosec2020-pandacap-pcap.zip",
+          "bytes": 1106321401,
+          "checksum": "md5:e3154304a5bc0ada181739c42912e15b",
+          "view": "network_traces_extracted_for_the_same_sessions"
+        }
+      ],
+      "archive_contents_verified": false,
+      "nested_notice_scope_verified": false
+    },
+    "official_capture_declaration": {
+      "declared_trace_count": 63,
+      "collection_period": "2020-02-21 through 2020-02-23",
+      "capture_trigger": "When an SSH session starts for root, the PANDA recctrl plugin starts a 30-second recording.",
+      "source_native_capture_unit": "one PANDA trace triggered by one SSH session",
+      "capture_unit_depends_on_attack_class_or_verdict": false,
+      "minimum_four_capture_declaration_met": true,
+      "rr_qcow_and_pcap_are_views_of_the_same_sessions": true,
+      "sensor_views_count_as_separate_lineages": false,
+      "vm_reset_or_snapshot_restore_between_sessions_declared": false,
+      "one_trace_per_unique_session_manifest_published_in_record_metadata": false,
+      "duplicate_or_repeat_session_policy_published": false,
+      "session_statistical_independence_verified": false,
+      "metadata_level_capture_verdict": "at_least_four_curator_declared_label_independent_session_capture_units_but_manifest_reset_duplicate_and_view_binding_audits_are_unclosed",
+      "lineage_credit_awarded": 0
+    },
+    "associated_publication": {
+      "title": "PANDAcap: A Framework for Streamlining Collection of Full-System Traces",
+      "crossref_title": "PANDAcap",
+      "doi": "10.1145/3380786.3391396",
+      "doi_url": "https://doi.org/10.1145/3380786.3391396",
+      "venue": "Proceedings of the 13th European Workshop on Systems Security",
+      "publisher": "ACM",
+      "publication_date": "2020-04-27",
+      "publication_type": "proceedings_article",
+      "authors_match_dataset_creators": true,
+      "zenodo_relation": "isSupplementTo",
+      "crossref_metadata_verified": true,
+      "full_text_read": false
+    },
+    "curator_documentation": {
+      "repository": "vusec/pandacap",
+      "repository_url": "https://github.com/vusec/pandacap",
+      "repository_description": "A framework for streamlining the capture of PANDA execution traces.",
+      "repository_head": "ce3d2590ca79ca5afea2593fefc90b087777ecc3",
+      "repository_tree": "6169f6deccb92593ca4d76470bb890dd7598525d",
+      "repository_license": "Apache-2.0",
+      "release_count": 0,
+      "tag_count": 0,
+      "dataset_document_path": "docs/eurosec20-dataset.md",
+      "dataset_document_blob_sha": "f5daa87d67194c426eed51ad01583ba941cdb3fa",
+      "dataset_document_size": 4970,
+      "dataset_document_confirms_63_traces_and_session_trigger": true,
+      "repository_payload_or_code_read": false
+    },
+    "evidence_fit": {
+      "endpoint_or_host_evidence_fit": "strong",
+      "provenance_or_execution_replay_fit": "strong_but_specialized",
+      "candidate_modalities": [
+        "panda_full_system_record_replay_trace",
+        "qcow_disk_delta_view",
+        "pcap_network_view"
+      ],
+      "preferred_future_review_surface": "eurosec2020-pandacap-rr.zip",
+      "pcap_may_be_used_as_default_model_surface": false,
+      "qcow_may_be_used_as_default_model_surface": false,
+      "multi_view_lineage_rule": "All RR, QCOW, and PCAP material from one SSH session must remain one lineage group and one split.",
+      "candidate_pointer_shape": "record DOI + RR archive identity + opaque trace/session identifier + replay event index",
+      "pointer_shape_approved": false,
+      "temporal_normalization_support": "plausible_from_replay_events_but_unverified",
+      "candidate_q_support": "not_established_from_metadata",
+      "metadata_stage_benign_or_null_capacity": 0,
+      "class_balance_implication": "The collection is an SSH honeypot/brute-force trace family and does not provide a curator-declared benign/null execution pool."
+    },
+    "privacy_safety_and_rights_risks": {
+      "record_scope_license_verified": true,
+      "record_scope_license": "CC-BY-4.0",
+      "artifact_level_checksums_published": true,
+      "nested_or_third_party_notice_audit_performed": false,
+      "live_honeypot_session_content_may_contain_personal_or_sensitive_data": true,
+      "full_system_trace_may_contain_credentials_commands_payloads_or_secrets": true,
+      "qcow_delta_may_contain_malicious_or_sensitive_files": true,
+      "pcap_may_contain_network_identifiers_or_session_content": true,
+      "ordinary_payload_or_trace_content_may_be_read_at_metadata_stage": false,
+      "privacy_and_dual_use_gate_for_training": "not_passed"
+    },
+    "reader_and_format_risk": {
+      "record_declares_rrarchive_format": true,
+      "record_date_format_status": "upcoming_and_PANDA_support_work_in_progress_in_April_2020",
+      "reader_name_version_package_or_executable_identity_pinned": false,
+      "reader_invocation_and_parser_pinned": false,
+      "kernel_profile_published": true,
+      "future_reader_gate_required": true,
+      "silent_tool_install_or_format_conversion_allowed": false
+    },
+    "portfolio_distinctness": {
+      "same_record_or_artifact_as_reprod": false,
+      "same_record_or_artifact_as_existing_train_dev_test_family": false,
+      "known_metadata_level_overlap_with_cert_or_iot23": false,
+      "known_metadata_level_overlap_with_beth_loghub_atomic_zeek_camlds_socbed_ainception_liwa_evtx_or_dynamic_malware": false,
+      "known_metadata_level_overlap_with_protected_e3_e5_optc_otrf_or_witfoo": false,
+      "curator_or_collection_framework_overlap_found": false,
+      "payload_level_overlap_verified": false,
+      "distinctness_verdict": "plausibly_distinct_at_metadata_level_exact_and_near_overlap_audit_still_required"
+    },
+    "blocking_risks_before_any_source_role": [
+      "The record does not declare VM snapshot restoration or equivalent reset between the 63 sessions.",
+      "A bounded central-directory audit must prove that at least four stable trace identifiers map to separate non-empty session captures without reading labels or ordinary trace payload.",
+      "RR, QCOW, and PCAP views of one SSH session must remain one lineage and one split.",
+      "The RRArchive format was described as upcoming and PANDA support as work in progress; no reader identity or reproducible invocation is pinned.",
+      "Live honeypot full-system traces, disk deltas, and PCAPs may contain credentials, commands, downloaded payloads, personal identifiers, secrets, or malicious files.",
+      "Nested notices and third-party rights inside the archives remain unverified.",
+      "The collection has no curator-declared benign/null execution capacity.",
+      "Pointer recoverability and protected exact/near-duplicate exclusion remain unverified."
+    ],
+    "current_authority": {
+      "registered_in_effective_catalog": false,
+      "download_authorized": false,
+      "payload_or_manifest_audit_authorized": false,
+      "approved_as_train_candidate": false,
+      "counts_as_family": false,
+      "counts_as_lineage": false,
+      "counts_as_samples": false,
+      "quota_credit": 0
+    }
+  },
+  "screened_not_advanced": [
+    {
+      "candidate_id": "streamspot_all_provenance_graphs_2016",
+      "official_repository": "https://github.com/sbustreamspot/sbustreamspot-data",
+      "repository_head": "07942da41ae3ba7202b146c758fcf0c30d2cb7b6",
+      "repository_license": "Apache-2.0",
+      "artifact": {
+        "key": "all.tar.gz",
+        "bytes": 87860166,
+        "git_blob_sha1": "0e987d918cdcb4c53446e3ed73b7697d425955a4"
+      },
+      "curator_declaration": "The official README declares 600 benign and attack scenario graphs with graph IDs 0 through 599 in six scenario-coded ranges.",
+      "status": "hold_graph_id_ranges_encode_scenario_and_raw_execution_contract_is_missing",
+      "reason": "The repository has strong immutable artifact and license metadata, but graph-ID ranges deterministically encode scenario labels, timestamps were removed during preprocessing, and the README does not declare that each graph is a separately reset or independent source execution. It is retained only as a future derived-graph possibility and does not satisfy this search's stricter label-independent execution key requirement."
+    },
+    {
+      "candidate_id": "winmet_windows_malware_execution_traces_2025",
+      "official_record": "https://zenodo.org/records/16414116",
+      "doi": "10.5281/zenodo.16414116",
+      "license": "GPL-3.0-or-later",
+      "official_file_count": 8,
+      "official_total_bytes": 12994795853,
+      "status": "hold_source_native_execution_manifest_and_label_isolation_unverified",
+      "reason": "The record describes CAPE-generated JSON execution traces for malware samples, but this broad search did not close a source-native one-execution-per-trace manifest, duplicate-run policy, label isolation, reader surface, or metadata-level distinctness. PANDAcap has the stronger explicit session-triggered capture contract."
+    },
+    {
+      "candidate_id": "pandacap_academic_torrent_mirrors",
+      "official_reference": "The Zenodo description links Academic Torrents for a VM image and individual samples.",
+      "status": "excluded_mirror_not_used",
+      "reason": "The reviewable candidate is pinned only to Zenodo record revision 4 and its four MD5-addressed objects. Mirrors, torrents, standalone VM images, and individual samples are not substituted into the artifact Gate."
+    }
+  ],
+  "source_verification": {
+    "primary_identity_sources_reviewed": 6,
+    "verified_primary_identity_sources": 5,
+    "unavailable_primary_web_page_checks": 1,
+    "candidate_records_screened": 3,
+    "matrix": [
+      {
+        "source": "Zenodo record 3759652 and Records API",
+        "evidence_level": "VI_primary_descriptive_technical_record",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_artifact_identity_and_capture_declaration",
+        "supports": [
+          "dataset identity",
+          "revision and version",
+          "CC-BY-4.0 license",
+          "four file byte sizes and MD5 values",
+          "63 trace declaration",
+          "SSH-session-triggered 30-second recording",
+          "RR/QCOW/PCAP multi-view relationship"
+        ]
+      },
+      {
+        "source": "DataCite metadata for 10.5281/zenodo.3759652",
+        "evidence_level": "VI_primary_registry_record",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_doi_rights_creator_type_and_relation_identity",
+        "supports": [
+          "active DOI",
+          "dataset type",
+          "title and creators",
+          "version 1.0",
+          "CC-BY-4.0 rights",
+          "concept DOI relation",
+          "publication supplement relation"
+        ]
+      },
+      {
+        "source": "Crossref metadata for 10.1145/3380786.3391396",
+        "evidence_level": "VI_primary_publication_registry_record",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_publication_existence_authorship_and_venue",
+        "supports": [
+          "ACM EuroSec 2020 paper identity",
+          "matching authors and affiliations",
+          "publication date and venue"
+        ]
+      },
+      {
+        "source": "vusec/pandacap repository metadata at ce3d2590ca79ca5afea2593fefc90b087777ecc3",
+        "evidence_level": "VII_primary_repository_metadata",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "B_curator_framework_identity",
+        "supports": [
+          "official curator repository identity",
+          "Apache-2.0 repository license",
+          "immutable documentation revision"
+        ]
+      },
+      {
+        "source": "vusec/pandacap docs/eurosec20-dataset.md blob f5daa87d67194c426eed51ad01583ba941cdb3fa",
+        "evidence_level": "VI_primary_descriptive_technical_documentation",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_session_capture_and_layout_declaration",
+        "supports": [
+          "63 trace declaration",
+          "one recording triggered by each SSH session",
+          "30-second recording duration",
+          "RR/QCOW/PCAP layout and same-session view relationship",
+          "RRArchive format warning"
+        ]
+      },
+      {
+        "source": "StreamSpot official project web page linked from its repository",
+        "evidence_level": "not_applicable",
+        "verification_outcome": "HTTP_403_NOT_USED",
+        "grade_for_claim": "not_used",
+        "supports": []
+      }
+    ],
+    "predatory_venue_alerts": [],
+    "conflict_of_interest": {
+      "dataset_and_framework_authors_overlap": true,
+      "severity": "low_expected_curator_relationship",
+      "effect_on_artifact_identity": "none identified",
+      "effect_on_independence_claim": "The same team curates the framework, dataset record, and documentation, so reset and uniqueness claims still require artifact-level audit."
+    },
+    "verification_limitations": [
+      "No archive, archive member, trace, disk image, PCAP, ordinary repository code, paper full text, model output, or protected payload was read.",
+      "The official metadata declares session-triggered captures but does not publish a machine-readable one-trace-per-session manifest at the record level.",
+      "Statistical independence, VM reset, duplicate sessions, pointer recoverability, nested notices, privacy isolation, and protected exclusion require separately authorized bounded audits.",
+      "The StreamSpot project web page returned HTTP 403; its official GitHub README, repository license, immutable tree, and Crossref paper record were sufficient only for a hold decision."
+    ]
+  },
+  "evidence_inference_recommendation": {
+    "evidence": [
+      "Zenodo revision 4 and DataCite agree on PANDAcap dataset DOI, title, creators, version 1.0, Dataset type, open access, and CC-BY-4.0 rights.",
+      "The Zenodo record publishes four objects totaling 22433496290 bytes and an MD5 for every object.",
+      "Zenodo and the pinned curator document both declare 63 PANDA traces and state that each SSH session triggers one 30-second PANDA recording.",
+      "The same documentation states that RR, QCOW disk-delta, and PCAP files are views of the same 63 sessions.",
+      "Crossref verifies the matching-author ACM EuroSec 2020 paper, and Zenodo formally marks the dataset as its supplement.",
+      "No metadata source declares VM reset, a one-trace-per-session immutable manifest, duplicate-session policy, or a safe RRArchive reader identity."
+    ],
+    "inference": [
+      "PANDAcap is a stronger fit than StreamSpot for this search because its source-native capture boundary is a live SSH session recording, not merely a derived graph count.",
+      "The capture grouping rule is label-independent at the metadata level: one session triggers one trace, without using attack family, technique, verdict, file count, or time window to create groups.",
+      "The 63 traces remain candidate capture groups rather than verified independent lineages because reset, duplicate, manifest, and statistical-independence Gates are open.",
+      "RR, QCOW, and PCAP are multiple sensor or state views of the same sessions and must never be counted as separate families or lineages.",
+      "Full-system honeypot traces are scientifically relevant but carry unusually high privacy, secrets, malware, dual-use, reader, and pointer risks."
+    ],
+    "recommendation": [
+      "Approve only a separate metadata-candidate review for pandacap_ssh_honeypot_full_system_traces_2020; do not write the effective catalog, assign a source role, or award family, lineage, sample, or quota credit.",
+      "A future per-family review should prefer eurosec2020-pandacap-rr.zip as the only endpoint/provenance surface under consideration and keep QCOW and PCAP excluded by default.",
+      "If that review passes, require a new exact bounded acquisition contract, a reader/tool amendment for RRArchive, central-directory and nested-notice caps, privacy/secret/malware isolation, session manifest and multi-view binding, pointer probe, and protected exact/near exclusion.",
+      "Fail closed if four stable session traces cannot be proven without reading labels, sensitive session content, disk deltas, PCAP payload, or hidden ground truth."
+    ]
+  },
+  "portfolio_after_search": {
+    "additional_family_search_slot": "train_executed_evidence_additional_family_search_01",
+    "additional_family_search_slot_status": "vacant_pending_separate_metadata_candidate_review",
+    "reviewable_metadata_direction": "pandacap_ssh_honeypot_full_system_traces_2020",
+    "new_source_role_approved": false,
+    "new_download_approved": false,
+    "new_quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "metadata_search_complete": true,
+    "at_least_one_reviewable_direction_found": true,
+    "minimum_four_label_independent_capture_declaration_found": true,
+    "separate_metadata_candidate_review_required": true,
+    "pandacap_approved_for_separate_metadata_candidate_review": true,
+    "pandacap_approved_as_source_role": false,
+    "effective_catalog_change_authorized": false,
+    "download_authorized": false,
+    "payload_or_manifest_audit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "family_role_change_authorized": false,
+    "family_lineage_sample_or_quota_credit_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_m3_work_authorized": false,
+    "cert_or_iot23_download_authorized": false,
+    "reprod_download_mutation_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false
+  }
+}
