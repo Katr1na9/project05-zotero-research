@@ -1,0 +1,88 @@
+schema_version: "0.8.0"
+policy_id: part-b-connector-contract-policy-v0.8
+policy_version: "0.8.0"
+status: B7_CONTRACT_ONLY
+authorized_slice: B7_BROAD_CONNECTORS
+bindings:
+  b1_federation_contract_hash: "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"
+  b1_adapter_conformance_hash: "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a"
+  b1_manifest_hash: "sha256:cecc07466d0aec0dbc7b4d95127651546ba7eb895f98a56d7e37c6f753850f6e"
+  b2_stochastic_catalog_hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+  b2_tv_policy_hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
+  b2_world_pair_delta_decision_hash: "sha256:1a9668ef8c968c968e14587778d261b023dff60a0234e4e67251051ec07e5919"
+  b2_manifest_hash: "sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed"
+  b3_cost_instrumentation_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+  b3_manifest_hash: "sha256:9403004d25c1428beeb85f04c6d65eeb02759d6881ede67390a2d97f2b9c82fb"
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  b4_manifest_hash: "sha256:2649b2a9067858d5fe2fa4c2f9d6386408384448910c97ee4eb89f1817893afc"
+  b5_planner_public_state_example_hash: "sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae"
+  b5_planner_decision_example_hash: "sha256:144cd24c0d6e3906ee31d25cdcc629f20901648d58204ee030f397daca23da6d"
+  b5_planner_interface_policy_hash: "sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343"
+  b5_bounded_evaluation_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+  b5_manifest_hash: "sha256:bbe8bde7e6ab4695fc6a03233a8c45f5d205c77b3bed6f2816a89c8f7616c069"
+  b6_closed_loop_policy_hash: "sha256:f9e225fd0bd90046424183620dc9d20a6e91e9c2f4f24893f62dd2b5f8f9f2b1"
+  b6_episode_example_hash: "sha256:25216c85648ae7a54b5a8a909773b0714147b64c2fbd4d8ebb6ac98b931f92a7"
+  b6_feedback_example_hash: "sha256:01077b5bf717dcbc22b1d65a6e1d0653ce753504dd2ee713fd83b8b064d15a36"
+  b6_preregistration_hash: "sha256:1c3177a68178d9f940978979ae2ff4c59646bf14e693e78f6592ab5f70f91aca"
+  b6_manifest_hash: "sha256:eca84c24d8e75c3daedbd0e786921c8b00827e8f4405be92a7517cba0e94936d"
+connector_contract:
+  connector_kinds:
+    - SNAPSHOT_TABULAR
+    - SNAPSHOT_DOCUMENT
+    - SNAPSHOT_GRAPH
+    - SNAPSHOT_EVENT_STREAM
+  descriptor_semantics: NON_EXECUTABLE_CAPABILITY_DECLARATION
+  source_identity_semantics: ABSTRACT_FIXTURE_ONLY
+source_authorization:
+  default_decision: DENY
+  grant_mode: SEPARATE_PER_SOURCE_ARTIFACT
+  missing_artifact_behavior: DENY_NO_ACCESS
+  descriptor_is_authorization: false
+provenance_rules:
+  pointer_provenance: PRESERVE_EXACTLY
+  range_semantics: EXPLICIT_CONFORMANCE_ENVELOPE_ONLY
+  modality_rewrite: FORBIDDEN
+  authority_self_grant: FORBIDDEN
+world_semantics:
+  open_world_zero_hit: UNKNOWN_NOT_ABSENCE
+  closed_world_gate: SEPARATE_COMPLETENESS_ATTESTATION_REQUIRED
+error_semantics:
+  unknown_family: B7-CONN-001_UNKNOWN_FAMILY
+  unknown_source_schema: B7-CONN-002_UNKNOWN_SOURCE_SCHEMA
+  conformance_hash_mismatch: B7-CONN-003_CONFORMANCE_HASH_MISMATCH
+  source_authorization_missing: B7-SOURCE-001_SEPARATE_AUTHORIZATION_REQUIRED
+  source_authorization_mismatch: B7-SOURCE-002_AUTHORIZATION_BINDING_MISMATCH
+  pointer_rewrite: B7-PROV-001_POINTER_REWRITE
+  range_semantics_missing: B7-PROV-002_RANGE_SEMANTICS_MISSING
+  authority_self_grant: B7-PROV-003_AUTHORITY_SELF_GRANT
+failure_semantics:
+  timeout: UNKNOWN_NO_ZERO_HIT
+  resource_exhaustion: UNKNOWN_NO_ZERO_HIT
+  partial_result: UNKNOWN_INCOMPLETE
+  parse_failure: REJECTED_UNKNOWN
+  schema_mismatch: REJECTED_UNKNOWN
+  authorization_missing: DENY_NO_ACCESS
+  connector_unavailable: UNKNOWN_NO_ZERO_HIT
+runtime_boundary:
+  connector_runtime: false
+  network_access: false
+  credential_resolution: false
+  data_download: false
+  data_retrieval: false
+  sampling: false
+  planner_execution: false
+  evaluation_execution: false
+authority_boundary:
+  claim_admission_authority: false
+  world_elimination_authority: false
+  certificate_authority: false
+  system_status_authority: false
+  certified_stop_authority: false
+proof_boundary:
+  contract_consistency_only: true
+  source_conformance_validated: false
+  connector_implementation_validated: false
+  external_validity: false
+  performance_validity: false
+hash: "sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3"
