@@ -180,6 +180,34 @@ The right-hand paths are normative. This ratification changes no B2 semantics,
 authority boundary or artifact hash and is included in the approved B2
 contract slice.
 
+## Part B PB-SI-003 world-pair / delta decision — 2026-07-23
+
+The user separately authorized closure of PB-SI-003 for exact finite
+world-pair and threshold semantics:
+
+```text
+PB-SI-003: CLOSED — APPROVED FOR EXACT FINITE TABLES ONLY
+required pairs: all legal worlds partitioned by q; complete support × alternative
+single Checker witness pair: insufficient
+pair encoding: unordered / canonical lexicographic / frozen pre-outcome
+delta_a: exact rational / per action / inclusive >= / future catalog hash
+aggregation: MINIMUM_TV_WORST_CASE
+decision_rule_authority=true
+execution_authority=false
+sampling_authority=false
+estimated-model acceptance: UNRESOLVED_PB_B2_SI_003
+simulation reproducibility: UNRESOLVED_PB_B2_SI_002
+CERTIFIED_STOP: UNCHANGED / NO PART B AUTHORITY
+```
+
+The normative artifact is
+`configs/part-b-b2-world-pair-delta-decision-v0.8.yaml` and its human-readable
+contract. The three previously approved B2 hashes remain unchanged and remain
+the historical snapshot created while PB-SI-003 was OPEN. No executable
+stochastic catalog currently binds a production `delta_a`; therefore issue
+closure does not authorize a sampler, stochastic executor, observation,
+evidence admission, Planner/M3*, performance claim or `CERTIFIED_STOP`.
+
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.
 

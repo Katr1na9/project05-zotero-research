@@ -99,3 +99,25 @@ B2 cannot emit certificates, `system_status` or `CERTIFIED_STOP`, and cannot
 extend Part A's deterministic formal ceiling. LLM, training, connectors,
 downloads, real data, cost instrumentation, Planner/M3* and B3–B9 remain
 outside this contract.
+
+## 7. Exact-finite PB-SI-003 decision addendum — 2026-07-23
+
+The later decision artifact
+`part-b-b2-world-pair-delta-decision-v0.8.md` closes PB-SI-003 for exact
+finite decision semantics:
+
+```text
+world pairs: all legal worlds partitioned by q; complete support × alternative
+single Checker witness pair: insufficient
+orientation: unordered / canonical lexicographic
+freeze point: before any action outcome
+delta: exact rational, per action, catalog-hash-bound, inclusive >=
+multi-pair aggregation: MINIMUM_TV_WORST_CASE
+execution_authority=false
+sampling_authority=false
+estimated-model acceptance: UNRESOLVED_PB_B2_SI_003
+```
+
+The original approved B2 hashes and non-executable examples are unchanged;
+they remain the historical snapshot made while PB-SI-003 was OPEN. This
+addendum creates neither a sampler nor `CERTIFIED_STOP` authority.

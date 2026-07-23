@@ -12,15 +12,24 @@ CERTIFIED_STOP: NONE
 
 ## PB-B2-SI-001 — Inherited TV policy decision is unresolved
 
-**State:** `OPEN — BLOCKS STOCHASTIC EXECUTION`.
+**State:** `CLOSED — APPROVED FOR EXACT FINITE WORLD-PAIR / DELTA SEMANTICS`
+on `2026-07-23`.
 
-This issue carries forward `PB-SI-003`. The contract can represent exact
-finite distributions and replay TV for a named design pair, but production
-world-pair selection, threshold scope, multi-pair aggregation and estimated
-model acceptance remain `UNRESOLVED_PB_SI_003`.
+The separate decision contract
+`contracts/part-b-b2-world-pair-delta-decision-v0.8.md` closes the portion
+carried from `PB-SI-003`: partition all frozen legal worlds by candidate
+\(q\), compare the complete `support × alternative` cross-product (not only
+the first SAT witnesses), use canonical unordered orientation and pre-outcome
+pair-set binding, exact rational
+per-action \(\delta_a\), inclusive `>=`, and `MINIMUM_TV_WORST_CASE`.
 
-No B2 artifact closes or narrows `PB-SI-003`. While it is OPEN, a caller must
-fail closed with no execution or sampling.
+The three approved B2 hashes are unchanged and remain an audit snapshot made
+while PB-SI-003 was OPEN. Their examples remain non-executable. Closing this
+issue gives decision-rule semantics only: `sampling_authority=false`.
+Estimated-model admission remains `UNRESOLVED_PB_B2_SI_003` under
+PB-B2-SI-003, and simulation reproducibility remains
+`UNRESOLVED_PB_B2_SI_002`. There is no executable stochastic catalog, sampler,
+case-evidence path or `CERTIFIED_STOP` authority.
 
 ## PB-B2-SI-002 — Simulation reproducibility policy is not approved
 
