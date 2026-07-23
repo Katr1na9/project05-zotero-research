@@ -96,3 +96,21 @@ The B2 contract slice and its three exact hashes were approved on
 their local commit. Push, PR, stochastic execution and every later Part B slice
 still require separate explicit authorization. Execution additionally requires
 an approved closure of `PB-SI-003`.
+
+## 8. PB-SI-003 decision addendum — 2026-07-23
+
+The separately authorized decision contract
+`part-b-b2-world-pair-delta-decision-v0.8.md` now marks PB-SI-003
+`CLOSED — APPROVED FOR EXACT FINITE DECISION SEMANTICS ONLY`.
+
+It partitions all frozen legal worlds by candidate \(q\), freezes the complete
+`support × alternative` cross-product before an action outcome, rejects a
+single-witness-pair shortcut, uses canonical unordered pairs, and requires an exact rational
+per-action `delta_a` bound into a future executable catalog hash, and applies
+`MINIMUM_TV_WORST_CASE` with an inclusive `>=` gate.
+
+This addendum does not retroactively make the B2 examples executable. The
+original B2 artifact remains the snapshot created while PB-SI-003 was OPEN.
+`sampling_authority=false`; estimated-model admission remains
+`UNRESOLVED_PB_B2_SI_003`; no observation, certificate or `CERTIFIED_STOP` is
+authorized.

@@ -40,12 +40,28 @@ raw SHA-256 is
 
 ## PB-SI-003 — TV threshold semantics are underspecified
 
-**State:** `OPEN — BLOCKS STOCHASTIC EXECUTION`.
+**State:** `CLOSED — APPROVED FOR EXACT FINITE DECISION SEMANTICS ONLY` on
+`2026-07-23`.
 
-v0.8 requires preregistered \(\delta_a\) in the catalog hash but does not state
-which world pairs are compared, whether the threshold is per pair or worst
-case, or how an estimated observation model is accepted. B0 freezes an exact
-finite representation and a non-executable two-world example only.
+The normative decision is
+`contracts/part-b-b2-world-pair-delta-decision-v0.8.md`. For the current
+candidate \(q\), it partitions all frozen legal worlds into those satisfying
+\(q\) and those satisfying \(\neg q\), then freezes their complete
+`support × alternative` cross-product before any action outcome. A single
+support/alternative witness pair is insufficient. It uses unordered
+lexicographically canonical pairs, applies an exact rational per-action
+\(\delta_a\) with the
+inclusive `>=` comparator, and aggregates multiple pairs by
+`MINIMUM_TV_WORST_CASE`.
+
+The closure is deliberately narrow. The approved B2 artifacts remain the
+historical non-executable snapshot produced while PB-SI-003 was OPEN. A future
+executable catalog must embed \(\delta_a\) before hashing, and its evaluation
+manifest must bind the required pair set. Estimated-model admission remains
+`UNRESOLVED_PB_B2_SI_003`; simulation reproducibility remains
+`UNRESOLVED_PB_B2_SI_002`; `sampling_authority=false`. Therefore this closure
+does not itself authorize a sampler, stochastic executor, observation,
+evidence admission, Planner/M3*, certificate or `CERTIFIED_STOP`.
 
 ## PB-SI-004 — Full-cost measurement governance is not approved
 

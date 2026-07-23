@@ -1,0 +1,75 @@
+schema_version: "0.8.0"
+decision_id: part-b-b2-world-pair-delta-decision-v0.8
+decision_version: "0.8.0"
+status: APPROVED_DECISION_CONTRACT_ONLY
+authorized_slice: B2_SI003_WORLD_PAIR_DELTA_DECISION_ONLY
+decision_rule_authority: true
+execution_authority: false
+sampling_authority: false
+stop_authority: NONE
+applies_to: EXACT_FINITE_TABLES_ONLY
+pb_si_003_state: CLOSED_APPROVED_EXACT_FINITE_ONLY
+bindings:
+  b2_catalog_hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+  b2_tv_policy_hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
+  b2_manifest_hash: "sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed"
+world_pair_policy:
+  source: ALL_LEGAL_WORLDS_PARTITIONED_BY_CANDIDATE_Q
+  support_partition_definition: LEGAL_WORLDS_SATISFYING_CANDIDATE_Q
+  alternative_partition_definition: LEGAL_WORLDS_SATISFYING_NOT_CANDIDATE_Q
+  single_witness_pair_sufficient: false
+  orientation: UNORDERED_CANONICAL_LEXICOGRAPHIC
+  include_all_cross_partition_pairs: true
+  self_pairs_forbidden: true
+  duplicates_forbidden: true
+  freeze_before_action_outcome: true
+  comparison_set_binding: EVALUATION_MANIFEST_HASH_REQUIRED
+  coverage_requirement: EVERY_REQUIRED_PAIR_IN_ACTION_FINITE_WORLD_DOMAIN
+delta_policy:
+  scope: PER_ACTION
+  encoding: EXACT_RATIONAL_CLOSED_UNIT_INTERVAL
+  inclusive_operator: GREATER_THAN_OR_EQUAL
+  binding: EXECUTABLE_ACTION_CATALOG_HASH_REQUIRED
+  defaults_forbidden: true
+  post_hoc_change_forbidden: true
+multi_pair_rule:
+  aggregation: MINIMUM_TV_WORST_CASE
+  pass_condition: ALL_REQUIRED_PAIRS_GTE_ACTION_DELTA
+  empty_pair_set: NOT_APPLICABLE_FAIL_CLOSED
+  missing_pair: FAIL_CLOSED_NO_ELIGIBILITY
+model_boundary:
+  exact_table_decision_defined: true
+  estimated_model_acceptance: UNRESOLVED_PB_B2_SI_003
+  simulation_reproducibility: UNRESOLVED_PB_B2_SI_002
+  executable_catalog_available: false
+  closing_this_issue_does_not_authorize_sampler: true
+conformance_example:
+  example_id: SI003-EXAMPLE-001
+  result_authority: CONFORMANCE_CHECK_ONLY
+  support_world_ids: [WORLD-A, WORLD-B]
+  alternative_world_ids: [WORLD-C]
+  required_pairs:
+    - left_world_id: WORLD-A
+      right_world_id: WORLD-C
+      total_variation: {numerator: 1, denominator: 2}
+    - left_world_id: WORLD-B
+      right_world_id: WORLD-C
+      total_variation: {numerator: 1, denominator: 3}
+  action_delta: {numerator: 1, denominator: 3}
+  minimum_tv: {numerator: 1, denominator: 3}
+  decision: ELIGIBLE
+error_semantics:
+  pair_set_not_frozen: B2-SI003-001_PAIR_SET_NOT_FROZEN
+  pair_missing: B2-SI003-002_REQUIRED_PAIR_MISSING
+  pair_outside_domain: B2-SI003-003_PAIR_OUTSIDE_FINITE_DOMAIN
+  delta_missing_or_invalid: B2-SI003-004_DELTA_MISSING_OR_INVALID
+  estimated_model_unapproved: B2-SI003-005_ESTIMATED_MODEL_UNAPPROVED
+  sampling_unauthorized: B2-SI003-006_NO_SAMPLING_AUTHORITY
+  stop_or_certificate_attempt: B2-SI003-007_NO_STOP_AUTHORITY
+limitations:
+  - This decision closes exact finite world-pair and delta semantics only.
+  - The approved B2 catalog remains non-executable and contains no production delta binding.
+  - Estimated-model acceptance and simulation reproducibility remain open.
+  - JSON Schema alone cannot prove cross-field pair completeness or rational reduction; executable use requires a separately reviewed validator.
+  - No sampler, stochastic executor, observation, certificate, system state, or CERTIFIED_STOP is authorized.
+hash: "sha256:1a9668ef8c968c968e14587778d261b023dff60a0234e4e67251051ec07e5919"
