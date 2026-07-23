@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-closed-loop-evaluation-policy.schema.json",
+  "title": "Project05 Part B B6 closed-loop evaluation policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "bindings",
+    "protocol",
+    "b4_roster_binding",
+    "role_enforcement",
+    "decision_enforcement",
+    "stochastic_observation_boundary",
+    "cost_boundary",
+    "failure_semantics",
+    "feedback_isolation",
+    "implementation_admission",
+    "claim_boundary",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-closed-loop-evaluation-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B6_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B6_CLOSED_LOOP_EVAL"},
+    "bindings": {"$ref": "#/$defs/inheritedBindings"},
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence",
+        "finite_episode_required",
+        "deterministic_validation_only",
+        "public_state_input",
+        "planner_output",
+        "feedback_input",
+        "action_payload_allowed",
+        "hidden_state_allowed"
+      ],
+      "properties": {
+        "sequence": {
+          "const": [
+            "PUBLIC_STATE_REFERENCE",
+            "ACTION_ID_DECISION_REFERENCE",
+            "FEEDBACK_ENVELOPE_REFERENCE"
+          ]
+        },
+        "finite_episode_required": {"const": true},
+        "deterministic_validation_only": {"const": true},
+        "public_state_input": {"const": "B5_HASH_BOUND_PUBLIC_STATE_ONLY"},
+        "planner_output": {"const": "B5_ACTION_ID_OR_NULL_ONLY"},
+        "feedback_input": {
+          "const": "EVALUATOR_SUPPLIED_REFERENCE_ENVELOPE_ONLY"
+        },
+        "action_payload_allowed": {"const": false},
+        "hidden_state_allowed": {"const": false}
+      }
+    },
+    "b4_roster_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "all_roster_ids",
+        "public_action_selector_ids",
+        "unregistered_method_behavior"
+      ],
+      "properties": {
+        "all_roster_ids": {"$ref": "#/$defs/idList"},
+        "public_action_selector_ids": {"$ref": "#/$defs/idList"},
+        "unregistered_method_behavior": {
+          "const": "FAIL_CLOSED_NOT_ADMITTED"
+        }
+      }
+    },
+    "role_enforcement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "oracle_evaluation_only",
+        "no_acquisition",
+        "b4_role_preservation_required"
+      ],
+      "properties": {
+        "oracle_evaluation_only": {
+          "const": "FORBIDDEN_AS_DEPLOYABLE_PLANNER"
+        },
+        "no_acquisition": {"const": "CONTROL_NO_ACTION_ONLY"},
+        "b4_role_preservation_required": {"const": true}
+      }
+    },
+    "decision_enforcement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "output_semantics",
+        "unknown_action_behavior",
+        "state_hash_mismatch_behavior",
+        "payload_behavior"
+      ],
+      "properties": {
+        "output_semantics": {"const": "ACTION_ID_OR_NULL_ONLY"},
+        "unknown_action_behavior": {
+          "const": "FAIL_CLOSED_ACTION_NOT_FEASIBLE"
+        },
+        "state_hash_mismatch_behavior": {
+          "const": "FAIL_CLOSED_STATE_BINDING_MISMATCH"
+        },
+        "payload_behavior": {"const": "FORBIDDEN"}
+      }
+    },
+    "stochastic_observation_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_hash",
+        "tv_policy_hash",
+        "world_pair_delta_decision_hash",
+        "input_semantics",
+        "sampling_authority",
+        "distribution_estimation_authority",
+        "catalog_examples_executable"
+      ],
+      "properties": {
+        "catalog_hash": {"$ref": "#/$defs/sha256"},
+        "tv_policy_hash": {"$ref": "#/$defs/sha256"},
+        "world_pair_delta_decision_hash": {"$ref": "#/$defs/sha256"},
+        "input_semantics": {
+          "const": "EVALUATOR_SUPPLIED_OBSERVATION_REFERENCE_ONLY"
+        },
+        "sampling_authority": {"const": false},
+        "distribution_estimation_authority": {"const": false},
+        "catalog_examples_executable": {"const": false}
+      }
+    },
+    "cost_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instrumentation_policy_hash",
+        "representation",
+        "scalarization_enabled",
+        "missing_measurement",
+        "infeasible_as_high_cost",
+        "infeasibility_semantics"
+      ],
+      "properties": {
+        "instrumentation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "representation": {"const": "B3_EIGHT_DIMENSION_VECTOR_ONLY"},
+        "scalarization_enabled": {"const": false},
+        "missing_measurement": {"const": "UNKNOWN_NOT_ZERO"},
+        "infeasible_as_high_cost": {"const": false},
+        "infeasibility_semantics": {"const": "SEPARATE_NO_ACTION"}
+      }
+    },
+    "failure_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timeout", "resource_exhaustion", "infeasible", "unknown"],
+      "properties": {
+        "timeout": {"const": "UNKNOWN_NO_RANK"},
+        "resource_exhaustion": {"const": "UNKNOWN_NO_RANK"},
+        "infeasible": {"const": "SEPARATE_NO_ACTION"},
+        "unknown": {"const": "FAIL_CLOSED_NO_RANK"}
+      }
+    },
+    "feedback_isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b4_isolation_policy_hash",
+        "evaluation_to_train",
+        "evaluation_to_tune",
+        "holdout_to_any_model",
+        "historical_result_access"
+      ],
+      "properties": {
+        "b4_isolation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "evaluation_to_train": {"const": false},
+        "evaluation_to_tune": {"const": false},
+        "holdout_to_any_model": {"const": false},
+        "historical_result_access": {"const": false}
+      }
+    },
+    "implementation_admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pb_b5_si_001_state",
+        "approved_implementations",
+        "legacy_m3star_status",
+        "shape_compatibility_grants_admission"
+      ],
+      "properties": {
+        "pb_b5_si_001_state": {"const": "UNCHANGED_OPEN_FROM_B5"},
+        "approved_implementations": {"const": []},
+        "legacy_m3star_status": {"const": "NOT_ADMITTED_UNVERIFIED"},
+        "shape_compatibility_grants_admission": {"const": false}
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_level",
+        "implementation_validation",
+        "evaluation_execution_authority",
+        "ranking_authority",
+        "performance_validity",
+        "superiority_claim",
+        "certificate_authority",
+        "system_status_authority",
+        "certified_stop_authority"
+      ],
+      "properties": {
+        "evidence_level": {"const": "CONTRACT_CONSISTENCY_ONLY"},
+        "implementation_validation": {"const": false},
+        "evaluation_execution_authority": {"const": false},
+        "ranking_authority": {"const": false},
+        "performance_validity": {"const": false},
+        "superiority_claim": {"const": false},
+        "certificate_authority": {"const": false},
+        "system_status_authority": {"const": false},
+        "certified_stop_authority": {"const": false}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "publicId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9_.:-]*$"
+    },
+    "idList": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/publicId"},
+      "uniqueItems": true
+    },
+    "inheritedBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b2_stochastic_catalog_hash",
+        "b2_tv_policy_hash",
+        "b2_manifest_hash",
+        "b2_world_pair_delta_decision_hash",
+        "b3_cost_instrumentation_policy_hash",
+        "b3_manifest_hash",
+        "b4_baseline_preregistration_hash",
+        "b4_baseline_isolation_policy_hash",
+        "b4_manifest_hash",
+        "b5_planner_public_state_example_hash",
+        "b5_planner_decision_example_hash",
+        "b5_planner_interface_policy_hash",
+        "b5_bounded_evaluation_hash",
+        "b5_manifest_hash"
+      ],
+      "properties": {
+        "b2_stochastic_catalog_hash": {"$ref": "#/$defs/sha256"},
+        "b2_tv_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b2_manifest_hash": {"$ref": "#/$defs/sha256"},
+        "b2_world_pair_delta_decision_hash": {"$ref": "#/$defs/sha256"},
+        "b3_cost_instrumentation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b3_manifest_hash": {"$ref": "#/$defs/sha256"},
+        "b4_baseline_preregistration_hash": {"$ref": "#/$defs/sha256"},
+        "b4_baseline_isolation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b4_manifest_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_public_state_example_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_decision_example_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_interface_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b5_bounded_evaluation_hash": {"$ref": "#/$defs/sha256"},
+        "b5_manifest_hash": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

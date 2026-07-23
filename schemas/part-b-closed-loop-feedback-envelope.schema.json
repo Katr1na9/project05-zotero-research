@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-closed-loop-feedback-envelope.schema.json",
+  "title": "Project05 Part B B6 feedback reference envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "feedback_id",
+    "feedback_version",
+    "status",
+    "authorized_slice",
+    "case_id",
+    "episode_id",
+    "step_index",
+    "partition",
+    "public_state_hash",
+    "decision_hash",
+    "selected_action_id",
+    "observation_reference",
+    "claim_ir_ownership",
+    "modality_change_allowed",
+    "used_for_training",
+    "used_for_holdout_release",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "feedback_id": {"const": "B6-FEEDBACK-REFERENCE-001"},
+    "feedback_version": {"const": "0.8.0"},
+    "status": {"const": "B6_CONTRACT_EXAMPLE_ONLY"},
+    "authorized_slice": {"const": "B6_CLOSED_LOOP_EVAL"},
+    "case_id": {"$ref": "#/$defs/publicId"},
+    "episode_id": {"$ref": "#/$defs/publicId"},
+    "step_index": {"type": "integer", "minimum": 0},
+    "partition": {"enum": ["TRAIN", "TUNE", "EVALUATION", "HOLDOUT"]},
+    "public_state_hash": {"$ref": "#/$defs/sha256"},
+    "decision_hash": {"$ref": "#/$defs/sha256"},
+    "selected_action_id": {
+      "anyOf": [
+        {"$ref": "#/$defs/publicId"},
+        {"type": "null"}
+      ]
+    },
+    "observation_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "pointer", "source", "availability"],
+      "properties": {
+        "observation_id": {"$ref": "#/$defs/publicId"},
+        "pointer": {
+          "type": "string",
+          "pattern": "^contract://[A-Za-z0-9._:/-]+$"
+        },
+        "source": {"const": "EVALUATOR_SUPPLIED_REFERENCE_ONLY"},
+        "availability": {"const": "NOT_EXECUTED_CONTRACT_EXAMPLE"}
+      }
+    },
+    "claim_ir_ownership": {"const": false},
+    "modality_change_allowed": {"const": false},
+    "used_for_training": {"const": false},
+    "used_for_holdout_release": {"const": false},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "publicId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    }
+  }
+}

@@ -5,8 +5,8 @@
 ```text
 Branch: feat/kernel-v0.8
 Working state: A16 GO closeout (scoped Kernel Part A)
-Regression: 227/227 PASS at the B5 local contract review tip
-(208 pre-B5 + 19 B5)
+Regression: 249/249 PASS at the B6 local contract review tip
+(227 pre-B6 + 22 B6)
 A16 Decision: PASSED / GO — Kernel v0.8 Part A only
 Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
@@ -14,8 +14,9 @@ Part B: B0 APPROVED; B1_FEDERATION_SCHEMAS AUTHORIZED on 2026-07-23;
 B2_STOCHASTIC_OBSERVATION CONTRACT-ONLY AUTHORIZED on 2026-07-23;
 B3_COST_INSTRUMENTATION AUTHORIZED FOR LOCAL TRACE AGGREGATION on 2026-07-23;
 B4_BASELINE_PREREG APPROVED / MERGED on 2026-07-23;
-B5_PLANNER_INTERFACE AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-23;
-B6–B9 CLOSED
+B5_PLANNER_INTERFACE APPROVED / MERGED on 2026-07-23;
+B6_CLOSED_LOOP_EVAL AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-23;
+B7–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -50,8 +51,8 @@ v0.8 Part B map:
 | B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED — CONTRACT ONLY / NO SAMPLING |
 | B3 | `B3_COST_INSTRUMENTATION` | LOCAL REVIEW — TRACE AGGREGATION ONLY |
 | B4 | `B4_BASELINE_PREREG` | APPROVED / MERGED — CONTRACT ONLY |
-| B5 | `B5_PLANNER_INTERFACE` | LOCAL REVIEW — CONTRACT ONLY / NO EXECUTION |
-| B6 | `B6_CLOSED_LOOP_EVAL` | CLOSED |
+| B5 | `B5_PLANNER_INTERFACE` | APPROVED / MERGED — CONTRACT ONLY / NO EXECUTION |
+| B6 | `B6_CLOSED_LOOP_EVAL` | LOCAL REVIEW — CONTRACT ONLY / NO EXECUTION |
 | B7 | `B7_BROAD_CONNECTORS` | CLOSED |
 | B8 | `B8_HOLDOUT_ANALYSIS` | CLOSED |
 | B9 | `B9_FREEZE_AND_CLAIMS` | CLOSED |
@@ -373,6 +374,79 @@ The local B5 review passed `19/19` targeted tests and `227/227` full
 repository tests. `compileall`, `git diff --check`, exact hash replay, the
 19-file allowlist audit, zero-staged-file check and forbidden-path check also
 passed. These results do not authorize commit, push, PR or runtime behavior.
+
+## Part B B6 closed-loop evaluation scope — 2026-07-23
+
+The user separately authorized `B6_CLOSED_LOOP_EVAL` on an exact 18-file
+contract-only allowlist based on merged
+`main@02348b809d4b7e7d883ddd02be9ad80deb0204ae`.
+
+```text
+protocol: public-state reference → action-ID-or-null → feedback reference
+closed_loop_contract_authority=true
+preregistration_contract_authority=true
+planner_implementation_admission_authority=false
+planner_execution_authority=false
+evaluation_execution_authority=false
+sampling_authority=false
+production_capture_authority=false
+connector_authority=false
+scalarization_authority=false
+performance_claim_authority=false
+stop_authority=NONE
+B7–B9: CLOSED
+LLM / 09-experiments: FORBIDDEN
+Commit / push / PR: NOT AUTHORIZED
+```
+
+B6 binds all B2–B5 approved artifact identities without changing their files
+or hashes. The B4 roster, control/evaluator roles and
+TRAIN/TUNE/EVALUATION/HOLDOUT isolation rules remain exact. The
+preregistration envelope freezes hashes, roster, partitions, contract
+metrics, finite bounds and tie-break rules before first feedback.
+
+The episode and feedback objects are non-executed examples. B6 does not
+instantiate a Planner, dispatch an action, sample B2, collect production B3
+events, run a baseline, read a connector or release HOLDOUT. The feedback
+pointer has no Claim IR ownership and cannot change modality or grant evidence
+authority.
+
+`PB-B5-SI-001` remains
+`OPEN — BLOCKS IMPLEMENTATION ADMISSION AND EXECUTION`, with B6 disposition
+`UNCHANGED_OPEN_FROM_B5`.
+
+```text
+Legacy M3* implementation admission: NOT ESTABLISHED
+Legacy M3* execution authority: NONE
+```
+
+The B6 artifact identities are:
+
+```text
+Closed-loop evaluation policy:
+sha256:f9e225fd0bd90046424183620dc9d20a6e91e9c2f4f24893f62dd2b5f8f9f2b1
+
+Closed-loop episode example:
+sha256:25216c85648ae7a54b5a8a909773b0714147b64c2fbd4d8ebb6ac98b931f92a7
+
+Feedback envelope example:
+sha256:01077b5bf717dcbc22b1d65a6e1d0653ce753504dd2ee713fd83b8b064d15a36
+
+Closed-loop preregistration:
+sha256:1c3177a68178d9f940978979ae2ff4c59646bf14e693e78f6592ab5f70f91aca
+
+B6 manifest:
+sha256:eca84c24d8e75c3daedbd0e786921c8b00827e8f4405be92a7517cba0e94936d
+```
+
+The B6 evidence level is `CONTRACT_CONSISTENCY_ONLY`. It grants no ranking,
+performance validity, superiority claim, certificate, system status or
+`CERTIFIED_STOP`.
+
+The local B6 review passed `22/22` targeted tests and `249/249` full
+repository tests. `compileall`, whitespace/diff checks, exact hash replay and
+the 18-file allowlist audit also passed. These results do not authorize
+commit, push, PR or runtime behavior.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.

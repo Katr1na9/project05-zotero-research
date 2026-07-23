@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b6-manifest.schema.json",
+  "title": "Project05 Part B B6 contract manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "closed_loop_contract_authority",
+    "preregistration_contract_authority",
+    "planner_implementation_admission_authority",
+    "planner_execution_authority",
+    "evaluation_execution_authority",
+    "sampling_authority",
+    "production_capture_authority",
+    "connector_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "stop_authority",
+    "bindings",
+    "proof_boundary",
+    "closed_slices",
+    "llm_integration",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"const": "part-b-b6-manifest-v0.8"},
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B6_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B6_CLOSED_LOOP_EVAL"},
+    "closed_loop_contract_authority": {"const": true},
+    "preregistration_contract_authority": {"const": true},
+    "planner_implementation_admission_authority": {"const": false},
+    "planner_execution_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "production_capture_authority": {"const": false},
+    "connector_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "bindings": {"$ref": "#/$defs/inheritedBindings"},
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_consistency_only",
+        "implementation_validation",
+        "evaluation_execution",
+        "performance_validity",
+        "superiority_claim"
+      ],
+      "properties": {
+        "contract_consistency_only": {"const": true},
+        "implementation_validation": {"const": false},
+        "evaluation_execution": {"const": false},
+        "performance_validity": {"const": false},
+        "superiority_claim": {"const": false}
+      }
+    },
+    "closed_slices": {"const": ["B7", "B8", "B9"]},
+    "llm_integration": {"const": "FORBIDDEN"},
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "inheritedBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b2_stochastic_catalog_hash",
+        "b2_tv_policy_hash",
+        "b2_manifest_hash",
+        "b2_world_pair_delta_decision_hash",
+        "b3_cost_instrumentation_policy_hash",
+        "b3_manifest_hash",
+        "b4_baseline_preregistration_hash",
+        "b4_baseline_isolation_policy_hash",
+        "b4_manifest_hash",
+        "b5_planner_public_state_example_hash",
+        "b5_planner_decision_example_hash",
+        "b5_planner_interface_policy_hash",
+        "b5_bounded_evaluation_hash",
+        "b5_manifest_hash"
+      ],
+      "properties": {
+        "b2_stochastic_catalog_hash": {"$ref": "#/$defs/sha256"},
+        "b2_tv_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b2_manifest_hash": {"$ref": "#/$defs/sha256"},
+        "b2_world_pair_delta_decision_hash": {"$ref": "#/$defs/sha256"},
+        "b3_cost_instrumentation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b3_manifest_hash": {"$ref": "#/$defs/sha256"},
+        "b4_baseline_preregistration_hash": {"$ref": "#/$defs/sha256"},
+        "b4_baseline_isolation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b4_manifest_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_public_state_example_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_decision_example_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_interface_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b5_bounded_evaluation_hash": {"$ref": "#/$defs/sha256"},
+        "b5_manifest_hash": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

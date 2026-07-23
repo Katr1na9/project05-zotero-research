@@ -1,0 +1,115 @@
+schema_version: "0.8.0"
+policy_id: part-b-closed-loop-evaluation-policy-v0.8
+policy_version: "0.8.0"
+status: B6_CONTRACT_ONLY
+authorized_slice: B6_CLOSED_LOOP_EVAL
+bindings:
+  b2_stochastic_catalog_hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+  b2_tv_policy_hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
+  b2_manifest_hash: "sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed"
+  b2_world_pair_delta_decision_hash: "sha256:1a9668ef8c968c968e14587778d261b023dff60a0234e4e67251051ec07e5919"
+  b3_cost_instrumentation_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+  b3_manifest_hash: "sha256:9403004d25c1428beeb85f04c6d65eeb02759d6881ede67390a2d97f2b9c82fb"
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  b4_manifest_hash: "sha256:2649b2a9067858d5fe2fa4c2f9d6386408384448910c97ee4eb89f1817893afc"
+  b5_planner_public_state_example_hash: "sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae"
+  b5_planner_decision_example_hash: "sha256:144cd24c0d6e3906ee31d25cdcc629f20901648d58204ee030f397daca23da6d"
+  b5_planner_interface_policy_hash: "sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343"
+  b5_bounded_evaluation_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+  b5_manifest_hash: "sha256:bbe8bde7e6ab4695fc6a03233a8c45f5d205c77b3bed6f2816a89c8f7616c069"
+protocol:
+  sequence:
+    - PUBLIC_STATE_REFERENCE
+    - ACTION_ID_DECISION_REFERENCE
+    - FEEDBACK_ENVELOPE_REFERENCE
+  finite_episode_required: true
+  deterministic_validation_only: true
+  public_state_input: B5_HASH_BOUND_PUBLIC_STATE_ONLY
+  planner_output: B5_ACTION_ID_OR_NULL_ONLY
+  feedback_input: EVALUATOR_SUPPLIED_REFERENCE_ENVELOPE_ONLY
+  action_payload_allowed: false
+  hidden_state_allowed: false
+b4_roster_binding:
+  all_roster_ids:
+    - NO_ACQUISITION
+    - RANDOM_FEASIBLE
+    - COVERAGE_GREEDY
+    - CMI_PROXY
+    - M1_STATIC_EXPECTED_GAIN
+    - M2_TRANSPARENT
+    - M3A_GAP_COMPATIBILITY
+    - LOGISTIC_M3B
+    - XGBOOST_ACTION_VALUE
+    - AFA_VOI_MYOPIC
+    - AFA_VOI_ROLLOUT_H3
+    - DEPTH2_PUBLIC
+    - ORACLE_EVALUATION_ONLY
+  public_action_selector_ids:
+    - RANDOM_FEASIBLE
+    - COVERAGE_GREEDY
+    - CMI_PROXY
+    - M1_STATIC_EXPECTED_GAIN
+    - M2_TRANSPARENT
+    - M3A_GAP_COMPATIBILITY
+    - LOGISTIC_M3B
+    - XGBOOST_ACTION_VALUE
+    - AFA_VOI_MYOPIC
+    - AFA_VOI_ROLLOUT_H3
+    - DEPTH2_PUBLIC
+  unregistered_method_behavior: FAIL_CLOSED_NOT_ADMITTED
+role_enforcement:
+  oracle_evaluation_only: FORBIDDEN_AS_DEPLOYABLE_PLANNER
+  no_acquisition: CONTROL_NO_ACTION_ONLY
+  b4_role_preservation_required: true
+decision_enforcement:
+  output_semantics: ACTION_ID_OR_NULL_ONLY
+  unknown_action_behavior: FAIL_CLOSED_ACTION_NOT_FEASIBLE
+  state_hash_mismatch_behavior: FAIL_CLOSED_STATE_BINDING_MISMATCH
+  payload_behavior: FORBIDDEN
+stochastic_observation_boundary:
+  catalog_hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+  tv_policy_hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
+  world_pair_delta_decision_hash: "sha256:1a9668ef8c968c968e14587778d261b023dff60a0234e4e67251051ec07e5919"
+  input_semantics: EVALUATOR_SUPPLIED_OBSERVATION_REFERENCE_ONLY
+  sampling_authority: false
+  distribution_estimation_authority: false
+  catalog_examples_executable: false
+cost_boundary:
+  instrumentation_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+  representation: B3_EIGHT_DIMENSION_VECTOR_ONLY
+  scalarization_enabled: false
+  missing_measurement: UNKNOWN_NOT_ZERO
+  infeasible_as_high_cost: false
+  infeasibility_semantics: SEPARATE_NO_ACTION
+failure_semantics:
+  timeout: UNKNOWN_NO_RANK
+  resource_exhaustion: UNKNOWN_NO_RANK
+  infeasible: SEPARATE_NO_ACTION
+  unknown: FAIL_CLOSED_NO_RANK
+feedback_isolation:
+  b4_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  evaluation_to_train: false
+  evaluation_to_tune: false
+  holdout_to_any_model: false
+  historical_result_access: false
+implementation_admission:
+  pb_b5_si_001_state: UNCHANGED_OPEN_FROM_B5
+  approved_implementations: []
+  legacy_m3star_status: NOT_ADMITTED_UNVERIFIED
+  shape_compatibility_grants_admission: false
+claim_boundary:
+  evidence_level: CONTRACT_CONSISTENCY_ONLY
+  implementation_validation: false
+  evaluation_execution_authority: false
+  ranking_authority: false
+  performance_validity: false
+  superiority_claim: false
+  certificate_authority: false
+  system_status_authority: false
+  certified_stop_authority: false
+limitations:
+  - This policy validates a non-executing closed-loop contract only.
+  - No Planner implementation is admitted and no action or sampler is invoked.
+  - Feedback is an evaluator-supplied reference envelope and grants no evidence authority.
+hash: "sha256:f9e225fd0bd90046424183620dc9d20a6e91e9c2f4f24893f62dd2b5f8f9f2b1"

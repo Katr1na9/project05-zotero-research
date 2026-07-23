@@ -1,0 +1,32 @@
+schema_version: "0.8.0"
+episode_id: part-b-closed-loop-episode-example-v0.8
+episode_version: "0.8.0"
+status: B6_CONTRACT_EXAMPLE_ONLY
+authorized_slice: B6_CLOSED_LOOP_EVAL
+case_id: CASE-PUBLIC-001
+partition: EVALUATION
+policy_hash: "sha256:f9e225fd0bd90046424183620dc9d20a6e91e9c2f4f24893f62dd2b5f8f9f2b1"
+preregistration_hash: "sha256:1c3177a68178d9f940978979ae2ff4c59646bf14e693e78f6592ab5f70f91aca"
+finite_step_count: 1
+sequence:
+  - PUBLIC_STATE_REFERENCE
+  - ACTION_ID_DECISION_REFERENCE
+  - FEEDBACK_ENVELOPE_REFERENCE
+steps:
+  - step_index: 0
+    public_state_reference:
+      state_id: part-b-planner-public-state-example-v0.8
+      public_state_hash: "sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae"
+      feasible_action_ids:
+        - ACTION-DOCUMENT-QUERY-001
+        - ACTION-LOG-QUERY-001
+    decision_reference:
+      decision_id: part-b-planner-decision-example-v0.8
+      decision_hash: "sha256:144cd24c0d6e3906ee31d25cdcc629f20901648d58204ee030f397daca23da6d"
+      public_state_hash: "sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae"
+      decision_status: SELECT_ACTION
+      selected_action_id: ACTION-DOCUMENT-QUERY-001
+    feedback_reference:
+      feedback_id: B6-FEEDBACK-REFERENCE-001
+      feedback_hash: "sha256:01077b5bf717dcbc22b1d65a6e1d0653ce753504dd2ee713fd83b8b064d15a36"
+hash: "sha256:25216c85648ae7a54b5a8a909773b0714147b64c2fbd4d8ebb6ac98b931f92a7"

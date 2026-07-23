@@ -1,0 +1,44 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b6-manifest-v0.8
+manifest_version: "0.8.0"
+status: B6_CONTRACT_ONLY
+authorized_slice: B6_CLOSED_LOOP_EVAL
+closed_loop_contract_authority: true
+preregistration_contract_authority: true
+planner_implementation_admission_authority: false
+planner_execution_authority: false
+evaluation_execution_authority: false
+sampling_authority: false
+production_capture_authority: false
+connector_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+stop_authority: NONE
+bindings:
+  b2_stochastic_catalog_hash: "sha256:200f0ccd89525bcbda89ea77101cdcab7fda675888938ee106e389a1a8beeab5"
+  b2_tv_policy_hash: "sha256:b25ed05fdbd9780c1d0de1889e7651220e8a2fc9ce6a86fcdf4720926a31d3e8"
+  b2_manifest_hash: "sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed"
+  b2_world_pair_delta_decision_hash: "sha256:1a9668ef8c968c968e14587778d261b023dff60a0234e4e67251051ec07e5919"
+  b3_cost_instrumentation_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+  b3_manifest_hash: "sha256:9403004d25c1428beeb85f04c6d65eeb02759d6881ede67390a2d97f2b9c82fb"
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  b4_manifest_hash: "sha256:2649b2a9067858d5fe2fa4c2f9d6386408384448910c97ee4eb89f1817893afc"
+  b5_planner_public_state_example_hash: "sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae"
+  b5_planner_decision_example_hash: "sha256:144cd24c0d6e3906ee31d25cdcc629f20901648d58204ee030f397daca23da6d"
+  b5_planner_interface_policy_hash: "sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343"
+  b5_bounded_evaluation_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+  b5_manifest_hash: "sha256:bbe8bde7e6ab4695fc6a03233a8c45f5d205c77b3bed6f2816a89c8f7616c069"
+proof_boundary:
+  contract_consistency_only: true
+  implementation_validation: false
+  evaluation_execution: false
+  performance_validity: false
+  superiority_claim: false
+closed_slices: [B7, B8, B9]
+llm_integration: FORBIDDEN
+limitations:
+  - B6 defines closed-loop shapes and a preregistration envelope but runs no evaluation.
+  - PB-B5-SI-001 remains open and no Planner implementation is admitted.
+  - No sampler, production capture, connector, scalarization, claim, certificate, or STOP is authorized.
+hash: "sha256:eca84c24d8e75c3daedbd0e786921c8b00827e8f4405be92a7517cba0e94936d"
