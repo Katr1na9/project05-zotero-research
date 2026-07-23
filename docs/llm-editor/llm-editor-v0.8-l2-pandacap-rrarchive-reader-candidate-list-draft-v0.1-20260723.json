@@ -1,0 +1,208 @@
+{
+  "schema_version": "project05-llm-editor-l2-pandacap-rrarchive-reader-candidate-list-draft-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "456b129bd98a317c3de85e78274b11e28ff61a41",
+  "review_type": "serial_public_metadata_only_reader_candidate_inventory",
+  "status": "draft_candidates_only_none_pinned_installed_or_authorized",
+  "purpose": "List possible RRArchive/PANDA reader surfaces for a future independent reader amendment. This inventory does not select, install, execute, pin, or authorize any reader and does not inspect an archive.",
+  "scope": {
+    "local_read_allowlist": [
+      "docs/llm-editor/**"
+    ],
+    "public_metadata_services_used": [
+      "GitHub repository metadata API",
+      "GitHub tree metadata API",
+      "GitHub tag and commit metadata API",
+      "PyPI package index JSON metadata"
+    ],
+    "hard_excluded_path_hit": false,
+    "datasets_path_read": false,
+    "local_audit_cache_read": false,
+    "launcher_file_read": false,
+    "archive_or_member_read": false,
+    "central_directory_read": false,
+    "pid_process_or_runtime_log_read": false,
+    "ongoing_acquisition_touched": false,
+    "payload_or_archive_downloaded": false,
+    "reader_installed": false,
+    "reader_executed": false,
+    "local_reader_installation_inspected": false,
+    "effective_catalog_written": false,
+    "family_role_or_quota_changed": false,
+    "baseline_fine_tuning_or_sample_generation_run": false,
+    "l2_gate_changed": false,
+    "git_commit_performed": false,
+    "git_push_performed": false
+  },
+  "upstream_metadata_observation": {
+    "repository": "panda-re/panda",
+    "repository_url": "https://github.com/panda-re/panda",
+    "default_branch": "dev",
+    "observed_head_sha": "36502113107ff260e7499065c9d4b764d387a7da",
+    "observed_head_date": "2026-06-09T00:49:59Z",
+    "observed_tag": "v1.8.85",
+    "observed_tag_commit_sha": "36502113107ff260e7499065c9d4b764d387a7da",
+    "pypi_package": "pandare",
+    "pypi_observed_version": "1.8.85",
+    "pypi_project_url": "https://pypi.org/project/pandare/1.8.85/",
+    "pypi_summary": "Python Interface to PANDA",
+    "observation_is_a_pin": false,
+    "repository_or_package_downloaded": false,
+    "source_blob_content_read": false
+  },
+  "candidates": [
+    {
+      "candidate_id": "panda_rrunpack_python_script",
+      "name": "PANDA rrunpack.py",
+      "candidate_version": "upstream tag v1.8.85 observed, not pinned",
+      "source_url": "https://github.com/panda-re/panda/blob/v1.8.85/panda/scripts/rrunpack.py",
+      "public_tree_path": "panda/scripts/rrunpack.py",
+      "public_tree_blob_sha_observed_not_pinned": "7da2e4b6f5b34f31863f771d953fcfedab57fb5c",
+      "candidate_reader_class": "official_python_rrarchive_unpack_utility",
+      "possible_use": "Format-identification and RRArchive unpack compatibility candidate.",
+      "known_limitations": [
+        "Its public identity is an unpack utility, not a bounded no-extract central-directory reader.",
+        "Direct use would conflict with the current no-extract and no-payload-persistence policy unless a later amendment proves a metadata-only dry-run or supplies a separately reviewed bounded adapter.",
+        "No executable, interpreter, dependency set, invocation, parser, output cap, or local SHA-256 is pinned.",
+        "Compatibility with the PANDAcap 2020 RRArchive variant is unverified."
+      ],
+      "not_pinned": true,
+      "not_installed": true,
+      "not_authorized": true,
+      "status_tokens": [
+        "not_pinned",
+        "not_installed",
+        "not_authorized"
+      ]
+    },
+    {
+      "candidate_id": "panda_native_replay_runtime",
+      "name": "PANDA native panda-system-* replay runtime",
+      "candidate_version": "upstream tag v1.8.85 observed, not pinned",
+      "source_url": "https://github.com/panda-re/panda/tree/v1.8.85/panda/src/rr",
+      "public_tree_paths": [
+        "panda/src/rr/panda_rr2.c",
+        "panda/src/rr/rr_log.c",
+        "panda/src/rr/README.md"
+      ],
+      "public_tree_blob_shas_observed_not_pinned": [
+        "0355fec867ff520381845cb3625bd8130d13ddd9",
+        "47dfbf6c5c207b55d59265384fbf0f3d3759fa8c",
+        "a7d46d3a676dadec915b2857f771e3acd35ee954"
+      ],
+      "candidate_reader_class": "official_native_record_replay_runtime",
+      "possible_use": "Reference implementation for format compatibility if a future authorization permits a sandboxed synthetic compatibility test.",
+      "known_limitations": [
+        "Replay is active execution, not a passive archive metadata read.",
+        "It may require an architecture-matched PANDA build, guest state, kernel profile, and format-compatible recording.",
+        "Running a honeypot replay could expose commands, credentials, payload behavior, secrets, personal identifiers, or malicious activity.",
+        "It is unsuitable for the planned first-pass central-directory and notice audit unless a future authority explicitly permits replay inside a separately isolated environment.",
+        "No executable build identity, dependency graph, invocation, parser, output cap, or local SHA-256 is pinned."
+      ],
+      "not_pinned": true,
+      "not_installed": true,
+      "not_authorized": true,
+      "status_tokens": [
+        "not_pinned",
+        "not_installed",
+        "not_authorized"
+      ]
+    },
+    {
+      "candidate_id": "panda_rr_print_utility",
+      "name": "PANDA rr_print",
+      "candidate_version": "upstream tag v1.8.85 observed, not pinned",
+      "source_url": "https://github.com/panda-re/panda/blob/v1.8.85/panda/src/rr/rr_print.c",
+      "public_tree_path": "panda/src/rr/rr_print.c",
+      "public_tree_blob_sha_observed_not_pinned": "65583273fd628f177d0c319461131dd96c75499f",
+      "candidate_reader_class": "official_native_rr_log_print_utility_source",
+      "possible_use": "Low-level RR log parser candidate only after outer-container and privacy Gates are separately closed.",
+      "known_limitations": [
+        "The public tree identifies source code, not a prebuilt, reproducibly pinned executable.",
+        "It is an RR log printer rather than a verified outer RRArchive central-directory reader.",
+        "Printed event or nondeterminism data may reveal ordinary replay content and therefore exceed a notice or manifest-only audit.",
+        "It may require archive unpacking or native PANDA build artifacts, both outside current authority.",
+        "No build flags, executable identity, invocation, parser, redaction policy, output cap, or local SHA-256 is pinned."
+      ],
+      "not_pinned": true,
+      "not_installed": true,
+      "not_authorized": true,
+      "status_tokens": [
+        "not_pinned",
+        "not_installed",
+        "not_authorized"
+      ]
+    },
+    {
+      "candidate_id": "pandare_python_interface",
+      "name": "pandare Python interface",
+      "candidate_version": "PyPI 1.8.85 observed, not pinned",
+      "source_url": "https://pypi.org/project/pandare/1.8.85/",
+      "upstream_repository_url": "https://github.com/panda-re/panda/",
+      "candidate_reader_class": "python_controller_candidate_not_standalone_archive_parser",
+      "possible_use": "Potential controller for a future pinned PANDA runtime; direct RRArchive metadata-read capability is unverified.",
+      "known_limitations": [
+        "The PyPI metadata describes a Python interface to PANDA, not a standalone passive RRArchive reader.",
+        "Using it would likely require native PANDA components and could initiate active replay.",
+        "The package index version alone does not pin every wheel, sdist, dependency, executable, or transitive native artifact.",
+        "No method-level reader contract, invocation, parser, privacy boundary, output cap, or artifact SHA-256 is pinned.",
+        "This candidate must be rejected if a future source inspection cannot prove a bounded metadata-only path."
+      ],
+      "not_pinned": true,
+      "not_installed": true,
+      "not_authorized": true,
+      "status_tokens": [
+        "not_pinned",
+        "not_installed",
+        "not_authorized"
+      ]
+    }
+  ],
+  "disposition": {
+    "candidate_count": 4,
+    "selected_reader": null,
+    "reader_identity_gate_passed": false,
+    "reader_execution_authorized": false,
+    "archive_audit_authorized": false,
+    "preferred_future_review_order": [
+      "Determine whether rrunpack.py can expose format identity without extraction; otherwise reject it for the first-pass audit.",
+      "Seek a passive, bounded, no-extract RRArchive metadata parser before considering active PANDA replay.",
+      "Treat rr_print and pandare as later compatibility or content-parser candidates, not notice or manifest readers."
+    ],
+    "future_reader_amendment_must_pin": [
+      "reader name and exact version or commit",
+      "source and local executable or package identity",
+      "all applicable SHA-256 hashes",
+      "dependencies and runtime",
+      "invocation and parser",
+      "member, token, per-member, total-byte, time, and output limits",
+      "no-extract and no-ordinary-content behavior",
+      "privacy, secret, identifier, malware, and raw-path redaction",
+      "fail-closed behavior on unsupported format or cap exceedance"
+    ]
+  },
+  "gate": {
+    "step_c_complete": true,
+    "all_candidates_not_pinned": true,
+    "all_candidates_not_installed": true,
+    "all_candidates_not_authorized": true,
+    "reader_selected": false,
+    "reader_execution_authorized": false,
+    "archive_or_payload_audit_authorized": false,
+    "effective_catalog_change_authorized": false,
+    "family_role_change_authorized": false,
+    "family_lineage_sample_or_quota_credit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false
+  },
+  "step_self_check": {
+    "hard_excluded_path_hit": false,
+    "download_process_cache_archive_zip_or_launcher_touched": false,
+    "reader_installed_or_executed": false,
+    "outputs_only_under_docs_llm_editor": true,
+    "result": "pass"
+  }
+}
