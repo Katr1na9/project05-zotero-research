@@ -1,0 +1,98 @@
+schema_version: "0.8.0"
+policy_id: part-b-cost-instrumentation-policy-v0.8
+policy_version: "0.8.0"
+status: B3_LOCAL_REVIEW_AUTHORIZED_INSTRUMENTATION
+authorized_slice: B3_COST_INSTRUMENTATION
+instrumentation_authority: true
+action_execution_authority: false
+sampling_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+stop_authority: NONE
+b0_cost_contract_hash: "sha256:b6d36c40f7b52c12733dbe75cbcba6058e952f23d67e2155bd73196f6bcfaf53"
+capture_boundary:
+  input: EVALUATOR_SUPPLIED_INTEGER_EVENTS
+  clock_access: false
+  executor_hook: false
+  external_connector: false
+  event_order_semantics: ORDER_INVARIANT_EVENT_ID_UNIQUE
+exact_arithmetic:
+  integer_input_required: true
+  binary_float_input_allowed: false
+  nanoseconds_per_second: 1000000000
+  output_encoding: REDUCED_EXACT_RATIONAL
+dimensions:
+  - dimension_id: T_human
+    unit: seconds
+    aggregation: sum
+    event_type: HUMAN_ACTIVITY
+    source_fields: [duration_ns]
+  - dimension_id: T_wall
+    unit: seconds
+    aggregation: elapsed
+    event_type: EXECUTOR_WALL_INTERVAL
+    source_fields: [start_ns, end_ns]
+  - dimension_id: T_CPU
+    unit: cpu_seconds
+    aggregation: sum
+    event_type: CPU_ACCOUNTING
+    source_fields: [cpu_delta_ns]
+  - dimension_id: M_byte_sec
+    unit: byte_seconds
+    aggregation: integral
+    event_type: MEMORY_INTEGRAL
+    source_fields: [byte_nanoseconds]
+  - dimension_id: D_scan
+    unit: bytes
+    aggregation: sum
+    event_type: SOURCE_SCAN
+    source_fields: [bytes_scanned]
+  - dimension_id: N_record
+    unit: records
+    aggregation: sum
+    event_type: SOURCE_SCAN
+    source_fields: [records_scanned]
+  - dimension_id: C_money
+    unit: currency_microunits
+    aggregation: sum
+    event_type: BILLED_USAGE
+    source_fields: [currency_code, currency_microunits]
+  - dimension_id: T_auth
+    unit: seconds
+    aggregation: sum
+    event_type: AUTHORIZATION_ACTIVITY
+    source_fields: [duration_ns]
+missingness:
+  missing_measurement: UNKNOWN_NOT_ZERO
+  implicit_zero_forbidden: true
+  explicit_reason_required: true
+  complete_trace_rule: ALL_EIGHT_DIMENSIONS_MEASURED
+currency:
+  code_format: ISO_4217_UPPERCASE
+  trace_currency_count: ZERO_OR_ONE
+  mixed_currency_behavior: FAIL_CLOSED_NO_IMPLICIT_FX
+  fx_normalization_authority: false
+feasibility:
+  semantics: SEPARATE_NOT_HIGH_COST
+  partial_trace_preserved: true
+  infeasible_scalar_cost: null
+scalarization:
+  enabled: false
+  weights: null
+  normalization: null
+  sensitivity_grid: null
+error_semantics:
+  invalid_event: B3-COST-001_INVALID_EVENT
+  duplicate_event_id: B3-COST-002_DUPLICATE_EVENT_ID
+  undeclared_missing_dimension: B3-COST-003_UNDECLARED_MISSING_DIMENSION
+  measured_and_unknown_conflict: B3-COST-004_MEASURED_UNKNOWN_CONFLICT
+  mixed_currency: B3-COST-005_MIXED_CURRENCY_NO_FX
+  policy_hash_mismatch: B3-COST-006_POLICY_HASH_MISMATCH
+  execution_or_sampling_attempt: B3-COST-007_NO_ACTION_OR_SAMPLING_AUTHORITY
+  scalarization_or_claim_attempt: B3-COST-008_NO_SCALAR_OR_CLAIM_AUTHORITY
+  stop_or_certificate_attempt: B3-COST-009_NO_STOP_AUTHORITY
+limitations:
+  - B3 aggregates injected trace events and does not execute actions or read clocks.
+  - Mixed currencies fail closed because no FX-normalization contract is approved.
+  - Scalarization, planner use, performance claims, sampling, and CERTIFIED_STOP remain unauthorized.
+hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"

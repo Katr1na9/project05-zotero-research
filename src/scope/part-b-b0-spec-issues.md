@@ -65,11 +65,19 @@ evidence admission, Planner/M3*, certificate or `CERTIFIED_STOP`.
 
 ## PB-SI-004 — Full-cost measurement governance is not approved
 
-**State:** `OPEN — BLOCKS COST CLAIMS`.
+**State:** `CLOSED FOR B3 TRACE INSTRUMENTATION; COST CLAIMS STILL BLOCKED`
+on `2026-07-23`.
 
-v0.7 lists eight dimensions but does not fully freeze units, aggregation,
-missingness, currency normalization or scalarization. The B0 cost contract is a
-review proposal; it contains no measurements and supports no superiority claim.
+`B3_COST_INSTRUMENTATION` freezes the eight ordered dimensions, trace-event
+sources, exact units, aggregation, `UNKNOWN_NOT_ZERO` missingness and
+`SEPARATE_NOT_HIGH_COST` feasibility semantics. Its deterministic aggregator
+accepts evaluator-supplied integer events and emits exact-rational values.
+
+This closure does not approve real production capture adapters, mixed-currency
+FX normalization, scalar weights, sensitivity grids or performance claims.
+Accordingly `sampling_authority=false`, `scalarization_authority=false` and
+`performance_claim_authority=false`; the B0 cost hash remains unchanged, and
+B3 creates no certificate or `CERTIFIED_STOP` authority.
 
 ## PB-SI-005 — Legacy M3* is not a Part B interface
 

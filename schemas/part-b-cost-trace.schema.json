@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-cost-trace.schema.json",
+  "title": "Project05 Part B B3 eight-dimensional cost trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "trace_id",
+    "attempt_id",
+    "action_id",
+    "policy_hash",
+    "source_trace_hash",
+    "status",
+    "feasibility_status",
+    "reason_codes",
+    "currency_code",
+    "complete",
+    "dimensions",
+    "scalar_cost",
+    "performance_claim_authority",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "trace_id": {"type": "string", "pattern": "^B3-TRACE-[0-9]{3,}$"},
+    "attempt_id": {"type": "string", "minLength": 1},
+    "action_id": {"type": "string", "minLength": 1},
+    "policy_hash": {"$ref": "#/$defs/sha256"},
+    "source_trace_hash": {"$ref": "#/$defs/sha256"},
+    "status": {
+      "enum": [
+        "COMPLETE",
+        "PARTIAL_UNKNOWN",
+        "INFEASIBLE_WITH_PARTIAL_TRACE",
+        "FAILED_WITH_PARTIAL_TRACE",
+        "NOT_EXECUTED_WITH_PARTIAL_TRACE"
+      ]
+    },
+    "feasibility_status": {
+      "enum": ["EXECUTED", "INFEASIBLE", "FAILED", "NOT_EXECUTED"]
+    },
+    "reason_codes": {"$ref": "#/$defs/uniqueStrings"},
+    "currency_code": {
+      "anyOf": [
+        {"type": "string", "pattern": "^[A-Z]{3}$"},
+        {"type": "null"}
+      ]
+    },
+    "complete": {"type": "boolean"},
+    "dimensions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        {"$ref": "#/$defs/T_human"},
+        {"$ref": "#/$defs/T_wall"},
+        {"$ref": "#/$defs/T_CPU"},
+        {"$ref": "#/$defs/M_byte_sec"},
+        {"$ref": "#/$defs/D_scan"},
+        {"$ref": "#/$defs/N_record"},
+        {"$ref": "#/$defs/C_money"},
+        {"$ref": "#/$defs/T_auth"}
+      ],
+      "items": false
+    },
+    "scalar_cost": {"type": "null"},
+    "performance_claim_authority": {"const": false},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "uniqueStrings": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 1}
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension_id",
+        "unit",
+        "aggregation",
+        "measurement_status",
+        "value",
+        "source_event_ids",
+        "missing_reason"
+      ],
+      "properties": {
+        "dimension_id": {"type": "string"},
+        "unit": {"type": "string"},
+        "aggregation": {"enum": ["sum", "elapsed", "integral"]},
+        "measurement_status": {"enum": ["MEASURED", "UNKNOWN"]},
+        "value": {
+          "anyOf": [{"$ref": "#/$defs/rational"}, {"type": "null"}]
+        },
+        "source_event_ids": {"$ref": "#/$defs/uniqueStrings"},
+        "missing_reason": {
+          "anyOf": [{"type": "string", "minLength": 1}, {"type": "null"}]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"measurement_status": {"const": "MEASURED"}}
+          },
+          "then": {
+            "properties": {
+              "value": {"$ref": "#/$defs/rational"},
+              "source_event_ids": {"minItems": 1},
+              "missing_reason": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"measurement_status": {"const": "UNKNOWN"}}
+          },
+          "then": {
+            "properties": {
+              "value": {"type": "null"},
+              "source_event_ids": {"maxItems": 0},
+              "missing_reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      ]
+    },
+    "T_human": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "T_human"},
+            "unit": {"const": "seconds"},
+            "aggregation": {"const": "sum"}
+          }
+        }
+      ]
+    },
+    "T_wall": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "T_wall"},
+            "unit": {"const": "seconds"},
+            "aggregation": {"const": "elapsed"}
+          }
+        }
+      ]
+    },
+    "T_CPU": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "T_CPU"},
+            "unit": {"const": "cpu_seconds"},
+            "aggregation": {"const": "sum"}
+          }
+        }
+      ]
+    },
+    "M_byte_sec": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "M_byte_sec"},
+            "unit": {"const": "byte_seconds"},
+            "aggregation": {"const": "integral"}
+          }
+        }
+      ]
+    },
+    "D_scan": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "D_scan"},
+            "unit": {"const": "bytes"},
+            "aggregation": {"const": "sum"}
+          }
+        }
+      ]
+    },
+    "N_record": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "N_record"},
+            "unit": {"const": "records"},
+            "aggregation": {"const": "sum"}
+          }
+        }
+      ]
+    },
+    "C_money": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "C_money"},
+            "unit": {"const": "currency_microunits"},
+            "aggregation": {"const": "sum"}
+          }
+        }
+      ]
+    },
+    "T_auth": {
+      "allOf": [
+        {"$ref": "#/$defs/dimension"},
+        {
+          "properties": {
+            "dimension_id": {"const": "T_auth"},
+            "unit": {"const": "seconds"},
+            "aggregation": {"const": "sum"}
+          }
+        }
+      ]
+    }
+  }
+}
