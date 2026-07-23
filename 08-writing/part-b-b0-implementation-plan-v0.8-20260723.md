@@ -51,24 +51,29 @@ requirements, UNKNOWN semantics, or Checker-only STOP authority.
 | `src/scope/part-b-b0-spec-issues.md` | Ambiguities and decisions that must not be resolved silently. |
 | `tests/unit/test_part_b_b0_contracts.py` | Schema, hash, probability, cost and authority invariants. |
 
-## 4. Proposed later decomposition — not authorized
+## 4. Normative v0.8 Part B slice map
 
-The following map is planning vocabulary only. It does not open any slice.
+PB-SI-002 was closed by explicit approval on `2026-07-23`. The following map
+is normative for Part B numbering and scope vocabulary. It does not itself
+authorize implementation or execution: B1–B9 remain closed.
 
-| Slice | Proposed subject | Current state |
-|---|---|---|
-| B1 | Semantic-family federation schemas and adapter conformance | CLOSED |
-| B2 | Stochastic observation catalog, TV policy and simulation contract | CLOSED |
-| B3 | Eight-dimensional executor/resource instrumentation | CLOSED |
-| B4 | Full baseline preregistration and isolation | CLOSED |
-| B5 | M3* public-state/action interface and bounded planner evaluation | CLOSED |
-| B6 | Integrated Part B closed-loop evaluation | CLOSED |
-| B7 | Broad-input connectors and provenance validation | CLOSED |
-| B8 | External/holdout preregistration and statistical analysis | CLOSED |
-| B9 | Final freeze, audit and claim-boundary package | CLOSED |
+| Slice | Normative name | Content | Authority state |
+|---|---|---|---|
+| B0 | `B0_PLANNING_AND_CONTRACTS` | Completed contracts, Schemas, manifest and tests; no execution authority. | COMPLETED / APPROVED |
+| B1 | `B1_FEDERATION_SCHEMAS` | Semantic-family federation Schemas and adapter-conformance contracts; no broad downloads or connector implementation. | CLOSED |
+| B2 | `B2_STOCHASTIC_OBSERVATION` | Stochastic-observation catalog, TV policy and simulation contract; sampling cannot execute before PB-SI-003 closes. | CLOSED |
+| B3 | `B3_COST_INSTRUMENTATION` | Eight-dimensional cost executor/resource-trace instrumentation; no superiority claim before PB-SI-004 closes. | CLOSED |
+| B4 | `B4_BASELINE_PREREG` | Complete baseline preregistration and isolation. | CLOSED |
+| B5 | `B5_PLANNER_INTERFACE` | Public-state, action-ID-only M3*/planner interface and bounded evaluation; unverified legacy M3* is not reused. | CLOSED |
+| B6 | `B6_CLOSED_LOOP_EVAL` | Integrated Part B closed-loop evaluation. | CLOSED |
+| B7 | `B7_BROAD_CONNECTORS` | Broad connectors and provenance validation; every source requires separate authorization. | CLOSED |
+| B8 | `B8_HOLDOUT_ANALYSIS` | External/holdout preregistration and statistical analysis. | CLOSED |
+| B9 | `B9_FREEZE_AND_CLAIMS` | Final freeze, audit and claim-boundary closeout package. | CLOSED |
 
-The v0.7 document names B1–B6 differently and does not define B7–B9. The map
-above is intentionally non-normative until human review resolves PB-SI-002.
+The v0.7 B1–B6 stages remain reference lineage and do not directly equal the
+same-numbered rows above. B7–B9 are explicit v0.8 extensions for connectors,
+holdout analysis and closeout. The legacy `B0 no-acquisition` experimental arm
+is not Part B `B0_PLANNING_AND_CONTRACTS`.
 
 ## 5. B0 invariants
 

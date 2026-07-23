@@ -12,11 +12,30 @@ experimental arm. Documents and manifests must use the full identifier.
 
 ## PB-SI-002 — Part B inheritance and phase numbering
 
-**State:** `OPEN — BLOCKS NORMATIVE B1–B9 MAP`.
+**State:** `CLOSED — APPROVED` on `2026-07-23`.
 
-v0.8 says Part B inherits v0.7, but v0.7 defines only B1–B6 while v0.8 earlier
-mentions B0–B9. B0 records a proposed map but cannot make it normative. The
-reference v0.7 raw SHA-256 is
+The following names are the normative v0.8 Part B phase map. This decision
+freezes numbering and scope vocabulary only; it does not authorize B1–B9
+implementation or execution.
+
+| Slice | Normative name |
+|---|---|
+| B0 | `B0_PLANNING_AND_CONTRACTS` |
+| B1 | `B1_FEDERATION_SCHEMAS` |
+| B2 | `B2_STOCHASTIC_OBSERVATION` |
+| B3 | `B3_COST_INSTRUMENTATION` |
+| B4 | `B4_BASELINE_PREREG` |
+| B5 | `B5_PLANNER_INTERFACE` |
+| B6 | `B6_CLOSED_LOOP_EVAL` |
+| B7 | `B7_BROAD_CONNECTORS` |
+| B8 | `B8_HOLDOUT_ANALYSIS` |
+| B9 | `B9_FREEZE_AND_CLAIMS` |
+
+The v0.7 B1–B6 stages are a reference lineage and do not map directly by
+number to this table. B7–B9 are explicit v0.8 extensions for connectors,
+holdout analysis and final claim-boundary closeout. The legacy experimental
+arm `B0 no-acquisition` remains distinct from Part B B0. The reference v0.7
+raw SHA-256 is
 `b1ff751758377afa2e3287ce68a2e579ac0a4bcb8c687bf4731e1927290de0da`.
 
 ## PB-SI-003 — TV threshold semantics are underspecified

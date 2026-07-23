@@ -32,6 +32,30 @@ The B0 manifest must state `execution_authority=false`,
 `CERTIFIED_STOP` authority remains limited to the already approved frozen
 deterministic Kernel Gamma; B0 does not extend it.
 
+## Part B normative slice map approval — 2026-07-23
+
+PB-SI-002 is `CLOSED — APPROVED`. The following names now form the normative
+v0.8 Part B map:
+
+| Slice | Normative name | Authority state |
+|---|---|---|
+| B0 | `B0_PLANNING_AND_CONTRACTS` | COMPLETED / APPROVED |
+| B1 | `B1_FEDERATION_SCHEMAS` | CLOSED |
+| B2 | `B2_STOCHASTIC_OBSERVATION` | CLOSED |
+| B3 | `B3_COST_INSTRUMENTATION` | CLOSED |
+| B4 | `B4_BASELINE_PREREG` | CLOSED |
+| B5 | `B5_PLANNER_INTERFACE` | CLOSED |
+| B6 | `B6_CLOSED_LOOP_EVAL` | CLOSED |
+| B7 | `B7_BROAD_CONNECTORS` | CLOSED |
+| B8 | `B8_HOLDOUT_ANALYSIS` | CLOSED |
+| B9 | `B9_FREEZE_AND_CLAIMS` | CLOSED |
+
+This ruling freezes names and slice boundaries only. It authorizes no B1–B9
+runtime or implementation work, no LLM, and no push or PR. The v0.7 B1–B6
+stages remain reference lineage rather than direct number-equivalents; B7–B9
+are v0.8 extensions. Legacy `B0 no-acquisition` remains a different experiment
+arm and is not Part B B0.
+
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.
 
