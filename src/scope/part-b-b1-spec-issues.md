@@ -18,13 +18,21 @@ per-source authorization.
 
 ## PB-B1-SI-002 — Range semantics are not a Kernel Claim IR field
 
-**State:** `OPEN — BLOCKS PRODUCTION ADAPTER`.
+**State:** `CLOSED — APPROVED` on `2026-07-23`.
 
-The frozen Kernel Claim IR has `byte_or_row_range` but no explicit
-`range_semantics`. B1 conformance requires `ROWS_HALF_OPEN` or
-`BYTES_HALF_OPEN` in its projection envelope so ambiguity cannot be hidden.
-No production mapping may silently drop that field. Resolving shared Schema
-ownership would exceed B1's 13-file authorization and requires a later gate.
+The approved decision is `CONFORMANCE_ENVELOPE_ONLY`. The frozen Kernel Claim
+IR keeps `byte_or_row_range` but does not gain a `range_semantics` field. B1
+conformance continues to require `ROWS_HALF_OPEN` or `BYTES_HALF_OPEN` in the
+projection envelope.
+
+The Claim IR range pair is opaque. Units and endpoint convention may not be
+inferred from numeric values or other claim fields. A missing or mismatched
+versioned conformance contract fails closed under the error rules in
+`contracts/part-b-b1-range-semantics-v0.8.md`.
+
+Closure decides field ownership only. It grants no production adapter,
+connector, runtime, admission, certification or `CERTIFIED_STOP` authority.
+Candidate Compiler ownership remains candidate-only and excludes `pointer`.
 
 ## PB-B1-SI-003 — Completeness declarations are not completeness proofs
 

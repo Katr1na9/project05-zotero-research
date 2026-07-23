@@ -57,10 +57,17 @@ may not invent, erase or silently rewrite a source ID, record ID, content hash
 or range. B1 defines this comparison contract but supplies no pointer resolver
 or runtime validator.
 
-The existing Kernel Claim IR stores `byte_or_row_range` but does not carry a
-separate `range_semantics` field. B1 therefore keeps that field in its
-conformance envelope. Mapping it into production Claim IR is blocked until
-the ownership/interface issue in `part-b-b1-spec-issues.md` is reviewed.
+The ownership question was closed by the approved
+`part-b-b1-range-semantics-v0.8.md` decision. The existing Kernel Claim IR
+continues to store `byte_or_row_range` without a `range_semantics` field.
+`range_semantics` belongs only to the versioned conformance envelope.
+
+The Claim IR range pair is opaque: units and endpoint convention must never be
+inferred from its values or surrounding claim fields. Without a matching
+conformance contract, a future adapter must fail closed under
+`B1-RANGE-001_CONFORMANCE_CONTRACT_REQUIRED`. Closing the ownership issue
+provides no production adapter, resolver, admission or certification
+authority.
 
 ## 4. Epistemic separation and authority
 

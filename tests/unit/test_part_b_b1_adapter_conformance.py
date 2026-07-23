@@ -277,6 +277,70 @@ class PartBB1AdapterConformanceTests(unittest.TestCase):
         visit(self.contract["conformance_examples"])
         self.assertFalse(self.contract["execution_authority"])
 
+    def test_range_semantics_is_conformance_envelope_only(self) -> None:
+        kernel_schema = load_json(SCHEMA_DIR / "claim-ir-kernel.schema.json")
+        kernel_pointer = kernel_schema["$defs"]["pointer"]
+        self.assertNotIn("range_semantics", kernel_pointer["properties"])
+        self.assertNotIn("range_semantics", kernel_pointer["required"])
+        self.assertFalse(kernel_pointer["additionalProperties"])
+
+        fixture_path = (
+            ROOT
+            / "tests"
+            / "fixtures"
+            / "TWIN-COUNTEREXAMPLE-001"
+            / "claims"
+            / "case_evidence.jsonl"
+        )
+        claim = json.loads(fixture_path.read_text(encoding="utf-8").splitlines()[0])
+        injected = deepcopy(claim)
+        injected["pointer"]["range_semantics"] = "ROWS_HALF_OPEN"
+        self.assertTrue(validate(injected, kernel_schema))
+
+        conformance_pointer = self.schema["$defs"]["claimPointer"]
+        self.assertIn("range_semantics", conformance_pointer["required"])
+        self.assertEqual(
+            conformance_pointer["properties"]["range_semantics"]["enum"],
+            ["ROWS_HALF_OPEN", "BYTES_HALF_OPEN"],
+        )
+
+        candidate_interface = load_json(
+            ROOT / "src" / "ir" / "candidate-claim-ir-interface-v0.8.json"
+        )
+        self.assertIn(
+            "pointer",
+            candidate_interface["compiler_forbidden_fields"],
+        )
+
+        manifest = load_yaml(CONFIG_DIR / "part-b-b1-manifest-v0.8.yaml")
+        self.assertEqual(
+            self.federation["hash"],
+            "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d",
+        )
+        self.assertEqual(
+            self.contract["hash"],
+            "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a",
+        )
+        self.assertEqual(
+            manifest["hash"],
+            "sha256:cecc07466d0aec0dbc7b4d95127651546ba7eb895f98a56d7e37c6f753850f6e",
+        )
+
+        decision_contract = (
+            ROOT / "contracts" / "part-b-b1-range-semantics-v0.8.md"
+        ).read_text(encoding="utf-8")
+        for required_text in (
+            "CLOSED — APPROVED",
+            "CONFORMANCE_ENVELOPE_ONLY",
+            "INFERENCE_FORBIDDEN",
+            "FAIL_CLOSED",
+            "B1-RANGE-001_CONFORMANCE_CONTRACT_REQUIRED",
+            "Candidate Compiler",
+            "no production adapter authority",
+        ):
+            with self.subTest(required_text=required_text):
+                self.assertIn(required_text, decision_contract)
+
 
 if __name__ == "__main__":
     unittest.main()
