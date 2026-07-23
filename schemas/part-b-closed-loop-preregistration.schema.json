@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-closed-loop-preregistration.schema.json",
+  "title": "Project05 Part B B6 closed-loop preregistration envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "preregistration_id",
+    "preregistration_version",
+    "status",
+    "authorized_slice",
+    "bindings",
+    "isolation_binding",
+    "freeze_rules",
+    "registered_bounds",
+    "allowed_contract_metrics",
+    "forbidden_claims",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "preregistration_id": {
+      "const": "part-b-closed-loop-preregistration-v0.8"
+    },
+    "preregistration_version": {"const": "0.8.0"},
+    "status": {"const": "B6_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B6_CLOSED_LOOP_EVAL"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b4_baseline_preregistration_hash",
+        "b4_baseline_isolation_policy_hash",
+        "b5_planner_interface_policy_hash",
+        "b5_bounded_evaluation_hash"
+      ],
+      "properties": {
+        "b4_baseline_preregistration_hash": {"$ref": "#/$defs/sha256"},
+        "b4_baseline_isolation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b5_planner_interface_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b5_bounded_evaluation_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "isolation_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "partitions",
+        "mutually_disjoint",
+        "evaluation_feedback_to_train",
+        "evaluation_feedback_to_tune",
+        "holdout_visible_before_final_freeze",
+        "holdout_feedback_to_any_model",
+        "forbidden_path_prefixes"
+      ],
+      "properties": {
+        "partitions": {"const": ["TRAIN", "TUNE", "EVALUATION", "HOLDOUT"]},
+        "mutually_disjoint": {"const": true},
+        "evaluation_feedback_to_train": {"const": false},
+        "evaluation_feedback_to_tune": {"const": false},
+        "holdout_visible_before_final_freeze": {"const": false},
+        "holdout_feedback_to_any_model": {"const": false},
+        "forbidden_path_prefixes": {"const": ["09-experiments/"]}
+      }
+    },
+    "freeze_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "freeze_point",
+        "must_precede_first_feedback",
+        "roster_mutation_after_freeze",
+        "artifact_hash_mutation_after_freeze",
+        "metric_mutation_after_freeze",
+        "partition_mutation_after_freeze",
+        "bound_mutation_after_freeze",
+        "tie_break_mutation_after_freeze",
+        "violation_behavior"
+      ],
+      "properties": {
+        "freeze_point": {"const": "BEFORE_FIRST_FEEDBACK"},
+        "must_precede_first_feedback": {"const": true},
+        "roster_mutation_after_freeze": {"const": false},
+        "artifact_hash_mutation_after_freeze": {"const": false},
+        "metric_mutation_after_freeze": {"const": false},
+        "partition_mutation_after_freeze": {"const": false},
+        "bound_mutation_after_freeze": {"const": false},
+        "tie_break_mutation_after_freeze": {"const": false},
+        "violation_behavior": {
+          "const": "FAIL_CLOSED_EVALUATION_NOT_PREREGISTERED"
+        }
+      }
+    },
+    "registered_bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_public_state_bytes",
+        "max_feasible_action_ids",
+        "max_decision_wall_ms",
+        "max_decision_cpu_ms",
+        "max_memory_bytes",
+        "max_decisions_per_case"
+      ],
+      "properties": {
+        "max_public_state_bytes": {"type": "integer", "minimum": 1},
+        "max_feasible_action_ids": {"type": "integer", "minimum": 1},
+        "max_decision_wall_ms": {"type": "integer", "minimum": 1},
+        "max_decision_cpu_ms": {"type": "integer", "minimum": 1},
+        "max_memory_bytes": {"type": "integer", "minimum": 1},
+        "max_decisions_per_case": {"type": "integer", "minimum": 1}
+      }
+    },
+    "allowed_contract_metrics": {
+      "const": [
+        "INTERFACE_CONFORMANCE",
+        "FEEDBACK_BOUNDARY_CONFORMANCE",
+        "FAILURE_CHANNEL_COUNTS",
+        "UNSCALARIZED_RESOURCE_VECTOR_SHAPE"
+      ]
+    },
+    "forbidden_claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ranking",
+        "performance_validity",
+        "superiority",
+        "scalarized_cost",
+        "certificate",
+        "certified_stop"
+      ],
+      "properties": {
+        "ranking": {"const": true},
+        "performance_validity": {"const": true},
+        "superiority": {"const": true},
+        "scalarized_cost": {"const": true},
+        "certificate": {"const": true},
+        "certified_stop": {"const": true}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

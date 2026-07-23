@@ -1,0 +1,53 @@
+schema_version: "0.8.0"
+preregistration_id: part-b-closed-loop-preregistration-v0.8
+preregistration_version: "0.8.0"
+status: B6_CONTRACT_ONLY
+authorized_slice: B6_CLOSED_LOOP_EVAL
+bindings:
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  b5_planner_interface_policy_hash: "sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343"
+  b5_bounded_evaluation_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+isolation_binding:
+  partitions: [TRAIN, TUNE, EVALUATION, HOLDOUT]
+  mutually_disjoint: true
+  evaluation_feedback_to_train: false
+  evaluation_feedback_to_tune: false
+  holdout_visible_before_final_freeze: false
+  holdout_feedback_to_any_model: false
+  forbidden_path_prefixes:
+    - 09-experiments/
+freeze_rules:
+  freeze_point: BEFORE_FIRST_FEEDBACK
+  must_precede_first_feedback: true
+  roster_mutation_after_freeze: false
+  artifact_hash_mutation_after_freeze: false
+  metric_mutation_after_freeze: false
+  partition_mutation_after_freeze: false
+  bound_mutation_after_freeze: false
+  tie_break_mutation_after_freeze: false
+  violation_behavior: FAIL_CLOSED_EVALUATION_NOT_PREREGISTERED
+registered_bounds:
+  max_public_state_bytes: 1048576
+  max_feasible_action_ids: 4096
+  max_decision_wall_ms: 2000
+  max_decision_cpu_ms: 1000
+  max_memory_bytes: 536870912
+  max_decisions_per_case: 256
+allowed_contract_metrics:
+  - INTERFACE_CONFORMANCE
+  - FEEDBACK_BOUNDARY_CONFORMANCE
+  - FAILURE_CHANNEL_COUNTS
+  - UNSCALARIZED_RESOURCE_VECTOR_SHAPE
+forbidden_claims:
+  ranking: true
+  performance_validity: true
+  superiority: true
+  scalarized_cost: true
+  certificate: true
+  certified_stop: true
+limitations:
+  - This envelope freezes contract identities before any future feedback.
+  - It is not an evaluator, data splitter, runner, sampler, or analysis plan.
+  - HOLDOUT remains sealed and no performance inference is authorized.
+hash: "sha256:1c3177a68178d9f940978979ae2ff4c59646bf14e693e78f6592ab5f70f91aca"
