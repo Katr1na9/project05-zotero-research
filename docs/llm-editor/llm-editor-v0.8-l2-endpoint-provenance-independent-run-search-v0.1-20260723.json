@@ -1,0 +1,337 @@
+{
+  "schema_version": "project05-llm-editor-l2-endpoint-provenance-independent-run-search-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "ea349632aeeabe59056558e94f1d5925031b041e",
+  "review_type": "metadata_only_endpoint_provenance_independent_run_source_search",
+  "status": "search_complete_two_reviewable_directions_no_role_or_quota_change",
+  "scope": {
+    "official_metadata_apis_and_landing_pages_read": true,
+    "payload_downloaded_or_opened": false,
+    "archive_member_opened": false,
+    "model_output_or_private_gold_read": false,
+    "training_sample_generated": false,
+    "family_role_changed": false,
+    "quota_credit_awarded": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  },
+  "search_contract": {
+    "target": "A new endpoint, host-audit, system-call, or provenance family whose official metadata exposes at least four source-native executions or captures.",
+    "required_metadata": [
+      "Official artifact identity and immutable release or record revision",
+      "Artifact-level license",
+      "Published byte size and checksum",
+      "At least four curator-declared run, capture, execution, simulation, or independent-testbed units",
+      "A plausible physical boundary between raw evidence and labels, answers, or ground truth",
+      "No known reuse of an active train, development, or test artifact"
+    ],
+    "forbidden_substitutes_for_run_count": [
+      "row_count",
+      "file_count_without_a_run_mapping",
+      "directory_count_without_a_run_mapping",
+      "technique_or_attack_type_count",
+      "host_or_sensor_view_count",
+      "device_count",
+      "day_count",
+      "arbitrary_time_window"
+    ],
+    "protected_or_inactive_sources_not_eligible": [
+      "E3",
+      "E5",
+      "OpTC",
+      "OTRF",
+      "WitFoo",
+      "AInception",
+      "Liwa",
+      "EVTX-ATTACK-SAMPLES"
+    ],
+    "n_baiot_rule": "N-BaIoT was not advanced or re-reviewed. It remains on hold unless artifact license, immutable checksum, source-native run lineage, and overlap with the approved IoT-23 test candidate are all closed first."
+  },
+  "search_surfaces": [
+    {
+      "surface": "DataCite REST API",
+      "base_url": "https://api.datacite.org/dois",
+      "purpose": "DOI and repository discovery"
+    },
+    {
+      "surface": "OpenAlex Works API",
+      "base_url": "https://api.openalex.org/works",
+      "purpose": "Primary paper and dataset-name discovery"
+    },
+    {
+      "surface": "Zenodo Records API",
+      "base_url": "https://zenodo.org/api/records",
+      "purpose": "Official description, license, revision, file size, and checksum verification"
+    },
+    {
+      "surface": "GitHub repository metadata API",
+      "base_url": "https://api.github.com",
+      "purpose": "Repository discovery only; rate limiting prevented reliance on it for final evidence"
+    }
+  ],
+  "reproducible_query_terms": [
+    "endpoint security telemetry dataset attack runs",
+    "provenance graph intrusion dataset attack scenarios",
+    "host audit log cyber attack dataset experiments",
+    "system call intrusion dataset execution traces",
+    "Windows Event Logs attack dataset",
+    "audit logs intrusion dataset",
+    "system call attack dataset",
+    "malware system call traces dataset",
+    "dynamic malware analysis system calls",
+    "sandbox malware execution logs dataset"
+  ],
+  "reviewable_directions": [
+    {
+      "candidate_id": "dynamic_malware_kernel_user_calls_2018",
+      "candidate_slot": "train_executed_evidence_liwa_replacement_01",
+      "search_verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+      "source_identity": {
+        "title": "Dynamic Malware Analysis kernel and user-level calls",
+        "official_record": "https://zenodo.org/records/1203289",
+        "official_api_record": "https://zenodo.org/api/records/1203289",
+        "doi": "10.5281/zenodo.1203289",
+        "concept_doi": "10.5281/zenodo.1203288",
+        "zenodo_record_revision": 5,
+        "record_updated_at": "2020-01-24T19:24:03.680192+00:00",
+        "creator": "Matthew Nunes",
+        "resource_type": "dataset",
+        "license": "CC-BY-4.0"
+      },
+      "artifact_identity": [
+        {
+          "key": "KernelDriver.7z",
+          "bytes": 434907463,
+          "checksum": "md5:d4e4abb2d37353d22f80662864e03ea4"
+        },
+        {
+          "key": "Cuckoo.7z",
+          "bytes": 14638588754,
+          "checksum": "md5:070528130fc81478a77c763558530f6b"
+        }
+      ],
+      "official_run_declaration": {
+        "declared_malicious_samples_run": 1000,
+        "declared_clean_samples_run": 1000,
+        "declared_distinct_sample_run_lower_bound": 2000,
+        "source_native_mapping": "The official description states that numbered folders represent the running of different samples and calls each such unit a run.",
+        "sensor_views": [
+          "kernel-driver system-call logs",
+          "Cuckoo sandbox reports"
+        ],
+        "minimum_four_run_declaration_met": true,
+        "statistical_independence_verified": false,
+        "reason_independence_remains_unverified": "The record identifies different sample runs but does not publish a reset/snapshot manifest or an immutable mapping that proves whether the kernel-driver and Cuckoo views correspond to the same runs."
+      },
+      "fit_and_risks": {
+        "endpoint_evidence_fit": "strong_but_narrow",
+        "raw_evidence_shape": "per-run system-call logs and Cuckoo dynamic-analysis reports",
+        "benign_and_malicious_declared": true,
+        "label_isolation_candidate": "Clean/VirusShare directory names and any Cuckoo detections must be excluded from model-visible paths and fields.",
+        "paired_view_rule": "Kernel-driver and Cuckoo material from the same executed sample must remain one lineage group.",
+        "pointer_candidate": "opaque archive id plus run directory plus source file and line or event index",
+        "known_active_family_overlap": "none identified from official metadata",
+        "future_required_checks": [
+          "nested notice and archive manifest audit",
+          "sample-hash or run-id mapping across both archives",
+          "sandbox reset and duplicate-run audit",
+          "field-level exclusion of class paths, signatures, verdicts, and detector outputs",
+          "protected payload exact and near-duplicate scan",
+          "pointer-recoverability and capacity audit"
+        ]
+      },
+      "current_authority": {
+        "download_authorized": false,
+        "payload_or_manifest_audit_authorized": false,
+        "approved_as_train_candidate": false,
+        "counts_as_family": false,
+        "counts_as_lineage": false,
+        "counts_as_samples": false,
+        "quota_credit": 0
+      }
+    },
+    {
+      "candidate_id": "ait_lds_family",
+      "candidate_slot": "train_executed_evidence_liwa_replacement_01",
+      "search_verdict": "hold_for_distinctness_and_curator_overlap_review",
+      "metadata_strength": "The family is the clearest exact match for curator-declared independent testbeds, but it shares authors, institution, and a model-driven synthetic-testbed paradigm with the inactive CAM-LDS source.",
+      "candidate_releases": [
+        {
+          "title": "AIT Log Data Set V1.1",
+          "official_record": "https://zenodo.org/records/4264796",
+          "official_api_record": "https://zenodo.org/api/records/4264796",
+          "doi": "10.5281/zenodo.4264796",
+          "concept_doi": "10.5281/zenodo.3723082",
+          "zenodo_record_revision": 16,
+          "record_updated_at": "2023-10-18T07:22:24.211042+00:00",
+          "license": "CC-BY-NC-SA-4.0",
+          "official_group_declaration": "Logs were collected from four independent testbeds; each testbed simulates a web-server/user-host environment for six days.",
+          "minimum_four_run_declaration_met": true,
+          "preferred_artifact": {
+            "key": "AIT-LDS-v1_1.zip",
+            "bytes": 3404722917,
+            "checksum": "md5:4573b78ca4909c259632a49a3a34211e"
+          },
+          "duplicate_version_warning": "AIT-LDS-v1_0.zip and AIT-LDS-v1_1.zip are versions of the same four-testbed collection and may not be counted as separate runs or families."
+        },
+        {
+          "title": "AIT Log Data Set V2.1",
+          "official_record": "https://zenodo.org/records/19483937",
+          "official_api_record": "https://zenodo.org/api/records/19483937",
+          "doi": "10.5281/zenodo.19483937",
+          "concept_doi": "10.5281/zenodo.5789063",
+          "zenodo_record_revision": 6,
+          "record_updated_at": "2026-04-13T13:38:36.893468+00:00",
+          "license": "CC-BY-NC-SA-4.0",
+          "official_group_declaration": "The record declares eight testbeds and eight named datasets, each with its own simulation and attack time; every dataset is published as a full archive and a no-PCAP derivative.",
+          "source_native_group_count": 8,
+          "full_archive_and_no_pcap_derivative_pairs": 8,
+          "minimum_four_run_declaration_met": true,
+          "derivative_warning": "A full archive and its no-PCAP counterpart are two views of one testbed and provide only one lineage candidate."
+        }
+      ],
+      "overlap_assessment": {
+        "cam_lds_official_record": "https://zenodo.org/records/18861762",
+        "shared_creators": [
+          "Landauer, Max",
+          "Skopik, Florian",
+          "Hotwagner, Wolfgang",
+          "Wurzenberger, Markus"
+        ],
+        "shared_institution": "AIT Austrian Institute of Technology",
+        "shared_generation_nuisance": "synthetic small-enterprise testbeds with overlapping host/audit/network log modalities",
+        "known_payload_reuse": "not established from metadata",
+        "distinct_family_status": "unresolved",
+        "why_not_advance_now": "The request is for a new distinct family. Metadata proves testbed groups but does not yet prove that AIT-LDS is sufficiently independent of the failed CAM-LDS/AInception research-program nuisance to fill the vacant slot."
+      },
+      "current_authority": {
+        "download_authorized": false,
+        "payload_or_manifest_audit_authorized": false,
+        "approved_as_train_candidate": false,
+        "counts_as_family": false,
+        "counts_as_lineage": false,
+        "counts_as_samples": false,
+        "quota_credit": 0
+      }
+    }
+  ],
+  "screened_not_advanced": [
+    {
+      "candidate_id": "winmet_2025",
+      "official_record": "https://zenodo.org/records/16414116",
+      "doi": "10.5281/zenodo.16414116",
+      "license": "GPL-3.0-or-later",
+      "declared_execution_trace_count": 31844,
+      "artifact_files_with_size_and_md5": 8,
+      "status": "hold_run_independence_and_benign_gap",
+      "reason": "The record exposes one SHA-named JSON report per CAPE execution trace and separate label-mapping files, but does not publish a reset/non-duplicate run manifest and declares no benign execution pool. Trace count is not promoted to independent-lineage credit."
+    },
+    {
+      "candidate_id": "api_traces_malware_detection_2024",
+      "official_record": "https://zenodo.org/records/11079764",
+      "doi": "10.5281/zenodo.11079764",
+      "license": "CC-BY-4.0",
+      "declared_trace_count_approx": 330000,
+      "archive_bytes": 9336481760,
+      "archive_checksum": "md5:03d9610cadb30ee5d6cad50251f111bf",
+      "status": "hold_run_boundary_and_reset_undeclared",
+      "reason": "The official record says each SHA-named JSON is a trace and provides a separate family map, but does not define each trace as a separately reset execution or publish a run manifest."
+    },
+    {
+      "candidate_id": "dynamism_2018",
+      "official_record": "https://zenodo.org/records/1296278",
+      "doi": "10.5281/zenodo.1296278",
+      "declared_benign_application_runs": 2386,
+      "declared_malicious_application_runs": 2495,
+      "official_reset_declaration": "The Android operating system was re-initialized before every application run.",
+      "status": "hold_artifact_license_and_files_missing",
+      "reason": "The lineage description is strong, but the current Zenodo record API exposes neither an artifact license nor file size/checksum metadata."
+    },
+    {
+      "candidate_id": "dynamism_2016_2023",
+      "official_record": "https://zenodo.org/records/21280255",
+      "doi": "10.5281/zenodo.21280255",
+      "license": "CC-BY-NC-SA-4.0",
+      "declared_first_run_valid_benign": 12706,
+      "declared_first_run_valid_malicious": 10560,
+      "declared_second_runs": 1821,
+      "status": "hold_no_artifact_files_or_checksums",
+      "reason": "The record declares controlled executions and repeat runs but currently exposes no files, byte sizes, or checksums."
+    },
+    {
+      "candidate_id": "sappan_combined_network_host_2020",
+      "official_record": "https://zenodo.org/records/4159878",
+      "doi": "10.5281/zenodo.4159878",
+      "license": "CC-BY-4.0",
+      "status": "reject_four_phases_are_not_four_independent_runs",
+      "reason": "The record contains two attack scenarios. Four Samba datasets are individual phases or failed attempts inside one scenario, so their PCAP/host views cannot satisfy the independent-run requirement."
+    },
+    {
+      "candidate_id": "dongting_linux_kernel_2022",
+      "official_record": "https://zenodo.org/records/6627050",
+      "doi": "10.5281/zenodo.6627050",
+      "license": "CC-BY-4.0",
+      "declared_attack_sequence_count": 12116,
+      "declared_bug_triggering_program_count": 17855,
+      "status": "hold_execution_reset_and_security_semantics_unclosed",
+      "reason": "The record counts syscall sequences and bug-triggering programs across kernel releases, but does not publish source-native reset/run groups and is primarily a kernel-bug anomaly corpus rather than multi-entity security evidence."
+    },
+    {
+      "candidate_id": "hands_on_cyber_training_behavior_2023",
+      "official_record": "https://zenodo.org/records/10298187",
+      "doi": "10.5281/zenodo.10298187",
+      "license": "CC-BY-4.0",
+      "declared_participant_count": 100,
+      "status": "reject_participants_and_sessions_are_not_endpoint_capture_runs",
+      "reason": "The data records trainee progress and command histories for process mining. Participant and supervised-session counts do not establish independently captured endpoint evidence, and expected exercise definitions would be protected supervision."
+    },
+    {
+      "candidate_id": "node_level_intrusion_logs_2026",
+      "official_record": "https://zenodo.org/records/18997859",
+      "doi": "10.5281/zenodo.18997859",
+      "license": "CC-BY-4.0",
+      "status": "reject_empty_artifact_and_no_run_metadata",
+      "reason": "The official record provides only a one-line description and exposes no files, runs, sizes, or checksums."
+    }
+  ],
+  "evidence_inference_recommendation": {
+    "evidence": [
+      "Zenodo 1203289 publishes two checksummed archives and explicitly maps numbered directories to runs of different clean or malicious samples.",
+      "AIT-LDS V1.1 explicitly says four independent testbeds; AIT-LDS V2.1 publishes eight named testbed archives and eight no-PCAP derivatives.",
+      "All other screened sources either lack reset/run declarations, lack artifact identity, or substitute phases, traces, participants, programs, or files for independent runs."
+    ],
+    "inference": [
+      "Zenodo 1203289 is the most distinct new candidate direction, but a bounded review is still needed to bind paired sensor views and verify sandbox reset/non-duplication.",
+      "AIT-LDS has stronger curator-declared grouping but weaker portfolio distinctness because of CAM-LDS/AInception curator and testbed-generation overlap."
+    ],
+    "recommendation": [
+      "Open a separate metadata candidate review for dynamic_malware_kernel_user_calls_2018 before any download.",
+      "Keep AIT-LDS on hold until a distinctness amendment decides whether same-curator/testbed nuisance is acceptable for the vacant slot.",
+      "Do not advance N-BaIoT, WinMET, DYNAMISM, SAPPAN, DongTing, or API-traces under this authorization."
+    ]
+  },
+  "portfolio_after_search": {
+    "replacement_slot": "train_executed_evidence_liwa_replacement_01",
+    "replacement_slot_status": "vacant",
+    "new_source_role_approved": false,
+    "new_download_approved": false,
+    "new_quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "metadata_search_complete": true,
+    "separate_candidate_review_required": true,
+    "download_authorized": false,
+    "payload_or_manifest_audit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "family_role_change_authorized": false,
+    "quota_credit_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_m3_work_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false
+  }
+}
