@@ -1,0 +1,503 @@
+{
+  "schema_version": "project05-llm-editor-l2-endpoint-provenance-independent-run-search-v0.2",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "3190555e25f21df38eafe01d6c9067623e1a054d",
+  "review_type": "metadata_only_search_for_label_independent_endpoint_or_provenance_execution_groups",
+  "status": "search_complete_one_reviewable_direction_no_role_or_quota_change",
+  "extends": "llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.1-20260723.json",
+  "scope": {
+    "official_metadata_apis_and_repository_metadata_read": true,
+    "publication_metadata_read": true,
+    "publication_full_text_read": false,
+    "payload_or_archive_downloaded": false,
+    "payload_or_archive_opened": false,
+    "archive_member_content_read": false,
+    "private_gold_or_model_output_read": false,
+    "training_sample_generated": false,
+    "family_role_changed": false,
+    "quota_credit_awarded": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  },
+  "search_contract": {
+    "target": "A distinct endpoint or provenance family with at least four curator-declared execution or capture groups whose grouping identity does not depend on a class, attack, technique, answer, or ground-truth label.",
+    "required_metadata": [
+      "Official artifact identity and immutable record revision",
+      "Artifact-level license",
+      "Published byte size and checksum",
+      "At least four curator-declared run, execution, capture, or reset units",
+      "A label-independent candidate grouping key",
+      "A plausible physical boundary between raw evidence and labels or ground truth",
+      "No known reuse of an active train, development, or test artifact"
+    ],
+    "forbidden_substitutes_for_run_count": [
+      "row_count",
+      "file_count_without_a_curator_run_mapping",
+      "directory_or_class_path_count",
+      "device_or_host_count",
+      "day_count",
+      "technique_or_malware_family_count",
+      "sensor_view_count",
+      "arbitrary_time_window"
+    ],
+    "explicit_non_actions": {
+      "cuckoo_archive_downloaded_or_reconsidered": false,
+      "kernel_driver_class_path_lineage_reopened": false,
+      "ait_lds_advanced": false,
+      "n_baiot_advanced": false,
+      "cert_or_iot23_downloaded": false
+    }
+  },
+  "search_surfaces": [
+    {
+      "surface": "Zenodo Records API",
+      "base_url": "https://zenodo.org/api/records",
+      "purpose": "Official description, license, record revision, file byte size, and checksum"
+    },
+    {
+      "surface": "DataCite REST API",
+      "base_url": "https://api.datacite.org/dois",
+      "purpose": "Dataset DOI identity, rights, version, creators, and active registration"
+    },
+    {
+      "surface": "Crossref REST API",
+      "base_url": "https://api.crossref.org/works",
+      "purpose": "Associated publication identity, authorship, venue, and dataset citation"
+    },
+    {
+      "surface": "OpenAlex Works API",
+      "base_url": "https://api.openalex.org/works",
+      "purpose": "Publication discovery and independent metadata cross-check"
+    },
+    {
+      "surface": "Semantic Scholar Graph API",
+      "base_url": "https://api.semanticscholar.org/graph/v1",
+      "purpose": "Publication existence cross-check; unavailable due HTTP 429 during this search"
+    },
+    {
+      "surface": "GitHub REST API",
+      "base_url": "https://api.github.com/orgs/REPROD-prov",
+      "purpose": "Curator-declared workflow organization identity only; no repository content read"
+    }
+  ],
+  "reproducible_query_terms": [
+    "endpoint telemetry cybersecurity dataset",
+    "audit logs attack dataset",
+    "provenance cybersecurity dataset",
+    "system calls malware dataset",
+    "execution traces cybersecurity dataset",
+    "host logs intrusion dataset",
+    "sysmon attack dataset",
+    "process monitor ransomware dataset",
+    "ProcMon malware dataset",
+    "Linux audit attack dataset",
+    "auditd intrusion dataset",
+    "provenance graph attack dataset",
+    "endpoint ransomware logs dataset",
+    "host audit cybersecurity dataset",
+    "event logs attack scenario dataset",
+    "RanSAP ransomware dataset",
+    "ransomware provenance dataset",
+    "reproducible ransomware analysis dataset"
+  ],
+  "reviewable_direction": {
+    "candidate_id": "reprod_ransomware_execution_provenance_2023",
+    "candidate_slot": "train_executed_evidence_liwa_replacement_01",
+    "search_verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "why_it_is_reviewable": "The official record declares 405 ransomware-binary executions represented by raw ProcMon PML files, identifies those files by the MalwareBazaar SHA-256 rather than a class label, publishes a separate derived SPADE provenance-graph archive, and pins every artifact part by byte size and MD5.",
+    "source_identity": {
+      "title": "Ransomware Execution PROvenance Dataset (REPROD)",
+      "official_record": "https://zenodo.org/records/8123115",
+      "official_api_record": "https://zenodo.org/api/records/8123115",
+      "doi": "10.5281/zenodo.8123115",
+      "concept_doi": "10.5281/zenodo.7933806",
+      "doi_resolution": "https://zenodo.org/records/8123115",
+      "doi_resolution_http_status": 200,
+      "zenodo_record_revision": 2,
+      "record_created_at": "2023-07-09T20:00:41.717703+00:00",
+      "record_updated_at": "2023-07-10T02:26:48.679692+00:00",
+      "declared_version": "1.0",
+      "license": "CC-BY-4.0",
+      "access_right": "open",
+      "record_resource_type": "conferencepaper",
+      "resource_type_caution": "Zenodo and DataCite classify the record as a conference paper even though it publishes dataset artifacts. This is a metadata-quality warning, not an artifact-identity failure.",
+      "creators": [
+        "Ashish Gehani",
+        "Omer Ahmed",
+        "Muhammad Musa",
+        "Maneesh Kumar Yadav",
+        "Shozab Hussain",
+        "Fareed Zaffar",
+        "Turyal Neeshat",
+        "Rja Batool",
+        "Andy Poggio"
+      ]
+    },
+    "associated_publication": {
+      "title": "Towards Reproducible Ransomware Analysis",
+      "doi": "10.1145/3607505.3607510",
+      "venue": "2023 Cyber Security Experimentation and Test Workshop",
+      "publisher": "ACM",
+      "publication_date": "2023-08-07",
+      "crossref_api_record": "https://api.crossref.org/works/10.1145/3607505.3607510",
+      "author_set_matches_dataset_creators": true,
+      "crossref_reference_contains_reprod_concept_doi": true,
+      "cited_dataset_concept_doi": "10.5281/zenodo.7933806",
+      "full_text_read": false
+    },
+    "curator_workflow_identity": {
+      "official_organization": "https://github.com/REPROD-prov",
+      "organization_created_at": "2023-07-08T21:53:40Z",
+      "public_repository_count": 2,
+      "repositories": [
+        "REPROD-prov/REPROD-workflow",
+        "REPROD-prov/REPROD-initialml"
+      ],
+      "repository_content_read": false,
+      "workflow_repository_license_closed": false,
+      "workflow_repository_license_relevance": "The code license remains unclosed, but the candidate under review is the separately CC-BY-4.0 Zenodo artifact. No code use is approved."
+    },
+    "artifact_identity": {
+      "official_file_count": 15,
+      "official_total_bytes": 144708035023,
+      "all_files_have_md5": true,
+      "raw_procmon_multipart": [
+        {
+          "key": "pmls_split.zip",
+          "bytes": 4929941525,
+          "checksum": "md5:be5ddba86dcdeeaca8faa7d10aa8692a"
+        },
+        {
+          "key": "pmls_split.z01",
+          "bytes": 10737418240,
+          "checksum": "md5:8169f6c9be8fb0135dfdb93fea5499f8"
+        },
+        {
+          "key": "pmls_split.z02",
+          "bytes": 10737418240,
+          "checksum": "md5:be056cdfc68081e9c1717339121a884b"
+        },
+        {
+          "key": "pmls_split.z03",
+          "bytes": 10737418240,
+          "checksum": "md5:7114156374fb43a854b5d12d233bef79"
+        },
+        {
+          "key": "pmls_split.z04",
+          "bytes": 10737418240,
+          "checksum": "md5:a1ac2cc90a61f103869ff52c61862f15"
+        },
+        {
+          "key": "pmls_split.z05",
+          "bytes": 10737418240,
+          "checksum": "md5:2e59bf7cb132db41f855c8e8be722d00"
+        },
+        {
+          "key": "pmls_split.z06",
+          "bytes": 10737418240,
+          "checksum": "md5:1efcddc75a1692656b9a23467017a853"
+        },
+        {
+          "key": "pmls_split.z07",
+          "bytes": 10737418240,
+          "checksum": "md5:e7193a91843f5ba6feaf08292d9e5ee0"
+        },
+        {
+          "key": "pmls_split.z08",
+          "bytes": 10737418240,
+          "checksum": "md5:db8dfcaea50c78aa941c80015df11048"
+        },
+        {
+          "key": "pmls_split.z09",
+          "bytes": 10737418240,
+          "checksum": "md5:9e54fc7fec6f0e1d6962c6f6c0da3318"
+        },
+        {
+          "key": "pmls_split.z10",
+          "bytes": 10737418240,
+          "checksum": "md5:273684ea3383c42fa7b75d19d65033d0"
+        },
+        {
+          "key": "pmls_split.z11",
+          "bytes": 10737418240,
+          "checksum": "md5:633260a16eb54d0bc92b0d1088edeeb2"
+        },
+        {
+          "key": "pmls_split.z12",
+          "bytes": 10737418240,
+          "checksum": "md5:568306b60841283b19921c593300bcd8"
+        }
+      ],
+      "derived_provenance_archive": {
+        "key": "dots.zip",
+        "bytes": 10928971753,
+        "checksum": "md5:d9e3f24ba36a9b9503a55eb1cf677345"
+      },
+      "summary_metadata": {
+        "key": "summary.csv",
+        "bytes": 102865,
+        "checksum": "md5:b4e44a883dd702cb95be5ab270c96da9",
+        "model_view_status": "must_be_excluded_pending_field_level_review"
+      }
+    },
+    "official_execution_and_lineage_evidence": {
+      "declared_total_raw_pml_execution_groups": 405,
+      "declared_derived_dot_outputs": 861,
+      "minimum_four_execution_declaration_met": true,
+      "source_native_group_key_candidate": "MalwareBazaar sample SHA-256 used as the PML filename",
+      "group_key_depends_on_class_or_attack_label": false,
+      "dot_outputs_count_as_additional_lineages": false,
+      "reason_dot_outputs_do_not_add_lineage": "The official description says DOT subgraphs were produced by processing and querying the PML executions. They are derived views of the same executions.",
+      "reset_or_snapshot_between_executions_declared": false,
+      "one_unique_sha256_per_execution_manifest_verified": false,
+      "duplicate_or_repeat_execution_mapping_verified": false,
+      "metadata_level_lineage_verdict": "at_least_four_curator_declared_label_independent_candidate_groups_but_manifest_and_reset_audit_required"
+    },
+    "evidence_shape_and_isolation": {
+      "endpoint_modality": "Windows ProcMon PML execution logs",
+      "provenance_modality": "SPADE-derived DOT subgraphs",
+      "raw_and_derived_views_share_one_execution_lineage": true,
+      "all_declared_executions_are_ransomware": true,
+      "metadata_stage_benign_or_null_capacity": 0,
+      "label_or_ground_truth_isolation_candidate": "Keep summary.csv outside every model, prompt, pointer, and supervision view; use only the opaque SHA-256 execution key after a future manifest audit.",
+      "class_path_lineage_allowed": false,
+      "malware_family_or_detector_output_allowed": false,
+      "candidate_pointer_shape": "record DOI + artifact key + opaque SHA-256 execution id + member path + event or graph-record index",
+      "pointer_shape_approved": false
+    },
+    "portfolio_distinctness": {
+      "same_record_or_artifact_as_existing_train_dev_test_family": false,
+      "creator_or_curator_name_overlap_found_in_committed_effective_catalog": false,
+      "known_metadata_level_overlap_with_cert_or_iot23": false,
+      "known_metadata_level_overlap_with_beth_loghub_atomic_zeek_cam_socbed": false,
+      "upstream_sample_source": "MalwareBazaar",
+      "payload_level_sample_overlap_verified": false,
+      "distinctness_verdict": "plausibly_distinct_at_metadata_level_exact_and_near_overlap_audit_still_required"
+    },
+    "blocking_risks_before_any_source_role": [
+      "The official metadata does not declare VM reset, snapshot restore, or sandbox reinitialization between executions.",
+      "A central-directory audit must prove that at least four unique SHA-256 identifiers map to separate PML execution members without using summary.csv or class-bearing paths.",
+      "PML and DOT views of the same SHA-256 must remain one lineage group.",
+      "summary.csv and any malware-family, detector, verdict, answer, or ground-truth fields must remain physically excluded.",
+      "The raw PML artifact is a multipart object exceeding 133 GB; no acquisition plan or subset is approved.",
+      "The derived DOT archive is about 10.9 GB and cannot be substituted for raw PML without a separate source-role and evidence-level decision.",
+      "The corpus has no metadata-declared benign or null executions and cannot by itself repair class balance.",
+      "Protected-payload exact and near-duplicate exclusion remains unperformed.",
+      "Nested notices and any embedded third-party terms remain unverified."
+    ],
+    "current_authority": {
+      "registered_in_effective_catalog": false,
+      "download_authorized": false,
+      "payload_or_manifest_audit_authorized": false,
+      "approved_as_train_candidate": false,
+      "counts_as_family": false,
+      "counts_as_lineage": false,
+      "counts_as_samples": false,
+      "quota_credit": 0
+    }
+  },
+  "screened_not_advanced": [
+    {
+      "candidate_id": "en2025_endpoint_api_logs",
+      "official_record": "https://zenodo.org/records/18218588",
+      "doi": "10.5281/zenodo.18218588",
+      "license": "MIT",
+      "zenodo_revision": 6,
+      "declared_samples": 3260,
+      "artifacts": [
+        "benign.7z",
+        "spyware.7z",
+        "ransomware.7z",
+        "rat.7z"
+      ],
+      "all_artifacts_have_size_and_md5": true,
+      "status": "hold_label_blind_run_mapping_and_reset_undeclared",
+      "reason": "The official description says every sample includes endpoint API-call logs, but it does not define a reset execution unit or expose a label-independent per-sample grouping key. The four top-level archives are class labels and cannot be counted as lineages."
+    },
+    {
+      "candidate_id": "android_extinguishing_ransomware_execution_traces_2018",
+      "official_record": "https://zenodo.org/records/1420449",
+      "doi": "10.5281/zenodo.1420449",
+      "declared_execution_groups": 666,
+      "official_reset_declaration": "The Android operating system was re-initialized before every application run.",
+      "status": "hold_artifact_gate_failed",
+      "reason": "The lineage declaration is strong, but the current official API exposes no files, byte sizes, checksums, or artifact license."
+    },
+    {
+      "candidate_id": "twindroid_android_system_call_traces",
+      "official_record": "https://zenodo.org/records/6464808",
+      "doi": "10.5281/zenodo.6464808",
+      "license": "CC-BY-4.0",
+      "zenodo_revision": 4,
+      "official_file_count": 877,
+      "all_files_have_size_and_md5": true,
+      "status": "hold_exact_run_mapping_reset_and_label_prefix_semantics_unclosed",
+      "reason": "The record declares system-call traces from benign and infected apps and exposes SHA-like names, but it does not state reset semantics or provide a metadata-level one-trace-per-independent-execution contract. File count is not promoted to run count."
+    },
+    {
+      "candidate_id": "silrad_sysmon_ransomware_2025",
+      "official_record": "https://zenodo.org/records/17104902",
+      "doi": "10.5281/zenodo.17104902",
+      "license": "CC-BY-4.0",
+      "zenodo_revision": 6,
+      "artifact": {
+        "key": "JamilIsp/SILRAD-dataset-SILRAD-1.0.zip",
+        "bytes": 3587892,
+        "checksum": "md5:05a032e64076721bd42c5e63288b0baa"
+      },
+      "status": "hold_no_curator_declared_run_count_or_label_blind_group_key",
+      "reason": "The official description confirms benign and ransomware Sysmon logs but declares neither four executions nor a label-independent grouping key."
+    },
+    {
+      "candidate_id": "au_pemal_2025",
+      "official_record": "https://zenodo.org/records/16924564",
+      "doi": "10.5281/zenodo.16924564",
+      "license": "CC-BY-4.0",
+      "declared_dynamic_executions": 31000,
+      "status": "reject_flattened_feature_and_label_table_not_pointer_recoverable_raw_evidence",
+      "reason": "The deposited artifacts are two labeled CSV feature tables, not per-execution raw endpoint evidence. Sample counts cannot repair loss of source pointers or label isolation."
+    },
+    {
+      "candidate_id": "ranflood_benchmark_results",
+      "official_record": "https://zenodo.org/records/6587519",
+      "doi": "10.5281/zenodo.6587519",
+      "license": "CC-BY-4.0",
+      "declared_attack_scenarios": 78,
+      "status": "reject_benchmark_result_not_endpoint_or_provenance_evidence",
+      "reason": "The official record describes evaluation results over 78 scenarios, not source-native endpoint logs or provenance captures with recoverable evidence pointers."
+    }
+  ],
+  "source_verification": {
+    "primary_identity_sources_reviewed": 6,
+    "verified_primary_identity_sources": 4,
+    "unavailable_or_not_found_cross_checks": 2,
+    "candidate_records_screened": 7,
+    "rejected_as_primary_identity_evidence": 0,
+    "matrix": [
+      {
+        "source": "Zenodo record 8123115 and Records API",
+        "evidence_level": "VI_primary_descriptive_technical_record",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_artifact_identity",
+        "supports": [
+          "artifact identity",
+          "license",
+          "revision",
+          "bytes and MD5",
+          "405 execution declaration",
+          "SHA-256 filename grouping",
+          "PML to DOT derivation"
+        ]
+      },
+      {
+        "source": "DataCite DOI metadata for 10.5281/zenodo.8123115",
+        "evidence_level": "VI_primary_registry_record",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_doi_rights_and_creator_identity",
+        "supports": [
+          "active DOI",
+          "title",
+          "creators",
+          "version",
+          "CC-BY-4.0 rights",
+          "concept DOI relation"
+        ]
+      },
+      {
+        "source": "Crossref metadata for 10.1145/3607505.3607510",
+        "evidence_level": "VI_primary_publication_registry_record",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "A_publication_existence_and_authorship",
+        "supports": [
+          "ACM CSET 2023 publication identity",
+          "matching author set",
+          "formal citation of the REPROD concept DOI"
+        ]
+      },
+      {
+        "source": "Semantic Scholar Graph API",
+        "evidence_level": "not_applicable",
+        "verification_outcome": "S2_API_UNAVAILABLE_HTTP_429",
+        "grade_for_claim": "not_used",
+        "supports": []
+      },
+      {
+        "source": "OpenAlex exact DOI lookup for the associated paper",
+        "evidence_level": "not_applicable",
+        "verification_outcome": "NOT_FOUND",
+        "grade_for_claim": "not_used",
+        "supports": []
+      },
+      {
+        "source": "GitHub organization metadata for REPROD-prov",
+        "evidence_level": "VII_primary_repository_metadata",
+        "verification_outcome": "VERIFIED",
+        "grade_for_claim": "B_workflow_identity_only",
+        "supports": [
+          "official workflow organization exists",
+          "two public repositories exist"
+        ]
+      }
+    ],
+    "predatory_venue_alerts": [],
+    "conflict_of_interest": {
+      "funding_declared": "Office of Naval Research grant N00014-21-1-2754",
+      "severity": "low_contextual",
+      "effect_on_artifact_identity": "none identified"
+    },
+    "verification_limitations": [
+      "No publication full text, archive, archive member, source code, or payload was read under this metadata-only authorization.",
+      "Crossref verifies publication identity and the dataset citation but does not by itself prove VM reset or execution independence.",
+      "Semantic Scholar rate limiting and an absent OpenAlex exact-DOI record were logged; Crossref, DataCite, Zenodo, and DOI resolution independently verified the relevant identities.",
+      "Statistical independence, unique member mapping, pointer recoverability, nested notices, and protected-payload exclusion require separately authorized bounded audits."
+    ]
+  },
+  "evidence_inference_recommendation": {
+    "evidence": [
+      "Zenodo 8123115 declares 405 raw PML execution groups and 861 DOT outputs derived from those executions.",
+      "The record says PML files are named by the MalwareBazaar SHA-256, which is not a class or attack label.",
+      "The CC-BY-4.0 record is revision-pinned and every one of its 15 files has an official byte size and MD5.",
+      "Crossref verifies the matching-author ACM CSET 2023 paper and its formal citation of the REPROD concept DOI.",
+      "No Cuckoo archive was downloaded or considered, and the rejected KernelDriver class-path lineage was not reopened."
+    ],
+    "inference": [
+      "REPROD is the first newly screened direction in this search that closes the metadata-level artifact gate and exposes more than four curator-declared, label-independent candidate execution groups.",
+      "The absence of a reset declaration prevents treating the 405 executions as verified independent lineages before a bounded manifest review.",
+      "The source is all-ransomware and cannot supply null or benign capacity; scientific use would be limited to supported executed-evidence examples unless paired with another separately approved source.",
+      "Metadata-level distinctness from current train, development, and test families is plausible, but payload-level overlap cannot be ruled out without hashes from a future manifest audit."
+    ],
+    "recommendation": [
+      "Open a separate, metadata-only per-family candidate review for reprod_ransomware_execution_provenance_2023.",
+      "If that review passes, require a new exact bounded acquisition contract; do not download the 144.7 GB artifact under the current authority.",
+      "Any future audit must freeze SHA-256 as the label-blind grouping candidate, keep PML and derived DOT views in one lineage, and exclude summary.csv and all label-bearing fields.",
+      "Keep EN2025, TwinDroid, SILRAD, and the Android reset dataset on hold for the documented gates; do not count files, classes, traces, or scenarios as replacement lineages."
+    ]
+  },
+  "portfolio_after_search": {
+    "replacement_slot": "train_executed_evidence_liwa_replacement_01",
+    "replacement_slot_status": "vacant",
+    "reviewable_metadata_direction": "reprod_ransomware_execution_provenance_2023",
+    "new_source_role_approved": false,
+    "new_download_approved": false,
+    "new_quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "metadata_search_complete": true,
+    "at_least_one_reviewable_direction_found": true,
+    "separate_metadata_candidate_review_required": true,
+    "effective_catalog_change_authorized": false,
+    "download_authorized": false,
+    "payload_or_manifest_audit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "family_role_change_authorized": false,
+    "quota_credit_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_m3_work_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false
+  }
+}
