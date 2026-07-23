@@ -5,16 +5,17 @@
 ```text
 Branch: feat/kernel-v0.8
 Working state: A16 GO closeout (scoped Kernel Part A)
-Regression: 155/155 PASS at the B1 contract review tip
-(138 pre-B1 + 17 B1)
+Regression: 227/227 PASS at the B5 local contract review tip
+(208 pre-B5 + 19 B5)
 A16 Decision: PASSED / GO — Kernel v0.8 Part A only
 Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
 Part B: B0 APPROVED; B1_FEDERATION_SCHEMAS AUTHORIZED on 2026-07-23;
 B2_STOCHASTIC_OBSERVATION CONTRACT-ONLY AUTHORIZED on 2026-07-23;
 B3_COST_INSTRUMENTATION AUTHORIZED FOR LOCAL TRACE AGGREGATION on 2026-07-23;
-B4_BASELINE_PREREG AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-23;
-B5–B9 CLOSED
+B4_BASELINE_PREREG APPROVED / MERGED on 2026-07-23;
+B5_PLANNER_INTERFACE AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-23;
+B6–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -48,8 +49,8 @@ v0.8 Part B map:
 | B1 | `B1_FEDERATION_SCHEMAS` | APPROVED / MERGED |
 | B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED — CONTRACT ONLY / NO SAMPLING |
 | B3 | `B3_COST_INSTRUMENTATION` | LOCAL REVIEW — TRACE AGGREGATION ONLY |
-| B4 | `B4_BASELINE_PREREG` | LOCAL REVIEW — CONTRACT ONLY / NO EXECUTION |
-| B5 | `B5_PLANNER_INTERFACE` | CLOSED |
+| B4 | `B4_BASELINE_PREREG` | APPROVED / MERGED — CONTRACT ONLY |
+| B5 | `B5_PLANNER_INTERFACE` | LOCAL REVIEW — CONTRACT ONLY / NO EXECUTION |
 | B6 | `B6_CLOSED_LOOP_EVAL` | CLOSED |
 | B7 | `B7_BROAD_CONNECTORS` | CLOSED |
 | B8 | `B8_HOLDOUT_ANALYSIS` | CLOSED |
@@ -298,6 +299,80 @@ repository tests. `compileall`, tracked and untracked whitespace checks,
 canonical hash replay, the exact 15-file allowlist audit, zero-placeholder
 scan and zero-staged-file check also passed. These results do not authorize a
 commit, push, PR or any runtime behavior.
+
+## Part B B5 Planner-interface scope — 2026-07-23
+
+The user separately authorized `B5_PLANNER_INTERFACE` on an exact 19-file
+contract-only allowlist based on merged `main@c19640a`:
+
+```text
+public state: finite canonical public IDs only
+decision: action ID or explicit null only
+B4 roster / isolation: exact frozen-hash binding
+planner_interface_authority=true
+bounded_evaluation_contract_authority=true
+planner_execution_authority=false
+evaluation_execution_authority=false
+sampling_authority=false
+production_capture_authority=false
+scalarization_authority=false
+performance_claim_authority=false
+stop_authority=NONE
+B6–B9: CLOSED
+LLM / 09-experiments: FORBIDDEN
+Commit / push / PR: NOT AUTHORIZED
+```
+
+PB-SI-005 is closed only for the public-state/action-ID-only interface
+contract. The machine-tested closure token is
+`CLOSED 鈥?APPROVED FOR B5 INTERFACE CONTRACT ONLY`. It does not approve an
+adapter or runtime. `PB-B5-SI-001` remains
+`OPEN 鈥?BLOCKS IMPLEMENTATION ADMISSION AND EXECUTION`.
+
+```text
+Legacy M3* implementation admission: NOT ESTABLISHED
+Legacy M3* execution authority: NONE
+```
+
+The B4 public selector IDs are replayed without adding a method.
+`ORACLE_EVALUATION_ONLY` remains evaluator-only, `NO_ACQUISITION` remains a
+no-action control, and the approved implementation list is empty. The legacy
+identifier `project05_m3star_h3_dual` is explicitly
+`NOT_ADMITTED_UNVERIFIED`.
+
+The bounded-evaluation artifact declares finite future conformance limits and
+fail-closed result channels only. It executes nothing. Timeout and resource
+exhaustion are `UNKNOWN_NO_RANK`; infeasibility is `SEPARATE_NO_ACTION`. B3
+cost remains `B3_EIGHT_DIMENSION_VECTOR_ONLY` with no scalarization.
+
+The B5 evidence level is `CONTRACT_CONSISTENCY_ONLY`, with
+`NO_IMPLEMENTATION_VALIDATION`, `NO_PERFORMANCE_VALIDITY` and
+`NO_SUPERIORITY_CLAIM`. B5 cannot issue a certificate, system state or
+`CERTIFIED_STOP`.
+
+The provisional local-review artifact identities are:
+
+```text
+Planner public-state example:
+sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae
+
+Planner decision example:
+sha256:144cd24c0d6e3906ee31d25cdcc629f20901648d58204ee030f397daca23da6d
+
+Planner interface policy:
+sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343
+
+Bounded evaluation:
+sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858
+
+B5 manifest:
+sha256:bbe8bde7e6ab4695fc6a03233a8c45f5d205c77b3bed6f2816a89c8f7616c069
+```
+
+The local B5 review passed `19/19` targeted tests and `227/227` full
+repository tests. `compileall`, `git diff --check`, exact hash replay, the
+19-file allowlist audit, zero-staged-file check and forbidden-path check also
+passed. These results do not authorize commit, push, PR or runtime behavior.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.

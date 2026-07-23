@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-planner-interface-policy.schema.json",
+  "title": "Project05 Part B B5 planner interface policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "planner_interface_authority",
+    "planner_execution_authority",
+    "evaluation_execution_authority",
+    "sampling_authority",
+    "production_capture_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "stop_authority",
+    "b4_roster_binding",
+    "role_enforcement",
+    "public_state_boundary",
+    "decision_enforcement",
+    "implementation_admission",
+    "isolation_binding",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-planner-interface-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B5_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B5_PLANNER_INTERFACE"},
+    "planner_interface_authority": {"const": true},
+    "planner_execution_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "production_capture_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "b4_roster_binding": {"$ref": "#/$defs/rosterBinding"},
+    "role_enforcement": {"$ref": "#/$defs/roleEnforcement"},
+    "public_state_boundary": {"$ref": "#/$defs/publicStateBoundary"},
+    "decision_enforcement": {"$ref": "#/$defs/decisionEnforcement"},
+    "implementation_admission": {"$ref": "#/$defs/implementationAdmission"},
+    "isolation_binding": {"$ref": "#/$defs/isolationBinding"},
+    "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "allRosterIds": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "NO_ACQUISITION"},
+        {"const": "RANDOM_FEASIBLE"},
+        {"const": "COVERAGE_GREEDY"},
+        {"const": "CMI_PROXY"},
+        {"const": "M1_STATIC_EXPECTED_GAIN"},
+        {"const": "M2_TRANSPARENT"},
+        {"const": "M3A_GAP_COMPATIBILITY"},
+        {"const": "LOGISTIC_M3B"},
+        {"const": "XGBOOST_ACTION_VALUE"},
+        {"const": "AFA_VOI_MYOPIC"},
+        {"const": "AFA_VOI_ROLLOUT_H3"},
+        {"const": "DEPTH2_PUBLIC"},
+        {"const": "ORACLE_EVALUATION_ONLY"}
+      ],
+      "items": false,
+      "minItems": 13,
+      "maxItems": 13
+    },
+    "publicSelectorIds": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "RANDOM_FEASIBLE"},
+        {"const": "COVERAGE_GREEDY"},
+        {"const": "CMI_PROXY"},
+        {"const": "M1_STATIC_EXPECTED_GAIN"},
+        {"const": "M2_TRANSPARENT"},
+        {"const": "M3A_GAP_COMPATIBILITY"},
+        {"const": "LOGISTIC_M3B"},
+        {"const": "XGBOOST_ACTION_VALUE"},
+        {"const": "AFA_VOI_MYOPIC"},
+        {"const": "AFA_VOI_ROLLOUT_H3"},
+        {"const": "DEPTH2_PUBLIC"}
+      ],
+      "items": false,
+      "minItems": 11,
+      "maxItems": 11
+    },
+    "rosterBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b4_baseline_preregistration_hash",
+        "all_roster_ids",
+        "public_action_selector_ids",
+        "unregistered_method_behavior"
+      ],
+      "properties": {
+        "b4_baseline_preregistration_hash": {"$ref": "#/$defs/sha256"},
+        "all_roster_ids": {"$ref": "#/$defs/allRosterIds"},
+        "public_action_selector_ids": {"$ref": "#/$defs/publicSelectorIds"},
+        "unregistered_method_behavior": {
+          "const": "FAIL_CLOSED_NOT_ADMITTED"
+        }
+      }
+    },
+    "roleEnforcement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "oracle_evaluation_only",
+        "no_acquisition",
+        "b4_role_preservation_required"
+      ],
+      "properties": {
+        "oracle_evaluation_only": {
+          "const": "FORBIDDEN_AS_DEPLOYABLE_PLANNER"
+        },
+        "no_acquisition": {"const": "CONTROL_NO_ACTION_ONLY"},
+        "b4_role_preservation_required": {"const": true}
+      }
+    },
+    "publicStateBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_semantics",
+        "finite_id_domains_required",
+        "unique_ids_required",
+        "canonical_sort_required",
+        "oracle_state_allowed",
+        "hidden_ground_truth_allowed",
+        "holdout_labels_allowed",
+        "realized_action_outcomes_allowed"
+      ],
+      "properties": {
+        "input_semantics": {"const": "PUBLIC_ONLY_CANONICAL_ID_STATE"},
+        "finite_id_domains_required": {"const": true},
+        "unique_ids_required": {"const": true},
+        "canonical_sort_required": {"const": true},
+        "oracle_state_allowed": {"const": false},
+        "hidden_ground_truth_allowed": {"const": false},
+        "holdout_labels_allowed": {"const": false},
+        "realized_action_outcomes_allowed": {"const": false}
+      }
+    },
+    "decisionEnforcement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "output_semantics",
+        "no_action_allowed",
+        "unknown_action_behavior",
+        "state_hash_mismatch_behavior",
+        "payload_allowed",
+        "prediction_side_channel_allowed",
+        "certificate_or_stop_allowed"
+      ],
+      "properties": {
+        "output_semantics": {"const": "ACTION_ID_OR_NULL_ONLY"},
+        "no_action_allowed": {"const": true},
+        "unknown_action_behavior": {
+          "const": "FAIL_CLOSED_ACTION_NOT_FEASIBLE"
+        },
+        "state_hash_mismatch_behavior": {
+          "const": "FAIL_CLOSED_STATE_BINDING_MISMATCH"
+        },
+        "payload_allowed": {"const": false},
+        "prediction_side_channel_allowed": {"const": false},
+        "certificate_or_stop_allowed": {"const": false}
+      }
+    },
+    "implementationAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approved_implementations",
+        "legacy_m3star_status",
+        "legacy_runtime_identifiers",
+        "shape_compatibility_grants_admission",
+        "executable_locator_allowed"
+      ],
+      "properties": {
+        "approved_implementations": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "legacy_m3star_status": {"const": "NOT_ADMITTED_UNVERIFIED"},
+        "legacy_runtime_identifiers": {
+          "type": "array",
+          "prefixItems": [{"const": "project05_m3star_h3_dual"}],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "shape_compatibility_grants_admission": {"const": false},
+        "executable_locator_allowed": {"const": false}
+      }
+    },
+    "isolationBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b4_baseline_isolation_policy_hash",
+        "partition_order",
+        "evaluation_feedback_to_train",
+        "holdout_visible_before_final_freeze",
+        "historical_result_access"
+      ],
+      "properties": {
+        "b4_baseline_isolation_policy_hash": {"$ref": "#/$defs/sha256"},
+        "partition_order": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "TRAIN"},
+            {"const": "TUNE"},
+            {"const": "EVALUATION"},
+            {"const": "HOLDOUT"}
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "evaluation_feedback_to_train": {"const": false},
+        "holdout_visible_before_final_freeze": {"const": false},
+        "historical_result_access": {"const": false}
+      }
+    }
+  }
+}

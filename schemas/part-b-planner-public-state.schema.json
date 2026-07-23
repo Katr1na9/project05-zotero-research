@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-planner-public-state.schema.json",
+  "title": "Project05 Part B B5 planner public state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "state_id",
+    "state_version",
+    "status",
+    "authorized_slice",
+    "case_id",
+    "decision_step",
+    "public_claim_ids",
+    "admitted_evidence_ids",
+    "unresolved_predicate_ids",
+    "feasible_action_ids",
+    "remaining_resource_bounds",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "state_id": {"const": "part-b-planner-public-state-example-v0.8"},
+    "state_version": {"const": "0.8.0"},
+    "status": {"const": "B5_CONTRACT_EXAMPLE_ONLY"},
+    "authorized_slice": {"const": "B5_PLANNER_INTERFACE"},
+    "case_id": {"$ref": "#/$defs/publicId"},
+    "decision_step": {"type": "integer", "minimum": 0},
+    "public_claim_ids": {"$ref": "#/$defs/canonicalIdList"},
+    "admitted_evidence_ids": {"$ref": "#/$defs/canonicalIdList"},
+    "unresolved_predicate_ids": {"$ref": "#/$defs/canonicalIdList"},
+    "feasible_action_ids": {
+      "allOf": [
+        {"$ref": "#/$defs/canonicalIdList"},
+        {"minItems": 1}
+      ]
+    },
+    "remaining_resource_bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "remaining_actions",
+        "remaining_wall_ms",
+        "remaining_cpu_ms",
+        "remaining_memory_bytes"
+      ],
+      "properties": {
+        "remaining_actions": {"type": "integer", "minimum": 1},
+        "remaining_wall_ms": {"type": "integer", "minimum": 1},
+        "remaining_cpu_ms": {"type": "integer", "minimum": 1},
+        "remaining_memory_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "publicId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9_.:-]*$"
+    },
+    "canonicalIdList": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/publicId"},
+      "uniqueItems": true
+    }
+  }
+}
