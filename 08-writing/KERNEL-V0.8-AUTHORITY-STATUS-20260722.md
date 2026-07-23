@@ -12,7 +12,8 @@ Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
 Part B: B0 APPROVED; B1_FEDERATION_SCHEMAS AUTHORIZED on 2026-07-23;
 B2_STOCHASTIC_OBSERVATION CONTRACT-ONLY AUTHORIZED on 2026-07-23;
-B3–B9 CLOSED
+B3_COST_INSTRUMENTATION AUTHORIZED FOR LOCAL TRACE AGGREGATION on 2026-07-23;
+B4–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -45,7 +46,7 @@ v0.8 Part B map:
 | B0 | `B0_PLANNING_AND_CONTRACTS` | COMPLETED / APPROVED |
 | B1 | `B1_FEDERATION_SCHEMAS` | APPROVED / MERGED |
 | B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED — CONTRACT ONLY / NO SAMPLING |
-| B3 | `B3_COST_INSTRUMENTATION` | CLOSED |
+| B3 | `B3_COST_INSTRUMENTATION` | LOCAL REVIEW — TRACE AGGREGATION ONLY |
 | B4 | `B4_BASELINE_PREREG` | CLOSED |
 | B5 | `B5_PLANNER_INTERFACE` | CLOSED |
 | B6 | `B6_CLOSED_LOOP_EVAL` | CLOSED |
@@ -207,6 +208,37 @@ the historical snapshot created while PB-SI-003 was OPEN. No executable
 stochastic catalog currently binds a production `delta_a`; therefore issue
 closure does not authorize a sampler, stochastic executor, observation,
 evidence admission, Planner/M3*, performance claim or `CERTIFIED_STOP`.
+
+## Part B B3 cost-instrumentation scope — 2026-07-23
+
+The user separately opened `B3_COST_INSTRUMENTATION` for the auditable
+eight-dimensional cost contract and instrumentation:
+
+```text
+instrumentation_authority=true
+input: evaluator-supplied integer trace events
+UNKNOWN_NOT_ZERO
+SEPARATE_NOT_HIGH_COST
+action_execution_authority=false
+sampling_authority=false
+scalarization_authority=false
+performance_claim_authority=false
+B4–B9: CLOSED
+CERTIFIED_STOP: UNCHANGED / NO B3 AUTHORITY
+Commit / push / PR: NOT AUTHORIZED
+```
+
+B3 deterministically aggregates the ordered vector
+`[T_human, T_wall, T_CPU, M_byte_sec, D_scan, N_record, C_money, T_auth]`
+using exact-rational output and event-level provenance. It does not call a
+clock, hook the existing Executor, run an action, sample B2, access a
+connector or enter Planner/M3*.
+
+PB-SI-004 is closed only for trace-instrumentation governance. Production
+capture adapters, memory cadence, cross-currency FX normalization,
+scalarization, sensitivity analysis and any cost/performance superiority
+claim remain open in `src/scope/part-b-b3-spec-issues.md`. B3 cannot issue a
+certificate, system state or `CERTIFIED_STOP`.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.
