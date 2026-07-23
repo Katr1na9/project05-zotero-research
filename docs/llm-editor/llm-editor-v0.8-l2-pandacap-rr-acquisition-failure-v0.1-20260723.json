@@ -1,0 +1,51 @@
+{
+  "schema_version": "project05-llm-editor-l2-pandacap-rr-acquisition-failure-v0.1",
+  "created_date": "2026-07-23",
+  "observed_at": "2026-07-23T10:45:49.053Z",
+  "candidate_id": "pandacap_ssh_honeypot_full_system_traces_2020",
+  "attempt_id": "pandacap_eurosec2020_rr_archive_single_attempt",
+  "status": "failed_incomplete_transfer_hard_stopped",
+  "authority": {
+    "exact_bounded_acquisition_contract": "docs/llm-editor/llm-editor-v0.8-l2-pandacap-rr-exact-bounded-acquisition-contract-v0.1-20260723.json",
+    "contract_commit": "0f1ad1c3dfe37dc21cbd85a1aabee93f5f09bf43",
+    "execution_authority": "docs/llm-editor/llm-editor-v0.8-l2-pandacap-rr-acquisition-execution-authority-v0.1-20260723.json",
+    "launcher_sha256": "7d912856fdeea0d55d849130d76cbfe84c43c8a5af3960bb8bcb88c8e6419dbf",
+    "authority_commit": "456b129bd98a317c3de85e78274b11e28ff61a41"
+  },
+  "sanitized_observation": {
+    "launcher_running": false,
+    "transfer_process_running": false,
+    "expected_bytes": 14897472844,
+    "observed_bytes": 4930532296,
+    "observed_percent": 33.0964,
+    "exact_size_match": false,
+    "stderr_present": true,
+    "stderr_bytes": 0,
+    "stderr_summary": "empty",
+    "md5_status": "not_computed_exact_size_gate_failed"
+  },
+  "failure_reason": "The only authorized acquisition attempt terminated before the frozen exact byte size was reached. The incomplete object cannot be verified and must not be treated as an acquired archive.",
+  "hard_stop": {
+    "automatic_retry_performed": false,
+    "resume_performed": false,
+    "launcher_reinvoked": false,
+    "alternate_source_used": false,
+    "archive_opened_listed_or_extracted": false,
+    "qcow_pcap_mirror_or_individual_sample_downloaded": false,
+    "md5_computed": false,
+    "reader_frozen": false,
+    "audit_contract_started": false,
+    "next_action": "stop_and_require_new_explicit_authority_for_any_future_action"
+  },
+  "scope_guards": {
+    "payload_member_or_raw_path_persisted_in_report": false,
+    "effective_catalog_written": false,
+    "family_role_changed": false,
+    "lineage_sample_or_quota_credit_awarded": false,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  }
+}
