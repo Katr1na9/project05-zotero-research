@@ -81,16 +81,27 @@ B3 creates no certificate or `CERTIFIED_STOP` authority.
 
 ## PB-SI-005 — Legacy M3* is not a Part B interface
 
-**State:** `OPEN — BLOCKS PLANNER INTEGRATION`.
+**State:** `CLOSED — APPROVED FOR B5 INTERFACE CONTRACT ONLY`.
+
+Frozen machine-tested state token:
+`CLOSED 鈥?APPROVED FOR B5 INTERFACE CONTRACT ONLY`.
 
 Part A SI-007 excludes the legacy stochastic M3* runtime. B0 does not reuse or
-validate it and does not define a planner API. A later slice must specify a
-public-state, action-ID-only interface and preserve Checker-only STOP authority.
+validate it. B5 now defines a closed public-state, action-ID-only interface and
+preserves Checker-only STOP authority.
 
 B4 cross-reference: `B4_BASELINE_PREREG` registers legacy method identifiers,
 roles and future interface obligations only. It does not validate an
-implementation or define the B5 public-state adapter. Therefore B4 does not
-close this issue, grant Planner authority or make legacy M3* executable.
+implementation or define an executable B5 public-state adapter.
+
+B5 closure is deliberately narrow: it establishes the interface contract but
+admits no implementation. `PB-B5-SI-001` remains
+`OPEN — BLOCKS IMPLEMENTATION ADMISSION AND EXECUTION`. Therefore:
+
+```text
+Legacy M3* implementation admission: NOT ESTABLISHED
+Legacy M3* execution authority: NONE
+```
 
 ## PB-SI-006 — Broad connector and dataset scope is unselected
 

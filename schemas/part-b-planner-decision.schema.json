@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-planner-decision.schema.json",
+  "title": "Project05 Part B B5 planner decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "decision_version",
+    "status",
+    "authorized_slice",
+    "planner_id",
+    "public_state_hash",
+    "decision_status",
+    "selected_action_id",
+    "reason_code",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "decision_id": {"const": "part-b-planner-decision-example-v0.8"},
+    "decision_version": {"const": "0.8.0"},
+    "status": {"const": "B5_CONTRACT_EXAMPLE_ONLY"},
+    "authorized_slice": {"const": "B5_PLANNER_INTERFACE"},
+    "planner_id": {
+      "enum": [
+        "RANDOM_FEASIBLE",
+        "COVERAGE_GREEDY",
+        "CMI_PROXY",
+        "M1_STATIC_EXPECTED_GAIN",
+        "M2_TRANSPARENT",
+        "M3A_GAP_COMPATIBILITY",
+        "LOGISTIC_M3B",
+        "XGBOOST_ACTION_VALUE",
+        "AFA_VOI_MYOPIC",
+        "AFA_VOI_ROLLOUT_H3",
+        "DEPTH2_PUBLIC"
+      ]
+    },
+    "public_state_hash": {"$ref": "#/$defs/sha256"},
+    "decision_status": {"enum": ["SELECT_ACTION", "NO_ACTION"]},
+    "selected_action_id": {
+      "anyOf": [
+        {"$ref": "#/$defs/publicId"},
+        {"type": "null"}
+      ]
+    },
+    "reason_code": {
+      "enum": [
+        "B5-DECISION-000_SELECT_ACTION",
+        "B5-DECISION-001_NO_ACTION"
+      ]
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"decision_status": {"const": "SELECT_ACTION"}},
+        "required": ["decision_status"]
+      },
+      "then": {
+        "properties": {
+          "selected_action_id": {"$ref": "#/$defs/publicId"},
+          "reason_code": {"const": "B5-DECISION-000_SELECT_ACTION"}
+        }
+      },
+      "else": {
+        "properties": {
+          "selected_action_id": {"type": "null"},
+          "reason_code": {"const": "B5-DECISION-001_NO_ACTION"}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "publicId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9_.:-]*$"
+    }
+  }
+}
