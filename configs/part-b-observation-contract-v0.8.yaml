@@ -1,0 +1,34 @@
+schema_version: "0.8.0"
+contract_id: part-b-observation-contract-v0.8
+contract_version: "0.8.0"
+status: CONTRACT_DRAFT
+execution_authority: false
+probability_encoding: EXACT_RATIONAL
+finite_domain_required: true
+delta_tv_policy:
+  required_per_stochastic_action: true
+  comparison_operator: GREATER_THAN_OR_EQUAL
+  catalog_hash_binding_required: true
+  post_hoc_change_forbidden: true
+contract_examples:
+  - example_id: DESIGN-EXAMPLE-BINARY-TV
+    not_catalog_action: true
+    finite_worlds: [WORLD-A, WORLD-B]
+    finite_outcomes: [hit, miss]
+    conditional_distribution:
+      WORLD-A:
+        - outcome: hit
+          probability: {numerator: 9, denominator: 10}
+        - outcome: miss
+          probability: {numerator: 1, denominator: 10}
+      WORLD-B:
+        - outcome: hit
+          probability: {numerator: 1, denominator: 10}
+        - outcome: miss
+          probability: {numerator: 9, denominator: 10}
+    registered_delta_tv: {numerator: 4, denominator: 5}
+limitations:
+  - Design example only; it is not an executable action or catalog entry.
+  - B0 does not define sampling, inference, chance constraints, or recertification runtime.
+  - No stochastic observation may participate in Kernel deterministic certification.
+hash: "sha256:f5db6035452236fb6e316b8e9a5ada7e2a7cbce07c0eedc3b3e7c890bc4fd7d9"

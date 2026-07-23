@@ -5,11 +5,11 @@
 ```text
 Branch: feat/kernel-v0.8
 Working state: A16 GO closeout (scoped Kernel Part A)
-Regression: 131/131 PASS (must be re-verified on final closeout tip)
+Regression: 138/138 PASS at the B0 contract review tip (131 Part A + 7 B0)
 A16 Decision: PASSED / GO — Kernel v0.8 Part A only
 Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
-Part B: CLOSED — requires separate explicit authorization
+Part B: B0_PLANNING_AND_CONTRACTS AUTHORIZED on 2026-07-23; B1–B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -18,6 +18,19 @@ ESTABLISHED ONLY FOR THE FROZEN FINITE-DOMAIN KERNEL Γ,
 approved policy/catalog hashes, declared completeness assumptions,
 and the recorded solver/proof policy.
 ```
+
+## Part B B0 superseding scope update — 2026-07-23
+
+The user explicitly authorized only `B0_PLANNING_AND_CONTRACTS`, without LLM.
+This opens planning documents, boundary/contracts, JSON Schemas, non-executable
+contract examples/manifests, spec issues and contract tests. It does not open
+stochastic execution, broad connectors, full baselines, cost collection,
+Planner/M3*, experiments, training or any B1–B9 slice.
+
+The B0 manifest must state `execution_authority=false`,
+`llm_integration=FORBIDDEN` and `stop_authority=NONE`. Part A
+`CERTIFIED_STOP` authority remains limited to the already approved frozen
+deterministic Kernel Gamma; B0 does not extend it.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.

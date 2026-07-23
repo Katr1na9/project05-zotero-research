@@ -1,0 +1,30 @@
+schema_version: "0.8.0"
+contract_id: part-b-cost-contract-v0.8
+contract_version: "0.8.0"
+status: CONTRACT_DRAFT
+execution_authority: false
+dimensions:
+  - {dimension_id: T_human, unit: seconds, aggregation: sum, measurement_source: analyst_activity_trace}
+  - {dimension_id: T_wall, unit: seconds, aggregation: elapsed, measurement_source: executor_monotonic_clock}
+  - {dimension_id: T_CPU, unit: cpu_seconds, aggregation: sum, measurement_source: executor_process_accounting}
+  - {dimension_id: M_byte_sec, unit: byte_seconds, aggregation: integral, measurement_source: executor_memory_accounting}
+  - {dimension_id: D_scan, unit: bytes, aggregation: sum, measurement_source: source_scan_trace}
+  - {dimension_id: N_record, unit: records, aggregation: sum, measurement_source: source_scan_trace}
+  - {dimension_id: C_money, unit: currency_microunits, aggregation: sum, measurement_source: billed_usage_trace}
+  - {dimension_id: T_auth, unit: seconds, aggregation: sum, measurement_source: authorization_workflow_trace}
+feasibility_semantics: SEPARATE_NOT_HIGH_COST
+measurement_policy:
+  executor_trace_required: true
+  missing_measurement_policy: UNKNOWN_NOT_ZERO
+  unmeasured_action_claim_policy: NO_COST_SUPERIORITY_CLAIM
+  volatility_model: DELAY_LOSS_OR_DEADLINE_SEPARATE
+scalarization:
+  enabled: false
+  preregistration_required: true
+  weights: null
+  sensitivity_required: true
+limitations:
+  - B0 defines dimensions and provenance only; it contains no measured action costs.
+  - Risk is not a cost dimension and requires a separately approved contract.
+  - Scalar weights and sensitivity grids remain unset until a later authorized slice.
+hash: "sha256:b6d36c40f7b52c12733dbe75cbcba6058e952f23d67e2155bd73196f6bcfaf53"
