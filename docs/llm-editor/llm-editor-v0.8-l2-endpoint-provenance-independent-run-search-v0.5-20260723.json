@@ -1,0 +1,432 @@
+{
+  "schema_version": "project05-llm-editor-l2-endpoint-provenance-independent-run-search-v0.5",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "89e1c3c06930b21ad53bcab3804a87ef4c61b2b9",
+  "review_type": "metadata_only_search_for_fourth_label_independent_endpoint_or_provenance_family",
+  "status": "complete_fourth_reviewable_direction_found_no_role_or_credit_change",
+  "extends": "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.4-20260723.json",
+  "purpose": "Find one fourth independently reviewable endpoint or provenance family without lowering the source-native execution or capture threshold or re-promoting a previously advanced, held, or rejected source.",
+  "scope": {
+    "authority_head_verified_before_search": true,
+    "official_registry_metadata_read": true,
+    "official_repository_metadata_read": true,
+    "publication_registry_metadata_read": true,
+    "publication_full_text_read": false,
+    "repository_source_or_payload_read": false,
+    "datasets_path_read": false,
+    "local_audit_cache_read": false,
+    "zip_or_archive_read": false,
+    "download_launcher_read": false,
+    "payload_or_archive_downloaded": false,
+    "effective_catalog_written": false,
+    "family_role_changed": false,
+    "family_lineage_sample_or_quota_credit_awarded": false,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_commit_performed": false,
+    "git_push_performed": false
+  },
+  "search_contract": {
+    "minimum_curator_declared_label_independent_execution_or_capture_groups": 4,
+    "accepted_group_boundary": "A curator-declared source-native execution, connection session, job, run, or capture identifier that does not depend on class, attack, technique, verdict, directory, row, host, sensor view, date window, or analyst-created grouping.",
+    "forbidden_pseudoreplication_sources": [
+      "file count",
+      "directory count",
+      "row count",
+      "host count",
+      "sensor-view count",
+      "date-window count",
+      "configuration count",
+      "class count",
+      "attack count",
+      "technique count",
+      "verdict count"
+    ],
+    "required_metadata": [
+      "Official immutable record or release identity",
+      "Artifact-level or record-scope license",
+      "Published byte size and checksum for an exact candidate artifact",
+      "At least four curator-declared source-native execution, connection-session, run, job, or capture groups",
+      "A label-independent candidate grouping key",
+      "A plausible physical boundary between evidence and labels, answers, sensitive content, or ground truth",
+      "No known reuse of an active train, development, or test artifact"
+    ],
+    "forbidden_repromotion": [
+      "reprod_ransomware_execution_provenance_2023",
+      "pandacap_ssh_honeypot_full_system_traces_2020",
+      "logchunks_travis_ci_build_log_captures_2020",
+      "streamspot_all_provenance_graphs_2016",
+      "every candidate previously marked hold",
+      "every candidate previously rejected or disposed"
+    ],
+    "maximum_verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "maximum_credit": {
+      "family": 0,
+      "lineage": 0,
+      "sample": 0,
+      "quota": 0
+    }
+  },
+  "prior_portfolio": {
+    "reviewable_direction_01": "reprod_ransomware_execution_provenance_2023",
+    "reviewable_direction_02": "pandacap_ssh_honeypot_full_system_traces_2020",
+    "reviewable_direction_03": "logchunks_travis_ci_build_log_captures_2020",
+    "reviewable_direction_04": null,
+    "reviewable_direction_04_status": "vacant"
+  },
+  "reviewable_direction": {
+    "portfolio_ordinal": 4,
+    "candidate_id": "cow160x4_cowrie_ssh_session_provenance_2026",
+    "search_verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "post_search_status": "pending_separate_metadata_candidate_review",
+    "candidate_risk_level": "high",
+    "source_identity": {
+      "title": "Deployment of 160 Cowrie SSH honeypot instances across four distinct configurations",
+      "official_record": "https://zenodo.org/records/21260400",
+      "official_api_record": "https://zenodo.org/api/records/21260400",
+      "record_id": 21260400,
+      "record_revision": 6,
+      "record_created_at": "2026-07-09T10:05:50.003537+00:00",
+      "record_updated_at": "2026-07-12T13:24:28.946341+00:00",
+      "publication_date": "2026-07-08",
+      "doi": "10.5281/zenodo.21260400",
+      "concept_doi": "10.5281/zenodo.21260399",
+      "declared_version": null,
+      "resource_type": "Dataset",
+      "access_right": "open",
+      "license": "CC-BY-4.0",
+      "creators": [
+        "Matúš Mikuláš",
+        "Patrik Krajčík",
+        "Pavol Helebrandt",
+        "Ivan Kotuliak"
+      ],
+      "creator_affiliation": "Slovak University of Technology in Bratislava",
+      "datacite_state": "findable"
+    },
+    "artifact_identity": {
+      "official_file_count": 5,
+      "official_total_bytes": 28712103965,
+      "all_files_have_md5": true,
+      "preferred_future_metadata_review_surface": {
+        "key": "session_aggregation.jsonl.gz",
+        "bytes": 1328104319,
+        "checksum": "md5:1f3897650fb420c97c14ff452398c3f8",
+        "reason": "This object is curator-described as session-level aggregation with an opaque session identifier and event counts, and is materially narrower than raw logs or transferred payloads."
+      },
+      "excluded_by_default_high_risk_objects": [
+        {
+          "key": "data_all.zip",
+          "bytes": 19372965772,
+          "checksum": "md5:5b6d6e77e5f7247ac400d2318cef7adb",
+          "reason": "Raw event fields include commands, usernames, passwords, URLs, environment values, network identifiers, fingerprints, and filenames."
+        },
+        {
+          "key": "transferred_files.zip",
+          "bytes": 8010652189,
+          "checksum": "md5:1099a06827c9e426c6ac10e102e747d0",
+          "reason": "The curator explicitly warns that the object contains potentially malicious attacker-uploaded or downloaded file payloads."
+        },
+        {
+          "key": "transferred_files_metadata.csv",
+          "bytes": 367069,
+          "checksum": "md5:120ae0da9518d96fbe245ef8dcebb2fb",
+          "reason": "Transferred-file metadata is not needed to establish the session grouping candidate and may encode high-risk artifact context."
+        },
+        {
+          "key": "malformed.txt",
+          "bytes": 14616,
+          "checksum": "md5:d60148e631fe4f042ff4d5f0eb59451e",
+          "reason": "Malformed records cannot establish stable session or pointer semantics."
+        }
+      ],
+      "artifact_content_verified": false,
+      "nested_notice_verified": false,
+      "download_authorized": false
+    },
+    "curator_session_declaration": {
+      "collection_duration_days": 50,
+      "declared_honeypot_instance_count": 160,
+      "declared_configuration_count": 4,
+      "declared_country_count": 14,
+      "declared_event_count_approx": 211000000,
+      "declared_ssh_session_count_approx": 38000000,
+      "declared_session_identifier_semantics": "Cowrie assigns a unique session identifier for each SSH connection.",
+      "candidate_source_native_group": "one Cowrie SSH connection session identified by the opaque session field",
+      "minimum_four_session_declaration_met": true,
+      "session_count_is_not_host_count": true,
+      "session_count_is_not_configuration_count": true,
+      "session_count_is_not_daily_file_count": true,
+      "session_count_is_not_attack_class_technique_or_verdict_count": true,
+      "session_count_is_not_analyst_created_date_window_count": true,
+      "host_configuration_country_and_day_may_define_lineage": false,
+      "verified_independent_lineage_count": null,
+      "lineage_credit_awarded": 0
+    },
+    "label_and_grouping_boundary": {
+      "session_key_is_source_native": true,
+      "session_key_depends_on_attack_label": false,
+      "session_key_depends_on_configuration_label": false,
+      "configuration_group_may_be_used_as_lineage": false,
+      "event_type_or_success_failure_may_be_used_as_lineage": false,
+      "country_host_sensor_or_day_may_be_used_as_lineage": false,
+      "session_aggregation_contains_event_type_counts": true,
+      "event_type_counts_may_be_model_visible": false,
+      "future_field_allowlist_required": true,
+      "future_physical_exclusion_required": true
+    },
+    "endpoint_or_provenance_fit": {
+      "fit": "conditional_honeypot_interaction_provenance",
+      "evidence_surface": "Cowrie SSH connection and interaction event provenance",
+      "real_endpoint_execution_trace": false,
+      "emulated_shell_environment": true,
+      "candidate_pointer_shape": "record DOI + immutable artifact identity + opaque Cowrie session identifier + event or aggregate record position",
+      "pointer_shape_verified": false,
+      "scientific_limit": "Cowrie records attacker interactions with an emulated SSH environment. Commands or events are interaction provenance and must not be silently represented as operating-system execution or full-system endpoint evidence."
+    },
+    "privacy_safety_and_rights_risk": {
+      "record_scope_license_verified": true,
+      "record_scope_license": "CC-BY-4.0",
+      "raw_events_include_username_or_password_fields": true,
+      "raw_events_include_command_input_or_url_fields": true,
+      "raw_events_include_network_and_geolocation_fields": true,
+      "raw_events_include_file_and_fingerprint_fields": true,
+      "malicious_transferred_files_declared": true,
+      "session_aggregation_raw_sensitive_fields_declared": false,
+      "session_aggregation_privacy_safety_verified": false,
+      "ordinary_payload_or_command_content_may_be_read_at_metadata_stage": false,
+      "privacy_secret_malware_and_dual_use_gate_passed": false,
+      "nested_notice_gate_passed": false
+    },
+    "official_repository_metadata": {
+      "repository": "matusmikulas/COW160x4_dataset",
+      "repository_url": "https://github.com/matusmikulas/COW160x4_dataset",
+      "default_branch": "main",
+      "observed_head_sha": "886fc4cff99837c6fbec7a79d444f4234482385d",
+      "observed_head_date": "2026-02-21T17:34:16Z",
+      "repository_license": "MIT",
+      "tag_count": 0,
+      "release_count": 0,
+      "repository_source_read": false,
+      "repository_commit_is_not_dataset_artifact_pin": true
+    },
+    "publication_and_scientific_validation": {
+      "zenodo_related_publication_identifier": null,
+      "datacite_related_publication_identifier": null,
+      "crossref_exact_matching_publication_found": false,
+      "peer_reviewed_artifact_validation_closed": false,
+      "implication": "The artifact is registry-identifiable but very recent and lacks a curator-bound associated publication. Scientific validation, collection protocol review, and nuisance analysis remain open."
+    },
+    "portfolio_distinctness": {
+      "prior_committed_candidate_id_or_record_match_found": false,
+      "same_record_or_artifact_as_reprod": false,
+      "same_record_or_artifact_as_pandacap": false,
+      "same_record_or_artifact_as_logchunks": false,
+      "same_record_or_artifact_as_streamspot": false,
+      "known_metadata_level_overlap_with_cert_or_iot23": false,
+      "shared_ssh_honeypot_modality_with_pandacap": true,
+      "pandacap_difference": "PANDAcap is a 2020 PANDA full-system recording of 63 SSH-triggered sessions from different curators; this source is a 2026 Cowrie event collection with session aggregation from a different institution and record.",
+      "cross_family_nuisance_independence_verified": false,
+      "payload_exact_or_near_overlap_verified": false,
+      "distinctness_verdict": "new_artifact_and_curator_at_metadata_level_but_ssh_honeypot_modality_overlap_requires_later_review"
+    },
+    "unclosed_risks": [
+      "The record declares approximately 38 million sessions, but exact non-empty unique-session cardinality and duplicate or reconnect policy are not verified.",
+      "Session identifiers may represent reconnects, automated scans, or correlated botnet campaigns; statistical independence is unverified.",
+      "The session aggregation is a derived object and may be insufficient for Candidate Claim IR content even if it is sufficient for lineage audit.",
+      "The raw event object contains credentials, commands, URLs, environment values, filenames, fingerprints, and network or geolocation identifiers.",
+      "The transferred-file archive contains potentially malicious payloads and must remain excluded.",
+      "Nested notices, privacy safety, field allowlisting, pointer round trip, and protected exact or near overlap are unverified.",
+      "The source shares SSH honeypot nuisance with PANDAcap and lacks a curator-bound peer-reviewed publication."
+    ],
+    "current_authority": {
+      "approved_for_separate_metadata_candidate_review": true,
+      "registered_in_effective_catalog": false,
+      "download_authorized": false,
+      "archive_or_payload_audit_authorized": false,
+      "source_role_approved": false,
+      "train_admission_approved": false,
+      "family_credit": 0,
+      "lineage_credit": 0,
+      "sample_credit": 0,
+      "quota_credit": 0,
+      "l2_gate_passed": false
+    }
+  },
+  "screened_not_advanced": [
+    {
+      "candidate_id": "orthogonal_syscall_attack_capture_archives_2026",
+      "official_record": "https://zenodo.org/records/20776518",
+      "doi": "10.5281/zenodo.20776518",
+      "license": "CC-BY-4.0",
+      "record_revision": 3,
+      "artifact_file_count": 10,
+      "status": "hold_class_named_archives_and_source_native_execution_count_unclosed",
+      "reason": "The ten artifacts are named directly by attack family. The curator states one trace per file inside each archive but publishes neither a label-independent execution count nor a stable run manifest. Attack-family archive count and trace file count cannot satisfy the frozen threshold."
+    },
+    {
+      "candidate_id": "miningbeat_linux_host_telemetry_2026",
+      "official_record": "https://zenodo.org/records/21043546",
+      "doi": "10.5281/zenodo.21043546",
+      "license": "CC-BY-4.0",
+      "record_revision": 3,
+      "artifact": {
+        "key": "miningbeat.csv",
+        "bytes": 14959127,
+        "checksum": "md5:3e3e0a4d4d44dc22329e31d7ff8ccb0e"
+      },
+      "status": "reject_flattened_labeled_table_without_source_native_run_groups",
+      "reason": "The official record publishes one timestamped and labeled CSV and does not declare source-native run, session, or capture identifiers. Rows, attack techniques, workloads, and time windows cannot substitute for execution groups."
+    },
+    {
+      "candidate_id": "mendeley_syscall_context_modeling_dataset",
+      "official_record": "https://data.mendeley.com/datasets/vfvw7g8s8h/2",
+      "doi": "10.17632/vfvw7g8s8h.2",
+      "license": "CC-BY-4.0_at_registry_level",
+      "status": "hold_artifact_files_checksums_and_execution_mapping_unclosed",
+      "reason": "DataCite verifies the dataset DOI and rights, but the available public registry metadata did not expose an immutable file inventory, byte sizes, checksums, or a curator-declared one-trace-to-one-execution mapping. Mendeley API requests required authorization and were not bypassed."
+    },
+    {
+      "candidate_id": "ssh_botnet_interactions_command_payloads_2026",
+      "official_record": "https://zenodo.org/records/20435481",
+      "doi": "10.5281/zenodo.20435481",
+      "license": "CC-BY-4.0",
+      "record_revision": 4,
+      "status": "hold_interactive_subset_and_sensitive_field_boundary_unclosed",
+      "reason": "The curator declares UUID session assignment and 28 unique interactive sessions, but the highlighted session count is an outcome-filtered high-value subset while total source-native session cardinality is not declared. Raw records include IP, credentials, commands, payload strings, and a label-like level field."
+    },
+    {
+      "candidate_id": "llm_honeypot_detection_interaction_sessions_2026",
+      "official_record": "https://zenodo.org/records/20818246",
+      "doi": "10.5281/zenodo.20818246",
+      "license": "CC-BY-4.0",
+      "record_revision": 6,
+      "status": "hold_no_artifact_files_or_checksums",
+      "reason": "The curator declares approximately 16200 session files and 30 independent sessions per experimental cell, but the official record currently exposes no artifact files, byte sizes, or checksums. Model, environment, prompt, and turn-limit factors cannot replace an artifact Gate."
+    },
+    {
+      "candidate_id": "multi_regional_cloud_honeynet_2025",
+      "official_record": "https://zenodo.org/records/15716735",
+      "doi": "10.5281/zenodo.15716735",
+      "license": "MIT",
+      "record_revision": 16,
+      "artifact": {
+        "key": "CloudHoneyNetDataset.zip",
+        "bytes": 64567749,
+        "checksum": "md5:9902cf514bcc9cf6983a28bf55c7526c"
+      },
+      "status": "hold_event_host_sensor_and_time_counts_do_not_establish_sessions",
+      "reason": "The curator declares 132425 distinct attack events across three honeypot types and four VMs over 72 hours, but does not declare source-native session or run identifiers. Event, host, sensor, and time-window counts are forbidden substitutes."
+    },
+    {
+      "candidate_id": "cardiff_bane_or_boon_system_call_logs",
+      "official_record": "https://research-data.cardiff.ac.uk/articles/dataset/Dataset_for_Bane_or_Boon_Measuring_the_effect_of_evasive_malware_on_system_call_classifiers/27053740",
+      "doi": "10.17035/d.2022.0176862059",
+      "status": "excluded_same_underlying_family_as_previously_reviewed_dynamic_malware_kernel_user_calls_2018",
+      "reason": "The registry description identifies the same Kernel Driver and Cuckoo log collection already reviewed and disposed under the dynamic-malware family. It cannot be promoted as a new fourth family."
+    }
+  ],
+  "source_verification": {
+    "verified_primary_metadata_sources": [
+      {
+        "source": "Zenodo Records API record 21260400 revision 6",
+        "supports": [
+          "dataset identity and record revision",
+          "CC-BY-4.0 record-scope license",
+          "artifact keys, byte sizes, and MD5 checksums",
+          "38-million-session declaration",
+          "unique Cowrie session identifier semantics",
+          "session aggregation schema",
+          "privacy, credential, command, identifier, and malware warnings"
+        ]
+      },
+      {
+        "source": "DataCite DOI metadata for 10.5281/zenodo.21260400",
+        "supports": [
+          "findable DOI",
+          "Dataset type",
+          "CC-BY-4.0 rights",
+          "creator identity",
+          "concept DOI relation"
+        ]
+      },
+      {
+        "source": "GitHub repository metadata API for matusmikulas/COW160x4_dataset",
+        "supports": [
+          "supporting repository identity",
+          "observed default-branch head",
+          "repository-scope MIT license",
+          "absence of releases and tags"
+        ]
+      }
+    ],
+    "non_contributory_or_failed_checks": [
+      {
+        "source": "Zenodo broad search API batch",
+        "outcome": "timeout_or_HTTP_504",
+        "retried_as_same_batch": false,
+        "used_for_claims": false
+      },
+      {
+        "source": "Crossref exact-title query",
+        "outcome": "no curator-bound exact publication match",
+        "used_for_associated_publication_claim": false
+      },
+      {
+        "source": "Mendeley public API",
+        "outcome": "HTTP_401_and_public_endpoint_not_found",
+        "authentication_bypass_attempted": false,
+        "used_for_artifact_claims": false
+      }
+    ],
+    "artifact_or_payload_content_read": false,
+    "repository_source_read": false,
+    "publication_full_text_read": false
+  },
+  "portfolio_after_search": {
+    "reviewable_direction_01": "reprod_ransomware_execution_provenance_2023",
+    "reviewable_direction_02": "pandacap_ssh_honeypot_full_system_traces_2020",
+    "reviewable_direction_03": "logchunks_travis_ci_build_log_captures_2020",
+    "reviewable_direction_04": "cow160x4_cowrie_ssh_session_provenance_2026",
+    "reviewable_direction_04_status": "pending_separate_metadata_candidate_review",
+    "new_source_role_approved": false,
+    "new_train_admission_approved": false,
+    "new_family_credit": 0,
+    "new_lineage_credit": 0,
+    "new_sample_credit": 0,
+    "new_quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "search_complete": true,
+    "fourth_direction_found": true,
+    "fourth_direction_approved_for_separate_metadata_candidate_review": true,
+    "fourth_direction_approved_as_source_role": false,
+    "effective_catalog_change_authorized": false,
+    "download_authorized": false,
+    "archive_or_payload_audit_authorized": false,
+    "family_role_change_authorized": false,
+    "family_lineage_sample_or_quota_credit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  },
+  "step_self_check": {
+    "authority_head_verified": true,
+    "datasets_or_local_audit_cache_touched": false,
+    "zip_archive_or_download_launcher_touched": false,
+    "payload_or_archive_downloaded": false,
+    "prior_advanced_held_or_rejected_candidate_repromoted": false,
+    "threshold_lowered": false,
+    "effective_catalog_written": false,
+    "credit_awarded": false,
+    "git_commit_or_push_performed": false,
+    "outputs_only_under_docs_llm_editor": true,
+    "result": "pass"
+  }
+}
