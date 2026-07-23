@@ -1,0 +1,206 @@
+{
+  "schema_version": "project05-llm-editor-l2-evtx-attack-samples-metadata-execution-group-review-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "93cc45b9807c4d616d49db31a7f5b820afb6b8a5",
+  "review_type": "single_family_metadata_only_execution_group_review",
+  "candidate_id": "evtx_attack_samples",
+  "candidate_slot": "train_executed_evidence_liwa_replacement_01",
+  "status": "rejected_as_train_replacement_at_metadata_gate",
+  "scope": {
+    "github_repository_metadata_read": true,
+    "pinned_commit_metadata_read": true,
+    "recursive_tree_metadata_read": true,
+    "readme_and_license_text_read": true,
+    "five_small_documentation_readmes_read": true,
+    "evtx_payload_downloaded_or_opened": false,
+    "label_csv_or_attack_json_opened": false,
+    "log_txt_pcap_or_etl_opened": false,
+    "archive_or_repository_checkout_performed": false,
+    "model_output_read": false,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "quota_credit_awarded": false,
+    "l2_gate_passed": false,
+    "git_push_performed": false
+  },
+  "source_identity": {
+    "repository": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES",
+    "repository_api": "https://api.github.com/repos/sbousseaden/EVTX-ATTACK-SAMPLES",
+    "owner_and_name": "sbousseaden/EVTX-ATTACK-SAMPLES",
+    "repository_created_at": "2019-03-15T08:45:44Z",
+    "repository_archived": false,
+    "repository_disabled": false,
+    "default_branch": "master",
+    "pinned_commit": "4ceed2f4706daf601c212a8f91c113dd85349a2c",
+    "pinned_commit_url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES/commit/4ceed2f4706daf601c212a8f91c113dd85349a2c",
+    "pinned_commit_date": "2023-01-24T12:02:50Z",
+    "pinned_commit_signature_verified": true,
+    "pinned_commit_verification_reason": "valid",
+    "pinned_tree_sha": "df87756f61c490e20e73b1a6cf2835351e8fd070",
+    "recursive_tree_truncated": false
+  },
+  "rights_and_documentation": {
+    "github_api_license_spdx": "GPL-3.0",
+    "license_path": "LICENSE.GPL",
+    "license_git_blob_sha": "9cecc1d4669ee8af2ca727a5d8cde10cd8b2d7cc",
+    "license_sha256": "589ED823E9A84C56FEB95AC58E7CF384626B9CBF4FDA2A907BC36E103DE1BAD2",
+    "license_text_identity": "GNU General Public License, Version 3, 29 June 2007",
+    "readme_path": "README.md",
+    "readme_git_blob_sha": "d64c13d0fb0ab294c2f38c85cea27aac8b0ed51b",
+    "readme_sha256": "4CE6FB5C33A907A0325ED65DD0C5CB6ADCCFCBE75354B1BE38570D1B11253A97",
+    "readme_declares_repository_license_link": true,
+    "repository_scope_license_verified": true,
+    "nested_or_third_party_notice_audit_performed": false,
+    "rights_gate_for_metadata_review": "passed_with_future_notice_audit_required"
+  },
+  "pinned_tree_inventory": {
+    "total_blob_count": 316,
+    "evtx_file_count": 278,
+    "evtx_total_bytes": 48717824,
+    "distinct_evtx_git_blob_count": 277,
+    "duplicate_evtx_blob_group_count": 1,
+    "duplicate_evtx_path_count": 2,
+    "duplicate_blob_sha": "f6bad85d19539a92ce2c0ee1f3f49663c6e3052c",
+    "duplicate_path_sha256": [
+      "66973CC9CCD6B52EBBF08397BC7881A1EF9013D7F840D4744EDB11CD16579ECE",
+      "7CA2701BF25A214003DF9D32B3847A661B3469E04F85BAEDBE60D2B66E96ED1F"
+    ],
+    "evtx_path_depth_counts": {
+      "1": 1,
+      "2": 266,
+      "3": 11
+    },
+    "evtx_top_level_category_counts": {
+      "AutomatedTestingTools": 8,
+      "Command and Control": 6,
+      "Credential Access": 39,
+      "Defense Evasion": 36,
+      "Discovery": 11,
+      "Execution": 34,
+      "Lateral Movement": 47,
+      "Other": 8,
+      "Persistence": 22,
+      "Privilege Escalation": 66,
+      "root_level_evtx": 1
+    },
+    "forbidden_non_payload_artifacts_present": [
+      "evtx_data.csv",
+      "EVTX_ATT&CK_Metadata JSON and analytical material",
+      "attack-navigation and statistics images",
+      "PCAP, ETL, LOG, and large TXT artifacts",
+      "scripts and notebooks"
+    ],
+    "tree_identity_gate": "passed_immutable_commit_and_blob_metadata",
+    "file_count_may_be_used_as_execution_group_count": false,
+    "directory_or_tactic_count_may_be_used_as_execution_group_count": false,
+    "distinct_blob_count_may_be_used_as_execution_group_count": false
+  },
+  "documentation_evidence": [
+    {
+      "path": "README.md",
+      "git_blob_sha": "d64c13d0fb0ab294c2f38c85cea27aac8b0ed51b",
+      "observation": "The curator describes the repository as a container for Windows event samples associated with specific attack and post-exploitation techniques and lists DFIR training and detection-use-case design as uses.",
+      "execution_group_implication": "This is a sample-and-technique organization statement, not an independent run, session, capture, or experiment registry."
+    },
+    {
+      "path": "AutomatedTestingTools/readme.md",
+      "git_blob_sha": "52b585e69cf58d2e0173b82cd6012872d42f6676",
+      "observation": "The folder is declared to host results from public automated EDR and MITRE ATT&CK testing tools, explicitly including Atomic Red Team and an EDR testing script.",
+      "execution_group_implication": "Tool, technique, or result identity cannot establish execution independence; the Atomic Red Team reference also creates source-generation and nuisance-overlap risk with the existing Atomic family."
+    },
+    {
+      "path": "AutomatedTestingTools/Malware/readme.md",
+      "git_blob_sha": "428beb4a3def83d6afdfd28c8a5c95d6c2bfcbcb",
+      "observation": "The document says this location will host malware execution traces combining multiple TTPs but supplies no run manifest or current group boundary.",
+      "execution_group_implication": "A future-intent statement cannot verify four current source-native executions."
+    },
+    {
+      "path": "Command and Control/readme.md",
+      "git_blob_sha": "9559f9dfe4070e5cf9364f94b8024af187a0f251",
+      "observation": "The document enumerates event IDs and telemetry indicators for several tunneling techniques but supplies no capture IDs, environment IDs, timestamps, or file-to-run mapping.",
+      "execution_group_implication": "Multiple events or telemetry providers for a technique may belong to one execution and cannot be counted independently."
+    },
+    {
+      "path": "EVTX_ATT&CK_Metadata/README.md",
+      "git_blob_sha": "7b74b798c509751e6f417d493e57f700a1a0e069",
+      "observation": "The documentation frames the material as datasets for analytics, ATT&CK tactic/technique visualization, and telemetry-provider analysis.",
+      "execution_group_implication": "ATT&CK and analytics metadata are supervision and organization aids, not lineage evidence."
+    },
+    {
+      "path": "Other/emotet/README.md",
+      "git_blob_sha": "82717a8a42a0c22a4c297ed1b19153e76daaef9a",
+      "observation": "The document links to an external ANY.RUN task.",
+      "execution_group_implication": "The repository contains mixed-origin material; external task identity is not a repository-wide independence guarantee."
+    }
+  ],
+  "execution_group_assessment": {
+    "curator_declared_independent_run_count": null,
+    "curator_declared_capture_or_session_count": null,
+    "immutable_file_to_run_manifest_present": false,
+    "environment_or_host_boundary_registry_present": false,
+    "run_start_and_end_metadata_present": false,
+    "paired_provider_views_grouped_to_one_execution": false,
+    "cross_file_execution_non_overlap_declared": false,
+    "verified_source_native_execution_group_count": 0,
+    "minimum_required_execution_groups": 4,
+    "metadata_execution_group_gate_passed": false,
+    "statistical_independence_verified": false,
+    "reason": "The complete small-documentation surface at the pinned revision organizes samples by techniques, telemetry, tools, and external examples but never defines file membership for independently executed runs."
+  },
+  "overlap_and_supervision_risks": {
+    "attack_and_post_exploitation_technique_paths_present": true,
+    "attack_metadata_and_label_artifacts_present": true,
+    "atomic_red_team_generation_reference_present": true,
+    "existing_atomic_family_source_generation_overlap_risk": "high_for_automated_testing_subset",
+    "external_anyrun_origin_present": true,
+    "mixed_origin_risk": "high",
+    "file_or_path_labels_may_enter_model_view": false,
+    "attack_metadata_may_enter_model_view_or_target": false,
+    "protected_exclusion_status": "not_run_and_not_authorized"
+  },
+  "source_verification_grade": {
+    "repository_identity_and_revision": "A",
+    "repository_scope_license": "A_with_future_nested_notice_requirement",
+    "artifact_tree_reproducibility": "A",
+    "execution_group_provenance": "F",
+    "cross_family_nuisance_independence": "D",
+    "fitness_for_liwa_replacement_slot": "F",
+    "grade_interpretation": "Primary GitHub metadata is authoritative for repository identity and proves the absence of a documented execution-group contract in all small documentation at the pinned revision. Strong artifact identity cannot compensate for missing scientific lineage."
+  },
+  "verdict": {
+    "decision": "reject_as_train_replacement_at_metadata_gate",
+    "former_status": "reserve_lineage_independence_unverified",
+    "new_status": "metadata_reject_execution_groups_undocumented",
+    "approved_as_metadata_replacement_candidate": false,
+    "approved_for_download": false,
+    "approved_for_payload_or_lineage_audit": false,
+    "counts_as_family_now": false,
+    "counts_as_lineage_now": false,
+    "counts_as_samples_now": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "replacement_slot_filled": false
+  },
+  "reopen_conditions": [
+    "The curator publishes a new immutable revision with a machine-readable manifest mapping files to at least four separately executed runs or captures.",
+    "The manifest records environment or host boundary, run/capture identity, time boundary, generation tool, file membership, and paired-view grouping without exposing labels to the model.",
+    "Atomic Red Team-derived and other externally sourced subsets are identified so curator, scenario, and nuisance overlap can be isolated before any split decision.",
+    "A new metadata-only review approves the new revision before any download."
+  ],
+  "forbidden_remediation": [
+    "Count EVTX files, Git blobs, directories, tactics, techniques, providers, event IDs, or Git commits as independent execution groups.",
+    "Open EVTX payloads to infer runs when the curator has supplied no source-native grouping contract.",
+    "Use ATT&CK metadata, file paths, or technique labels as supervision or lineage.",
+    "Download first and decide provenance later."
+  ],
+  "replacement_slot_after_review": {
+    "slot_id": "train_executed_evidence_liwa_replacement_01",
+    "status": "vacant_evtx_rejected_metadata_gate",
+    "current_quota_credit": 0,
+    "next_priority": "new_distinct_endpoint_or_provenance_family_metadata_search",
+    "n_baiot_remains_hold_only": true
+  },
+  "next_action": "Search metadata for a distinct executed endpoint or provenance family whose official artifact already exposes at least four source-native run or capture groups; do not download EVTX-ATTACK-SAMPLES at this revision."
+}
