@@ -43,6 +43,19 @@ A conforming future adapter must satisfy all of the following:
 No example emits admission state, system state, a certificate or
 `CERTIFIED_STOP`.
 
+### 2.1 Range-semantics ownership
+
+The approved `part-b-b1-range-semantics-v0.8.md` contract assigns
+`range_semantics` exclusively to the conformance envelope. It is not a Kernel
+Claim IR field. `byte_or_row_range` in Claim IR is an opaque source-relative
+pair; neither an adapter nor a consumer may infer byte/row units or endpoint
+convention from it.
+
+The conformance envelope must carry `ROWS_HALF_OPEN` or `BYTES_HALF_OPEN` and
+must remain bound to the exact versioned conformance contract. A missing,
+unsupported or mismatched binding fails closed. This decision supplies no
+production adapter authority.
+
 ## 3. Error contract
 
 | Code | Meaning |
@@ -63,7 +76,8 @@ The adapter may propose a structurally conforming envelope only. Kernel-owned
 policy remains responsible for admission and any later certification decision.
 The Candidate Compiler remains candidate-only under
 `contracts/compiler-kernel-boundary-v0.8.md`; B1 does not give an LLM or any
-compiler permission to set protected epistemic or authority fields.
+compiler permission to set pointer/range, protected epistemic or authority
+fields.
 
 This contract contains no adapter implementation. B2–B9, LLM, real connectors,
 downloads, stochastic execution, cost instrumentation, Planner/M3* and all

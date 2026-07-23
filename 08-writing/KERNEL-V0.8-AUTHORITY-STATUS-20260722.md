@@ -42,7 +42,7 @@ v0.8 Part B map:
 | Slice | Normative name | Authority state |
 |---|---|---|
 | B0 | `B0_PLANNING_AND_CONTRACTS` | COMPLETED / APPROVED |
-| B1 | `B1_FEDERATION_SCHEMAS` | IMPLEMENTED / PENDING HUMAN REVIEW |
+| B1 | `B1_FEDERATION_SCHEMAS` | APPROVED / MERGED |
 | B2 | `B2_STOCHASTIC_OBSERVATION` | CLOSED |
 | B3 | `B3_COST_INSTRUMENTATION` | CLOSED |
 | B4 | `B4_BASELINE_PREREG` | CLOSED |
@@ -89,6 +89,35 @@ certificate or `CERTIFIED_STOP`.
 The local B1 review tip passed `17/17` B1 tests and `155/155` full repository
 tests. `compileall`, `git diff --check` and the exact 13-file allowlist audit
 also passed. These results do not authorize commit, push, PR or B2–B9.
+
+## Part B B1 range-semantics ownership decision — 2026-07-23
+
+The user separately authorized
+`B1_SI002_RANGE_SEMANTICS_DECISION_ONLY`. PB-B1-SI-002 is
+`CLOSED — APPROVED` with the following narrow ruling:
+
+```text
+range_semantics: CONFORMANCE_ENVELOPE_ONLY
+Kernel Claim IR: UNCHANGED
+byte_or_row_range inference: FORBIDDEN
+missing/mismatched conformance contract: FAIL_CLOSED
+Candidate Compiler pointer/range ownership: NONE
+```
+
+The normative contract is
+`contracts/part-b-b1-range-semantics-v0.8.md`. The ruling leaves the approved
+B1 federation, adapter-conformance and manifest hashes unchanged.
+
+Issue closure is not production adapter authority. It creates no connector,
+resolver, federation runtime, admission/certification result or
+`CERTIFIED_STOP` authority. B2–B9, LLM and Part A behavioral changes remain
+unauthorized. This local decision slice is not authorized for push or PR
+without a later explicit instruction.
+
+Local verification for the final seven-file decision slice passed `18/18`
+targeted B1 tests and `156/156` full repository tests. `compileall`,
+`git diff --check`, the exact allowlist audit and replay of the three frozen B1
+hashes also passed. These results do not expand the authority stated above.
 
 The earlier same-day `NOT PASSED / NO-GO` ruling is retained below as audit
 history and is **superseded** by the scoped GO ruling recorded in §4.1.

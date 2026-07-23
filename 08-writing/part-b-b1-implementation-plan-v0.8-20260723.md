@@ -1,6 +1,7 @@
 # Part B B1 federation Schemas implementation plan v0.8
 
-Status: **IMPLEMENTED — PENDING HUMAN REVIEW**
+Status: **B1 APPROVED / MERGED — SI-002 DECISION IMPLEMENTED LOCALLY,
+PENDING HUMAN REVIEW**
 
 ```text
 Authorized slice: B1_FEDERATION_SCHEMAS
@@ -137,3 +138,41 @@ Exact 13-file allowlist audit: PASS
 No B0 artifact or Part A implementation file changed. The pre-existing
 untracked workspace directories were left untouched and are not B1
 deliverables.
+
+## 8. PB-B1-SI-002 ownership decision — 2026-07-23
+
+The separately authorized `B1_SI002_RANGE_SEMANTICS_DECISION_ONLY` slice
+closes PB-B1-SI-002 as `CLOSED — APPROVED`.
+
+The normative decision is:
+
+```text
+range_semantics owner: CONFORMANCE_ENVELOPE_ONLY
+Kernel Claim IR change: NONE
+byte_or_row_range inference: FORBIDDEN
+missing conformance contract: FAIL_CLOSED
+Candidate Compiler pointer/range ownership: NONE
+production adapter authority: NONE
+```
+
+The full rule and error codes are frozen in
+`contracts/part-b-b1-range-semantics-v0.8.md`. The test contract verifies that
+Kernel Claim IR still rejects `range_semantics`, the B1 envelope still requires
+it, Candidate Compiler still forbids `pointer`, and all three approved B1
+artifact hashes remain unchanged.
+
+Closing field ownership does not implement or authorize storage of a
+claim-to-envelope binding. Production adapter use still requires a separate
+runtime authorization and resolution of the remaining open issues. B2–B9,
+LLM, Part A changes and `CERTIFIED_STOP` expansion remain closed.
+
+Final local verification for this decision-only slice:
+
+```text
+B1 targeted tests: 18/18 PASS
+Full repository tests: 156/156 PASS
+compileall: PASS
+git diff --check: PASS
+Exact seven-file allowlist audit: PASS
+Frozen B1 hashes unchanged: PASS
+```
