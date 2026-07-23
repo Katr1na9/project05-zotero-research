@@ -1,0 +1,367 @@
+{
+  "schema_version": "project05-llm-editor-l2-cow160x4-gzip-reader-privacy-notice-schema-manifest-lineage-pointer-audit-contract-v0.1",
+  "frozen_date": "2026-07-23",
+  "authority_base_commit": "afc50ae17be632b78146df3ab2f08b95fe6bc690",
+  "status": "frozen_contract_only_audit_execution_not_authorized",
+  "purpose": "Freeze one fail-closed, bounded, non-extracting gzip reader plus privacy, notice, schema, manifest, lineage, and pointer audit for the already identity-verified COW160x4 session aggregation object. This contract does not authorize opening the gzip object, decompression, JSONL reading, audit execution, source-role admission, catalog mutation, credit, training, baseline, or fine-tuning.",
+  "inputs": {
+    "target_id": "cow160x4_session_aggregation_jsonl_gz",
+    "acquisition_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-exact-bounded-acquisition-contract-v0.1-20260723.json",
+      "sha256": "bd9cd8c9d4275efe120078b912e034551d86f8934ad3127f1ea6654524f7f97d"
+    },
+    "acquisition_result": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-acquisition-result-v0.1-20260723.json",
+      "sha256": "a2f0e5f530c386e40960b84f5e07000fdfbcc2a8a4e229e85bc524cb36b86f78",
+      "status": "verified_identity_only_hard_stop"
+    },
+    "reader_amendment": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-gzip-reader-tool-amendment-v0.1-20260723.json",
+      "sha256": "cc3020aedb2528fe81cbee0f8036c2b2cf225d90973ac92de49755d17c7198cd",
+      "status": "reader_and_parser_identity_frozen_audit_not_authorized"
+    },
+    "audit_script": {
+      "path": "datasets/llm/audit_cow160x4_session_aggregation_v0_1.py",
+      "bytes": 25953,
+      "sha256": "a2157bdce0fb939aee2898ef0c4f14e33b8df98fd115cfabdb6831e37836bcb6",
+      "syntax_compile_passed": true,
+      "executed": false
+    }
+  },
+  "target_identity": {
+    "record_id": 21260400,
+    "record_revision": 6,
+    "source_key": "session_aggregation.jsonl.gz",
+    "compressed_bytes": 1328104319,
+    "compressed_md5": "1f3897650fb420c97c14ff452398c3f8",
+    "identity_verified_before_this_contract": true,
+    "identity_must_be_reverified_before_open": true
+  },
+  "reader_identity": {
+    "name": "CPython standard-library gzip/json/hashlib reader",
+    "python_version": "3.11.15 (main, Jun 23 2026, 15:20:37) [MSC v.1944 64 bit (AMD64)]",
+    "zlib_compile_version": "1.3.2",
+    "zlib_runtime_version": "1.3.2",
+    "all_component_paths_sizes_and_sha256_must_match_reader_amendment": true,
+    "reader_identity_mismatch_action": "fail_closed_before_source_stat_or_open",
+    "reader_install_or_download_allowed": false,
+    "substitute_reader_allowed": false
+  },
+  "execution_authority_gate": {
+    "separate_user_authorization_required": true,
+    "separate_authority_json_required": true,
+    "authority_status_required": "authorized_once",
+    "authority_target_id_required": "cow160x4_session_aggregation_jsonl_gz",
+    "authority_audit_execution_authorized_required": true,
+    "authority_gzip_open_authorized_required": true,
+    "authority_decompression_authorized_required": true,
+    "authority_automatic_retry_authorized_required": false,
+    "authority_resume_authorized_required": false,
+    "authority_must_pin_runtime_script_sha256": true,
+    "authority_must_pin_runtime_contract_sha256": true,
+    "authority_must_match_all_execution_caps_exactly": true,
+    "preexisting_result_json_or_markdown_blocks_execute": true,
+    "missing_or_mismatched_authority_action": "write_sanitized_terminal_failure_if_possible_and_stop_without_source_open_or_retry",
+    "execution_authority_created_in_this_step": false,
+    "audit_execution_authorized_now": false
+  },
+  "execution_caps": {
+    "maximum_wall_seconds": 300,
+    "maximum_compressed_source_bytes": 1328104319,
+    "maximum_decompressed_bytes_returned": 33554432,
+    "maximum_jsonl_lines": 4096,
+    "maximum_line_bytes": 262144,
+    "maximum_object_keys": 256,
+    "maximum_json_depth": 4,
+    "maximum_session_utf8_bytes": 256,
+    "maximum_scalar_string_utf8_bytes": 16384,
+    "maximum_notice_envelope_records": 16,
+    "maximum_result_bytes_per_file": 262144,
+    "maximum_result_file_count": 2,
+    "maximum_execute_count": 1,
+    "extract_to_disk_allowed": false,
+    "persist_decompressed_content_allowed": false,
+    "persist_raw_line_key_or_value_allowed": false,
+    "automatic_retry_allowed": false,
+    "resume_allowed": false
+  },
+  "audit_order": [
+    {
+      "stage": 0,
+      "name": "authority_and_execute_once_gate",
+      "source_stat_or_open_allowed": false,
+      "pass_condition": "Separate authority JSON exists, names the target, authorizes one execute, pins the runtime script and contract hashes, matches all caps, and no prior result exists."
+    },
+    {
+      "stage": 1,
+      "name": "reader_identity_gate",
+      "source_stat_or_open_allowed": false,
+      "pass_condition": "Python, zlib, executable, DLL, and standard-library module identities match the frozen reader amendment exactly."
+    },
+    {
+      "stage": 2,
+      "name": "compressed_source_identity_gate",
+      "gzip_open_allowed": false,
+      "pass_condition": "Exact compressed size equals 1328104319 and compressed MD5 equals 1f3897650fb420c97c14ff452398c3f8."
+    },
+    {
+      "stage": 3,
+      "name": "bounded_stream_open",
+      "gzip_open_allowed_only_after_stages_0_to_2": true,
+      "pass_condition": "Reader returns no more than the frozen decompressed-byte, line, line-byte, depth, key, scalar, and wall-time caps."
+    },
+    {
+      "stage": 4,
+      "name": "notice_and_schema_probe",
+      "pass_condition": "Only bounded in-memory JSON objects are classified; no raw record, key set, or field value is persisted."
+    },
+    {
+      "stage": 5,
+      "name": "privacy_and_field_isolation_probe",
+      "pass_condition": "Sensitive values remain non-persistent and sensitive-key detections are reported only as aggregate counts."
+    },
+    {
+      "stage": 6,
+      "name": "bounded_manifest_lineage_and_pointer_probe",
+      "pass_condition": "Opaque sessions are hashed in memory, only aggregate counts are emitted, lineage credit remains zero, and pointer candidates remain unbound."
+    },
+    {
+      "stage": 7,
+      "name": "sanitized_result_and_hard_stop",
+      "pass_condition": "At most one JSON and one Markdown aggregate result are written; no automatic source-role or later-stage action starts."
+    }
+  ],
+  "notice_contract": {
+    "record_scope_license": "CC-BY-4.0",
+    "record_scope_license_may_close_nested_or_third_party_rights": false,
+    "gzip_has_archive_central_directory": false,
+    "dedicated_notice_member_channel_assumed": false,
+    "notice_detection_surface": "bounded top-level JSON object keys only",
+    "notice_key_tokens": [
+      "license",
+      "licence",
+      "notice",
+      "copyright",
+      "copying",
+      "readme"
+    ],
+    "raw_notice_text_may_be_persisted": false,
+    "ordinary_record_value_may_be_reinterpreted_as_notice": false,
+    "absence_of_notice_key_may_be_reported_as_rights_pass": false,
+    "nested_notice_gate_default": false,
+    "bounded_probe_can_close_nested_notice_gate": false,
+    "source_role_requires_separate_rights_disposition": true
+  },
+  "schema_contract": {
+    "input_container": "gzip_compressed_json_lines",
+    "utf8_decoding": "strict",
+    "top_level_type_required": "object",
+    "required_declared_fields": [
+      "session",
+      "src_ip",
+      "honeypot_ip",
+      "first_seen",
+      "last_seen",
+      "total_events"
+    ],
+    "additional_fields_interpreted_as": "unknown_or_event_type_count_fields_pending_separate_semantic_review",
+    "additional_fields_may_define_labels_targets_lineage_or_samples": false,
+    "raw_key_names_may_be_persisted": false,
+    "raw_schema_examples_may_be_persisted": false,
+    "schema_signature_count_may_be_persisted": true,
+    "schema_signature_values_may_be_persisted": false,
+    "schema_probe_is_full_dataset_validation": false,
+    "schema_probe_can_authorize_training": false
+  },
+  "privacy_and_field_isolation_contract": {
+    "session": {
+      "allowed_in_memory_use": "opaque uniqueness and pointer-candidate digest only",
+      "raw_value_may_be_persisted": false,
+      "raw_value_may_become_model_visible": false,
+      "maximum_utf8_bytes": 256
+    },
+    "src_ip": {
+      "raw_value_may_be_persisted": false,
+      "raw_value_may_become_model_visible": false,
+      "may_define_lineage_or_split": false
+    },
+    "honeypot_ip": {
+      "raw_value_may_be_persisted": false,
+      "raw_value_may_become_model_visible": false,
+      "may_define_lineage_or_split": false
+    },
+    "first_seen_and_last_seen": {
+      "raw_value_may_be_persisted": false,
+      "raw_value_may_become_model_visible": false,
+      "trusted_temporal_normalization_verified": false,
+      "may_define_lineage_or_split": false
+    },
+    "total_events_and_event_type_counts": {
+      "aggregate_presence_or_count_may_be_reported": true,
+      "raw_values_may_be_persisted": false,
+      "raw_values_may_become_model_visible": false,
+      "may_define_label_target_lineage_or_sample": false
+    },
+    "prohibited_value_classes": [
+      "credentials",
+      "commands",
+      "URLs",
+      "filenames",
+      "fingerprints",
+      "geolocation",
+      "payloads",
+      "raw messages",
+      "labels",
+      "ground truth"
+    ],
+    "prohibited_values_may_be_persisted_or_emitted": false,
+    "sensitive_key_detection_output": "aggregate count only",
+    "bounded_field_isolation_probe_can_close_full_privacy_gate": false,
+    "full_privacy_gate_default": false
+  },
+  "manifest_and_lineage_contract": {
+    "candidate_group_key": "session",
+    "candidate_group_semantics": "one curator-declared Cowrie SSH connection candidate",
+    "raw_session_value_may_be_persisted": false,
+    "in_memory_session_transform": "lowercase hexadecimal SHA-256 of exact UTF-8 bytes without normalization",
+    "minimum_nonempty_unique_session_candidates": 4,
+    "duplicate_session_count_within_bounded_probe_must_be_reported": true,
+    "bounded_probe_unique_count_is_global_unique_count": false,
+    "bounded_probe_can_verify_one_session_to_one_record_globally": false,
+    "bounded_probe_can_verify_duplicate_reconnect_retry_or_campaign_policy": false,
+    "bounded_probe_can_verify_statistical_independence": false,
+    "host_configuration_country_day_file_event_type_attack_class_or_verdict_may_define_lineage": false,
+    "declared_approximate_session_count_may_become_verified_lineage": false,
+    "line_count_may_become_lineage_or_sample_count": false,
+    "cowrie_emulated_command_or_response_may_be_represented_as_real_os_execution_or_host_state": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0
+  },
+  "pointer_contract": {
+    "candidate_shape": {
+      "artifact_md5": "1f3897650fb420c97c14ff452398c3f8",
+      "record_ordinal": "one-based decompressed JSONL ordinal within the verified artifact",
+      "session_sha256": "SHA-256 of exact UTF-8 session bytes"
+    },
+    "canonical_serialization": "UTF-8 JSON with sorted keys and compact separators",
+    "raw_session_may_appear_in_pointer": false,
+    "raw_local_path_may_appear_in_pointer": false,
+    "per_record_pointer_may_be_persisted": false,
+    "aggregate_pointer_digest_may_be_persisted": true,
+    "gzip_random_access_available": false,
+    "bounded_in_memory_canonical_round_trip_is_source_round_trip": false,
+    "global_record_ordinal_stability_verified": false,
+    "normalization_to_source_round_trip_verified": false,
+    "pointer_binding_authorized": false,
+    "binding_status": "unbound",
+    "pointer_gate_default": false
+  },
+  "sanitized_result_contract": {
+    "allowed": [
+      "target identity",
+      "reader and contract hashes",
+      "compressed size and MD5",
+      "aggregate line and decompressed-byte counts",
+      "aggregate schema and failure counts",
+      "aggregate unique and duplicate session-candidate counts",
+      "aggregate pointer digest",
+      "boolean Gates",
+      "non-sensitive failure reason code"
+    ],
+    "forbidden": [
+      "local raw path",
+      "raw compressed or decompressed bytes",
+      "raw line",
+      "raw key set",
+      "raw field value",
+      "raw session identifier",
+      "per-record pointer",
+      "IP address",
+      "timestamp",
+      "credential",
+      "command",
+      "URL",
+      "filename",
+      "fingerprint",
+      "geolocation",
+      "payload",
+      "message",
+      "label",
+      "ground truth"
+    ],
+    "maximum_json_result_bytes": 262144,
+    "maximum_markdown_result_bytes": 262144,
+    "raw_result_may_be_committed": false,
+    "sanitized_result_requires_review_before_commit": true
+  },
+  "failure_gates": {
+    "reader_identity_mismatch": "fail_closed_before_source_access",
+    "source_size_or_md5_mismatch": "fail_closed_before_gzip_open",
+    "authority_or_hash_mismatch": "fail_closed_before_source_access",
+    "cap_exceeded": "write_sanitized_terminal_failure_and_stop",
+    "invalid_utf8_or_json": "aggregate_failure_and_fail_schema_probe",
+    "missing_required_field": "aggregate_failure_and_fail_schema_probe",
+    "sensitive_key_detected": "aggregate_count_and_fail_field_isolation_probe",
+    "fewer_than_four_session_candidates": "hold",
+    "duplicate_session_candidate_detected": "hold",
+    "notice_channel_absent_or_unclosed": "hold_nested_notice_gate_false",
+    "pointer_probe_passes_bounded_canonicalization": "keep_unbound",
+    "terminal_failure_allows_automatic_retry": false,
+    "successful_probe_allows_automatic_source_role_review": false
+  },
+  "result_interpretation": {
+    "possible_success_status": "bounded_probe_hold_nested_notice_and_full_lineage_unclosed",
+    "possible_failure_statuses": [
+      "fail_closed_schema_probe",
+      "fail_closed_sensitive_field_key_detected",
+      "failed_closed_terminal_no_automatic_retry"
+    ],
+    "bounded_probe_pass_means_source_role_approved": false,
+    "bounded_probe_pass_means_lineage_gate_passed": false,
+    "bounded_probe_pass_means_pointer_bound": false,
+    "bounded_probe_pass_means_train_data": false,
+    "bounded_probe_pass_means_l2_gate_passed": false,
+    "next_disposition_requires_separate_review": true
+  },
+  "scope": {
+    "contract_frozen": true,
+    "reader_or_parser_executed_against_target": false,
+    "target_statted_or_opened_during_contract_freeze": false,
+    "gzip_header_or_trailer_read": false,
+    "decompressed": false,
+    "jsonl_read": false,
+    "notice_schema_manifest_lineage_privacy_or_pointer_probe_run": false,
+    "audit_execution_authorized": false,
+    "execution_authority_json_created": false,
+    "effective_catalog_written": false,
+    "source_role_changed": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false
+  },
+  "authority": {
+    "contract_frozen": true,
+    "reader_identity_frozen": true,
+    "parser_identity_frozen": true,
+    "audit_execution_authorized": false,
+    "gzip_open_or_decompression_authorized": false,
+    "automatic_retry_or_resume_authorized": false,
+    "source_role_approved": false,
+    "effective_catalog_write_authorized": false,
+    "family_credit_awarded": 0,
+    "lineage_credit_awarded": 0,
+    "sample_credit_awarded": 0,
+    "quota_credit_awarded": 0,
+    "l2_gate_passed": false,
+    "next_action": "Hard stop. Do not run plan or execute automatically. A future audit requires a new explicit user authorization and a separate authority JSON that names cow160x4_session_aggregation_jsonl_gz and pins the runtime script hash, runtime contract hash, and exact caps."
+  }
+}
