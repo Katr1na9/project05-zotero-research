@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b2-sampler-stub-policy.schema.json",
+  "title": "Part B B2 local sampler stub policy v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "execution_scope",
+    "generator",
+    "seed_commitment",
+    "trial_budget",
+    "trace_identity",
+    "resource_policy",
+    "failure_semantics",
+    "authority_boundary",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-b2-sampler-stub-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B2_SAMPLER_STUB_LOCAL_ONLY"},
+    "authorized_slice": {"const": "B2_SAMPLER_STUB_LOCAL_FIXTURE_ONLY"},
+    "execution_scope": {"const": "LOCAL_FIXTURE_ONLY"},
+    "generator": {"$ref": "#/$defs/generator"},
+    "seed_commitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commitment_algorithm",
+        "required_before_sampling",
+        "post_hoc_change_forbidden",
+        "scope"
+      ],
+      "properties": {
+        "commitment_algorithm": {"const": "SHA256_CANONICAL_JSON"},
+        "required_before_sampling": {"const": true},
+        "post_hoc_change_forbidden": {"const": true},
+        "scope": {"const": "LOCAL_FIXTURE_ONLY"}
+      }
+    },
+    "trial_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum",
+        "default",
+        "maximum",
+        "adaptive_extension_forbidden"
+      ],
+      "properties": {
+        "minimum": {"type": "integer", "minimum": 1},
+        "default": {"type": "integer", "minimum": 1},
+        "maximum": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "adaptive_extension_forbidden": {"const": true}
+      }
+    },
+    "trace_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "binding_fields", "outcome_sequence_bound"],
+      "properties": {
+        "algorithm": {"const": "SHA256_CANONICAL_JSON"},
+        "binding_fields": {
+          "type": "array",
+          "minItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "catalog_hash",
+              "policy_hash",
+              "fixture_hash",
+              "generator",
+              "action_id",
+              "world_id",
+              "seed_commitment",
+              "trial_budget"
+            ]
+          }
+        },
+        "outcome_sequence_bound": {"const": true}
+      }
+    },
+    "resource_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "budget_scope",
+        "exhaustion_stops_trace",
+        "partial_trace_implies_success"
+      ],
+      "properties": {
+        "budget_scope": {"const": "PER_TRACE"},
+        "exhaustion_stops_trace": {"const": true},
+        "partial_trace_implies_success": {"const": false}
+      }
+    },
+    "failure_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "TIMEOUT",
+        "RESOURCE_EXHAUSTED",
+        "MODEL_INVALID",
+        "INFEASIBLE"
+      ],
+      "properties": {
+        "TIMEOUT": {"$ref": "#/$defs/unknown_failure"},
+        "RESOURCE_EXHAUSTED": {"$ref": "#/$defs/unknown_failure"},
+        "MODEL_INVALID": {"$ref": "#/$defs/unknown_failure"},
+        "INFEASIBLE": {"$ref": "#/$defs/infeasible_failure"}
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_fixture_sampler",
+        "production_sampling",
+        "real_source_access",
+        "holdout_release",
+        "planner_execution",
+        "estimated_model_admission",
+        "certificate",
+        "stop_authority"
+      ],
+      "properties": {
+        "local_fixture_sampler": {"const": true},
+        "production_sampling": {"const": false},
+        "real_source_access": {"const": false},
+        "holdout_release": {"const": false},
+        "planner_execution": {"const": false},
+        "estimated_model_admission": {"const": false},
+        "certificate": {"const": false},
+        "stop_authority": {"const": "NONE"}
+      }
+    },
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "version",
+        "deterministic_replay",
+        "counter_origin",
+        "uniform_mapping"
+      ],
+      "properties": {
+        "algorithm": {"const": "SHA256_COUNTER_V1"},
+        "version": {"const": "1.0.0"},
+        "deterministic_replay": {"const": true},
+        "counter_origin": {"const": 0},
+        "uniform_mapping": {"const": "UINT256_OVER_2_POW_256"}
+      }
+    },
+    "unknown_failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "sample_emitted", "unsat"],
+      "properties": {
+        "status": {"const": "UNKNOWN"},
+        "sample_emitted": {"const": false},
+        "unsat": {"const": false}
+      }
+    },
+    "infeasible_failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "sample_emitted", "unsat"],
+      "properties": {
+        "status": {"const": "INFEASIBLE"},
+        "sample_emitted": {"const": false},
+        "unsat": {"const": false}
+      }
+    }
+  }
+}

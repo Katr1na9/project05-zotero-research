@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b2-sampler-stub-fixture.schema.json",
+  "title": "Part B B2 local sampler fixture v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "fixture_id",
+    "fixture_version",
+    "status",
+    "source_scope",
+    "catalog_path",
+    "catalog_hash",
+    "real_source_access",
+    "catalog_ceiling_eligible",
+    "allowed_cases",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "fixture_id": {"const": "part-b-b2-sampler-stub-fixture-v0.8"},
+    "fixture_version": {"const": "0.8.0"},
+    "status": {"const": "B2_LOCAL_STUB_FIXTURE_ONLY"},
+    "source_scope": {"const": "FROZEN_B2_FIXTURE_CATALOG_ONLY"},
+    "catalog_path": {
+      "const": "configs\\part-b-stochastic-observation-catalog-v0.8.yaml"
+    },
+    "catalog_hash": {"$ref": "#/$defs/hash"},
+    "real_source_access": {"const": false},
+    "catalog_ceiling_eligible": {"const": false},
+    "allowed_cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action_id",
+          "world_ids",
+          "catalog_ceiling_eligible"
+        ],
+        "properties": {
+          "action_id": {
+            "type": "string",
+            "pattern": "^B2-DESIGN-STOCHASTIC-[0-9]{3}$"
+          },
+          "world_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "catalog_ceiling_eligible": {"const": false}
+        }
+      }
+    },
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}
