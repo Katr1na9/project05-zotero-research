@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b3-capture-fixture-manifest.schema.json",
+  "title": "Project05 B3 synthetic capture fixture manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "fixture_capture_authority",
+    "production_capture_authority",
+    "real_adapter_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "holdout_release",
+    "stop_authority",
+    "pb_b3_si_001_state",
+    "pb_b3_si_002_state",
+    "pb_b3_si_003_state",
+    "pb_b3_si_004_state",
+    "bindings",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"const": "part-b-b3-capture-fixture-manifest-v0.8"},
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B3_CAPTURE_FIXTURE_LOCAL_ONLY"},
+    "authorized_slice": {"const": "B3_COST_INSTRUMENTATION_FIXTURE_ONLY"},
+    "fixture_capture_authority": {"const": true},
+    "production_capture_authority": {"const": false},
+    "real_adapter_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "holdout_release": {"const": "DENY"},
+    "stop_authority": {"const": "NONE"},
+    "pb_b3_si_001_state": {
+      "const": "FIXTURE_PATH_ONLY_REAL_ADAPTER_OPEN"
+    },
+    "pb_b3_si_002_state": {"const": "OPEN"},
+    "pb_b3_si_003_state": {"const": "OPEN"},
+    "pb_b3_si_004_state": {"const": "OPEN"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b3_policy_hash",
+        "b3_trace_schema_path",
+        "capture_fixture_policy_hash",
+        "fixture_hash",
+        "result_schema_path"
+      ],
+      "properties": {
+        "b3_policy_hash": {"$ref": "#/$defs/sha256"},
+        "b3_trace_schema_path": {
+          "const": "schemas/part-b-cost-trace.schema.json"
+        },
+        "capture_fixture_policy_hash": {"$ref": "#/$defs/sha256"},
+        "fixture_hash": {"$ref": "#/$defs/sha256"},
+        "result_schema_path": {
+          "const": "schemas/part-b-b3-capture-fixture-result.schema.json"
+        }
+      }
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}
