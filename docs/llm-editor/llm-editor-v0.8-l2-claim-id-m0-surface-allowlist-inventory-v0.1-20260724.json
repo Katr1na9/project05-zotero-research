@@ -1,0 +1,168 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-m0-surface-allowlist-inventory-v0.1-20260724",
+  "artifact_type": "m0_surface_allowlist_inventory",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "9279cbe4b1d05c9d78186cb784b1fd385445c01f",
+  "authority_amendment": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-rule-path-priority-amendment-v0.1-20260724.json",
+    "sha256": "5cd0e244e935ef8478ce842a7df92813e799b756e9d3b9e272853b794f94be64",
+    "effective": false
+  },
+  "status": "draft_inventory_not_implementation",
+  "scope": {
+    "mode": "read_only_repository_inventory",
+    "surfaces": [
+      "planner_experiment_inputs",
+      "certificate_experiment_inputs"
+    ],
+    "evidence_boundary": "Only committed contracts, protocols, and sanitized aggregate result references were considered. No archive, private/hidden evidence, payload, or new experiment execution was accessed.",
+    "claim": "This inventory identifies candidate surfaces for later review; it does not establish a Claim IR schema, source role, train admission, lineage credit, quota credit, or L2 completion."
+  },
+  "planner_experiment_inputs": [
+    {
+      "experiment_id": "project05_depth2_public",
+      "path": "09-experiments/governance/contracts/planner-runtime-contract-v0.1.json",
+      "evidence_kind": "frozen_runtime_contract",
+      "contract_id": "project05-depth2-ml-runtime-contract-v0.1",
+      "contract_status": "frozen_for_new_runs",
+      "recommend_for_m0_allowlist": true,
+      "recommendation_basis": [
+        "The contract explicitly scopes the public planner family.",
+        "Runtime visibility is restricted to public config/state/action fields.",
+        "Labels, recoverable/hidden/required claim identifiers, oracle state, mask membership, and realized outcomes are forbidden or not visible.",
+        "The independent statistical unit is case_or_attack_chain; repeated mask/intensity/seed conditions are not independent cases."
+      ],
+      "exclusion_reason": null,
+      "m0_use_boundary": "Candidate for a rule-only planner input surface after a separate reviewer freezes the exact field projection; not evidence for training admission or Claim IR ingestion."
+    },
+    {
+      "experiment_id": "project05_depth2_public_information_boundary",
+      "path": "08-writing/2026-07-09-planner-information-boundary-design.md",
+      "evidence_kind": "frozen_protocol_supporting_evidence",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "This is a design/protocol document, not a frozen executable input or result surface. It may support interpretation of the public planner boundary but cannot itself be ingested as an experiment surface.",
+      "m0_use_boundary": "Supporting evidence only; no direct ingestion."
+    },
+    {
+      "experiment_id": "project05_depth2_public_baselines_ablation_plan",
+      "path": "08-writing/2026-07-09-planner-baselines-ablation.md",
+      "evidence_kind": "implementation_plan",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "The document describes planned implementation and ablations rather than a separately frozen experiment input/result. It cannot establish a Claim-ID surface or authorize execution.",
+      "m0_use_boundary": "Reference for future review only; implementation remains unauthorized."
+    },
+    {
+      "experiment_id": "project05_xgboost_policy",
+      "path": "09-experiments/governance/contracts/planner-runtime-contract-v0.1.json",
+      "evidence_kind": "frozen_runtime_contract_family_member",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "Although named in the frozen contract scope, the existing action-value XGBoost path is explicitly separate from Claim alignment. No M0 promotion may reinterpret it as Claim-ID/IR evidence or perform an XGB fit.",
+      "m0_use_boundary": "Remain excluded pending a separately frozen, rule-only Claim alignment surface and explicit review."
+    },
+    {
+      "experiment_id": "project05_logistic_policy",
+      "path": "09-experiments/governance/contracts/planner-runtime-contract-v0.1.json",
+      "evidence_kind": "frozen_runtime_contract_family_member",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "The contract names this planner family, but no separately frozen Claim-ID/IR input projection or result artifact was identified in the allowed inventory. Family membership alone is insufficient for M0 admission.",
+      "m0_use_boundary": "Remain vacant/excluded until a concrete, independently reviewable input surface is frozen."
+    },
+    {
+      "experiment_id": "c12_holdout_v0.1",
+      "path": "09-experiments/results/c12_holdout_v0.1/c12-witfoo-precinct6-f10c7270_mvp_summary.json",
+      "evidence_kind": "sanitized_aggregate_result_supporting_evidence",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "This is an aggregate operational stress-case result, not a planner input contract. Its 45 repeated mask/intensity/seed conditions must not be promoted to independent Claim-ID surfaces, and the result must not be pooled with other holdout families.",
+      "m0_use_boundary": "Supporting result evidence only; exact input fields and Claim-ID semantics remain unclosed."
+    },
+    {
+      "experiment_id": "c12_holdout_v0.1_boundary",
+      "path": "09-experiments/results/c12_holdout_v0.1/README.md",
+      "evidence_kind": "result_scope_boundary",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "The README explicitly bounds C12 as one separate operational stress case and prohibits pooling with C07-C10 or C11. It is a guardrail, not an executable M0 input.",
+      "m0_use_boundary": "Use only to preserve non-pooling and non-pseudoreplication constraints."
+    }
+  ],
+  "certificate_experiment_inputs": [
+    {
+      "experiment_id": "certificate_experiment_surface_vacant",
+      "path": null,
+      "evidence_kind": "negative_inventory_explicit_scope_constraint",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "No concrete, committed, frozen certificate experiment input or sanitized certificate result was identified. The certificate surface therefore remains vacant.",
+      "m0_use_boundary": "No certificate ingestion, certificate generation, checker invocation, Promote action, or STOP claim is authorized."
+    },
+    {
+      "experiment_id": "certificate_generation_prohibited_by_implementation_plan",
+      "path": "docs/llm-editor/llm-editor-v0.8-implementation-plan-20260722.md",
+      "evidence_kind": "committed_scope_constraint",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "The implementation plan limits current output to candidate Claim IR and manifest/hash artifacts and explicitly prohibits invoking a real Checker, writing E_case, generating certificates, executing Promote, or declaring STOP.",
+      "m0_use_boundary": "Negative evidence only; it cannot serve as a certificate input."
+    },
+    {
+      "experiment_id": "certificate_canonical_state_unavailable",
+      "path": "docs/llm-editor/llm-editor-v0.8-current-state-audit-20260722.md",
+      "evidence_kind": "committed_state_audit_constraint",
+      "recommend_for_m0_allowlist": false,
+      "exclusion_reason": "The shared Kernel schema and canonical certificate state remain unavailable, so no certificate surface can be frozen from the current committed state.",
+      "m0_use_boundary": "Remain vacant until a separately authorized contract freezes certificate inputs, checker identity, and sanitized output semantics."
+    }
+  ],
+  "m0_allowlist_recommendation": {
+    "recommended_initial_ids": [
+      "project05_depth2_public"
+    ],
+    "supporting_only_ids": [
+      "project05_depth2_public_information_boundary"
+    ],
+    "conditional_or_unresolved_ids": [
+      "c12_holdout_v0.1"
+    ],
+    "explicitly_vacant": [
+      "certificate_experiment_surface_vacant"
+    ],
+    "decision_limit": "approve_for_separate_metadata_candidate_review_not_source_role"
+  },
+  "implementation_and_governance_controls": {
+    "publish_claim_ir_kernel_schema": false,
+    "schema_path_not_published": "schemas/claim-ir-kernel.schema.json",
+    "kernel_ingestion_authorized": false,
+    "m0_implementation_authorized": false,
+    "m1_implementation_authorized": false,
+    "m2_implementation_authorized": false,
+    "xgboost_fit_authorized": false,
+    "certificate_generation_authorized": false,
+    "checker_execution_authorized": false,
+    "e_case_write_authorized": false,
+    "catalog_write_authorized": false,
+    "role_assignment_authorized": false,
+    "credit_assignment_authorized": false,
+    "l2_gate_change_authorized": false,
+    "download_or_archive_access_performed": false,
+    "experiment_execution_performed": false,
+    "amendment_effective": false
+  },
+  "m2_gold_adjudication": {
+    "approver_role_to_freeze": "PI"
+  },
+  "open_uncertainties": [
+    "The exact field-level Claim-ID/IR projection for project05_depth2_public still requires a separate review; this inventory does not publish a schema.",
+    "C12 has aggregate result evidence but no separately frozen M0 input surface in the reviewed paths.",
+    "No certificate experiment input/result is available; certificate_experiment_inputs remains vacant.",
+    "The M2 gold/adjudication approver role is recorded as PI only; no person is named."
+  ],
+  "audit_trail": {
+    "read_only_inventory": true,
+    "schemas_modified": false,
+    "compiler_modified": false,
+    "kernel_written": false,
+    "experiments_run": false,
+    "archives_opened": false,
+    "catalog_modified": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
