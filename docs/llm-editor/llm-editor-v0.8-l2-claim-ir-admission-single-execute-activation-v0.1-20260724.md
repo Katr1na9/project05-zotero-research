@@ -1,6 +1,6 @@
 # Claim IR Admission single-execute activation audit note
 
-Status: activated but not executed.
+Status: executed once; single-use authority exhausted.
 
 This note supplements, but is not part of, the strict executor authority payload
 in the adjacent JSON file. The executor requires an exact field set, so local
@@ -39,14 +39,32 @@ non-canonical authority fields.
 
 ## Ledger and boundaries
 
-- Ledger: authorized/maximum/started/consumed/remaining = `1/1/0/0/1`.
+- Ledger: authorized/maximum/started/consumed/remaining = `1/1/1/1/0`.
 - Retry, resume, and fallback are false.
-- This activation authorizes exactly one future in-memory admission operation
-  under the frozen executor gates.
-- It does not execute admission and does not authorize a persisted admitted
-  package.
+- This activation authorized exactly one in-memory admission operation under
+  the frozen executor gates; that operation has been consumed.
+- The returned package and a short report were persisted only as local `.tmp`
+  audit artifacts under the separately authorized execution wrapper.
 - Mint, Claim-ID transition, Kernel/E_case write, certificate generation,
   catalog/source-role/lineage-credit/quota-credit/L2 changes, M2 fit, and
   four-family fine-tuning remain blocked.
 - No key, secret, or HMAC material is present.
 
+## Execution completion
+
+- Admission calls: exactly one.
+- Admitted package:
+  `.tmp/claim-ir-admission-single-execute-v0.1/package.json`
+- Admitted package SHA-256:
+  `f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32`
+- Run report:
+  `.tmp/claim-ir-admission-single-execute-v0.1/run-report.json`
+- Run report SHA-256:
+  `f90fb2409ca19a929378c95125b82d4c333747b37a9de3a4ce5144a768998f12`
+- Claim count: `41`.
+- `claim_id_state`: `minted_opaque` (unchanged).
+- `admission_state`: `admitted_under_separate_authority`.
+- `kernel_state`: `pending_kernel_schema`.
+- No retry, resume, fallback, second admission call, mint, Kernel/E_case write,
+  certificate generation, catalog/role/credit/L2 change, M2 fit, or
+  four-family fine-tuning occurred.
