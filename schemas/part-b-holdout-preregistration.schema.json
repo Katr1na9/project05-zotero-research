@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-holdout-preregistration.schema.json",
+  "title": "Project05 Part B B8 holdout preregistration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "preregistration_id",
+    "preregistration_version",
+    "status",
+    "authorized_slice",
+    "analysis_id",
+    "partition_id",
+    "analysis_registry",
+    "split_commitment",
+    "freeze",
+    "b4_roster_binding",
+    "access_boundary",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "preregistration_id": {
+      "const": "part-b-holdout-preregistration-v0.8"
+    },
+    "preregistration_version": {"const": "0.8.0"},
+    "status": {"const": "B8_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B8_HOLDOUT_ANALYSIS"},
+    "analysis_id": {"const": "HOLDOUT-ANALYSIS-V0.8-001"},
+    "partition_id": {"const": "HOLDOUT"},
+    "analysis_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "analysis_ids",
+        "finite_complete",
+        "dynamic_analysis_addition"
+      ],
+      "properties": {
+        "analysis_ids": {"const": ["HOLDOUT-ANALYSIS-V0.8-001"]},
+        "finite_complete": {"const": true},
+        "dynamic_analysis_addition": {"const": false}
+      }
+    },
+    "split_commitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "partition_id",
+        "split_fingerprint",
+        "commitment_semantics",
+        "committed_before_label_access",
+        "committed_before_result_access",
+        "labels_included",
+        "results_included",
+        "disclosure"
+      ],
+      "properties": {
+        "partition_id": {"const": "HOLDOUT"},
+        "split_fingerprint": {
+          "const": "sha256:5ed7e9b20144322e90d4d8a7608d7592b707581020b39bbedee4cc7ad32b6a3a"
+        },
+        "commitment_semantics": {
+          "const": "ABSTRACT_CONTRACT_FIXTURE_NOT_DATA"
+        },
+        "committed_before_label_access": {"const": true},
+        "committed_before_result_access": {"const": true},
+        "labels_included": {"const": false},
+        "results_included": {"const": false},
+        "disclosure": {"const": "IDENTIFIERS_AND_LABELS_SEALED"}
+      }
+    },
+    "freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "freeze_state",
+        "labels_visible_at_freeze",
+        "results_visible_at_freeze",
+        "roster_mutation_after_freeze",
+        "parameter_mutation_after_freeze",
+        "endpoint_mutation_after_freeze",
+        "estimand_mutation_after_freeze",
+        "method_mutation_after_freeze"
+      ],
+      "properties": {
+        "freeze_state": {"const": "FROZEN_BEFORE_ANY_HOLDOUT_ACCESS"},
+        "labels_visible_at_freeze": {"const": false},
+        "results_visible_at_freeze": {"const": false},
+        "roster_mutation_after_freeze": {"const": false},
+        "parameter_mutation_after_freeze": {"const": false},
+        "endpoint_mutation_after_freeze": {"const": false},
+        "estimand_mutation_after_freeze": {"const": false},
+        "method_mutation_after_freeze": {"const": false}
+      }
+    },
+    "b4_roster_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry_hash",
+        "baseline_ids",
+        "no_new_methods",
+        "roster_mutation"
+      ],
+      "properties": {
+        "registry_hash": {
+          "const": "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+        },
+        "baseline_ids": {
+          "const": [
+            "NO_ACQUISITION",
+            "RANDOM_FEASIBLE",
+            "COVERAGE_GREEDY",
+            "CMI_PROXY",
+            "M1_STATIC_EXPECTED_GAIN",
+            "M2_TRANSPARENT",
+            "M3A_GAP_COMPATIBILITY",
+            "LOGISTIC_M3B",
+            "XGBOOST_ACTION_VALUE",
+            "AFA_VOI_MYOPIC",
+            "AFA_VOI_ROLLOUT_H3",
+            "DEPTH2_PUBLIC",
+            "ORACLE_EVALUATION_ONLY"
+          ]
+        },
+        "no_new_methods": {"const": true},
+        "roster_mutation": {"const": false}
+      }
+    },
+    "access_boundary": {"$ref": "#/$defs/accessBoundary"},
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {
+      "const": "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"
+    }
+  },
+  "$defs": {
+    "accessBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_data_loaded",
+        "holdout_labels_loaded",
+        "holdout_results_loaded",
+        "statistics_computed"
+      ],
+      "properties": {
+        "holdout_data_loaded": {"const": false},
+        "holdout_labels_loaded": {"const": false},
+        "holdout_results_loaded": {"const": false},
+        "statistics_computed": {"const": false}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

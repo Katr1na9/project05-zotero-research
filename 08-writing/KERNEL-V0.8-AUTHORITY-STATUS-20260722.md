@@ -5,8 +5,8 @@
 ```text
 Branch: feat/kernel-v0.8
 Working state: A16 GO closeout (scoped Kernel Part A)
-Regression: 249/249 PASS at the B6 local contract review tip
-(227 pre-B6 + 22 B6)
+Regression: 299/299 PASS at the B8 local contract review tip
+(273 pre-B8 + 26 B8)
 A16 Decision: PASSED / GO — Kernel v0.8 Part A only
 Push: AUTHORIZED after final closeout commit and clean full replay
 PR: AUTHORIZED for Kernel-only scope against main
@@ -15,8 +15,10 @@ B2_STOCHASTIC_OBSERVATION CONTRACT-ONLY AUTHORIZED on 2026-07-23;
 B3_COST_INSTRUMENTATION AUTHORIZED FOR LOCAL TRACE AGGREGATION on 2026-07-23;
 B4_BASELINE_PREREG APPROVED / MERGED on 2026-07-23;
 B5_PLANNER_INTERFACE APPROVED / MERGED on 2026-07-23;
-B6_CLOSED_LOOP_EVAL AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-23;
-B7–B9 CLOSED
+B6_CLOSED_LOOP_EVAL APPROVED / MERGED on 2026-07-23;
+B7_BROAD_CONNECTORS APPROVED / MERGED on 2026-07-24;
+B8_HOLDOUT_ANALYSIS AUTHORIZED FOR LOCAL CONTRACT REVIEW on 2026-07-24;
+B9 CLOSED
 LLM integration: NOT AUTHORIZED by this ruling
 Legacy M3*: OUT OF SCOPE / NOT VALIDATED
 Broad-input evaluation: NOT AUTHORIZED
@@ -48,13 +50,13 @@ v0.8 Part B map:
 |---|---|---|
 | B0 | `B0_PLANNING_AND_CONTRACTS` | COMPLETED / APPROVED |
 | B1 | `B1_FEDERATION_SCHEMAS` | APPROVED / MERGED |
-| B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED — CONTRACT ONLY / NO SAMPLING |
-| B3 | `B3_COST_INSTRUMENTATION` | LOCAL REVIEW — TRACE AGGREGATION ONLY |
+| B2 | `B2_STOCHASTIC_OBSERVATION` | APPROVED / MERGED — CONTRACT ONLY / NO SAMPLING |
+| B3 | `B3_COST_INSTRUMENTATION` | APPROVED / MERGED — TRACE AGGREGATION ONLY |
 | B4 | `B4_BASELINE_PREREG` | APPROVED / MERGED — CONTRACT ONLY |
 | B5 | `B5_PLANNER_INTERFACE` | APPROVED / MERGED — CONTRACT ONLY / NO EXECUTION |
-| B6 | `B6_CLOSED_LOOP_EVAL` | LOCAL REVIEW — CONTRACT ONLY / NO EXECUTION |
-| B7 | `B7_BROAD_CONNECTORS` | CLOSED |
-| B8 | `B8_HOLDOUT_ANALYSIS` | CLOSED |
+| B6 | `B6_CLOSED_LOOP_EVAL` | APPROVED / MERGED — CONTRACT ONLY / NO EXECUTION |
+| B7 | `B7_BROAD_CONNECTORS` | APPROVED / MERGED — CONTRACT ONLY / NO SOURCE |
+| B8 | `B8_HOLDOUT_ANALYSIS` | LOCAL REVIEW — CONTRACT ONLY / NO ACCESS |
 | B9 | `B9_FREEZE_AND_CLAIMS` | CLOSED |
 
 This map ruling froze names and slice boundaries only. The later explicit B1
@@ -676,3 +678,65 @@ sha256:f595cdee0a6c51f7a702e540bab71205f2b28a9701d991c214e28f1af8940ac9
 B7 manifest:
 sha256:28179580dc0e8c4dbc6f1a6cb1d5f0d4939a3ae7466c078e60f20fb16fffac49
 ```
+
+## 13. Part B B8 holdout-analysis contract status
+
+Status: **LOCAL REVIEW — B8 CONTRACT ONLY**
+
+```text
+Authorized slice: B8_HOLDOUT_ANALYSIS
+holdout_preregistration_contract_authority=true
+statistical_analysis_contract_authority=true
+analysis_envelope_contract_authority=true
+holdout_data_access_authority=false
+holdout_label_access_authority=false
+holdout_result_access_authority=false
+statistical_analysis_execution_authority=false
+source_selection_authority=false
+source_authorization_authority=false
+connector_execution_authority=false
+planner_execution_authority=false
+sampling_authority=false
+scalarization_authority=false
+performance_claim_authority=false
+stop_authority=NONE
+B9=CLOSED
+```
+
+B8 freezes a finite, outcome-blind holdout preregistration, a statistical
+analysis plan and a no-data analysis envelope. The configured split
+fingerprint commits an abstract phrase only; it is not a real dataset,
+partition validation, completeness statement or source authorization.
+
+The release policy remains default `DENY`. There is NO HOLDOUT LABEL access,
+NO HOLDOUT RESULT access and NO STATISTICAL EXECUTION. B4 isolation remains
+unchanged, and no outcome may flow to TRAIN, TUNE, EVALUATION, a Planner or
+any model.
+
+`PB-SI-006` and `PB-B5-SI-001` remain OPEN. B8 grants no real source,
+implementation admission, external validity, performance ranking,
+superiority claim, certificate, system status or `CERTIFIED_STOP`.
+
+The B8 artifact identities are:
+
+```text
+Holdout analysis policy:
+sha256:542ed51380c7dc3e5ba1553d3c80b1a55e5ca5b008cb38d3df831fdee828b603
+
+Holdout preregistration:
+sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342
+
+Statistical analysis plan example:
+sha256:57e24fd84df55adf44fbcae6c0dbf9248750c0901a6075ad845962c11b5e0627
+
+B8 manifest:
+sha256:4e6e4ec552d3a9c20c8c68e76766205cb1b2ecdf6dfbfe95866085e0b56c593b
+
+No-data analysis envelope:
+sha256:6126bd2145b1a05c91bf53aa81c599992a787d0dd6a43847f5a67f0bb07a07ed
+```
+
+The B8 evidence level remains `CONTRACT_CONSISTENCY_ONLY`. B9 stays closed.
+The local B8 review passed `26/26` targeted tests and `299/299` full
+repository tests. These results do not authorize commit, push, PR, data
+access or statistical execution.

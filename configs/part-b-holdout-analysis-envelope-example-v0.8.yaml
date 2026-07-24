@@ -1,0 +1,40 @@
+schema_version: "0.8.0"
+envelope_id: part-b-holdout-analysis-envelope-example-v0.8
+envelope_version: "0.8.0"
+status: B8_CONTRACT_ONLY
+authorized_slice: B8_HOLDOUT_ANALYSIS
+analysis_id: HOLDOUT-ANALYSIS-V0.8-001
+envelope_state: PREREGISTERED_NO_DATA
+bindings:
+  holdout_analysis_policy_hash: "sha256:542ed51380c7dc3e5ba1553d3c80b1a55e5ca5b008cb38d3df831fdee828b603"
+  holdout_preregistration_hash: "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"
+  statistical_analysis_plan_hash: "sha256:57e24fd84df55adf44fbcae6c0dbf9248750c0901a6075ad845962c11b5e0627"
+  b8_manifest_hash: "sha256:4e6e4ec552d3a9c20c8c68e76766205cb1b2ecdf6dfbfe95866085e0b56c593b"
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  b7_manifest_hash: "sha256:28179580dc0e8c4dbc6f1a6cb1d5f0d4939a3ae7466c078e60f20fb16fffac49"
+release_decision: DENY
+access_boundary:
+  holdout_data_loaded: false
+  holdout_labels_loaded: false
+  holdout_results_loaded: false
+  statistics_computed: false
+execution_boundary:
+  holdout_access: false
+  source_retrieval: false
+  connector_execution: false
+  planner_execution: false
+  statistical_analysis: false
+proof_boundary:
+  preregistration_bound: true
+  policy_bound: true
+  manifest_bound: true
+  data_validated: false
+  analysis_executed: false
+  performance_validity: false
+  superiority_claim: false
+limitations:
+  - This envelope is a preregistered no-data fixture and cannot carry outcomes.
+  - Its DENY decision cannot be widened without a separate execution authorization.
+  - It emits no ranking, claim, certificate, system status, or STOP.
+hash: "sha256:6126bd2145b1a05c91bf53aa81c599992a787d0dd6a43847f5a67f0bb07a07ed"
