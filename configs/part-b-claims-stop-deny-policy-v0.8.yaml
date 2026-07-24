@@ -1,0 +1,42 @@
+schema_version: "0.8.0"
+policy_id: part-b-claims-stop-deny-policy-v0.8
+slice_status: CLAIMS_STOP_DENY_GATE_ONLY
+claim_ceiling_remainder: CONTRACT_CONSISTENCY_ONLY
+scalarization_authority: false
+scalarization_decision: DENY
+performance_superiority_authority: false
+performance_superiority_decision: DENY
+stop_authority: NONE
+certified_stop: NOT_AUTHORIZED
+decision_boundary:
+  contract_consistency_check: NO_CLAIM_OR_STOP_AUTHORIZATION_REQUEST
+  elevation_targets:
+    - SCALARIZED_RANKING
+    - PERFORMANCE_SUPERIORITY
+    - CERTIFICATE_ISSUED
+    - CERTIFIED_STOP
+  elevation_decision: DENY
+  unknown_request: FAIL_CLOSED_DENY
+  separate_authorization: SEPARATE_HIGHEST_STRINGENCY_AUTHORIZATION_REQUIRED
+basis_boundary:
+  contract_only_stop_proof: false
+  b2_sampler_stub_stop_proof: false
+  b3_capture_fixture_stop_proof: false
+  b5_admission_record_stop_proof: false
+adjacent_gates:
+  holdout_release: DENY
+  pb_si_006_download: DENY
+  pb_si_008: NOT_OPENED
+  pb_b5_execution: NOT_ESTABLISHED
+authority_boundary:
+  certificate_issuance_authority: false
+  level_certificate_authority: false
+  part_a_stop_authority_extension: false
+  sampler_result_stop_authority: false
+  admission_result_stop_authority: false
+reason_codes:
+  no_elevation_request: CLAIMS-STOP-000_NO_ELEVATION_REQUEST
+  elevation_denied: CLAIMS-STOP-001_ELEVATION_DENIED
+  request_invalid: CLAIMS-STOP-002_REQUEST_INVALID
+  unknown_field: CLAIMS-STOP-003_UNKNOWN_FIELD
+hash: "sha256:263dc77b66430ecc6685515c0a3869145554135e367fe63e2d1a0d7232c27878"

@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-claims-stop-deny-manifest.schema.json",
+  "title": "Part B claims and CERTIFIED_STOP DENY manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "slice_status",
+    "claim_ceiling_remainder",
+    "scalarization_authority",
+    "scalarization_decision",
+    "performance_superiority_authority",
+    "performance_superiority_decision",
+    "stop_authority",
+    "certified_stop",
+    "holdout_release",
+    "pb_si_006_download",
+    "pb_si_008",
+    "pb_b5_execution",
+    "certificate_issuance_authority",
+    "level_certificate_authority",
+    "part_a_stop_authority_extension",
+    "sampler_result_stop_authority",
+    "admission_result_stop_authority",
+    "proof_boundary",
+    "artifacts",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "manifest_id": {
+      "const": "part-b-claims-stop-deny-manifest-v0.8"
+    },
+    "manifest_version": {
+      "const": "0.8.0"
+    },
+    "slice_status": {
+      "const": "CLAIMS_STOP_DENY_GATE_ONLY"
+    },
+    "claim_ceiling_remainder": {
+      "const": "CONTRACT_CONSISTENCY_ONLY"
+    },
+    "scalarization_authority": {
+      "const": false
+    },
+    "scalarization_decision": {
+      "const": "DENY"
+    },
+    "performance_superiority_authority": {
+      "const": false
+    },
+    "performance_superiority_decision": {
+      "const": "DENY"
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "certified_stop": {
+      "const": "NOT_AUTHORIZED"
+    },
+    "holdout_release": {
+      "const": "DENY"
+    },
+    "pb_si_006_download": {
+      "const": "DENY"
+    },
+    "pb_si_008": {
+      "const": "NOT_OPENED"
+    },
+    "pb_b5_execution": {
+      "const": "NOT_ESTABLISHED"
+    },
+    "certificate_issuance_authority": {
+      "const": false
+    },
+    "level_certificate_authority": {
+      "const": false
+    },
+    "part_a_stop_authority_extension": {
+      "const": false
+    },
+    "sampler_result_stop_authority": {
+      "const": false
+    },
+    "admission_result_stop_authority": {
+      "const": false
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deny_gate_validated",
+        "contract_consistency_only",
+        "scalarized_ranking",
+        "performance_superiority",
+        "certificate_issued",
+        "certified_stop_authorized",
+        "part_a_kernel_gamma_unchanged",
+        "part_a_stop_semantics_unchanged"
+      ],
+      "properties": {
+        "deny_gate_validated": {
+          "const": true
+        },
+        "contract_consistency_only": {
+          "const": true
+        },
+        "scalarized_ranking": {
+          "const": false
+        },
+        "performance_superiority": {
+          "const": false
+        },
+        "certificate_issued": {
+          "const": false
+        },
+        "certified_stop_authorized": {
+          "const": false
+        },
+        "part_a_kernel_gamma_unchanged": {
+          "const": true
+        },
+        "part_a_stop_semantics_unchanged": {
+          "const": true
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_hash",
+        "example_record_hash"
+      ],
+      "properties": {
+        "policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "example_record_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

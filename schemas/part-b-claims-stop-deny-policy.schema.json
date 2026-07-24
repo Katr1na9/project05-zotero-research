@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-claims-stop-deny-policy.schema.json",
+  "title": "Part B claims, scalarization and CERTIFIED_STOP DENY policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "slice_status",
+    "claim_ceiling_remainder",
+    "scalarization_authority",
+    "scalarization_decision",
+    "performance_superiority_authority",
+    "performance_superiority_decision",
+    "stop_authority",
+    "certified_stop",
+    "decision_boundary",
+    "basis_boundary",
+    "adjacent_gates",
+    "authority_boundary",
+    "reason_codes",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "policy_id": {
+      "const": "part-b-claims-stop-deny-policy-v0.8"
+    },
+    "slice_status": {
+      "const": "CLAIMS_STOP_DENY_GATE_ONLY"
+    },
+    "claim_ceiling_remainder": {
+      "const": "CONTRACT_CONSISTENCY_ONLY"
+    },
+    "scalarization_authority": {
+      "const": false
+    },
+    "scalarization_decision": {
+      "const": "DENY"
+    },
+    "performance_superiority_authority": {
+      "const": false
+    },
+    "performance_superiority_decision": {
+      "const": "DENY"
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "certified_stop": {
+      "const": "NOT_AUTHORIZED"
+    },
+    "decision_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_consistency_check",
+        "elevation_targets",
+        "elevation_decision",
+        "unknown_request",
+        "separate_authorization"
+      ],
+      "properties": {
+        "contract_consistency_check": {
+          "const": "NO_CLAIM_OR_STOP_AUTHORIZATION_REQUEST"
+        },
+        "elevation_targets": {
+          "type": "array",
+          "const": [
+            "SCALARIZED_RANKING",
+            "PERFORMANCE_SUPERIORITY",
+            "CERTIFICATE_ISSUED",
+            "CERTIFIED_STOP"
+          ]
+        },
+        "elevation_decision": {
+          "const": "DENY"
+        },
+        "unknown_request": {
+          "const": "FAIL_CLOSED_DENY"
+        },
+        "separate_authorization": {
+          "const": "SEPARATE_HIGHEST_STRINGENCY_AUTHORIZATION_REQUIRED"
+        }
+      }
+    },
+    "basis_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_only_stop_proof",
+        "b2_sampler_stub_stop_proof",
+        "b3_capture_fixture_stop_proof",
+        "b5_admission_record_stop_proof"
+      ],
+      "properties": {
+        "contract_only_stop_proof": {
+          "const": false
+        },
+        "b2_sampler_stub_stop_proof": {
+          "const": false
+        },
+        "b3_capture_fixture_stop_proof": {
+          "const": false
+        },
+        "b5_admission_record_stop_proof": {
+          "const": false
+        }
+      }
+    },
+    "adjacent_gates": {
+      "$ref": "#/$defs/adjacentGates"
+    },
+    "authority_boundary": {
+      "$ref": "#/$defs/authorityBoundary"
+    },
+    "reason_codes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_elevation_request",
+        "elevation_denied",
+        "request_invalid",
+        "unknown_field"
+      ],
+      "properties": {
+        "no_elevation_request": {
+          "const": "CLAIMS-STOP-000_NO_ELEVATION_REQUEST"
+        },
+        "elevation_denied": {
+          "const": "CLAIMS-STOP-001_ELEVATION_DENIED"
+        },
+        "request_invalid": {
+          "const": "CLAIMS-STOP-002_REQUEST_INVALID"
+        },
+        "unknown_field": {
+          "const": "CLAIMS-STOP-003_UNKNOWN_FIELD"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "adjacentGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_release",
+        "pb_si_006_download",
+        "pb_si_008",
+        "pb_b5_execution"
+      ],
+      "properties": {
+        "holdout_release": {
+          "const": "DENY"
+        },
+        "pb_si_006_download": {
+          "const": "DENY"
+        },
+        "pb_si_008": {
+          "const": "NOT_OPENED"
+        },
+        "pb_b5_execution": {
+          "const": "NOT_ESTABLISHED"
+        }
+      }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "certificate_issuance_authority",
+        "level_certificate_authority",
+        "part_a_stop_authority_extension",
+        "sampler_result_stop_authority",
+        "admission_result_stop_authority"
+      ],
+      "properties": {
+        "certificate_issuance_authority": {
+          "const": false
+        },
+        "level_certificate_authority": {
+          "const": false
+        },
+        "part_a_stop_authority_extension": {
+          "const": false
+        },
+        "sampler_result_stop_authority": {
+          "const": false
+        },
+        "admission_result_stop_authority": {
+          "const": false
+        }
+      }
+    }
+  }
+}

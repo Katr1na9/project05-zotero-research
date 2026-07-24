@@ -173,3 +173,28 @@ read**. Holdout release and SI-006 download remain `DENY`; B5 execution
 remains `NOT_ESTABLISHED`; PB-B8-SI-004 remains `OPEN`; and
 `stop_authority=NONE`. The update does not open PB-SI-008 or change a frozen
 Part B artifact hash.
+
+## Part B claims / CERTIFIED_STOP narrow DENY gate
+
+**State:** `CLAIMS_STOP_DENY_GATE_ONLY`.
+
+The local fail-closed gate freezes
+`claim_ceiling_remainder=CONTRACT_CONSISTENCY_ONLY`. It denies elevation to
+`SCALARIZED_RANKING`, `PERFORMANCE_SUPERIORITY`, `CERTIFICATE_ISSUED` and
+`CERTIFIED_STOP`.
+
+```text
+scalarization_authority=false / decision=DENY
+performance_superiority_authority=false / decision=DENY
+stop_authority=NONE
+CERTIFIED_STOP=NOT_AUTHORIZED
+holdout release=DENY
+PB-SI-006 download=DENY
+PB-SI-008=NOT_OPENED
+PB-B5 execution=NOT_ESTABLISHED
+```
+
+Sampler-stub, capture-fixture and admission-record results are not stopping
+proof. This is a **DENY GATE ONLY**: **PART A KERNEL GAMMA UNCHANGED** and
+the deterministic Part A stop semantics remain unchanged. Any future
+enablement requires **SEPARATE HIGHEST-STRINGENCY AUTHORIZATION**.
