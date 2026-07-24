@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-planner-admission-policy.schema.json",
+  "title": "Part B B5 planner admission policy v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "admission_scope",
+    "admissible_implementation_ids",
+    "legacy_rejections",
+    "unknown_implementation_behavior",
+    "required_evidence_slots",
+    "evidence_hash_bindings",
+    "decision_table",
+    "authority_boundary",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-b5-planner-admission-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B5_ADMISSION_SKELETON_LOCAL_ONLY"},
+    "authorized_slice": {
+      "const": "B5_PLANNER_IMPLEMENTATION_ADMISSION_SKELETON"
+    },
+    "admission_scope": {"const": "INTERFACE_CONFORMANCE_ONLY"},
+    "admissible_implementation_ids": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "part_b_b5_planner_admission_skeleton_v0.8"}
+      ],
+      "items": false,
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "legacy_rejections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project05_m3star_h3_dual"],
+      "properties": {
+        "project05_m3star_h3_dual": {
+          "const": "NOT_ADMITTED_UNVERIFIED"
+        }
+      }
+    },
+    "unknown_implementation_behavior": {
+      "const": "FAIL_CLOSED_DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    "required_evidence_slots": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "dependency"},
+        {"const": "parameter"},
+        {"const": "feature_provenance"},
+        {"const": "runtime_conformance"}
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "evidence_hash_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dependency",
+        "parameter",
+        "feature_provenance",
+        "runtime_conformance"
+      ],
+      "properties": {
+        "dependency": {"const": "dependency_lock_hash"},
+        "parameter": {"const": "parameter_manifest_hash"},
+        "feature_provenance": {"const": "feature_provenance_hash"},
+        "runtime_conformance": {"const": "runtime_conformance_hash"}
+      }
+    },
+    "decision_table": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/admitRow"
+        },
+        {
+          "$ref": "#/$defs/legacyRow"
+        },
+        {
+          "$ref": "#/$defs/unknownRow"
+        },
+        {
+          "$ref": "#/$defs/incompleteRow"
+        },
+        {
+          "$ref": "#/$defs/mismatchRow"
+        },
+        {
+          "$ref": "#/$defs/runtimeFailedRow"
+        }
+      ],
+      "items": false,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_admission_record",
+        "planner_execution",
+        "evaluation_execution",
+        "sampling",
+        "production_capture",
+        "holdout_release",
+        "scalarization",
+        "performance_claim",
+        "superiority_claim",
+        "certificate",
+        "stop_authority"
+      ],
+      "properties": {
+        "local_admission_record": {"const": true},
+        "planner_execution": {"const": false},
+        "evaluation_execution": {"const": false},
+        "sampling": {"const": false},
+        "production_capture": {"const": false},
+        "holdout_release": {"const": false},
+        "scalarization": {"const": false},
+        "performance_claim": {"const": false},
+        "superiority_claim": {"const": false},
+        "certificate": {"const": false},
+        "stop_authority": {"const": "NONE"}
+      }
+    },
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "decisionRowBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "decision", "reason_code"],
+      "properties": {
+        "condition": {"type": "string"},
+        "decision": {"type": "string"},
+        "reason_code": {"type": "string"}
+      }
+    },
+    "admitRow": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionRowBase"},
+        {
+          "properties": {
+            "condition": {"const": "IDENTITY_AND_ALL_EVIDENCE_VERIFIED"},
+            "decision": {"const": "ADMITTED_CONFORMANCE_ONLY"},
+            "reason_code": {"const": "B5-ADM-000-CONFORMANCE-ONLY"}
+          }
+        }
+      ]
+    },
+    "legacyRow": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionRowBase"},
+        {
+          "properties": {
+            "condition": {"const": "LEGACY_UNVERIFIED_ID"},
+            "decision": {"const": "DENY_NOT_ADMITTED_UNVERIFIED"},
+            "reason_code": {"const": "B5-ADM-LEGACY-NOT-ADMITTED"}
+          }
+        }
+      ]
+    },
+    "unknownRow": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionRowBase"},
+        {
+          "properties": {
+            "condition": {"const": "UNKNOWN_IMPLEMENTATION_ID"},
+            "decision": {"const": "DENY_UNKNOWN_IMPLEMENTATION"},
+            "reason_code": {"const": "B5-ADM-UNKNOWN-ID"}
+          }
+        }
+      ]
+    },
+    "incompleteRow": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionRowBase"},
+        {
+          "properties": {
+            "condition": {"const": "EVIDENCE_INCOMPLETE"},
+            "decision": {"const": "DENY_EVIDENCE_INCOMPLETE"},
+            "reason_code": {"const": "B5-ADM-EVIDENCE-INCOMPLETE"}
+          }
+        }
+      ]
+    },
+    "mismatchRow": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionRowBase"},
+        {
+          "properties": {
+            "condition": {"const": "EVIDENCE_HASH_MISMATCH"},
+            "decision": {"const": "DENY_EVIDENCE_HASH_MISMATCH"},
+            "reason_code": {"const": "B5-ADM-EVIDENCE-HASH-MISMATCH"}
+          }
+        }
+      ]
+    },
+    "runtimeFailedRow": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionRowBase"},
+        {
+          "properties": {
+            "condition": {"const": "RUNTIME_CONFORMANCE_FAILED"},
+            "decision": {"const": "DENY_RUNTIME_CONFORMANCE_FAILED"},
+            "reason_code": {
+              "const": "B5-ADM-RUNTIME-CONFORMANCE-FAILED"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

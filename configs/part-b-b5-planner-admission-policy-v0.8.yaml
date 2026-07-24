@@ -1,0 +1,53 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-planner-admission-policy-v0.8
+policy_version: "0.8.0"
+status: B5_ADMISSION_SKELETON_LOCAL_ONLY
+authorized_slice: B5_PLANNER_IMPLEMENTATION_ADMISSION_SKELETON
+admission_scope: INTERFACE_CONFORMANCE_ONLY
+admissible_implementation_ids:
+  - part_b_b5_planner_admission_skeleton_v0.8
+legacy_rejections:
+  project05_m3star_h3_dual: NOT_ADMITTED_UNVERIFIED
+unknown_implementation_behavior: FAIL_CLOSED_DENY_UNKNOWN_IMPLEMENTATION
+required_evidence_slots:
+  - dependency
+  - parameter
+  - feature_provenance
+  - runtime_conformance
+evidence_hash_bindings:
+  dependency: dependency_lock_hash
+  parameter: parameter_manifest_hash
+  feature_provenance: feature_provenance_hash
+  runtime_conformance: runtime_conformance_hash
+decision_table:
+  - condition: IDENTITY_AND_ALL_EVIDENCE_VERIFIED
+    decision: ADMITTED_CONFORMANCE_ONLY
+    reason_code: B5-ADM-000-CONFORMANCE-ONLY
+  - condition: LEGACY_UNVERIFIED_ID
+    decision: DENY_NOT_ADMITTED_UNVERIFIED
+    reason_code: B5-ADM-LEGACY-NOT-ADMITTED
+  - condition: UNKNOWN_IMPLEMENTATION_ID
+    decision: DENY_UNKNOWN_IMPLEMENTATION
+    reason_code: B5-ADM-UNKNOWN-ID
+  - condition: EVIDENCE_INCOMPLETE
+    decision: DENY_EVIDENCE_INCOMPLETE
+    reason_code: B5-ADM-EVIDENCE-INCOMPLETE
+  - condition: EVIDENCE_HASH_MISMATCH
+    decision: DENY_EVIDENCE_HASH_MISMATCH
+    reason_code: B5-ADM-EVIDENCE-HASH-MISMATCH
+  - condition: RUNTIME_CONFORMANCE_FAILED
+    decision: DENY_RUNTIME_CONFORMANCE_FAILED
+    reason_code: B5-ADM-RUNTIME-CONFORMANCE-FAILED
+authority_boundary:
+  local_admission_record: true
+  planner_execution: false
+  evaluation_execution: false
+  sampling: false
+  production_capture: false
+  holdout_release: false
+  scalarization: false
+  performance_claim: false
+  superiority_claim: false
+  certificate: false
+  stop_authority: NONE
+hash: "sha256:b80def1586cd9ef149ae237353372d974507b5bf25f04827c3f9cbd22a340f93"

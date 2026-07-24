@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-planner-admission-record.schema.json",
+  "title": "Part B B5 planner admission record v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "record_version",
+    "implementation_id",
+    "implementation_identity_hash",
+    "admission_evidence_hash",
+    "policy_hash",
+    "decision",
+    "reason_codes",
+    "admission_scope",
+    "planner_execution_authority",
+    "evaluation_execution_authority",
+    "holdout_release_authority",
+    "performance_claim_authority",
+    "scalarization_authority",
+    "stop_authority",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "record_id": {"$ref": "#/$defs/hash"},
+    "record_version": {"const": "0.8.0"},
+    "implementation_id": {"type": "string", "minLength": 1},
+    "implementation_identity_hash": {"$ref": "#/$defs/hash"},
+    "admission_evidence_hash": {"$ref": "#/$defs/hash"},
+    "policy_hash": {"$ref": "#/$defs/hash"},
+    "decision": {
+      "enum": [
+        "ADMITTED_CONFORMANCE_ONLY",
+        "DENY_NOT_ADMITTED_UNVERIFIED",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_EVIDENCE_INCOMPLETE",
+        "DENY_EVIDENCE_HASH_MISMATCH",
+        "DENY_RUNTIME_CONFORMANCE_FAILED"
+      ]
+    },
+    "reason_codes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^B5-ADM-[A-Z0-9-]+$"
+      }
+    },
+    "admission_scope": {"const": "INTERFACE_CONFORMANCE_ONLY"},
+    "planner_execution_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

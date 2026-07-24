@@ -61,6 +61,30 @@ scalarization. Contract validation gives `CONTRACT_CONSISTENCY_ONLY`,
 `NO_IMPLEMENTATION_VALIDATION`, `NO_PERFORMANCE_VALIDITY` and
 `NO_SUPERIORITY_CLAIM`.
 
+## 2026-07-24 superseding narrow ruling for PB-B5-SI-001
+
+**Current evidence-path state:**
+`SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED`.
+
+The earlier `OPEN` text remains the historical B5 interface-contract state.
+This separately authorized local slice establishes only a closed identity,
+dependency, parameter, feature-provenance and runtime-conformance evidence
+path plus a deterministic admission record. Planner execution authority:
+NOT ESTABLISHED.
+
+The only positive record is `ADMITTED_CONFORMANCE_ONLY` for the local
+non-executing admission skeleton. It must not be rendered as "admitted for
+execution". Legacy `project05_m3star_h3_dual` remains
+`NOT_ADMITTED_UNVERIFIED` and maps to
+`DENY_NOT_ADMITTED_UNVERIFIED`.
+
+`PB-B5-SI-002` remains open and blocks evaluation execution.
+`PB-B5-SI-003` remains open and blocks performance/scalarization.
+`PB-SI-006` remains `OPEN_DEFAULT_DENY`; holdout release: DENY.
+No certificate, system state or `CERTIFIED_STOP` follows. The claim ceiling
+is `CONTRACT_CONSISTENCY_ONLY` with
+`NO_PERFORMANCE_OR_SUPERIORITY_CLAIM`.
+
 ## Preserved boundaries
 
 B5 runs no baseline, Planner, B2 sampler, B3 production capture, experiment,
