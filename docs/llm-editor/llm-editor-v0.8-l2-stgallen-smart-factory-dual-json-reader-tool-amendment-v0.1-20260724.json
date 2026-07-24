@@ -1,0 +1,163 @@
+{
+  "schema_version": "project05-llm-editor-l2-stgallen-smart-factory-dual-json-reader-tool-amendment-v0.1",
+  "frozen_date": "2026-07-24",
+  "authority_base_commit": "c9ddf09",
+  "status": "dual_reader_and_parser_identity_frozen_audit_not_authorized",
+  "purpose": "Pin one existing CPython runtime and two strictly separated standard-library reader modes for the identity-verified St.Gallen pair: bounded in-memory JSON for the protected manifest and bounded binary-line plus strict UTF-8 JSON parsing for the sensor surface. Freeze the dormant parser and fail-closed execution gate without statting, opening, reading, or parsing either acquired surface.",
+  "inputs": {
+    "target_ids": [
+      "stgallen_camunda_process_manifest_surface",
+      "stgallen_training_sensor_log_surface"
+    ],
+    "acquisition_contract_json": "docs/llm-editor/llm-editor-v0.8-l2-stgallen-smart-factory-exact-bounded-dual-surface-acquisition-contract-v0.1-20260724.json",
+    "acquisition_contract_sha256": "f7a794e0774ecd1df58da98d487369892109644c706728cc23bc9ccf2b12af20",
+    "acquisition_result_json": "docs/llm-editor/llm-editor-v0.8-l2-stgallen-smart-factory-dual-surface-acquisition-result-v0.1-20260724.json",
+    "acquisition_result_sha256": "abc473ef9ce4c01bb21a9f78658c9e70bf58fddca84dfc3377b0408acfce8389",
+    "acquisition_result_markdown_sha256": "0cfb64c93efb2613307ad6104e507fb76848db922c230189b6d4a8baf88351b6",
+    "acquisition_result_commit": "c9ddf09",
+    "acquisition_identity_status": "verified_dual_surface_acquisition_complete_hard_stopped"
+  },
+  "reader": {
+    "name": "CPython standard-library dual JSON and JSONL reader",
+    "python_version": "3.11.15 (main, Jun 23 2026, 15:20:37) [MSC v.1944 64 bit (AMD64)]",
+    "installed_during_this_step": false,
+    "components": [
+      {
+        "component": "venv_python_executable",
+        "path_template": "%LOCALAPPDATA%\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+        "bytes": 45568,
+        "sha256": "0cf37e7be6ee71edef78e6c81f7dcef58237b204af36d6e83393c96538a52372"
+      },
+      {
+        "component": "base_python_executable",
+        "path_template": "%APPDATA%\\uv\\python\\cpython-3.11-windows-x86_64-none\\python.exe",
+        "bytes": 91648,
+        "sha256": "ae7e969410d751d010c2ca03394fe5c53230fbf48ca7d368b897e455eca14fba"
+      },
+      {
+        "component": "python311_dll",
+        "path_template": "%APPDATA%\\uv\\python\\cpython-3.11-windows-x86_64-none\\python311.dll",
+        "bytes": 5842944,
+        "sha256": "e1b53c741751563eca9eac70378de5be36994adac8c27e8ec375971579e23b50"
+      },
+      {
+        "component": "stdlib_json_module",
+        "path_template": "%APPDATA%\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\json\\__init__.py",
+        "bytes": 14020,
+        "sha256": "d5d41e2c29049515d295d81a6d40b4890fbec8d8482cfb401630f8ef2f77e4d5"
+      },
+      {
+        "component": "stdlib_hashlib_module",
+        "path_template": "%APPDATA%\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\hashlib.py",
+        "bytes": 11765,
+        "sha256": "e2bffb462e4d43e6637b9450e259e8ba2a56626ba3037d68aa1cee68b3f61d4a"
+      },
+      {
+        "component": "stdlib_re_module",
+        "path_template": "%APPDATA%\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\re\\__init__.py",
+        "bytes": 15889,
+        "sha256": "029ead61f362489e9bb034f4c2503abee95462056541e9ad07715de3c353b0da"
+      }
+    ],
+    "identity_gate": {
+      "exact_python_version_required": true,
+      "all_component_paths_sizes_and_sha256_required": true,
+      "identity_mismatch_action": "fail_closed_before_either_surface_stat_or_open"
+    }
+  },
+  "surface_readers": [
+    {
+      "target_id": "stgallen_camunda_process_manifest_surface",
+      "surface_class": "protected_manifest_ground_truth",
+      "reader_mode": "bounded_full_binary_read_strict_utf8_json_loads_in_memory",
+      "expected_bytes": 111548,
+      "expected_md5": "a56fb7b92ad99a8106ff3c75a2d94c6f",
+      "identity_reverified_before_content_open": true,
+      "extract_or_transform_to_disk": false,
+      "persist_raw_json_key_value_identifier_timestamp_or_pointer": false,
+      "model_visibility": "forbidden"
+    },
+    {
+      "target_id": "stgallen_training_sensor_log_surface",
+      "surface_class": "model_candidate_sensor_telemetry",
+      "reader_mode": "bounded_binary_readline_strict_utf8_per_line_json_loads_in_memory",
+      "expected_bytes": 59901231,
+      "expected_md5": "1b310fe1bbbbe53511db015375df8a41",
+      "identity_reverified_before_content_open": true,
+      "full_file_loaded_in_memory": false,
+      "extract_or_transform_to_disk": false,
+      "persist_raw_line_key_value_timestamp_offset_or_pointer": false,
+      "model_visibility": "forbidden_until_separate_field_isolation_and_source_role_review"
+    }
+  ],
+  "parser": {
+    "path": "datasets/llm/audit_stgallen_smart_factory_dual_surface_v0_1.py",
+    "bytes": 56500,
+    "sha256": "0291dc15193a5f6fe6d4d06b64d066bc6b98ac3bc2f4ad95227beefe6881e382",
+    "syntax_ast_parse_passed": true,
+    "syntax_validation_opened_or_statted_surfaces": false,
+    "ordinary_execution_performed": false,
+    "plan_mode_executed": false,
+    "execute_mode_executed": false,
+    "result_json": "docs/llm-editor/llm-editor-v0.8-l2-stgallen-smart-factory-dual-surface-bounded-audit-result-v0.1-20260724.json",
+    "result_markdown": "docs/llm-editor/llm-editor-v0.8-l2-stgallen-smart-factory-dual-surface-bounded-audit-result-v0.1-20260724.md",
+    "result_must_not_preexist_before_execute": true
+  },
+  "invocation": {
+    "plan_mode": "python datasets/llm/audit_stgallen_smart_factory_dual_surface_v0_1.py --mode plan",
+    "plan_mode_contract": "Verify only the pinned CPython reader identity; do not stat or open either acquired surface.",
+    "plan_mode_executed_during_freeze": false,
+    "execute_mode_template": "python datasets/llm/audit_stgallen_smart_factory_dual_surface_v0_1.py --mode execute --authority-json <separately-authorized-json>",
+    "execute_mode_executed_during_freeze": false,
+    "execute_requires_separate_authority_json": true,
+    "authority_must_simultaneously_name_both_target_ids": true,
+    "authority_must_pin_runtime_script_sha256": true,
+    "authority_must_pin_runtime_contract_sha256": true,
+    "authority_must_match_all_caps_exactly": true,
+    "result_preexistence_blocks_execute": true
+  },
+  "reader_behavior": {
+    "reader_identity_verified_before_surface_stat_or_open": true,
+    "both_source_identities_reverified_before_content_parse": true,
+    "protected_and_model_candidate_paths_remain_separate": true,
+    "protected_manifest_never_model_visible": true,
+    "manifest_values_used_only_for_in_memory_opaque_digest_interval_and_binding_probe": true,
+    "sensor_records_streamed_one_line_at_a_time": true,
+    "pointer_round_trip_sample_is_deterministic_and_bounded": true,
+    "raw_manifest_or_sensor_content_persisted": false,
+    "raw_key_value_identifier_timestamp_path_offset_ordinal_or_pointer_persisted": false,
+    "result_contains_aggregate_counts_digests_and_boolean_gates_only": true,
+    "failure_result_is_sanitized": true,
+    "terminal_failure_allows_automatic_retry": false
+  },
+  "scope": {
+    "reader_metadata_queried": true,
+    "reader_installed_or_downloaded": false,
+    "surfaces_statted_during_reader_freeze": false,
+    "surfaces_opened": false,
+    "surfaces_read_or_parsed": false,
+    "plan_mode_run": false,
+    "privacy_notice_schema_gt_exclusion_manifest_lineage_binding_or_pointer_probe_run": false,
+    "audit_execution_authorized": false,
+    "effective_catalog_written": false,
+    "source_role_changed": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false
+  },
+  "authority": {
+    "reader_identity_frozen": true,
+    "parser_identity_frozen": true,
+    "audit_execution_authorized": false,
+    "surface_open_read_or_parse_authorized": false,
+    "automatic_next_stage_authorized": false,
+    "next_action": "Freeze the composite dual-surface audit contract against this reader and parser identity, then hard stop until a separate user authorization supplies an exact execution-authority JSON that simultaneously names both targets and pins the script, contract, reader, and caps."
+  }
+}
