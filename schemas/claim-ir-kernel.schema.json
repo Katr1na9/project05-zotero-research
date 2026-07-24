@@ -200,37 +200,12 @@
       "pattern": "^clm_[A-Za-z0-9_-]{22,128}$"
     },
     "claim_value": {
-      "oneOf": [
-        {
-          "$ref": "#/$defs/opaque_reference_value"
-        },
-        {
-          "type": "number",
-          "description": "Bounded public numeric value; no outcome or label semantics."
-        },
-        {
-          "type": "boolean"
-        },
-        {
-          "$ref": "#/$defs/bounded_enum_value"
-        },
-        {
-          "$ref": "#/$defs/bounded_public_text_value"
-        },
-        {
-          "type": "array",
-          "maxItems": 4096,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "#/$defs/opaque_reference_value"
-              },
-              {
-                "$ref": "#/$defs/bounded_enum_value"
-              }
-            ]
-          }
-        }
+      "description": "Value validation is selected by claim_record.value_type; no overlapping union is used here.",
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "array"
       ]
     },
     "opaque_reference_value": {
@@ -316,6 +291,112 @@
               "claim_id": {
                 "type": "string",
                 "pattern": "^clm_[A-Za-z0-9_-]{22,128}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "opaque_reference"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/opaque_reference_value"
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 4096,
+                    "items": {
+                      "$ref": "#/$defs/opaque_reference_value"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_number"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_boolean"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_enum"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_enum_value"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_public_text"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_public_text_value"
               }
             }
           }
