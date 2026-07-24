@@ -1,0 +1,209 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-ir-admission-contract-design-v0.1-20260724",
+  "artifact_type": "claim_ir_admission_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "7edf110bccd0dc3ed3f28fa9cfd19799bddc64ed",
+  "status": "design_only_admission_not_authorized",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "certificate_surface": "vacant",
+    "additional_adapter_is_stage_prerequisite": false,
+    "additional_adapter_policy": "More adapters are not a prerequisite for this admission-design stage."
+  },
+  "pinned_authority_chain": {
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m0_depth2_public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    },
+    "m0_m1_mint_dual_path_completion_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-dual-path-single-execute-completion-disposition-v0.1-20260724.json",
+      "sha256": "101edb00b14dd548d9a579a6ffb9457e4a5b5605a24813e261222ffef8838cf2",
+      "status_observed": "draft_disposition_not_effective"
+    }
+  },
+  "separation_of_authority": {
+    "structural_validity_is_mint": false,
+    "structural_validity_is_admission": false,
+    "mint_is_admission": false,
+    "admission_is_kernel_ingestion": false,
+    "admission_is_certificate": false,
+    "admission_is_l2_gate_pass": false,
+    "minted_opaque_automatically_admitted": false,
+    "required_interpretation": "structural validity != mint != admission != Kernel != certificate != L2"
+  },
+  "current_candidate_input_class": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "only_candidate_input_class_now": true,
+    "new_adapter_required_before_admission_design_review": false,
+    "cross_surface_join_allowed": false
+  },
+  "known_local_candidate_variants_not_admitted": [
+    {
+      "candidate_kind": "structural_package",
+      "path": ".tmp/m1-planner-inputs-single-execute-v0.1/package.json",
+      "sha256": "a97dcdd63974cb86afd1cd76de23df41f178fbcedf4657c3345d5253f0e9a650",
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "selected_for_admission_now": false
+    },
+    {
+      "candidate_kind": "minted_package",
+      "path": ".tmp/production-claim-id-mint-single-execute-v0.1/package.json",
+      "sha256": "29a260fe46c3ccf45822e4e2b8d2085cfb6fef0b6a9a0edddfe9a30462cbb1a9",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "selected_for_admission_now": false
+    }
+  ],
+  "future_admission_necessary_conditions": {
+    "exact_target_required": {
+      "surface_id": "project05_depth2_public",
+      "source_class": "planner_experiment_inputs",
+      "adapter_id": "m1a_planner_inputs_v0_1",
+      "only_target": true
+    },
+    "exact_pins_required": [
+      "this reviewed admission-design artifact SHA-256",
+      "Claim IR schema SHA-256",
+      "M0 project05_depth2_public projection SHA-256",
+      "dual-path completion disposition SHA-256",
+      "exactly one selected structural_package or minted_package path and SHA-256",
+      "one unique admission result path that does not yet exist"
+    ],
+    "candidate_selection_rule": {
+      "exactly_one_candidate_variant": true,
+      "structural_or_minted_allowed_in_principle": true,
+      "claim_id_state_must_remain_input_orthogonal": true,
+      "mint_during_admission": false,
+      "candidate_package_must_validate_against_pinned_schema": true,
+      "candidate_admission_state_must_be": "not_admitted",
+      "candidate_kernel_state_must_be": "pending_kernel_schema"
+    },
+    "single_use_authority_required": true,
+    "pi_approval_required": true,
+    "approver_role_to_freeze": "PI",
+    "admission_code_implementation_required_before_execute": true,
+    "result_absence_gate_required": true,
+    "fail_closed_before_state_transition": true
+  },
+  "future_single_admission_authority_shape": {
+    "status": "activated_single_admission_execute_authorized",
+    "activated_now": false,
+    "authorized_now_by_this_design": 0,
+    "execute_ledger_if_later_activated": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "required_pi_attestation": {
+      "approver_role": "PI",
+      "approval_artifact_sha256_required": true,
+      "person_name_field_required": false
+    },
+    "separate_from_mint_authority": true,
+    "separate_from_kernel_authority": true,
+    "separate_from_certificate_authority": true
+  },
+  "fail_closed_rejection_rules": {
+    "unknown_surface": "reject",
+    "cross_surface_input_or_join": "reject",
+    "schema_or_projection_pin_mismatch": "reject",
+    "candidate_package_pin_mismatch": "reject",
+    "candidate_already_admitted": "reject",
+    "labels": "reject",
+    "oracle_or_oracle_path": "reject",
+    "realized_outcomes_or_feedback": "reject",
+    "mask_membership": "reject",
+    "hidden_recoverable_or_required_claim_ids": "reject",
+    "raw_path_or_payload_bytes": "reject",
+    "unknown_or_additional_fields": "reject",
+    "missing_or_inactive_authority": "reject",
+    "authority_target_or_pin_mismatch": "reject",
+    "authority_ledger_used_or_invalid": "reject",
+    "result_path_already_exists": "reject",
+    "mint_requested_during_admission": "reject",
+    "kernel_or_certificate_write_requested": "reject"
+  },
+  "future_success_state_design": {
+    "package_admission_state": "admitted_under_separate_authority",
+    "per_claim_admission_state": "admitted_under_separate_authority",
+    "claim_id_state_transition_performed": false,
+    "claim_id_state_after": "unchanged_from_exact_input",
+    "kernel_state": "pending_kernel_schema",
+    "kernel_ingestion_requires_separate_authority": true,
+    "certificate_surface": "vacant",
+    "certificate_requires_separate_authority": true,
+    "catalog_role_credit_or_l2_effect": false
+  },
+  "still_blocked": {
+    "admission_execute_now": true,
+    "kernel_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "catalog_write": true,
+    "source_role_assignment": true,
+    "lineage_credit": true,
+    "quota_credit": true,
+    "l2_gate_change": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true,
+    "unreviewed_adapter_activation_or_execution": true
+  },
+  "explicit_non_authorizations": {
+    "admission_code_implementation": false,
+    "admission_authority_activation": false,
+    "admission_execute": false,
+    "claim_id_mint": false,
+    "key_or_secret_creation": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "adapter_implementation_or_activation": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "The future fail-closed admission boundary and state transition are defined for the sole project05_depth2_public planner-inputs candidate class.",
+    "not_an_implementation": true,
+    "not_an_activation": true,
+    "not_an_admission": true,
+    "not_a_kernel_or_certificate_authority": true,
+    "not_an_l2_gate_pass": true,
+    "effective": false
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "package_changed_in_this_turn": false,
+    "admission_executed_in_this_turn": false,
+    "mint_executed_in_this_turn": false,
+    "key_or_secret_created_or_read_in_this_turn": false,
+    "kernel_admission_catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
