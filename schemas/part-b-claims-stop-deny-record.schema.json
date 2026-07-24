@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-claims-stop-deny-record.schema.json",
+  "title": "Part B claims and CERTIFIED_STOP DENY decision record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "record_version",
+    "request",
+    "decision",
+    "reason_code",
+    "basis_accepted_for_stop",
+    "slice_status",
+    "claim_ceiling_remainder",
+    "scalarization_authority",
+    "scalarization_decision",
+    "performance_superiority_authority",
+    "performance_superiority_decision",
+    "stop_authority",
+    "certified_stop",
+    "holdout_release",
+    "pb_si_006_download",
+    "pb_si_008",
+    "pb_b5_execution",
+    "certificate_issued",
+    "scalarization_applied",
+    "superiority_claim_issued",
+    "network_io",
+    "llm_invoked",
+    "holdout_artifact_accessed",
+    "part_a_kernel_gamma_changed",
+    "part_a_certified_stop_semantics_changed",
+    "kernel_stop_path_invoked",
+    "record_hash",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_version": {
+      "const": "0.8.0"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "decision": {
+      "enum": [
+        "NO_CLAIM_OR_STOP_AUTHORIZATION_REQUEST",
+        "DENY"
+      ]
+    },
+    "reason_code": {
+      "enum": [
+        "CLAIMS-STOP-000_NO_ELEVATION_REQUEST",
+        "CLAIMS-STOP-001_ELEVATION_DENIED",
+        "CLAIMS-STOP-002_REQUEST_INVALID",
+        "CLAIMS-STOP-003_UNKNOWN_FIELD"
+      ]
+    },
+    "basis_accepted_for_stop": {
+      "const": false
+    },
+    "slice_status": {
+      "const": "CLAIMS_STOP_DENY_GATE_ONLY"
+    },
+    "claim_ceiling_remainder": {
+      "const": "CONTRACT_CONSISTENCY_ONLY"
+    },
+    "scalarization_authority": {
+      "const": false
+    },
+    "scalarization_decision": {
+      "const": "DENY"
+    },
+    "performance_superiority_authority": {
+      "const": false
+    },
+    "performance_superiority_decision": {
+      "const": "DENY"
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "certified_stop": {
+      "const": "NOT_AUTHORIZED"
+    },
+    "holdout_release": {
+      "const": "DENY"
+    },
+    "pb_si_006_download": {
+      "const": "DENY"
+    },
+    "pb_si_008": {
+      "const": "NOT_OPENED"
+    },
+    "pb_b5_execution": {
+      "const": "NOT_ESTABLISHED"
+    },
+    "certificate_issued": {
+      "const": false
+    },
+    "scalarization_applied": {
+      "const": false
+    },
+    "superiority_claim_issued": {
+      "const": false
+    },
+    "network_io": {
+      "const": false
+    },
+    "llm_invoked": {
+      "const": false
+    },
+    "holdout_artifact_accessed": {
+      "const": false
+    },
+    "part_a_kernel_gamma_changed": {
+      "const": false
+    },
+    "part_a_certified_stop_semantics_changed": {
+      "const": false
+    },
+    "kernel_stop_path_invoked": {
+      "const": false
+    },
+    "record_hash": {
+      "$ref": "#/$defs/sha256"
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "request_kind",
+        "promotion_target",
+        "basis_kind"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promotion_target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis_kind": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

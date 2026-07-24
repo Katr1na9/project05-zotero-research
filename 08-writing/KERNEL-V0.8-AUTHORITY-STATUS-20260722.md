@@ -952,3 +952,32 @@ under separate authority. The gate performs **no real LLM call** and **no
 experiment artifact read**; it denies only attempted elevation into Part B.
 A Part B denial is not experiment STOP or failure and grants no certificate,
 system status or `CERTIFIED_STOP`.
+
+## 18. Part B claims and CERTIFIED_STOP DENY gate
+
+The separately authorized local gate is limited to deterministic
+classification and contract consistency:
+
+```text
+slice_status=CLAIMS_STOP_DENY_GATE_ONLY
+claim_ceiling_remainder=CONTRACT_CONSISTENCY_ONLY
+scalarization_authority=false
+scalarization_decision=DENY
+performance_superiority_authority=false
+performance_superiority_decision=DENY
+stop_authority=NONE
+CERTIFIED_STOP=NOT_AUTHORIZED
+holdout release=DENY
+PB-SI-006 download=DENY
+PB-SI-008=NOT_OPENED
+PB-B5 execution=NOT_ESTABLISHED
+```
+
+`SCALARIZED_RANKING`, `PERFORMANCE_SUPERIORITY`,
+`CERTIFICATE_ISSUED` and `CERTIFIED_STOP` requests fail closed. Stub,
+sampler, fixture and admission results are not stop proof. The gate emits no
+weights, empirical result, certificate, system status or STOP.
+
+This is a **DENY GATE ONLY**. **PART A KERNEL GAMMA UNCHANGED** and existing
+deterministic Part A `CERTIFIED_STOP` semantics remain unchanged. Future
+enablement requires **SEPARATE HIGHEST-STRINGENCY AUTHORIZATION**.
