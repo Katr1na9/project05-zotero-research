@@ -1,0 +1,312 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-mainline-handoff-design-v0.1-20260724",
+  "artifact_type": "claim_id_mainline_handoff_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "eaf9c495707a4a05ad9f750e7761405d03e758dc",
+  "status": "design_only_mainline_handoff_not_authorized",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "intended_future_consumers": [
+      "control_loop",
+      "planner"
+    ],
+    "certificate_surface": "vacant"
+  },
+  "pinned_predecessors": {
+    "exact_admitted_package": {
+      "path": ".tmp/claim-ir-admission-single-execute-v0.1/package.json",
+      "sha256": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "claim_count": 41,
+      "claim_id_list_sha256": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4",
+      "claims_content_hash": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "pending_kernel_schema",
+      "local_audit_only": true
+    },
+    "shared_kernel_consumer_contract_draft": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-shared-kernel-claim-ir-consumer-contract-design-draft-v0.1-20260724.json",
+      "sha256": "e2d30697909c2f41e2f6c86178fe198369a35215e937c8129269ea1d68aedfdc",
+      "status_observed": "design_only_shared_kernel_consumer_contract_draft_not_owned_by_this_track",
+      "owner": "Kernel/M3*",
+      "effective": false
+    },
+    "kernel_ingestion_contract_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-ir-kernel-ingestion-contract-design-v0.1-20260724.json",
+      "sha256": "b3c0e4f10722e9a27472968ed8d0fe77a29a363219baf70fba5f188d85143e60",
+      "status_observed": "design_only_kernel_ingestion_not_authorized"
+    },
+    "frontend_path_completion_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-frontend-path-completion-disposition-v0.1-20260724.json",
+      "sha256": "a61de173005ea5d6ca178de9af31f9699529472481f85622ef657190c487ae83",
+      "status_observed": "draft_frontend_path_complete_disposition_not_effective"
+    },
+    "external_claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    }
+  },
+  "handoff_state_model": {
+    "current_audit_reference_state": {
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "pending_kernel_schema",
+      "allowed_use_now": "design documentation, contract review, and non-production interface fixture specification only",
+      "runtime_control_loop_reference_authorized": false,
+      "runtime_planner_reference_authorized": false,
+      "production_wiring_available": false
+    },
+    "future_post_ingestion_reference_state": {
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "ingested_under_separate_authority",
+      "effective_consumer_contract_pin_required": true,
+      "immutable_ingestion_receipt_required": true,
+      "runtime_reference_may_be_considered_only_after_separate_authority": true,
+      "authorized_now": false
+    },
+    "current_audit_reference_is_future_ingested_reference": false,
+    "pending_kernel_schema_may_be_treated_as_ingested": false,
+    "design_can_be_reviewed_without_completed_ingestion": true,
+    "production_handoff_can_run_without_completed_ingestion": false
+  },
+  "control_loop_and_planner_reference_semantics": {
+    "reference_mode": "opaque_claim_identity_read_only",
+    "allowed_future_operations_after_all_dependency_gates": [
+      "carry the exact package_id as an immutable provenance reference",
+      "reference one or more exact Claim-IDs already present in the pinned package",
+      "use the package claims content hash to verify the referenced identity set",
+      "attach a bound effective consumer-contract pin and ingestion receipt reference",
+      "read claim identity and state without mutating Claim IR lifecycle fields"
+    ],
+    "prohibited_interpretations": [
+      "a Claim-ID is a certificate or truth assertion",
+      "admission is Kernel ingestion",
+      "Kernel ingestion is an E_case write",
+      "Kernel intake is Checker acceptance, Promote, SAT, UNSAT, STOP, or UNRESOLVABLE",
+      "a handoff reference passes L2",
+      "a local .tmp path is a production Kernel reference"
+    ],
+    "claim_payload_copy_into_control_state": false,
+    "claim_id_mint_during_handoff": false,
+    "claim_id_admission_during_handoff": false,
+    "kernel_state_transition_during_handoff": false,
+    "e_case_or_certificate_write_during_handoff": false
+  },
+  "minimal_handoff_payload_design": {
+    "payload_type": "claim_id_mainline_reference_v0.1",
+    "additional_fields_allowed": false,
+    "required_fields": [
+      "surface_id",
+      "package_id",
+      "claim_reference",
+      "claim_id_state",
+      "admission_state",
+      "kernel_state",
+      "consumer_contract_ref"
+    ],
+    "fields": {
+      "surface_id": {
+        "type": "string",
+        "const": "project05_depth2_public"
+      },
+      "package_id": {
+        "type": "string",
+        "const_for_this_design": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9"
+      },
+      "claim_reference": {
+        "type": "object",
+        "mode": "package_content_hash_with_optional_explicit_claim_id_subset",
+        "required": [
+          "claims_content_hash",
+          "full_claim_id_list_sha256",
+          "claim_count"
+        ],
+        "claims_content_hash": {
+          "const": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+        },
+        "full_claim_id_list_sha256": {
+          "const": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4"
+        },
+        "claim_count": {
+          "const": 41
+        },
+        "optional_claim_ids": {
+          "type": "array",
+          "items_pattern": "^clm_[A-Za-z0-9_-]+$",
+          "must_be_exact_members_of_pinned_package": true,
+          "duplicates_allowed": false,
+          "may_be_omitted_for_package_level_reference": true
+        }
+      },
+      "claim_id_state": {
+        "type": "string",
+        "const": "minted_opaque"
+      },
+      "admission_state": {
+        "type": "string",
+        "const": "admitted_under_separate_authority"
+      },
+      "kernel_state": {
+        "type": "string",
+        "design_review_value_now": "pending_kernel_schema",
+        "future_runtime_required_value": "ingested_under_separate_authority"
+      },
+      "consumer_contract_ref": {
+        "type": "object",
+        "current_status": "unbound_pending_kernel_owner_approval",
+        "owner": "Kernel/M3*",
+        "effective_artifact_id": null,
+        "effective_version": null,
+        "effective_sha256": null,
+        "must_be_bound_for_runtime": true,
+        "draft_sha256_may_not_fill_effective_sha256": true
+      }
+    },
+    "forbidden_payload_content": [
+      "raw claim values or payload bytes",
+      "labels or realized outcomes",
+      "oracle, mask, hidden, recoverable, or required claim identities",
+      "filesystem or archive paths",
+      "key, secret, or HMAC material",
+      "certificate, truth-status, promotion, or E_case fields",
+      "catalog, role, credit, quota, or L2 fields"
+    ]
+  },
+  "dependency_gates_before_any_runtime_handoff": {
+    "kernel_owner_approved_effective_consumer_contract": {
+      "required": true,
+      "present_now": false,
+      "owner": "Kernel/M3*",
+      "draft_contract_is_sufficient": false
+    },
+    "completed_kernel_ingestion": {
+      "required": true,
+      "present_now": false,
+      "required_kernel_state": "ingested_under_separate_authority",
+      "required_receipt_pin": true
+    },
+    "mainline_handoff_implementation_and_registration": {
+      "required": true,
+      "implemented_now": false,
+      "registered_now": false,
+      "separate_authority_required": true
+    },
+    "fail_closed_when_any_dependency_missing": true,
+    "this_design_may_not_be_used_to_fake_wiring": true
+  },
+  "rule_path_as_prior_gate_and_future_llm_control": {
+    "deterministic_rule_path_is_prior_authority_and_structure_gate": true,
+    "deterministic_rule_path_is_future_non_llm_comparison_arm": true,
+    "future_llm_arm_must_use_same_surface_schema_and_effective_consumer_contract": true,
+    "future_llm_arm_must_separately_pass_mint_admission_ingestion_and_handoff_gates": true,
+    "rule_path_is_ground_truth": false,
+    "rule_path_is_certificate": false,
+    "model_results_may_relax_handoff_gates": false,
+    "llm_training_authorized_by_this_design": false,
+    "llm_inference_authorized_by_this_design": false,
+    "llm_adapter_authorized_by_this_design": false,
+    "m2_fit_authorized_by_this_design": false,
+    "four_family_finetune_authorized_by_this_design": false
+  },
+  "separation_of_authority": {
+    "handoff_is_certificate": false,
+    "handoff_is_e_case_write": false,
+    "handoff_is_kernel_ingestion": false,
+    "handoff_is_l2_gate_pass": false,
+    "handoff_implies_claim_truth": false,
+    "handoff_implies_checker_or_promotion": false,
+    "required_interpretation": "Claim-ID handoff != Kernel ingestion != E_case != certificate != L2"
+  },
+  "future_fail_closed_rules": {
+    "effective_consumer_contract_missing_or_unbound": "reject",
+    "consumer_contract_ref_points_only_to_draft": "reject",
+    "ingestion_receipt_missing_or_mismatched": "reject",
+    "kernel_state_not_ingested_under_separate_authority": "reject",
+    "wrong_surface_or_package_id": "reject",
+    "package_or_claim_identity_digest_mismatch": "reject",
+    "unknown_or_nonmember_claim_id": "reject",
+    "claim_id_state_or_admission_state_mismatch": "reject",
+    "cross_surface_join": "reject",
+    "unknown_or_additional_payload_field": "reject",
+    "raw_payload_label_outcome_oracle_mask_or_hidden_identity": "reject",
+    "state_mutation_mint_admission_or_ingestion_requested": "reject",
+    "e_case_certificate_checker_or_promotion_requested": "reject",
+    "runtime_use_of_local_tmp_path": "reject"
+  },
+  "still_blocked": {
+    "kernel_owner_approved_effective_consumer_contract": true,
+    "kernel_ingestion_executor_implementation": true,
+    "kernel_ingestion_activation": true,
+    "kernel_ingestion_execute": true,
+    "mainline_handoff_implementation": true,
+    "mainline_handoff_registration_or_activation": true,
+    "kernel_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "catalog_write": true,
+    "source_role_assignment": true,
+    "lineage_credit": true,
+    "quota_credit": true,
+    "l2_gate_change": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "current_authorization_state": {
+    "effective": false,
+    "mainline_handoff_implementation_authorized": false,
+    "mainline_handoff_runtime_authorized": false,
+    "kernel_ingestion_authorized": false,
+    "kernel_or_e_case_write_performed": false,
+    "certificate_generated": false,
+    "llm_authorized": false
+  },
+  "explicit_non_authorizations": {
+    "this_is_effective_consumer_contract": false,
+    "this_is_ingestion_authority": false,
+    "this_is_handoff_implementation_or_registration": false,
+    "mainline_handoff_execute": false,
+    "kernel_ingestion_implementation": false,
+    "kernel_ingestion_execute": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "llm_training_or_inference": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "This artifact defines a minimal future Claim-ID reference payload and fail-closed dependency gates without assuming that Kernel ingestion has occurred.",
+    "not_an_implementation": true,
+    "not_an_activation": true,
+    "not_a_runtime_handoff": true,
+    "not_a_kernel_or_e_case_write": true,
+    "not_a_certificate": true,
+    "not_an_l2_gate_pass": true
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "admitted_package_changed_in_this_turn": false,
+    "handoff_implemented_in_this_turn": false,
+    "handoff_executed_in_this_turn": false,
+    "kernel_ingestion_implemented_or_executed_in_this_turn": false,
+    "kernel_or_e_case_write_in_this_turn": false,
+    "certificate_generated_in_this_turn": false,
+    "llm_authorized_or_run_in_this_turn": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
