@@ -818,3 +818,52 @@ issuance and `CERTIFIED_STOP` authority are `DENY`.
 
 B9 local contract review does not authorize delivery, runtime execution,
 holdout release, claim release, a certificate, system status or STOP.
+
+## 15. Part B B5 planner-admission skeleton local status
+
+The user separately authorized the local non-executing B5 admission-record
+slice on `2026-07-24`. This section records the current narrow evidence-path
+state; it does not rewrite the historical B9 freeze or any frozen B0–B9 hash.
+
+```text
+Authorized slice: B5_PLANNER_IMPLEMENTATION_ADMISSION_SKELETON
+PB-B5-SI-001: SKELETON_EVIDENCE_PATH_ESTABLISHED
+Planner execution authority: NOT ESTABLISHED
+planner_execution_authority=false
+evaluation_execution_authority=false
+PB-B5-SI-002: OPEN_BLOCKS_EVALUATION_EXECUTION
+PB-B5-SI-003: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+PB-SI-006: OPEN_DEFAULT_DENY
+holdout release: DENY
+scalarization_authority=false
+performance_claim_authority=false
+certificate_authority=false
+stop_authority=NONE
+```
+
+The local `ADMITTED_CONFORMANCE_ONLY` record concerns the evidence-complete
+non-executing skeleton only. Legacy `project05_m3star_h3_dual` remains
+`NOT_ADMITTED_UNVERIFIED`; it is explicitly denied and receives no runtime
+locator or execution authority.
+
+```text
+Implementation identity:
+sha256:c7ea784dd23bb04c83fdbe61c285b91d19ec70d02ecc1ee08aa62ac3145efc4f
+
+Admission evidence:
+sha256:824ae46d5b7dc28e25144697b3192bfec92c79183b21fbfc5661b31031ca2014
+
+Admission policy:
+sha256:b80def1586cd9ef149ae237353372d974507b5bf25f04827c3f9cbd22a340f93
+
+Admission record:
+sha256:452da1b35504592785bd60f2a292dd94d31aa763bb5310fa1a1262a4f6c078b7
+
+Admission manifest:
+sha256:b3b4192fd8f494cd415c97920846bb79100e6597858fd20077ffdcdd8a48badd
+```
+
+The claim ceiling remains `CONTRACT_CONSISTENCY_ONLY` and
+`NO_PERFORMANCE_OR_SUPERIORITY_CLAIM`. There is no Planner action, evaluation
+runner, empirical result, holdout release, certificate, system status or
+`CERTIFIED_STOP`.
