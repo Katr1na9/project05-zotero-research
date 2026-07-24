@@ -1,0 +1,238 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m2-optional-residual-normalizer-design-v0.1-20260724",
+  "artifact_type": "m2_optional_residual_normalizer_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "ae66f9c2c8214110ef3250e5264dc621608e7394",
+  "status": "design_only_m2_not_authorized",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "surface_expansion_authorized": false,
+    "cross_surface_join_authorized": false,
+    "certificate_surface": "vacant"
+  },
+  "inherited_m0_m1_boundary": {
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m1_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "a220eafde5eb0c38c381a23ba80e22571edfe932fca401a0e240ec562bb199dc",
+      "status": "design_only_m1_not_authorized"
+    },
+    "m1_planner_adapter_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json",
+      "sha256": "e26fc1573bf312f6dd63e9716eebd0ed2ac8804a19fa6658de31b256df05fead",
+      "status": "draft_disposition_not_effective"
+    },
+    "m1_planner_adapter_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+      "sha256": "b9dbbb471bc69932bd6ef81e9824f492fb382125f7c5ef361153c4bf428c4eca",
+      "status": "design_only_adapter_not_registered"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+    },
+    "m0_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    }
+  },
+  "m2_role": {
+    "kind": "optional_residual_normalizer_after_frozen_rule_baseline",
+    "purpose": "Provide a future, separately adjudicated residual comparison against the deterministic M0/M1 rule path.",
+    "not_a_replacement_for": [
+      "M0 structural compiler",
+      "M1 adapter contract and fail-closed selection",
+      "Claim-ID mint authority",
+      "Kernel or certificate state"
+    ],
+    "implementation_authorized_by_this_design": false,
+    "execution_authorized_by_this_design": false,
+    "fit_authorized_by_this_design": false
+  },
+  "baseline_gate": {
+    "required_before_any_future_m2_authority": [
+      "Freeze the exact M0 rule output and its schema/compiler pins.",
+      "Freeze the exact M1 adapter contract, adapter implementation, and disposition pins.",
+      "Record a deterministic baseline evaluation before any residual fit.",
+      "Keep the baseline and residual paths separately identifiable in all reports.",
+      "Prohibit any post-result quota, role, privacy, or label-threshold relaxation."
+    ],
+    "baseline_is_control": true,
+    "residual_may_override_rule_output": false,
+    "residual_may_change_surface_scope": false,
+    "residual_may_change_claim_id_policy": false
+  },
+  "residual_contract_skeleton": {
+    "status": "placeholder_contract_not_frozen",
+    "future_contract_required": true,
+    "input_boundary": {
+      "surface_id": "project05_depth2_public",
+      "source_class": "normalized_public_projection_only",
+      "allowed_inputs": [
+        "frozen M0 structural output",
+        "frozen M1 adapter structural output",
+        "predeclared rule residual features derived only from allowlisted public fields",
+        "baseline comparison metadata and bounded error categories"
+      ],
+      "forbidden_inputs": [
+        "labels or verdicts not covered by a future gold contract",
+        "realized outcomes or post-action recovery",
+        "oracle state, mask membership, or hidden/recoverable Claim-IDs",
+        "raw paths, archive members, payload bytes, credentials, secrets, or unallowlisted PII",
+        "any surface other than project05_depth2_public",
+        "features imported from the existing action-value XGBoost protocol"
+      ]
+    },
+    "residual_semantics": {
+      "operation": "bounded_residual_normalization_or_comparison",
+      "rule_baseline_preserved": true,
+      "semantic_alignment_claim": false,
+      "unbounded_generation": false,
+      "post_hoc_label_invention": false,
+      "opaque_claim_id_minting": false,
+      "admission_decision": false
+    },
+    "required_future_fields": [
+      "baseline_artifact_sha256",
+      "residual_contract_sha256",
+      "source_and_lineage_split_manifest_sha256",
+      "gold_adjudication_contract_sha256",
+      "normalizer_version",
+      "feature_allowlist_sha256",
+      "fit_authority_id",
+      "output_state"
+    ],
+    "fail_closed_rules": [
+      "Reject any input whose surface, baseline pin, adapter pin, or schema pin differs.",
+      "Reject any feature absent from the future frozen allowlist.",
+      "Reject labels, outcomes, oracle/mask fields, hidden IDs, raw paths, payload bytes, credentials, or secrets outside the future gold contract.",
+      "Reject source or lineage overlap between fit, adjudication, and holdout partitions.",
+      "Reject any attempt to use residual output as a Claim-ID, admission, certificate, role, quota, credit, or L2 decision.",
+      "Reject a missing, expired, reused, or multi-use execute authority.",
+      "Emit no residual package on ambiguity, missing provenance, pin mismatch, or contract mismatch."
+    ]
+  },
+  "gold_adjudication_contract": {
+    "status": "future_contract_and_review_required",
+    "approver_role_to_freeze": "PI",
+    "approver_name": null,
+    "role_is_exhaustive": true,
+    "no_other_approver_role_is_authorized_by_this_design": true,
+    "gold_contract_must_define": [
+      "construct and label definitions before any fit",
+      "adjudication procedure and disagreement handling",
+      "allowed evidence modalities and privacy exclusions",
+      "source-disjoint and lineage-disjoint split manifest",
+      "fit, adjudication, and holdout partition identities",
+      "minimum sample and coverage requirements",
+      "stop conditions and failure disposition",
+      "independent review record signed by the PI role"
+    ],
+    "split_requirements": {
+      "source_disjoint": true,
+      "lineage_disjoint": true,
+      "case_disjoint": true,
+      "fit_vs_adjudication_overlap": false,
+      "fit_vs_holdout_overlap": false,
+      "adjudication_vs_holdout_overlap": false,
+      "split_manifest_must_be_pinned": true
+    },
+    "gold_or_adjudication_written_now": false
+  },
+  "future_execute_authority": {
+    "required": true,
+    "new_authority_required": true,
+    "single_use": true,
+    "authority_must_pin": [
+      "this M2 design or a separately frozen M2 contract",
+      "gold/adjudication contract SHA-256",
+      "source/lineage-disjoint split manifest SHA-256",
+      "normalizer implementation SHA-256",
+      "input surface and all M0/M1 pins",
+      "sanitized result path"
+    ],
+    "reuse_of_m0_or_m1_authority": false,
+    "retry_or_resume": false,
+    "activation_created_now": false,
+    "execute_count_authorized_now": 0
+  },
+  "output_boundary": {
+    "if_future_output_exists": {
+      "surface_id": "project05_depth2_public",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "certificate_surface": "vacant"
+    },
+    "mint_authorized": false,
+    "kernel_ingestion_authorized": false,
+    "certificate_generation_authorized": false,
+    "admission_authorized": false,
+    "catalog_or_role_or_credit_effect": false,
+    "l2_gate_effect": false
+  },
+  "existing_action_value_xgboost_separation": {
+    "status": "separate_existing_protocol",
+    "retask_as_claim_alignment": false,
+    "reuse_weights": false,
+    "reuse_labels": false,
+    "reuse_feature_schema": false,
+    "reuse_predictions_as_claim_evidence": false,
+    "reinterpretation_as_m2_gold": false,
+    "new_claim_alignment_contract_required": true
+  },
+  "explicit_non_authorizations": {
+    "m2_code_implementation": false,
+    "m2_training": false,
+    "m2_fit": false,
+    "gold_contract_approval": false,
+    "registry_activation": false,
+    "adapter_execution": false,
+    "claim_id_mint": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "download": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "This document defines only a future M2 residual-normalizer contract skeleton after a frozen M0/M1 rule baseline.",
+    "not_a_fit_result": true,
+    "not_a_gold_approval": true,
+    "not_a_source_role_decision": true,
+    "not_effective": true,
+    "future_review_order": [
+      "freeze the gold/adjudication contract with approver_role_to_freeze=PI",
+      "freeze source/lineage-disjoint split manifest",
+      "freeze implementation and a new single-use execute authority",
+      "run only under that authority and emit sanitized aggregate results"
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "registry_activated_in_this_turn": false,
+    "training_started": false,
+    "fit_started": false,
+    "download_performed": false,
+    "minting_performed": false,
+    "kernel_or_admission_write": false,
+    "catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
