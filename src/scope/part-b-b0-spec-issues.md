@@ -127,3 +127,26 @@ silently extend `CERTIFIED_STOP` beyond the frozen deterministic Kernel Gamma.
 The user explicitly authorized B0 without LLM. B0 contains no LLM code, prompt,
 model, dataset, training, inference, selector or judge contract. Any later LLM
 work is a separate authority decision and cannot be inferred from Part B.
+
+## PB-SI-006 narrow update — source selection only
+
+**State:** `SELECTION_CONTRACT_ONLY_DOWNLOAD_DENY`.
+
+The SI-006 sub-slice now has a closed local source-selection contract for
+abstract, non-authorized identifiers. It requires explicit pointer,
+modality, truth-status, epistemic role, certification authority,
+open/closed-world semantics and B1 adapter-conformance. It does not authorize
+any real source, connector, endpoint, credential, retrieval, download,
+quarantine or holdout.
+
+```text
+download_authority=false
+retrieval_authority=false
+connector_execution_authority=false
+holdout release: DENY
+stop_authority=NONE
+```
+
+`PB-B7-SI-001` and `PB-B7-SI-002` remain `OPEN_DEFAULT_DENY`;
+`PB-B5-SI-001` remains `EXECUTION_NOT_ESTABLISHED`. This narrow update does
+not change any frozen B1–B9 artifact hash or grant `CERTIFIED_STOP`.

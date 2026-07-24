@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-source-selection-record.schema.json",
+  "title": "Part B PB-SI-006 source-selection record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "selection_id",
+    "source_pointer",
+    "source_status",
+    "source_authorization",
+    "selection_decision",
+    "modality",
+    "truth_status",
+    "epistemic_role",
+    "certification_authority",
+    "world_semantics",
+    "adapter_conformance",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "selection_id": {
+      "type": "string",
+      "pattern": "^si006-selection-[a-z0-9-]+$"
+    },
+    "source_pointer": {
+      "$ref": "#/$defs/sourcePointer"
+    },
+    "source_status": {
+      "const": "ABSTRACT_CONTRACT_FIXTURE_NOT_AUTHORIZED"
+    },
+    "source_authorization": {
+      "const": "NOT_AUTHORIZED"
+    },
+    "selection_decision": {
+      "const": "SELECTED_CONTRACT_ONLY"
+    },
+    "modality": {
+      "enum": [
+        "observed",
+        "reported",
+        "derived",
+        "control"
+      ]
+    },
+    "truth_status": {
+      "enum": [
+        "unassessed",
+        "supported",
+        "refuted",
+        "unknown"
+      ]
+    },
+    "epistemic_role": {
+      "enum": [
+        "background_intelligence",
+        "case_evidence",
+        "candidate",
+        "control"
+      ]
+    },
+    "certification_authority": {
+      "$ref": "#/$defs/certificationAuthority"
+    },
+    "world_semantics": {
+      "$ref": "#/$defs/worldSemantics"
+    },
+    "adapter_conformance": {
+      "$ref": "#/$defs/adapterConformance"
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "sourcePointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "record_id",
+        "content_hash",
+        "range",
+        "range_semantics"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^abstract-[a-z0-9-]+$"
+        },
+        "record_id": {
+          "type": "string",
+          "pattern": "^abstract-[a-z0-9-]+$"
+        },
+        "content_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "range": {
+          "$ref": "#/$defs/range"
+        },
+        "range_semantics": {
+          "enum": [
+            "ROWS_HALF_OPEN",
+            "BYTES_HALF_OPEN"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "range": {
+                "properties": {
+                  "kind": {
+                    "const": "ROWS"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "range_semantics": {
+                "const": "ROWS_HALF_OPEN"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "range": {
+                "properties": {
+                  "kind": {
+                    "const": "BYTES"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "range_semantics": {
+                "const": "BYTES_HALF_OPEN"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "start",
+        "end",
+        "end_semantics"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "ROWS",
+            "BYTES"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_semantics": {
+          "const": "EXCLUSIVE"
+        }
+      }
+    },
+    "certificationAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed",
+        "levels",
+        "basis_rule_id",
+        "policy_hash"
+      ],
+      "properties": {
+        "allowed": {
+          "const": false
+        },
+        "levels": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "basis_rule_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "policy_hash": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      }
+    },
+    "worldSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "zero_hit_semantics",
+        "completeness_attestation"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "OPEN_WORLD",
+            "CLOSED_BOUNDED"
+          ]
+        },
+        "zero_hit_semantics": {
+          "enum": [
+            "UNKNOWN_NOT_ABSENCE",
+            "ABSENCE_ONLY_WITH_COMPLETE_ATTESTATION"
+          ]
+        },
+        "completeness_attestation": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "OPEN_WORLD"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "zero_hit_semantics": {
+                "const": "UNKNOWN_NOT_ABSENCE"
+              },
+              "completeness_attestation": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "CLOSED_BOUNDED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "zero_hit_semantics": {
+                "const": "ABSENCE_ONLY_WITH_COMPLETE_ATTESTATION"
+              },
+              "completeness_attestation": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "adapterConformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_id",
+        "contract_hash",
+        "decision",
+        "pointer_ownership_transferred"
+      ],
+      "properties": {
+        "contract_id": {
+          "const": "part-b-adapter-conformance-v0.8"
+        },
+        "contract_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "decision": {
+          "const": "CONFORMANT"
+        },
+        "pointer_ownership_transferred": {
+          "const": false
+        }
+      }
+    }
+  }
+}
