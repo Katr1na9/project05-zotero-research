@@ -4,6 +4,7 @@ import re
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 SRC_ROOT = Path(__file__).resolve().parents[2] / "src"
@@ -16,6 +17,7 @@ from compiler.llm.claim_id_mint_executor import (  # noqa: E402
     load_and_validate_slot_mapping,
     mint_claim_ids,
 )
+from compiler.llm import claim_id_mint_executor as mint_executor  # noqa: E402
 from compiler.llm.m0_rule_compiler import compile_public_projection  # noqa: E402
 
 
@@ -105,6 +107,108 @@ class ClaimIDMintExecutorTests(unittest.TestCase):
                 self.assertEqual("not_minted", fixture["claim_id_state"])
                 self.assertEqual("not_admitted", fixture["admission_state"])
                 self.assertEqual("pending_kernel_schema", fixture["kernel_state"])
+
+    def test_ephemeral_in_memory_authority_and_key_mint_happy_path(self):
+        structural_package = compile_public_projection(
+            load_json(M0_FIXTURE),
+            repo_root=REPO_ROOT,
+        )
+        original = copy.deepcopy(structural_package)
+        authority = {
+            "status": "activated_single_mint_execute_authorized",
+            "surface_id": "project05_depth2_public",
+            "pinned_hashes": {
+                "minting_design_sha256": (
+                    "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe"
+                ),
+                "mapping_design_sha256": (
+                    "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
+                ),
+                "schema_sha256": (
+                    "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+                ),
+            },
+            "execute_ledger": {
+                "authorized": 1,
+                "maximum": 1,
+                "started": 0,
+                "consumed": 0,
+                "remaining": 1,
+                "retry": False,
+                "resume": False,
+                "fallback": False,
+            },
+            "namespace_key_attestation": {
+                "key_id": "ephemeral-test-namespace-v01",
+                "key_material_external": True,
+                "key_material_not_logged": True,
+                "key_material_not_committed": True,
+            },
+            "still_blocked": {
+                "admission": True,
+                "kernel_ingestion": True,
+                "certificate": True,
+                "catalog": True,
+                "source_role": True,
+                "lineage_credit": True,
+                "quota_credit": True,
+                "l2_gate": True,
+            },
+        }
+
+        class EphemeralTestKeyProvider:
+            def __init__(self):
+                self.key = bytearray(b"ephemeral-test-key-material-0001")
+
+            def get_key(self, key_id):
+                self.key_id = key_id
+                return self.key
+
+        provider = EphemeralTestKeyProvider()
+        authority_sentinel = Path(
+            "__claim_id_ephemeral_authority_never_written__.json"
+        )
+        package_sentinel = Path(
+            "__claim_id_ephemeral_package_never_written__.json"
+        )
+        self.assertFalse(authority_sentinel.exists())
+        self.assertFalse(package_sentinel.exists())
+
+        real_load_json = mint_executor._load_json
+
+        def load_json_without_disk_authority(path):
+            if path == authority_sentinel:
+                return authority
+            return real_load_json(path)
+
+        with patch.object(
+            mint_executor,
+            "_load_json",
+            side_effect=load_json_without_disk_authority,
+        ):
+            minted = mint_claim_ids(
+                structural_package,
+                repo_root=REPO_ROOT,
+                authority_path=authority_sentinel,
+                key_provider=provider,
+            )
+
+        self.assertEqual("minted_opaque", minted["claim_id_state"])
+        self.assertEqual("not_admitted", minted["admission_state"])
+        self.assertEqual("pending_kernel_schema", minted["kernel_state"])
+        self.assertTrue(
+            all(
+                isinstance(claim["claim_id"], str)
+                and re.fullmatch(r"clm_[A-Za-z0-9_-]+", claim["claim_id"])
+                and claim["claim_id_state"] == "minted_opaque"
+                and claim["admission_state"] == "not_admitted"
+                for claim in minted["claims"]
+            )
+        )
+        self.assertEqual(original, structural_package)
+        self.assertEqual(bytearray(len(provider.key)), provider.key)
+        self.assertFalse(authority_sentinel.exists())
+        self.assertFalse(package_sentinel.exists())
 
 
 if __name__ == "__main__":
