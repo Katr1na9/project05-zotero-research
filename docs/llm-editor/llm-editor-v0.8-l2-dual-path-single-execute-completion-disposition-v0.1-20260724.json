@@ -1,0 +1,147 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-dual-path-single-execute-completion-disposition-v0.1-20260724",
+  "artifact_type": "m1_structural_and_production_mint_single_execute_completion_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "e8d69b0a36bc06289eac2524cf918cda98541c9b",
+  "status": "draft_disposition_not_effective",
+  "disposition_code": "dual_single_execute_complete_both_ledgers_exhausted_admission_and_l2_blocked",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "certificate_surface": "vacant"
+  },
+  "m1_planner_inputs_single_execute": {
+    "execution_kind": "structural_adapter_only",
+    "activation": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-single-execute-activation-v0.1-20260724.json",
+      "exhausted_sha256": "070c86604af03cff9c21174c6fc316a608365c55e3104a8ff59df3df78d0e79a",
+      "ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    },
+    "local_audit_outputs": {
+      "committed_or_cataloged": false,
+      "structural_package": {
+        "path": ".tmp/m1-planner-inputs-single-execute-v0.1/package.json",
+        "sha256": "a97dcdd63974cb86afd1cd76de23df41f178fbcedf4657c3345d5253f0e9a650"
+      },
+      "run_report": {
+        "path": ".tmp/m1-planner-inputs-single-execute-v0.1/run-report.json",
+        "sha256": "92ed930be5b887ce45ab804e75ad1d1336525f2311b69062a06287b90b8bb038"
+      }
+    },
+    "observed_output_state": {
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "certificate_surface": "vacant"
+    }
+  },
+  "production_claim_id_single_mint": {
+    "execution_kind": "pi_local_environment_provider_path_a",
+    "activation": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-claim-id-mint-single-execute-activation-v0.1-20260724.json",
+      "exhausted_sha256": "7a90a32280118d2c747542c6503af8b43faa9698f78f8bfa3ec6287a67d21416",
+      "ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    },
+    "local_audit_outputs": {
+      "committed_or_cataloged": false,
+      "minted_package": {
+        "path": ".tmp/production-claim-id-mint-single-execute-v0.1/package.json",
+        "sha256": "29a260fe46c3ccf45822e4e2b8d2085cfb6fef0b6a9a0edddfe9a30462cbb1a9"
+      },
+      "run_report": {
+        "path": ".tmp/production-claim-id-mint-single-execute-v0.1/run-report.json",
+        "sha256": "38785824ef38224b6e24785192733e85097dcc31c5d5db3687e3f25374b955f9"
+      }
+    },
+    "namespace_key_attestation": {
+      "key_id": "project05-depth2-public-mint-ns-v01",
+      "key_material_in_repository": false,
+      "key_material_in_activation": false,
+      "key_material_in_package_or_report": false
+    },
+    "observed_output_state": {
+      "claim_id_state": "minted_opaque",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "certificate_surface": "vacant"
+    }
+  },
+  "semantic_separation": {
+    "minted_opaque_is_admission": false,
+    "minted_opaque_is_kernel_ingestion": false,
+    "minted_opaque_is_certificate": false,
+    "minted_opaque_is_l2_gate_pass": false,
+    "required_interpretation": "minted_opaque != admission != L2 Gate"
+  },
+  "still_blocked": {
+    "second_execute_under_m1_activation": true,
+    "second_mint_under_production_activation": true,
+    "retry_resume_or_fallback": true,
+    "admission": true,
+    "kernel_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "catalog_write": true,
+    "source_role_assignment": true,
+    "lineage_credit": true,
+    "quota_credit": true,
+    "l2_gate_change": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "reuse_or_reactivate_either_activation": false,
+    "adapter_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "git_push": false
+  },
+  "disposition_boundary": {
+    "capability_claim": "The M1 structural adapter path and one production opaque Claim-ID mint path each completed exactly one authorized local execution.",
+    "governance_claim": "Both single-use ledgers are exhausted, while admission, Kernel/E_case, certificate, catalog, role, credit, quota, and L2 gates remain closed.",
+    "effective": false,
+    "not_an_execution_authority": true,
+    "not_an_admission": true,
+    "not_a_kernel_or_certificate_record": true,
+    "not_an_l2_gate_pass": true
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "key_or_secret_created_or_read_in_this_turn": false,
+    "adapter_executed_in_this_turn": false,
+    "mint_executed_in_this_turn": false,
+    "kernel_admission_catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
