@@ -1,0 +1,225 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m0-rule-compiler-design-v0.1-20260724",
+  "artifact_type": "m0_rule_compiler_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "41cae094bf74b39653f71f7dce0eb4ec35f7a285",
+  "status": "design_only_implementation_not_authorized",
+  "surface_scope": {
+    "surface_id": "project05_depth2_public",
+    "field_projection_path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+    "field_projection_sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8",
+    "only_input_surface": true,
+    "certificate_surface": "vacant"
+  },
+  "input_contract": {
+    "source_kind": "projection_allowlist_only",
+    "accepted_groups": [
+      "config",
+      "state",
+      "action"
+    ],
+    "reject_unknown_fields": true,
+    "reject_forbidden_fields": true,
+    "reject_runtime_realized_feedback": true,
+    "reject_cross_surface_join": true,
+    "reject_label_or_verdict_join": true
+  },
+  "rule_compilation_design": {
+    "implementation_status": "not_implemented",
+    "execution_status": "not_executed",
+    "proposed_stages": [
+      {
+        "stage": 1,
+        "name": "authority_and_projection_gate",
+        "behavior": [
+          "Verify the pinned projection path and SHA-256.",
+          "Verify surface_id is exactly project05_depth2_public.",
+          "Require a future, separate execution authority before any package emission."
+        ]
+      },
+      {
+        "stage": 2,
+        "name": "allowlist_shape_validation",
+        "behavior": [
+          "Accept only the config/state/action paths in the pinned projection.",
+          "Reject additional properties and forbidden recursive keys.",
+          "Reject state.actions_taken and state.action_feedback.recovered_count from the M0 projection."
+        ]
+      },
+      {
+        "stage": 3,
+        "name": "public_value_canonicalization",
+        "behavior": [
+          "Canonicalize field paths, numeric bounds, booleans, bounded enums, and opaque references.",
+          "Treat natural_language_request and target.target_value as public metadata only; do not parse them for labels, verdicts, outcomes, or hidden identifiers.",
+          "Do not read private evidence, archives, payloads, or external outcome tables."
+        ]
+      },
+      {
+        "stage": 4,
+        "name": "candidate_claim_record_assembly",
+        "behavior": [
+          "Create candidate records with claim_id null, claim_id_state not_minted, and admission_state not_admitted.",
+          "Assign claim_kind only from the public config/alignment/action enum.",
+          "Attach the pinned projection reference and sanitized field-path manifest."
+        ]
+      },
+      {
+        "stage": 5,
+        "name": "sanitized_manifest_and_hash",
+        "behavior": [
+          "Emit counts, allowlisted field paths, projection SHA-256, and a package content hash only.",
+          "Do not emit raw private paths, labels, verdicts, realized outcomes, credentials, or secrets."
+        ]
+      },
+      {
+        "stage": 6,
+        "name": "fail_closed_status",
+        "behavior": [
+          "Keep kernel_state=pending_kernel_schema until a separately approved schema exists.",
+          "Keep claim_id_state=not_minted and admission_state=not_admitted in this draft-only phase.",
+          "Reject rather than partially emit on any authority or forbidden-field failure."
+        ]
+      }
+    ]
+  },
+  "claim_id_minting_design": {
+    "current_state": "not_minted",
+    "authorized_now": false,
+    "future_strategy": {
+      "algorithm": "authority-bound opaque identifier",
+      "proposed_input_tuple": [
+        "surface_id",
+        "source_field",
+        "opaque_case_reference",
+        "within_package_ordinal"
+      ],
+      "proposed_derivation": "HMAC-SHA-256 with an authority-provided namespace secret, encoded as a non-semantic clm_ identifier.",
+      "prohibitions": [
+        "Never derive an ID directly from labels, verdicts, attack/technique classes, hidden/recoverable claims, realized outcomes, raw paths, or payload bytes.",
+        "Never mint IDs without a separately signed/recorded execute authority.",
+        "Never treat an opaque ID as source role, lineage, quota, credit, or L2 approval."
+      ]
+    },
+    "emission_before_execute_authority": "No Claim IDs are emitted; claim_id remains null and claim_id_state remains not_minted."
+  },
+  "output_state_contract": {
+    "kernel_state": {
+      "enum": [
+        "pending_kernel_schema",
+        "ingested_under_separate_authority",
+        "rejected"
+      ],
+      "current_value": "pending_kernel_schema"
+    },
+    "claim_id_state": {
+      "enum": [
+        "not_minted",
+        "pending_review",
+        "minted_opaque",
+        "invalid"
+      ],
+      "current_value": "not_minted"
+    },
+    "admission_state": {
+      "enum": [
+        "not_admitted",
+        "pending_review",
+        "admitted_under_separate_authority",
+        "rejected"
+      ],
+      "current_value": "not_admitted"
+    },
+    "semantic_guard": "pending_kernel_schema is a blocking state value only, not an execution or ingestion authorization."
+  },
+  "fixture_specifications": [
+    {
+      "fixture_id": "m0_valid_public_projection",
+      "fixture_kind": "valid",
+      "storage_status": "specification_only_not_created",
+      "input_constraints": [
+        "Uses only pinned project05_depth2_public config/state/action fields.",
+        "Contains no labels, verdicts, hidden/recoverable/required claim IDs, oracle data, mask membership, or realized outcomes.",
+        "Excludes state.actions_taken and state.action_feedback.recovered_count."
+      ],
+      "expected_result": {
+        "structural_validation": "pass",
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "package_emission_authorized": false
+      }
+    },
+    {
+      "fixture_id": "m0_authority_leak_labels",
+      "fixture_kind": "authority_leak",
+      "storage_status": "specification_only_not_created",
+      "injected_violation": "labels or verdict field",
+      "expected_result": {
+        "structural_validation": "reject_forbidden_field",
+        "package_emitted": false,
+        "claim_ids_minted": false,
+        "kernel_state": "pending_kernel_schema"
+      }
+    },
+    {
+      "fixture_id": "m0_authority_leak_hidden_claims",
+      "fixture_kind": "authority_leak",
+      "storage_status": "specification_only_not_created",
+      "injected_violation": "recoverable_claim_ids, hidden_claim_ids, or required_claim_ids",
+      "expected_result": {
+        "structural_validation": "reject_forbidden_field",
+        "package_emitted": false,
+        "claim_ids_minted": false
+      }
+    },
+    {
+      "fixture_id": "m0_authority_leak_realized_outcome",
+      "fixture_kind": "authority_leak",
+      "storage_status": "specification_only_not_created",
+      "injected_violation": "state.action_feedback.recovered_count, actual_recovered_claims, or realized_outcomes",
+      "expected_result": {
+        "structural_validation": "reject_realized_outcome",
+        "package_emitted": false,
+        "claim_ids_minted": false
+      }
+    },
+    {
+      "fixture_id": "m0_authority_leak_oracle_mask",
+      "fixture_kind": "authority_leak",
+      "storage_status": "specification_only_not_created",
+      "injected_violation": "oracle, oracle_path, mask_strategy, mask_intensity, mask_membership, or random_seed",
+      "expected_result": {
+        "structural_validation": "reject_forbidden_control_field",
+        "package_emitted": false,
+        "claim_ids_minted": false
+      }
+    }
+  ],
+  "fail_closed_rules": [
+    "No schema file is created or published by this design.",
+    "No compiler code is created or executed by this design.",
+    "No Claim ID is minted until a separate execute authority is granted.",
+    "No certificate, Checker, E_case, Promote, STOP, catalog, source-role, credit, quota, or L2 state is written.",
+    "Any hash mismatch, unknown field, forbidden token, authority absence, or cross-surface join causes rejection."
+  ],
+  "controls": {
+    "kernel_ingestion_authorized": false,
+    "schema_publication_authorized": false,
+    "compiler_implementation_authorized": false,
+    "compiler_execution_authorized": false,
+    "claim_id_minting_authorized": false,
+    "admission_authorized": false,
+    "certificate_surface_vacant": true,
+    "experiment_execution_performed": false,
+    "archive_access_performed": false,
+    "catalog_modified": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  },
+  "review_boundary": {
+    "decision_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "next_step_requires_new_authority": true
+  }
+}

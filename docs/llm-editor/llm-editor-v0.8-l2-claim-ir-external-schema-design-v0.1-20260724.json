@@ -1,0 +1,293 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-ir-external-schema-design-v0.1-20260724",
+  "artifact_type": "external_claim_ir_schema_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "41cae094bf74b39653f71f7dce0eb4ec35f7a285",
+  "status": "design_only_schema_not_published",
+  "surface_scope": {
+    "surface_id": "project05_depth2_public",
+    "field_projection_path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+    "field_projection_sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8",
+    "only_input_surface": true,
+    "certificate_surface": "vacant"
+  },
+  "publication_target": {
+    "path": "schemas/claim-ir-kernel.schema.json",
+    "publication_status": "not_created",
+    "publication_authorized": false,
+    "design_does_not_create_file": true
+  },
+  "schema_design": {
+    "format": "JSON Schema draft design only",
+    "additional_properties": false,
+    "root_required": [
+      "schema_version",
+      "package_id",
+      "surface_id",
+      "kernel_state",
+      "claim_id_state",
+      "admission_state",
+      "projection_ref",
+      "claims",
+      "manifest"
+    ],
+    "root_fields": {
+      "schema_version": {
+        "type": "string",
+        "const": "claim-ir-external-v0.1"
+      },
+      "package_id": {
+        "type": "string",
+        "format": "opaque_identifier",
+        "description": "Non-semantic package reference; not derived from labels or outcomes."
+      },
+      "surface_id": {
+        "type": "string",
+        "const": "project05_depth2_public"
+      },
+      "kernel_state": {
+        "type": "string",
+        "enum": [
+          "pending_kernel_schema",
+          "ingested_under_separate_authority",
+          "rejected"
+        ],
+        "current_value": "pending_kernel_schema",
+        "semantics": "A state value indicating that the Kernel schema/ingestion gate is still blocking. It is not an authorization or approval."
+      },
+      "claim_id_state": {
+        "type": "string",
+        "enum": [
+          "not_minted",
+          "pending_review",
+          "minted_opaque",
+          "invalid"
+        ],
+        "current_value": "not_minted",
+        "semantics": "No Claim IDs are minted by this design artifact."
+      },
+      "admission_state": {
+        "type": "string",
+        "enum": [
+          "not_admitted",
+          "pending_review",
+          "admitted_under_separate_authority",
+          "rejected"
+        ],
+        "current_value": "not_admitted",
+        "semantics": "Admission is distinct from structural validity and does not grant source role, train admission, lineage, quota, or credit."
+      },
+      "projection_ref": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256",
+          "surface_id"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "surface_id": {
+            "type": "string",
+            "const": "project05_depth2_public"
+          }
+        }
+      },
+      "claims": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/claim_record"
+        }
+      },
+      "manifest": {
+        "type": "object",
+        "required": [
+          "claim_count",
+          "field_path_set",
+          "projection_sha256",
+          "content_hash"
+        ],
+        "properties": {
+          "claim_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "field_path_set": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "projection_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "defs": {
+      "claim_record": {
+        "type": "object",
+        "additional_properties": false,
+        "required": [
+          "claim_id",
+          "claim_id_state",
+          "claim_kind",
+          "source_field",
+          "value_type",
+          "value",
+          "admission_state"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "opaque_identifier",
+            "description": "Null while claim_id_state is not_minted or pending_review; never a label, path, verdict, or raw claim text."
+          },
+          "claim_id_state": {
+            "type": "string",
+            "enum": [
+              "not_minted",
+              "pending_review",
+              "minted_opaque",
+              "invalid"
+            ]
+          },
+          "claim_kind": {
+            "type": "string",
+            "enum": [
+              "public_config",
+              "public_alignment_state",
+              "public_action_declaration",
+              "public_prospective_effect"
+            ]
+          },
+          "source_field": {
+            "type": "string",
+            "enum_source": "field_projection_allowlist_only"
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "opaque_reference",
+              "bounded_number",
+              "bounded_boolean",
+              "bounded_enum",
+              "bounded_public_text"
+            ]
+          },
+          "value": {
+            "description": "Value must conform to the field projection and may not contain forbidden fields, labels, outcomes, private evidence, or raw secrets."
+          },
+          "admission_state": {
+            "type": "string",
+            "enum": [
+              "not_admitted",
+              "pending_review",
+              "admitted_under_separate_authority",
+              "rejected"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "field_projection_constraints": {
+    "allowed_source_path_groups": [
+      "config.case_id",
+      "config.budget_total",
+      "config.cti_nodes.node_id",
+      "config.cti_nodes.stage",
+      "config.cti_nodes.critical",
+      "config.channel_reliability",
+      "state.case_id",
+      "state.step_index",
+      "state.matched_cti_node_ids",
+      "state.unmatched_cti_node_ids",
+      "state.matched_cti_edge_ids",
+      "state.unmatched_cti_edge_ids",
+      "state.coverage.*",
+      "state.budget.*",
+      "state.remaining_action_ids",
+      "action.action_id",
+      "action.case_id",
+      "action.action_type",
+      "action.acquisition_channel",
+      "action.target.*",
+      "action.cost",
+      "action.intended_cti_node_ids",
+      "action.expected_evidence_types",
+      "action.expected_stages",
+      "action.expected_effects.*",
+      "action.status",
+      "action.natural_language_request"
+    ],
+    "excluded_even_if_runtime_visible": [
+      "state.actions_taken",
+      "state.action_feedback.recovered_count"
+    ],
+    "forbidden_tokens_or_sources": [
+      "label",
+      "labels",
+      "class",
+      "attack",
+      "technique",
+      "verdict",
+      "recoverable_claim_ids",
+      "hidden_claim_ids",
+      "required_claim_ids",
+      "actual_recovered_claims",
+      "oracle",
+      "oracle_path",
+      "mask_strategy",
+      "mask_intensity",
+      "mask_membership",
+      "random_seed",
+      "run_id",
+      "realized_recovery",
+      "realized_outcomes",
+      "private_evidence",
+      "hidden_evidence",
+      "credentials",
+      "secrets"
+    ]
+  },
+  "status_semantics": {
+    "pending_kernel_schema": "Blocking state only. It means the external schema has not been published/accepted for Kernel ingestion; it never means execute, ingest, admit, or approve.",
+    "not_minted": "No Claim ID exists in the package; source references remain opaque public field references.",
+    "not_admitted": "The package has no source role, train admission, lineage credit, quota credit, or L2 effect.",
+    "ingested_under_separate_authority": "Reserved future state requiring a new execution authority and a published schema; not reachable from this design artifact.",
+    "admitted_under_separate_authority": "Reserved future state requiring an independent disposition and authority; not reachable from this design artifact."
+  },
+  "controls": {
+    "kernel_ingestion_authorized": false,
+    "claim_id_minting_authorized": false,
+    "admission_authorized": false,
+    "certificate_generation_authorized": false,
+    "compiler_execution_authorized": false,
+    "m0_m1_m2_implementation_authorized": false,
+    "xgboost_fit_authorized": false,
+    "catalog_write_authorized": false,
+    "role_or_credit_change_authorized": false,
+    "l2_change_authorized": false,
+    "schema_file_created": false,
+    "kernel_written": false,
+    "experiments_run": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  },
+  "review_limit": "approve_for_separate_metadata_candidate_review_not_source_role"
+}
