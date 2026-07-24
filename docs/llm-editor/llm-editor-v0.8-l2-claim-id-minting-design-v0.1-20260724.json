@@ -1,0 +1,257 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-minting-design-v0.1-20260724",
+  "artifact_type": "opaque_claim_id_minting_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "c0dc780f12af9a1c0e019cf0d9bf032983ce8ab0",
+  "status": "design_only_minting_not_authorized",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "projection_path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+    "projection_sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8",
+    "schema_path": "schemas/claim-ir-kernel.schema.json",
+    "schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "compiler_path": "src/compiler/llm/m0_rule_compiler.py",
+    "compiler_sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1",
+    "m0_disposition_path": "docs/llm-editor/llm-editor-v0.8-l2-m0-structural-completion-disposition-v0.1-20260724.json",
+    "m0_disposition_sha256": "03a6014177960b51e25e1c18acaef334bfd48f0015995b5637006666e6d4c60f",
+    "certificate_surface": "vacant"
+  },
+  "design_boundary": {
+    "implementation_authorized": false,
+    "execution_authorized": false,
+    "secret_or_hmac_key_created": false,
+    "minting_performed": false,
+    "package_state_now": {
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    }
+  },
+  "opaque_id_algorithm": {
+    "algorithm": "HMAC-SHA-256",
+    "identifier_prefix": "clm_",
+    "encoding": "base64url_without_padding",
+    "digest_length": "full_256_bit_digest",
+    "canonical_message_version": "claim-id-mint-v0.1",
+    "canonical_tuple": [
+      "canonical_message_version",
+      "surface_id",
+      "allowlisted_source_slot",
+      "opaque_case_reference",
+      "within_package_ordinal"
+    ],
+    "source_slot_policy": {
+      "meaning": "A schema-controlled opaque slot from the pinned projection allowlist, not a filesystem/member/raw path.",
+      "raw_path_values_allowed": false,
+      "examples": [
+        "cfg_case_ref",
+        "state_alignment_ref",
+        "action_declaration_ref"
+      ]
+    },
+    "key_policy": {
+      "key_material_created_now": false,
+      "key_material_stored_in_repository": false,
+      "required_future_input": "external authority-provisioned namespace secret identified only by key_id",
+      "secret_output_persisted": false,
+      "key_rotation_requires_new_authority": true
+    },
+    "non_semantic_guarantees": [
+      "The identifier must not encode labels, classes, attacks, techniques, verdicts, outcomes, or admission state.",
+      "The identifier must not be derived from filesystem paths, archive member paths, raw payload bytes, credentials, or secrets.",
+      "The identifier must not be derived from oracle state, mask membership, realized recovery, or hidden/recoverable claim IDs.",
+      "The same authority namespace and canonical tuple may provide repeatability; repeatability does not grant admission or source role."
+    ],
+    "collision_and_replay_policy": {
+      "collision_check": "Reject on an existing different canonical tuple mapping to the same clm_ identifier.",
+      "replay_check": "Require the same pinned chain and authority namespace; otherwise fail closed.",
+      "cross_surface_reuse": false
+    }
+  },
+  "required_execute_authority_before_any_mint": {
+    "authority_status": "activated_single_mint_execute_authorized",
+    "target": {
+      "surface_id": "project05_depth2_public",
+      "only_surface": true
+    },
+    "pinned_chain": [
+      {
+        "name": "field_projection",
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+        "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+      },
+      {
+        "name": "schema",
+        "path": "schemas/claim-ir-kernel.schema.json",
+        "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+      },
+      {
+        "name": "compiler",
+        "path": "src/compiler/llm/m0_rule_compiler.py",
+        "sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+      },
+      {
+        "name": "m0_disposition",
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m0-structural-completion-disposition-v0.1-20260724.json",
+        "sha256": "03a6014177960b51e25e1c18acaef334bfd48f0015995b5637006666e6d4c60f"
+      }
+    ],
+    "attempt_ledger": {
+      "execute_count_authorized_now": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "namespace_key_attestation": {
+      "key_id_required": true,
+      "key_material_must_be_external": true,
+      "key_material_must_not_be_logged": true,
+      "key_material_must_not_be_committed": true
+    },
+    "input_and_output_gates": {
+      "allowlisted_source_slots_only": true,
+      "labels_or_outcomes_allowed": false,
+      "raw_paths_or_payload_bytes_allowed": false,
+      "cross_surface_join_allowed": false,
+      "output_claim_id_must_match_clm_pattern": true,
+      "package_and_claim_state_transition_must_be_recorded": true
+    },
+    "still_blocked_after_mint": {
+      "admission": true,
+      "kernel_ingestion": true,
+      "certificate": true,
+      "catalog": true,
+      "source_role": true,
+      "lineage_credit": true,
+      "quota_credit": true,
+      "l2_gate": true
+    }
+  },
+  "state_transition_design": {
+    "package_level": {
+      "current": {
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema"
+      },
+      "future_after_authorized_mint": {
+        "claim_id_state": "minted_opaque",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema"
+      }
+    },
+    "per_claim": {
+      "current": {
+        "claim_id": null,
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted"
+      },
+      "future_after_authorized_mint": {
+        "claim_id": "clm_<full-base64url-hmac-sha256>",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "not_admitted"
+      }
+    },
+    "transition_guard": "No transition occurs in this design artifact. A future executor must atomically update package and per-claim state or emit no package."
+  },
+  "fail_closed_rules": [
+    "No mint without an activated authority that pins the exact surface and all chain hashes.",
+    "No mint without an external key_id attestation; key material must never enter repository files, logs, fixtures, or output.",
+    "Reject any unknown field, forbidden field, label/verdict token, hidden/recoverable claim ID, oracle/mask field, realized outcome, raw path, payload byte, credential, or secret.",
+    "Reject any surface_id other than project05_depth2_public or any cross-surface join.",
+    "Reject any retry, resume, fallback, second execution, hash mismatch, collision, or replay under a different authority namespace.",
+    "Keep admission_state=not_admitted and kernel_state=pending_kernel_schema after mint.",
+    "Never infer certificate, source role, lineage, quota, credit, catalog, or L2 state from an opaque ID."
+  ],
+  "fixture_specifications": [
+    {
+      "fixture_id": "mint_valid_public_projection",
+      "fixture_kind": "valid_mint",
+      "storage_status": "specification_only_not_created",
+      "execution_status": "not_run",
+      "input_shape": "A synthetic project05_depth2_public structural package containing only pinned allowlisted source slots and opaque case references.",
+      "authority_shape": "A future single-use authority with external key_id attestation and the pinned projection/schema/compiler/disposition chain.",
+      "expected_result": {
+        "package_claim_id_state": "minted_opaque",
+        "per_claim_claim_id_state": "minted_opaque",
+        "claim_id_pattern": "clm_<base64url-hmac-sha256>",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "raw_paths_or_payload_emitted": false
+      }
+    },
+    {
+      "fixture_id": "mint_antileak_labels_outcomes",
+      "fixture_kind": "anti_leak_mint",
+      "storage_status": "specification_only_not_created",
+      "execution_status": "not_run",
+      "injected_violation": "labels, verdict, class, attack, technique, or realized_outcomes in input or canonical tuple.",
+      "expected_result": {
+        "outcome": "reject_forbidden_field",
+        "ids_minted": false,
+        "package_emitted": false
+      }
+    },
+    {
+      "fixture_id": "mint_antileak_paths_payloads",
+      "fixture_kind": "anti_leak_mint",
+      "storage_status": "specification_only_not_created",
+      "execution_status": "not_run",
+      "injected_violation": "filesystem path, archive member path, raw payload bytes, credential, or secret in input or canonical tuple.",
+      "expected_result": {
+        "outcome": "reject_raw_path_or_payload",
+        "ids_minted": false,
+        "package_emitted": false
+      }
+    },
+    {
+      "fixture_id": "mint_antileak_oracle_hidden_mask",
+      "fixture_kind": "anti_leak_mint",
+      "storage_status": "specification_only_not_created",
+      "execution_status": "not_run",
+      "injected_violation": "oracle, oracle_path, hidden/recoverable claim IDs, mask membership, or random seed.",
+      "expected_result": {
+        "outcome": "reject_authority_leak",
+        "ids_minted": false,
+        "package_emitted": false
+      }
+    }
+  ],
+  "explicit_non_authorizations": {
+    "mint_implementation": false,
+    "mint_execution": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m1_implementation": false,
+    "m2_implementation": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "decision_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "effective": false,
+    "next_step_requires_new_execute_authority": true
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "secrets_created": false,
+    "minting_run": false,
+    "kernel_or_admission_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
