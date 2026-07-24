@@ -297,6 +297,32 @@ baseline execution, B2 sampling, B3 production capture, scalarization,
 performance superiority claims, B5–B9, LLM or any extension of
 `CERTIFIED_STOP`.
 
+## 16. PB-SI-006 source-selection contract-only status
+
+The separately authorized SI-006 local slice establishes only a deterministic
+source-selection contract. It does not rewrite the historical B0–B9
+裁定 or any frozen artifact hash.
+
+```text
+Authorized slice: PB-SI-006_SOURCE_SELECTION
+PB-SI-006: SELECTION_CONTRACT_ONLY_DOWNLOAD_DENY
+source_selection_contract_authority=true
+local_selection_evaluation_authority=true
+source_authorization_authority=false
+retrieval_authority=false
+download_authority=false
+connector_execution_authority=false
+holdout release: DENY
+PB-B7-SI-001: OPEN_DEFAULT_DENY
+PB-B7-SI-002: OPEN_DEFAULT_DENY
+PB-B5-SI-001: EXECUTION_NOT_ESTABLISHED
+stop_authority=NONE
+```
+
+Only abstract, `NOT_AUTHORIZED` source identifiers are accepted. No HTTP/API,
+credential, connector runtime, data download, quarantine, holdout release,
+Planner execution, certificate or `CERTIFIED_STOP` authority is established.
+
 The B4 local review passed `12/12` targeted tests and `208/208` full
 repository tests. `compileall`, tracked and untracked whitespace checks,
 canonical hash replay, the exact 15-file allowlist audit, zero-placeholder

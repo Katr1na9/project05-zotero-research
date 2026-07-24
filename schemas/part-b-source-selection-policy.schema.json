@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-source-selection-policy.schema.json",
+  "title": "Part B PB-SI-006 source-selection policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "status",
+    "authorized_slice",
+    "bindings",
+    "selection_boundary",
+    "authority_boundary",
+    "error_codes",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "policy_id": {
+      "const": "part-b-source-selection-policy-v0.8"
+    },
+    "status": {
+      "const": "SI006_SOURCE_SELECTION_CONTRACT_ONLY"
+    },
+    "authorized_slice": {
+      "const": "PB-SI-006_SOURCE_SELECTION"
+    },
+    "bindings": {
+      "$ref": "#/$defs/frozenBindings"
+    },
+    "selection_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection_semantics",
+        "source_id_semantics",
+        "pointer_semantics",
+        "world_semantics",
+        "adapter_conformance",
+        "network_io"
+      ],
+      "properties": {
+        "selection_semantics": {
+          "const": "CONTRACT_RECORD_ONLY_NOT_SOURCE_AUTHORIZATION"
+        },
+        "source_id_semantics": {
+          "const": "ABSTRACT_ONLY_NOT_AUTHORIZED"
+        },
+        "pointer_semantics": {
+          "const": "PRESERVE_EXACTLY_NO_UNIT_INFERENCE"
+        },
+        "world_semantics": {
+          "const": "EXPLICIT_OPEN_OR_CLOSED_WITH_COMPLETENESS_GATE"
+        },
+        "adapter_conformance": {
+          "const": "B1_CONTRACT_HASH_REQUIRED"
+        },
+        "network_io": {
+          "const": "FORBIDDEN"
+        }
+      }
+    },
+    "authority_boundary": {
+      "$ref": "#/$defs/authorityBoundary"
+    },
+    "error_codes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "missing_required_field",
+        "unknown_field",
+        "pointer_invalid",
+        "adapter_conformance_invalid",
+        "source_not_abstract",
+        "world_semantics_invalid",
+        "authority_request_forbidden",
+        "contract_only"
+      ],
+      "properties": {
+        "missing_required_field": {
+          "const": "SI006-SELECTION-001_MISSING_REQUIRED_FIELD"
+        },
+        "unknown_field": {
+          "const": "SI006-SELECTION-002_UNKNOWN_FIELD"
+        },
+        "pointer_invalid": {
+          "const": "SI006-SELECTION-003_POINTER_INVALID"
+        },
+        "adapter_conformance_invalid": {
+          "const": "SI006-SELECTION-004_ADAPTER_CONFORMANCE_INVALID"
+        },
+        "source_not_abstract": {
+          "const": "SI006-SELECTION-005_SOURCE_NOT_ABSTRACT"
+        },
+        "world_semantics_invalid": {
+          "const": "SI006-SELECTION-006_WORLD_SEMANTICS_INVALID"
+        },
+        "authority_request_forbidden": {
+          "const": "SI006-SELECTION-007_AUTHORITY_REQUEST_FORBIDDEN"
+        },
+        "contract_only": {
+          "const": "SI006-SELECTION-000_CONTRACT_ONLY"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "frozenBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b1_adapter_conformance_hash",
+        "b7_connector_policy_hash",
+        "b7_manifest_hash"
+      ],
+      "properties": {
+        "b1_adapter_conformance_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "b7_connector_policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "b7_manifest_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_selection_contract_authority",
+        "local_selection_evaluation_authority",
+        "source_authorization_authority",
+        "retrieval_authority",
+        "download_authority",
+        "credential_use_authority",
+        "connector_execution_authority",
+        "planner_execution_authority",
+        "holdout_release",
+        "stop_authority"
+      ],
+      "properties": {
+        "source_selection_contract_authority": {
+          "const": true
+        },
+        "local_selection_evaluation_authority": {
+          "const": true
+        },
+        "source_authorization_authority": {
+          "const": false
+        },
+        "retrieval_authority": {
+          "const": false
+        },
+        "download_authority": {
+          "const": false
+        },
+        "credential_use_authority": {
+          "const": false
+        },
+        "connector_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "holdout_release": {
+          "const": "DENY"
+        },
+        "stop_authority": {
+          "const": "NONE"
+        }
+      }
+    }
+  }
+}

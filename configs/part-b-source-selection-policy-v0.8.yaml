@@ -1,0 +1,36 @@
+schema_version: "0.8.0"
+policy_id: part-b-source-selection-policy-v0.8
+status: SI006_SOURCE_SELECTION_CONTRACT_ONLY
+authorized_slice: PB-SI-006_SOURCE_SELECTION
+bindings:
+  b1_adapter_conformance_hash: "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a"
+  b7_connector_policy_hash: "sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3"
+  b7_manifest_hash: "sha256:28179580dc0e8c4dbc6f1a6cb1d5f0d4939a3ae7466c078e60f20fb16fffac49"
+selection_boundary:
+  selection_semantics: CONTRACT_RECORD_ONLY_NOT_SOURCE_AUTHORIZATION
+  source_id_semantics: ABSTRACT_ONLY_NOT_AUTHORIZED
+  pointer_semantics: PRESERVE_EXACTLY_NO_UNIT_INFERENCE
+  world_semantics: EXPLICIT_OPEN_OR_CLOSED_WITH_COMPLETENESS_GATE
+  adapter_conformance: B1_CONTRACT_HASH_REQUIRED
+  network_io: FORBIDDEN
+authority_boundary:
+  source_selection_contract_authority: true
+  local_selection_evaluation_authority: true
+  source_authorization_authority: false
+  retrieval_authority: false
+  download_authority: false
+  credential_use_authority: false
+  connector_execution_authority: false
+  planner_execution_authority: false
+  holdout_release: DENY
+  stop_authority: NONE
+error_codes:
+  missing_required_field: SI006-SELECTION-001_MISSING_REQUIRED_FIELD
+  unknown_field: SI006-SELECTION-002_UNKNOWN_FIELD
+  pointer_invalid: SI006-SELECTION-003_POINTER_INVALID
+  adapter_conformance_invalid: SI006-SELECTION-004_ADAPTER_CONFORMANCE_INVALID
+  source_not_abstract: SI006-SELECTION-005_SOURCE_NOT_ABSTRACT
+  world_semantics_invalid: SI006-SELECTION-006_WORLD_SEMANTICS_INVALID
+  authority_request_forbidden: SI006-SELECTION-007_AUTHORITY_REQUEST_FORBIDDEN
+  contract_only: SI006-SELECTION-000_CONTRACT_ONLY
+hash: "sha256:6f50c0f405afc30dd35cfa8738e169b23df7f341780e01da42512ed05232c507"
