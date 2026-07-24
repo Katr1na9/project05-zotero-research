@@ -1,0 +1,60 @@
+schema_version: "0.8.0"
+policy_id: part-b-freeze-and-claims-policy-v0.8
+policy_version: "0.8.0"
+status: B9_CONTRACT_ONLY
+authorized_slice: B9_FREEZE_AND_CLAIMS
+freeze_contract_authority: true
+audit_contract_authority: true
+claim_boundary_contract_authority: true
+execution_authority: false
+holdout_release_authority: false
+holdout_data_access_authority: false
+holdout_label_access_authority: false
+holdout_result_access_authority: false
+statistical_analysis_execution_authority: false
+source_selection_authority: false
+source_authorization_authority: false
+connector_execution_authority: false
+retrieval_authority: false
+download_authority: false
+planner_implementation_admission_authority: false
+planner_execution_authority: false
+sampling_authority: false
+baseline_execution_authority: false
+evaluation_execution_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+claim_release_authority: false
+certificate_authority: false
+stop_authority: NONE
+llm_integration: FORBIDDEN
+evidence_ceiling: CONTRACT_CONSISTENCY_ONLY
+bindings:
+  freeze_record_hash: "sha256:92182dbe5b58163b35f113831847a6349dba1c1f19cfd3a42a352b52a6a968ab"
+gate_states:
+  PB-SI-006: OPEN_BLOCKS_CONNECTOR_DATA_HOLDOUT_ACCESS
+  PB-B5-SI-001: OPEN_BLOCKS_IMPLEMENTATION_ADMISSION_AND_EXECUTION
+  PB-B8-SI-004: OPEN_REQUIRES_SEPARATE_EXECUTION_EVIDENCE
+  HOLDOUT_RELEASE: OPEN_DEFAULT_DENY
+  STATISTICAL_EXECUTION: OPEN_NOT_AUTHORIZED
+  IMPLEMENTATION_ADMISSION: OPEN_NOT_ESTABLISHED
+holdout_gate:
+  default_decision: DENY
+  failure_behavior: FAIL_CLOSED_NO_ACCESS
+  contract_unseals_holdout: false
+runtime_boundary:
+  real_source_access: false
+  holdout_access: false
+  statistical_analysis: false
+  connector_execution: false
+  planner_execution: false
+  sampling: false
+  baseline_execution: false
+  evaluation_execution: false
+  llm_integration: false
+  experiment_access: false
+limitations:
+  - The policy freezes contracts and claims only; it cannot execute any component.
+  - Every unresolved source, implementation, holdout, and analysis gate remains open or deny.
+  - The evidence and claim ceiling is CONTRACT_CONSISTENCY_ONLY.
+hash: "sha256:bd04bac10be6e9b049a700eccf8d7f1e771cec89dbf9f6fce412145f40609999"

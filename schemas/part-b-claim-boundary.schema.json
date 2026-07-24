@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-claim-boundary.schema.json",
+  "title": "Project05 Part B B9 claim boundary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "boundary_id",
+    "boundary_version",
+    "status",
+    "authorized_slice",
+    "evidence_ceiling",
+    "bindings",
+    "allowed_claims",
+    "denied_claims",
+    "unknown_claim_behavior",
+    "claim_inference_authority",
+    "claim_release_authority",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "boundary_id": {"const": "part-b-claim-boundary-example-v0.8"},
+    "boundary_version": {"const": "0.8.0"},
+    "status": {"const": "B9_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B9_FREEZE_AND_CLAIMS"},
+    "evidence_ceiling": {"const": "CONTRACT_CONSISTENCY_ONLY"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "freeze_record_hash",
+        "freeze_and_claims_policy_hash"
+      ],
+      "properties": {
+        "freeze_record_hash": {"$ref": "#/$defs/sha256"},
+        "freeze_and_claims_policy_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "allowed_claims": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/allowedClaim"}
+    },
+    "denied_claims": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {"$ref": "#/$defs/deniedClaim"}
+    },
+    "unknown_claim_behavior": {"const": "DENY_UNKNOWN_CLAIM"},
+    "claim_inference_authority": {"const": false},
+    "claim_release_authority": {"const": false},
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "claimId": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]+$"
+    },
+    "allowedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "decision", "evidence_level"],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/claimId"},
+        "decision": {"const": "ALLOW_CONTRACT_ONLY"},
+        "evidence_level": {"const": "CONTRACT_CONSISTENCY_ONLY"}
+      }
+    },
+    "deniedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "decision", "evidence_level"],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/claimId"},
+        "decision": {"const": "DENY"},
+        "evidence_level": {"const": "NOT_ESTABLISHED"}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

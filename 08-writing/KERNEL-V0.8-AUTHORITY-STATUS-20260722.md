@@ -740,3 +740,81 @@ The B8 evidence level remains `CONTRACT_CONSISTENCY_ONLY`. B9 stays closed.
 The local B8 review passed `26/26` targeted tests and `299/299` full
 repository tests. These results do not authorize commit, push, PR, data
 access or statistical execution.
+
+## 14. Part B B9 freeze-and-claims local contract status
+
+The user authorized the local contract slice
+`B9_FREEZE_AND_CLAIMS` on `2026-07-24`. This appended section does not rewrite
+any B0–B8 ruling above.
+
+```text
+Artifact status: B9_CONTRACT_ONLY
+Evidence ceiling: CONTRACT_CONSISTENCY_ONLY
+freeze_contract_authority=true
+audit_contract_authority=true
+claim_boundary_contract_authority=true
+execution_authority=false
+holdout_release_authority=false
+holdout_data_access_authority=false
+holdout_label_access_authority=false
+holdout_result_access_authority=false
+statistical_analysis_execution_authority=false
+source_authorization_authority=false
+connector_execution_authority=false
+planner_implementation_admission_authority=false
+planner_execution_authority=false
+sampling_authority=false
+scalarization_authority=false
+performance_claim_authority=false
+claim_release_authority=false
+certificate_authority=false
+stop_authority=NONE
+LLM integration=FORBIDDEN
+commit / push / PR: NOT AUTHORIZED
+```
+
+B9 freezes an explicit 39-item B0–B8 artifact inventory at
+`be33ef8906f5c6ca0891d21da11573b9510e941e`. The list is the 38-identity
+manifest union plus the B8 no-data holdout envelope. All paths and canonical
+hashes replay from that baseline. B9 is excluded from its own upstream freeze
+record.
+
+The directed B9 artifact identities are:
+
+```text
+Freeze record:
+sha256:92182dbe5b58163b35f113831847a6349dba1c1f19cfd3a42a352b52a6a968ab
+
+Freeze and claims policy:
+sha256:bd04bac10be6e9b049a700eccf8d7f1e771cec89dbf9f6fce412145f40609999
+
+Claim boundary:
+sha256:0ee41ab84b171d7b4789a3b76d7971e15ed3e8f5d6501889b4d486b7e70722a8
+
+B9 manifest:
+sha256:6cff911409da42f66b3fef1e25cf555f72f6620f5fd713bdf3bc16bcf50c563e
+
+Freeze audit:
+sha256:102c6d1871d89fcbf8a3902f3b26a5e1ac081b578dc220481f6f8b4792e8b8d0
+```
+
+`PB-SI-006` remains **OPEN** and no real source is selected or authorized.
+`PB-B5-SI-001` remains **OPEN** and no Planner implementation is admitted.
+`PB-B8-SI-004` remains **OPEN** because there is no separate execution
+evidence.
+
+```text
+holdout release: OPEN / default DENY
+statistical execution: OPEN / NOT AUTHORIZED
+implementation admission: OPEN / NOT ESTABLISHED
+```
+
+The audit contains no data, labels, results, statistics, metrics, rankings or
+execution traces. Allowed claims concern exact hash replay, Schema validation,
+internal contract consistency and fail-closed unknown claims only. Empirical
+validity, external validity, performance superiority, global optimality,
+holdout analysis, statistical execution, scalarized ranking, certificate
+issuance and `CERTIFIED_STOP` authority are `DENY`.
+
+B9 local contract review does not authorize delivery, runtime execution,
+holdout release, claim release, a certificate, system status or STOP.
