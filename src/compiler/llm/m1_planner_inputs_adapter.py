@@ -1,8 +1,9 @@
-"""Fail-closed structural adapter for planner_experiment_inputs.
+"""Authority-gated fail-closed adapter for planner_experiment_inputs.
 
-The adapter validates one frozen M1 contract and then delegates the public
-projection to the existing M0 rule compiler.  It never mints Claim-IDs,
-writes files, invokes the mint executor, or changes admission/Kernel state.
+The adapter requires an in-memory, activated, single-use execute authority,
+validates one frozen M1 contract, and then delegates the public projection to
+the existing M0 rule compiler.  It never mints Claim-IDs, writes files,
+invokes the mint executor, or changes admission/Kernel state.
 """
 
 from __future__ import annotations
@@ -58,6 +59,21 @@ PROJECTION_SHA256 = (
 MAPPING_SHA256 = (
     "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
 )
+AUTHORITY_DESIGN_PATH = (
+    "docs/llm-editor/"
+    "llm-editor-v0.8-l2-m1-planner-inputs-single-execute-authority-design-v0.1-20260724.json"
+)
+AUTHORITY_DESIGN_SHA256 = (
+    "ea451a7e709072b9ab5723fc17547d0d55807fe6e24243a77b46c6c8f9f60214"
+)
+ADAPTER_DISPOSITION_PATH = (
+    "docs/llm-editor/"
+    "llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json"
+)
+ADAPTER_DISPOSITION_SHA256 = (
+    "e26fc1573bf312f6dd63e9716eebd0ed2ac8804a19fa6658de31b256df05fead"
+)
+ADAPTER_IMPLEMENTATION_PATH = "src/compiler/llm/m1_planner_inputs_adapter.py"
 
 _EXPECTED_DESCRIPTOR_FIELDS = frozenset(
     {
@@ -67,6 +83,62 @@ _EXPECTED_DESCRIPTOR_FIELDS = frozenset(
         "adapter_version",
         "opaque_record_reference",
         "declared_source_fields",
+    }
+)
+_EXPECTED_AUTHORITY_FIELDS = frozenset(
+    {
+        "status",
+        "target",
+        "pinned_hashes",
+        "pinned_inputs",
+        "reserved_result_path",
+        "execute_ledger",
+        "output_policy",
+        "still_blocked",
+    }
+)
+_EXPECTED_EXECUTE_LEDGER = {
+    "authorized": 1,
+    "maximum": 1,
+    "started": 0,
+    "consumed": 0,
+    "remaining": 1,
+    "retry": False,
+    "resume": False,
+    "fallback": False,
+}
+_EXPECTED_OUTPUT_POLICY = {
+    "mode": "in_memory_structural_only",
+    "file_write": False,
+    "mint": False,
+    "kernel_write": False,
+    "admission": False,
+}
+_EXPECTED_STILL_BLOCKED = {
+    "production_claim_id_mint": True,
+    "kernel_write": True,
+    "e_case_write": True,
+    "certificate_generation": True,
+    "admission": True,
+    "catalog_write": True,
+    "source_role_assignment": True,
+    "lineage_credit": True,
+    "quota_credit": True,
+    "l2_gate_change": True,
+    "m2_implementation_or_fit": True,
+    "four_family_llm_finetune": True,
+    "registry_permanent_effect": True,
+}
+_FORBIDDEN_AUTHORITY_KEYS = frozenset(
+    {
+        "key",
+        "key_bytes",
+        "key_material",
+        "hmac_key",
+        "secret",
+        "secret_bytes",
+        "credential",
+        "credentials",
     }
 )
 _FORBIDDEN_KEYS = frozenset(
@@ -146,6 +218,8 @@ def verify_adapter_pins(repo_root: Path) -> None:
     for relative_path, expected_sha in (
         (CONTRACT_PATH, CONTRACT_SHA256),
         (M1_FRAMEWORK_PATH, M1_FRAMEWORK_SHA256),
+        (AUTHORITY_DESIGN_PATH, AUTHORITY_DESIGN_SHA256),
+        (ADAPTER_DISPOSITION_PATH, ADAPTER_DISPOSITION_SHA256),
         (SCHEMA_PATH, SCHEMA_SHA256),
         (COMPILER_PATH, COMPILER_SHA256),
         (PROJECTION_PATH, PROJECTION_SHA256),
@@ -285,14 +359,18 @@ def verify_adapter_pins(repo_root: Path) -> None:
     ):
         raise M1AdapterError("framework_boundary", "M1 framework implementation boundary is not closed")
 
+    _validate_authority_design(repo_root)
+    _validate_adapter_disposition(repo_root)
+
 
 def adapt_planner_projection(
     descriptor: Mapping[str, Any],
     projection: Mapping[str, Any],
     *,
     repo_root: Path,
+    authority: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Validate one planner descriptor and compile its public projection.
+    """Authorize, validate, and compile one planner public projection.
 
     The returned object is exactly the existing M0 structural package.  No
     adapter metadata is appended because the published Claim IR schema is
@@ -300,6 +378,12 @@ def adapt_planner_projection(
     """
 
     verify_adapter_pins(repo_root)
+    _validate_execute_authority(
+        authority,
+        descriptor=descriptor,
+        projection=projection,
+        repo_root=repo_root,
+    )
     source_fields = _schema_source_fields(repo_root / SCHEMA_PATH)
     _validate_descriptor(descriptor, source_fields)
     _reject_forbidden_keys(projection)
@@ -327,10 +411,291 @@ def compile_planner_projection(
     projection: Mapping[str, Any],
     *,
     repo_root: Path,
+    authority: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compatibility alias for callers that name the adapter handoff compile."""
 
-    return adapt_planner_projection(descriptor, projection, repo_root=repo_root)
+    return adapt_planner_projection(
+        descriptor,
+        projection,
+        repo_root=repo_root,
+        authority=authority,
+    )
+
+
+def _validate_authority_design(repo_root: Path) -> None:
+    design = _load_json(repo_root / AUTHORITY_DESIGN_PATH)
+    if not isinstance(design, Mapping):
+        raise M1AdapterError("authority_design_shape", "authority design must be an object")
+    _require_constant(
+        design.get("status"),
+        "design_only_execute_authority_not_activated",
+        "authority_design.status",
+    )
+    _require_constant(
+        design.get("artifact_type"),
+        "m1_planner_inputs_single_execute_authority_design",
+        "authority_design.artifact_type",
+    )
+
+    scope = design.get("scope")
+    if not isinstance(scope, Mapping):
+        raise M1AdapterError("authority_design_shape", "authority design scope is missing")
+    for field, expected in (
+        ("surface_id", SURFACE_ID),
+        ("only_input_surface", True),
+        ("adapter_id", ADAPTER_ID),
+        ("source_class", SOURCE_CLASS),
+        ("certificate_surface", "vacant"),
+        ("permanent_registry_effect", False),
+    ):
+        _require_constant(scope.get(field), expected, f"authority_design.scope.{field}")
+
+    chain = design.get("pinned_authority_chain")
+    if not isinstance(chain, Mapping):
+        raise M1AdapterError("authority_design_pins", "authority design chain is missing")
+    for key, expected_path, expected_sha in (
+        ("m1_framework", M1_FRAMEWORK_PATH, M1_FRAMEWORK_SHA256),
+        ("planner_adapter_contract", CONTRACT_PATH, CONTRACT_SHA256),
+        (
+            "planner_adapter_disposition",
+            ADAPTER_DISPOSITION_PATH,
+            ADAPTER_DISPOSITION_SHA256,
+        ),
+        ("claim_ir_schema", SCHEMA_PATH, SCHEMA_SHA256),
+        ("m0_rule_compiler", COMPILER_PATH, COMPILER_SHA256),
+        ("m0_projection", PROJECTION_PATH, PROJECTION_SHA256),
+    ):
+        _require_pin_record(
+            chain.get(key),
+            expected_path,
+            expected_sha,
+            f"authority_design.pinned_authority_chain.{key}",
+        )
+    implementation = chain.get("planner_adapter_implementation")
+    if (
+        not isinstance(implementation, Mapping)
+        or implementation.get("path") != ADAPTER_IMPLEMENTATION_PATH
+        or implementation.get("sha256")
+        != "40b68761fa56c01327427b1e096b05785a58b545f8dc6e53df25a2100f6cf8fb"
+    ):
+        raise M1AdapterError(
+            "authority_design_pins",
+            "authority design does not pin the pre-gate adapter lineage",
+        )
+
+    current = design.get("current_authorization_state")
+    expected_current = {
+        "authority_activated": False,
+        "adapter_execute_authorized_now": 0,
+        "adapter_execute_started": 0,
+        "adapter_execute_consumed": 0,
+        "adapter_execute_remaining": 0,
+        "registry_activated": False,
+        "adapter_registered_effective": False,
+        "execution_performed": False,
+    }
+    if not isinstance(current, Mapping):
+        raise M1AdapterError("authority_design_state", "current authorization state is missing")
+    for field, expected in expected_current.items():
+        _require_constant(
+            current.get(field),
+            expected,
+            f"authority_design.current_authorization_state.{field}",
+        )
+
+    future = design.get("future_activation_shape")
+    if not isinstance(future, Mapping):
+        raise M1AdapterError("authority_design_shape", "future activation shape is missing")
+    _require_constant(
+        future.get("status"),
+        "activated_single_adapter_execute_authorized",
+        "authority_design.future_activation_shape.status",
+    )
+    _require_typed_mapping(
+        future.get("target"),
+        {
+            "surface_id": SURFACE_ID,
+            "adapter_id": ADAPTER_ID,
+            "source_class": SOURCE_CLASS,
+            "only_target": True,
+        },
+        "authority_design.future_activation_shape.target",
+        "authority_design_shape",
+    )
+    _require_typed_mapping(
+        future.get("execute_ledger"),
+        _EXPECTED_EXECUTE_LEDGER,
+        "authority_design.future_activation_shape.execute_ledger",
+        "authority_design_state",
+    )
+    _require_constant(
+        future.get("activation_created_now"),
+        False,
+        "authority_design.future_activation_shape.activation_created_now",
+    )
+    _require_constant(
+        future.get("execute_authorized_now_by_this_design"),
+        False,
+        "authority_design.future_activation_shape.execute_authorized_now_by_this_design",
+    )
+
+    integrity = design.get("activation_integrity_rules")
+    if not isinstance(integrity, Mapping):
+        raise M1AdapterError("authority_design_shape", "activation integrity rules are missing")
+    _require_constant(
+        integrity.get("adapter_contract_status_must_remain"),
+        "design_only_adapter_not_registered",
+        "authority_design.activation_integrity_rules.adapter_contract_status_must_remain",
+    )
+    for field in (
+        "editing_adapter_contract_status_to_simulate_activation",
+        "editing_m1_framework_status_to_simulate_activation",
+        "in_place_activation_of_this_design",
+        "registry_permanence_from_single_execute",
+        "adapter_effective_registration_from_single_execute",
+        "activation_without_authority_artifact",
+    ):
+        _require_constant(
+            integrity.get(field),
+            False,
+            f"authority_design.activation_integrity_rules.{field}",
+        )
+
+    gate = design.get("required_future_adapter_authority_gate")
+    if not isinstance(gate, Mapping):
+        raise M1AdapterError("authority_design_shape", "future authority gate is missing")
+    for field, expected in (
+        ("code_change_required_before_any_execute", True),
+        ("current_adapter_must_not_be_executed_under_this_design", True),
+        ("fail_closed_before_m0_handoff", True),
+        ("no_authority_no_execution", True),
+        ("code_implementation_authorized_by_this_design", False),
+    ):
+        _require_constant(
+            gate.get(field),
+            expected,
+            f"authority_design.required_future_adapter_authority_gate.{field}",
+        )
+
+
+def _validate_adapter_disposition(repo_root: Path) -> None:
+    disposition = _load_json(repo_root / ADAPTER_DISPOSITION_PATH)
+    if not isinstance(disposition, Mapping):
+        raise M1AdapterError("disposition_shape", "adapter disposition must be an object")
+    _require_constant(
+        disposition.get("status"),
+        "draft_disposition_not_effective",
+        "adapter_disposition.status",
+    )
+    scope = disposition.get("scope")
+    if not isinstance(scope, Mapping):
+        raise M1AdapterError("disposition_shape", "adapter disposition scope is missing")
+    for field, expected in (
+        ("surface_id", SURFACE_ID),
+        ("only_input_surface", True),
+        ("adapter_id", ADAPTER_ID),
+        ("source_class", SOURCE_CLASS),
+        ("certificate_surface", "vacant"),
+    ):
+        _require_constant(scope.get(field), expected, f"adapter_disposition.scope.{field}")
+    registry = disposition.get("registry_and_effective_status")
+    if not isinstance(registry, Mapping):
+        raise M1AdapterError("disposition_shape", "registry disposition is missing")
+    for field, expected in (
+        ("registry_activated", False),
+        ("adapter_registered_effective", False),
+        ("adapter_contract_effective", False),
+        ("adapter_execution_authorized", False),
+        ("contract_status_remains", "design_only_adapter_not_registered"),
+        ("contract_is_frozen_pin_not_execution_authority", True),
+    ):
+        _require_constant(
+            registry.get(field),
+            expected,
+            f"adapter_disposition.registry_and_effective_status.{field}",
+        )
+
+
+def _validate_execute_authority(
+    authority: Mapping[str, Any] | None,
+    *,
+    descriptor: Mapping[str, Any],
+    projection: Mapping[str, Any],
+    repo_root: Path,
+) -> None:
+    if authority is None:
+        raise M1AdapterError(
+            "missing_authority",
+            "an activated single-use adapter execute authority is required",
+        )
+    if not isinstance(authority, Mapping):
+        raise M1AdapterError("authority_type", "adapter execute authority must be an object")
+    _reject_forbidden_authority_keys(authority)
+    if set(authority) != _EXPECTED_AUTHORITY_FIELDS:
+        raise M1AdapterError(
+            "authority_shape",
+            "adapter execute authority fields are not canonical",
+        )
+    if authority.get("status") != "activated_single_adapter_execute_authorized":
+        raise M1AdapterError("not_activated", "adapter execute authority is not activated")
+
+    _require_typed_mapping(
+        authority.get("target"),
+        {
+            "surface_id": SURFACE_ID,
+            "adapter_id": ADAPTER_ID,
+            "source_class": SOURCE_CLASS,
+            "only_target": True,
+        },
+        "authority.target",
+        "authority_target",
+    )
+    expected_pins = {
+        "authority_design_sha256": AUTHORITY_DESIGN_SHA256,
+        "m1_framework_sha256": M1_FRAMEWORK_SHA256,
+        "adapter_contract_sha256": CONTRACT_SHA256,
+        "adapter_implementation_sha256": _sha256(repo_root / ADAPTER_IMPLEMENTATION_PATH),
+        "adapter_disposition_sha256": ADAPTER_DISPOSITION_SHA256,
+        "schema_sha256": SCHEMA_SHA256,
+        "m0_compiler_sha256": COMPILER_SHA256,
+        "projection_sha256": PROJECTION_SHA256,
+    }
+    _require_typed_mapping(
+        authority.get("pinned_hashes"),
+        expected_pins,
+        "authority.pinned_hashes",
+        "authority_pin",
+    )
+    expected_inputs = {
+        "descriptor_sha256": _canonical_json_sha256(descriptor),
+        "public_projection_sha256": _canonical_json_sha256(projection),
+    }
+    _require_typed_mapping(
+        authority.get("pinned_inputs"),
+        expected_inputs,
+        "authority.pinned_inputs",
+        "authority_input",
+    )
+    _validate_reserved_result_path(authority.get("reserved_result_path"), repo_root)
+    _require_typed_mapping(
+        authority.get("execute_ledger"),
+        _EXPECTED_EXECUTE_LEDGER,
+        "authority.execute_ledger",
+        "authority_ledger",
+    )
+    _require_typed_mapping(
+        authority.get("output_policy"),
+        _EXPECTED_OUTPUT_POLICY,
+        "authority.output_policy",
+        "authority_boundary",
+    )
+    _require_typed_mapping(
+        authority.get("still_blocked"),
+        _EXPECTED_STILL_BLOCKED,
+        "authority.still_blocked",
+        "authority_boundary",
+    )
 
 
 def _validate_descriptor(
@@ -454,6 +819,97 @@ def _reject_forbidden_values(value: Any, path: tuple[str, ...] = ()) -> None:
     elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
         for index, nested in enumerate(value):
             _reject_forbidden_values(nested, (*path, str(index)))
+
+
+def _reject_forbidden_authority_keys(
+    value: Any,
+    path: tuple[str, ...] = (),
+) -> None:
+    if isinstance(value, Mapping):
+        for key, nested in value.items():
+            normalized = _normalize_key(key)
+            field_path = ".".join((*path, str(key)))
+            if normalized in _FORBIDDEN_AUTHORITY_KEYS:
+                raise M1AdapterError(
+                    "secret_in_authority",
+                    f"secret or credential field is forbidden: {field_path}",
+                )
+            _reject_forbidden_authority_keys(nested, (*path, str(key)))
+    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+        for index, nested in enumerate(value):
+            _reject_forbidden_authority_keys(nested, (*path, str(index)))
+
+
+def _validate_reserved_result_path(value: Any, repo_root: Path) -> None:
+    if (
+        not isinstance(value, str)
+        or not value
+        or "\\" in value
+        or "\x00" in value
+    ):
+        raise M1AdapterError(
+            "authority_result_path",
+            "reserved result path must be a non-empty repository-relative POSIX path",
+        )
+    relative = Path(value)
+    if (
+        relative.is_absolute()
+        or relative.drive
+        or relative.suffix.casefold() != ".json"
+        or any(part in {"", ".", ".."} for part in relative.parts)
+    ):
+        raise M1AdapterError(
+            "authority_result_path",
+            "reserved result path is not a safe JSON path",
+        )
+    resolved_root = repo_root.resolve()
+    resolved = (resolved_root / relative).resolve()
+    try:
+        resolved.relative_to(resolved_root)
+    except ValueError as exc:
+        raise M1AdapterError(
+            "authority_result_path",
+            "reserved result path escapes the repository",
+        ) from exc
+    if resolved.exists():
+        raise M1AdapterError(
+            "result_exists",
+            "the authority's unique structural result path already exists",
+        )
+
+
+def _canonical_json_sha256(value: Any) -> str:
+    try:
+        encoded = json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    except (TypeError, ValueError) as exc:
+        raise M1AdapterError(
+            "authority_input",
+            "authority-pinned input is not canonical JSON",
+        ) from exc
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _require_typed_mapping(
+    value: Any,
+    expected: Mapping[str, Any],
+    field: str,
+    error_code: str,
+) -> None:
+    if not isinstance(value, Mapping) or set(value) != set(expected):
+        raise M1AdapterError(error_code, f"{field} does not match the frozen shape")
+    for key, expected_value in expected.items():
+        actual_value = value.get(key)
+        if actual_value != expected_value or type(actual_value) is not type(expected_value):
+            raise M1AdapterError(
+                error_code,
+                f"{field}.{key} does not match the frozen value",
+            )
 
 
 def _contains_forbidden_reference_token(value: str) -> bool:
