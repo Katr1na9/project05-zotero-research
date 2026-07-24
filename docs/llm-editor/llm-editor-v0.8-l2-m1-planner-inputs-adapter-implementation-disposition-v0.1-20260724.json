@@ -1,0 +1,187 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724",
+  "artifact_type": "m1_adapter_implementation_completion_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "10152d647b95020dedaa59aa67156ac7a5c871a9",
+  "status": "draft_disposition_not_effective",
+  "disposition_code": "fail_closed_planner_adapter_implemented_registry_and_execution_blocked",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "source_class": "planner_experiment_inputs",
+    "certificate_surface": "vacant"
+  },
+  "pinned_artifacts": {
+    "adapter_implementation": {
+      "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+      "sha256": "40b68761fa56c01327427b1e096b05785a58b545f8dc6e53df25a2100f6cf8fb",
+      "commit": "10152d647b95020dedaa59aa67156ac7a5c871a9"
+    },
+    "adapter_tests": {
+      "path": "tests/compiler_contract/test_m1_planner_inputs_adapter.py",
+      "sha256": "b933e84313e88586eb37f909065f8408ad5c9c72a89bb07bb9cd1bd47f804867",
+      "commit": "10152d647b95020dedaa59aa67156ac7a5c871a9"
+    },
+    "adapter_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+      "sha256": "b9dbbb471bc69932bd6ef81e9824f492fb382125f7c5ef361153c4bf428c4eca",
+      "status_observed": "design_only_adapter_not_registered",
+      "semantics": "frozen_pin_only_not_execution_authority"
+    },
+    "m1_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "a220eafde5eb0c38c381a23ba80e22571edfe932fca401a0e240ec562bb199dc",
+      "status_observed": "design_only_m1_not_authorized"
+    },
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+    },
+    "m0_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    }
+  },
+  "implementation_completion": {
+    "fail_closed_adapter_implemented": true,
+    "implementation_commit": "10152d647b95020dedaa59aa67156ac7a5c871a9",
+    "contract_and_pin_validation": true,
+    "unknown_source_field_rejected": true,
+    "authority_leak_rejected": true,
+    "path_like_or_raw_payload_value_rejected": true,
+    "delegates_to_existing_m0_structural_compiler": true,
+    "m0_compiler_invoked_only_after_adapter_gates": true,
+    "mint_executor_imported_or_called": false,
+    "package_file_written_by_adapter": false,
+    "output_boundary": {
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "certificate_surface": "vacant"
+    }
+  },
+  "test_observations": {
+    "targeted_adapter_suite": {
+      "tests_run": 4,
+      "passed": 4,
+      "failed": 0,
+      "test_path": "tests/compiler_contract/test_m1_planner_inputs_adapter.py"
+    },
+    "valid_structural_path": {
+      "fixture": "tests/compiler_contract/fixtures/m0_rule_compiler/m0_valid_public_projection.json",
+      "outcome": "accepted_structural",
+      "claim_id_null": true,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "package_file_written": false
+    },
+    "authority_leak_paths": {
+      "fixture_count": 4,
+      "fixtures": [
+        "m0_authority_leak_labels.json",
+        "m0_authority_leak_hidden_claims.json",
+        "m0_authority_leak_realized_outcome.json",
+        "m0_authority_leak_oracle_mask.json"
+      ],
+      "outcomes": "all_rejected",
+      "error_code": "forbidden_field",
+      "ids_minted": 0,
+      "package_emitted": false
+    },
+    "additional_rejection_paths": [
+      {
+        "case": "unknown_declared_source_field",
+        "outcome": "rejected",
+        "error_code": "unknown_source_field"
+      },
+      {
+        "case": "path_like_target_value",
+        "outcome": "rejected",
+        "error_code": "raw_path"
+      }
+    ],
+    "compiler_contract_regression_suite": {
+      "tests_run": 56,
+      "passed": 56,
+      "failed": 0
+    }
+  },
+  "registry_and_effective_status": {
+    "registry_activated": false,
+    "adapter_registered_effective": false,
+    "adapter_contract_effective": false,
+    "adapter_execution_authorized": false,
+    "contract_status_remains": "design_only_adapter_not_registered",
+    "contract_is_frozen_pin_not_execution_authority": true,
+    "surface_expansion_authorized": false,
+    "cross_surface_join_authorized": false
+  },
+  "blocked_gates": {
+    "claim_id_mint": {
+      "blocked": true,
+      "reason": "The adapter emits only M0 structural packages with claim_id=null; separate mint authority remains required."
+    },
+    "kernel_and_e_case": {
+      "blocked": true,
+      "reason": "pending_kernel_schema remains a blocking state and no Kernel or E_case write is authorized."
+    },
+    "admission_and_certificate": {
+      "blocked": true,
+      "reason": "Structural adapter success is not admission or certificate evidence; certificate_surface remains vacant."
+    },
+    "catalog_role_credit_l2": {
+      "blocked": true,
+      "reason": "No catalog, source role, lineage/quota credit, or L2 state follows from adapter output."
+    }
+  },
+  "explicit_non_authorizations": {
+    "registry_activation": false,
+    "effective_adapter_registration": false,
+    "production_claim_id_mint": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_implementation": false,
+    "m2_residual_fit": false,
+    "training": false,
+    "download": false,
+    "git_push": false
+  },
+  "disposition_boundary": {
+    "capability_claim": "The fail-closed planner-inputs adapter implementation and its structural test coverage are complete for project05_depth2_public.",
+    "scientific_or_governance_claim": "This draft does not establish semantic alignment, source role, admission, certificate validity, Kernel acceptance, quota/credit, or L2 readiness.",
+    "review_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "effective": false,
+    "future_execution_requires": [
+      "A separately reviewed registry activation and adapter execution authority.",
+      "A separate mint authority before any Claim-ID transition.",
+      "Independent review of provenance, privacy, and any future source-role claim."
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "registry_activated_in_this_turn": false,
+    "adapter_executed_in_this_turn": false,
+    "minting_performed": false,
+    "kernel_or_admission_write": false,
+    "catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
