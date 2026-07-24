@@ -1,0 +1,190 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-mint-capability-completion-disposition-v0.1-20260724",
+  "artifact_type": "claim_id_mint_capability_completion_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "9e3658ae32e13223e985001457f78cd090bac472",
+  "status": "draft_disposition_not_effective",
+  "disposition_code": "fail_closed_mint_executor_ephemeral_proof_complete_production_mint_blocked",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "certificate_surface": "vacant",
+    "structural_completion_commit": "7d67898472bb616b29a1954f1ccb8e84548c9157",
+    "mint_executor_commit": "7100c2470507c5a6ea35dadef79e7a03436176d3",
+    "ephemeral_happy_path_test_commit": "9e3658ae32e13223e985001457f78cd090bac472"
+  },
+  "pinned_artifacts": {
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+    },
+    "minting_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-minting-design-v0.1-20260724.json",
+      "sha256": "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe"
+    },
+    "source_field_slot_mapping_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
+    },
+    "mint_executor": {
+      "path": "src/compiler/llm/claim_id_mint_executor.py",
+      "sha256": "b0460b331402bfa35a7db8e62cd6366d00121e7241a766181a5e396c7601522d"
+    },
+    "mint_executor_tests": {
+      "path": "tests/compiler_contract/test_claim_id_mint_executor.py",
+      "sha256": "9bdd8935d4b6edd0e66d5fddd239dcdacaf59864dd2d7bc528aaa12e0e55cf48"
+    },
+    "m0_structural_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m0-structural-completion-disposition-v0.1-20260724.json",
+      "sha256": "03a6014177960b51e25e1c18acaef334bfd48f0015995b5637006666e6d4c60f"
+    }
+  },
+  "capability_completion": {
+    "m0_structural_compilation": {
+      "status": "complete",
+      "commit": "7d67898472bb616b29a1954f1ccb8e84548c9157",
+      "surface_id": "project05_depth2_public",
+      "valid_fixture_observed": {
+        "fixture_id": "m0_valid_public_projection",
+        "outcome": "accepted_structural",
+        "claim_count": 41,
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "claim_ids_null": true
+      },
+      "authority_leak_fixtures_observed": {
+        "count": 4,
+        "outcome": "all_rejected_forbidden_field",
+        "ids_minted": false
+      },
+      "draft_2020_12_validation_errors": 0
+    },
+    "mint_executor": {
+      "status": "implemented_fail_closed",
+      "commit": "7100c2470507c5a6ea35dadef79e7a03436176d3",
+      "requires_activated_single_use_authority": true,
+      "requires_external_key_id_attestation": true,
+      "default_key_provider": "unavailable",
+      "reads_or_writes_key_material": false,
+      "production_authority_created": false,
+      "live_production_mint_performed": false,
+      "cross_surface_join_allowed": false,
+      "package_write_by_executor": false
+    },
+    "ephemeral_happy_path_proof": {
+      "status": "passed_test_only",
+      "commit": "9e3658ae32e13223e985001457f78cd090bac472",
+      "test_path": "tests/compiler_contract/test_claim_id_mint_executor.py",
+      "test_sha256": "9bdd8935d4b6edd0e66d5fddd239dcdacaf59864dd2d7bc528aaa12e0e55cf48",
+      "authority_storage": "in_memory_only",
+      "key_provider": "ephemeral_in_memory_bytearray_test_double",
+      "key_zeroized_after_test": true,
+      "authority_file_written": false,
+      "key_material_written": false,
+      "package_file_written": false,
+      "claims_minted_in_memory": true,
+      "claim_id_pattern": "^clm_[A-Za-z0-9_-]+$",
+      "package_state_observed": {
+        "claim_id_state": "minted_opaque",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema"
+      },
+      "production_state_transition": false
+    },
+    "anti_leak_proof": {
+      "status": "passed_test_only",
+      "fixture_count": 3,
+      "fixture_ids": [
+        "mint_antileak_labels_outcomes",
+        "mint_antileak_paths_payloads",
+        "mint_antileak_oracle_hidden_mask"
+      ],
+      "all_rejected": true,
+      "total_ids_minted": 0,
+      "package_emitted": false
+    },
+    "test_observation": {
+      "mint_executor_tests": {
+        "tests_run": 5,
+        "passed": 5,
+        "failed": 0
+      },
+      "compiler_contract_suite": {
+        "tests_run": 52,
+        "passed": 52,
+        "failed": 0
+      }
+    }
+  },
+  "repository_state_after_proof": {
+    "surface_id": "project05_depth2_public",
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "certificate_surface": "vacant",
+    "interpretation": "The minted_opaque observation exists only in the in-memory test process; no package or claim identifier was persisted."
+  },
+  "blocked_gates": {
+    "production_mint": {
+      "blocked": true,
+      "reason": "No production execute authority is activated; the tested authority and key were ephemeral and in memory only."
+    },
+    "admission": {
+      "blocked": true,
+      "reason": "Opaque Claim-ID minting does not establish admission or source eligibility."
+    },
+    "kernel_ingestion": {
+      "blocked": true,
+      "reason": "kernel_state remains pending_kernel_schema and no Kernel write is authorized."
+    },
+    "certificate": {
+      "blocked": true,
+      "reason": "certificate_surface is vacant; no E_case or certificate state exists."
+    }
+  },
+  "explicit_non_authorizations": {
+    "production_claim_id_mint": false,
+    "execute_authority_creation": false,
+    "execute_authority_activation": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m1_implementation": false,
+    "m2_implementation": false,
+    "git_push": false
+  },
+  "disposition_boundary": {
+    "capability_claim": "The fail-closed executor is implemented and its constrained HMAC path is proven only with an in-memory test authority and ephemeral key; anti-leak fixtures reject without minting.",
+    "non_scientific_claim": "This draft does not establish source role, train admission, certificate validity, Kernel acceptance, lineage, quota, credit, or L2 completion.",
+    "decision_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "effective": false,
+    "future_live_mint_requires": [
+      "A separately reviewed and activated single-use production execute authority.",
+      "External key_id attestation without repository, fixture, log, or output persistence of key material.",
+      "Revalidation of the pinned surface, projection, schema, mapping, executor, and test chain."
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "key_created_in_this_turn": false,
+    "production_mint_run": false,
+    "kernel_or_admission_write": false,
+    "catalog_or_role_or_credit_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
