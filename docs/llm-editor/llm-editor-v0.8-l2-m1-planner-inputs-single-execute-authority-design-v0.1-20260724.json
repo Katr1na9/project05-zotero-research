@@ -1,0 +1,230 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-planner-inputs-single-execute-authority-design-v0.1-20260724",
+  "artifact_type": "m1_planner_inputs_single_execute_authority_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "778435367da11249b5b9c2f45383d18acaa55625",
+  "status": "design_only_execute_authority_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "source_class": "planner_experiment_inputs",
+    "certificate_surface": "vacant",
+    "permanent_registry_effect": false
+  },
+  "pinned_authority_chain": {
+    "m1_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "a220eafde5eb0c38c381a23ba80e22571edfe932fca401a0e240ec562bb199dc"
+    },
+    "planner_adapter_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+      "sha256": "b9dbbb471bc69932bd6ef81e9824f492fb382125f7c5ef361153c4bf428c4eca",
+      "status": "design_only_adapter_not_registered"
+    },
+    "planner_adapter_implementation": {
+      "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+      "sha256": "40b68761fa56c01327427b1e096b05785a58b545f8dc6e53df25a2100f6cf8fb",
+      "commit": "10152d647b95020dedaa59aa67156ac7a5c871a9"
+    },
+    "planner_adapter_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json",
+      "sha256": "e26fc1573bf312f6dd63e9716eebd0ed2ac8804a19fa6658de31b256df05fead",
+      "status": "draft_disposition_not_effective"
+    },
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+    },
+    "m0_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    }
+  },
+  "current_authorization_state": {
+    "authority_activated": false,
+    "adapter_execute_authorized_now": 0,
+    "adapter_execute_started": 0,
+    "adapter_execute_consumed": 0,
+    "adapter_execute_remaining": 0,
+    "registry_activated": false,
+    "adapter_registered_effective": false,
+    "execution_performed": false,
+    "interpretation": "This design document records a future authority shape only. It does not authorize or activate an adapter execution."
+  },
+  "future_activation_shape": {
+    "status": "activated_single_adapter_execute_authorized",
+    "target": {
+      "surface_id": "project05_depth2_public",
+      "adapter_id": "m1a_planner_inputs_v0_1",
+      "source_class": "planner_experiment_inputs",
+      "only_target": true
+    },
+    "execute_ledger": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "required_pins": [
+      "this authority-design artifact SHA-256 after review and commit",
+      "M1 framework SHA-256",
+      "planner adapter contract SHA-256",
+      "planner adapter implementation SHA-256",
+      "planner adapter disposition SHA-256",
+      "Claim IR schema SHA-256",
+      "M0 compiler SHA-256",
+      "M0 projection SHA-256",
+      "one exact public input descriptor SHA-256",
+      "one exact public projection SHA-256",
+      "one unique structural result path that does not yet exist"
+    ],
+    "execution_semantics": {
+      "single_initial_execute": true,
+      "process_start_consumes_attempt": true,
+      "success_or_failure_exhausts_attempt": true,
+      "second_execute": false,
+      "automatic_retry": false,
+      "resume": false,
+      "fallback_adapter": false,
+      "cross_surface_join": false
+    },
+    "activation_created_now": false,
+    "execute_authorized_now_by_this_design": false
+  },
+  "activation_integrity_rules": {
+    "adapter_contract_status_must_remain": "design_only_adapter_not_registered",
+    "editing_adapter_contract_status_to_simulate_activation": false,
+    "editing_m1_framework_status_to_simulate_activation": false,
+    "in_place_activation_of_this_design": false,
+    "required_future_method": "Create and review a distinct activation artifact that references this authority design and repeats the exact target, pins, and single-use ledger.",
+    "registry_permanence_from_single_execute": false,
+    "adapter_effective_registration_from_single_execute": false,
+    "activation_without_authority_artifact": false
+  },
+  "required_future_adapter_authority_gate": {
+    "code_change_required_before_any_execute": true,
+    "current_adapter_must_not_be_executed_under_this_design": true,
+    "future_adapter_behavior": {
+      "authority_missing": "reject_missing_adapter_execute_authority",
+      "authority_not_activated": "reject_adapter_execute_not_activated",
+      "authority_target_mismatch": "reject_authority_target_mismatch",
+      "authority_pin_mismatch": "reject_authority_pin_mismatch",
+      "authority_ledger_used_or_invalid": "reject_authority_ledger",
+      "result_path_already_exists": "reject_result_exists",
+      "valid_activated_authority": "allow_exactly_one_structural_adapter_execute"
+    },
+    "fail_closed_before_m0_handoff": true,
+    "no_authority_no_execution": true,
+    "code_implementation_authorized_by_this_design": false
+  },
+  "input_boundary_for_future_activation": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "input_descriptor_must_be_exactly_pinned": true,
+    "public_projection_must_be_exactly_pinned": true,
+    "unknown_fields": "reject",
+    "authority_leak_fields": "reject",
+    "raw_paths_or_payload_bytes": "reject",
+    "labels_or_realized_outcomes": "reject",
+    "oracle_mask_hidden_or_recoverable_ids": "reject"
+  },
+  "future_output_boundary": {
+    "output_kind": "structural_claim_ir_package_only",
+    "surface_id": "project05_depth2_public",
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "certificate_surface": "vacant",
+    "mint_performed": false,
+    "kernel_or_e_case_write": false,
+    "certificate_generated": false,
+    "admission_performed": false,
+    "catalog_role_credit_or_l2_effect": false
+  },
+  "production_mint_separation": {
+    "production_mint_authority_is_separate": true,
+    "this_authority_accepted_by_mint_executor": false,
+    "adapter_execute_implies_mint": false,
+    "adapter_execute_output_may_contain_minted_identifier": false,
+    "contains_sensitive_material": false,
+    "contains_namespace_material": false,
+    "contains_credential_material": false,
+    "sensitive_material_may_be_added_later": false
+  },
+  "still_blocked_after_any_future_structural_execute": {
+    "production_claim_id_mint": true,
+    "kernel_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "admission": true,
+    "catalog_write": true,
+    "source_role_assignment": true,
+    "lineage_credit": true,
+    "quota_credit": true,
+    "l2_gate_change": true,
+    "m2_implementation_or_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "activation": false,
+    "adapter_execution": false,
+    "registry_activation": false,
+    "effective_adapter_registration": false,
+    "code_change": false,
+    "production_claim_id_mint": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_implementation_or_fit": false,
+    "four_family_llm_finetune": false,
+    "training": false,
+    "download": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "The exact shape and boundaries of a future single-use planner adapter execute authority are defined.",
+    "not_an_activation": true,
+    "not_an_execution": true,
+    "not_a_registry_activation": true,
+    "not_a_production_mint_authority": true,
+    "not_an_l2_gate_pass": true,
+    "effective": false,
+    "next_steps_require_separate_authorities": [
+      "implement and test the adapter authority gate",
+      "review and commit that implementation",
+      "create a distinct activation artifact for one exact input",
+      "separately authorize the single adapter execution"
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "registry_activated_in_this_turn": false,
+    "adapter_executed_in_this_turn": false,
+    "sensitive_material_created": false,
+    "minting_performed": false,
+    "kernel_admission_catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
