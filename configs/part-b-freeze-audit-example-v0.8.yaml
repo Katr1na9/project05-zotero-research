@@ -1,0 +1,44 @@
+schema_version: "0.8.0"
+audit_id: part-b-freeze-audit-example-v0.8
+audit_version: "0.8.0"
+status: B9_CONTRACT_ONLY
+authorized_slice: B9_FREEZE_AND_CLAIMS
+evidence_ceiling: CONTRACT_CONSISTENCY_ONLY
+bindings:
+  freeze_record_hash: "sha256:92182dbe5b58163b35f113831847a6349dba1c1f19cfd3a42a352b52a6a968ab"
+  freeze_and_claims_policy_hash: "sha256:bd04bac10be6e9b049a700eccf8d7f1e771cec89dbf9f6fce412145f40609999"
+  claim_boundary_hash: "sha256:0ee41ab84b171d7b4789a3b76d7971e15ed3e8f5d6501889b4d486b7e70722a8"
+  b9_manifest_hash: "sha256:6cff911409da42f66b3fef1e25cf555f72f6620f5fd713bdf3bc16bcf50c563e"
+checks:
+  frozen_artifact_count: 39
+  frozen_paths_resolve: true
+  frozen_hashes_replay: true
+  schemas_validate: true
+  claim_boundary_validates: true
+  upstream_content_rewritten: false
+evidence_inventory:
+  real_source_data_present: false
+  holdout_data_present: false
+  holdout_labels_present: false
+  holdout_results_present: false
+  statistics_present: false
+  metrics_present: false
+  rankings_present: false
+  execution_trace_present: false
+gate_states:
+  PB-SI-006: OPEN_BLOCKS_CONNECTOR_DATA_HOLDOUT_ACCESS
+  PB-B5-SI-001: OPEN_BLOCKS_IMPLEMENTATION_ADMISSION_AND_EXECUTION
+  PB-B8-SI-004: OPEN_REQUIRES_SEPARATE_EXECUTION_EVIDENCE
+  HOLDOUT_RELEASE: OPEN_DEFAULT_DENY
+  STATISTICAL_EXECUTION: OPEN_NOT_AUTHORIZED
+  IMPLEMENTATION_ADMISSION: OPEN_NOT_ESTABLISHED
+outputs:
+  certificate_issued: false
+  system_status_emitted: false
+  certified_stop_emitted: false
+  performance_claim_released: false
+limitations:
+  - This audit verifies frozen contract identities and closed Schemas only.
+  - No data, label, result, statistic, metric, ranking, or trace is present.
+  - Audit success cannot close an execution gate or raise the claim ceiling.
+hash: "sha256:102c6d1871d89fcbf8a3902f3b26a5e1ac081b578dc220481f6f8b4792e8b8d0"

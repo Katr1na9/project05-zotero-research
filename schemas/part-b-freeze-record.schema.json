@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-freeze-record.schema.json",
+  "title": "Project05 Part B B9 upstream freeze record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "record_version",
+    "status",
+    "authorized_slice",
+    "upstream_commit",
+    "slice_order",
+    "frozen_artifacts",
+    "freeze_semantics",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "record_id": {"const": "part-b-freeze-record-example-v0.8"},
+    "record_version": {"const": "0.8.0"},
+    "status": {"const": "B9_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B9_FREEZE_AND_CLAIMS"},
+    "upstream_commit": {
+      "const": "be33ef8906f5c6ca0891d21da11573b9510e941e"
+    },
+    "slice_order": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "prefixItems": [
+        {"const": "B0"},
+        {"const": "B1"},
+        {"const": "B2"},
+        {"const": "B3"},
+        {"const": "B4"},
+        {"const": "B5"},
+        {"const": "B6"},
+        {"const": "B7"},
+        {"const": "B8"}
+      ],
+      "items": false
+    },
+    "frozen_artifacts": {
+      "type": "array",
+      "minItems": 39,
+      "maxItems": 39,
+      "items": {"$ref": "#/$defs/frozenArtifact"}
+    },
+    "freeze_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_freeze",
+        "authority_freeze",
+        "upstream_rewrite",
+        "runtime_activation",
+        "execution_evidence_created"
+      ],
+      "properties": {
+        "content_freeze": {"const": true},
+        "authority_freeze": {"const": true},
+        "upstream_rewrite": {"const": false},
+        "runtime_activation": {"const": false},
+        "execution_evidence_created": {"const": false}
+      }
+    },
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "sliceId": {
+      "enum": ["B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"]
+    },
+    "frozenArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slice_id", "artifact_id", "path", "hash"],
+      "properties": {
+        "slice_id": {"$ref": "#/$defs/sliceId"},
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]*$"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^configs/[A-Za-z0-9._/-]+\\.yaml$"
+        },
+        "hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}
