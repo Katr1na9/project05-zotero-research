@@ -1,0 +1,69 @@
+schema_version: "0.8.0"
+plan_id: part-b-statistical-analysis-plan-example-v0.8
+plan_version: "0.8.0"
+status: B8_CONTRACT_ONLY
+authorized_slice: B8_HOLDOUT_ANALYSIS
+analysis_id: HOLDOUT-ANALYSIS-V0.8-001
+estimands:
+  primary:
+    - estimand_id: PRIMARY_SUCCESS_PRESERVATION
+      endpoint_id: SUCCESS_INDICATOR
+      analysis_unit: CASE
+      effect_measure: PAIRED_RISK_DIFFERENCE
+      direction: HIGHER_IS_BETTER
+      sesoi: "1/20"
+      frozen_before_holdout_access: true
+  secondary:
+    - estimand_id: SECONDARY_EIGHT_DIMENSION_COST_VECTOR
+      endpoint_id: B3_EIGHT_DIMENSION_VECTOR
+      analysis_unit: CASE
+      effect_measure: PAIRED_COMPONENTWISE_DIFFERENCE
+      direction: LOWER_IS_BETTER
+      sesoi: NOT_APPLICABLE_DESCRIPTIVE_ONLY
+      frozen_before_holdout_access: true
+error_control:
+  alpha: "1/20"
+  confidence_level: "19/20"
+  multiplicity_family: PRIMARY_ENDPOINTS
+  multiplicity_method: HOLM_STEP_DOWN
+  adaptive_family_selection: false
+  outcome_dependent_method_selection: false
+analysis_population:
+  unit: CASE
+  inclusion_rule: ALL_PREREGISTERED_HOLDOUT_CASES
+  exclusion_rules:
+    - PREDECLARED_SCHEMA_INVALID_CASE_ONLY
+  exclusion_rules_frozen: true
+  post_outcome_exclusion: false
+missing_data:
+  rule: NO_OUTCOME_DEPENDENT_IMPUTATION
+  outcome_dependent_exclusion: false
+  implicit_zero: false
+  missing_as_loss: false
+reproducibility:
+  seed_policy: PREDECLARED_FIXED
+  seed: 1729
+  resampling_iterations: 10000
+  tie_break_rule: METHOD_ID_ASCENDING
+stopping_rule:
+  rule: FIXED_SINGLE_HOLDOUT_ANALYSIS
+  optional_stopping: false
+  interim_peeking: false
+  adaptive_endpoint_selection: false
+  adaptive_sample_size: false
+cost_analysis:
+  b3_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+  dimensions:
+    [T_human, T_wall, T_CPU, M_byte_sec, D_scan, N_record, C_money, T_auth]
+  scalarization_enabled: false
+  outcome_dependent_metric_selection: false
+access_boundary:
+  holdout_data_loaded: false
+  holdout_labels_loaded: false
+  holdout_results_loaded: false
+  statistics_computed: false
+limitations:
+  - This is a frozen analysis-plan example and contains no observations.
+  - Secondary cost analysis remains componentwise and unscalarized.
+  - No effect estimate, p-value, ranking, or superiority claim is produced.
+hash: "sha256:57e24fd84df55adf44fbcae6c0dbf9248750c0901a6075ad845962c11b5e0627"

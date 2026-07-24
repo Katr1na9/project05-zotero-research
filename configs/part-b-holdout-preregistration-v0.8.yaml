@@ -1,0 +1,57 @@
+schema_version: "0.8.0"
+preregistration_id: part-b-holdout-preregistration-v0.8
+preregistration_version: "0.8.0"
+status: B8_CONTRACT_ONLY
+authorized_slice: B8_HOLDOUT_ANALYSIS
+analysis_id: HOLDOUT-ANALYSIS-V0.8-001
+partition_id: HOLDOUT
+analysis_registry:
+  analysis_ids: [HOLDOUT-ANALYSIS-V0.8-001]
+  finite_complete: true
+  dynamic_analysis_addition: false
+split_commitment:
+  partition_id: HOLDOUT
+  split_fingerprint: "sha256:5ed7e9b20144322e90d4d8a7608d7592b707581020b39bbedee4cc7ad32b6a3a"
+  commitment_semantics: ABSTRACT_CONTRACT_FIXTURE_NOT_DATA
+  committed_before_label_access: true
+  committed_before_result_access: true
+  labels_included: false
+  results_included: false
+  disclosure: IDENTIFIERS_AND_LABELS_SEALED
+freeze:
+  freeze_state: FROZEN_BEFORE_ANY_HOLDOUT_ACCESS
+  labels_visible_at_freeze: false
+  results_visible_at_freeze: false
+  roster_mutation_after_freeze: false
+  parameter_mutation_after_freeze: false
+  endpoint_mutation_after_freeze: false
+  estimand_mutation_after_freeze: false
+  method_mutation_after_freeze: false
+b4_roster_binding:
+  registry_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  baseline_ids:
+    - NO_ACQUISITION
+    - RANDOM_FEASIBLE
+    - COVERAGE_GREEDY
+    - CMI_PROXY
+    - M1_STATIC_EXPECTED_GAIN
+    - M2_TRANSPARENT
+    - M3A_GAP_COMPATIBILITY
+    - LOGISTIC_M3B
+    - XGBOOST_ACTION_VALUE
+    - AFA_VOI_MYOPIC
+    - AFA_VOI_ROLLOUT_H3
+    - DEPTH2_PUBLIC
+    - ORACLE_EVALUATION_ONLY
+  no_new_methods: true
+  roster_mutation: false
+access_boundary:
+  holdout_data_loaded: false
+  holdout_labels_loaded: false
+  holdout_results_loaded: false
+  statistics_computed: false
+limitations:
+  - The split fingerprint commits an abstract contract fixture, not a dataset.
+  - This preregistration does not release labels, outcomes, or method outputs.
+  - Registration identity does not admit or execute a Planner or baseline.
+hash: "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"

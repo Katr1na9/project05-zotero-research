@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-holdout-analysis-envelope.schema.json",
+  "title": "Project05 Part B B8 holdout analysis envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "envelope_id",
+    "envelope_version",
+    "status",
+    "authorized_slice",
+    "analysis_id",
+    "envelope_state",
+    "bindings",
+    "release_decision",
+    "access_boundary",
+    "execution_boundary",
+    "proof_boundary",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "envelope_id": {
+      "const": "part-b-holdout-analysis-envelope-example-v0.8"
+    },
+    "envelope_version": {"const": "0.8.0"},
+    "status": {"const": "B8_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B8_HOLDOUT_ANALYSIS"},
+    "analysis_id": {"const": "HOLDOUT-ANALYSIS-V0.8-001"},
+    "envelope_state": {"const": "PREREGISTERED_NO_DATA"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_analysis_policy_hash",
+        "holdout_preregistration_hash",
+        "statistical_analysis_plan_hash",
+        "b8_manifest_hash",
+        "b4_baseline_preregistration_hash",
+        "b4_baseline_isolation_policy_hash",
+        "b7_manifest_hash"
+      ],
+      "properties": {
+        "holdout_analysis_policy_hash": {
+          "const": "sha256:542ed51380c7dc3e5ba1553d3c80b1a55e5ca5b008cb38d3df831fdee828b603"
+        },
+        "holdout_preregistration_hash": {
+          "const": "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"
+        },
+        "statistical_analysis_plan_hash": {
+          "const": "sha256:57e24fd84df55adf44fbcae6c0dbf9248750c0901a6075ad845962c11b5e0627"
+        },
+        "b8_manifest_hash": {
+          "const": "sha256:4e6e4ec552d3a9c20c8c68e76766205cb1b2ecdf6dfbfe95866085e0b56c593b"
+        },
+        "b4_baseline_preregistration_hash": {
+          "const": "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+        },
+        "b4_baseline_isolation_policy_hash": {
+          "const": "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+        },
+        "b7_manifest_hash": {
+          "const": "sha256:28179580dc0e8c4dbc6f1a6cb1d5f0d4939a3ae7466c078e60f20fb16fffac49"
+        }
+      }
+    },
+    "release_decision": {"const": "DENY"},
+    "access_boundary": {"$ref": "#/$defs/accessBoundary"},
+    "execution_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_access",
+        "source_retrieval",
+        "connector_execution",
+        "planner_execution",
+        "statistical_analysis"
+      ],
+      "properties": {
+        "holdout_access": {"const": false},
+        "source_retrieval": {"const": false},
+        "connector_execution": {"const": false},
+        "planner_execution": {"const": false},
+        "statistical_analysis": {"const": false}
+      }
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preregistration_bound",
+        "policy_bound",
+        "manifest_bound",
+        "data_validated",
+        "analysis_executed",
+        "performance_validity",
+        "superiority_claim"
+      ],
+      "properties": {
+        "preregistration_bound": {"const": true},
+        "policy_bound": {"const": true},
+        "manifest_bound": {"const": true},
+        "data_validated": {"const": false},
+        "analysis_executed": {"const": false},
+        "performance_validity": {"const": false},
+        "superiority_claim": {"const": false}
+      }
+    },
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {
+      "const": "sha256:6126bd2145b1a05c91bf53aa81c599992a787d0dd6a43847f5a67f0bb07a07ed"
+    }
+  },
+  "$defs": {
+    "accessBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_data_loaded",
+        "holdout_labels_loaded",
+        "holdout_results_loaded",
+        "statistics_computed"
+      ],
+      "properties": {
+        "holdout_data_loaded": {"const": false},
+        "holdout_labels_loaded": {"const": false},
+        "holdout_results_loaded": {"const": false},
+        "statistics_computed": {"const": false}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-statistical-analysis-plan.schema.json",
+  "title": "Project05 Part B B8 statistical analysis plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "plan_version",
+    "status",
+    "authorized_slice",
+    "analysis_id",
+    "estimands",
+    "error_control",
+    "analysis_population",
+    "missing_data",
+    "reproducibility",
+    "stopping_rule",
+    "cost_analysis",
+    "access_boundary",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "plan_id": {
+      "const": "part-b-statistical-analysis-plan-example-v0.8"
+    },
+    "plan_version": {"const": "0.8.0"},
+    "status": {"const": "B8_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B8_HOLDOUT_ANALYSIS"},
+    "analysis_id": {"const": "HOLDOUT-ANALYSIS-V0.8-001"},
+    "estimands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "secondary"],
+      "properties": {
+        "primary": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/estimand"}
+        },
+        "secondary": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/estimand"}
+        }
+      }
+    },
+    "error_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alpha",
+        "confidence_level",
+        "multiplicity_family",
+        "multiplicity_method",
+        "adaptive_family_selection",
+        "outcome_dependent_method_selection"
+      ],
+      "properties": {
+        "alpha": {"const": "1/20"},
+        "confidence_level": {"const": "19/20"},
+        "multiplicity_family": {"const": "PRIMARY_ENDPOINTS"},
+        "multiplicity_method": {"const": "HOLM_STEP_DOWN"},
+        "adaptive_family_selection": {"const": false},
+        "outcome_dependent_method_selection": {"const": false}
+      }
+    },
+    "analysis_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unit",
+        "inclusion_rule",
+        "exclusion_rules",
+        "exclusion_rules_frozen",
+        "post_outcome_exclusion"
+      ],
+      "properties": {
+        "unit": {"const": "CASE"},
+        "inclusion_rule": {
+          "const": "ALL_PREREGISTERED_HOLDOUT_CASES"
+        },
+        "exclusion_rules": {
+          "const": ["PREDECLARED_SCHEMA_INVALID_CASE_ONLY"]
+        },
+        "exclusion_rules_frozen": {"const": true},
+        "post_outcome_exclusion": {"const": false}
+      }
+    },
+    "missing_data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "outcome_dependent_exclusion",
+        "implicit_zero",
+        "missing_as_loss"
+      ],
+      "properties": {
+        "rule": {"const": "NO_OUTCOME_DEPENDENT_IMPUTATION"},
+        "outcome_dependent_exclusion": {"const": false},
+        "implicit_zero": {"const": false},
+        "missing_as_loss": {"const": false}
+      }
+    },
+    "reproducibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seed_policy",
+        "seed",
+        "resampling_iterations",
+        "tie_break_rule"
+      ],
+      "properties": {
+        "seed_policy": {"const": "PREDECLARED_FIXED"},
+        "seed": {"type": "integer", "minimum": 0},
+        "resampling_iterations": {"type": "integer", "minimum": 1},
+        "tie_break_rule": {"const": "METHOD_ID_ASCENDING"}
+      }
+    },
+    "stopping_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "optional_stopping",
+        "interim_peeking",
+        "adaptive_endpoint_selection",
+        "adaptive_sample_size"
+      ],
+      "properties": {
+        "rule": {"const": "FIXED_SINGLE_HOLDOUT_ANALYSIS"},
+        "optional_stopping": {"const": false},
+        "interim_peeking": {"const": false},
+        "adaptive_endpoint_selection": {"const": false},
+        "adaptive_sample_size": {"const": false}
+      }
+    },
+    "cost_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b3_policy_hash",
+        "dimensions",
+        "scalarization_enabled",
+        "outcome_dependent_metric_selection"
+      ],
+      "properties": {
+        "b3_policy_hash": {
+          "const": "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+        },
+        "dimensions": {
+          "const": [
+            "T_human",
+            "T_wall",
+            "T_CPU",
+            "M_byte_sec",
+            "D_scan",
+            "N_record",
+            "C_money",
+            "T_auth"
+          ]
+        },
+        "scalarization_enabled": {"const": false},
+        "outcome_dependent_metric_selection": {"const": false}
+      }
+    },
+    "access_boundary": {"$ref": "#/$defs/accessBoundary"},
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {
+      "const": "sha256:57e24fd84df55adf44fbcae6c0dbf9248750c0901a6075ad845962c11b5e0627"
+    }
+  },
+  "$defs": {
+    "estimand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "estimand_id",
+        "endpoint_id",
+        "analysis_unit",
+        "effect_measure",
+        "direction",
+        "sesoi",
+        "frozen_before_holdout_access"
+      ],
+      "properties": {
+        "estimand_id": {"type": "string", "minLength": 1},
+        "endpoint_id": {"type": "string", "minLength": 1},
+        "analysis_unit": {"const": "CASE"},
+        "effect_measure": {"type": "string", "minLength": 1},
+        "direction": {
+          "enum": ["LOWER_IS_BETTER", "HIGHER_IS_BETTER"]
+        },
+        "sesoi": {"type": "string", "minLength": 1},
+        "frozen_before_holdout_access": {"const": true}
+      }
+    },
+    "accessBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_data_loaded",
+        "holdout_labels_loaded",
+        "holdout_results_loaded",
+        "statistics_computed"
+      ],
+      "properties": {
+        "holdout_data_loaded": {"const": false},
+        "holdout_labels_loaded": {"const": false},
+        "holdout_results_loaded": {"const": false},
+        "statistics_computed": {"const": false}
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}
