@@ -1,0 +1,259 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-production-claim-id-mint-single-execute-authority-design-v0.1-20260724",
+  "artifact_type": "production_claim_id_mint_single_execute_authority_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "4f4e9d842c6759b3c0806caa3aa57fac3dcd6bab",
+  "status": "design_only_production_mint_authority_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "certificate_surface": "vacant",
+    "production_mint_only": true,
+    "adapter_execution_included": false,
+    "registry_effect_included": false
+  },
+  "pinned_authority_chain": {
+    "minting_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-minting-design-v0.1-20260724.json",
+      "sha256": "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe"
+    },
+    "source_field_slot_mapping_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
+    },
+    "mint_executor": {
+      "path": "src/compiler/llm/claim_id_mint_executor.py",
+      "sha256": "b0460b331402bfa35a7db8e62cd6366d00121e7241a766181a5e396c7601522d",
+      "commit": "7100c2470507c5a6ea35dadef79e7a03436176d3"
+    },
+    "mint_capability_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mint-capability-completion-disposition-v0.1-20260724.json",
+      "sha256": "9fd898eb0e0ea5c7d14104589175ac6bbb2d44847a962c0c45c9d71169e3e409",
+      "status": "draft_disposition_not_effective"
+    },
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m1_adapter_execute_authority_design_separation_reference": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-single-execute-authority-design-v0.1-20260724.json",
+      "sha256": "ea451a7e709072b9ab5723fc17547d0d55807fe6e24243a77b46c6c8f9f60214",
+      "relationship": "separation_reference_only_not_merged_not_substitutable"
+    }
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "mint_execute_authorized_now": 0,
+    "mint_execute_started": 0,
+    "mint_execute_consumed": 0,
+    "mint_execute_remaining": 0,
+    "production_mint_performed": false,
+    "namespace_attestation_created": false,
+    "interpretation": "This document records a future authority shape only and grants no production mint execution."
+  },
+  "future_activation_shape": {
+    "status": "activated_single_mint_execute_authorized",
+    "surface_id": "project05_depth2_public",
+    "pinned_hashes": {
+      "minting_design_sha256": "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe",
+      "mapping_design_sha256": "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799",
+      "schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "governance_chain_pins": {
+      "mint_executor_sha256": "b0460b331402bfa35a7db8e62cd6366d00121e7241a766181a5e396c7601522d",
+      "mint_capability_disposition_sha256": "9fd898eb0e0ea5c7d14104589175ac6bbb2d44847a962c0c45c9d71169e3e409",
+      "m1_adapter_execute_authority_design_sha256": "ea451a7e709072b9ab5723fc17547d0d55807fe6e24243a77b46c6c8f9f60214",
+      "m1_reference_semantics": "separation_reference_only"
+    },
+    "execute_ledger": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "namespace_key_attestation": {
+      "key_id": "required_future_non_secret_identifier",
+      "key_material_external": true,
+      "key_material_not_logged": true,
+      "key_material_not_committed": true
+    },
+    "still_blocked": {
+      "admission": true,
+      "kernel_ingestion": true,
+      "certificate": true,
+      "catalog": true,
+      "source_role": true,
+      "lineage_credit": true,
+      "quota_credit": true,
+      "l2_gate": true
+    },
+    "additional_blocked_boundaries": {
+      "e_case_write": true,
+      "m2_implementation_or_fit": true,
+      "four_family_llm_finetune": true,
+      "registry_permanent_effect": true
+    },
+    "activation_created_now": false,
+    "mint_execute_authorized_now_by_this_design": false
+  },
+  "namespace_attestation_boundary": {
+    "allowed_future_attestation_fields_only": [
+      "key_id",
+      "key_material_external",
+      "key_material_not_logged",
+      "key_material_not_committed"
+    ],
+    "key_id_is_non_secret_identifier_only": true,
+    "actual_namespace_material_present": false,
+    "actual_credential_material_present": false,
+    "actual_hmac_material_present": false,
+    "repository_material_write_allowed": false,
+    "log_material_write_allowed": false,
+    "output_material_write_allowed": false,
+    "environment_or_provider_configuration_created_now": false
+  },
+  "future_input_package_contract": {
+    "input_kind": "already_structurally_validated_claim_ir_package",
+    "allowed_origins": [
+      "M0 structural compiler path",
+      "M1 planner-inputs structural adapter path"
+    ],
+    "required_states_before_mint": {
+      "surface_id": "project05_depth2_public",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "external_certificate_surface_state": "vacant",
+    "future_activation_must_pin": [
+      "one exact structural input package SHA-256",
+      "one exact non-secret namespace key_id attestation",
+      "one unique result path that does not yet exist",
+      "this authority-design artifact SHA-256 after review and commit",
+      "all mint and separation chain pins"
+    ],
+    "forbidden_inputs": [
+      "labels, verdicts, classes, attacks, techniques, or ground truth",
+      "realized outcomes or post-action recovery",
+      "oracle state, mask membership, or hidden/recoverable Claim-IDs",
+      "raw filesystem paths, archive member paths, or payload bytes",
+      "credentials, secrets, namespace material, or HMAC material",
+      "packages from any surface other than project05_depth2_public",
+      "packages that are already minted, admitted, certified, or Kernel-ingested"
+    ],
+    "fail_closed_on_unknown_or_forbidden_field": true,
+    "fail_closed_on_pin_or_state_mismatch": true
+  },
+  "future_execution_semantics": {
+    "single_initial_execute": true,
+    "process_start_consumes_attempt": true,
+    "success_or_failure_exhausts_attempt": true,
+    "second_execute": false,
+    "automatic_retry": false,
+    "resume": false,
+    "fallback_namespace": false,
+    "fallback_executor": false,
+    "cross_surface_input": false,
+    "result_overwrite": false
+  },
+  "future_success_boundary": {
+    "allowed_state_transition": {
+      "before": {
+        "claim_id": null,
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema"
+      },
+      "after": {
+        "claim_id": "clm_<opaque_base64url_hmac_sha256>",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema"
+      }
+    },
+    "certificate_surface": "vacant",
+    "admission_granted": false,
+    "kernel_or_e_case_write": false,
+    "certificate_generated": false,
+    "catalog_role_credit_or_l2_effect": false,
+    "m2_or_finetune_effect": false
+  },
+  "m1_adapter_authority_separation": {
+    "m1_adapter_execute_authority_design_sha256": "ea451a7e709072b9ab5723fc17547d0d55807fe6e24243a77b46c6c8f9f60214",
+    "authorities_are_distinct": true,
+    "m1_adapter_authority_substitutes_for_mint_authority": false,
+    "mint_authority_substitutes_for_m1_adapter_authority": false,
+    "m1_adapter_execution_implies_mint": false,
+    "mint_execution_implies_registry_activation": false,
+    "one_authority_consumes_or_activates_the_other": false,
+    "merged_ledger": false,
+    "shared_attempt_credit": false
+  },
+  "activation_integrity_rules": {
+    "in_place_activation_of_this_design": false,
+    "editing_minting_design_status_to_simulate_activation": false,
+    "editing_capability_disposition_status_to_simulate_activation": false,
+    "required_future_method": "Create and review a distinct activation artifact that references this design, pins one exact structural package, and repeats the single-use ledger and namespace attestation.",
+    "activation_without_distinct_artifact": false,
+    "activation_without_external_attestation": false,
+    "activation_with_material_in_repository_or_logs": false
+  },
+  "explicit_non_authorizations": {
+    "activation": false,
+    "production_mint_execution": false,
+    "namespace_or_hmac_material_creation": false,
+    "repository_credential_write": false,
+    "code_change": false,
+    "m1_adapter_execution": false,
+    "registry_activation": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_implementation_or_fit": false,
+    "four_family_llm_finetune": false,
+    "training": false,
+    "download": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "The exact shape and boundaries of a future single-use production Claim-ID mint authority are defined.",
+    "not_an_activation": true,
+    "not_a_mint_execution": true,
+    "not_an_adapter_execute_authority": true,
+    "not_a_registry_activation": true,
+    "not_an_admission_or_kernel_authority": true,
+    "not_an_l2_gate_pass": true,
+    "effective": false,
+    "future_order": [
+      "review and commit this authority design",
+      "freeze one exact structural input package and non-secret namespace key_id attestation",
+      "create a distinct single-use activation artifact",
+      "separately authorize exactly one production mint execution"
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "activation_created_in_this_turn": false,
+    "namespace_or_hmac_material_created": false,
+    "minting_performed": false,
+    "adapter_executed_or_registry_activated": false,
+    "kernel_admission_catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
