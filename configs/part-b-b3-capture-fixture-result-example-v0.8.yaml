@@ -1,0 +1,104 @@
+schema_version: 0.8.0
+trace:
+  schema_version: 0.8.0
+  trace_id: B3-TRACE-901
+  attempt_id: ATTEMPT-901
+  action_id: ACTION-901
+  policy_hash: sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278
+  source_trace_hash: sha256:03b1a6e2ae5fd069920fb69a8a42ad20ac648f8f3dffa3ce0e553f9be93bc9d3
+  status: COMPLETE
+  feasibility_status: EXECUTED
+  reason_codes: []
+  currency_code: USD
+  complete: true
+  dimensions:
+    - dimension_id: T_human
+      unit: seconds
+      aggregation: sum
+      measurement_status: MEASURED
+      value:
+        numerator: 2
+        denominator: 1
+      source_event_ids: [EV-HUMAN-001]
+      missing_reason: null
+    - dimension_id: T_wall
+      unit: seconds
+      aggregation: elapsed
+      measurement_status: MEASURED
+      value:
+        numerator: 3
+        denominator: 1
+      source_event_ids: [EV-WALL-001, EV-WALL-002]
+      missing_reason: null
+    - dimension_id: T_CPU
+      unit: cpu_seconds
+      aggregation: sum
+      measurement_status: MEASURED
+      value:
+        numerator: 3
+        denominator: 2
+      source_event_ids: [EV-CPU-001]
+      missing_reason: null
+    - dimension_id: M_byte_sec
+      unit: byte_seconds
+      aggregation: integral
+      measurement_status: MEASURED
+      value:
+        numerator: 3
+        denominator: 1
+      source_event_ids: [EV-MEM-001]
+      missing_reason: null
+    - dimension_id: D_scan
+      unit: bytes
+      aggregation: sum
+      measurement_status: MEASURED
+      value:
+        numerator: 4096
+        denominator: 1
+      source_event_ids: [EV-SCAN-001]
+      missing_reason: null
+    - dimension_id: N_record
+      unit: records
+      aggregation: sum
+      measurement_status: MEASURED
+      value:
+        numerator: 18
+        denominator: 1
+      source_event_ids: [EV-SCAN-001]
+      missing_reason: null
+    - dimension_id: C_money
+      unit: currency_microunits
+      aggregation: sum
+      measurement_status: MEASURED
+      value:
+        numerator: 125
+        denominator: 1
+      source_event_ids: [EV-MONEY-001]
+      missing_reason: null
+    - dimension_id: T_auth
+      unit: seconds
+      aggregation: sum
+      measurement_status: MEASURED
+      value:
+        numerator: 1
+        denominator: 2
+      source_event_ids: [EV-AUTH-001]
+      missing_reason: null
+  scalar_cost: null
+  performance_claim_authority: false
+  hash: sha256:ff4cf9372332f0ad37baaaf0e598fd63bf10387e8305be07dbf56129c09e6257
+provenance:
+  source_kind: FIXTURE_SYNTHETIC
+  measurement_class: NOT_PRODUCTION_MEASUREMENT
+  real_os_access: false
+  billing_connector_access: false
+  production_adapter_authority: false
+fixture_hash: sha256:9d81a227127140c9be3b2f5058bf67dacf6550c996190e36f658b75979687303
+b3_policy_hash: sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278
+scalarization_authority: false
+performance_claim_authority: false
+production_capture_authority: false
+real_adapter_authority: false
+holdout_release_authority: false
+stop_authority: NONE
+hash: sha256:0900bd89aa71bd8fde8ce99285989e6e3e3052f85373859528eca232b1777706

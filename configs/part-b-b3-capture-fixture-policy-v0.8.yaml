@@ -1,0 +1,78 @@
+schema_version: "0.8.0"
+policy_id: part-b-b3-capture-fixture-policy-v0.8
+policy_version: "0.8.0"
+status: B3_CAPTURE_FIXTURE_LOCAL_ONLY
+authorized_slice: B3_COST_INSTRUMENTATION_FIXTURE_ONLY
+fixture_capture_authority: true
+production_adapter_authority: false
+real_os_access: false
+billing_connector_access: false
+action_execution_authority: false
+holdout_release_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+superiority_claim_authority: false
+stop_authority: NONE
+b3_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+b3_trace_schema_path: schemas/part-b-cost-trace.schema.json
+dimensions:
+  - dimension_id: T_human
+    unit: seconds
+    aggregation: sum
+    event_type: HUMAN_ACTIVITY
+    source_fields: [duration_ns]
+  - dimension_id: T_wall
+    unit: seconds
+    aggregation: elapsed
+    event_type: EXECUTOR_WALL_INTERVAL
+    source_fields: [start_ns, end_ns]
+  - dimension_id: T_CPU
+    unit: cpu_seconds
+    aggregation: sum
+    event_type: CPU_ACCOUNTING
+    source_fields: [cpu_delta_ns]
+  - dimension_id: M_byte_sec
+    unit: byte_seconds
+    aggregation: integral
+    event_type: MEMORY_INTEGRAL
+    source_fields: [byte_nanoseconds]
+  - dimension_id: D_scan
+    unit: bytes
+    aggregation: sum
+    event_type: SOURCE_SCAN
+    source_fields: [bytes_scanned]
+  - dimension_id: N_record
+    unit: records
+    aggregation: sum
+    event_type: SOURCE_SCAN
+    source_fields: [records_scanned]
+  - dimension_id: C_money
+    unit: currency_microunits
+    aggregation: sum
+    event_type: BILLED_USAGE
+    source_fields: [currency_code, currency_microunits]
+  - dimension_id: T_auth
+    unit: seconds
+    aggregation: sum
+    event_type: AUTHORIZATION_ACTIVITY
+    source_fields: [duration_ns]
+missingness:
+  missing_measurement: UNKNOWN_NOT_ZERO
+  implicit_zero_forbidden: true
+  explicit_reason_required: true
+  complete_trace_rule: ALL_EIGHT_DIMENSIONS_MEASURED
+currency:
+  code_format: ISO_4217_UPPERCASE
+  trace_currency_count: ZERO_OR_ONE
+  mixed_currency_behavior: FAIL_CLOSED_NO_IMPLICIT_FX
+  fx_normalization_authority: false
+feasibility:
+  semantics: SEPARATE_NOT_HIGH_COST
+  partial_trace_preserved: true
+  infeasible_scalar_cost: null
+scalarization:
+  enabled: false
+  weights: null
+  normalization: null
+  sensitivity_grid: null
+hash: "sha256:0cc7a172e77315b196755306ee65afda764c176b9acbc9188c9f6aff78e3172e"

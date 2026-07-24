@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b3-capture-fixture-policy.schema.json",
+  "title": "Project05 B3 synthetic capture fixture policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "fixture_capture_authority",
+    "production_adapter_authority",
+    "real_os_access",
+    "billing_connector_access",
+    "action_execution_authority",
+    "holdout_release_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "superiority_claim_authority",
+    "stop_authority",
+    "b3_policy_hash",
+    "b3_trace_schema_path",
+    "dimensions",
+    "missingness",
+    "currency",
+    "feasibility",
+    "scalarization",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-b3-capture-fixture-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B3_CAPTURE_FIXTURE_LOCAL_ONLY"},
+    "authorized_slice": {"const": "B3_COST_INSTRUMENTATION_FIXTURE_ONLY"},
+    "fixture_capture_authority": {"const": true},
+    "production_adapter_authority": {"const": false},
+    "real_os_access": {"const": false},
+    "billing_connector_access": {"const": false},
+    "action_execution_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "superiority_claim_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "b3_policy_hash": {"$ref": "#/$defs/sha256"},
+    "b3_trace_schema_path": {"const": "schemas/part-b-cost-trace.schema.json"},
+    "dimensions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/dimension"}
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "missing_measurement",
+        "implicit_zero_forbidden",
+        "explicit_reason_required",
+        "complete_trace_rule"
+      ],
+      "properties": {
+        "missing_measurement": {"const": "UNKNOWN_NOT_ZERO"},
+        "implicit_zero_forbidden": {"const": true},
+        "explicit_reason_required": {"const": true},
+        "complete_trace_rule": {"const": "ALL_EIGHT_DIMENSIONS_MEASURED"}
+      }
+    },
+    "currency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code_format",
+        "trace_currency_count",
+        "mixed_currency_behavior",
+        "fx_normalization_authority"
+      ],
+      "properties": {
+        "code_format": {"const": "ISO_4217_UPPERCASE"},
+        "trace_currency_count": {"const": "ZERO_OR_ONE"},
+        "mixed_currency_behavior": {
+          "const": "FAIL_CLOSED_NO_IMPLICIT_FX"
+        },
+        "fx_normalization_authority": {"const": false}
+      }
+    },
+    "feasibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantics",
+        "partial_trace_preserved",
+        "infeasible_scalar_cost"
+      ],
+      "properties": {
+        "semantics": {"const": "SEPARATE_NOT_HIGH_COST"},
+        "partial_trace_preserved": {"const": true},
+        "infeasible_scalar_cost": {"type": "null"}
+      }
+    },
+    "scalarization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "weights", "normalization", "sensitivity_grid"],
+      "properties": {
+        "enabled": {"const": false},
+        "weights": {"type": "null"},
+        "normalization": {"type": "null"},
+        "sensitivity_grid": {"type": "null"}
+      }
+    },
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension_id",
+        "unit",
+        "aggregation",
+        "event_type",
+        "source_fields"
+      ],
+      "properties": {
+        "dimension_id": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "aggregation": {
+          "enum": ["sum", "elapsed", "integral"]
+        },
+        "event_type": {"type": "string", "minLength": 1},
+        "source_fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
