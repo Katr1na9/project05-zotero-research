@@ -150,3 +150,26 @@ stop_authority=NONE
 `PB-B7-SI-001` and `PB-B7-SI-002` remain `OPEN_DEFAULT_DENY`;
 `PB-B5-SI-001` remains `EXECUTION_NOT_ESTABLISHED`. This narrow update does
 not change any frozen B1–B9 artifact hash or grant `CERTIFIED_STOP`.
+
+## PB-SI-008 narrow update — Part B / experiment dual-track gate
+
+**State:** `NOT_OPENED`.
+
+The local gate records **dual-track separation**:
+
+```text
+part_b_status=OUTSIDE_AUTHORIZED_TRACK_DENY
+experiment_track_status=MAY_PROCEED_UNDER_SEPARATE_AUTHORITY
+PB-SI-008=NOT_OPENED
+```
+
+Part B fails closed only when an LLM output or experiment reference is
+promoted to Part B evidence, claim, authority or a pass condition. This is
+**not a global LLM ban**: independent experiment work may proceed under
+separate authority, and Part B denial is not experiment STOP or failure.
+
+The classifier performs **no real LLM call** and **no experiment artifact
+read**. Holdout release and SI-006 download remain `DENY`; B5 execution
+remains `NOT_ESTABLISHED`; PB-B8-SI-004 remains `OPEN`; and
+`stop_authority=NONE`. The update does not open PB-SI-008 or change a frozen
+Part B artifact hash.
