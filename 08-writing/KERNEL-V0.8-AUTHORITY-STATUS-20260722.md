@@ -893,3 +893,33 @@ The claim ceiling remains `CONTRACT_CONSISTENCY_ONLY` and
 `NO_PERFORMANCE_OR_SUPERIORITY_CLAIM`. There is no Planner action, evaluation
 runner, empirical result, holdout release, certificate, system status or
 `CERTIFIED_STOP`.
+
+## 16. B8 holdout DENY-audit local status
+
+The separately authorized B8 DENY-audit slice establishes only a deterministic
+contract audit. It does not rewrite the B8 analysis contract or any frozen
+B0–B9 artifact hash.
+
+```text
+Authorized slice: B8_HOLDOUT_DENY_AUDIT
+status=B8_HOLDOUT_DENY_AUDIT
+claim_ceiling=HOLDOUT_DENY_AUDIT_ONLY
+default_decision=DENY
+release_decision=DENY
+holdout_data_access_authority=false
+holdout_label_access_authority=false
+holdout_result_access_authority=false
+statistical_analysis_execution_authority=false
+PB-B8-SI-001=OPEN
+PB-B8-SI-002=OPEN
+PB-B8-SI-003=OPEN
+PB-B8-SI-004=OPEN
+PB-SI-006=DENY
+PB-B5-SI-001=NOT_ESTABLISHED
+holdout release=DENY
+stop_authority=NONE
+```
+
+No holdout label, result, statistic, ranking, certificate, system status or
+`CERTIFIED_STOP` is present. The audit is contract-only and does not grant
+release, retrieval, Planner execution or any empirical claim.

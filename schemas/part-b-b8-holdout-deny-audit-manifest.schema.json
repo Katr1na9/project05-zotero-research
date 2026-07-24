@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b8-holdout-deny-audit-manifest.schema.json",
+  "title": "Part B B8 holdout DENY-audit manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "claim_ceiling",
+    "default_decision",
+    "release_decision",
+    "holdout_data_access_authority",
+    "holdout_label_access_authority",
+    "holdout_result_access_authority",
+    "statistical_analysis_execution_authority",
+    "performance_claim_authority",
+    "stop_authority",
+    "bindings",
+    "open_gates",
+    "access_boundary",
+    "proof_boundary",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "manifest_id": {
+      "const": "part-b-b8-holdout-deny-audit-manifest-v0.8"
+    },
+    "manifest_version": {
+      "const": "0.8.0"
+    },
+    "status": {
+      "const": "B8_HOLDOUT_DENY_AUDIT"
+    },
+    "authorized_slice": {
+      "const": "B8_HOLDOUT_DENY_AUDIT"
+    },
+    "claim_ceiling": {
+      "const": "HOLDOUT_DENY_AUDIT_ONLY"
+    },
+    "default_decision": {
+      "const": "DENY"
+    },
+    "release_decision": {
+      "const": "DENY"
+    },
+    "holdout_data_access_authority": {
+      "const": false
+    },
+    "holdout_label_access_authority": {
+      "const": false
+    },
+    "holdout_result_access_authority": {
+      "const": false
+    },
+    "statistical_analysis_execution_authority": {
+      "const": false
+    },
+    "performance_claim_authority": {
+      "const": false
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "bindings": {
+      "$ref": "#/$defs/frozenBindings"
+    },
+    "open_gates": {
+      "$ref": "#/$defs/openGates"
+    },
+    "access_boundary": {
+      "$ref": "#/$defs/accessBoundary"
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_consistency_only",
+        "holdout_deny_audit_validated",
+        "holdout_data_access",
+        "holdout_label_access",
+        "holdout_result_access",
+        "statistical_analysis_execution",
+        "external_validity",
+        "performance_validity",
+        "superiority_claim"
+      ],
+      "properties": {
+        "contract_consistency_only": {
+          "const": true
+        },
+        "holdout_deny_audit_validated": {
+          "const": true
+        },
+        "holdout_data_access": {
+          "const": false
+        },
+        "holdout_label_access": {
+          "const": false
+        },
+        "holdout_result_access": {
+          "const": false
+        },
+        "statistical_analysis_execution": {
+          "const": false
+        },
+        "external_validity": {
+          "const": false
+        },
+        "performance_validity": {
+          "const": false
+        },
+        "superiority_claim": {
+          "const": false
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "frozenBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_analysis_policy_hash",
+        "holdout_preregistration_hash",
+        "holdout_analysis_envelope_hash",
+        "b8_manifest_hash"
+      ],
+      "properties": {
+        "holdout_analysis_policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "holdout_preregistration_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "holdout_analysis_envelope_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "b8_manifest_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "openGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PB-B8-SI-001",
+        "PB-B8-SI-002",
+        "PB-B8-SI-003",
+        "PB-B8-SI-004",
+        "PB-SI-006",
+        "PB-B5-SI-001",
+        "CERTIFIED_STOP"
+      ],
+      "properties": {
+        "PB-B8-SI-001": {
+          "const": "OPEN"
+        },
+        "PB-B8-SI-002": {
+          "const": "OPEN"
+        },
+        "PB-B8-SI-003": {
+          "const": "OPEN"
+        },
+        "PB-B8-SI-004": {
+          "const": "OPEN"
+        },
+        "PB-SI-006": {
+          "const": "DENY"
+        },
+        "PB-B5-SI-001": {
+          "const": "NOT_ESTABLISHED"
+        },
+        "CERTIFIED_STOP": {
+          "const": "NONE"
+        }
+      }
+    },
+    "accessBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_data_loaded",
+        "holdout_labels_loaded",
+        "holdout_results_loaded",
+        "statistics_computed"
+      ],
+      "properties": {
+        "holdout_data_loaded": {
+          "const": false
+        },
+        "holdout_labels_loaded": {
+          "const": false
+        },
+        "holdout_results_loaded": {
+          "const": false
+        },
+        "statistics_computed": {
+          "const": false
+        }
+      }
+    }
+  }
+}

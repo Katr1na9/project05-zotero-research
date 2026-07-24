@@ -1,0 +1,59 @@
+schema_version: "0.8.0"
+policy_id: part-b-b8-holdout-deny-audit-policy-v0.8
+status: B8_HOLDOUT_DENY_AUDIT
+authorized_slice: B8_HOLDOUT_DENY_AUDIT
+claim_ceiling: HOLDOUT_DENY_AUDIT_ONLY
+bindings:
+  holdout_analysis_policy_hash: "sha256:542ed51380c7dc3e5ba1553d3c80b1a55e5ca5b008cb38d3df831fdee828b603"
+  holdout_preregistration_hash: "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"
+  holdout_analysis_envelope_hash: "sha256:6126bd2145b1a05c91bf53aa81c599992a787d0dd6a43847f5a67f0bb07a07ed"
+  b8_manifest_hash: "sha256:4e6e4ec552d3a9c20c8c68e76766205cb1b2ecdf6dfbfe95866085e0b56c593b"
+release_gate:
+  default_decision: DENY
+  required_conditions:
+    - B4_REGISTRY_FROZEN
+    - B4_ISOLATION_BOUND
+    - SPLIT_COMMITMENT_FROZEN
+    - PER_SOURCE_AUTHORIZATION_APPROVED
+    - ANALYSIS_PLAN_FROZEN
+    - SEPARATE_EXECUTION_AUTHORIZATION_APPROVED
+  failure_behavior: FAIL_CLOSED_NO_ACCESS
+  contract_only_no_release: true
+audit_boundary:
+  scope: HOLDOUT_DENY_AUDIT_ONLY
+  local_evaluation: true
+  release_authority: false
+  holdout_payload: false
+  statistical_execution: false
+  network_io: false
+open_gates:
+  PB-B8-SI-001: OPEN
+  PB-B8-SI-002: OPEN
+  PB-B8-SI-003: OPEN
+  PB-B8-SI-004: OPEN
+  PB-SI-006: DENY
+  PB-B5-SI-001: NOT_ESTABLISHED
+  CERTIFIED_STOP: NONE
+access_boundary:
+  holdout_data_loaded: false
+  holdout_labels_loaded: false
+  holdout_results_loaded: false
+  statistics_computed: false
+authority_boundary:
+  holdout_data_access_authority: false
+  holdout_label_access_authority: false
+  holdout_result_access_authority: false
+  statistical_analysis_execution_authority: false
+  release_authority: false
+  performance_claim_authority: false
+  stop_authority: NONE
+error_codes:
+  release_not_authorized: B8-DENY-001_RELEASE_NOT_AUTHORIZED
+  label_access_denied: B8-DENY-002_LABEL_ACCESS_DENIED
+  result_access_denied: B8-DENY-003_RESULT_ACCESS_DENIED
+  data_access_denied: B8-DENY-004_DATA_ACCESS_DENIED
+  statistical_execution_denied: B8-DENY-005_STATISTICAL_EXECUTION_DENIED
+  request_invalid: B8-DENY-006_REQUEST_INVALID
+  unknown_field: B8-DENY-007_UNKNOWN_FIELD
+  binding_mismatch: B8-DENY-008_BINDING_MISMATCH
+hash: "sha256:511fad4d0cd1f1044aab3b6f4e8d71967883f17636918fd31a9f655953d4e962"

@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b8-holdout-deny-audit-policy.schema.json",
+  "title": "Part B B8 holdout DENY-audit policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "status",
+    "authorized_slice",
+    "claim_ceiling",
+    "bindings",
+    "release_gate",
+    "audit_boundary",
+    "open_gates",
+    "access_boundary",
+    "authority_boundary",
+    "error_codes",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "policy_id": {
+      "const": "part-b-b8-holdout-deny-audit-policy-v0.8"
+    },
+    "status": {
+      "const": "B8_HOLDOUT_DENY_AUDIT"
+    },
+    "authorized_slice": {
+      "const": "B8_HOLDOUT_DENY_AUDIT"
+    },
+    "claim_ceiling": {
+      "const": "HOLDOUT_DENY_AUDIT_ONLY"
+    },
+    "bindings": {
+      "$ref": "#/$defs/frozenBindings"
+    },
+    "release_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_decision",
+        "required_conditions",
+        "failure_behavior",
+        "contract_only_no_release"
+      ],
+      "properties": {
+        "default_decision": {
+          "const": "DENY"
+        },
+        "required_conditions": {
+          "type": "array",
+          "const": [
+            "B4_REGISTRY_FROZEN",
+            "B4_ISOLATION_BOUND",
+            "SPLIT_COMMITMENT_FROZEN",
+            "PER_SOURCE_AUTHORIZATION_APPROVED",
+            "ANALYSIS_PLAN_FROZEN",
+            "SEPARATE_EXECUTION_AUTHORIZATION_APPROVED"
+          ]
+        },
+        "failure_behavior": {
+          "const": "FAIL_CLOSED_NO_ACCESS"
+        },
+        "contract_only_no_release": {
+          "const": true
+        }
+      }
+    },
+    "audit_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "local_evaluation",
+        "release_authority",
+        "holdout_payload",
+        "statistical_execution",
+        "network_io"
+      ],
+      "properties": {
+        "scope": {
+          "const": "HOLDOUT_DENY_AUDIT_ONLY"
+        },
+        "local_evaluation": {
+          "const": true
+        },
+        "release_authority": {
+          "const": false
+        },
+        "holdout_payload": {
+          "const": false
+        },
+        "statistical_execution": {
+          "const": false
+        },
+        "network_io": {
+          "const": false
+        }
+      }
+    },
+    "open_gates": {
+      "$ref": "#/$defs/openGates"
+    },
+    "access_boundary": {
+      "$ref": "#/$defs/accessBoundary"
+    },
+    "authority_boundary": {
+      "$ref": "#/$defs/authorityBoundary"
+    },
+    "error_codes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_not_authorized",
+        "label_access_denied",
+        "result_access_denied",
+        "data_access_denied",
+        "statistical_execution_denied",
+        "request_invalid",
+        "unknown_field",
+        "binding_mismatch"
+      ],
+      "properties": {
+        "release_not_authorized": {
+          "const": "B8-DENY-001_RELEASE_NOT_AUTHORIZED"
+        },
+        "label_access_denied": {
+          "const": "B8-DENY-002_LABEL_ACCESS_DENIED"
+        },
+        "result_access_denied": {
+          "const": "B8-DENY-003_RESULT_ACCESS_DENIED"
+        },
+        "data_access_denied": {
+          "const": "B8-DENY-004_DATA_ACCESS_DENIED"
+        },
+        "statistical_execution_denied": {
+          "const": "B8-DENY-005_STATISTICAL_EXECUTION_DENIED"
+        },
+        "request_invalid": {
+          "const": "B8-DENY-006_REQUEST_INVALID"
+        },
+        "unknown_field": {
+          "const": "B8-DENY-007_UNKNOWN_FIELD"
+        },
+        "binding_mismatch": {
+          "const": "B8-DENY-008_BINDING_MISMATCH"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "frozenBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_analysis_policy_hash",
+        "holdout_preregistration_hash",
+        "holdout_analysis_envelope_hash",
+        "b8_manifest_hash"
+      ],
+      "properties": {
+        "holdout_analysis_policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "holdout_preregistration_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "holdout_analysis_envelope_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "b8_manifest_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "openGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PB-B8-SI-001",
+        "PB-B8-SI-002",
+        "PB-B8-SI-003",
+        "PB-B8-SI-004",
+        "PB-SI-006",
+        "PB-B5-SI-001",
+        "CERTIFIED_STOP"
+      ],
+      "properties": {
+        "PB-B8-SI-001": {
+          "const": "OPEN"
+        },
+        "PB-B8-SI-002": {
+          "const": "OPEN"
+        },
+        "PB-B8-SI-003": {
+          "const": "OPEN"
+        },
+        "PB-B8-SI-004": {
+          "const": "OPEN"
+        },
+        "PB-SI-006": {
+          "const": "DENY"
+        },
+        "PB-B5-SI-001": {
+          "const": "NOT_ESTABLISHED"
+        },
+        "CERTIFIED_STOP": {
+          "const": "NONE"
+        }
+      }
+    },
+    "accessBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_data_loaded",
+        "holdout_labels_loaded",
+        "holdout_results_loaded",
+        "statistics_computed"
+      ],
+      "properties": {
+        "holdout_data_loaded": {
+          "const": false
+        },
+        "holdout_labels_loaded": {
+          "const": false
+        },
+        "holdout_results_loaded": {
+          "const": false
+        },
+        "statistics_computed": {
+          "const": false
+        }
+      }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_data_access_authority",
+        "holdout_label_access_authority",
+        "holdout_result_access_authority",
+        "statistical_analysis_execution_authority",
+        "release_authority",
+        "performance_claim_authority",
+        "stop_authority"
+      ],
+      "properties": {
+        "holdout_data_access_authority": {
+          "const": false
+        },
+        "holdout_label_access_authority": {
+          "const": false
+        },
+        "holdout_result_access_authority": {
+          "const": false
+        },
+        "statistical_analysis_execution_authority": {
+          "const": false
+        },
+        "release_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        }
+      }
+    }
+  }
+}
