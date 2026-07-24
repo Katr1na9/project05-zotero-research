@@ -628,3 +628,51 @@ deny。P11 仍沿既有 feedback/Recert/SystemState 路径；candidate-level 结
 在 §4.1 裁定下，level-complete `CERTIFIED_STOP` 仅在冻结有限域 Kernel Γ、批准
 policy/catalog、声明 completeness 与 recorded solver/proof policy 同时满足时
 成立；P11 allow/admit 本身仍不是该证书。
+
+## 12. Part B B7 broad-connector contract status
+
+Status: **LOCAL REVIEW — B7 CONTRACT ONLY**
+
+```text
+Authorized slice: B7_BROAD_CONNECTORS
+connector_contract_authority=true
+provenance_contract_authority=true
+source_selection_authority=false
+source_authorization_authority=false
+connector_execution_authority=false
+retrieval_authority=false
+download_authority=false
+credential_use_authority=false
+planner_execution_authority=false
+sampling_authority=false
+evaluation_execution_authority=false
+performance_claim_authority=false
+stop_authority=NONE
+B8-B9=CLOSED
+```
+
+B7 freezes connector-descriptor, deny-only source-authorization and provenance
+contracts. It grants NO CONNECTOR RUNTIME and NO DOWNLOAD. Every real source
+remains behind the `PB-SI-006` PER-SOURCE SEPARATE AUTHORIZATION gate.
+`PB-B5-SI-001` remains OPEN, and Planner implementation admission remains NOT
+ESTABLISHED.
+
+The B7 evidence level is `CONTRACT_CONSISTENCY_ONLY`: NO EXTERNAL VALIDITY, NO
+PERFORMANCE CLAIM, no certificate, no system state and no `CERTIFIED_STOP`.
+
+```text
+Connector contract policy:
+sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3
+
+Connector descriptor example:
+sha256:bc3f2934eb65868ba5db3ac8a0d8bbff7d766271eece9094c68183ce8919ac22
+
+Source authorization example:
+sha256:6576f01963ed07f291a19c8ddcf60dbc9ab5fcde5c7868671b43107db3ca15e0
+
+Provenance envelope example:
+sha256:f595cdee0a6c51f7a702e540bab71205f2b28a9701d991c214e28f1af8940ac9
+
+B7 manifest:
+sha256:28179580dc0e8c4dbc6f1a6cb1d5f0d4939a3ae7466c078e60f20fb16fffac49
+```

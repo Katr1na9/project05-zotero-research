@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-connector-descriptor.schema.json",
+  "title": "Project05 Part B B7 non-executable connector descriptor",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "descriptor_id",
+    "descriptor_version",
+    "status",
+    "authorized_slice",
+    "connector_kind",
+    "semantic_family",
+    "bindings",
+    "source_id",
+    "source_status",
+    "source_selected",
+    "execution_authority",
+    "declared_capabilities",
+    "authority_boundary",
+    "execution_boundary",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "descriptor_id": {"const": "b7-contract-fixture-tabular-001"},
+    "descriptor_version": {"const": "0.8.0"},
+    "status": {"const": "B7_CONTRACT_FIXTURE_ONLY"},
+    "authorized_slice": {"const": "B7_BROAD_CONNECTORS"},
+    "connector_kind": {
+      "enum": [
+        "SNAPSHOT_TABULAR",
+        "SNAPSHOT_DOCUMENT",
+        "SNAPSHOT_GRAPH",
+        "SNAPSHOT_EVENT_STREAM"
+      ]
+    },
+    "semantic_family": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["family_id", "family_version", "source_schema_id"],
+          "properties": {
+            "family_id": {"const": "execution"},
+            "family_version": {"const": "0.8.0"},
+            "source_schema_id": {"const": "abstract.process-event.v1"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["family_id", "family_version", "source_schema_id"],
+          "properties": {
+            "family_id": {"const": "external_intel"},
+            "family_version": {"const": "0.8.0"},
+            "source_schema_id": {"const": "abstract.report-fragment.v1"}
+          }
+        }
+      ]
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b1_federation_contract_hash",
+        "b1_adapter_conformance_hash",
+        "b7_policy_hash"
+      ],
+      "properties": {
+        "b1_federation_contract_hash": {
+          "const": "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"
+        },
+        "b1_adapter_conformance_hash": {
+          "const": "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a"
+        },
+        "b7_policy_hash": {
+          "const": "sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3"
+        }
+      }
+    },
+    "source_id": {"const": "abstract-b7-source-not-authorized"},
+    "source_status": {"const": "CONTRACT_FIXTURE_ONLY"},
+    "source_selected": {"const": false},
+    "execution_authority": {"const": false},
+    "declared_capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["DESCRIBE_SCHEMA", "DECLARE_PROVENANCE_SHAPE"]
+      }
+    },
+    "authority_boundary": {"$ref": "#/$defs/authorityBoundary"},
+    "execution_boundary": {"$ref": "#/$defs/executionBoundary"},
+    "hash": {
+      "const": "sha256:bc3f2934eb65868ba5db3ac8a0d8bbff7d766271eece9094c68183ce8919ac22"
+    }
+  },
+  "$defs": {
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_admission_authority",
+        "world_elimination_authority",
+        "certificate_authority",
+        "system_status_authority",
+        "certified_stop_authority"
+      ],
+      "properties": {
+        "claim_admission_authority": {"const": false},
+        "world_elimination_authority": {"const": false},
+        "certificate_authority": {"const": false},
+        "system_status_authority": {"const": false},
+        "certified_stop_authority": {"const": false}
+      }
+    },
+    "executionBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network_access",
+        "credential_use",
+        "retrieval",
+        "download",
+        "connector_execution"
+      ],
+      "properties": {
+        "network_access": {"const": false},
+        "credential_use": {"const": false},
+        "retrieval": {"const": false},
+        "download": {"const": false},
+        "connector_execution": {"const": false}
+      }
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b7-manifest.schema.json",
+  "title": "Project05 Part B B7 contract manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "connector_contract_authority",
+    "provenance_contract_authority",
+    "source_selection_authority",
+    "source_authorization_authority",
+    "connector_execution_authority",
+    "retrieval_authority",
+    "download_authority",
+    "credential_use_authority",
+    "planner_execution_authority",
+    "sampling_authority",
+    "evaluation_execution_authority",
+    "performance_claim_authority",
+    "stop_authority",
+    "bindings",
+    "artifacts",
+    "proof_boundary",
+    "closed_slices",
+    "llm_integration",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"const": "part-b-b7-manifest-v0.8"},
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B7_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B7_BROAD_CONNECTORS"},
+    "connector_contract_authority": {"const": true},
+    "provenance_contract_authority": {"const": true},
+    "source_selection_authority": {"const": false},
+    "source_authorization_authority": {"const": false},
+    "connector_execution_authority": {"const": false},
+    "retrieval_authority": {"const": false},
+    "download_authority": {"const": false},
+    "credential_use_authority": {"const": false},
+    "planner_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "bindings": {"$ref": "#/$defs/upstreamBindings"},
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "connector_policy_hash",
+        "descriptor_example_hash",
+        "source_authorization_example_hash",
+        "provenance_envelope_example_hash"
+      ],
+      "properties": {
+        "connector_policy_hash": {
+          "const": "sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3"
+        },
+        "descriptor_example_hash": {
+          "const": "sha256:bc3f2934eb65868ba5db3ac8a0d8bbff7d766271eece9094c68183ce8919ac22"
+        },
+        "source_authorization_example_hash": {
+          "const": "sha256:6576f01963ed07f291a19c8ddcf60dbc9ab5fcde5c7868671b43107db3ca15e0"
+        },
+        "provenance_envelope_example_hash": {
+          "const": "sha256:f595cdee0a6c51f7a702e540bab71205f2b28a9701d991c214e28f1af8940ac9"
+        }
+      }
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_consistency_only",
+        "source_conformance_validated",
+        "connector_implementation_validated",
+        "connector_execution",
+        "data_acquisition",
+        "external_validity",
+        "performance_validity",
+        "superiority_claim"
+      ],
+      "properties": {
+        "contract_consistency_only": {"const": true},
+        "source_conformance_validated": {"const": false},
+        "connector_implementation_validated": {"const": false},
+        "connector_execution": {"const": false},
+        "data_acquisition": {"const": false},
+        "external_validity": {"const": false},
+        "performance_validity": {"const": false},
+        "superiority_claim": {"const": false}
+      }
+    },
+    "closed_slices": {"const": ["B8", "B9"]},
+    "llm_integration": {"const": "FORBIDDEN"},
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "hash": {
+      "const": "sha256:28179580dc0e8c4dbc6f1a6cb1d5f0d4939a3ae7466c078e60f20fb16fffac49"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "upstreamBindings": {
+      "type": "object",
+      "required": [
+        "b1_federation_contract_hash",
+        "b1_adapter_conformance_hash",
+        "b1_manifest_hash",
+        "b2_stochastic_catalog_hash",
+        "b2_tv_policy_hash",
+        "b2_world_pair_delta_decision_hash",
+        "b2_manifest_hash",
+        "b3_cost_instrumentation_policy_hash",
+        "b3_manifest_hash",
+        "b4_baseline_preregistration_hash",
+        "b4_baseline_isolation_policy_hash",
+        "b4_manifest_hash",
+        "b5_planner_public_state_example_hash",
+        "b5_planner_decision_example_hash",
+        "b5_planner_interface_policy_hash",
+        "b5_bounded_evaluation_hash",
+        "b5_manifest_hash",
+        "b6_closed_loop_policy_hash",
+        "b6_episode_example_hash",
+        "b6_feedback_example_hash",
+        "b6_preregistration_hash",
+        "b6_manifest_hash"
+      ],
+      "propertyNames": {
+        "enum": [
+          "b1_federation_contract_hash",
+          "b1_adapter_conformance_hash",
+          "b1_manifest_hash",
+          "b2_stochastic_catalog_hash",
+          "b2_tv_policy_hash",
+          "b2_world_pair_delta_decision_hash",
+          "b2_manifest_hash",
+          "b3_cost_instrumentation_policy_hash",
+          "b3_manifest_hash",
+          "b4_baseline_preregistration_hash",
+          "b4_baseline_isolation_policy_hash",
+          "b4_manifest_hash",
+          "b5_planner_public_state_example_hash",
+          "b5_planner_decision_example_hash",
+          "b5_planner_interface_policy_hash",
+          "b5_bounded_evaluation_hash",
+          "b5_manifest_hash",
+          "b6_closed_loop_policy_hash",
+          "b6_episode_example_hash",
+          "b6_feedback_example_hash",
+          "b6_preregistration_hash",
+          "b6_manifest_hash"
+        ]
+      },
+      "additionalProperties": {"$ref": "#/$defs/sha256"}
+    }
+  }
+}

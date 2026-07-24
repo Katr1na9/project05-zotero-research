@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-source-authorization.schema.json",
+  "title": "Project05 Part B B7 deny-only source-authorization example",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authorization_id",
+    "authorization_version",
+    "status",
+    "authorized_slice",
+    "source_id",
+    "source_kind",
+    "decision",
+    "reason_code",
+    "bindings",
+    "authorization_scope",
+    "authorities",
+    "execution_boundary",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "authorization_id": {"const": "b7-source-authorization-fixture-001"},
+    "authorization_version": {"const": "0.8.0"},
+    "status": {"const": "B7_CONTRACT_FIXTURE_ONLY"},
+    "authorized_slice": {"const": "B7_BROAD_CONNECTORS"},
+    "source_id": {"const": "abstract-b7-source-not-authorized"},
+    "source_kind": {"const": "CONTRACT_FIXTURE"},
+    "decision": {"const": "NOT_AUTHORIZED"},
+    "reason_code": {
+      "const": "B7-SOURCE-001_SEPARATE_AUTHORIZATION_REQUIRED"
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_hash", "descriptor_hash"],
+      "properties": {
+        "policy_hash": {
+          "const": "sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3"
+        },
+        "descriptor_hash": {
+          "const": "sha256:bc3f2934eb65868ba5db3ac8a0d8bbff7d766271eece9094c68183ce8919ac22"
+        }
+      }
+    },
+    "authorization_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_ids", "operations"],
+      "properties": {
+        "dataset_ids": {"type": "array", "maxItems": 0},
+        "operations": {"type": "array", "maxItems": 0}
+      }
+    },
+    "authorities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_access",
+        "credential_use",
+        "retrieval",
+        "download",
+        "connector_execution"
+      ],
+      "properties": {
+        "source_access": {"const": false},
+        "credential_use": {"const": false},
+        "retrieval": {"const": false},
+        "download": {"const": false},
+        "connector_execution": {"const": false}
+      }
+    },
+    "execution_boundary": {"$ref": "#/$defs/executionBoundary"},
+    "hash": {
+      "const": "sha256:6576f01963ed07f291a19c8ddcf60dbc9ab5fcde5c7868671b43107db3ca15e0"
+    }
+  },
+  "$defs": {
+    "executionBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network_access",
+        "credential_use",
+        "retrieval",
+        "download",
+        "connector_execution"
+      ],
+      "properties": {
+        "network_access": {"const": false},
+        "credential_use": {"const": false},
+        "retrieval": {"const": false},
+        "download": {"const": false},
+        "connector_execution": {"const": false}
+      }
+    }
+  }
+}
