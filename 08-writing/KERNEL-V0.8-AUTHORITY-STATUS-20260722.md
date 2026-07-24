@@ -923,3 +923,32 @@ stop_authority=NONE
 No holdout label, result, statistic, ranking, certificate, system status or
 `CERTIFIED_STOP` is present. The audit is contract-only and does not grant
 release, retrieval, Planner execution or any empirical claim.
+
+## 17. PB-SI-008 dual-track separation local gate
+
+The separately authorized PB-SI-008 sub-slice establishes only a
+deterministic **dual-track separation** gate. It does not rewrite B0–B9 or
+any later local-slice artifact hash.
+
+```text
+part_b_status=OUTSIDE_AUTHORIZED_TRACK_DENY
+experiment_track_status=MAY_PROCEED_UNDER_SEPARATE_AUTHORITY
+PB-SI-008=NOT_OPENED
+part_b_evidence_authority=false
+part_b_claim_authority=false
+part_b_authority_grant=false
+part_b_pass_condition_authority=false
+llm_execution_authority=false
+experiment_artifact_access_authority=false
+holdout release=DENY
+PB-SI-006 download=DENY
+PB-B5 execution=NOT_ESTABLISHED
+PB-B8-SI-004=OPEN
+stop_authority=NONE
+```
+
+This is **not a global LLM ban**. Independent experiment work may proceed
+under separate authority. The gate performs **no real LLM call** and **no
+experiment artifact read**; it denies only attempted elevation into Part B.
+A Part B denial is not experiment STOP or failure and grants no certificate,
+system status or `CERTIFIED_STOP`.

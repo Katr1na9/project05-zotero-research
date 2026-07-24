@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-si008-dual-track-deny-policy.schema.json",
+  "title": "Part B PB-SI-008 dual-track separation DENY policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "status",
+    "authorized_slice",
+    "part_b_status",
+    "experiment_track_status",
+    "pb_si_008_status",
+    "decision_boundary",
+    "adjacent_gates",
+    "authority_boundary",
+    "reason_codes",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "policy_id": {
+      "const": "part-b-si008-dual-track-deny-policy-v0.8"
+    },
+    "status": {
+      "const": "SI008_DUAL_TRACK_SEPARATION_DENY"
+    },
+    "authorized_slice": {
+      "const": "PB-SI-008_DUAL_TRACK_DENY"
+    },
+    "part_b_status": {
+      "const": "OUTSIDE_AUTHORIZED_TRACK_DENY"
+    },
+    "experiment_track_status": {
+      "const": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY"
+    },
+    "pb_si_008_status": {
+      "const": "NOT_OPENED"
+    },
+    "decision_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_track_only",
+        "part_b_elevation",
+        "reference_handling",
+        "experiment_interference",
+        "llm_invocation",
+        "experiment_artifact_read"
+      ],
+      "properties": {
+        "experiment_track_only": {
+          "const": "NO_PART_B_ADMISSION_REQUEST"
+        },
+        "part_b_elevation": {
+          "const": "DENY"
+        },
+        "reference_handling": {
+          "const": "CLASSIFY_ONLY_NEVER_DEREFERENCE"
+        },
+        "experiment_interference": {
+          "const": "NO_INTERFERENCE_SEPARATE_AUTHORITY_REQUIRED"
+        },
+        "llm_invocation": {
+          "const": false
+        },
+        "experiment_artifact_read": {
+          "const": false
+        }
+      }
+    },
+    "adjacent_gates": {
+      "$ref": "#/$defs/adjacentGates"
+    },
+    "authority_boundary": {
+      "$ref": "#/$defs/authorityBoundary"
+    },
+    "reason_codes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_part_b_admission_request",
+        "part_b_elevation_denied",
+        "request_invalid",
+        "unknown_field"
+      ],
+      "properties": {
+        "no_part_b_admission_request": {
+          "const": "SI008-DUAL-000_NO_PART_B_ADMISSION_REQUEST"
+        },
+        "part_b_elevation_denied": {
+          "const": "SI008-DUAL-001_PART_B_ELEVATION_DENIED"
+        },
+        "request_invalid": {
+          "const": "SI008-DUAL-002_REQUEST_INVALID"
+        },
+        "unknown_field": {
+          "const": "SI008-DUAL-003_UNKNOWN_FIELD"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "adjacentGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_release",
+        "pb_si_006_download",
+        "pb_b5_execution",
+        "pb_b8_si_004",
+        "stop_authority"
+      ],
+      "properties": {
+        "holdout_release": {
+          "const": "DENY"
+        },
+        "pb_si_006_download": {
+          "const": "DENY"
+        },
+        "pb_b5_execution": {
+          "const": "NOT_ESTABLISHED"
+        },
+        "pb_b8_si_004": {
+          "const": "OPEN"
+        },
+        "stop_authority": {
+          "const": "NONE"
+        }
+      }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "part_b_evidence_authority",
+        "part_b_claim_authority",
+        "part_b_authority_grant",
+        "part_b_pass_condition_authority",
+        "llm_execution_authority",
+        "experiment_artifact_access_authority"
+      ],
+      "properties": {
+        "part_b_evidence_authority": {
+          "const": false
+        },
+        "part_b_claim_authority": {
+          "const": false
+        },
+        "part_b_authority_grant": {
+          "const": false
+        },
+        "part_b_pass_condition_authority": {
+          "const": false
+        },
+        "llm_execution_authority": {
+          "const": false
+        },
+        "experiment_artifact_access_authority": {
+          "const": false
+        }
+      }
+    }
+  }
+}
