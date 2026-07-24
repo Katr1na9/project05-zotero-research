@@ -1,0 +1,126 @@
+{
+  "schema_version": "project05-llm-editor-l2-toyota-hsr-validation-corrected-invocation-amendment-v0.2",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "5da5b62561c3c42c9e4878c5c597a8ff0df9562e",
+  "status": "frozen_non_bypass_corrected_invocation_not_activated_execution_not_authorized",
+  "target_id": "toyota_hsr_place_action_validation_archive",
+  "purpose": "Replace the blocked PowerShell-script entry with one exact direct-curl executable-and-argv manifest. This amendment freezes identity and safety boundaries only. It does not activate or execute the entry, start curl, issue a network request, create or write the raw target, consume the remaining acquisition attempt, open the archive, commit, or push.",
+  "superseded_uncommitted_drafts": {
+    "powershell_remote_signed_v0_1_draft_superseded": true,
+    "v0_1_draft_was_committed": false,
+    "v0_1_draft_is_referenced_as_authority": false,
+    "reuse_existing_ps1_launcher_proposed_by_v0_1": false,
+    "v0_1_draft_disposition": "void_not_part_of_authority_chain",
+    "reason": "The prior .ps1 launcher invocation budget was exhausted by a host-policy block. Reusing the old activation or adding RemoteSigned to another .ps1 invocation would silently reuse a terminal entry path and is not authorized."
+  },
+  "prior_failure": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-toyota-hsr-validation-acquisition-result-v0.1-20260724.json",
+    "sha256": "1c77267148f0f4c0ea91febbb04d0fc90a6321dfedae2e4d887de39886fe9cbb",
+    "commit": "5da5b62561c3c42c9e4878c5c597a8ff0df9562e",
+    "status": "failed_before_launcher_load_execution_policy_block_no_curl_attempt_not_consumed_hard_stop",
+    "launcher_invocation_1_exhausted": true,
+    "launcher_source_loaded": false,
+    "curl_started": false,
+    "acquisition_attempt_consumed": false,
+    "acquisition_attempt_remaining": 1
+  },
+  "pinned_inputs": {
+    "acquisition_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-toyota-hsr-validation-exact-bounded-acquisition-contract-v0.1-20260724.json",
+      "sha256": "90e746c609bd60aeff2a85a48c925c6fc46b54dd55de506e4e806bfd1f58547b",
+      "commit": "bef5c2b33b21c7fe61bd66b571bc83a9ffe75252"
+    },
+    "direct_curl_entry": {
+      "path": "datasets/llm/toyota_hsr_validation_exact_curl_entry_v0_2.json",
+      "sha256": "9e54fefd3baec63691d9fcc14fd1a19f5ea288ae64b3ccd566251d8aa4c0903f",
+      "status": "frozen_direct_curl_entry_not_executed",
+      "entry_id": "toyota_hsr_validation_direct_curl_entry_v0_2"
+    },
+    "curl_executable": {
+      "path": "C:\\WINDOWS\\system32\\curl.exe",
+      "version": "8.21.0",
+      "sha256": "73d24149ff289afc49ec41f08918ef9faa727d39ad993e929757dc2ddafab805"
+    }
+  },
+  "replacement_entry_policy": {
+    "entry_kind": "exact_direct_curl_executable_and_argv_manifest",
+    "loads_powershell_script": false,
+    "loads_any_ps1": false,
+    "uses_execution_policy_argument": false,
+    "uses_execution_policy_bypass": false,
+    "execution_policy_bypass_authorized": false,
+    "uses_remote_signed_ps1_entry": false,
+    "uses_inline_shell_script": false,
+    "uses_alternate_curl_executable": false,
+    "allows_environment_override": false,
+    "entry_executed_during_amendment": false,
+    "network_request_performed_during_amendment": false
+  },
+  "frozen_target_identity": {
+    "record_id": 4578539,
+    "record_revision": 3,
+    "download_url": "https://zenodo.org/api/records/4578539/files/place_action_validation.tar.gz/content",
+    "local_relative_path": "datasets/llm/local_audit_cache/toyota-hsr-placement-bounded-v0.1/raw/place_action_validation.tar.gz",
+    "expected_bytes": 365983836,
+    "maximum_persisted_bytes": 365983836,
+    "expected_md5": "76cb0cab741c3a55eaf662df979f4637"
+  },
+  "integrity_and_stop_boundary": {
+    "curl_exit_code_zero_required": true,
+    "exact_size_check_required_before_md5": true,
+    "exact_size_required": 365983836,
+    "md5_may_be_computed_only_after_exact_size_pass": true,
+    "md5_required_after_size_pass": "76cb0cab741c3a55eaf662df979f4637",
+    "verified_requires_exact_size_and_md5": true,
+    "success_or_failure_requires_hard_stop": true,
+    "gzip_or_tar_open_list_read_decompress_or_extract_authorized": false,
+    "notice_privacy_manifest_lineage_pointer_or_other_audit_authorized": false
+  },
+  "attempt_ledger": {
+    "launcher_invocation_1_exhausted": true,
+    "launcher_invocation_1_reuse_authorized": false,
+    "launcher_invocation_2_authorized_by_this_amendment": false,
+    "launcher_invocation_2_requires_new_execution_authority": true,
+    "acquisition_attempt_number": 1,
+    "acquisition_attempts_started": 0,
+    "acquisition_attempts_consumed": 0,
+    "acquisition_attempts_remaining": 1,
+    "curl_start_consumes_remaining_acquisition_attempt": true,
+    "remaining_after_any_curl_start": 0,
+    "automatic_retry_or_resume_authorized": false,
+    "additional_acquisition_attempt_authorized": false
+  },
+  "future_authority_contract": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-toyota-hsr-validation-launcher-invocation-attempt-2-execution-authority-v0.2-20260724.json",
+    "must_name_target_id": "toyota_hsr_place_action_validation_archive",
+    "must_pin_contract_sha256": true,
+    "must_pin_prior_failure_sha256": true,
+    "must_pin_this_amendment_sha256": true,
+    "must_pin_direct_entry_sha256": true,
+    "must_pin_curl_sha256": true,
+    "maximum_curl_start_count": 1,
+    "document_creation_or_commit_may_start_curl": false,
+    "separate_explicit_execution_authorization_required": true
+  },
+  "scientific_boundary": {
+    "effective_catalog_write_authorized": false,
+    "source_role_or_train_admission_authorized": false,
+    "family_credit_awarded": 0,
+    "lineage_credit_awarded": 0,
+    "sample_credit_awarded": 0,
+    "quota_credit_awarded": 0,
+    "baseline_or_fine_tuning_authorized": false,
+    "kernel_gamma_or_m3_authorized": false,
+    "l2_gate_passed": false
+  },
+  "authority": {
+    "amendment_frozen": true,
+    "entry_execution_authorized": false,
+    "curl_start_authorized": false,
+    "raw_target_write_authorized": false,
+    "execution_policy_bypass_authorized": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false,
+    "next_action": "Create the separate attempt-2 execution-authority and non-network preflight. Do not execute curl. The authority chain remains uncommitted and ineffective for execution until separately reviewed and committed."
+  }
+}
