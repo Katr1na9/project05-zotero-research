@@ -1,0 +1,223 @@
+{
+  "schema_version": "project05-llm-editor-l2-claim-id-rule-path-priority-amendment-v0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "12fddd382f6bd783970093b0d3a91cd10445a844",
+  "status": "draft_for_review_not_effective",
+  "purpose": "Propose freezing the blocking dependence of the main experimental path on LLM four-family fine-tuning, and prioritizing a deterministic Claim-ID / Claim-IR output path so Kernel, planning, and certificate work are not stalled by B-tier public-family scarcity. This draft does not lower B-tier gates, admit source roles, write the effective train catalog, award credit, authorize Qwen fine-tuning, authorize downloads, or mark L2 passed.",
+  "related_documents": {
+    "quota_role_negative_result_amendment": "docs/llm-editor/llm-editor-v0.8-l2-quota-role-negative-result-amendment-v0.1-20260724.json",
+    "quota_amendment": "docs/llm-editor/llm-editor-v0.8-l2-quota-amendment-v0.1-20260722.md",
+    "si_llm_001": "docs/spec-issues/SI-LLM-001-shared-claim-ir-artifact-absent.md",
+    "legacy_candidate_claim_envelope": "09-experiments/llm_evidence_compiler_mainline/contracts/candidate_claim_envelope.schema.json",
+    "existing_action_value_xgboost_protocol": "08-writing/xgboost-action-value-protocol-v0.1-20260711.md"
+  },
+  "non_effective_status": {
+    "amendment_effective": false,
+    "llm_four_family_finetune_search_formally_frozen": false,
+    "claim_ir_schema_published": false,
+    "rule_compiler_authorized": false,
+    "adapter_framework_authorized": false,
+    "claim_residual_xgboost_authorized": false,
+    "qwen_or_llm_finetune_authorized": false,
+    "effective_catalog_written": false,
+    "source_role_changed": false,
+    "family_credit_awarded": 0,
+    "lineage_credit_awarded": 0,
+    "sample_credit_awarded": 0,
+    "quota_credit_awarded": 0,
+    "l2_gate_passed": false,
+    "download_authorized": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false
+  },
+  "decision_summary": {
+    "defer_llm_four_family_finetune_path_as_non_blocking": true,
+    "llm_four_family_finetune_path_reopen_requires_new_authorization": true,
+    "unblock_main_experiment_via_claim_id_ir_output": true,
+    "primary_method_for_claim_id_output": "deterministic_rule_and_script_compilation",
+    "ordered_phases": [
+      "M0_rule_claim_id_compiler",
+      "M1_multi_source_adapter_framework",
+      "M2_optional_xgboost_rule_residual_normalizer"
+    ],
+    "default_parallel_equal_priority_not_authorized": true,
+    "comparison_allowed_only_after_frozen_rule_baseline": true,
+    "implementation_authorized_by_this_draft": false
+  },
+  "scope_of_freeze": {
+    "deferred_as_non_blocking_not_revoked": [
+      "Public B-tier family search and four-family LLM fine-tuning are not prerequisites for the Claim-ID/IR interface path.",
+      "Qwen or other LLM fine-tuning for multi-source semantic alignment remains unavailable without a new explicit authorization.",
+      "L2 train-quota satisfaction is not a prerequisite for interface/compiler work that only consumes normalized Claim IR packets."
+    ],
+    "not_frozen_or_erased": [
+      "The A/B tier and negative-result draft remain available for supply documentation.",
+      "Future B-tier admission and optional LLM fine-tuning may be reopened only under a new explicit authorization.",
+      "Existing action-value XGBoost protocols remain separate and are not retasked by this draft.",
+      "Fail-closed, independence, privacy, anti-composite-family, and exhausted-attempt rules remain unchanged."
+    ]
+  },
+  "claim_id_ir_objective": {
+    "objective": "Produce a unified, machine-checkable Claim ID / Claim IR packet from declared source adapters so subsequent systems can advance without LLM fine-tuning.",
+    "schema_artifact": {
+      "proposed_path": "schemas/claim-ir-kernel.schema.json",
+      "publication_status": "proposed_versioned_external_schema_not_published_by_this_draft",
+      "required_state_field": "certification_state",
+      "pending_state_value": "pending_kernel_schema",
+      "kernel_ingestion_authorized": false,
+      "effective_kernel_state_write_authorized": false,
+      "bridge_only_without_versioned_schema_authorized": false
+    },
+    "minimum_output_properties": [
+      "Stable claim identity rule (Claim ID assignment and collision policy).",
+      "Pointer and binding-status fields consistent with admission rules.",
+      "Admission status that can reject or mark unknown without silent promotion.",
+      "Modality and authority fields that cannot be interpreted as certified Kernel state until SI-LLM-001 shared schema is closed or an explicit provisional bridge is separately authorized.",
+      "Deterministic replay from frozen inputs and frozen adapter versions."
+    ],
+    "non_objectives": [
+      "Solving general multi-lingual or multi-corpus semantic alignment by learning.",
+      "Passing L2 train quota.",
+      "Replacing human codebook construct-validity repair.",
+      "Writing LLM outputs into Kernel or E_case before shared Claim IR schema closure."
+    ]
+  },
+  "phase_plan": {
+    "M0_rule_claim_id_compiler": {
+      "priority": 1,
+      "status_if_amendment_effective": "eligible_for_separate_implementation_authorization",
+      "goal": "Ship a deterministic rule/script compiler that emits normalized Claim ID / Claim IR packets for already-approved experimental surfaces.",
+      "required_work": [
+        "Publish and version an external Claim IR schema before implementation; pending_kernel_schema is a state value in that schema, not an alternate bridge protocol.",
+        "Keep Kernel ingestion and certified Kernel/E_case state writes disabled until SI-LLM-001 shared schema closure and a separate authorization.",
+        "Define Claim ID minting, deduplication, conflict-group, and admission reject rules.",
+        "Implement pure rule/script compilation for the first explicit surface allowlist: planner and certificate experiment inputs plus valid/invalid fixtures.",
+        "Provide fixtures: one valid admitted packet and one authority-leak or invalid packet that must fail."
+      ],
+      "initial_surface_allowlist": [
+        "planner_experiment_inputs",
+        "certificate_experiment_inputs",
+        "claim_ir_valid_fixture",
+        "claim_ir_authority_leak_or_invalid_fixture"
+      ],
+      "success_criterion_for_unblocking": "Downstream episodes can consume rule-emitted Claim IR packets without waiting for B-tier families or LLM fine-tuning.",
+      "scientific_claim_ceiling": "Interface and compiler availability only; not semantic-alignment solved; not construct validity closed."
+    },
+    "M1_multi_source_adapter_framework": {
+      "priority": 2,
+      "depends_on": [
+        "M0_rule_claim_id_compiler"
+      ],
+      "status_if_amendment_effective": "eligible_for_separate_implementation_authorization_after_M0_baseline_frozen",
+      "goal": "Integrate multiple source-type adapters behind one framework so each declared input class has a corresponding pipeline into the same Claim IR export.",
+      "required_work": [
+        "Register adapter contracts per source class (mapping, modality default, failure and unknown behavior).",
+        "Keep a single admission and Claim ID policy at the hub.",
+        "Publish a coverage and failure-mode table; holds and rejects are first-class outputs.",
+        "Do not expand beyond the M0 allowlist without a separate surface-scope authorization."
+      ],
+      "scientific_claim_ceiling": "Source-constrained compilation framework; not a learned universal aligner."
+    },
+    "M2_optional_xgboost_rule_residual_normalizer": {
+      "priority": 3,
+      "depends_on": [
+        "M0_rule_claim_id_compiler",
+        "separate_label_or_adjudication_contract_for_gold_claims"
+      ],
+      "status_if_amendment_effective": "design_allowed_execution_not_authorized_by_this_draft",
+      "goal": "Optionally learn corrections to rule-compiler residuals with a tree model, as a controlled comparison against pure rules—not as a replacement for Qwen L2 fine-tuning dependency unless separately proven.",
+      "operating_modes": {
+        "engineering_smoke_test": "May check interface, determinism, and failure handling without fitting a residual model or making a scientific gain claim.",
+        "scientific_residual_fit": "Requires a separate gold/adjudication contract, source/lineage-disjoint evaluation pack, frozen rule baseline, and explicit execute authority."
+      },
+      "hard_separations": [
+        "Must not reuse or silently retask the existing action-value XGBoost models or protocols.",
+        "Features may use only public rule-exposed match signals; no hidden recoverable sets, private gold leakage into features beyond the contracted label channel, or post-hoc quota lowering.",
+        "Requires a frozen gold or adjudicated claim set and a pre-registered metric contract before fitting.",
+        "For a scientific claim, the adjudication pack must satisfy the existing evaluative sample-kind minima or be covered by a separately justified amendment; a new arbitrary minimum is not implied here."
+      ],
+      "scientific_claim_ceiling": "Residual improvement over the frozen rule baseline on the contracted label set only."
+    }
+  },
+  "comparison_protocol": {
+    "allowed": true,
+    "condition": "Only after M0 rule baseline is frozen and an evaluation pack is pinned.",
+    "arms": [
+      {
+        "arm_id": "rules_only",
+        "required": true,
+        "description": "Deterministic compiler; primary path for unblocking."
+      },
+      {
+        "arm_id": "framework_plus_rules",
+        "required": false,
+        "description": "Same rules behind multi-adapter framework; evaluates coverage and operational failure modes."
+      },
+      {
+        "arm_id": "rules_plus_xgboost_residual",
+        "required": false,
+        "description": "Optional residual normalizer; reports delta versus rules_only only."
+      }
+    ],
+    "forbidden_comparison_practices": [
+      "Starting XGBoost or framework work as an equal-priority substitute for M0.",
+      "Comparing arms on different Claim IR versions or different label packs.",
+      "Claiming semantic alignment solved from compiler throughput alone.",
+      "Using LLM fine-tuning arms in this comparison without a new authorization."
+    ]
+  },
+  "relationship_to_a_b_and_negative_result_track": {
+    "a_tier_may_document_compiler_inputs_and_gate_maps": true,
+    "b_tier_still_required_for_train_quota_and_llm_finetune_data": true,
+    "claim_id_rule_path_does_not_create_b_tier_credit": true,
+    "negative_result_track_may_cite_b_supply_gap_while_claim_ir_rule_path_proceeds": true
+  },
+  "invariants_not_open_for_relaxation": [
+    "Identity is not role; role is not credit; credit is not L2.",
+    "No half-family or composite-family counting.",
+    "No Bypass, exhausted-attempt reuse, or silent reopen of failed acquisitions.",
+    "No writing LLM or unverified compiler output into Kernel/E_case as certified state before shared schema and admission rules allow it.",
+    "Codebook construct-validity repair remains mandatory for any human-semantic correctness claim; this path does not waive SI-level codebook issues.",
+    "Existing action-value XGBoost results must not be reinterpreted as Claim-ID alignment results."
+  ],
+  "review_decisions": {
+    "schema": {
+      "decision": "Publish a versioned external Claim IR schema first; pending_kernel_schema is an explicit state value, not a bridge-only protocol.",
+      "kernel_ingestion_before_si_llm_001_closure": false
+    },
+    "initial_surfaces": {
+      "decision": "Start with the explicit planner and certificate input allowlist plus valid/invalid fixtures; do not claim repository-wide coverage.",
+      "allowlist": [
+        "planner_experiment_inputs",
+        "certificate_experiment_inputs",
+        "claim_ir_valid_fixture",
+        "claim_ir_authority_leak_or_invalid_fixture"
+      ]
+    },
+    "m2_gold_pack": {
+      "decision": "Separate engineering smoke tests from scientific residual fitting. A scientific fit requires a new gold/adjudication contract using existing evaluative minima or a separately justified amendment, with source/lineage-disjoint splits.",
+      "fit_authorized_by_this_draft": false
+    },
+    "paper_system_figure": {
+      "decision": "M0 is sufficient for an interface/compiler-unblocking figure; M1 is required for a multi-source adapter framework claim.",
+      "semantic_alignment_claim_authorized_by_this_draft": false
+    }
+  },
+  "remaining_review_questions": [
+    "Which concrete planner and certificate experiment identifiers should replace the proposed initial surface labels before implementation authorization?",
+    "Which authority will approve the separate M2 gold/adjudication contract, if a scientific residual fit is later proposed?"
+  ],
+  "hard_stop": {
+    "download_performed": false,
+    "archive_opened": false,
+    "llm_finetune_started": false,
+    "xgboost_claim_residual_fit_started": false,
+    "implementation_authorized_by_draft": false,
+    "schema_written_to_kernel": false,
+    "catalog_changed": false,
+    "role_changed": false,
+    "credit_changed": false,
+    "l2_gate_changed": false,
+    "next_action": "Human review of this draft. It is not effective until separately approved and committed as effective, or committed as draft-only archival. Until effective, the experimental path remains free to continue under prior authorizations, but this document recommends treating LLM four-family fine-tuning as non-blocking and prioritizing M0."
+  }
+}
