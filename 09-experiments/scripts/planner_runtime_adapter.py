@@ -7,6 +7,7 @@ import copy
 import hashlib
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Any, Callable
 
@@ -85,11 +86,68 @@ def recursive_key_hits(value: Any, forbidden: set[str]) -> list[str]:
     return hits
 
 
+def load_claim_id_mainline_reference(
+    reference_path: Path,
+    activation_path: Path,
+) -> Any:
+    """Load one authorized opaque Claim-ID planner-sidecar import."""
+
+    root_text = str(ROOT)
+    inserted_root = root_text not in sys.path
+    if inserted_root:
+        sys.path.insert(0, root_text)
+    try:
+        from src.compiler.llm.claim_id_planner_reference_importer import (
+            import_claim_id_planner_reference,
+        )
+
+        return import_claim_id_planner_reference(
+            reference_path,
+            repo_root=ROOT,
+            activation_path=activation_path,
+        )
+    finally:
+        if inserted_root:
+            sys.path.remove(root_text)
+
+
+def _attach_claim_id_mainline_reference(
+    view: dict[str, Any],
+    claim_id_reference_import: Any,
+    forbidden: set[str],
+) -> dict[str, Any]:
+    """Attach a validated sidecar outside config/state/action planning inputs."""
+
+    from src.compiler.llm.claim_id_planner_reference_importer import (
+        ClaimIDPlannerReferenceImportError,
+        validate_authorized_planner_import,
+    )
+
+    try:
+        provenance = validate_authorized_planner_import(
+            claim_id_reference_import,
+            repo_root=ROOT,
+        )
+    except ClaimIDPlannerReferenceImportError as exc:
+        raise ValueError(
+            "claim_id_mainline_reference requires an authorized planner import"
+        ) from exc
+    hits = recursive_key_hits(provenance, forbidden)
+    if hits:
+        raise ValueError(
+            f"Claim-ID planner sidecar leaked forbidden keys: {hits}"
+        )
+    attached = copy.deepcopy(view)
+    attached["claim_id_mainline_reference"] = provenance
+    return attached
+
+
 def build_runtime_view(
     config: dict[str, Any],
     state: dict[str, Any],
     actions: list[dict[str, Any]],
     contract_bundle: dict[str, Any] | None = None,
+    claim_id_reference_import: Any | None = None,
 ) -> dict[str, Any]:
     bundle = contract_bundle or load_contract()
     contract = bundle["document"]
@@ -111,6 +169,12 @@ def build_runtime_view(
     hits = recursive_key_hits(view, forbidden)
     if hits:
         raise ValueError(f"Planner runtime allowlist leaked forbidden keys: {hits}")
+    if claim_id_reference_import is not None:
+        view = _attach_claim_id_mainline_reference(
+            view,
+            claim_id_reference_import,
+            forbidden,
+        )
     return view
 
 
@@ -121,12 +185,19 @@ def build_ml_feature_row(
     feature_builder: Callable[[dict[str, Any], dict[str, Any], dict[str, Any]], dict[str, Any]],
     feature_columns: list[str],
     contract_bundle: dict[str, Any] | None = None,
+    claim_id_reference_import: Any | None = None,
 ) -> dict[str, float]:
     bundle = contract_bundle or load_contract()
     frozen_columns = list(bundle["document"]["ml_feature_contract"]["columns"])
     if list(feature_columns) != frozen_columns:
         raise ValueError("ML feature columns do not match the frozen runtime contract")
-    view = build_runtime_view(config, state, [action], bundle)
+    view = build_runtime_view(
+        config,
+        state,
+        [action],
+        bundle,
+        claim_id_reference_import,
+    )
     features = feature_builder(view["config"], view["state"], view["actions"][0])
     if set(features) != set(frozen_columns):
         raise ValueError("Runtime feature builder returned fields outside the frozen contract")
