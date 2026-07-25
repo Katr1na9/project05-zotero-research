@@ -1,0 +1,403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/e-case-record-effective-v0.1.schema.json",
+  "title": "Project05 E_case record (Kernel/M3* effective v0.1)",
+  "description": "Kernel/M3*-owned effective provenance-only E_case record schema. Independently typed from kernel claim-IR intake store records. Does not authorize E_case write execution, Checker, certificate, CERTIFIED_STOP, SI-LLM-001 closure, L2, or Part B elevation. Assisted draft path schemas/e-case-record.schema.json and its SHA must never occupy effective schema identity fields.",
+  "x-project05-artifact": {
+    "artifact_type": "e_case_target_schema_assisted_draft",
+    "status": "assisted_draft_not_effective_pending_kernel_m3_owner_review",
+    "owner": "Kernel/M3*",
+    "drafting_track_role": "LLM-editor track assists with a review draft only",
+    "authority_base_commit": "446a94fca90d2bcfa5519e9e10060bcc964120a7",
+    "effective": false,
+    "owner_approval_present": false,
+    "may_occupy_effective_schema_identity": false
+  },
+  "x-project05-prohibited-top-level-fields": [
+    "stored_claim_ir_package",
+    "store_record_version",
+    "store_record_id",
+    "store_target_class",
+    "certificate",
+    "certificate_id",
+    "checker_decision",
+    "checker_accepted",
+    "promotion",
+    "promoted",
+    "certified_stop",
+    "claim_values",
+    "labels",
+    "realized_outcomes",
+    "oracle"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "e_case_version",
+    "e_case_id",
+    "record_scope",
+    "surface_id",
+    "package_id",
+    "is_e_case",
+    "is_kernel_store_record",
+    "source_store",
+    "source_package_state",
+    "claim_identity_refs",
+    "provenance",
+    "write_authority",
+    "transaction",
+    "separation_assertions"
+  ],
+  "properties": {
+    "e_case_version": {
+      "const": "e-case-record-v0.1"
+    },
+    "e_case_id": {
+      "type": "string",
+      "pattern": "^ec_[A-Za-z0-9_-]{16,128}$"
+    },
+    "record_scope": {
+      "const": "opaque_claim_identity_provenance_only"
+    },
+    "surface_id": {
+      "const": "project05_depth2_public"
+    },
+    "package_id": {
+      "const": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9"
+    },
+    "is_e_case": {
+      "const": true
+    },
+    "is_kernel_store_record": {
+      "const": false
+    },
+    "source_store": {
+      "$ref": "#/$defs/sourceStore"
+    },
+    "source_package_state": {
+      "$ref": "#/$defs/sourcePackageState"
+    },
+    "claim_identity_refs": {
+      "type": "array",
+      "minItems": 41,
+      "maxItems": 41,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/claimIdentityRef"
+      }
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "write_authority": {
+      "$ref": "#/$defs/writeAuthority"
+    },
+    "transaction": {
+      "$ref": "#/$defs/transaction"
+    },
+    "separation_assertions": {
+      "$ref": "#/$defs/separationAssertions"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "repoPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "artifactPin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "version",
+        "path",
+        "sha256",
+        "status"
+      ],
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "sourceStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_path",
+        "record_sha256",
+        "receipt_path",
+        "receipt_sha256",
+        "store_record_id",
+        "store_target_id",
+        "source_is_kernel_store_record",
+        "source_is_e_case"
+      ],
+      "properties": {
+        "record_path": {
+          "const": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json"
+        },
+        "record_sha256": {
+          "const": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248"
+        },
+        "receipt_path": {
+          "const": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json"
+        },
+        "receipt_sha256": {
+          "const": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565"
+        },
+        "store_record_id": {
+          "const": "kcisr_98aa4efb2a71a8466249148610ff4624"
+        },
+        "store_target_id": {
+          "const": "kernel_claim_ir_intake_store:project05_depth2_public:pkg_73d77b55ef6a517a0dc528f7f3a89bd9:v0.1"
+        },
+        "source_is_kernel_store_record": {
+          "const": true
+        },
+        "source_is_e_case": {
+          "const": false
+        }
+      }
+    },
+    "sourcePackageState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id_state",
+        "admission_state",
+        "kernel_state",
+        "claim_count",
+        "claims_content_hash"
+      ],
+      "properties": {
+        "claim_id_state": {
+          "const": "minted_opaque"
+        },
+        "admission_state": {
+          "const": "admitted_under_separate_authority"
+        },
+        "kernel_state": {
+          "const": "ingested_under_separate_authority"
+        },
+        "claim_count": {
+          "const": 41
+        },
+        "claims_content_hash": {
+          "const": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+        }
+      }
+    },
+    "claimIdentityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "source_claim_index",
+        "source_claim_id_state",
+        "source_admission_state"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^clm_[A-Za-z0-9_-]+$"
+        },
+        "source_claim_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 40
+        },
+        "source_claim_id_state": {
+          "const": "minted_opaque"
+        },
+        "source_admission_state": {
+          "const": "admitted_under_separate_authority"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "effective_consumer_contract",
+        "effective_e_case_target_schema",
+        "effective_e_case_write_contract"
+      ],
+      "properties": {
+        "effective_consumer_contract": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifactPin"
+            },
+            {
+              "properties": {
+                "artifact_id": {
+                  "const": "kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725"
+                },
+                "version": {
+                  "const": "0.1"
+                },
+                "path": {
+                  "const": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json"
+                },
+                "sha256": {
+                  "const": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+                },
+                "status": {
+                  "const": "effective_consumer_contract_semantics_only_ingestion_not_authorized"
+                }
+              }
+            }
+          ]
+        },
+        "effective_e_case_target_schema": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_e_case_write_contract": {
+          "$ref": "#/$defs/artifactPin"
+        }
+      }
+    },
+    "writeAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_artifact_id",
+        "activation_path",
+        "activation_sha256_before",
+        "executor_path",
+        "executor_sha256",
+        "single_use"
+      ],
+      "properties": {
+        "activation_artifact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "activation_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "activation_sha256_before": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executor_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "executor_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "single_use": {
+          "const": true
+        }
+      }
+    },
+    "transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "e_case_target_id",
+        "transaction_id",
+        "idempotency_key",
+        "atomic_all_or_nothing",
+        "partial_write",
+        "retry",
+        "resume",
+        "fallback"
+      ],
+      "properties": {
+        "e_case_target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "transaction_id": {
+          "type": "string",
+          "pattern": "^ecase_txn_[0-9a-f]{32,64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^ecase_idem_[0-9a-f]{64}$"
+        },
+        "atomic_all_or_nothing": {
+          "const": true
+        },
+        "partial_write": {
+          "const": false
+        },
+        "retry": {
+          "const": false
+        },
+        "resume": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        }
+      }
+    },
+    "separationAssertions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_store_record_unchanged",
+        "source_store_record_is_e_case",
+        "checker_decision_present",
+        "promotion_performed",
+        "certificate_generated",
+        "certified_stop",
+        "si_llm_001_closed",
+        "l2_or_part_b_gate_passed"
+      ],
+      "properties": {
+        "source_store_record_unchanged": {
+          "const": true
+        },
+        "source_store_record_is_e_case": {
+          "const": false
+        },
+        "checker_decision_present": {
+          "const": false
+        },
+        "promotion_performed": {
+          "const": false
+        },
+        "certificate_generated": {
+          "const": false
+        },
+        "certified_stop": {
+          "const": false
+        },
+        "si_llm_001_closed": {
+          "const": false
+        },
+        "l2_or_part_b_gate_passed": {
+          "const": false
+        }
+      }
+    }
+  }
+}
