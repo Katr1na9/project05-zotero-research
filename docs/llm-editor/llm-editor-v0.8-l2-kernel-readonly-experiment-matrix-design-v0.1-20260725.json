@@ -1,0 +1,284 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-design-v0.1-20260725",
+  "artifact_type": "kernel_readonly_experiment_matrix_design_assisted_draft",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "status": "RED_DRAFT_PENDING_KERNEL_OWNER_REVIEW_NOT_EFFECTIVE",
+  "owner": "Kernel/M3*",
+  "prepared_by": "Codex / LLM-editor Claim-ID track",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "claim_count": 41,
+    "claim_id_list_sha256": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4",
+    "claims_content_hash": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1",
+    "execution_mode": "LOCAL_PINNED_FIXTURE_READ_ONLY",
+    "assisted_only": true
+  },
+  "matrix_arms": [
+    {
+      "arm_id": "A_baseline_no_claim_id_provenance",
+      "uses_claim_id_reference": false,
+      "procedure": "Run the frozen local planner/control-loop case without attaching Claim-ID provenance.",
+      "success_criteria": [
+        "arm status is PASS",
+        "no Claim-ID provenance is attached",
+        "case-local visible evidence remains exactly E1",
+        "no clm_* identifier enters case-local E1, scoring, state, or action selection"
+      ],
+      "failure_criteria": [
+        "any clm_* identifier enters case-local E1 or scoring",
+        "any write-side effect occurs",
+        "the frozen planner/control-loop algorithm changes"
+      ]
+    },
+    {
+      "arm_id": "B_claim_id_provenance_attached_read_only",
+      "uses_claim_id_reference": true,
+      "procedure": "Load the exact pinned reference through the committed durable-replay receipt and attach only its read-only provenance projection; never execute an exhausted single-use activation.",
+      "success_criteria": [
+        "arm status is PASS",
+        "the reference SHA-256 is db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d",
+        "algorithm_changed is false",
+        "Arm A and Arm B action identifiers are identical",
+        "case-local visible evidence remains exactly E1",
+        "no clm_* identifier enters case-local E1, scoring, state, or action selection",
+        "no per-run ledger is consumed"
+      ],
+      "failure_criteria": [
+        "an activation entry point is invoked",
+        "the durable receipt or reference pin does not match",
+        "any clm_* identifier influences scoring or action selection",
+        "Arm A and Arm B actions differ",
+        "any write-side effect occurs"
+      ]
+    },
+    {
+      "arm_id": "C_negative_mixlayer_rejected",
+      "uses_claim_id_reference": false,
+      "procedure": "Submit three typed negative reinterpretations to the local harness and require fail-closed rejection before any runtime or write path.",
+      "negative_cases": [
+        {
+          "case_id": "store_as_e_case",
+          "source_record_class": "kernel_claim_ir_intake_store",
+          "requested_record_class": "e_case",
+          "required_decision": "FAIL_CLOSED_DENY"
+        },
+        {
+          "case_id": "certificate_as_certified_stop",
+          "source_record_class": "certificate",
+          "requested_record_class": "certified_stop",
+          "required_decision": "FAIL_CLOSED_DENY"
+        },
+        {
+          "case_id": "certified_stop_as_run_mvp_stop",
+          "source_record_class": "certified_stop",
+          "requested_record_class": "run_mvp_ordinary_stop",
+          "required_decision": "FAIL_CLOSED_DENY"
+        }
+      ],
+      "success_criteria": [
+        "all three reinterpretations are rejected",
+        "no ordinary run_mvp STOP is emitted",
+        "no certificate or CERTIFIED_STOP is issued"
+      ],
+      "failure_criteria": [
+        "any reinterpretation is accepted",
+        "CERTIFIED_STOP is treated as ordinary run_mvp STOP",
+        "any write-side effect occurs"
+      ]
+    }
+  ],
+  "required_read_only_sequence": [
+    "reverify this design's intake pin and every intake verified_pins row from raw bytes",
+    "snapshot protected store, E_case, certificate, CERTIFIED_STOP, receipt, and exhausted activation bytes",
+    "run Arm A against existing local fixtures without Claim-ID provenance",
+    "load Arm B provenance only through load_claim_id_durable_replay_attachment and validate_durable_replay_attachment",
+    "run Arm B against the same frozen case and compare the core result with Arm A",
+    "evaluate Arm C type-confusion requests in memory and reject all three",
+    "reverify PRODUCTION_REGISTRATION_ENABLED is false",
+    "re-snapshot protected bytes and require exact equality",
+    "emit only sanitized assisted result and receipt fixtures"
+  ],
+  "runner_contract": {
+    "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+    "entrypoint": "run_matrix(repo_root: pathlib.Path) -> dict",
+    "red_behavior": "raise KernelReadonlyExperimentMatrixOwnerAcceptanceRequired before any arm executes",
+    "green_behavior_requires_owner_acceptance": true,
+    "forbidden_imports_or_calls": [
+      "kernel_claim_ir_store_executor",
+      "e_case_write_executor",
+      "certificate_issue_executor",
+      "certified_stop_executor",
+      "enable_durable_replay_attach_capability",
+      "load_claim_id_control_loop_reference",
+      "network I/O",
+      "LLM invocation"
+    ]
+  },
+  "test_contract": {
+    "path": "tests/compiler_contract/test_kernel_readonly_experiment_matrix.py",
+    "red_expected_reason": "missing accepted runner implementation / Kernel Owner acceptance required",
+    "green_expected": [
+      "Arm A PASS",
+      "Arm B PASS and reproducible",
+      "Arm C three of three FAIL_CLOSED_DENY",
+      "algorithm_changed=false",
+      "no clm_* in E1 or scoring",
+      "PRODUCTION_REGISTRATION_ENABLED=false",
+      "protected byte snapshots identical before and after"
+    ]
+  },
+  "pin_table": {
+    "handoff_intake": {
+      "path": "docs/kernel/kernel-v0.8-claim-id-certificate-track-handoff-intake-and-experiment-plan-v0.1-20260725.json",
+      "sha256": "5da2ceedb63ccdb3ca8d409d3dfd23aec0a274da4c01ee3747276d42f8c232cf"
+    },
+    "external_envelope": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+    },
+    "ingested_package": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+      "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179"
+    },
+    "ingestion_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json",
+      "sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de"
+    },
+    "intake_store": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+      "sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248"
+    },
+    "store_receipt": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565"
+    },
+    "e_case_schema": {
+      "path": "schemas/e-case-record-effective-v0.1.schema.json",
+      "sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1"
+    },
+    "e_case_contract": {
+      "path": "docs/kernel/kernel-v0.8-e-case-write-contract-effective-v0.1-20260725.json",
+      "sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63"
+    },
+    "e_case_record": {
+      "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json",
+      "sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6"
+    },
+    "e_case_receipt": {
+      "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e"
+    },
+    "certificate_schema": {
+      "path": "schemas/certificate-record-effective-v0.1.schema.json",
+      "sha256": "a29f5a13944242076973c1d735f33cf82d7e7665c622b4c3e8ac52434d72677d"
+    },
+    "certificate_contract": {
+      "path": "docs/kernel/kernel-v0.8-certificate-issue-write-contract-effective-v0.1-20260725.json",
+      "sha256": "fccfbb9066e3cc0ef2abaff775f34b36c512bc1d13ca23dca675d32f622793dc"
+    },
+    "certificate_record": {
+      "path": "docs/llm-editor/fixtures/certificate/project05-depth2-public-v0.1/certificate-record.json",
+      "sha256": "a7cead6c0315ede6859000db63990f8148c258c2350fba0e99d368ca4a4fa40c"
+    },
+    "certificate_receipt": {
+      "path": "docs/llm-editor/fixtures/certificate/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "b1190082b3879fe070eb816c1684354783fcc4b6a0773176b29659e2822f5f64"
+    },
+    "certified_stop_schema": {
+      "path": "schemas/certified-stop-record-effective-v0.1.schema.json",
+      "sha256": "80a63e23b61914a42d9a6e9fc954b210f5321c263a18844a2bcb82c6c1acbd2c"
+    },
+    "certified_stop_contract": {
+      "path": "docs/kernel/kernel-v0.8-certified-stop-write-contract-effective-v0.1-20260725.json",
+      "sha256": "75073ab3edbf849cfaf10c799fec53e5ad0084a6b5228283781c4295a67c79cd"
+    },
+    "certified_stop_record": {
+      "path": "docs/llm-editor/fixtures/certified-stop/project05-depth2-public-v0.1/certified-stop-record.json",
+      "sha256": "0505efc64d63933913a22918b709d98f2c7064307e3734b7de406f2db3b58015"
+    },
+    "certified_stop_receipt": {
+      "path": "docs/llm-editor/fixtures/certified-stop/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "82ec8ccd41e229fed98efd10e5a208a84f1d86c03277b6ef12cea09db45dcee4"
+    },
+    "control_loop_reference": {
+      "path": "docs/llm-editor/fixtures/claim-id-control-loop-reference/project05-depth2-public-v0.1/reference.json",
+      "sha256": "db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d"
+    },
+    "durable_replay_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-id-durable-replay-attach/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "5d585fa125e454e15b0f36c4a040ee139cd2aeb3198ff1da7c45166e954a3279"
+    },
+    "shortest_path_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mainline-shortest-path-completion-disposition-v0.1-20260725.json",
+      "sha256": "c9030339a7d4fbd29b8f7a9ae69d3b60d4a132e3574d941563cb1be0c3023792"
+    },
+    "si_llm_001_issue": {
+      "path": "docs/spec-issues/SI-LLM-001-shared-claim-ir-artifact-absent.md",
+      "sha256": "b99c6183da25224e842daa29029cad125671d3c8549197339706946bc6d3c2ba"
+    },
+    "si_llm_001_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-si-llm-001-closure-evidence-disposition-v0.1-20260725.json",
+      "sha256": "a08878422aaacd6e3c726fea4528d9ed48a7c1ba98a4e445f990f72cd7d8601e"
+    },
+    "si_llm_001_closure": {
+      "path": "docs/kernel/kernel-v0.8-si-llm-001-owner-closure-record-v0.1-20260725.json",
+      "sha256": "5abac87ff8d6325c5c49e7054bf0cecf7630665f064f9023419698205b1fd223"
+    },
+    "controller_import_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-id-controller-import-wiring/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "5b74a22a9dd6b2718a947ff88f7ed252ccc57060ec1b05a9656922870f2af19d"
+    },
+    "planner_import_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-id-planner-import-wiring/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "0373d53cc56fe8efa8c2d35d74a1ab7949490f9a5fc1bc5e25759ae5351e7b31"
+    }
+  },
+  "write_side_effect_boundary": {
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop_execution": false,
+    "activation_created_or_replayed": false,
+    "activation_ledger_mutation": false,
+    "production_registration_enablement": false,
+    "checker_invocation": false,
+    "evidence_sufficiency_assertion": false
+  },
+  "explicit_non_authorizations": {
+    "new_write_activation": false,
+    "reactivate_exhausted_ledger": false,
+    "rewrite_historical_effective_sha": false,
+    "checker_non_null": false,
+    "sufficiency_claim": false,
+    "l2_gate": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_finetune_or_kernel_ingestion": false,
+    "production_registration_enabled_true": false,
+    "ordinary_run_mvp_stop_from_certificate_or_certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "owner_review_gate": {
+    "current_decision": null,
+    "allowed_decisions": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "green_implementation_authorized": false,
+    "hard_stop_pending_owner_review": true
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-green-sanitized-receipt-project05-depth2-public-v0.1-20260726",
+  "artifact_type": "kernel_readonly_experiment_matrix_sanitized_receipt_green",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "status": "GREEN_PASS_READ_ONLY",
+  "effective": false,
+  "owner_acceptance_present": true,
+  "owner_acceptance": {
+    "path": "docs/kernel/kernel-v0.8-readonly-experiment-matrix-red-owner-acceptance-v0.1-20260725.json",
+    "sha256": "a95a07cb302c8231cbe66336422af0998e15d869c687a42ba6cbac9a06d3263a",
+    "decision": "accept"
+  },
+  "matrix_result": {
+    "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/matrix-result.json",
+    "sha256": "9cdfdb7fc87e9ac41ad58c8975ad6428202fd974ef8c9cf453d9a8e67611ff42",
+    "observed_execution_status": "PASS_READ_ONLY"
+  },
+  "review_inputs": {
+    "design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-design-v0.1-20260725.json",
+      "sha256": "78b31c84c812316840f8cafe9286f35eb99894104e9f7793ed3815bf0fd879ca"
+    },
+    "runner": {
+      "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+      "sha256": "1df1cf43c88289c6877b73ce934ccd6e429641c2a91774b1d59d820292522e0e",
+      "status": "GREEN_OWNER_ACCEPTANCE_PINNED_READ_ONLY"
+    },
+    "tests": {
+      "path": "tests/compiler_contract/test_kernel_readonly_experiment_matrix.py",
+      "sha256": "f90f07953d0e0847ab34eedc91b5ceefa2a048914fcb95bfffb9457099901208",
+      "runtime_result": "5/5 PASS"
+    }
+  },
+  "verified_kernel_pins": {
+    "handoff_intake_sha256": "5da2ceedb63ccdb3ca8d409d3dfd23aec0a274da4c01ee3747276d42f8c232cf",
+    "si_closure_sha256": "5abac87ff8d6325c5c49e7054bf0cecf7630665f064f9023419698205b1fd223",
+    "consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+    "control_loop_reference_sha256": "db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d",
+    "controller_wiring_receipt_sha256": "5b74a22a9dd6b2718a947ff88f7ed252ccc57060ec1b05a9656922870f2af19d",
+    "planner_wiring_receipt_sha256": "0373d53cc56fe8efa8c2d35d74a1ab7949490f9a5fc1bc5e25759ae5351e7b31",
+    "durable_replay_receipt_sha256": "5d585fa125e454e15b0f36c4a040ee139cd2aeb3198ff1da7c45166e954a3279",
+    "full_pin_count_including_intake": 28,
+    "pin_reverify": "OK"
+  },
+  "arm_receipts": [
+    {
+      "arm_id": "A_baseline_no_claim_id_provenance",
+      "status": "PASS",
+      "action_id": "A-high",
+      "core_runtime_view_sha256": "dcbbb1e9541457164fc935c1541dceef888734f8046ebc0be559621622b8c58c"
+    },
+    {
+      "arm_id": "B_claim_id_provenance_attached_read_only",
+      "status": "PASS",
+      "action_id": "A-high",
+      "core_runtime_view_sha256": "dcbbb1e9541457164fc935c1541dceef888734f8046ebc0be559621622b8c58c",
+      "provenance_sha256": "5123ef610b54bc999b9274766e847d4f461aab429cc2d4154314eaa1cbdf0904",
+      "load_entrypoint": "load_claim_id_durable_replay_attachment",
+      "validation_entrypoint": "validate_durable_replay_attachment",
+      "per_attach_ledger_consumed": false
+    },
+    {
+      "arm_id": "C_negative_mixlayer_rejected",
+      "status": "PASS",
+      "decisions": [
+        "store_as_e_case=FAIL_CLOSED_DENY",
+        "certificate_as_certified_stop=FAIL_CLOSED_DENY",
+        "certified_stop_as_run_mvp_stop=FAIL_CLOSED_DENY"
+      ],
+      "write_path_invoked": false
+    }
+  ],
+  "comparison_assertions": {
+    "arm_a_and_b_action_id_identical": true,
+    "arm_a_and_b_core_runtime_view_sha256_identical": true,
+    "algorithm_changed": false,
+    "opaque_claim_ids_in_case_local_e1": false,
+    "opaque_claim_ids_in_scoring": false,
+    "production_registration_enabled": false
+  },
+  "protected_state": {
+    "path_count": 31,
+    "before_sha256": "b725d27d4d95ebb7f3d1ec2e39f7b0fec905548d396946ab55371bdb1abfac75",
+    "after_sha256": "b725d27d4d95ebb7f3d1ec2e39f7b0fec905548d396946ab55371bdb1abfac75",
+    "bytes_identical": true
+  },
+  "write_side_effects": "none",
+  "write_boundary_audit": {
+    "store_bytes_written": false,
+    "e_case_bytes_written": false,
+    "certificate_bytes_written": false,
+    "certified_stop_bytes_written": false,
+    "activation_created_or_replayed": false,
+    "exhausted_activation_ledger_revived": false,
+    "production_registration_enabled": false,
+    "checker_decision": null,
+    "evidence_sufficiency": null
+  },
+  "explicit_non_authorizations": {
+    "kernel_owner_green_rereview": false,
+    "effective_result": false,
+    "new_write_activation": false,
+    "l2": false,
+    "part_b": false,
+    "m2": false,
+    "four_family_finetune_or_ingestion": false,
+    "certificate_or_certified_stop_as_ordinary_run_mvp_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "hard_stop_pending_kernel_owner_green_rereview": true
+}

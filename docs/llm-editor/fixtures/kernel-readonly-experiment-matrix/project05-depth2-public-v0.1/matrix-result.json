@@ -1,0 +1,151 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-green-result-project05-depth2-public-v0.1-20260726",
+  "artifact_type": "kernel_readonly_experiment_matrix_sanitized_result_green",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "status": "GREEN_PASS_READ_ONLY",
+  "effective": false,
+  "case": {
+    "surface_id": "project05_depth2_public",
+    "fixture_id": "project05-depth2-public-v0.1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "claim_count": 41,
+    "claim_id_list_sha256": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4",
+    "claims_content_hash": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+  },
+  "artifact_pins": {
+    "design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-design-v0.1-20260725.json",
+      "sha256": "78b31c84c812316840f8cafe9286f35eb99894104e9f7793ed3815bf0fd879ca"
+    },
+    "owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-readonly-experiment-matrix-red-owner-acceptance-v0.1-20260725.json",
+      "sha256": "a95a07cb302c8231cbe66336422af0998e15d869c687a42ba6cbac9a06d3263a"
+    },
+    "runner": {
+      "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+      "sha256": "1df1cf43c88289c6877b73ce934ccd6e429641c2a91774b1d59d820292522e0e"
+    },
+    "tests": {
+      "path": "tests/compiler_contract/test_kernel_readonly_experiment_matrix.py",
+      "sha256": "f90f07953d0e0847ab34eedc91b5ceefa2a048914fcb95bfffb9457099901208"
+    },
+    "handoff_intake": {
+      "path": "docs/kernel/kernel-v0.8-claim-id-certificate-track-handoff-intake-and-experiment-plan-v0.1-20260725.json",
+      "sha256": "5da2ceedb63ccdb3ca8d409d3dfd23aec0a274da4c01ee3747276d42f8c232cf"
+    },
+    "durable_replay_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-id-durable-replay-attach/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "5d585fa125e454e15b0f36c4a040ee139cd2aeb3198ff1da7c45166e954a3279"
+    }
+  },
+  "preflight": {
+    "tip": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+    "owner_acceptance_decision": "accept",
+    "owner_acceptance_pin_match": true,
+    "verified_pins_checked_including_intake": 28,
+    "pin_reverify": "OK",
+    "production_registration_enabled": false
+  },
+  "matrix_status": "PASS_READ_ONLY",
+  "arms": [
+    {
+      "arm_id": "A_baseline_no_claim_id_provenance",
+      "status": "PASS",
+      "claim_id_provenance_attached": false,
+      "action_id": "A-high",
+      "algorithm_changed": false,
+      "case_local_visible_evidence": [
+        "E1"
+      ],
+      "scoring_claim_id_hits": [],
+      "core_runtime_view_sha256": "dcbbb1e9541457164fc935c1541dceef888734f8046ebc0be559621622b8c58c"
+    },
+    {
+      "arm_id": "B_claim_id_provenance_attached_read_only",
+      "status": "PASS",
+      "claim_id_provenance_attached": true,
+      "action_id": "A-high",
+      "algorithm_changed": false,
+      "case_local_visible_evidence": [
+        "E1"
+      ],
+      "scoring_claim_id_hits": [],
+      "core_runtime_view_sha256": "dcbbb1e9541457164fc935c1541dceef888734f8046ebc0be559621622b8c58c",
+      "provenance_sha256": "5123ef610b54bc999b9274766e847d4f461aab429cc2d4154314eaa1cbdf0904",
+      "reference_sha256": "db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d",
+      "capability_receipt_sha256": "5d585fa125e454e15b0f36c4a040ee139cd2aeb3198ff1da7c45166e954a3279",
+      "per_attach_ledger_consumed": false
+    },
+    {
+      "arm_id": "C_negative_mixlayer_rejected",
+      "status": "PASS",
+      "rejections": [
+        {
+          "case_id": "store_as_e_case",
+          "source_record_class": "kernel_claim_ir_intake_store",
+          "requested_record_class": "e_case",
+          "source_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+          "decision": "FAIL_CLOSED_DENY",
+          "write_path_invoked": false
+        },
+        {
+          "case_id": "certificate_as_certified_stop",
+          "source_record_class": "certificate",
+          "requested_record_class": "certified_stop",
+          "source_sha256": "a7cead6c0315ede6859000db63990f8148c258c2350fba0e99d368ca4a4fa40c",
+          "decision": "FAIL_CLOSED_DENY",
+          "write_path_invoked": false
+        },
+        {
+          "case_id": "certified_stop_as_run_mvp_stop",
+          "source_record_class": "certified_stop",
+          "requested_record_class": "run_mvp_ordinary_stop",
+          "source_sha256": "0505efc64d63933913a22918b709d98f2c7064307e3734b7de406f2db3b58015",
+          "decision": "FAIL_CLOSED_DENY",
+          "write_path_invoked": false
+        }
+      ],
+      "ordinary_run_mvp_stop_emitted": false,
+      "certificate_issued": false,
+      "certified_stop_issued": false
+    }
+  ],
+  "protected_state": {
+    "path_count": 31,
+    "before_sha256": "b725d27d4d95ebb7f3d1ec2e39f7b0fec905548d396946ab55371bdb1abfac75",
+    "after_sha256": "b725d27d4d95ebb7f3d1ec2e39f7b0fec905548d396946ab55371bdb1abfac75",
+    "bytes_identical": true
+  },
+  "write_side_effects": "none",
+  "side_effect_assertions": {
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop_execution": false,
+    "activation_created": false,
+    "activation_replayed": false,
+    "activation_ledger_mutated": false,
+    "historical_pin_rewritten": false,
+    "checker_invoked": false,
+    "evidence_sufficiency_asserted": false
+  },
+  "authority_boundaries": {
+    "algorithm_changed": false,
+    "clm_entered_case_local_e1_or_scoring": false,
+    "production_registration_enabled": false,
+    "checker_decision": null,
+    "evidence_sufficiency": null,
+    "l2_authorized": false,
+    "part_b_elevated": false,
+    "m2_fit_authorized": false,
+    "four_family_ingestion_authorized": false,
+    "ordinary_run_mvp_stop_from_certificate_or_certified_stop": false
+  },
+  "review_state": {
+    "kernel_owner_green_rereview_present": false,
+    "effective_claim_present": false,
+    "hard_stop_pending_owner_rereview": true
+  }
+}

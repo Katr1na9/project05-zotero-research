@@ -1,0 +1,83 @@
+{
+  "artifact_id": "kernel-v0.8-readonly-experiment-matrix-red-owner-acceptance-v0.1-20260725",
+  "artifact_type": "kernel_m3_readonly_experiment_matrix_red_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "red_accepted_green_readonly_implementation_and_local_run_authorized_only",
+  "authority_base_commit": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "reviewed_tip": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-readonly-experiment-matrix-review-packet-v0.1-20260725.json",
+    "content_sha256": "71a91e468c71a75a913f09e302eea97b7fd879319d4d1ebb41a8035aa4e68caa",
+    "canonical_self_hash": "eade44fb9319998da34ff65cb76fbe58e9f97f43b044a07e77dc64b511107203"
+  },
+  "pinned_red_artifacts": {
+    "design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-design-v0.1-20260725.json",
+      "content_sha256": "78b31c84c812316840f8cafe9286f35eb99894104e9f7793ed3815bf0fd879ca"
+    },
+    "runner_red_skeleton": {
+      "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+      "content_sha256": "9758a35338e52066cc634f168941920d37f230a6ce2c24fb7469240546b668b8"
+    },
+    "tests": {
+      "path": "tests/compiler_contract/test_kernel_readonly_experiment_matrix.py",
+      "content_sha256": "9849ea6e3c1d4b4a0c9db8b55031f565f10b7ee699b6ce1cc2155b5613e7f3d6"
+    },
+    "matrix_result_red_not_run": {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/matrix-result.json",
+      "content_sha256": "a4b72b48995c7f2186895a2fdaf197375beac616f6eeb0b7cc2ddc0aa3545cc3"
+    },
+    "sanitized_receipt_revised": {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "content_sha256": "f70fa6b0a744eb2c15620c682202e031e3c7e584ef92de82e118a5a6ac96be90"
+    }
+  },
+  "answers_to_owner_questions": {
+    "arm_ab_comparison_sufficient_for_v0_1": true,
+    "arm_b_entry_path_accepted": "load_claim_id_durable_replay_attachment + validate_durable_replay_attachment",
+    "arm_c_three_cases_complete_for_v0_1": true,
+    "protected_byte_snapshot_set_sufficient": true,
+    "green_may_proceed_without_new_activation": true
+  },
+  "authorized_now": {
+    "green_readonly_runner_implementation": true,
+    "local_readonly_abc_execution_once_or_as_needed_for_reproducible_fixtures": true,
+    "update_matrix_result_and_sanitized_receipt_after_local_run": true,
+    "submit_green_review_packet_for_owner_rereview": true
+  },
+  "not_authorized": {
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "new_write_activation": false,
+    "reactivate_exhausted_ledger": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_assertion": false,
+    "l2": false,
+    "part_b": false,
+    "m2": false,
+    "four_family_finetune_or_ingestion": false,
+    "production_registration_enablement": false,
+    "certificate_or_certified_stop_as_ordinary_run_mvp_stop": false
+  },
+  "green_constraints": [
+    "Keep PRODUCTION_REGISTRATION_ENABLED False",
+    "Arm B must use durable-replay load/validate only; do not call enable_durable_replay_attach_capability or exhausted single-execute activations",
+    "Arm A and Arm B action_id must match; algorithm_changed must be false",
+    "No clm_* in case-local E1 or scoring",
+    "Arm C must FAIL_CLOSED_DENY all three mixlayer cases",
+    "Protected byte snapshot before/after must be identical",
+    "Do not import or call store/e_case/certificate/certified_stop write executors",
+    "After GREEN local run, stop at Owner rereview; no commit/push/PR without separate authorization"
+  ],
+  "revision_closure": {
+    "prior_blocking_finding": "sanitized-receipt tests SHA truncated to 63 hex chars",
+    "resolved": true,
+    "revised_receipt_sha256": "f70fa6b0a744eb2c15620c682202e031e3c7e584ef92de82e118a5a6ac96be90",
+    "tests_pin_now_64_hex": "9849ea6e3c1d4b4a0c9db8b55031f565f10b7ee699b6ce1cc2155b5613e7f3d6"
+  },
+  "hard_stop_after_green_local_run_until_rereview": true
+}
