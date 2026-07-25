@@ -1,0 +1,112 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-checker-owner-certificate-schema-contract-review-response-v0.1-20260725",
+  "artifact_type": "kernel_checker_owner_certificate_schema_contract_review_response_and_approval_record",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "owner": "Kernel/Checker",
+  "status": "accept_and_issue_new_effective_schema_and_contract_issue_still_blocked",
+  "reviewed_tip": "09a3b53f2211837ded1c6dffef4ba9e68c8632be",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-checker-owner-certificate-schema-contract-review-packet-v0.1-20260725.json",
+    "content_sha256": "9af2bb34d14469baf48bb333cad05630f9e007bc8960e52bd6e7299ba7a6d93d"
+  },
+  "overall_decision": "accept",
+  "decision_rationale": "Assisted certificate schema and issue/write contract correctly define a separately typed provenance-attestation certificate sourced from one exact E_case identity; inventory schemas/certificate.schema.json remains non-effective; mapping is identity/provenance-only; Checker/CERTIFIED_STOP/SI/L2/Part B are fail-closed and separated. Owner tightens record_scope, certificate_scope, claim_id_list_sha256, and Checker decision input policy to null-only for this scope, then issues new effective identities that do not reuse assisted or inventory SHAs.",
+  "overall_contract_decision": "accept_and_issue_new_effective_schema_and_contract",
+  "target_schema_decision": "accept_as_basis_and_issue_new_effective_schema",
+  "issue_write_contract_decision": "accept_as_basis_and_issue_new_effective_contract",
+  "source_identity_decision": "accept_exact_e_case_source_identity",
+  "effective_certificate_schema_identity": {
+    "artifact_id": "certificate-record-effective-v0.1",
+    "version": "0.1",
+    "path": "schemas/certificate-record-effective-v0.1.schema.json",
+    "sha256": "a29f5a13944242076973c1d735f33cf82d7e7665c622b4c3e8ac52434d72677d",
+    "content_sha256": "a29f5a13944242076973c1d735f33cf82d7e7665c622b4c3e8ac52434d72677d",
+    "status": "effective_certificate_target_schema_semantics_only_issue_not_authorized",
+    "owner": "Kernel/Checker",
+    "schema_id": "https://project05.invalid/schemas/certificate-record-effective-v0.1.schema.json",
+    "path_differs_from_assisted_schema_path": true,
+    "sha256_differs_from_assisted_schema_sha256": true,
+    "sha256_differs_from_inventory_schema_sha256": true,
+    "assisted_schema_path": "schemas/certificate-record.schema.json",
+    "assisted_schema_sha256": "7468a2ecbd4f7031ac1374eae68385d309cd3728b85faaf01462aa8cf10d3fad",
+    "inventory_schema_path": "schemas/certificate.schema.json",
+    "inventory_schema_sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba"
+  },
+  "effective_certificate_issue_write_contract_identity": {
+    "artifact_id": "kernel-v0.8-certificate-issue-write-contract-effective-v0.1-20260725",
+    "version": "0.1",
+    "path": "docs/kernel/kernel-v0.8-certificate-issue-write-contract-effective-v0.1-20260725.json",
+    "sha256": "fccfbb9066e3cc0ef2abaff775f34b36c512bc1d13ca23dca675d32f622793dc",
+    "content_sha256": "fccfbb9066e3cc0ef2abaff775f34b36c512bc1d13ca23dca675d32f622793dc",
+    "status": "effective_certificate_issue_write_contract_semantics_only_issue_not_authorized",
+    "owner": "Kernel/Checker",
+    "authority_base_commit": "09a3b53f2211837ded1c6dffef4ba9e68c8632be",
+    "path_differs_from_assisted_contract_path": true,
+    "sha256_differs_from_assisted_contract_sha256": true,
+    "assisted_contract_path": "docs/kernel/kernel-v0.8-certificate-issue-write-contract-assisted-draft-v0.1-20260725.json",
+    "assisted_contract_sha256": "fd269701d6957a1883cc62537632ffc7faf40f8bfabf88d71b4ef21a816cc964"
+  },
+  "owner_approval_record": {
+    "artifact_id": "llm-editor-v0.8-l2-kernel-checker-owner-certificate-schema-contract-review-response-v0.1-20260725",
+    "version": "0.1",
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-checker-owner-certificate-schema-contract-review-response-v0.1-20260725.json",
+    "status": "owner_approval_record_for_effective_certificate_schema_and_issue_write_contract",
+    "owner": "Kernel/Checker",
+    "approves_effective_schema_path": "schemas/certificate-record-effective-v0.1.schema.json",
+    "approves_effective_schema_sha256": "a29f5a13944242076973c1d735f33cf82d7e7665c622b4c3e8ac52434d72677d",
+    "approves_effective_contract_path": "docs/kernel/kernel-v0.8-certificate-issue-write-contract-effective-v0.1-20260725.json",
+    "approves_effective_contract_sha256": "fccfbb9066e3cc0ef2abaff775f34b36c512bc1d13ca23dca675d32f622793dc",
+    "content_sha256_computed_externally_after_write": true,
+    "note": "This response file is the owner approval record; report its post-write content SHA-256 as the approval-record identity."
+  },
+  "checker_decision_input_policy": {
+    "policy_id": "certificate_v0_1_checker_decision_ref_null_only",
+    "required_for_certificate_issuance_under_this_effective_contract": false,
+    "allowed_form_under_this_scope": "null_only",
+    "non_null_checker_decision_ref_rejected_fail_closed": true,
+    "certificate_writer_may_invoke_checker": false,
+    "owner_effective_checker_decision_schema_or_contract_pin_for_this_scope": null,
+    "this_policy_authorizes_checker_invocation": false,
+    "this_policy_authorizes_checker_acceptance_or_promotion": false,
+    "future_non_null_policy_requires_separate_owner_effective_checker_artifacts_and_invocation_authority": true
+  },
+  "certified_stop_separation_confirmation": {
+    "confirmed_by_owner": true,
+    "certificate_is_certified_stop": false,
+    "certificate_presence_implies_certified_stop": false,
+    "certified_stop_requires_different_effective_contract_executor_and_authority": true
+  },
+  "accepted_source_pins": {
+    "e_case_record_path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json",
+    "e_case_record_sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+    "receipt_path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json",
+    "receipt_sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e",
+    "authority_design_path": "docs/llm-editor/llm-editor-v0.8-l2-production-certificate-single-execute-authority-design-v0.1-20260725.json",
+    "authority_design_sha256": "c4a2ed8298a4cf7126c13fc23d0515a9aaabe0e247b96c5b8a20f5f784414e3b",
+    "inventory_schema_path": "schemas/certificate.schema.json",
+    "inventory_schema_sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba",
+    "inventory_schema_is_effective_pin": false
+  },
+  "issue_authority": {
+    "certificate_generation_authorized": false,
+    "executor_implementation_authorized": false,
+    "activation_authorized": false,
+    "checker_invocation_authorized": false,
+    "certified_stop_authorized": false,
+    "note": "Acceptance issues effective schema and issue/write-contract semantics only. Separate executor review and single-use activation remain required before any certificate issue."
+  },
+  "explicit_non_authorizations": {
+    "assisted_schema_sha_as_effective_schema_sha": false,
+    "assisted_contract_sha_as_effective_contract_sha": false,
+    "inventory_schema_as_effective_pin": false,
+    "certificate_generation": false,
+    "checker_invocation": false,
+    "checker_acceptance_or_promotion": false,
+    "certified_stop": false,
+    "part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "hard_stop": true
+}
