@@ -1,0 +1,97 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-m3-e-case-schema-contract-review-response-v0.1-20260725",
+  "artifact_type": "kernel_m3_e_case_schema_contract_review_response",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "owner": "Kernel/M3*",
+  "status": "accept_and_issue_new_effective_schema_and_contract_write_still_blocked",
+  "reviewed_tip": "b4b9d604404b7957d8f86edf29ebe3959b743c9b",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-e-case-schema-contract-review-packet-v0.1-20260725.json",
+    "content_sha256": "8723463f73bc05ebcd473fa2554ba7203b272631c9734d9b4fc9a64433c62f23"
+  },
+  "overall_decision": "accept",
+  "overall_contract_decision": "accept_and_issue_new_effective_schema_and_contract",
+  "target_schema_decision": "accept_as_basis_and_issue_new_effective_schema",
+  "write_contract_decision": "accept_as_basis_and_issue_new_effective_contract",
+  "source_identity_decision": "accept_exact_source_identity",
+  "intake_versus_e_case_boundary_confirmation": {
+    "confirmed_by_owner": true,
+    "confirmed_boundary": "The intake store record remains is_e_case=false and immutable. A future E_case write creates a new separately typed target under a distinct effective schema, write contract, executor, and activation."
+  },
+  "answers_to_schema_questions": {
+    "independently_typed_from_intake_store": true,
+    "e_case_id_source_pins_opaque_claim_refs_and_type_flags_sufficient": true,
+    "additional_provenance_only_fields_required_now": false,
+    "checker_promotion_certificate_certified_stop_fields_correctly_excluded": true
+  },
+  "answers_to_write_contract_questions": {
+    "exact_source_record_and_receipt_identity_accepted": true,
+    "provenance_only_mapping_accepted": true,
+    "source_preservation_transaction_idempotency_duplicate_handling_sufficient": true,
+    "fail_closed_rejections_complete_for_this_scope": true,
+    "checker_certificate_certified_stop_si_l2_part_b_boundaries_confirmed": true
+  },
+  "effective_schema_identity": {
+    "artifact_id": "e-case-record-effective-v0.1",
+    "version": "0.1",
+    "path": "schemas/e-case-record-effective-v0.1.schema.json",
+    "sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1",
+    "content_sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1",
+    "status": "effective_e_case_target_schema_semantics_only",
+    "owner": "Kernel/M3*",
+    "schema_id": "https://project05.invalid/schemas/e-case-record-effective-v0.1.schema.json",
+    "path_differs_from_assisted_schema_path": true,
+    "sha256_differs_from_assisted_schema_sha256": true,
+    "assisted_schema_path": "schemas/e-case-record.schema.json",
+    "assisted_schema_sha256": "caa29f20c619653e4340822c096b11746d418b205506464bd8f104ad89b792fc"
+  },
+  "effective_write_contract_identity": {
+    "artifact_id": "kernel-v0.8-e-case-write-contract-effective-v0.1-20260725",
+    "version": "0.1",
+    "path": "docs/kernel/kernel-v0.8-e-case-write-contract-effective-v0.1-20260725.json",
+    "sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63",
+    "content_sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63",
+    "status": "effective_e_case_write_contract_semantics_only_write_not_authorized",
+    "owner": "Kernel/M3*",
+    "authority_base_commit": "b4b9d604404b7957d8f86edf29ebe3959b743c9b",
+    "path_differs_from_assisted_contract_path": true,
+    "sha256_differs_from_assisted_contract_sha256": true,
+    "assisted_contract_path": "docs/kernel/kernel-v0.8-e-case-write-contract-assisted-draft-v0.1-20260725.json",
+    "assisted_contract_sha256": "faa817a7f33744c4dfc819cc932584659219f6e0e59ff46b1d27d3bfc82b1c8f"
+  },
+  "accepted_source_pins": {
+    "store_record_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+    "store_record_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+    "receipt_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+    "receipt_sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565",
+    "authority_design_path": "docs/llm-editor/llm-editor-v0.8-l2-production-e-case-single-execute-authority-design-v0.1-20260725.json",
+    "authority_design_sha256": "154eaa54f4387c0a0bfdbf01dba8130f0542ddb140444358da99d4c67d2ab1ee",
+    "store_is_e_case": false,
+    "store_is_kernel_store_record": true
+  },
+  "si_llm_001_disposition": {
+    "issue_currently_closed": false,
+    "owner_will_issue_separate_closure_record": true,
+    "closed_by_this_response": false
+  },
+  "write_authority": {
+    "e_case_write_authorized": false,
+    "executor_implementation_authorized": false,
+    "activation_authorized": false,
+    "note": "Acceptance issues effective schema and write-contract semantics only. Separate executor review and single-use activation remain required before any E_case write."
+  },
+  "explicit_non_authorizations": {
+    "assisted_schema_sha_as_effective_schema_sha": false,
+    "assisted_contract_sha_as_effective_contract_sha": false,
+    "e_case_write_execution": false,
+    "kernel_store_mutation_or_relabel": false,
+    "checker_or_promotion": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "hard_stop": true
+}

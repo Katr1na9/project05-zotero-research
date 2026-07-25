@@ -1,0 +1,285 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-e-case-schema-contract-review-packet-v0.1-20260725",
+  "artifact_type": "kernel_owner_e_case_schema_contract_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "446a94fca90d2bcfa5519e9e10060bcc964120a7",
+  "status": "draft_kernel_owner_e_case_schema_contract_review_packet_not_effective",
+  "submission": {
+    "submitted_to_owner": "Kernel/M3*",
+    "submitted_by_track": "LLM-editor track",
+    "submission_role": "assisted drafting and review coordination only",
+    "owned_by_submitting_track": false,
+    "owner_review_present": false,
+    "owner_approval_present": false,
+    "effective_schema_present": false,
+    "effective_write_contract_present": false,
+    "activation_or_execution_authority_present": false
+  },
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "source_store_class": "kernel_claim_ir_intake_store",
+    "proposed_target_record_class": "e_case",
+    "review_only": true,
+    "e_case_write_included": false,
+    "certificate_checker_or_certified_stop_included": false
+  },
+  "submitted_artifacts": {
+    "e_case_target_schema_assisted_draft": {
+      "artifact_type": "e_case_target_schema_assisted_draft",
+      "path": "schemas/e-case-record.schema.json",
+      "sha256": "caa29f20c619653e4340822c096b11746d418b205506464bd8f104ad89b792fc",
+      "schema_id": "https://project05.invalid/schemas/e-case-record-assisted-draft-v0.1.schema.json",
+      "status": "assisted_draft_not_effective_pending_kernel_m3_owner_review",
+      "effective": false,
+      "may_occupy_effective_schema_sha256_field": false
+    },
+    "e_case_write_contract_assisted_draft": {
+      "artifact_id": "kernel-v0.8-e-case-write-contract-assisted-draft-v0.1-20260725",
+      "version": "0.1",
+      "path": "docs/kernel/kernel-v0.8-e-case-write-contract-assisted-draft-v0.1-20260725.json",
+      "sha256": "faa817a7f33744c4dfc819cc932584659219f6e0e59ff46b1d27d3bfc82b1c8f",
+      "status": "assisted_draft_not_effective_pending_kernel_m3_owner_review",
+      "owner": "Kernel/M3*",
+      "effective": false,
+      "may_occupy_effective_contract_sha256_field": false
+    }
+  },
+  "pinned_review_context": {
+    "production_e_case_authority_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-e-case-single-execute-authority-design-v0.1-20260725.json",
+      "sha256": "154eaa54f4387c0a0bfdbf01dba8130f0542ddb140444358da99d4c67d2ab1ee",
+      "status_observed": "design_only_production_e_case_authority_not_activated"
+    },
+    "effective_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "relationship": "intake_versus_e_case_boundary_only_not_e_case_write_authority"
+    },
+    "kernel_intake_store_record": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+      "sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "is_kernel_store_record_observed": true,
+      "is_e_case_observed": false
+    },
+    "sanitized_kernel_intake_store_receipt": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565"
+    },
+    "ingested_claim_ir_package": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+      "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+      "claim_count": 41,
+      "claims_content_hash": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+    }
+  },
+  "review_summary": {
+    "proposed_schema_summary": "Define a new provenance-only E_case record with its own e_case_id and type flags, exact source-store pins, 41 opaque Claim-ID references, effective artifact provenance, single-use write authority, transaction identity, and explicit false Checker/certificate/CERTIFIED_STOP assertions.",
+    "proposed_mapping_summary": "Construct a new target; preserve the intake record and receipt byte-for-byte; copy only package identity, source states, aggregate hashes, and Claim-ID identity references; never copy claim values, labels, outcomes, or oracle fields.",
+    "proposed_transaction_summary": "Validate all effective owner pins and source bytes before mutation; one atomic target; deterministic transaction and idempotency identities; target empty or exactly idempotent; process start consumes the single attempt; no retry/resume/fallback.",
+    "hard_boundary": "E_case write is not Kernel intake, Checker acceptance, evidence sufficiency, promotion, certificate generation, CERTIFIED_STOP, SI-LLM-001 closure, L2, or Part B elevation."
+  },
+  "requested_kernel_owner_decisions": {
+    "overall_decision": {
+      "required": true,
+      "current_value": null,
+      "allowed_values": [
+        "accept_and_issue_new_effective_schema_and_contract",
+        "request_revision",
+        "reject"
+      ]
+    },
+    "target_schema_decision": {
+      "required": true,
+      "current_value": null,
+      "allowed_values": [
+        "accept_as_basis_and_issue_new_effective_schema",
+        "request_revision",
+        "reject"
+      ],
+      "questions": [
+        "Does the proposed record remain independently typed from the Kernel intake store record?",
+        "Are e_case_id, source-store pins, opaque Claim-ID references, and type flags sufficient?",
+        "Should any additional provenance-only field be required without introducing claim values or certification state?",
+        "Are the prohibited Checker, promotion, certificate, and CERTIFIED_STOP fields correctly excluded?"
+      ]
+    },
+    "write_contract_decision": {
+      "required": true,
+      "current_value": null,
+      "allowed_values": [
+        "accept_as_basis_and_issue_new_effective_contract",
+        "request_revision",
+        "reject"
+      ],
+      "questions": [
+        "Is the exact source record and receipt identity accepted?",
+        "Is the provenance-only source-to-target mapping accepted?",
+        "Are source preservation, transaction, idempotency, and duplicate handling sufficient?",
+        "Are fail-closed rejection conditions complete?",
+        "Are Checker, certificate, CERTIFIED_STOP, SI-LLM-001, L2, and Part B boundaries confirmed?"
+      ]
+    },
+    "source_identity_decision": {
+      "required": true,
+      "current_value": null,
+      "allowed_values": [
+        "accept_exact_source_identity",
+        "replace_with_versioned_eligibility_rule",
+        "reject"
+      ],
+      "proposed_source_record_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "proposed_source_receipt_sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565",
+      "replacement_eligibility_rule": {
+        "artifact_id": null,
+        "version": null,
+        "path": null,
+        "sha256": null
+      },
+      "exact_identity_and_replacement_rule_may_both_be_selected": false
+    },
+    "intake_versus_e_case_boundary_confirmation": {
+      "required": true,
+      "confirmed_by_owner": null,
+      "proposed_boundary": "The intake store record remains is_e_case=false and immutable. A future E_case write creates a new separately typed target under a distinct effective schema, write contract, executor, and activation.",
+      "owner_revision_if_not_confirmed": null
+    }
+  },
+  "required_owner_response_envelope": {
+    "artifact_type": "kernel_m3_e_case_schema_contract_review_response",
+    "owner": "Kernel/M3*",
+    "must_pin_this_review_packet_path_and_sha256": true,
+    "review_packet_path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-e-case-schema-contract-review-packet-v0.1-20260725.json",
+    "review_packet_sha256_placeholder_until_this_packet_is_frozen": null,
+    "must_answer_every_requested_decision": true,
+    "decision": null,
+    "allowed_decisions": [
+      "accept_and_issue_new_effective_schema_and_contract",
+      "request_revision",
+      "reject"
+    ],
+    "effective_schema_identity_required_if_accepted": {
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "status": null,
+      "owner": "Kernel/M3*",
+      "must_be_new_versioned_immutable_and_sha_pinnable": true,
+      "path_must_differ_from_assisted_schema_path": true,
+      "sha256_must_differ_from_assisted_schema_sha256": true
+    },
+    "effective_write_contract_identity_required_if_accepted": {
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "status": null,
+      "owner": "Kernel/M3*",
+      "must_be_new_versioned_immutable_and_sha_pinnable": true,
+      "path_must_differ_from_assisted_contract_path": true,
+      "sha256_must_differ_from_assisted_contract_sha256": true
+    },
+    "revision_comments_required_if_request_revision": true,
+    "rejection_reason_required_if_reject": true,
+    "approval_without_both_effective_identities_is_sufficient": false,
+    "response_is_activation": false,
+    "response_is_executor": false,
+    "response_is_e_case_execution": false
+  },
+  "assisted_identity_prohibitions": {
+    "assisted_schema_path": "schemas/e-case-record.schema.json",
+    "assisted_schema_sha256": "caa29f20c619653e4340822c096b11746d418b205506464bd8f104ad89b792fc",
+    "assisted_schema_sha256_may_be_effective_schema_sha256": false,
+    "assisted_write_contract_path": "docs/kernel/kernel-v0.8-e-case-write-contract-assisted-draft-v0.1-20260725.json",
+    "assisted_write_contract_sha256": "faa817a7f33744c4dfc819cc932584659219f6e0e59ff46b1d27d3bfc82b1c8f",
+    "assisted_write_contract_sha256_may_be_effective_contract_sha256": false,
+    "review_packet_sha256_may_be_effective_schema_or_contract_sha256": false,
+    "in_place_status_edit_may_make_any_assisted_artifact_effective": false
+  },
+  "decision_effect_boundaries": {
+    "acceptance_requires_owner_to_issue_new_effective_artifacts": true,
+    "owner_review_response_by_itself_authorizes_activation": false,
+    "owner_review_response_by_itself_authorizes_executor_implementation": false,
+    "effective_schema_by_itself_authorizes_e_case_write": false,
+    "effective_write_contract_by_itself_authorizes_e_case_write": false,
+    "separate_executor_review_and_single_use_activation_required": true,
+    "this_packet_is_effective_schema": false,
+    "this_packet_is_effective_write_contract": false,
+    "this_packet_is_activation": false,
+    "this_packet_is_e_case_execution": false,
+    "this_packet_is_certificate_or_certified_stop": false,
+    "this_packet_closes_si_llm_001": false,
+    "this_packet_passes_l2_or_part_b": false
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "authorized": 0,
+    "maximum": 0,
+    "started": 0,
+    "consumed": 0,
+    "remaining": 0,
+    "e_case_write_authorized": false,
+    "e_case_write_performed": false
+  },
+  "still_blocked": {
+    "kernel_m3_owner_review": true,
+    "effective_e_case_target_schema": true,
+    "effective_e_case_write_contract": true,
+    "production_e_case_executor": true,
+    "e_case_activation": true,
+    "e_case_execution": true,
+    "checker_or_promotion": true,
+    "certificate": true,
+    "certified_stop": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "production_registration_execution": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "owner_approval": false,
+    "effective_schema_issuance": false,
+    "effective_write_contract_issuance": false,
+    "activation": false,
+    "executor_implementation": false,
+    "e_case_write": false,
+    "kernel_store_record_mutation_or_relabel": false,
+    "checker_or_promotion": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "production_registration_switch_change": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "git_push": false,
+    "pull_request_creation": false
+  },
+  "review_boundary": {
+    "review_claim": "This packet freezes assisted review inputs and requests Kernel/M3* decisions. It grants no authority and creates no effective artifact.",
+    "effective": false,
+    "not_an_activation": true,
+    "not_an_executor": true,
+    "not_an_e_case_write": true,
+    "not_a_certificate_or_certified_stop": true,
+    "not_an_si_llm_001_closure": true,
+    "not_an_l2_or_part_b_gate_pass": true
+  },
+  "audit_trail": {
+    "submitted_artifact_sha256_rehashed_from_disk": true,
+    "review_context_sha256_rehashed_from_disk": true,
+    "source_intake_record_is_e_case_observed_false": true,
+    "activation_created_in_this_turn": false,
+    "executor_created_in_this_turn": false,
+    "e_case_written_in_this_turn": false,
+    "certificate_or_checker_effect_in_this_turn": false,
+    "production_registration_switch_changed_in_this_turn": false,
+    "si_llm_001_or_l2_effect_in_this_turn": false,
+    "git_push_performed_in_this_turn": false
+  }
+}
