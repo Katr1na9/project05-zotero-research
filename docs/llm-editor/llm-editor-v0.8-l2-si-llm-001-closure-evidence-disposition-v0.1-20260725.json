@@ -1,0 +1,99 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-si-llm-001-closure-evidence-disposition-v0.1-20260725",
+  "artifact_type": "si_llm_001_closure_evidence_disposition_draft",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "status": "draft_closure_evidence_not_effective_pending_kernel_owner_decision",
+  "authority_base_commit": "1c062328e6974788e246d8b499320fd8f0d78f23",
+  "owner_of_closure": "Kernel/M3*",
+  "source_issue": {
+    "issue_id": "SI-LLM-001",
+    "path": "docs/spec-issues/SI-LLM-001-shared-claim-ir-artifact-absent.md",
+    "content_sha256": "b99c6183da25224e842daa29029cad125671d3c8549197339706946bc6d3c2ba",
+    "title": "共享 Claim IR schema 工件缺失",
+    "issue_text_modified_by_this_artifact": false,
+    "issue_closed_by_this_artifact": false
+  },
+  "authority_boundary": {
+    "this_track_may_not_self_close": true,
+    "effective": false,
+    "is_owner_closure_record": false,
+    "grants_execution_authority": false,
+    "creates_or_reactivates_activation": false,
+    "required_interpretation": "This is an evidence index and proposed disposition only. Kernel/M3* must issue a distinct owner closure record before SI-LLM-001 may be treated as closed."
+  },
+  "evidence_snapshot": {
+    "method": "sha256_of_file_bytes_on_authority_base_commit_worktree",
+    "schema_and_contract": [
+      {
+        "role": "versioned_external_claim_ir_envelope",
+        "path": "schemas/claim-ir-external-envelope.schema.json",
+        "content_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+        "schema_id_observed": "https://project05.invalid/schemas/claim-ir-kernel.schema.json",
+        "schema_version_observed": "claim-ir-external-v0.1",
+        "owner_acceptance_evidence": "The effective consumer contract accepts this exact path and SHA as the external Claim IR schema identity."
+      },
+      {
+        "role": "kernel_owned_claim_ir_schema",
+        "path": "schemas/claim-ir-kernel.schema.json",
+        "content_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+        "schema_id_observed": "https://project05.local/schemas/claim-ir-kernel.schema.json",
+        "draft_2020_12_observed": true,
+        "definitions_observed": ["entityRef", "claimObject", "pointer", "certificationAuthority", "kernelClaim", "candidateProposal", "candidateCompilerRequest", "candidateCompilerResponse"]
+      },
+      {
+        "role": "kernel_m3_effective_consumer_contract",
+        "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+        "content_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+        "status_observed": "effective_consumer_contract_semantics_only_ingestion_not_authorized",
+        "owner_observed": "Kernel/M3*",
+        "accepted_external_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+        "contract_itself_closes_si_llm_001": false
+      }
+    ],
+    "candidate_guard_and_fixture_evidence": [
+      {"role": "minimal_valid_candidate_fixture", "path": "tests/compiler_contract/fixtures/valid_candidate_unbound.json", "content_sha256": "8fee4b14881360283e012f255cbb52cefa1d1fdcb74ec518ebee6b254cdbe7a7", "scope_caveat": "Local candidate guard fixture; owner must decide whether it satisfies the requested Kernel-owned minimum fixture."},
+      {"role": "authority_leak_invalid_fixture", "path": "tests/compiler_contract/fixtures/invalid_authority_leakage.json", "content_sha256": "9a10fe0d3f976802145b7d5459369d74d0428565b1426f98503324fc3b5904be", "expected_result": "fail_closed"},
+      {"role": "valid_and_invalid_candidate_contract_test", "path": "tests/compiler_contract/test_candidate_claim_ir_schema.py", "content_sha256": "e2c06f91d2a8ee4a6766bfc8d4dc4fedc49665393078ef004671ca94334ed82c"},
+      {"role": "exact_admitted_package_accepted_by_effective_consumer_contract", "path": "docs/llm-editor/fixtures/claim-ir-admitted/project05-depth2-public-minted-admitted-v0.1/package.json", "content_sha256": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32", "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9", "claim_count": 41, "kernel_state_observed": "pending_kernel_schema"}
+    ],
+    "exact_executed_chain_summary": [
+      {"stage": "ingested", "record_path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json", "record_sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179", "receipt_path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json", "receipt_sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de", "state_observed": "ingested_under_separate_authority"},
+      {"stage": "kernel_claim_ir_intake_store", "record_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json", "record_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248", "receipt_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json", "receipt_sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565", "is_e_case_observed": false},
+      {"stage": "e_case", "record_path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json", "record_sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6", "receipt_path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json", "receipt_sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e", "separately_typed": true},
+      {"stage": "certificate", "record_path": "docs/llm-editor/fixtures/certificate/project05-depth2-public-v0.1/certificate-record.json", "record_sha256": "a7cead6c0315ede6859000db63990f8148c258c2350fba0e99d368ca4a4fa40c", "receipt_path": "docs/llm-editor/fixtures/certificate/project05-depth2-public-v0.1/sanitized-receipt.json", "receipt_sha256": "b1190082b3879fe070eb816c1684354783fcc4b6a0773176b29659e2822f5f64", "certified_stop_implied": false},
+      {"stage": "certified_stop", "record_path": "docs/llm-editor/fixtures/certified-stop/project05-depth2-public-v0.1/certified-stop-record.json", "record_sha256": "0505efc64d63933913a22918b709d98f2c7064307e3734b7de406f2db3b58015", "receipt_path": "docs/llm-editor/fixtures/certified-stop/project05-depth2-public-v0.1/sanitized-receipt.json", "receipt_sha256": "82ec8ccd41e229fed98efd10e5a208a84f1d86c03277b6ef12cea09db45dcee4", "checker_decision_ref_observed": null, "evidence_sufficiency_ref_observed": null}
+    ],
+    "single_use_activation_exhaustion": [
+      {"stage": "ingestion", "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-claim-ir-ingestion-single-execute-activation-v0.1-20260725.json", "content_sha256": "708229bef9e00d13e623d384c87ab8dcde27f34cb9e0becbbb5b96c3b006f06e"},
+      {"stage": "kernel_store", "path": "docs/llm-editor/llm-editor-v0.8-l2-production-kernel-claim-ir-store-single-execute-activation-v0.1-20260725.json", "content_sha256": "f7f90f6803bd93c43053faceb67156437e3c4cb8c831d4dc411ea9646bcc4f02"},
+      {"stage": "e_case", "path": "docs/llm-editor/llm-editor-v0.8-l2-production-e-case-single-execute-activation-v0.1-20260725.json", "content_sha256": "4125cc20e4aa9cd7958c216a6a2ac5e5ce0e7f2d3c57d7e9980fe0aca21a35f4"},
+      {"stage": "certificate", "path": "docs/llm-editor/llm-editor-v0.8-l2-production-certificate-single-execute-activation-v0.1-20260725.json", "content_sha256": "4800885e72bd9310cbe711b5d01ebfd1912b17636de97cc20b68762c93fad643"},
+      {"stage": "certified_stop", "path": "docs/llm-editor/llm-editor-v0.8-l2-production-certified-stop-single-execute-activation-v0.1-20260725.json", "content_sha256": "b4f448993f6422b91b1be92ce2a4646ae082c05fdafbeaf675fb77b169da31f8"}
+    ],
+    "activation_ledger_observed_for_every_listed_stage": {"authorized": 1, "maximum": 1, "started": 1, "consumed": 1, "remaining": 0, "retry": false, "resume": false, "fallback": false}
+  },
+  "comparison_to_original_issue": [
+    {"original_concern": "No schemas directory or shared Claim IR JSON Schema exists.", "evidence_disposition": "satisfied_by_present_versioned_artifacts", "basis": "Both the external envelope and Kernel schema paths exist with pinned content SHA-256 values."},
+    {"original_concern": "No stable schema id, version, or hash exists.", "evidence_disposition": "substantially_satisfied_owner_confirmation_required", "basis": "Both schemas expose stable ids and byte hashes; the effective consumer contract accepts the external-envelope identity and version.", "owner_attention": "The accepted external envelope retains schema id https://project05.invalid/schemas/claim-ir-kernel.schema.json while the Kernel schema has https://project05.local/schemas/claim-ir-kernel.schema.json. Kernel/M3* must explicitly decide whether this established split identity is sufficient for closure."},
+    {"original_concern": "Canonical predicate/entity references and candidate lifecycle/authority fields are not defined.", "evidence_disposition": "substantially_satisfied_owner_confirmation_required", "basis": "The Kernel schema defines entityRef, claimObject, pointer, certificationAuthority, kernelClaim, and candidate request/proposal/response definitions; the external envelope separately freezes the admitted package surface."},
+    {"original_concern": "Minimum valid candidate and authority-leak invalid fixture are absent.", "evidence_disposition": "evidence_present_owner_acceptance_required", "basis": "Pinned local valid/invalid candidate fixtures and their fail-closed contract test exist, and an exact admitted package is accepted by the effective consumer contract.", "owner_attention": "Owner must decide whether the local candidate fixtures count as the requested Kernel-owned fixtures or whether owner-minted replacements are required."},
+    {"original_concern": "A candidate dict cannot be shown to pass an actual Kernel consumption chain without silent promotion.", "evidence_disposition": "satisfied_for_one_exact_pinned_package_only", "basis": "One exact 41-claim package has a byte-pinned admitted, ingested, Kernel intake, E_case, certificate, and CERTIFIED_STOP chain with separate records, receipts, contracts, and exhausted single-use authorities.", "not_a_generalization": "This exact-chain evidence is not blanket eligibility for arbitrary future LLM candidate output."}
+  ],
+  "remaining_follow_on_boundaries": {
+    "candidate_llm_output_into_kernel": {
+      "status": "still_requires_existing_or_future_fail_closed_gates_per_new_input",
+      "not_proven_by_exact_fixture": ["arbitrary model-generated candidate eligibility", "automatic admission or ingestion of new packages", "four-family model output compatibility", "legacy CandidateClaimEnvelope conversion for every producer", "permission to bypass schema, admission, authority, receipt, or idempotency gates"],
+      "owner_question": "Should these generalized producer/runtime questions remain within SI-LLM-001, or be tracked as separate follow-on issues after artifact-absence closure?"
+    },
+    "closure_does_not_authorize": ["L2 gate execution or success", "Part B claim elevation", "M2 fit", "four-family LLM training, fine-tuning, or output ingestion", "new Kernel store, E_case, certificate, or CERTIFIED_STOP execution", "reactivation, retry, resume, fallback, or reuse of any exhausted activation", "Checker invocation, evidence-sufficiency assertion, or promotion"]
+  },
+  "recommended_owner_actions": {
+    "allowed_decisions": ["accept_and_close", "request_revision", "keep_open_with_reason"],
+    "accept_and_close": {"precondition": "Kernel/M3* accepts the dual-schema identity split, existing candidate fixtures, and exact executed-chain evidence as sufficient for the original artifact-absence scope.", "required_output": "A new owner-authored closure record with its own artifact_id, version, path, content SHA-256, decision, scope, and explicit non-authorizations.", "may_reuse_this_disposition_as_closure_identity": false},
+    "request_revision": {"use_when": "Owner requires revised schema identity, owner-minted valid/invalid fixtures, additional tests, or corrected evidence pins."},
+    "keep_open_with_reason": {"use_when": "Owner decides generalized candidate-producer-to-Kernel proof remains part of SI-LLM-001 rather than a follow-on issue.", "required_output": "State the unmet closure condition and the exact additional artifact or test required."}
+  },
+  "proposed_disposition": "owner_decision_required_no_self_closure",
+  "hard_stop": true
+}
