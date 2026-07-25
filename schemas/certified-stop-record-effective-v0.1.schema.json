@@ -1,0 +1,486 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/certified-stop-record-effective-v0.1.schema.json",
+  "title": "Project05 CERTIFIED_STOP record (Kernel/Checker effective v0.1)",
+  "description": "Kernel/Checker-owned effective CERTIFIED_STOP record schema. Independently typed from provenance certificate, E_case, Kernel intake store, Part B stop-deny inventory schemas, and ordinary run_mvp STOP. Does not authorize CERTIFIED_STOP execution, Checker invocation/acceptance/promotion, evidence-sufficiency assertion, SI-LLM-001 closure, L2, Part B elevation, or run_mvp STOP semantics change. Assisted draft path schemas/certified-stop-record.schema.json and its SHA must never occupy effective schema identity fields.",
+  "x-project05-artifact": {
+    "artifact_type": "certified_stop_target_schema_effective",
+    "artifact_id": "certified-stop-record-effective-v0.1",
+    "version": "0.1",
+    "status": "effective_certified_stop_target_schema_semantics_only_execution_not_authorized",
+    "owner": "Kernel/Checker",
+    "drafting_track_role": "LLM-editor assisted draft accepted as basis only",
+    "authority_base_commit": "978dcd5a98db8cb00b771dd45a3dbaeebbf5f908",
+    "authority_design_path": "docs/llm-editor/llm-editor-v0.8-l2-production-certified-stop-single-execute-authority-design-v0.1-20260725.json",
+    "authority_design_sha256": "45260e4552c570307277262bd5701987289584e9f8e021b0c7439664bc2bcc67",
+    "effective": true,
+    "owner_approval_present": true,
+    "may_occupy_effective_schema_identity": true,
+    "assisted_basis_path": "schemas/certified-stop-record.schema.json",
+    "assisted_basis_sha256": "238401cd1744864fcb56e2833317922a530a804e4e9ed9469e9b6dffc2254ac8",
+    "assisted_basis_may_occupy_effective_schema_identity": false,
+    "part_b_stop_deny_schemas_are_effective_target_schema": false,
+    "certificate_schema_is_certified_stop_schema": false,
+    "ordinary_run_mvp_stop_is_certified_stop": false,
+    "certificate_is_certified_stop": false
+  },
+  "x-project05-prohibited-top-level-fields": [
+    "certificate_version",
+    "e_case_version",
+    "store_record_version",
+    "stored_claim_ir_package",
+    "claim_identity_refs",
+    "claim_values",
+    "labels",
+    "realized_outcomes",
+    "oracle",
+    "action_id",
+    "action_type",
+    "expected_gain",
+    "stop_recommendation",
+    "checker_decision",
+    "checker_accepted",
+    "promotion",
+    "promoted",
+    "evidence_sufficiency",
+    "evidence_sufficiency_passed",
+    "si_llm_001_closed",
+    "l2_passed",
+    "part_b_elevated"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "certified_stop_version",
+    "certified_stop_id",
+    "record_scope",
+    "surface_id",
+    "package_id",
+    "is_certified_stop",
+    "is_certificate",
+    "is_e_case",
+    "is_kernel_store_record",
+    "is_ordinary_run_mvp_stop",
+    "source_certificate",
+    "source_package_state",
+    "claim_identity_summary",
+    "certified_stop_subject",
+    "provenance",
+    "checker_decision_ref",
+    "evidence_sufficiency_ref",
+    "issue_authority",
+    "transaction",
+    "separation_assertions"
+  ],
+  "properties": {
+    "certified_stop_version": {
+      "const": "certified-stop-record-v0.1"
+    },
+    "certified_stop_id": {
+      "type": "string",
+      "pattern": "^cstop_[A-Za-z0-9_-]{16,128}$"
+    },
+    "record_scope": {
+      "const": "source_certificate_identity_terminal_declaration_only"
+    },
+    "surface_id": {
+      "const": "project05_depth2_public"
+    },
+    "package_id": {
+      "const": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9"
+    },
+    "is_certified_stop": {
+      "const": true
+    },
+    "is_certificate": {
+      "const": false
+    },
+    "is_e_case": {
+      "const": false
+    },
+    "is_kernel_store_record": {
+      "const": false
+    },
+    "is_ordinary_run_mvp_stop": {
+      "const": false
+    },
+    "source_certificate": {
+      "$ref": "#/$defs/sourceCertificate"
+    },
+    "source_package_state": {
+      "$ref": "#/$defs/sourcePackageState"
+    },
+    "claim_identity_summary": {
+      "$ref": "#/$defs/claimIdentitySummary"
+    },
+    "certified_stop_subject": {
+      "$ref": "#/$defs/certifiedStopSubject"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "checker_decision_ref": {
+      "description": "Under this effective CERTIFIED_STOP scope, Checker decision input is not required and must remain null. Non-null refs are rejected. CERTIFIED_STOP writer must not invoke Checker.",
+      "type": "null"
+    },
+    "evidence_sufficiency_ref": {
+      "description": "Under this effective CERTIFIED_STOP scope, evidence-sufficiency input is not required and must remain null. Certificate presence is never a substitute. Non-null refs are rejected.",
+      "type": "null"
+    },
+    "issue_authority": {
+      "$ref": "#/$defs/issueAuthority"
+    },
+    "transaction": {
+      "$ref": "#/$defs/transaction"
+    },
+    "separation_assertions": {
+      "$ref": "#/$defs/separationAssertions"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "repoPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "artifactPin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "version",
+        "path",
+        "sha256",
+        "status",
+        "owner"
+      ],
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "sourceCertificate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_path",
+        "record_sha256",
+        "receipt_path",
+        "receipt_sha256",
+        "certificate_id",
+        "source_is_certificate",
+        "source_is_e_case",
+        "source_is_kernel_store_record",
+        "source_is_certified_stop",
+        "source_is_ordinary_run_mvp_stop"
+      ],
+      "properties": {
+        "record_path": {
+          "const": "docs/llm-editor/fixtures/certificate/project05-depth2-public-v0.1/certificate-record.json"
+        },
+        "record_sha256": {
+          "const": "a7cead6c0315ede6859000db63990f8148c258c2350fba0e99d368ca4a4fa40c"
+        },
+        "receipt_path": {
+          "const": "docs/llm-editor/fixtures/certificate/project05-depth2-public-v0.1/sanitized-receipt.json"
+        },
+        "receipt_sha256": {
+          "const": "b1190082b3879fe070eb816c1684354783fcc4b6a0773176b29659e2822f5f64"
+        },
+        "certificate_id": {
+          "const": "cert_2d016caab300bc0a25cd7d973a2ba3d0116dcb74277bc45f0d5ed6b1ef7efd00"
+        },
+        "source_is_certificate": {
+          "const": true
+        },
+        "source_is_e_case": {
+          "const": false
+        },
+        "source_is_kernel_store_record": {
+          "const": false
+        },
+        "source_is_certified_stop": {
+          "const": false
+        },
+        "source_is_ordinary_run_mvp_stop": {
+          "const": false
+        }
+      }
+    },
+    "sourcePackageState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id_state",
+        "admission_state",
+        "kernel_state",
+        "claim_count",
+        "claims_content_hash"
+      ],
+      "properties": {
+        "claim_id_state": {
+          "const": "minted_opaque"
+        },
+        "admission_state": {
+          "const": "admitted_under_separate_authority"
+        },
+        "kernel_state": {
+          "const": "ingested_under_separate_authority"
+        },
+        "claim_count": {
+          "const": 41
+        },
+        "claims_content_hash": {
+          "const": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+        }
+      }
+    },
+    "claimIdentitySummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_count",
+        "claim_id_list_sha256",
+        "claim_values_copied"
+      ],
+      "properties": {
+        "claim_count": {
+          "const": 41
+        },
+        "claim_id_list_sha256": {
+          "const": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4"
+        },
+        "claim_values_copied": {
+          "const": false
+        }
+      }
+    },
+    "certifiedStopSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_kind",
+        "certificate_id",
+        "certified_stop_scope"
+      ],
+      "properties": {
+        "subject_kind": {
+          "const": "provenance_certificate"
+        },
+        "certificate_id": {
+          "const": "cert_2d016caab300bc0a25cd7d973a2ba3d0116dcb74277bc45f0d5ed6b1ef7efd00"
+        },
+        "certified_stop_scope": {
+          "const": "terminal_declaration_of_exact_provenance_certificate_identity_only_not_checker_acceptance_not_evidence_sufficiency_not_run_mvp_ordinary_stop",
+          "description": "Owner-defined terminal declaration scope. Does not equate certificate presence, ordinary planner STOP, Checker acceptance, or evidence sufficiency with CERTIFIED_STOP."
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "effective_certificate_schema",
+        "effective_certificate_issue_write_contract",
+        "effective_certified_stop_schema",
+        "effective_certified_stop_write_contract"
+      ],
+      "properties": {
+        "effective_certificate_schema": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_certificate_issue_write_contract": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_certified_stop_schema": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_certified_stop_write_contract": {
+          "$ref": "#/$defs/artifactPin"
+        }
+      }
+    },
+    "externalDecisionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact",
+        "decision_sha256",
+        "invocation_authority",
+        "invoked_by_certified_stop_writer"
+      ],
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "decision_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "invocation_authority": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "invoked_by_certified_stop_writer": {
+          "const": false
+        }
+      }
+    },
+    "issueAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_artifact_id",
+        "activation_path",
+        "activation_sha256_before",
+        "executor_path",
+        "executor_sha256",
+        "single_use"
+      ],
+      "properties": {
+        "activation_artifact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "activation_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "activation_sha256_before": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executor_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "executor_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "single_use": {
+          "const": true
+        }
+      }
+    },
+    "transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "certified_stop_target_id",
+        "transaction_id",
+        "idempotency_key",
+        "atomic_all_or_nothing",
+        "partial_write",
+        "retry",
+        "resume",
+        "fallback"
+      ],
+      "properties": {
+        "certified_stop_target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "transaction_id": {
+          "type": "string",
+          "pattern": "^cstop_txn_[0-9a-f]{32,64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^cstop_idem_[0-9a-f]{64}$"
+        },
+        "atomic_all_or_nothing": {
+          "const": true
+        },
+        "partial_write": {
+          "const": false
+        },
+        "retry": {
+          "const": false
+        },
+        "resume": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        }
+      }
+    },
+    "separationAssertions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_certificate_unchanged",
+        "source_is_certified_stop",
+        "certified_stop_is_certificate",
+        "certified_stop_is_e_case",
+        "certified_stop_is_kernel_store_record",
+        "certified_stop_is_ordinary_run_mvp_stop",
+        "checker_invoked_by_certified_stop_writer",
+        "checker_acceptance_or_promotion_implied",
+        "evidence_sufficiency_defaulted",
+        "si_llm_001_closed",
+        "l2_or_part_b_gate_passed"
+      ],
+      "properties": {
+        "source_certificate_unchanged": {
+          "const": true
+        },
+        "source_is_certified_stop": {
+          "const": false
+        },
+        "certified_stop_is_certificate": {
+          "const": false
+        },
+        "certified_stop_is_e_case": {
+          "const": false
+        },
+        "certified_stop_is_kernel_store_record": {
+          "const": false
+        },
+        "certified_stop_is_ordinary_run_mvp_stop": {
+          "const": false
+        },
+        "checker_invoked_by_certified_stop_writer": {
+          "const": false
+        },
+        "checker_acceptance_or_promotion_implied": {
+          "const": false
+        },
+        "evidence_sufficiency_defaulted": {
+          "const": false
+        },
+        "si_llm_001_closed": {
+          "const": false
+        },
+        "l2_or_part_b_gate_passed": {
+          "const": false
+        }
+      }
+    }
+  }
+}
