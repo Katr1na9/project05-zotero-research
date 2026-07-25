@@ -1,0 +1,459 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/certificate-record.schema.json",
+  "title": "Project05 certificate record assisted draft v0.1",
+  "description": "Assisted, non-effective proposal for a separately typed certificate record sourced from one exact E_case identity. It grants no certificate generation, Checker invocation or acceptance, promotion, evidence-sufficiency claim, CERTIFIED_STOP, SI-LLM-001 closure, L2, or Part B effect. Kernel/Checker owner must issue a new effective schema at a new owner-approved identity before any activation.",
+  "x-project05-artifact": {
+    "artifact_type": "certificate_target_schema_assisted_draft",
+    "status": "assisted_draft_not_effective_pending_kernel_checker_owner_review",
+    "owner": "Kernel/Checker",
+    "drafting_track_role": "LLM-editor track assists with a review draft only",
+    "authority_base_commit": "10a193565cc86b48a573ec29cf4335d5bbdaa32f",
+    "effective": false,
+    "owner_approval_present": false,
+    "may_occupy_effective_schema_identity": false,
+    "existing_inventory_schema_path": "schemas/certificate.schema.json",
+    "existing_inventory_schema_sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba",
+    "existing_inventory_schema_is_effective_by_this_draft": false,
+    "future_effective_schema_must_be_new_owner_issued_artifact": true
+  },
+  "x-project05-prohibited-top-level-fields": [
+    "e_case_version",
+    "store_record_version",
+    "stored_claim_ir_package",
+    "claim_identity_refs",
+    "claim_values",
+    "labels",
+    "realized_outcomes",
+    "oracle",
+    "checker_decision",
+    "checker_accepted",
+    "promotion",
+    "promoted",
+    "evidence_sufficiency",
+    "certified_stop",
+    "certified_stop_authorized",
+    "si_llm_001_closed",
+    "l2_passed",
+    "part_b_elevated"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "certificate_version",
+    "certificate_id",
+    "record_scope",
+    "surface_id",
+    "package_id",
+    "is_certificate",
+    "is_e_case",
+    "is_kernel_store_record",
+    "source_e_case",
+    "source_package_state",
+    "claim_identity_summary",
+    "certificate_subject",
+    "provenance",
+    "checker_decision_ref",
+    "issue_authority",
+    "transaction",
+    "separation_assertions"
+  ],
+  "properties": {
+    "certificate_version": {
+      "const": "certificate-record-v0.1"
+    },
+    "certificate_id": {
+      "type": "string",
+      "pattern": "^cert_[A-Za-z0-9_-]{16,128}$"
+    },
+    "record_scope": {
+      "const": "source_e_case_provenance_only_pending_owner_effective_contract"
+    },
+    "surface_id": {
+      "const": "project05_depth2_public"
+    },
+    "package_id": {
+      "const": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9"
+    },
+    "is_certificate": {
+      "const": true
+    },
+    "is_e_case": {
+      "const": false
+    },
+    "is_kernel_store_record": {
+      "const": false
+    },
+    "source_e_case": {
+      "$ref": "#/$defs/sourceECase"
+    },
+    "source_package_state": {
+      "$ref": "#/$defs/sourcePackageState"
+    },
+    "claim_identity_summary": {
+      "$ref": "#/$defs/claimIdentitySummary"
+    },
+    "certificate_subject": {
+      "$ref": "#/$defs/certificateSubject"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "checker_decision_ref": {
+      "description": "Must remain null unless a future Kernel/Checker owner-effective issue/write contract separately requires and pins an already-authorized Checker decision. This draft does not authorize invoking Checker.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/checkerDecisionRef"
+        }
+      ]
+    },
+    "issue_authority": {
+      "$ref": "#/$defs/issueAuthority"
+    },
+    "transaction": {
+      "$ref": "#/$defs/transaction"
+    },
+    "separation_assertions": {
+      "$ref": "#/$defs/separationAssertions"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "repoPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "artifactPin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "version",
+        "path",
+        "sha256",
+        "status",
+        "owner"
+      ],
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "sourceECase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_path",
+        "record_sha256",
+        "receipt_path",
+        "receipt_sha256",
+        "e_case_id",
+        "source_is_e_case",
+        "source_is_kernel_store_record",
+        "source_is_certificate"
+      ],
+      "properties": {
+        "record_path": {
+          "const": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json"
+        },
+        "record_sha256": {
+          "const": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6"
+        },
+        "receipt_path": {
+          "const": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json"
+        },
+        "receipt_sha256": {
+          "const": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e"
+        },
+        "e_case_id": {
+          "const": "ec_a75ad3da6a9f164a3d3050014c8a1c2082056ea58993a7434b2a23a00ba69cba"
+        },
+        "source_is_e_case": {
+          "const": true
+        },
+        "source_is_kernel_store_record": {
+          "const": false
+        },
+        "source_is_certificate": {
+          "const": false
+        }
+      }
+    },
+    "sourcePackageState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id_state",
+        "admission_state",
+        "kernel_state",
+        "claim_count",
+        "claims_content_hash"
+      ],
+      "properties": {
+        "claim_id_state": {
+          "const": "minted_opaque"
+        },
+        "admission_state": {
+          "const": "admitted_under_separate_authority"
+        },
+        "kernel_state": {
+          "const": "ingested_under_separate_authority"
+        },
+        "claim_count": {
+          "const": 41
+        },
+        "claims_content_hash": {
+          "const": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+        }
+      }
+    },
+    "claimIdentitySummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_count",
+        "claim_id_list_sha256",
+        "claim_values_copied"
+      ],
+      "properties": {
+        "claim_count": {
+          "const": 41
+        },
+        "claim_id_list_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "claim_values_copied": {
+          "const": false
+        }
+      }
+    },
+    "certificateSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_kind",
+        "e_case_id",
+        "certificate_scope"
+      ],
+      "properties": {
+        "subject_kind": {
+          "const": "e_case"
+        },
+        "e_case_id": {
+          "const": "ec_a75ad3da6a9f164a3d3050014c8a1c2082056ea58993a7434b2a23a00ba69cba"
+        },
+        "certificate_scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "description": "Owner-defined scope. Presence does not imply Checker acceptance, evidence sufficiency, promotion, or CERTIFIED_STOP."
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "effective_e_case_schema",
+        "effective_e_case_write_contract",
+        "effective_certificate_schema",
+        "effective_certificate_issue_write_contract"
+      ],
+      "properties": {
+        "effective_e_case_schema": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_e_case_write_contract": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_certificate_schema": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "effective_certificate_issue_write_contract": {
+          "$ref": "#/$defs/artifactPin"
+        }
+      }
+    },
+    "checkerDecisionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact",
+        "decision_sha256",
+        "invoked_by_certificate_writer"
+      ],
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/artifactPin"
+        },
+        "decision_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "invoked_by_certificate_writer": {
+          "const": false
+        }
+      }
+    },
+    "issueAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_artifact_id",
+        "activation_path",
+        "activation_sha256_before",
+        "executor_path",
+        "executor_sha256",
+        "single_use"
+      ],
+      "properties": {
+        "activation_artifact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "activation_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "activation_sha256_before": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executor_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "executor_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "single_use": {
+          "const": true
+        }
+      }
+    },
+    "transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "certificate_target_id",
+        "transaction_id",
+        "idempotency_key",
+        "atomic_all_or_nothing",
+        "partial_write",
+        "retry",
+        "resume",
+        "fallback"
+      ],
+      "properties": {
+        "certificate_target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "transaction_id": {
+          "type": "string",
+          "pattern": "^cert_txn_[0-9a-f]{32,64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^cert_idem_[0-9a-f]{64}$"
+        },
+        "atomic_all_or_nothing": {
+          "const": true
+        },
+        "partial_write": {
+          "const": false
+        },
+        "retry": {
+          "const": false
+        },
+        "resume": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        }
+      }
+    },
+    "separationAssertions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_e_case_unchanged",
+        "source_is_certificate",
+        "certificate_is_e_case",
+        "certificate_is_kernel_store_record",
+        "checker_invoked_by_certificate_writer",
+        "checker_acceptance_or_promotion_implied",
+        "evidence_sufficiency_defaulted",
+        "certified_stop_authorized",
+        "certified_stop_declared",
+        "si_llm_001_closed",
+        "l2_or_part_b_gate_passed"
+      ],
+      "properties": {
+        "source_e_case_unchanged": {
+          "const": true
+        },
+        "source_is_certificate": {
+          "const": false
+        },
+        "certificate_is_e_case": {
+          "const": false
+        },
+        "certificate_is_kernel_store_record": {
+          "const": false
+        },
+        "checker_invoked_by_certificate_writer": {
+          "const": false
+        },
+        "checker_acceptance_or_promotion_implied": {
+          "const": false
+        },
+        "evidence_sufficiency_defaulted": {
+          "const": false
+        },
+        "certified_stop_authorized": {
+          "const": false
+        },
+        "certified_stop_declared": {
+          "const": false
+        },
+        "si_llm_001_closed": {
+          "const": false
+        },
+        "l2_or_part_b_gate_passed": {
+          "const": false
+        }
+      }
+    }
+  }
+}
