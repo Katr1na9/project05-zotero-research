@@ -1,0 +1,189 @@
+{
+  "artifact_id": "llm_editor_v0_8_l2_production_e_case_single_execute_activation_v0_1_20260725",
+  "artifact_type": "production_e_case_single_execute_activation",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "e78b0784b2e5f0fdca87a0bdf278d721ba6c0926",
+  "status": "activated_single_production_e_case_execute_authorized",
+  "authority_design": {
+    "artifact_id": "llm-editor-v0.8-l2-production-e-case-single-execute-authority-design-v0.1-20260725",
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-production-e-case-single-execute-authority-design-v0.1-20260725.json",
+    "sha256": "154eaa54f4387c0a0bfdbf01dba8130f0542ddb140444358da99d4c67d2ab1ee",
+    "status": "design_only_production_e_case_authority_not_activated"
+  },
+  "owner_approval": {
+    "artifact_id": "llm-editor-v0.8-l2-kernel-m3-e-case-schema-contract-review-response-v0.1-20260725",
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-m3-e-case-schema-contract-review-response-v0.1-20260725.json",
+    "sha256": "490a308abde413126dcbc5f2ed6c8ed0d19cc32c74fe8d5931f67895b9dc91f0",
+    "status": "accept_and_issue_new_effective_schema_and_contract_write_still_blocked",
+    "owner": "Kernel/M3*",
+    "overall_decision": "accept",
+    "e_case_write_authorized_by_response": false
+  },
+  "target": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "source_record_class": "kernel_claim_ir_intake_store",
+    "target_record_class": "e_case",
+    "e_case_target_id": "e_case:project05_depth2_public:pkg_73d77b55ef6a517a0dc528f7f3a89bd9:v0.1",
+    "operation": "construct_and_write_one_separately_typed_e_case_record"
+  },
+  "pinned_hashes": {
+    "authority_design_sha256": "154eaa54f4387c0a0bfdbf01dba8130f0542ddb140444358da99d4c67d2ab1ee",
+    "owner_response_sha256": "490a308abde413126dcbc5f2ed6c8ed0d19cc32c74fe8d5931f67895b9dc91f0",
+    "effective_e_case_schema_sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1",
+    "effective_e_case_write_contract_sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63",
+    "effective_consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+    "external_envelope_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "ingested_package_sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+    "source_store_record_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+    "source_store_receipt_sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565",
+    "e_case_write_executor_sha256": "f5f6c8c3fff56bb0c116a85f584657d6ef86eb759a0ceb1b63c56bc1dea2942b"
+  },
+  "selected_source": {
+    "store_record": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+      "sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "store_record_id": "kcisr_98aa4efb2a71a8466249148610ff4624",
+      "store_target_id": "kernel_claim_ir_intake_store:project05_depth2_public:pkg_73d77b55ef6a517a0dc528f7f3a89bd9:v0.1",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "surface_id": "project05_depth2_public",
+      "is_kernel_store_record": true,
+      "is_e_case": false
+    },
+    "sanitized_store_receipt": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565"
+    }
+  },
+  "transaction_contract": {
+    "e_case_target_id": "e_case:project05_depth2_public:pkg_73d77b55ef6a517a0dc528f7f3a89bd9:v0.1",
+    "idempotency_key": "ecase_idem_7a22b8bf5776ced913958da02d1a911b4c85b54fa19676abe9d8755e7b2dcea8",
+    "transaction_id_derivation": "ecase_txn_ + first_32_hex(sha256(effective_contract_sha256 NUL source_record_sha256 NUL e_case_target_id NUL activation_sha256_before))",
+    "atomic_all_or_nothing": true,
+    "target_empty_or_idempotently_equivalent_required": true,
+    "partial_write": false
+  },
+  "execute_ledger": {
+    "authorized": 1,
+    "maximum": 1,
+    "started": 1,
+    "consumed": 1,
+    "remaining": 0,
+    "retry": false,
+    "resume": false,
+    "fallback": false
+  },
+  "output_policy": {
+    "mode": "versioned_e_case_record_and_sanitized_receipt",
+    "e_case_record_path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json",
+    "sanitized_receipt_path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json",
+    "file_write": true,
+    "e_case_write": true,
+    "new_separately_typed_target": true,
+    "source_store_write": false,
+    "source_store_mutation_or_relabel": false,
+    "kernel_store_reexecution": false,
+    "checker_or_promotion": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "si_llm_001_closure": false,
+    "l2_or_part_b_change": false
+  },
+  "still_blocked": {
+    "second_e_case_execute": true,
+    "source_store_mutation_or_relabel": true,
+    "kernel_store_reexecution": true,
+    "checker_or_promotion": true,
+    "certificate": true,
+    "certified_stop": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "production_registration_execution": true,
+    "catalog_role_credit": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "execution_audit": {
+    "decision": "e_case_written_once_under_single_execute_authority",
+    "executed_date": "2026-07-25",
+    "executor_invocation_count": 1,
+    "process_start_consumed_single_attempt": true,
+    "activation_sha256_before": "bfd47a243ad7f47373f26f2936a9dcadf1dfded77ed50f685ed5a47f4e365e8c",
+    "runtime_pins": {
+      "e_case_write_executor_sha256": "f5f6c8c3fff56bb0c116a85f584657d6ef86eb759a0ceb1b63c56bc1dea2942b",
+      "effective_e_case_schema_sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1",
+      "effective_e_case_write_contract_sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63",
+      "owner_response_sha256": "490a308abde413126dcbc5f2ed6c8ed0d19cc32c74fe8d5931f67895b9dc91f0",
+      "source_store_record_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "source_store_receipt_sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565"
+    },
+    "execute_ledger_before": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "execute_ledger_after": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 1,
+      "consumed": 1,
+      "remaining": 0,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "outputs": {
+      "e_case_record": {
+        "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json",
+        "sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+        "e_case_id": "ec_a75ad3da6a9f164a3d3050014c8a1c2082056ea58993a7434b2a23a00ba69cba",
+        "is_e_case": true,
+        "is_kernel_store_record": false
+      },
+      "sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json",
+        "sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e"
+      }
+    },
+    "source_preservation": {
+      "source_store_record_bytes_unchanged": true,
+      "source_store_receipt_bytes_unchanged": true,
+      "source_store_record_is_kernel_store_record_remains_true": true,
+      "source_store_record_is_e_case_remains_false": true,
+      "source_package_id_unchanged": true,
+      "source_claim_ids_unchanged": true,
+      "source_claim_order_unchanged": true,
+      "source_claim_id_state_unchanged": true,
+      "source_admission_state_unchanged": true,
+      "source_kernel_state_unchanged": true,
+      "source_claim_content_unchanged": true,
+      "direct_rename_relabel_alias_or_in_place_conversion": false
+    },
+    "forbidden_side_effects": {
+      "source_store_write": false,
+      "source_store_mutation_or_relabel": false,
+      "kernel_store_reexecution": false,
+      "checker_or_promotion": false,
+      "certificate_generation": false,
+      "certified_stop": false,
+      "production_registration": false,
+      "si_llm_001_closure": false,
+      "catalog_role_credit_l2_change": false,
+      "part_b_elevation": false,
+      "m2_fit": false,
+      "four_family_llm_finetune": false
+    },
+    "no_key_or_secret_material": true,
+    "second_executor_invocation": false
+  }
+}
