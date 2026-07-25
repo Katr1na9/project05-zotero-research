@@ -1,0 +1,265 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-checker-owner-certificate-schema-contract-review-packet-v0.1-20260725",
+  "artifact_type": "kernel_checker_owner_certificate_schema_contract_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "10a193565cc86b48a573ec29cf4335d5bbdaa32f",
+  "status": "draft_kernel_checker_owner_certificate_schema_contract_review_packet_not_effective",
+  "submission": {
+    "requested_owner": "Kernel/Checker",
+    "drafting_track": "LLM-editor",
+    "drafting_track_role": "assisted_draft_author_only",
+    "purpose": "request review of a non-effective certificate target schema proposal and non-effective issue/write contract proposal",
+    "allowed_owner_decisions": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "this_packet_is_owner_approval": false,
+    "this_packet_is_effective_schema_or_contract": false,
+    "this_packet_authorizes_activation_or_execution": false
+  },
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "source_record_class": "e_case",
+    "target_record_class": "certificate",
+    "source_e_case_sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+    "certificate_generation_included": false,
+    "checker_invocation_or_promotion_included": false,
+    "certified_stop_included": false
+  },
+  "submitted_artifacts": {
+    "assisted_certificate_target_schema": {
+      "artifact_id": "certificate-target-schema-assisted-draft-v0.1-20260725",
+      "path": "schemas/certificate-record.schema.json",
+      "sha256": "7468a2ecbd4f7031ac1374eae68385d309cd3728b85faaf01462aa8cf10d3fad",
+      "schema_id": "https://project05.invalid/schemas/certificate-record.schema.json",
+      "status": "assisted_draft_not_effective_pending_kernel_checker_owner_review",
+      "effective": false,
+      "owner_approval_present": false,
+      "may_occupy_effective_schema_identity": false
+    },
+    "assisted_certificate_issue_write_contract": {
+      "artifact_id": "kernel-v0.8-certificate-issue-write-contract-assisted-draft-v0.1-20260725",
+      "path": "docs/kernel/kernel-v0.8-certificate-issue-write-contract-assisted-draft-v0.1-20260725.json",
+      "sha256": "fd269701d6957a1883cc62537632ffc7faf40f8bfabf88d71b4ef21a816cc964",
+      "status": "assisted_draft_not_effective_pending_kernel_checker_owner_review",
+      "effective": false,
+      "owner_approval_present": false,
+      "may_occupy_effective_contract_identity": false
+    }
+  },
+  "pinned_review_context": {
+    "production_certificate_authority_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-certificate-single-execute-authority-design-v0.1-20260725.json",
+      "sha256": "c4a2ed8298a4cf7126c13fc23d0515a9aaabe0e247b96c5b8a20f5f784414e3b",
+      "status_observed": "design_only_production_certificate_authority_not_activated"
+    },
+    "exact_e_case_record": {
+      "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json",
+      "sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+      "is_e_case_observed": true,
+      "is_kernel_store_record_observed": false
+    },
+    "sanitized_e_case_receipt": {
+      "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e"
+    },
+    "effective_e_case_schema": {
+      "path": "schemas/e-case-record-effective-v0.1.schema.json",
+      "sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1"
+    },
+    "effective_e_case_write_contract": {
+      "path": "docs/kernel/kernel-v0.8-e-case-write-contract-effective-v0.1-20260725.json",
+      "sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63"
+    },
+    "kernel_intake_store_record_separation_reference": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+      "sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "is_e_case_observed": false,
+      "is_certificate_observed": false
+    },
+    "existing_certificate_schema_inventory_candidate": {
+      "path": "schemas/certificate.schema.json",
+      "sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba",
+      "owner_metadata_present": false,
+      "effective_status_metadata_present": false,
+      "may_be_silently_promoted_to_effective": false
+    }
+  },
+  "review_summary": {
+    "proposed_schema_summary": "Define a new certificate record type with its own certificate identity and type flags, an exact source E_case record and receipt reference, provenance and transaction authority, an optional separately pinned Checker decision reference, and explicit false Checker-promotion-evidence-sufficiency-CERTIFIED_STOP-SI-L2 assertions.",
+    "proposed_contract_summary": "Define exact E_case-to-certificate mapping, source preservation, owner-defined certificate scope, optional separately authorized Checker decision input, fail-closed transaction and idempotency rules, and strict separation from E_case, intake store, Checker promotion, CERTIFIED_STOP, SI-LLM-001, L2, and Part B.",
+    "hard_boundary": "Certificate generation is not E_case writing, Kernel intake storage, Checker invocation or acceptance, evidence sufficiency by default, promotion, CERTIFIED_STOP, SI-LLM-001 closure, L2, or Part B elevation.",
+    "current_effective_certificate_schema_present": false,
+    "current_effective_certificate_issue_write_contract_present": false,
+    "activation_or_execution_requested_by_this_packet": false
+  },
+  "requested_kernel_checker_owner_decisions": [
+    {
+      "decision_id": "certificate_schema_shape",
+      "question": "Accept, request revision, or reject the independently typed assisted certificate schema shape?",
+      "accept_requires": [
+        "owner issues a new effective certificate schema at a new effective path",
+        "owner returns artifact_id version path SHA-256 status and approval record",
+        "assisted schema SHA is not reused as the effective identity"
+      ]
+    },
+    {
+      "decision_id": "source_e_case_identity",
+      "question": "Accept the exact E_case record and sanitized receipt pins as the eligible source identity, or provide replacement eligibility rules?",
+      "exact_source_record_sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+      "exact_source_receipt_sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e"
+    },
+    {
+      "decision_id": "e_case_to_certificate_mapping",
+      "question": "Accept or revise the proposed provenance-only E_case-to-certificate field mapping and source-preservation rules?"
+    },
+    {
+      "decision_id": "checker_decision_policy",
+      "question": "Does certificate issuance require a pre-existing Checker decision input; if yes, specify its owner-effective schema or contract, exact pin requirements, and separate invocation authority boundary?",
+      "default_if_owner_does_not_approve": "checker_decision_ref_remains_null_and_certificate_activation_remains_blocked",
+      "this_packet_authorizes_checker_invocation": false
+    },
+    {
+      "decision_id": "certificate_scope_and_evidence_semantics",
+      "question": "Define certificate scope and proof or evidence requirements without defaulting E_case presence to evidence sufficiency, Checker acceptance, or promotion."
+    },
+    {
+      "decision_id": "transaction_and_idempotency",
+      "question": "Accept or revise the proposed single-attempt atomic transaction, deterministic target identity, idempotency, collision, and failure-consumption semantics?"
+    },
+    {
+      "decision_id": "certified_stop_boundary",
+      "question": "Confirm certificate is not CERTIFIED_STOP and that STOP requires a different effective contract, executor, and authority.",
+      "required_confirmation": true
+    },
+    {
+      "decision_id": "effective_issue_write_contract",
+      "question": "Accept, request revision, or reject the assisted issue/write contract; if accepted, issue a new owner-effective contract at a new path with a new content SHA."
+    }
+  ],
+  "required_owner_response_envelope": {
+    "owner": "Kernel/Checker",
+    "overall_decision": "accept | request_revision | reject",
+    "decision_rationale_required": true,
+    "effective_certificate_schema_identity_if_accept": {
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "status": null
+    },
+    "effective_certificate_issue_write_contract_identity_if_accept": {
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "status": null
+    },
+    "owner_approval_record_identity_if_accept": {
+      "artifact_id": null,
+      "path": null,
+      "sha256": null,
+      "status": null
+    },
+    "source_eligibility_decision_required": true,
+    "checker_decision_policy_required": true,
+    "certified_stop_separation_confirmation_required": true,
+    "requested_revision_items_if_not_accept": [],
+    "accept_without_new_effective_paths_and_sha256_is_valid": false
+  },
+  "assisted_identity_prohibitions": {
+    "assisted_schema_sha256": "7468a2ecbd4f7031ac1374eae68385d309cd3728b85faaf01462aa8cf10d3fad",
+    "assisted_contract_sha256": "fd269701d6957a1883cc62537632ffc7faf40f8bfabf88d71b4ef21a816cc964",
+    "existing_inventory_schema_sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba",
+    "assisted_schema_sha_may_occupy_effective_schema_identity": false,
+    "assisted_contract_sha_may_occupy_effective_contract_identity": false,
+    "inventory_schema_may_be_effective_without_owner_record": false,
+    "owner_accept_comment_alone_makes_assisted_artifacts_effective": false,
+    "effective_artifacts_must_be_new_owner_issued_files": true
+  },
+  "decision_effect_boundaries": {
+    "accept_means_owner_may_issue_new_effective_artifacts": true,
+    "accept_makes_this_packet_an_activation": false,
+    "accept_makes_assisted_schema_effective": false,
+    "accept_makes_assisted_contract_effective": false,
+    "accept_authorizes_certificate_execution": false,
+    "accept_authorizes_checker_invocation_or_promotion": false,
+    "accept_authorizes_certified_stop": false,
+    "request_revision_authorizes_execution": false,
+    "reject_authorizes_execution": false
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "authorized": 0,
+    "maximum": 0,
+    "started": 0,
+    "consumed": 0,
+    "remaining": 0,
+    "certificate_generation_authorized": false,
+    "checker_invocation_authorized": false,
+    "checker_acceptance_or_promotion_authorized": false,
+    "certified_stop_authorized": false
+  },
+  "still_blocked": {
+    "owner_effective_certificate_schema": true,
+    "owner_effective_certificate_issue_write_contract": true,
+    "owner_approval_record": true,
+    "certificate_executor_implementation": true,
+    "certificate_activation": true,
+    "certificate_execution": true,
+    "checker_invocation": true,
+    "checker_acceptance_or_promotion": true,
+    "certified_stop": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "activation": false,
+    "certificate_executor_implementation": false,
+    "certificate_generation": false,
+    "checker_invocation": false,
+    "checker_acceptance_or_promotion": false,
+    "evidence_sufficiency_assertion": false,
+    "certified_stop": false,
+    "e_case_write_or_mutation": false,
+    "kernel_store_write_or_mutation": false,
+    "production_registration": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "assisted_artifact_effectivity": false
+  },
+  "review_boundary": {
+    "this_packet_is_review_material_only": true,
+    "this_packet_is_effective_schema_or_contract": false,
+    "this_packet_is_owner_approval": false,
+    "this_packet_is_activation": false,
+    "this_packet_is_executor": false,
+    "this_packet_is_certificate": false,
+    "this_packet_is_checker_decision_or_promotion": false,
+    "this_packet_is_certified_stop": false,
+    "this_packet_closes_si_llm_001": false,
+    "next_step_if_accept": "Kernel/Checker owner separately issues an approval response plus new effective schema and new effective issue/write contract with exact identities and SHA-256; no execution follows without later executor and PI activation authorization."
+  },
+  "audit_trail": {
+    "submitted_artifact_hashes_computed_from_file_bytes": true,
+    "review_context_rehashed_from_disk": true,
+    "inventory_certificate_schema_unchanged": true,
+    "code_changed_in_this_review_packet_turn": false,
+    "existing_schema_changed_in_this_review_packet_turn": false,
+    "fixture_changed_in_this_review_packet_turn": false,
+    "activation_created_in_this_review_packet_turn": false,
+    "certificate_generated_in_this_review_packet_turn": false,
+    "checker_invoked_in_this_review_packet_turn": false,
+    "certified_stop_effect_in_this_review_packet_turn": false,
+    "git_push_performed_in_this_review_packet_turn": false
+  }
+}
