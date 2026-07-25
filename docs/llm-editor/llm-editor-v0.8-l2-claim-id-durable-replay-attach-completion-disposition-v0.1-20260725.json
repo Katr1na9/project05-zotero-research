@@ -1,0 +1,168 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-durable-replay-attach-completion-disposition-v0.1-20260725",
+  "artifact_type": "claim_id_durable_replay_attach_completion_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "28131df8d3a49c6bc1c15c53c1659792117b9737",
+  "status": "draft_durable_replay_attach_completion_disposition_not_effective",
+  "surface_id": "project05_depth2_public",
+  "scope": {
+    "records_completed_capability_enablement": true,
+    "this_file_grants_new_execution": false,
+    "this_file_reactivates_any_ledger": false,
+    "this_file_authorizes_kernel_store_or_e_case": false
+  },
+  "pinned_capability": {
+    "authority_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-durable-replay-attach-authority-design-v0.1-20260725.json",
+      "sha256": "41a272e66ed30ea5b603fa5daeff9af1938d885786f79db74d6184797d155180",
+      "status": "design_only_claim_id_durable_replay_attach_authority_not_activated"
+    },
+    "exhausted_activation": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-durable-replay-attach-activation-v0.1-20260725.json",
+      "sha256": "0db85d4a98606a57fa0c0b115c5b10f471fab327fbf43455d22e763ba5c9cd7a",
+      "sha256_before": "57c9ec6e5db0a1297a32be05120ef6d241fcb58b60c734cee0e2a71482bee6ca",
+      "execute_ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      },
+      "attacher_invocation_count": 1
+    },
+    "sanitized_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-id-durable-replay-attach/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "5d585fa125e454e15b0f36c4a040ee139cd2aeb3198ff1da7c45166e954a3279",
+      "status": "durable_replay_attach_capability_enabled"
+    },
+    "bound_reference": {
+      "path": "docs/llm-editor/fixtures/claim-id-control-loop-reference/project05-depth2-public-v0.1/reference.json",
+      "sha256": "db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d"
+    }
+  },
+  "runtime_implementation": {
+    "attacher": {
+      "path": "src/compiler/llm/claim_id_durable_replay_attacher.py",
+      "executed_sha256": "eb3a425a59c3d74fcbb451db33c4128f76a7101dc1eda1dcfa06a0c98e294789",
+      "current_sha256": "58595b717dd577ee467f6fdd574cff695eb0604a05f3f022ba94aac65cdc2d81",
+      "post_execution_fail_closed_hardening": true,
+      "second_capability_activation_execution_performed": false
+    },
+    "controller_entrypoint": {
+      "path": "09-experiments/scripts/run_mvp.py",
+      "sha256": "0ffb60b2864d8aa35ba7d96ca2667413846c1d6c1c5021f19f7b8a5c9a801d76",
+      "opt_in_only": true
+    },
+    "planner_adapter": {
+      "path": "09-experiments/scripts/planner_runtime_adapter.py",
+      "sha256": "7e0cf78b0a74414af02e388496188f5e27cfa72a6ff143d32fd1da7763fbb9ef",
+      "sidecar_only": true
+    },
+    "historical_controller_loader": {
+      "path": "src/compiler/llm/claim_id_control_loop_reference_loader.py",
+      "sha256": "3bf033296a4aceb497f8563ef1321998bbe8deb47ad80b41698b9a02017514b9",
+      "historical_semantics_changed": false
+    },
+    "historical_planner_importer": {
+      "path": "src/compiler/llm/claim_id_planner_reference_importer.py",
+      "sha256": "00454a59223a9c5ba678dbe101b645649c67456b95159661dcf249ba6d0a8db9",
+      "historical_semantics_changed": false
+    }
+  },
+  "repeatable_attach_evidence": {
+    "capability_enablement_proof_attach_count": 2,
+    "first_provenance_sha256": "5123ef610b54bc999b9274766e847d4f461aab429cc2d4154314eaa1cbdf0904",
+    "second_provenance_sha256": "5123ef610b54bc999b9274766e847d4f461aab429cc2d4154314eaa1cbdf0904",
+    "provenance_stable": true,
+    "per_attach_ledger_consumed": false,
+    "historical_controller_activation_remains_exhausted": true,
+    "historical_planner_activation_remains_exhausted": true
+  },
+  "fixed_seed_comparison": {
+    "controller": {
+      "results_csv_baseline_sha256": "90c1eca26b951931301f9ac022a7b739a76c02347eaf1bc2157c7faf8d239cc7",
+      "results_csv_wired_sha256": "90c1eca26b951931301f9ac022a7b739a76c02347eaf1bc2157c7faf8d239cc7",
+      "results_csv_identical": true,
+      "traces_baseline_sha256": "2ac32bca46e8f309ec988b4fc9f2aa23538136b15c5c96b588d1aede683841e5",
+      "traces_wired_sha256": "2ac32bca46e8f309ec988b4fc9f2aa23538136b15c5c96b588d1aede683841e5",
+      "traces_identical": true,
+      "core_summary_baseline_sha256": "d9329d111bf4834316b98e926bad4a84bdd39761135c2eaff21a1e35d6d92cca",
+      "core_summary_wired_sha256": "d9329d111bf4834316b98e926bad4a84bdd39761135c2eaff21a1e35d6d92cca",
+      "core_summary_identical": true,
+      "only_additive_difference": "claim_id_mainline_reference"
+    },
+    "planner": {
+      "core_runtime_view_baseline_sha256": "4a1ad2b36077aa4511ea60137071bf6e31bc33a22308fc3451afc427e1c35c7e",
+      "core_runtime_view_wired_sha256": "4a1ad2b36077aa4511ea60137071bf6e31bc33a22308fc3451afc427e1c35c7e",
+      "core_runtime_view_identical": true,
+      "baseline_action_id": "A-high",
+      "wired_action_id": "A-high",
+      "action_identical": true,
+      "ml_features_identical": true,
+      "opaque_claim_ids_present_in_core_view": false
+    }
+  },
+  "test_evidence": [
+    {
+      "command": "python -m pytest -p no:cacheprovider tests/compiler_contract/test_claim_id_durable_replay_attacher.py tests/compiler_contract/test_claim_id_control_loop_reference_loader.py tests/compiler_contract/test_claim_id_planner_reference_importer.py 09-experiments/tests/test_planner_runtime_contract.py -q",
+      "passed": 27,
+      "failed": 0
+    },
+    {
+      "command": "python -m pytest -p no:cacheprovider tests/compiler_contract -q",
+      "passed": 115,
+      "subtests_passed": 75,
+      "failed": 0
+    },
+    {
+      "command": "python -m pytest -p no:cacheprovider 09-experiments/tests/test_planner_runtime_contract.py 09-experiments/tests/test_run_mvp.py -q",
+      "passed": 30,
+      "subtests_passed": 8,
+      "failed": 0
+    }
+  ],
+  "terminal_state": {
+    "durable_replay_attach_authorized": true,
+    "production_controller_import_wired": true,
+    "production_planner_import_wired": true,
+    "read_only_reference_only": true,
+    "algorithm_changed": false,
+    "claim_ids_enter_case_local_e1_vocabulary": false,
+    "claim_ids_enter_required_or_visible_claim_ids": false,
+    "claim_ids_enter_scoring_or_ml_features": false,
+    "production_registration_enabled": false,
+    "evidence_sufficiency_asserted": false,
+    "certified_stop_asserted": false,
+    "si_llm_001_closed": false
+  },
+  "still_blocked": {
+    "kernel_store": true,
+    "e_case": true,
+    "certificate": true,
+    "certified_stop": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b": true,
+    "m2": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "new_capability_activation": false,
+    "historical_import_reexecution": false,
+    "historical_ledger_reactivation": false,
+    "production_registration_switch_enablement": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_training_or_inference": false
+  }
+}
