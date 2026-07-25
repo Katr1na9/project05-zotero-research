@@ -1,0 +1,235 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-mainline-shortest-path-completion-disposition-v0.1-20260725",
+  "artifact_type": "claim_id_mainline_shortest_path_completion_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "ffcc8ba74064ec7b3ade3df796d61916fc9eaf75",
+  "status": "draft_disposition_not_effective",
+  "surface_id": "project05_depth2_public",
+  "certificate_surface": "vacant",
+  "scope": {
+    "purpose": "record the completed shortest read-only Claim-ID mainline provenance path",
+    "disposition_only": true,
+    "effective_runtime_authority": false,
+    "grants_new_execution": false,
+    "creates_or_reactivates_activation": false,
+    "durable_replay_attach_authorized": false,
+    "kernel_store_or_e_case_authorized": false
+  },
+  "pinned_completed_chain": {
+    "effective_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "status": "effective_consumer_contract_semantics_only_ingestion_not_authorized"
+    },
+    "claim_ir_ingestion": {
+      "versioned_fixture": {
+        "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+        "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+        "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "admitted_under_separate_authority",
+        "kernel_state": "ingested_under_separate_authority",
+        "is_kernel_store_record": false,
+        "is_e_case": false,
+        "is_certificate": false
+      },
+      "versioned_sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json",
+        "sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de",
+        "receipt_scope": "sanitized_in_memory_test_only",
+        "production_kernel_store_write": false
+      }
+    },
+    "mainline_handoff": {
+      "design": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mainline-handoff-design-v0.1-20260724.json",
+        "sha256": "cc6829709b359e2cac72ad30c00ac78ce7e2989a66f2b2e20d7eac4b98452e80"
+      },
+      "implementation": {
+        "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+        "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+        "production_registration_enabled": false
+      },
+      "payload_semantics": "opaque_claim_identity_read_only"
+    },
+    "production_mainline_registration": {
+      "registration_record": {
+        "path": "docs/llm-editor/fixtures/claim-id-mainline-registration/project05-depth2-public-v0.1/registration-record.json",
+        "sha256": "7c0e9f5c09774610746c76ec6e2bda92c79ad9a54351cf6e3afc04ebe3f0e875",
+        "status": "registered_exact_read_only_handoff_reference_under_single_execute_authority"
+      },
+      "sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/claim-id-mainline-registration/project05-depth2-public-v0.1/sanitized-receipt.json",
+        "sha256": "edb1a654ee3b80f8b874b02f8364526e9f28e35120cff2e3f7ef70d74f2d228a"
+      }
+    },
+    "control_loop_reference": {
+      "path": "docs/llm-editor/fixtures/claim-id-control-loop-reference/project05-depth2-public-v0.1/reference.json",
+      "sha256": "db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d",
+      "status": "bound_registered_claim_id_reference_read_only"
+    },
+    "controller_import": {
+      "sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/claim-id-controller-import-wiring/project05-depth2-public-v0.1/sanitized-receipt.json",
+        "sha256": "5b74a22a9dd6b2718a947ff88f7ed252ccc57060ec1b05a9656922870f2af19d",
+        "status": "production_controller_import_wired_read_only_reference"
+      }
+    },
+    "planner_import": {
+      "sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/claim-id-planner-import-wiring/project05-depth2-public-v0.1/sanitized-receipt.json",
+        "sha256": "0373d53cc56fe8efa8c2d35d74a1ab7949490f9a5fc1bc5e25759ae5351e7b31",
+        "status": "production_planner_import_wired_read_only_reference"
+      }
+    },
+    "registration_kill_switch": {
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "file_sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+      "symbol": "PRODUCTION_REGISTRATION_ENABLED",
+      "value": false
+    },
+    "schema_context": {
+      "external_envelope": {
+        "path": "schemas/claim-ir-external-envelope.schema.json",
+        "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+      },
+      "kernel_owned_schema": {
+        "path": "schemas/claim-ir-kernel.schema.json",
+        "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+      }
+    }
+  },
+  "exhausted_single_use_activations": {
+    "kernel_claim_ir_ingestion": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-claim-ir-ingestion-single-execute-activation-v0.1-20260725.json",
+      "sha256": "708229bef9e00d13e623d384c87ab8dcde27f34cb9e0becbbb5b96c3b006f06e",
+      "execute_ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    },
+    "production_mainline_registration": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-claim-id-mainline-registration-single-execute-activation-v0.1-20260725.json",
+      "sha256": "8b6c85ae5ab25d144cfb9de15d6ee6e00a24860e6ac78cd698c6840033cd63cd",
+      "execute_ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    },
+    "control_loop_reference_binding": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-control-loop-reference-wiring-single-execute-activation-v0.1-20260725.json",
+      "sha256": "428fc4552768b1d1f98e1336a1a7c74be8f7ad0e16b0eed42f0b1defb89fa4f2",
+      "execute_ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    },
+    "controller_import": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-controller-import-wiring-single-execute-activation-v0.1-20260725.json",
+      "sha256": "9a9b561f5aecdc60f8a605c4918f123309d6117561f0450a654f08b6e622d682",
+      "execute_ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    },
+    "planner_import": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-planner-import-wiring-single-execute-activation-v0.1-20260725.json",
+      "sha256": "336c9ddc4a0d2b5b58bd025adfd9af42debf1d1ca2e5bd62642f8e25e579de58",
+      "execute_ledger": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    }
+  },
+  "terminal_state": {
+    "production_controller_import_wired": true,
+    "production_planner_import_wired": true,
+    "read_only_opaque_claim_id_provenance_only": true,
+    "algorithm_changed": false,
+    "production_registration_enabled": false,
+    "claim_ids_enter_case_local_e1_vocabulary": false,
+    "claim_ids_enter_coverage_or_scoring": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generated": false,
+    "evidence_sufficiency_asserted": false,
+    "certified_stop_asserted": false,
+    "si_llm_001_closed": false
+  },
+  "activation_replay_boundary": {
+    "all_listed_single_use_activations_exhausted": true,
+    "committed_activation_can_drive_loader_again": false,
+    "same_activation_retry_resume_or_fallback_permitted": false,
+    "automatic_provenance_attach_on_every_run_currently_authorized": false,
+    "automatic_provenance_attach_on_every_run_requires_separate_durable_receipt_or_replay_authority": true,
+    "durable_replay_attach_implementation_present": false,
+    "durable_replay_attach_status": "blocked_pending_separate_design_activation_and_authorization"
+  },
+  "separation_assertions": {
+    "registration_is_kernel_store": false,
+    "registration_is_e_case": false,
+    "registration_is_certificate": false,
+    "read_only_provenance_is_evidence_sufficiency": false,
+    "read_only_provenance_is_certified_stop": false,
+    "read_only_provenance_is_l2_gate_pass": false,
+    "this_disposition_closes_si_llm_001": false
+  },
+  "still_blocked": {
+    "durable_replay_attach": true,
+    "kernel_store": true,
+    "e_case": true,
+    "certificate": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b": true,
+    "m2": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "new_activation": false,
+    "new_execution": false,
+    "durable_replay_attach": false,
+    "production_registration_switch_enablement": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_training_or_inference": false,
+    "git_push": false
+  }
+}
