@@ -166,6 +166,41 @@ def load_claim_id_mainline_reference(
     }
 
 
+def load_claim_id_durable_replay_reference(
+    reference_path: Path,
+    capability_receipt_path: Path,
+    capability_receipt_sha256: str,
+) -> dict[str, Any]:
+    """Load repeatable provenance from committed exhausted-state evidence."""
+
+    repo_root = Path(__file__).resolve().parents[2]
+    repo_root_text = str(repo_root)
+    inserted_repo_root = repo_root_text not in sys.path
+    if inserted_repo_root:
+        sys.path.insert(0, repo_root_text)
+    try:
+        from src.compiler.llm.claim_id_durable_replay_attacher import (
+            load_claim_id_durable_replay_attachment,
+            validate_durable_replay_attachment,
+        )
+
+        loaded = load_claim_id_durable_replay_attachment(
+            reference_path,
+            capability_receipt_path,
+            capability_receipt_sha256,
+            repo_root=repo_root,
+        )
+        provenance = validate_durable_replay_attachment(loaded)
+    finally:
+        if inserted_repo_root:
+            sys.path.remove(repo_root_text)
+    return {
+        "provenance": provenance,
+        "capability_receipt_sha256": capability_receipt_sha256,
+        "per_attach_ledger_consumed": False,
+    }
+
+
 def attach_claim_id_mainline_reference(
     summary: dict[str, Any],
     provenance: dict[str, Any] | None,
@@ -2269,6 +2304,26 @@ def main() -> None:
             "provenance import."
         ),
     )
+    parser.add_argument(
+        "--claim-id-durable-replay-reference-path",
+        type=Path,
+        help=(
+            "Exact versioned opaque Claim-ID reference for repeatable "
+            "read-only provenance attachment."
+        ),
+    )
+    parser.add_argument(
+        "--claim-id-durable-replay-receipt-path",
+        type=Path,
+        help=(
+            "Versioned durable-replay capability receipt bound to exhausted "
+            "controller and planner import activations."
+        ),
+    )
+    parser.add_argument(
+        "--claim-id-durable-replay-receipt-sha256",
+        help="Exact lowercase SHA-256 of the durable-replay capability receipt.",
+    )
     args = parser.parse_args()
     if args.cost_regime in {"rubric", "measured"} and args.cost_profile is None:
         parser.error(f"--cost-profile is required for --cost-regime {args.cost_regime}")
@@ -2280,6 +2335,26 @@ def main() -> None:
         parser.error(
             "--claim-id-reference-path and "
             "--claim-id-reference-activation-path must be provided together"
+        )
+    durable_replay_values = (
+        args.claim_id_durable_replay_reference_path,
+        args.claim_id_durable_replay_receipt_path,
+        args.claim_id_durable_replay_receipt_sha256,
+    )
+    if any(value is not None for value in durable_replay_values) and not all(
+        value is not None for value in durable_replay_values
+    ):
+        parser.error(
+            "--claim-id-durable-replay-reference-path, "
+            "--claim-id-durable-replay-receipt-path, and "
+            "--claim-id-durable-replay-receipt-sha256 must be provided together"
+        )
+    if args.claim_id_reference_path is not None and (
+        args.claim_id_durable_replay_reference_path is not None
+    ):
+        parser.error(
+            "historical single-execute import and durable replay attach are "
+            "mutually exclusive"
         )
     if args.cost_regime != "legacy" and args.output_dir.exists():
         if not args.output_dir.is_dir() or any(args.output_dir.iterdir()):
@@ -2300,10 +2375,23 @@ def main() -> None:
         if args.claim_id_reference_path is not None
         else None
     )
+    claim_id_durable_replay_import = (
+        load_claim_id_durable_replay_reference(
+            args.claim_id_durable_replay_reference_path,
+            args.claim_id_durable_replay_receipt_path,
+            args.claim_id_durable_replay_receipt_sha256,
+        )
+        if args.claim_id_durable_replay_reference_path is not None
+        else None
+    )
     claim_id_mainline_reference = (
         claim_id_reference_import["provenance"]
         if claim_id_reference_import is not None
-        else None
+        else (
+            claim_id_durable_replay_import["provenance"]
+            if claim_id_durable_replay_import is not None
+            else None
+        )
     )
     if args.examples_dir is not None:
         run_cases(

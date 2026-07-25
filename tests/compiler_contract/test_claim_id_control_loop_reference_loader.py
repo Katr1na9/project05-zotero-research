@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import importlib.util
 import json
 import tempfile
@@ -86,6 +87,9 @@ class ClaimIDControlLoopReferenceLoaderTests(unittest.TestCase):
         activation = copy.deepcopy(self.activation)
         activation["execute_ledger"] = copy.deepcopy(LEDGER_BEFORE)
         activation["execution_audit"] = None
+        activation["pinned_hashes"]["controller_entrypoint_sha256"] = (
+            hashlib.sha256(RUN_MVP_PATH.read_bytes()).hexdigest()
+        )
         return activation
 
     def load_with(self, activation: dict):

@@ -111,6 +111,33 @@ def load_claim_id_mainline_reference(
             sys.path.remove(root_text)
 
 
+def load_claim_id_durable_replay_attachment(
+    reference_path: Path,
+    capability_receipt_path: Path,
+    capability_receipt_sha256: str,
+) -> Any:
+    """Load a repeatable sealed planner-side provenance attachment."""
+
+    root_text = str(ROOT)
+    inserted_root = root_text not in sys.path
+    if inserted_root:
+        sys.path.insert(0, root_text)
+    try:
+        from src.compiler.llm.claim_id_durable_replay_attacher import (
+            load_claim_id_durable_replay_attachment as load_attachment,
+        )
+
+        return load_attachment(
+            reference_path,
+            capability_receipt_path,
+            capability_receipt_sha256,
+            repo_root=ROOT,
+        )
+    finally:
+        if inserted_root:
+            sys.path.remove(root_text)
+
+
 def _attach_claim_id_mainline_reference(
     view: dict[str, Any],
     claim_id_reference_import: Any,
@@ -142,12 +169,43 @@ def _attach_claim_id_mainline_reference(
     return attached
 
 
+def _attach_claim_id_durable_replay_reference(
+    view: dict[str, Any],
+    durable_replay_attachment: Any,
+    forbidden: set[str],
+) -> dict[str, Any]:
+    """Attach a revalidated durable sidecar outside planning inputs."""
+
+    from src.compiler.llm.claim_id_durable_replay_attacher import (
+        ClaimIDDurableReplayAttachError,
+        validate_durable_replay_attachment,
+    )
+
+    try:
+        provenance = validate_durable_replay_attachment(
+            durable_replay_attachment
+        )
+    except ClaimIDDurableReplayAttachError as exc:
+        raise ValueError(
+            "claim_id_mainline_reference requires authorized durable replay"
+        ) from exc
+    hits = recursive_key_hits(provenance, forbidden)
+    if hits:
+        raise ValueError(
+            f"Claim-ID durable replay sidecar leaked forbidden keys: {hits}"
+        )
+    attached = copy.deepcopy(view)
+    attached["claim_id_mainline_reference"] = provenance
+    return attached
+
+
 def build_runtime_view(
     config: dict[str, Any],
     state: dict[str, Any],
     actions: list[dict[str, Any]],
     contract_bundle: dict[str, Any] | None = None,
     claim_id_reference_import: Any | None = None,
+    claim_id_durable_replay_attachment: Any | None = None,
 ) -> dict[str, Any]:
     bundle = contract_bundle or load_contract()
     contract = bundle["document"]
@@ -169,10 +227,23 @@ def build_runtime_view(
     hits = recursive_key_hits(view, forbidden)
     if hits:
         raise ValueError(f"Planner runtime allowlist leaked forbidden keys: {hits}")
+    if (
+        claim_id_reference_import is not None
+        and claim_id_durable_replay_attachment is not None
+    ):
+        raise ValueError(
+            "single-execute import and durable replay attach are mutually exclusive"
+        )
     if claim_id_reference_import is not None:
         view = _attach_claim_id_mainline_reference(
             view,
             claim_id_reference_import,
+            forbidden,
+        )
+    if claim_id_durable_replay_attachment is not None:
+        view = _attach_claim_id_durable_replay_reference(
+            view,
+            claim_id_durable_replay_attachment,
             forbidden,
         )
     return view
@@ -186,6 +257,7 @@ def build_ml_feature_row(
     feature_columns: list[str],
     contract_bundle: dict[str, Any] | None = None,
     claim_id_reference_import: Any | None = None,
+    claim_id_durable_replay_attachment: Any | None = None,
 ) -> dict[str, float]:
     bundle = contract_bundle or load_contract()
     frozen_columns = list(bundle["document"]["ml_feature_contract"]["columns"])
@@ -197,6 +269,7 @@ def build_ml_feature_row(
         [action],
         bundle,
         claim_id_reference_import,
+        claim_id_durable_replay_attachment,
     )
     features = feature_builder(view["config"], view["state"], view["actions"][0])
     if set(features) != set(frozen_columns):
