@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/policy-approval.schema.json",
+  "title": "Project05 v0.8 Policy Approval Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "policy_id",
+    "policy_version",
+    "policy_hash",
+    "decision",
+    "approved_by",
+    "approved_at",
+    "authority_source",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"type": "string", "minLength": 1},
+    "policy_id": {"type": "string", "minLength": 1},
+    "policy_version": {"type": "string", "pattern": "^0\\.8\\.[0-9]+$"},
+    "policy_hash": {"$ref": "#/$defs/sha256"},
+    "decision": {"enum": ["PENDING", "APPROVED", "REJECTED"]},
+    "approved_by": {"type": ["string", "null"], "minLength": 1},
+    "approved_at": {"type": ["string", "null"], "format": "date-time"},
+    "authority_source": {"type": ["string", "null"], "minLength": 1},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"decision": {"const": "APPROVED"}}, "required": ["decision"]},
+      "then": {
+        "properties": {
+          "approved_by": {"type": "string", "minLength": 1},
+          "approved_at": {"type": "string", "format": "date-time"},
+          "authority_source": {"type": "string", "minLength": 1}
+        }
+      },
+      "else": {
+        "properties": {
+          "approved_by": {"type": "null"},
+          "approved_at": {"type": "null"},
+          "authority_source": {"type": "null"}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

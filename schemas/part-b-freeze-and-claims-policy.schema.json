@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-freeze-and-claims-policy.schema.json",
+  "title": "Project05 Part B B9 freeze and claims policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "freeze_contract_authority",
+    "audit_contract_authority",
+    "claim_boundary_contract_authority",
+    "execution_authority",
+    "holdout_release_authority",
+    "holdout_data_access_authority",
+    "holdout_label_access_authority",
+    "holdout_result_access_authority",
+    "statistical_analysis_execution_authority",
+    "source_selection_authority",
+    "source_authorization_authority",
+    "connector_execution_authority",
+    "retrieval_authority",
+    "download_authority",
+    "planner_implementation_admission_authority",
+    "planner_execution_authority",
+    "sampling_authority",
+    "baseline_execution_authority",
+    "evaluation_execution_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "claim_release_authority",
+    "certificate_authority",
+    "stop_authority",
+    "llm_integration",
+    "evidence_ceiling",
+    "bindings",
+    "gate_states",
+    "holdout_gate",
+    "runtime_boundary",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-freeze-and-claims-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B9_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B9_FREEZE_AND_CLAIMS"},
+    "freeze_contract_authority": {"const": true},
+    "audit_contract_authority": {"const": true},
+    "claim_boundary_contract_authority": {"const": true},
+    "execution_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "holdout_data_access_authority": {"const": false},
+    "holdout_label_access_authority": {"const": false},
+    "holdout_result_access_authority": {"const": false},
+    "statistical_analysis_execution_authority": {"const": false},
+    "source_selection_authority": {"const": false},
+    "source_authorization_authority": {"const": false},
+    "connector_execution_authority": {"const": false},
+    "retrieval_authority": {"const": false},
+    "download_authority": {"const": false},
+    "planner_implementation_admission_authority": {"const": false},
+    "planner_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "baseline_execution_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "claim_release_authority": {"const": false},
+    "certificate_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "llm_integration": {"const": "FORBIDDEN"},
+    "evidence_ceiling": {"const": "CONTRACT_CONSISTENCY_ONLY"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["freeze_record_hash"],
+      "properties": {
+        "freeze_record_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "gate_states": {"$ref": "#/$defs/gateStates"},
+    "holdout_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_decision",
+        "failure_behavior",
+        "contract_unseals_holdout"
+      ],
+      "properties": {
+        "default_decision": {"const": "DENY"},
+        "failure_behavior": {"const": "FAIL_CLOSED_NO_ACCESS"},
+        "contract_unseals_holdout": {"const": false}
+      }
+    },
+    "runtime_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_source_access",
+        "holdout_access",
+        "statistical_analysis",
+        "connector_execution",
+        "planner_execution",
+        "sampling",
+        "baseline_execution",
+        "evaluation_execution",
+        "llm_integration",
+        "experiment_access"
+      ],
+      "properties": {
+        "real_source_access": {"const": false},
+        "holdout_access": {"const": false},
+        "statistical_analysis": {"const": false},
+        "connector_execution": {"const": false},
+        "planner_execution": {"const": false},
+        "sampling": {"const": false},
+        "baseline_execution": {"const": false},
+        "evaluation_execution": {"const": false},
+        "llm_integration": {"const": false},
+        "experiment_access": {"const": false}
+      }
+    },
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "gateStates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PB-SI-006",
+        "PB-B5-SI-001",
+        "PB-B8-SI-004",
+        "HOLDOUT_RELEASE",
+        "STATISTICAL_EXECUTION",
+        "IMPLEMENTATION_ADMISSION"
+      ],
+      "properties": {
+        "PB-SI-006": {
+          "const": "OPEN_BLOCKS_CONNECTOR_DATA_HOLDOUT_ACCESS"
+        },
+        "PB-B5-SI-001": {
+          "const": "OPEN_BLOCKS_IMPLEMENTATION_ADMISSION_AND_EXECUTION"
+        },
+        "PB-B8-SI-004": {
+          "const": "OPEN_REQUIRES_SEPARATE_EXECUTION_EVIDENCE"
+        },
+        "HOLDOUT_RELEASE": {"const": "OPEN_DEFAULT_DENY"},
+        "STATISTICAL_EXECUTION": {"const": "OPEN_NOT_AUTHORIZED"},
+        "IMPLEMENTATION_ADMISSION": {"const": "OPEN_NOT_ESTABLISHED"}
+      }
+    }
+  }
+}

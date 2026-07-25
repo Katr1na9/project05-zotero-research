@@ -1,0 +1,59 @@
+schema_version: "0.8.0"
+contract_id: part-b-federation-contract-v0.8
+contract_version: "0.8.0"
+status: B1_CONTRACT_ONLY
+authorized_slice: B1_FEDERATION_SCHEMAS
+execution_authority: false
+domain_kind: FINITE_REGISTERED_FAMILIES
+semantic_families:
+  - family_id: execution
+    family_version: "0.8.0"
+    source_schema_ids:
+      - abstract.process-event.v1
+    allowed_predicates:
+      - process.executed
+      - process.accessed_object
+    default_modality: observed
+    default_epistemic_role: case_evidence
+    world_semantics:
+      mode: CLOSED_BOUNDED
+      zero_hit_semantics: ABSENCE_ONLY_WHEN_COMPLETE
+      completeness_contract:
+        scope: abstract-host-process-events
+        time_window:
+          start_inclusive: "2026-01-01T00:00:00Z"
+          end_exclusive: "2026-01-02T00:00:00Z"
+        snapshot_identity: abstract-execution-snapshot-001
+        completeness_conditions:
+          - source-manifest-present
+          - declared-time-window-covered
+          - record-sequence-gap-free
+        absence_semantics: ZERO_HIT_EXCLUDES_IN_SCOPE_RECORD
+  - family_id: external_intel
+    family_version: "0.8.0"
+    source_schema_ids:
+      - abstract.report-fragment.v1
+    allowed_predicates:
+      - report.attributes_activity
+      - report.mentions_indicator
+    default_modality: reported
+    default_epistemic_role: background_intelligence
+    world_semantics:
+      mode: OPEN_WORLD
+      zero_hit_semantics: UNKNOWN_NOT_ABSENCE
+      completeness_contract: null
+pointer_policy:
+  source_identity_required: true
+  record_identity_required: true
+  content_hash_required: true
+  range_semantics_required: true
+  provenance_rewrite: FORBIDDEN
+epistemic_separation:
+  separate_fields:
+    - modality
+    - truth_status
+    - epistemic_role
+    - certification_authority
+  adapter_may_assign_certification_authority: false
+  authority_gate: KERNEL_POLICY_OUTSIDE_ADAPTER
+hash: "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"

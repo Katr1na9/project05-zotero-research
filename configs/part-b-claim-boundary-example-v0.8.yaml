@@ -1,0 +1,73 @@
+schema_version: "0.8.0"
+boundary_id: part-b-claim-boundary-example-v0.8
+boundary_version: "0.8.0"
+status: B9_CONTRACT_ONLY
+authorized_slice: B9_FREEZE_AND_CLAIMS
+evidence_ceiling: CONTRACT_CONSISTENCY_ONLY
+bindings:
+  freeze_record_hash: "sha256:92182dbe5b58163b35f113831847a6349dba1c1f19cfd3a42a352b52a6a968ab"
+  freeze_and_claims_policy_hash: "sha256:bd04bac10be6e9b049a700eccf8d7f1e771cec89dbf9f6fce412145f40609999"
+allowed_claims:
+  - claim_id: B0_B8_FROZEN_HASHES_REPLAY
+    decision: ALLOW_CONTRACT_ONLY
+    evidence_level: CONTRACT_CONSISTENCY_ONLY
+  - claim_id: B9_SCHEMAS_VALIDATE
+    decision: ALLOW_CONTRACT_ONLY
+    evidence_level: CONTRACT_CONSISTENCY_ONLY
+  - claim_id: B9_CONTRACTS_INTERNALLY_CONSISTENT
+    decision: ALLOW_CONTRACT_ONLY
+    evidence_level: CONTRACT_CONSISTENCY_ONLY
+  - claim_id: B9_UNKNOWN_CLAIMS_FAIL_CLOSED
+    decision: ALLOW_CONTRACT_ONLY
+    evidence_level: CONTRACT_CONSISTENCY_ONLY
+denied_claims:
+  - claim_id: EMPIRICAL_VALIDITY_ESTABLISHED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: EXTERNAL_VALIDITY_ESTABLISHED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: PERFORMANCE_SUPERIORITY_ESTABLISHED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: GLOBAL_OPTIMALITY_ESTABLISHED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: HOLDOUT_RELEASED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: HOLDOUT_ANALYZED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: STATISTICAL_ANALYSIS_EXECUTED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: REAL_SOURCE_AUTHORIZED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: PLANNER_IMPLEMENTATION_ADMITTED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: PLANNER_EXECUTED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: SAMPLING_EXECUTED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: SCALARIZED_RANKING_VALID
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: CERTIFICATE_ISSUED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+  - claim_id: CERTIFIED_STOP_AUTHORIZED
+    decision: DENY
+    evidence_level: NOT_ESTABLISHED
+unknown_claim_behavior: DENY_UNKNOWN_CLAIM
+claim_inference_authority: false
+claim_release_authority: false
+limitations:
+  - Allowed claims describe contract and hash consistency only.
+  - Denied claims require evidence or authority that B9 does not possess.
+  - Unknown claims fail closed and cannot be inferred or released.
+hash: "sha256:0ee41ab84b171d7b4789a3b76d7971e15ed3e8f5d6501889b4d486b7e70722a8"

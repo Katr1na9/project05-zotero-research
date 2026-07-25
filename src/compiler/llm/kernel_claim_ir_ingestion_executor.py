@@ -31,7 +31,7 @@ EFFECTIVE_CONSUMER_CONTRACT_PATH = (
     "kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json"
 )
 EFFECTIVE_CONSUMER_CONTRACT_SHA256 = (
-    "21766e5d4885170baabfd76eda4e053e2f03778dc32ece778fd3374123009af6"
+    "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
 )
 EFFECTIVE_CONSUMER_CONTRACT_ARTIFACT_ID = (
     "kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725"
@@ -47,7 +47,7 @@ ADMITTED_FIXTURE_PATH = (
 ADMITTED_FIXTURE_SHA256 = (
     "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32"
 )
-SCHEMA_PATH = "schemas/claim-ir-kernel.schema.json"
+SCHEMA_PATH = "schemas/claim-ir-external-envelope.schema.json"
 SCHEMA_SHA256 = (
     "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
 )

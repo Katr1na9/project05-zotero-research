@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b8-manifest.schema.json",
+  "title": "Project05 Part B B8 contract manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "holdout_preregistration_contract_authority",
+    "statistical_analysis_contract_authority",
+    "analysis_envelope_contract_authority",
+    "holdout_data_access_authority",
+    "holdout_label_access_authority",
+    "holdout_result_access_authority",
+    "statistical_analysis_execution_authority",
+    "source_selection_authority",
+    "source_authorization_authority",
+    "connector_execution_authority",
+    "retrieval_authority",
+    "download_authority",
+    "planner_execution_authority",
+    "sampling_authority",
+    "evaluation_execution_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "stop_authority",
+    "bindings",
+    "artifacts",
+    "proof_boundary",
+    "closed_slices",
+    "llm_integration",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"const": "part-b-b8-manifest-v0.8"},
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B8_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B8_HOLDOUT_ANALYSIS"},
+    "holdout_preregistration_contract_authority": {"const": true},
+    "statistical_analysis_contract_authority": {"const": true},
+    "analysis_envelope_contract_authority": {"const": true},
+    "holdout_data_access_authority": {"const": false},
+    "holdout_label_access_authority": {"const": false},
+    "holdout_result_access_authority": {"const": false},
+    "statistical_analysis_execution_authority": {"const": false},
+    "source_selection_authority": {"const": false},
+    "source_authorization_authority": {"const": false},
+    "connector_execution_authority": {"const": false},
+    "retrieval_authority": {"const": false},
+    "download_authority": {"const": false},
+    "planner_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "bindings": {
+      "type": "object",
+      "minProperties": 27,
+      "maxProperties": 27,
+      "propertyNames": {
+        "enum": [
+          "b1_federation_contract_hash",
+          "b1_adapter_conformance_hash",
+          "b1_manifest_hash",
+          "b2_stochastic_catalog_hash",
+          "b2_tv_policy_hash",
+          "b2_world_pair_delta_decision_hash",
+          "b2_manifest_hash",
+          "b3_cost_instrumentation_policy_hash",
+          "b3_manifest_hash",
+          "b4_baseline_preregistration_hash",
+          "b4_baseline_isolation_policy_hash",
+          "b4_manifest_hash",
+          "b5_planner_public_state_example_hash",
+          "b5_planner_decision_example_hash",
+          "b5_planner_interface_policy_hash",
+          "b5_bounded_evaluation_hash",
+          "b5_manifest_hash",
+          "b6_closed_loop_policy_hash",
+          "b6_episode_example_hash",
+          "b6_feedback_example_hash",
+          "b6_preregistration_hash",
+          "b6_manifest_hash",
+          "b7_connector_policy_hash",
+          "b7_descriptor_example_hash",
+          "b7_source_authorization_example_hash",
+          "b7_provenance_envelope_example_hash",
+          "b7_manifest_hash"
+        ]
+      },
+      "additionalProperties": {"$ref": "#/$defs/sha256"}
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "holdout_analysis_policy_hash",
+        "holdout_preregistration_hash",
+        "statistical_analysis_plan_hash"
+      ],
+      "properties": {
+        "holdout_analysis_policy_hash": {
+          "const": "sha256:542ed51380c7dc3e5ba1553d3c80b1a55e5ca5b008cb38d3df831fdee828b603"
+        },
+        "holdout_preregistration_hash": {
+          "const": "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"
+        },
+        "statistical_analysis_plan_hash": {
+          "const": "sha256:57e24fd84df55adf44fbcae6c0dbf9248750c0901a6075ad845962c11b5e0627"
+        }
+      }
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_consistency_only",
+        "preregistration_contract_validated",
+        "holdout_split_validated",
+        "holdout_data_access",
+        "holdout_label_access",
+        "holdout_result_access",
+        "statistical_analysis_execution",
+        "external_validity",
+        "performance_validity",
+        "superiority_claim"
+      ],
+      "properties": {
+        "contract_consistency_only": {"const": true},
+        "preregistration_contract_validated": {"const": true},
+        "holdout_split_validated": {"const": false},
+        "holdout_data_access": {"const": false},
+        "holdout_label_access": {"const": false},
+        "holdout_result_access": {"const": false},
+        "statistical_analysis_execution": {"const": false},
+        "external_validity": {"const": false},
+        "performance_validity": {"const": false},
+        "superiority_claim": {"const": false}
+      }
+    },
+    "closed_slices": {"const": ["B9"]},
+    "llm_integration": {"const": "FORBIDDEN"},
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "hash": {
+      "const": "sha256:4e6e4ec552d3a9c20c8c68e76766205cb1b2ecdf6dfbfe95866085e0b56c593b"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

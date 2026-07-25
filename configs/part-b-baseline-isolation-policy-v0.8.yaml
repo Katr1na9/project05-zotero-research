@@ -1,0 +1,50 @@
+schema_version: "0.8.0"
+policy_id: part-b-baseline-isolation-policy-v0.8
+policy_version: "0.8.0"
+status: B4_CONTRACT_ONLY
+authorized_slice: B4_BASELINE_PREREG
+execution_authority: false
+sampling_authority: false
+planner_authority: false
+performance_claim_authority: false
+partition_order: [TRAIN, TUNE, EVALUATION, HOLDOUT]
+partitions:
+  - partition_id: TRAIN
+    purpose: Model fitting for preregistered learning baselines only
+    baseline_read_access: TRAINING_ONLY
+    outcome_release: TRAINING_PIPELINE_ONLY
+  - partition_id: TUNE
+    purpose: Preregistered parameter and threshold selection only
+    baseline_read_access: TUNING_ONLY
+    outcome_release: TUNING_PIPELINE_ONLY
+  - partition_id: EVALUATION
+    purpose: Primary comparison after complete registry freeze
+    baseline_read_access: PUBLIC_STATE_ONLY
+    outcome_release: AFTER_REGISTRY_FREEZE
+  - partition_id: HOLDOUT
+    purpose: Sealed external analysis reserved for B8 authority
+    baseline_read_access: SEALED_UNTIL_FINAL_ANALYSIS
+    outcome_release: AFTER_FINAL_FREEZE
+isolation:
+  mutually_disjoint: true
+  holdout_visible_before_final_freeze: false
+  evaluation_outcomes_flow_to_training: false
+  holdout_outcomes_flow_to_any_model: false
+registration_freeze:
+  must_precede_evaluation: true
+  roster_mutation_after_first_outcome: false
+  parameter_mutation_after_first_outcome: false
+  endpoint_mutation_after_first_outcome: false
+  seed_mutation_after_first_outcome: false
+  tie_break_mutation_after_first_outcome: false
+historical_artifacts:
+  may_supply_registration_parameters: false
+  forbidden_path_prefixes: [09-experiments/]
+  prohibited_material:
+    [HISTORICAL_RESULT, REALIZED_ACTION_OUTCOME, HOLDOUT_LABEL, ORACLE_WORLD_ID]
+  violation_behavior: FAIL_CLOSED_REGISTRATION_REJECTED
+limitations:
+  - This policy is a non-executing isolation contract, not a data splitter.
+  - No dataset, connector, sampler, baseline runtime, or holdout analysis is authorized.
+  - B8 must separately authorize any holdout release or statistical analysis.
+hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"

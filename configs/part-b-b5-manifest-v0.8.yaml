@@ -1,0 +1,34 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b5-manifest-v0.8
+manifest_version: "0.8.0"
+status: B5_CONTRACT_ONLY
+authorized_slice: B5_PLANNER_INTERFACE
+planner_interface_authority: true
+bounded_evaluation_contract_authority: true
+planner_execution_authority: false
+evaluation_execution_authority: false
+sampling_authority: false
+production_capture_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+stop_authority: NONE
+bindings:
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  b4_manifest_hash: "sha256:2649b2a9067858d5fe2fa4c2f9d6386408384448910c97ee4eb89f1817893afc"
+  planner_public_state_example_hash: "sha256:42efd17661a1335f3c84c2c4efbea4de8107087d099dc987a902d20ded50deae"
+  planner_decision_example_hash: "sha256:144cd24c0d6e3906ee31d25cdcc629f20901648d58204ee030f397daca23da6d"
+  planner_interface_policy_hash: "sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343"
+  bounded_evaluation_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+proof_boundary:
+  contract_consistency_only: true
+  implementation_validation: false
+  performance_validity: false
+  superiority_claim: false
+closed_slices: [B6, B7, B8, B9]
+llm_integration: FORBIDDEN
+limitations:
+  - B5 establishes public-state and action-ID-only contracts but runs no Planner.
+  - No implementation is admitted and legacy M3star remains unverified.
+  - B5 grants no evaluation, sampling, scalarization, performance, or stop authority.
+hash: "sha256:bbe8bde7e6ab4695fc6a03233a8c45f5d205c77b3bed6f2816a89c8f7616c069"

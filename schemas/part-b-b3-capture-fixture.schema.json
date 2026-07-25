@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b3-capture-fixture.schema.json",
+  "title": "Project05 B3 synthetic capture fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "fixture_id",
+    "source_kind",
+    "measurement_class",
+    "description",
+    "b3_policy_hash",
+    "real_os_access",
+    "billing_connector_access",
+    "production_adapter_authority",
+    "events",
+    "catalog_ceiling_eligible",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "fixture_id": {"const": "part-b-b3-capture-fixture-v0.8"},
+    "source_kind": {"const": "FIXTURE_SYNTHETIC"},
+    "measurement_class": {"const": "NOT_PRODUCTION_MEASUREMENT"},
+    "description": {"type": "string", "minLength": 1},
+    "b3_policy_hash": {"$ref": "#/$defs/sha256"},
+    "real_os_access": {"const": false},
+    "billing_connector_access": {"const": false},
+    "production_adapter_authority": {"const": false},
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/event"}
+    },
+    "catalog_ceiling_eligible": {"const": false},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "event": {
+      "oneOf": [
+        {"$ref": "#/$defs/human"},
+        {"$ref": "#/$defs/wall"},
+        {"$ref": "#/$defs/cpu"},
+        {"$ref": "#/$defs/memory"},
+        {"$ref": "#/$defs/scan"},
+        {"$ref": "#/$defs/billed"},
+        {"$ref": "#/$defs/auth"}
+      ]
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonnegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "human": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_type", "duration_ns"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "HUMAN_ACTIVITY"},
+        "duration_ns": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    },
+    "wall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_type", "start_ns", "end_ns"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "EXECUTOR_WALL_INTERVAL"},
+        "start_ns": {"$ref": "#/$defs/nonnegativeInteger"},
+        "end_ns": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    },
+    "cpu": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_type", "cpu_delta_ns"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "CPU_ACCOUNTING"},
+        "cpu_delta_ns": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    },
+    "memory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_type", "byte_nanoseconds"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "MEMORY_INTEGRAL"},
+        "byte_nanoseconds": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "event_type",
+        "bytes_scanned",
+        "records_scanned"
+      ],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "SOURCE_SCAN"},
+        "bytes_scanned": {"$ref": "#/$defs/nonnegativeInteger"},
+        "records_scanned": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    },
+    "billed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "event_type",
+        "currency_code",
+        "currency_microunits"
+      ],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "BILLED_USAGE"},
+        "currency_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "currency_microunits": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    },
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_type", "duration_ns"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/event_id"},
+        "event_type": {"const": "AUTHORIZATION_ACTIVITY"},
+        "duration_ns": {"$ref": "#/$defs/nonnegativeInteger"}
+      }
+    }
+  }
+}

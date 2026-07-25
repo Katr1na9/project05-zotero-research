@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b9-manifest.schema.json",
+  "title": "Project05 Part B B9 contract manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "freeze_contract_authority",
+    "audit_contract_authority",
+    "claim_boundary_contract_authority",
+    "execution_authority",
+    "holdout_release_authority",
+    "holdout_data_access_authority",
+    "holdout_label_access_authority",
+    "holdout_result_access_authority",
+    "statistical_analysis_execution_authority",
+    "source_selection_authority",
+    "source_authorization_authority",
+    "connector_execution_authority",
+    "retrieval_authority",
+    "download_authority",
+    "planner_implementation_admission_authority",
+    "planner_execution_authority",
+    "sampling_authority",
+    "baseline_execution_authority",
+    "evaluation_execution_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "claim_release_authority",
+    "certificate_authority",
+    "stop_authority",
+    "llm_integration",
+    "evidence_ceiling",
+    "artifacts",
+    "proof_boundary",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"const": "part-b-b9-manifest-v0.8"},
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B9_CONTRACT_ONLY"},
+    "authorized_slice": {"const": "B9_FREEZE_AND_CLAIMS"},
+    "freeze_contract_authority": {"const": true},
+    "audit_contract_authority": {"const": true},
+    "claim_boundary_contract_authority": {"const": true},
+    "execution_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "holdout_data_access_authority": {"const": false},
+    "holdout_label_access_authority": {"const": false},
+    "holdout_result_access_authority": {"const": false},
+    "statistical_analysis_execution_authority": {"const": false},
+    "source_selection_authority": {"const": false},
+    "source_authorization_authority": {"const": false},
+    "connector_execution_authority": {"const": false},
+    "retrieval_authority": {"const": false},
+    "download_authority": {"const": false},
+    "planner_implementation_admission_authority": {"const": false},
+    "planner_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "baseline_execution_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "claim_release_authority": {"const": false},
+    "certificate_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "llm_integration": {"const": "FORBIDDEN"},
+    "evidence_ceiling": {"const": "CONTRACT_CONSISTENCY_ONLY"},
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "freeze_record_hash",
+        "freeze_and_claims_policy_hash",
+        "claim_boundary_hash"
+      ],
+      "properties": {
+        "freeze_record_hash": {"$ref": "#/$defs/sha256"},
+        "freeze_and_claims_policy_hash": {"$ref": "#/$defs/sha256"},
+        "claim_boundary_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_consistency_only",
+        "frozen_hashes_replayed",
+        "schema_contracts_validated",
+        "external_validity",
+        "performance_validity",
+        "superiority_claim",
+        "global_optimality_claim",
+        "holdout_validated",
+        "statistical_analysis_executed"
+      ],
+      "properties": {
+        "contract_consistency_only": {"const": true},
+        "frozen_hashes_replayed": {"const": true},
+        "schema_contracts_validated": {"const": true},
+        "external_validity": {"const": false},
+        "performance_validity": {"const": false},
+        "superiority_claim": {"const": false},
+        "global_optimality_claim": {"const": false},
+        "holdout_validated": {"const": false},
+        "statistical_analysis_executed": {"const": false}
+      }
+    },
+    "limitations": {"$ref": "#/$defs/limitations"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

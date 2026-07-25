@@ -1,0 +1,21 @@
+schema_version: "0.8.0"
+case_id: TWIN-COUNTEREXAMPLE-001
+target_level: initial_foothold
+candidate_q: H1
+base: SAT
+support: SAT
+alternative: SAT
+checker_status: COUNTEREXAMPLE_FOUND
+system_status: CONTINUE
+mindiff_disagreement:
+  support_world: H1
+  alternative_world: H3
+distinguishing_predicates:
+  - authentication_origin:H3
+  - credential_activity:H1
+allowed_actions:
+  - query_auth_H1_1000_1015
+  - query_logon_origin_H3
+forbidden_actions:
+  - oracle_reveal_true_initial_foothold
+  - use_hidden_recoverable_claim_ids

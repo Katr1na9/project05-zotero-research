@@ -1,0 +1,43 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b8-holdout-deny-audit-manifest-v0.8
+manifest_version: "0.8.0"
+status: B8_HOLDOUT_DENY_AUDIT
+authorized_slice: B8_HOLDOUT_DENY_AUDIT
+claim_ceiling: HOLDOUT_DENY_AUDIT_ONLY
+default_decision: DENY
+release_decision: DENY
+holdout_data_access_authority: false
+holdout_label_access_authority: false
+holdout_result_access_authority: false
+statistical_analysis_execution_authority: false
+performance_claim_authority: false
+stop_authority: NONE
+bindings:
+  holdout_analysis_policy_hash: "sha256:542ed51380c7dc3e5ba1553d3c80b1a55e5ca5b008cb38d3df831fdee828b603"
+  holdout_preregistration_hash: "sha256:6af52503f38ff70fc640d8e1313ce8d7f02cf6f79bf23f5cc2a8b3bf5ba38342"
+  holdout_analysis_envelope_hash: "sha256:6126bd2145b1a05c91bf53aa81c599992a787d0dd6a43847f5a67f0bb07a07ed"
+  b8_manifest_hash: "sha256:4e6e4ec552d3a9c20c8c68e76766205cb1b2ecdf6dfbfe95866085e0b56c593b"
+open_gates:
+  PB-B8-SI-001: OPEN
+  PB-B8-SI-002: OPEN
+  PB-B8-SI-003: OPEN
+  PB-B8-SI-004: OPEN
+  PB-SI-006: DENY
+  PB-B5-SI-001: NOT_ESTABLISHED
+  CERTIFIED_STOP: NONE
+access_boundary:
+  holdout_data_loaded: false
+  holdout_labels_loaded: false
+  holdout_results_loaded: false
+  statistics_computed: false
+proof_boundary:
+  contract_consistency_only: true
+  holdout_deny_audit_validated: true
+  holdout_data_access: false
+  holdout_label_access: false
+  holdout_result_access: false
+  statistical_analysis_execution: false
+  external_validity: false
+  performance_validity: false
+  superiority_claim: false
+hash: "sha256:d4fff2da1821098f9c990ed2f3ea8d1e3640c0f70255ad07fbb1ea17986ea747"

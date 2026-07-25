@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b2-sampler-stub-manifest.schema.json",
+  "title": "Part B B2 local sampler stub manifest v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "claim_ceiling",
+    "pb_b2_si_002_state",
+    "pb_b2_si_003_state",
+    "pb_si_006_state",
+    "pb_b5_si_001_state",
+    "holdout_release",
+    "stop_authority",
+    "local_fixture_sampler_authority",
+    "production_sampling_authority",
+    "real_source_access_authority",
+    "connector_execution_authority",
+    "holdout_release_authority",
+    "planner_execution_authority",
+    "estimated_model_admission_authority",
+    "certificate_authority",
+    "bindings",
+    "frozen_artifacts_modified",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {"const": "part-b-b2-sampler-stub-manifest-v0.8"},
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B2_SAMPLER_STUB_LOCAL_ONLY"},
+    "authorized_slice": {"const": "B2_SAMPLER_STUB_LOCAL_FIXTURE_ONLY"},
+    "claim_ceiling": {"const": "CONTRACT_CONSISTENCY_ONLY"},
+    "pb_b2_si_002_state": {
+      "const": "CLOSED_LOCAL_STUB_REPRODUCIBILITY_ONLY_REMAINDER_OPEN"
+    },
+    "pb_b2_si_003_state": {
+      "const": "OPEN_BLOCKS_EMPIRICAL_MODEL_ADMISSION"
+    },
+    "pb_si_006_state": {"const": "OPEN_DEFAULT_DENY"},
+    "pb_b5_si_001_state": {"const": "OPEN_DEFAULT_DENY"},
+    "holdout_release": {"const": "DENY"},
+    "stop_authority": {"const": "NONE"},
+    "local_fixture_sampler_authority": {"const": true},
+    "production_sampling_authority": {"const": false},
+    "real_source_access_authority": {"const": false},
+    "connector_execution_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "planner_execution_authority": {"const": false},
+    "estimated_model_admission_authority": {"const": false},
+    "certificate_authority": {"const": false},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stochastic_catalog_hash",
+        "exact_finite_decision_hash",
+        "sampler_policy_hash",
+        "fixture_hash"
+      ],
+      "properties": {
+        "stochastic_catalog_hash": {"$ref": "#/$defs/hash"},
+        "exact_finite_decision_hash": {"$ref": "#/$defs/hash"},
+        "sampler_policy_hash": {"$ref": "#/$defs/hash"},
+        "fixture_hash": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "frozen_artifacts_modified": {"const": false},
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

@@ -43,7 +43,7 @@ def planner_descriptor(projection: dict) -> dict:
     package = compile_public_projection(projection, repo_root=REPO_ROOT)
     present = {claim["source_field"] for claim in package["claims"]}
     schema_fields = json.loads(
-        (REPO_ROOT / "schemas/claim-ir-kernel.schema.json").read_text(encoding="utf-8")
+        (REPO_ROOT / "schemas/claim-ir-external-envelope.schema.json").read_text(encoding="utf-8")
     )["$defs"]["source_field"]["enum"]
     return {
         "surface_id": SURFACE_ID,

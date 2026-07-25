@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b2-sampler-stub-trace.schema.json",
+  "title": "Part B B2 local sampler trace v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "request_id",
+    "trace_id",
+    "source_scope",
+    "simulated",
+    "admitted_case_evidence",
+    "catalog_ceiling_eligible",
+    "action_id",
+    "world_id",
+    "seed_commitment",
+    "trial_budget",
+    "catalog_hash",
+    "policy_hash",
+    "fixture_hash",
+    "generator",
+    "outcome_sequence",
+    "outcome_counts",
+    "resource_trace"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "status": {"const": "COMPLETED"},
+    "request_id": {"$ref": "#/$defs/hash"},
+    "trace_id": {"$ref": "#/$defs/hash"},
+    "source_scope": {"const": "FROZEN_B2_FIXTURE_CATALOG_ONLY"},
+    "simulated": {"const": true},
+    "admitted_case_evidence": {"const": false},
+    "catalog_ceiling_eligible": {"const": false},
+    "action_id": {
+      "type": "string",
+      "pattern": "^B2-DESIGN-STOCHASTIC-[0-9]{3}$"
+    },
+    "world_id": {"type": "string", "minLength": 1},
+    "seed_commitment": {"$ref": "#/$defs/hash"},
+    "trial_budget": {"type": "integer", "minimum": 1, "maximum": 100000},
+    "catalog_hash": {"$ref": "#/$defs/hash"},
+    "policy_hash": {"$ref": "#/$defs/hash"},
+    "fixture_hash": {"$ref": "#/$defs/hash"},
+    "generator": {"$ref": "#/$defs/generator"},
+    "outcome_sequence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100000,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "outcome_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "patternProperties": {
+        "^[A-Z][A-Z0-9_-]*$": {"type": "integer", "minimum": 1}
+      }
+    },
+    "resource_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "trials_requested",
+        "trials_completed",
+        "random_draw_count",
+        "failure_kind"
+      ],
+      "properties": {
+        "status": {"const": "COMPLETED"},
+        "trials_requested": {"type": "integer", "minimum": 1},
+        "trials_completed": {"type": "integer", "minimum": 1},
+        "random_draw_count": {"type": "integer", "minimum": 1},
+        "failure_kind": {"type": "null"}
+      }
+    }
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "version",
+        "deterministic_replay",
+        "counter_origin",
+        "uniform_mapping"
+      ],
+      "properties": {
+        "algorithm": {"const": "SHA256_COUNTER_V1"},
+        "version": {"const": "1.0.0"},
+        "deterministic_replay": {"const": true},
+        "counter_origin": {"const": 0},
+        "uniform_mapping": {"const": "UINT256_OVER_2_POW_256"}
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+schema_version: "0.8.0"
+policy_id: part-b-si008-dual-track-deny-policy-v0.8
+status: SI008_DUAL_TRACK_SEPARATION_DENY
+authorized_slice: PB-SI-008_DUAL_TRACK_DENY
+part_b_status: OUTSIDE_AUTHORIZED_TRACK_DENY
+experiment_track_status: MAY_PROCEED_UNDER_SEPARATE_AUTHORITY
+pb_si_008_status: NOT_OPENED
+decision_boundary:
+  experiment_track_only: NO_PART_B_ADMISSION_REQUEST
+  part_b_elevation: DENY
+  reference_handling: CLASSIFY_ONLY_NEVER_DEREFERENCE
+  experiment_interference: NO_INTERFERENCE_SEPARATE_AUTHORITY_REQUIRED
+  llm_invocation: false
+  experiment_artifact_read: false
+adjacent_gates:
+  holdout_release: DENY
+  pb_si_006_download: DENY
+  pb_b5_execution: NOT_ESTABLISHED
+  pb_b8_si_004: OPEN
+  stop_authority: NONE
+authority_boundary:
+  part_b_evidence_authority: false
+  part_b_claim_authority: false
+  part_b_authority_grant: false
+  part_b_pass_condition_authority: false
+  llm_execution_authority: false
+  experiment_artifact_access_authority: false
+reason_codes:
+  no_part_b_admission_request: SI008-DUAL-000_NO_PART_B_ADMISSION_REQUEST
+  part_b_elevation_denied: SI008-DUAL-001_PART_B_ELEVATION_DENIED
+  request_invalid: SI008-DUAL-002_REQUEST_INVALID
+  unknown_field: SI008-DUAL-003_UNKNOWN_FIELD
+hash: "sha256:c104d2f05ea354a8eb2310d78d0de1e76a2db9729004189f3340503d5df13092"

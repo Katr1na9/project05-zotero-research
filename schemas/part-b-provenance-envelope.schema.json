@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-provenance-envelope.schema.json",
+  "title": "Project05 Part B B7 non-executed provenance envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "envelope_id",
+    "envelope_version",
+    "status",
+    "authorized_slice",
+    "bindings",
+    "input_provenance",
+    "pointer",
+    "source_family",
+    "source_schema",
+    "modality",
+    "truth_status",
+    "epistemic_role",
+    "certification_authority",
+    "world_semantics",
+    "authority_boundary",
+    "execution_boundary",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "envelope_id": {"const": "b7-provenance-fixture-001"},
+    "envelope_version": {"const": "0.8.0"},
+    "status": {"const": "B7_CONTRACT_FIXTURE_ONLY"},
+    "authorized_slice": {"const": "B7_BROAD_CONNECTORS"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_hash",
+        "descriptor_id",
+        "descriptor_hash",
+        "b1_adapter_conformance_hash"
+      ],
+      "properties": {
+        "policy_hash": {
+          "const": "sha256:43c6270078e03ac1764d16c41871a97a09df3a626c060ceebdecc06682b064c3"
+        },
+        "descriptor_id": {"const": "b7-contract-fixture-tabular-001"},
+        "descriptor_hash": {
+          "const": "sha256:bc3f2934eb65868ba5db3ac8a0d8bbff7d766271eece9094c68183ce8919ac22"
+        },
+        "b1_adapter_conformance_hash": {
+          "const": "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a"
+        }
+      }
+    },
+    "input_provenance": {"$ref": "#/$defs/pointer"},
+    "pointer": {"$ref": "#/$defs/pointer"},
+    "source_family": {"const": "execution"},
+    "source_schema": {"const": "abstract.process-event.v1"},
+    "modality": {"const": "observed"},
+    "truth_status": {"const": "unassessed"},
+    "epistemic_role": {"const": "case_evidence"},
+    "certification_authority": {"$ref": "#/$defs/certificationAuthority"},
+    "world_semantics": {"$ref": "#/$defs/worldSemantics"},
+    "authority_boundary": {"$ref": "#/$defs/authorityBoundary"},
+    "execution_boundary": {"$ref": "#/$defs/executionBoundary"},
+    "hash": {
+      "const": "sha256:f595cdee0a6c51f7a702e540bab71205f2b28a9701d991c214e28f1af8940ac9"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "start", "end", "end_semantics"],
+      "properties": {
+        "kind": {"enum": ["ROWS", "BYTES"]},
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1},
+        "end_semantics": {"const": "EXCLUSIVE"}
+      }
+    },
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "record_id",
+        "content_hash",
+        "range",
+        "range_semantics"
+      ],
+      "properties": {
+        "source_id": {"const": "abstract-b7-source-not-authorized"},
+        "record_id": {"const": "abstract-b7-record-001"},
+        "content_hash": {
+          "const": "sha256:16c57acae47d1d172e5da2149add72b5e197dfdf6d093eb448ab13f29020158c"
+        },
+        "range": {"$ref": "#/$defs/range"},
+        "range_semantics": {
+          "enum": ["ROWS_HALF_OPEN", "BYTES_HALF_OPEN"]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "range": {
+                "properties": {"kind": {"const": "ROWS"}},
+                "required": ["kind"]
+              }
+            },
+            "required": ["range"]
+          },
+          "then": {
+            "properties": {
+              "range_semantics": {"const": "ROWS_HALF_OPEN"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "range": {
+                "properties": {"kind": {"const": "BYTES"}},
+                "required": ["kind"]
+              }
+            },
+            "required": ["range"]
+          },
+          "then": {
+            "properties": {
+              "range_semantics": {"const": "BYTES_HALF_OPEN"}
+            }
+          }
+        }
+      ]
+    },
+    "certificationAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "levels", "basis_rule_id", "policy_hash"],
+      "properties": {
+        "allowed": {"const": false},
+        "levels": {"type": "array", "maxItems": 0},
+        "basis_rule_id": {"type": "null"},
+        "policy_hash": {"type": "null"}
+      }
+    },
+    "worldSemantics": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "zero_hit_semantics",
+            "completeness_attestation"
+          ],
+          "properties": {
+            "mode": {"const": "OPEN_WORLD"},
+            "zero_hit_semantics": {"const": "UNKNOWN_NOT_ABSENCE"},
+            "completeness_attestation": {"type": "null"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "zero_hit_semantics",
+            "completeness_attestation"
+          ],
+          "properties": {
+            "mode": {"const": "CLOSED_BOUNDED"},
+            "zero_hit_semantics": {
+              "const": "ABSENCE_ONLY_WHEN_SEPARATELY_PROVEN_COMPLETE"
+            },
+            "completeness_attestation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["attestation_id", "attestation_hash"],
+              "properties": {
+                "attestation_id": {"type": "string", "minLength": 1},
+                "attestation_hash": {"$ref": "#/$defs/sha256"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_admission_authority",
+        "world_elimination_authority",
+        "certificate_authority",
+        "system_status_authority",
+        "certified_stop_authority"
+      ],
+      "properties": {
+        "claim_admission_authority": {"const": false},
+        "world_elimination_authority": {"const": false},
+        "certificate_authority": {"const": false},
+        "system_status_authority": {"const": false},
+        "certified_stop_authority": {"const": false}
+      }
+    },
+    "executionBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network_access",
+        "credential_use",
+        "retrieval",
+        "download",
+        "connector_execution"
+      ],
+      "properties": {
+        "network_access": {"const": false},
+        "credential_use": {"const": false},
+        "retrieval": {"const": false},
+        "download": {"const": false},
+        "connector_execution": {"const": false}
+      }
+    }
+  }
+}

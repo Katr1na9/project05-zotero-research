@@ -1,0 +1,50 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b9-manifest-v0.8
+manifest_version: "0.8.0"
+status: B9_CONTRACT_ONLY
+authorized_slice: B9_FREEZE_AND_CLAIMS
+freeze_contract_authority: true
+audit_contract_authority: true
+claim_boundary_contract_authority: true
+execution_authority: false
+holdout_release_authority: false
+holdout_data_access_authority: false
+holdout_label_access_authority: false
+holdout_result_access_authority: false
+statistical_analysis_execution_authority: false
+source_selection_authority: false
+source_authorization_authority: false
+connector_execution_authority: false
+retrieval_authority: false
+download_authority: false
+planner_implementation_admission_authority: false
+planner_execution_authority: false
+sampling_authority: false
+baseline_execution_authority: false
+evaluation_execution_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+claim_release_authority: false
+certificate_authority: false
+stop_authority: NONE
+llm_integration: FORBIDDEN
+evidence_ceiling: CONTRACT_CONSISTENCY_ONLY
+artifacts:
+  freeze_record_hash: "sha256:92182dbe5b58163b35f113831847a6349dba1c1f19cfd3a42a352b52a6a968ab"
+  freeze_and_claims_policy_hash: "sha256:bd04bac10be6e9b049a700eccf8d7f1e771cec89dbf9f6fce412145f40609999"
+  claim_boundary_hash: "sha256:0ee41ab84b171d7b4789a3b76d7971e15ed3e8f5d6501889b4d486b7e70722a8"
+proof_boundary:
+  contract_consistency_only: true
+  frozen_hashes_replayed: true
+  schema_contracts_validated: true
+  external_validity: false
+  performance_validity: false
+  superiority_claim: false
+  global_optimality_claim: false
+  holdout_validated: false
+  statistical_analysis_executed: false
+limitations:
+  - B9 closes only the contract inventory and claim-boundary package.
+  - No unresolved execution, source, implementation, or holdout gate is closed.
+  - No empirical claim, certificate, system status, or CERTIFIED_STOP is issued.
+hash: "sha256:6cff911409da42f66b3fef1e25cf555f72f6620f5fd713bdf3bc16bcf50c563e"

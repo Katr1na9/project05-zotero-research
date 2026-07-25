@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-planner-implementation-identity.schema.json",
+  "title": "Part B B5 planner implementation identity v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "implementation_id",
+    "implementation_version",
+    "implementation_kind",
+    "execution_requested",
+    "identity_inputs",
+    "identity_hashes",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "implementation_id": {
+      "const": "part_b_b5_planner_admission_skeleton_v0.8"
+    },
+    "implementation_version": {"const": "0.8.0"},
+    "implementation_kind": {
+      "const": "ADMISSION_SKELETON_NONEXECUTING"
+    },
+    "execution_requested": {"const": false},
+    "identity_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_tree",
+        "dependency_lock",
+        "parameter_manifest",
+        "feature_provenance",
+        "runtime_conformance"
+      ],
+      "properties": {
+        "source_tree": {"$ref": "#/$defs/sourceTree"},
+        "dependency_lock": {"$ref": "#/$defs/dependencyLock"},
+        "parameter_manifest": {"$ref": "#/$defs/parameterManifest"},
+        "feature_provenance": {"$ref": "#/$defs/featureProvenance"},
+        "runtime_conformance": {"$ref": "#/$defs/runtimeConformance"}
+      }
+    },
+    "identity_hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_tree_hash",
+        "dependency_lock_hash",
+        "parameter_manifest_hash",
+        "feature_provenance_hash",
+        "runtime_conformance_hash"
+      ],
+      "properties": {
+        "source_tree_hash": {"$ref": "#/$defs/hash"},
+        "dependency_lock_hash": {"$ref": "#/$defs/hash"},
+        "parameter_manifest_hash": {"$ref": "#/$defs/hash"},
+        "feature_provenance_hash": {"$ref": "#/$defs/hash"},
+        "runtime_conformance_hash": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "sourceTree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "baseline_commit",
+        "authorized_runtime_paths",
+        "forbidden_runtime_paths"
+      ],
+      "properties": {
+        "basis": {"const": "AUTHORIZED_ALLOWLIST_AND_BASELINE"},
+        "baseline_commit": {
+          "const": "868708cd12663a90b34a60d67b669b734c3720ef"
+        },
+        "authorized_runtime_paths": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "src/scope/part_b_b5_planner_admission.py"}
+          ],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "forbidden_runtime_paths": {"$ref": "#/$defs/nonEmptyUniqueStrings"}
+      }
+    },
+    "dependencyLock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_dependencies",
+        "repository_dependencies",
+        "external_dependencies"
+      ],
+      "properties": {
+        "runtime_dependencies": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "repository_dependencies": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "external_dependencies": {
+          "type": "array",
+          "maxItems": 0,
+          "items": false
+        }
+      }
+    },
+    "parameterManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semantics", "parameters", "trained_state"],
+      "properties": {
+        "semantics": {"const": "NO_TRAINED_OR_TUNABLE_PARAMETERS"},
+        "parameters": {
+          "type": "array",
+          "maxItems": 0,
+          "items": false
+        },
+        "trained_state": {"const": false}
+      }
+    },
+    "featureProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_inputs", "forbidden_inputs"],
+      "properties": {
+        "allowed_inputs": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+        "forbidden_inputs": {"$ref": "#/$defs/nonEmptyUniqueStrings"}
+      }
+    },
+    "runtimeConformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "function",
+        "deterministic",
+        "allowed_output",
+        "forbidden_outputs"
+      ],
+      "properties": {
+        "module": {"const": "src.scope.part_b_b5_planner_admission"},
+        "function": {"const": "evaluate_admission"},
+        "deterministic": {"const": true},
+        "allowed_output": {"const": "ADMISSION_RECORD_ONLY"},
+        "forbidden_outputs": {"$ref": "#/$defs/nonEmptyUniqueStrings"}
+      }
+    }
+  }
+}

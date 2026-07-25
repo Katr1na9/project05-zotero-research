@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-si008-dual-track-deny-record.schema.json",
+  "title": "Part B PB-SI-008 dual-track separation decision record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "record_version",
+    "request",
+    "part_b_status",
+    "experiment_track_status",
+    "pb_si_008_status",
+    "part_b_decision",
+    "experiment_track_decision",
+    "reason_code",
+    "experiment_artifact_accessed",
+    "llm_invoked",
+    "holdout_release",
+    "pb_si_006_download",
+    "pb_b5_execution",
+    "pb_b8_si_004",
+    "stop_authority",
+    "part_b_evidence_authority",
+    "part_b_claim_authority",
+    "part_b_authority_grant",
+    "part_b_pass_condition_authority",
+    "llm_execution_authority",
+    "experiment_artifact_access_authority",
+    "record_hash",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_version": {
+      "const": "0.8.0"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "part_b_status": {
+      "const": "OUTSIDE_AUTHORIZED_TRACK_DENY"
+    },
+    "experiment_track_status": {
+      "const": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY"
+    },
+    "pb_si_008_status": {
+      "const": "NOT_OPENED"
+    },
+    "part_b_decision": {
+      "enum": [
+        "NO_PART_B_ADMISSION_REQUEST",
+        "DENY"
+      ]
+    },
+    "experiment_track_decision": {
+      "const": "NO_INTERFERENCE_SEPARATE_AUTHORITY_REQUIRED"
+    },
+    "reason_code": {
+      "enum": [
+        "SI008-DUAL-000_NO_PART_B_ADMISSION_REQUEST",
+        "SI008-DUAL-001_PART_B_ELEVATION_DENIED",
+        "SI008-DUAL-002_REQUEST_INVALID",
+        "SI008-DUAL-003_UNKNOWN_FIELD"
+      ]
+    },
+    "experiment_artifact_accessed": {
+      "const": false
+    },
+    "llm_invoked": {
+      "const": false
+    },
+    "holdout_release": {
+      "const": "DENY"
+    },
+    "pb_si_006_download": {
+      "const": "DENY"
+    },
+    "pb_b5_execution": {
+      "const": "NOT_ESTABLISHED"
+    },
+    "pb_b8_si_004": {
+      "const": "OPEN"
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "part_b_evidence_authority": {
+      "const": false
+    },
+    "part_b_claim_authority": {
+      "const": false
+    },
+    "part_b_authority_grant": {
+      "const": false
+    },
+    "part_b_pass_condition_authority": {
+      "const": false
+    },
+    "llm_execution_authority": {
+      "const": false
+    },
+    "experiment_artifact_access_authority": {
+      "const": false
+    },
+    "record_hash": {
+      "$ref": "#/$defs/sha256"
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "request_kind",
+        "promotion_target",
+        "reference_kind"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_kind": {
+          "enum": [
+            "EXPERIMENT_TRACK_ONLY",
+            "PROMOTE_TO_PART_B"
+          ]
+        },
+        "promotion_target": {
+          "enum": [
+            "NONE",
+            "EVIDENCE",
+            "CLAIM",
+            "AUTHORITY",
+            "PASS_CONDITION"
+          ]
+        },
+        "reference_kind": {
+          "enum": [
+            "ABSTRACT_EXPERIMENT_REFERENCE",
+            "LLM_OUTPUT_REFERENCE",
+            "EXPERIMENT_PATH_REFERENCE"
+          ]
+        }
+      }
+    }
+  }
+}

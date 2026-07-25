@@ -1,0 +1,29 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b3-manifest-v0.8
+manifest_version: "0.8.0"
+status: B3_LOCAL_REVIEW
+authorized_slice: B3_COST_INSTRUMENTATION
+instrumentation_authority: true
+action_execution_authority: false
+sampling_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+stop_authority: NONE
+bindings:
+  b0_cost_contract_hash: "sha256:b6d36c40f7b52c12733dbe75cbcba6058e952f23d67e2155bd73196f6bcfaf53"
+  b2_manifest_hash: "sha256:6d6f67d9722eff1b2e1aa75277b0c390dc485751067728a347ae89c77f83faed"
+  cost_instrumentation_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+runtime_authority:
+  trace_aggregation: true
+  clock_capture: false
+  executor_hook: false
+  external_connector: false
+  action_execution: false
+  sampling: false
+closed_slices: [B4, B5, B6, B7, B8, B9]
+llm_integration: FORBIDDEN
+limitations:
+  - B3 authority covers deterministic aggregation of evaluator-supplied integer trace events only.
+  - No action execution, stochastic sampling, connector, scalarization, planner, or performance claim is authorized.
+  - B3 cannot issue a certificate, system state, or CERTIFIED_STOP.
+hash: "sha256:9403004d25c1428beeb85f04c6d65eeb02759d6881ede67390a2d97f2b9c82fb"

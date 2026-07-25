@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-planner-admission-manifest.schema.json",
+  "title": "Part B B5 planner admission skeleton manifest v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "claim_ceiling",
+    "pb_b5_si_001_state",
+    "pb_b5_si_002_state",
+    "pb_b5_si_003_state",
+    "pb_si_006_state",
+    "holdout_release",
+    "stop_authority",
+    "local_admission_record_authority",
+    "planner_execution_authority",
+    "evaluation_execution_authority",
+    "sampling_authority",
+    "production_capture_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "superiority_claim_authority",
+    "holdout_release_authority",
+    "certificate_authority",
+    "legacy_m3star_status",
+    "bindings",
+    "frozen_artifacts_modified",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "manifest_id": {
+      "const": "part-b-b5-planner-admission-manifest-v0.8"
+    },
+    "manifest_version": {"const": "0.8.0"},
+    "status": {"const": "B5_ADMISSION_SKELETON_LOCAL_ONLY"},
+    "authorized_slice": {
+      "const": "B5_PLANNER_IMPLEMENTATION_ADMISSION_SKELETON"
+    },
+    "claim_ceiling": {"const": "CONTRACT_CONSISTENCY_ONLY"},
+    "pb_b5_si_001_state": {
+      "const": "SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED"
+    },
+    "pb_b5_si_002_state": {
+      "const": "OPEN_BLOCKS_EVALUATION_EXECUTION"
+    },
+    "pb_b5_si_003_state": {
+      "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+    },
+    "pb_si_006_state": {"const": "OPEN_DEFAULT_DENY"},
+    "holdout_release": {"const": "DENY"},
+    "stop_authority": {"const": "NONE"},
+    "local_admission_record_authority": {"const": true},
+    "planner_execution_authority": {"const": false},
+    "evaluation_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "production_capture_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "superiority_claim_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "certificate_authority": {"const": false},
+    "legacy_m3star_status": {"const": "NOT_ADMITTED_UNVERIFIED"},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b5_planner_interface_policy_hash",
+        "b5_manifest_hash",
+        "implementation_identity_hash",
+        "admission_evidence_hash",
+        "admission_policy_hash",
+        "admission_record_hash"
+      ],
+      "properties": {
+        "b5_planner_interface_policy_hash": {"$ref": "#/$defs/hash"},
+        "b5_manifest_hash": {"$ref": "#/$defs/hash"},
+        "implementation_identity_hash": {"$ref": "#/$defs/hash"},
+        "admission_evidence_hash": {"$ref": "#/$defs/hash"},
+        "admission_policy_hash": {"$ref": "#/$defs/hash"},
+        "admission_record_hash": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "frozen_artifacts_modified": {"const": false},
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

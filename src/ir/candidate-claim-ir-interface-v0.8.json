@@ -1,0 +1,107 @@
+{
+  "interface_version": "0.8.0",
+  "claim_schema_version": "0.8.0",
+  "claim_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+  "compiler_request_schema_ref": "schemas/claim-ir-kernel.schema.json#/$defs/candidateCompilerRequest",
+  "compiler_response_schema_ref": "schemas/claim-ir-kernel.schema.json#/$defs/candidateCompilerResponse",
+  "admission_boundary": "candidate_only",
+  "compiler_response_required_fields": [
+    "schema_version",
+    "request_id",
+    "candidates"
+  ],
+  "compiler_forbidden_fields": [
+    "claim_id",
+    "modality",
+    "truth_status",
+    "epistemic_role",
+    "certification_authority",
+    "pointer",
+    "compiler",
+    "binding_status",
+    "admission_status",
+    "promotion_status",
+    "promotion_event_id",
+    "admissible_levels",
+    "support_claim_ids",
+    "contradict_claim_ids",
+    "rule_trace",
+    "confidence",
+    "lifecycle_state"
+  ],
+  "forbidden_oracle_fields": [
+    "ground_truth",
+    "recoverable_claim_ids",
+    "oracle_effects",
+    "hidden_claim_ids",
+    "true_outcome"
+  ],
+  "error_codes": [
+    "CKI-001_SCHEMA_VERSION_UNSUPPORTED",
+    "CKI-002_SCHEMA_VALIDATION_FAILED",
+    "CKI-003_PROTECTED_FIELD_SET",
+    "CKI-004_POINTER_CONTEXT_MISMATCH",
+    "CKI-005_BINDING_ABSTENTION_REQUIRED",
+    "CKI-006_NON_CANDIDATE_STATUS",
+    "CKI-007_MODALITY_OVERRIDE_ATTEMPT",
+    "CKI-008_AUTHORITY_OVERRIDE_ATTEMPT",
+    "CKI-009_GROUND_TRUTH_FIELD_FORBIDDEN"
+  ],
+  "input_example": {
+    "schema_version": "0.8.0",
+    "request_id": "REQ-TWIN-001",
+    "source_context": {
+      "source_id": "auth.jsonl",
+      "source_schema": "twin.auth.v0.8",
+      "source_family": "identity",
+      "modality": "observed",
+      "epistemic_role": "case_evidence",
+      "pointer": {
+        "source_id": "auth.jsonl",
+        "record_id": "AUTH-001",
+        "byte_or_row_range": [1, 1],
+        "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      }
+    },
+    "source_excerpt": "ACCOUNT-A authenticated to H3 during the frozen window.",
+    "allowed_predicates": ["authenticated_account"],
+    "allowed_entity_types": ["host", "account"]
+  },
+  "output_example": {
+    "schema_version": "0.8.0",
+    "request_id": "REQ-TWIN-001",
+    "candidates": [
+      {
+        "candidate_id": "CAND-001",
+        "subject": {
+          "entity_id": "H3",
+          "entity_type": "host"
+        },
+        "predicate": "authenticated_account",
+        "object": {
+          "entity_id": "ACCOUNT-A",
+          "literal": null,
+          "entity_type": "account"
+        },
+        "time": {
+          "start": "2026-01-01T10:04:00Z",
+          "end": "2026-01-01T10:04:00Z",
+          "precision": "exact"
+        },
+        "location": {
+          "host": "H3",
+          "tenant": "T1",
+          "zone": null
+        },
+        "polarity": "positive",
+        "binding_proposals": [
+          {
+            "field": "subject.entity_id",
+            "entity_id": "H3"
+          }
+        ],
+        "abstention": null
+      }
+    ]
+  }
+}

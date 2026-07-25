@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-planner-admission-evidence.schema.json",
+  "title": "Part B B5 planner admission evidence v0.8",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "evidence_version",
+    "implementation_id",
+    "implementation_identity_hash",
+    "evidence_scope",
+    "evidence_slots",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "evidence_id": {
+      "const": "part-b-b5-planner-admission-evidence-example-v0.8"
+    },
+    "evidence_version": {"const": "0.8.0"},
+    "implementation_id": {
+      "const": "part_b_b5_planner_admission_skeleton_v0.8"
+    },
+    "implementation_identity_hash": {"$ref": "#/$defs/hash"},
+    "evidence_scope": {"const": "LOCAL_CONFORMANCE_EVIDENCE_ONLY"},
+    "evidence_slots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dependency",
+        "parameter",
+        "feature_provenance",
+        "runtime_conformance"
+      ],
+      "properties": {
+        "dependency": {"$ref": "#/$defs/evidenceSlot"},
+        "parameter": {"$ref": "#/$defs/evidenceSlot"},
+        "feature_provenance": {"$ref": "#/$defs/evidenceSlot"},
+        "runtime_conformance": {"$ref": "#/$defs/evidenceSlot"}
+      }
+    },
+    "hash": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "evidenceSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "artifact_hash",
+        "verification_method",
+        "grants_execution_authority"
+      ],
+      "properties": {
+        "status": {"enum": ["VERIFIED", "FAILED"]},
+        "artifact_hash": {"$ref": "#/$defs/hash"},
+        "verification_method": {"const": "CANONICAL_VALUE_HASH_REPLAY"},
+        "grants_execution_authority": {"const": false}
+      }
+    }
+  }
+}

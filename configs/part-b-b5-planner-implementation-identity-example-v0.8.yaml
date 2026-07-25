@@ -1,0 +1,55 @@
+schema_version: "0.8.0"
+implementation_id: part_b_b5_planner_admission_skeleton_v0.8
+implementation_version: "0.8.0"
+implementation_kind: ADMISSION_SKELETON_NONEXECUTING
+execution_requested: false
+identity_inputs:
+  source_tree:
+    basis: AUTHORIZED_ALLOWLIST_AND_BASELINE
+    baseline_commit: "868708cd12663a90b34a60d67b669b734c3720ef"
+    authorized_runtime_paths:
+      - src/scope/part_b_b5_planner_admission.py
+    forbidden_runtime_paths:
+      - src/planner/
+      - 09-experiments/
+      - training/
+  dependency_lock:
+    runtime_dependencies:
+      - python-stdlib
+    repository_dependencies:
+      - src.ir.canonical_hash
+    external_dependencies: []
+  parameter_manifest:
+    semantics: NO_TRAINED_OR_TUNABLE_PARAMETERS
+    parameters: []
+    trained_state: false
+  feature_provenance:
+    allowed_inputs:
+      - implementation_identity
+      - admission_evidence
+      - admission_policy
+    forbidden_inputs:
+      - oracle_label
+      - hidden_ground_truth
+      - holdout_label
+      - realized_action_outcome
+      - historical_performance
+  runtime_conformance:
+    module: src.scope.part_b_b5_planner_admission
+    function: evaluate_admission
+    deterministic: true
+    allowed_output: ADMISSION_RECORD_ONLY
+    forbidden_outputs:
+      - planner_action
+      - evaluation_result
+      - performance_metric
+      - certificate
+      - system_status
+      - CERTIFIED_STOP
+identity_hashes:
+  source_tree_hash: "sha256:5b44219feec5f600ae1cbbe873920a2a1eff07ffb523e21e4e10afc727c79ccd"
+  dependency_lock_hash: "sha256:881a59c1bfabdbfb58d87429aec97e6b7926cb692801419505befa9bb98043cc"
+  parameter_manifest_hash: "sha256:4c56f6b01ab3ba4afe556f0bfe43facc262d8fa0fef270f0d7582e176b53c639"
+  feature_provenance_hash: "sha256:286c79f26b19599a2c98ee91dc33e2ed76c40c8960d439ed1ea1ba79325d6d69"
+  runtime_conformance_hash: "sha256:615139e5fae4301ab5d3132cb3581e063eabb555c4f0108fdca5c0035f3f19e4"
+hash: "sha256:c7ea784dd23bb04c83fdbe61c285b91d19ec70d02ecc1ee08aa62ac3145efc4f"

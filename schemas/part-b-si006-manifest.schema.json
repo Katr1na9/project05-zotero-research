@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-si006-manifest.schema.json",
+  "title": "Part B PB-SI-006 source-selection manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "source_selection_contract_authority",
+    "local_selection_evaluation_authority",
+    "source_authorization_authority",
+    "retrieval_authority",
+    "download_authority",
+    "credential_use_authority",
+    "connector_execution_authority",
+    "planner_execution_authority",
+    "sampling_authority",
+    "evaluation_execution_authority",
+    "performance_claim_authority",
+    "holdout_release",
+    "stop_authority",
+    "pb_si_006_state",
+    "pb_b7_si_001_state",
+    "pb_b7_si_002_state",
+    "pb_b5_si_001_state",
+    "bindings",
+    "artifacts",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "manifest_id": {
+      "const": "part-b-si006-manifest-v0.8"
+    },
+    "manifest_version": {
+      "const": "0.8.0"
+    },
+    "status": {
+      "const": "SI006_SOURCE_SELECTION_CONTRACT_ONLY"
+    },
+    "authorized_slice": {
+      "const": "PB-SI-006_SOURCE_SELECTION"
+    },
+    "source_selection_contract_authority": {
+      "const": true
+    },
+    "local_selection_evaluation_authority": {
+      "const": true
+    },
+    "source_authorization_authority": {
+      "const": false
+    },
+    "retrieval_authority": {
+      "const": false
+    },
+    "download_authority": {
+      "const": false
+    },
+    "credential_use_authority": {
+      "const": false
+    },
+    "connector_execution_authority": {
+      "const": false
+    },
+    "planner_execution_authority": {
+      "const": false
+    },
+    "sampling_authority": {
+      "const": false
+    },
+    "evaluation_execution_authority": {
+      "const": false
+    },
+    "performance_claim_authority": {
+      "const": false
+    },
+    "holdout_release": {
+      "const": "DENY"
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "pb_si_006_state": {
+      "const": "SELECTION_CONTRACT_ONLY_DOWNLOAD_DENY"
+    },
+    "pb_b7_si_001_state": {
+      "const": "OPEN_DEFAULT_DENY"
+    },
+    "pb_b7_si_002_state": {
+      "const": "OPEN_DEFAULT_DENY"
+    },
+    "pb_b5_si_001_state": {
+      "const": "EXECUTION_NOT_ESTABLISHED"
+    },
+    "bindings": {
+      "$ref": "#/$defs/frozenBindings"
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection_policy_hash",
+        "selection_example_hash"
+      ],
+      "properties": {
+        "selection_policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "selection_example_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "frozenBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b1_adapter_conformance_hash",
+        "b7_connector_policy_hash",
+        "b7_manifest_hash"
+      ],
+      "properties": {
+        "b1_adapter_conformance_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "b7_connector_policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "b7_manifest_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

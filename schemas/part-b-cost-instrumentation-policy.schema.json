@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-cost-instrumentation-policy.schema.json",
+  "title": "Project05 Part B B3 cost instrumentation policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "status",
+    "authorized_slice",
+    "instrumentation_authority",
+    "action_execution_authority",
+    "sampling_authority",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "stop_authority",
+    "b0_cost_contract_hash",
+    "capture_boundary",
+    "exact_arithmetic",
+    "dimensions",
+    "missingness",
+    "currency",
+    "feasibility",
+    "scalarization",
+    "error_semantics",
+    "limitations",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "policy_id": {"const": "part-b-cost-instrumentation-policy-v0.8"},
+    "policy_version": {"const": "0.8.0"},
+    "status": {"const": "B3_LOCAL_REVIEW_AUTHORIZED_INSTRUMENTATION"},
+    "authorized_slice": {"const": "B3_COST_INSTRUMENTATION"},
+    "instrumentation_authority": {"const": true},
+    "action_execution_authority": {"const": false},
+    "sampling_authority": {"const": false},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "b0_cost_contract_hash": {"$ref": "#/$defs/sha256"},
+    "capture_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input",
+        "clock_access",
+        "executor_hook",
+        "external_connector",
+        "event_order_semantics"
+      ],
+      "properties": {
+        "input": {"const": "EVALUATOR_SUPPLIED_INTEGER_EVENTS"},
+        "clock_access": {"const": false},
+        "executor_hook": {"const": false},
+        "external_connector": {"const": false},
+        "event_order_semantics": {"const": "ORDER_INVARIANT_EVENT_ID_UNIQUE"}
+      }
+    },
+    "exact_arithmetic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "integer_input_required",
+        "binary_float_input_allowed",
+        "nanoseconds_per_second",
+        "output_encoding"
+      ],
+      "properties": {
+        "integer_input_required": {"const": true},
+        "binary_float_input_allowed": {"const": false},
+        "nanoseconds_per_second": {"const": 1000000000},
+        "output_encoding": {"const": "REDUCED_EXACT_RATIONAL"}
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/dimension"}
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "missing_measurement",
+        "implicit_zero_forbidden",
+        "explicit_reason_required",
+        "complete_trace_rule"
+      ],
+      "properties": {
+        "missing_measurement": {"const": "UNKNOWN_NOT_ZERO"},
+        "implicit_zero_forbidden": {"const": true},
+        "explicit_reason_required": {"const": true},
+        "complete_trace_rule": {"const": "ALL_EIGHT_DIMENSIONS_MEASURED"}
+      }
+    },
+    "currency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code_format",
+        "trace_currency_count",
+        "mixed_currency_behavior",
+        "fx_normalization_authority"
+      ],
+      "properties": {
+        "code_format": {"const": "ISO_4217_UPPERCASE"},
+        "trace_currency_count": {"const": "ZERO_OR_ONE"},
+        "mixed_currency_behavior": {
+          "const": "FAIL_CLOSED_NO_IMPLICIT_FX"
+        },
+        "fx_normalization_authority": {"const": false}
+      }
+    },
+    "feasibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantics",
+        "partial_trace_preserved",
+        "infeasible_scalar_cost"
+      ],
+      "properties": {
+        "semantics": {"const": "SEPARATE_NOT_HIGH_COST"},
+        "partial_trace_preserved": {"const": true},
+        "infeasible_scalar_cost": {"type": "null"}
+      }
+    },
+    "scalarization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "weights",
+        "normalization",
+        "sensitivity_grid"
+      ],
+      "properties": {
+        "enabled": {"const": false},
+        "weights": {"type": "null"},
+        "normalization": {"type": "null"},
+        "sensitivity_grid": {"type": "null"}
+      }
+    },
+    "error_semantics": {"$ref": "#/$defs/errorSemantics"},
+    "limitations": {"$ref": "#/$defs/nonEmptyUniqueStrings"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension_id",
+        "unit",
+        "aggregation",
+        "event_type",
+        "source_fields"
+      ],
+      "properties": {
+        "dimension_id": {
+          "enum": [
+            "T_human",
+            "T_wall",
+            "T_CPU",
+            "M_byte_sec",
+            "D_scan",
+            "N_record",
+            "C_money",
+            "T_auth"
+          ]
+        },
+        "unit": {
+          "enum": [
+            "seconds",
+            "cpu_seconds",
+            "byte_seconds",
+            "bytes",
+            "records",
+            "currency_microunits"
+          ]
+        },
+        "aggregation": {"enum": ["sum", "elapsed", "integral"]},
+        "event_type": {
+          "enum": [
+            "HUMAN_ACTIVITY",
+            "EXECUTOR_WALL_INTERVAL",
+            "CPU_ACCOUNTING",
+            "MEMORY_INTEGRAL",
+            "SOURCE_SCAN",
+            "BILLED_USAGE",
+            "AUTHORIZATION_ACTIVITY"
+          ]
+        },
+        "source_fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    },
+    "errorSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invalid_event",
+        "duplicate_event_id",
+        "undeclared_missing_dimension",
+        "measured_and_unknown_conflict",
+        "mixed_currency",
+        "policy_hash_mismatch",
+        "execution_or_sampling_attempt",
+        "scalarization_or_claim_attempt",
+        "stop_or_certificate_attempt"
+      ],
+      "properties": {
+        "invalid_event": {"const": "B3-COST-001_INVALID_EVENT"},
+        "duplicate_event_id": {"const": "B3-COST-002_DUPLICATE_EVENT_ID"},
+        "undeclared_missing_dimension": {
+          "const": "B3-COST-003_UNDECLARED_MISSING_DIMENSION"
+        },
+        "measured_and_unknown_conflict": {
+          "const": "B3-COST-004_MEASURED_UNKNOWN_CONFLICT"
+        },
+        "mixed_currency": {"const": "B3-COST-005_MIXED_CURRENCY_NO_FX"},
+        "policy_hash_mismatch": {
+          "const": "B3-COST-006_POLICY_HASH_MISMATCH"
+        },
+        "execution_or_sampling_attempt": {
+          "const": "B3-COST-007_NO_ACTION_OR_SAMPLING_AUTHORITY"
+        },
+        "scalarization_or_claim_attempt": {
+          "const": "B3-COST-008_NO_SCALAR_OR_CLAIM_AUTHORITY"
+        },
+        "stop_or_certificate_attempt": {
+          "const": "B3-COST-009_NO_STOP_AUTHORITY"
+        }
+      }
+    }
+  }
+}

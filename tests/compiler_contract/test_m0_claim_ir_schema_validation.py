@@ -6,7 +6,7 @@ from jsonschema import Draft202012Validator
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SCHEMA_PATH = REPO_ROOT / "schemas" / "claim-ir-kernel.schema.json"
+SCHEMA_PATH = REPO_ROOT / "schemas" / "claim-ir-external-envelope.schema.json"
 PACKAGE_PATH = (
     REPO_ROOT
     / ".tmp"

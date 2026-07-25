@@ -1,0 +1,40 @@
+schema_version: "0.8.0"
+fixture_id: part-b-b3-capture-fixture-v0.8
+source_kind: FIXTURE_SYNTHETIC
+measurement_class: NOT_PRODUCTION_MEASUREMENT
+description: Synthetic evaluator-supplied B3 events for local fixture replay only.
+b3_policy_hash: "sha256:c64865166be067da37a6f4f5d745ce8dc0421dc342d88589c9bbce6142eb3278"
+real_os_access: false
+billing_connector_access: false
+production_adapter_authority: false
+events:
+  - event_id: EV-HUMAN-001
+    event_type: HUMAN_ACTIVITY
+    duration_ns: 2000000000
+  - event_id: EV-WALL-001
+    event_type: EXECUTOR_WALL_INTERVAL
+    start_ns: 1000000000
+    end_ns: 3000000000
+  - event_id: EV-WALL-002
+    event_type: EXECUTOR_WALL_INTERVAL
+    start_ns: 1500000000
+    end_ns: 4000000000
+  - event_id: EV-CPU-001
+    event_type: CPU_ACCOUNTING
+    cpu_delta_ns: 1500000000
+  - event_id: EV-MEM-001
+    event_type: MEMORY_INTEGRAL
+    byte_nanoseconds: 3000000000
+  - event_id: EV-SCAN-001
+    event_type: SOURCE_SCAN
+    bytes_scanned: 4096
+    records_scanned: 18
+  - event_id: EV-MONEY-001
+    event_type: BILLED_USAGE
+    currency_code: USD
+    currency_microunits: 125
+  - event_id: EV-AUTH-001
+    event_type: AUTHORIZATION_ACTIVITY
+    duration_ns: 500000000
+catalog_ceiling_eligible: false
+hash: "sha256:9d81a227127140c9be3b2f5058bf67dacf6550c996190e36f658b75979687303"

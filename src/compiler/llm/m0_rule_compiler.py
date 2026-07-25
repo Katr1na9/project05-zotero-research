@@ -26,7 +26,7 @@ PROJECTION_PATH = (
 PROJECTION_SHA256 = (
     "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
 )
-SCHEMA_PATH = "schemas/claim-ir-kernel.schema.json"
+SCHEMA_PATH = "schemas/claim-ir-external-envelope.schema.json"
 SCHEMA_SHA256 = (
     "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
 )

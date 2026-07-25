@@ -1,0 +1,42 @@
+schema_version: "0.8.0"
+manifest_id: part-b-b0-manifest-v0.8
+manifest_version: "0.8.0"
+status: B0_CONTRACT_ONLY
+authorized_slice: B0_PLANNING_AND_CONTRACTS
+execution_authority: false
+llm_integration: FORBIDDEN
+stop_authority: NONE
+closed_slices: [B1, B2, B3, B4, B5, B6, B7, B8, B9]
+bindings:
+  kernel_gamma_hash: "sha256:0bad34b682c0b4f79b2423a241880932d655b886ad539d90d53e37917cbf41d2"
+  kernel_catalog_hash: "sha256:0cd3ee1331aef81ca955e973ae9bc30c364acd2a2f6c34247438f4dd94add8eb"
+  admission_policy_hash: "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671"
+  approval_manifest_hash: "sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b"
+  observation_contract_hash: "sha256:f5db6035452236fb6e316b8e9a5ada7e2a7cbce07c0eedc3b3e7c890bc4fd7d9"
+  cost_contract_hash: "sha256:b6d36c40f7b52c12733dbe75cbcba6058e952f23d67e2155bd73196f6bcfaf53"
+runtime_authority:
+  stochastic_execution: false
+  broad_connectors: false
+  planner: false
+  m3star: false
+  baselines: false
+  cost_superiority_claims: false
+allowed_outputs:
+  - planning_document
+  - boundary_contract
+  - json_schema
+  - contract_manifest
+  - contract_test
+  - spec_issue_register
+error_semantics:
+  contract_only: B0-CONTRACT-001_NO_EXECUTION_AUTHORITY
+  outside_frozen_domain: B0-CONTRACT-002_OUTSIDE_FROZEN_DOMAIN
+  timeout: B0-CONTRACT-003_UNKNOWN_TIMEOUT
+  resource_exhaustion: B0-CONTRACT-004_UNKNOWN_RESOURCE_EXHAUSTED
+  infeasible: B0-CONTRACT-005_INFEASIBLE_SEPARATE_FROM_COST
+  unauthorized_component: B0-CONTRACT-006_UNAUTHORIZED_COMPONENT
+next_gate:
+  requires_explicit_user_authorization: true
+  requires_contract_approval: true
+  default: STOP_AFTER_B0_REVIEW
+hash: "sha256:22601f9876ecc8b348a9a2d836b3b842576de4f1442124cb2e82807e30096b4f"

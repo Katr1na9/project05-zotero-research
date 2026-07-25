@@ -25,16 +25,16 @@ MINTING_DESIGN_PATH = (
     "llm-editor-v0.8-l2-claim-id-minting-design-v0.1-20260724.json"
 )
 MINTING_DESIGN_SHA256 = (
-    "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe"
+    "9f57e9c93cdf5ed2493a428177f434f280859789accdbf50ff01483fef91b21c"
 )
 MAPPING_DESIGN_PATH = (
     "docs/llm-editor/"
     "llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json"
 )
 MAPPING_DESIGN_SHA256 = (
-    "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
+    "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070"
 )
-SCHEMA_PATH = "schemas/claim-ir-kernel.schema.json"
+SCHEMA_PATH = "schemas/claim-ir-external-envelope.schema.json"
 SCHEMA_SHA256 = (
     "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
 )

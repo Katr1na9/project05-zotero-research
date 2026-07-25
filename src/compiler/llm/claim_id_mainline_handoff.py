@@ -33,14 +33,14 @@ HANDOFF_DESIGN_PATH = (
     "llm-editor-v0.8-l2-claim-id-mainline-handoff-design-v0.1-20260724.json"
 )
 HANDOFF_DESIGN_SHA256 = (
-    "d1a618b8f6c7ec03d89ddf87a1eff6a7ffa04dcf6ba3b453f04a558aaec9b23a"
+    "cc6829709b359e2cac72ad30c00ac78ce7e2989a66f2b2e20d7eac4b98452e80"
 )
 EFFECTIVE_CONSUMER_CONTRACT_PATH = (
     "docs/kernel/"
     "kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json"
 )
 EFFECTIVE_CONSUMER_CONTRACT_SHA256 = (
-    "21766e5d4885170baabfd76eda4e053e2f03778dc32ece778fd3374123009af6"
+    "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
 )
 EFFECTIVE_CONSUMER_CONTRACT_ARTIFACT_ID = (
     "kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725"
@@ -49,7 +49,7 @@ EFFECTIVE_CONSUMER_CONTRACT_VERSION = "0.1"
 EFFECTIVE_CONSUMER_CONTRACT_STATUS = (
     "effective_consumer_contract_semantics_only_ingestion_not_authorized"
 )
-SCHEMA_PATH = "schemas/claim-ir-kernel.schema.json"
+SCHEMA_PATH = "schemas/claim-ir-external-envelope.schema.json"
 SCHEMA_SHA256 = (
     "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
 )
@@ -66,7 +66,7 @@ SANITIZED_RECEIPT_PATH = (
     "sanitized-receipt.json"
 )
 SANITIZED_RECEIPT_SHA256 = (
-    "4e737e896dc97a2f4a78cb022745405e14acd961b47ed7c4b720d94501c5f954"
+    "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de"
 )
 
 ASSISTED_DRAFT_SHA256 = (

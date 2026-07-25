@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-si008-dual-track-deny-manifest.schema.json",
+  "title": "Part B PB-SI-008 dual-track separation DENY manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "manifest_version",
+    "status",
+    "authorized_slice",
+    "claim_ceiling",
+    "part_b_status",
+    "experiment_track_status",
+    "pb_si_008_status",
+    "part_b_evidence_authority",
+    "part_b_claim_authority",
+    "part_b_authority_grant",
+    "part_b_pass_condition_authority",
+    "llm_execution_authority",
+    "experiment_artifact_access_authority",
+    "holdout_release",
+    "pb_si_006_download",
+    "pb_b5_execution",
+    "pb_b8_si_004",
+    "stop_authority",
+    "proof_boundary",
+    "artifacts",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.8.0"
+    },
+    "manifest_id": {
+      "const": "part-b-si008-dual-track-deny-manifest-v0.8"
+    },
+    "manifest_version": {
+      "const": "0.8.0"
+    },
+    "status": {
+      "const": "SI008_DUAL_TRACK_SEPARATION_DENY"
+    },
+    "authorized_slice": {
+      "const": "PB-SI-008_DUAL_TRACK_DENY"
+    },
+    "claim_ceiling": {
+      "const": "DUAL_TRACK_GATE_CONSISTENCY_ONLY"
+    },
+    "part_b_status": {
+      "const": "OUTSIDE_AUTHORIZED_TRACK_DENY"
+    },
+    "experiment_track_status": {
+      "const": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY"
+    },
+    "pb_si_008_status": {
+      "const": "NOT_OPENED"
+    },
+    "part_b_evidence_authority": {
+      "const": false
+    },
+    "part_b_claim_authority": {
+      "const": false
+    },
+    "part_b_authority_grant": {
+      "const": false
+    },
+    "part_b_pass_condition_authority": {
+      "const": false
+    },
+    "llm_execution_authority": {
+      "const": false
+    },
+    "experiment_artifact_access_authority": {
+      "const": false
+    },
+    "holdout_release": {
+      "const": "DENY"
+    },
+    "pb_si_006_download": {
+      "const": "DENY"
+    },
+    "pb_b5_execution": {
+      "const": "NOT_ESTABLISHED"
+    },
+    "pb_b8_si_004": {
+      "const": "OPEN"
+    },
+    "stop_authority": {
+      "const": "NONE"
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dual_track_separation_validated",
+        "part_b_elevation_denied",
+        "experiment_track_evaluated",
+        "experiment_track_stopped",
+        "llm_invoked",
+        "experiment_artifact_read"
+      ],
+      "properties": {
+        "dual_track_separation_validated": {
+          "const": true
+        },
+        "part_b_elevation_denied": {
+          "const": true
+        },
+        "experiment_track_evaluated": {
+          "const": false
+        },
+        "experiment_track_stopped": {
+          "const": false
+        },
+        "llm_invoked": {
+          "const": false
+        },
+        "experiment_artifact_read": {
+          "const": false
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_hash",
+        "example_record_hash"
+      ],
+      "properties": {
+        "policy_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "example_record_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "hash": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

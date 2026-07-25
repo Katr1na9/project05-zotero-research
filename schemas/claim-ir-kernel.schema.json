@@ -1,325 +1,288 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://project05.invalid/schemas/claim-ir-kernel.schema.json",
-  "title": "Project05 external Claim IR kernel envelope",
-  "description": "Published M0 structural schema for the project05_depth2_public public planner surface. This schema defines shape and state values only; pending_kernel_schema is a blocking state, not an ingestion or execution authorization. No labels, verdicts, hidden/recoverable/required claim IDs, oracle data, mask membership, realized outcomes, certificates, or private evidence are representable.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "schema_version",
-    "package_id",
-    "surface_id",
-    "kernel_state",
-    "claim_id_state",
-    "admission_state",
-    "projection_ref",
-    "claims",
-    "manifest"
-  ],
-  "properties": {
-    "schema_version": {
+  "$id": "https://project05.local/schemas/claim-ir-kernel.schema.json",
+  "title": "Project05 v0.8 Kernel Claim IR",
+  "description": "Evidence-safe Kernel Claim IR plus the pointer-free Candidate Compiler exchange profiles.",
+  "$ref": "#/$defs/kernelClaim",
+  "$defs": {
+    "sha256": {
       "type": "string",
-      "const": "claim-ir-external-v0.1"
+      "pattern": "^sha256:[0-9a-f]{64}$"
     },
-    "package_id": {
-      "type": "string",
-      "pattern": "^pkg_[A-Za-z0-9_-]{16,128}$",
-      "description": "Opaque package reference. It must not be derived from labels, outcomes, private paths, or payload bytes."
-    },
-    "surface_id": {
-      "type": "string",
-      "const": "project05_depth2_public"
-    },
-    "kernel_state": {
-      "$ref": "#/$defs/kernel_state"
-    },
-    "claim_id_state": {
-      "$ref": "#/$defs/claim_id_state"
-    },
-    "admission_state": {
-      "$ref": "#/$defs/admission_state"
-    },
-    "projection_ref": {
+    "entityRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "path",
-        "sha256",
-        "surface_id"
-      ],
+      "required": ["entity_id", "entity_type"],
       "properties": {
-        "path": {
-          "type": "string",
-          "const": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json"
-        },
-        "sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "surface_id": {
-          "type": "string",
-          "const": "project05_depth2_public"
+        "entity_id": {"type": "string", "minLength": 1},
+        "entity_type": {"type": "string", "minLength": 1}
+      }
+    },
+    "claimObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "literal", "entity_type"],
+      "properties": {
+        "entity_id": {"type": ["string", "null"], "minLength": 1},
+        "literal": {"type": ["string", "number", "boolean", "null"]},
+        "entity_type": {"type": ["string", "null"], "minLength": 1}
+      },
+      "anyOf": [
+        {"properties": {"entity_id": {"type": "string", "minLength": 1}}},
+        {"properties": {"literal": {"type": ["string", "number", "boolean"]}}}
+      ]
+    },
+    "claimTime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "precision"],
+      "properties": {
+        "start": {"type": ["string", "null"], "format": "date-time"},
+        "end": {"type": ["string", "null"], "format": "date-time"},
+        "precision": {
+          "enum": ["exact", "bounded", "approximate", "unknown"]
         }
       }
     },
-    "claims": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/claim_record"
-      }
-    },
-    "manifest": {
+    "claimLocation": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "claim_count",
-        "field_path_set",
-        "projection_sha256",
-        "content_hash"
-      ],
+      "required": ["host", "tenant", "zone"],
       "properties": {
-        "claim_count": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "field_path_set": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "$ref": "#/$defs/source_field"
-          }
-        },
-        "projection_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+        "host": {"type": ["string", "null"], "minLength": 1},
+        "tenant": {"type": ["string", "null"], "minLength": 1},
+        "zone": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "record_id", "byte_or_row_range", "content_hash"],
+      "properties": {
+        "source_id": {"type": ["string", "null"], "minLength": 1},
+        "record_id": {"type": ["string", "null"], "minLength": 1},
+        "byte_or_row_range": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"type": "integer", "minimum": 0},
+                {"type": "integer", "minimum": 0}
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
         },
         "content_hash": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "oneOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
         }
       }
-    }
-  },
-  "$defs": {
-    "kernel_state": {
-      "type": "string",
-      "enum": [
-        "pending_kernel_schema",
-        "ingested_under_separate_authority",
-        "rejected"
-      ],
-      "description": "pending_kernel_schema is a blocking state value only. It does not authorize execution, ingestion, admission, or approval."
     },
-    "claim_id_state": {
-      "type": "string",
-      "enum": [
-        "not_minted",
-        "pending_review",
-        "minted_opaque",
-        "invalid"
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parser_id", "parser_version", "model_id", "prompt_or_rule_hash"],
+      "properties": {
+        "parser_id": {"type": "string", "minLength": 1},
+        "parser_version": {"type": "string", "minLength": 1},
+        "model_id": {"type": ["string", "null"], "minLength": 1},
+        "prompt_or_rule_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "certificationAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "levels", "basis_rule_id", "policy_hash"],
+      "properties": {
+        "allowed": {"type": "boolean"},
+        "levels": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "basis_rule_id": {"type": ["string", "null"], "minLength": 1},
+        "policy_hash": {
+          "oneOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"allowed": {"const": false}}, "required": ["allowed"]},
+          "then": {
+            "properties": {
+              "levels": {"maxItems": 0},
+              "basis_rule_id": {"type": "null"},
+              "policy_hash": {"type": "null"}
+            }
+          },
+          "else": {
+            "properties": {
+              "levels": {"minItems": 1},
+              "basis_rule_id": {"type": "string", "minLength": 1},
+              "policy_hash": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
       ]
     },
-    "admission_state": {
-      "type": "string",
-      "enum": [
-        "not_admitted",
-        "pending_review",
-        "admitted_under_separate_authority",
-        "rejected"
-      ],
-      "description": "Admission is separate from structural validity and does not grant source role, train admission, lineage, quota, credit, or L2 state."
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["extraction", "source", "model"],
+      "properties": {
+        "extraction": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "source": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "model": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
     },
-    "claim_kind": {
-      "type": "string",
-      "enum": [
-        "public_config",
-        "public_alignment_state",
-        "public_action_declaration",
-        "public_prospective_effect"
-      ]
-    },
-    "source_field": {
-      "type": "string",
-      "enum": [
-        "config.case_id",
-        "config.budget_total",
-        "config.cti_nodes.node_id",
-        "config.cti_nodes.stage",
-        "config.cti_nodes.critical",
-        "config.channel_reliability",
-        "state.case_id",
-        "state.step_index",
-        "state.matched_cti_node_ids",
-        "state.unmatched_cti_node_ids",
-        "state.matched_cti_edge_ids",
-        "state.unmatched_cti_edge_ids",
-        "state.coverage.cti_node_coverage",
-        "state.coverage.cti_edge_coverage",
-        "state.coverage.critical_gap_count",
-        "state.coverage.stage_coverage",
-        "state.coverage.evidence_type_coverage",
-        "state.budget.budget_total",
-        "state.budget.budget_used",
-        "state.budget.budget_remaining",
-        "state.remaining_action_ids",
-        "action.action_id",
-        "action.case_id",
-        "action.action_type",
-        "action.acquisition_channel",
-        "action.target.target_type",
-        "action.target.target_value",
-        "action.cost",
-        "action.intended_cti_node_ids",
-        "action.expected_evidence_types",
-        "action.expected_stages",
-        "action.expected_effects.expected_granularity_gain",
-        "action.expected_effects.expected_uncertainty_reduction",
-        "action.expected_effects.expected_over_attribution_risk_reduction",
-        "action.expected_effects.expected_conflict_resolution",
-        "action.expected_effects.expected_coverage_delta",
-        "action.status",
-        "action.natural_language_request"
-      ],
-      "description": "Only the pinned public projection paths are admissible. actions_taken and action_feedback.recovered_count are intentionally absent because realized feedback is outside M0."
-    },
-    "value_type": {
-      "type": "string",
-      "enum": [
-        "opaque_reference",
-        "bounded_number",
-        "bounded_boolean",
-        "bounded_enum",
-        "bounded_public_text"
-      ]
-    },
-    "claim_id": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^clm_[A-Za-z0-9_-]{22,128}$"
-    },
-    "claim_value": {
-      "description": "Value validation is selected by claim_record.value_type; no overlapping union is used here.",
-      "type": [
-        "string",
-        "number",
-        "boolean",
-        "array"
-      ]
-    },
-    "opaque_reference_value": {
-      "type": "string",
-      "pattern": "^[A-Za-z0-9._:-]{1,256}$",
-      "description": "Opaque public reference only; not a Claim ID unless it conforms to the claim_id definition and the state/authority gates allow it."
-    },
-    "bounded_enum_value": {
-      "type": "string",
-      "maxLength": 128,
-      "pattern": "^[A-Za-z0-9._:-]{1,128}$"
-    },
-    "bounded_public_text_value": {
-      "type": "string",
-      "maxLength": 1024,
-      "description": "Public action metadata only. Consumers must not parse it for labels, verdicts, hidden claims, or realized outcomes."
-    },
-    "claim_record": {
+    "kernelClaim": {
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "schema_version",
         "claim_id",
-        "claim_id_state",
-        "claim_kind",
-        "source_field",
-        "value_type",
-        "value",
-        "admission_state"
+        "subject",
+        "predicate",
+        "object",
+        "time",
+        "location",
+        "polarity",
+        "modality",
+        "truth_status",
+        "epistemic_role",
+        "certification_authority",
+        "source_family",
+        "source_schema",
+        "pointer",
+        "compiler",
+        "binding_status",
+        "admission_status",
+        "promotion_status",
+        "promotion_event_id",
+        "admissible_levels",
+        "support_claim_ids",
+        "contradict_claim_ids",
+        "rule_trace",
+        "confidence",
+        "lifecycle_state"
       ],
       "properties": {
-        "claim_id": {
-          "$ref": "#/$defs/claim_id"
+        "schema_version": {"const": "0.8.0"},
+        "claim_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"},
+        "subject": {"$ref": "#/$defs/entityRef"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/claimObject"},
+        "time": {"$ref": "#/$defs/claimTime"},
+        "location": {"$ref": "#/$defs/claimLocation"},
+        "polarity": {"enum": ["positive", "negative", "unknown"]},
+        "modality": {"enum": ["observed", "derived", "reported", "hypothesized", "unknown"]},
+        "truth_status": {"enum": ["unassessed", "supported", "contradicted", "conflicted", "retracted"]},
+        "epistemic_role": {
+          "enum": [
+            "case_evidence",
+            "mechanism_knowledge",
+            "background_intelligence",
+            "model_hypothesis",
+            "analyst_hypothesis",
+            "unknown"
+          ]
         },
-        "claim_id_state": {
-          "$ref": "#/$defs/claim_id_state"
+        "certification_authority": {"$ref": "#/$defs/certificationAuthority"},
+        "source_family": {
+          "enum": [
+            "execution",
+            "identity",
+            "communication",
+            "data_access",
+            "control_plane",
+            "system_provenance",
+            "software_supply_chain",
+            "external_intel",
+            "human_investigation"
+          ]
         },
-        "claim_kind": {
-          "$ref": "#/$defs/claim_kind"
+        "source_schema": {"type": "string", "minLength": 1},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "compiler": {"$ref": "#/$defs/compiler"},
+        "binding_status": {"enum": ["unbound", "bound", "ambiguous", "failed"]},
+        "admission_status": {"enum": ["candidate", "admitted", "rejected", "abstained"]},
+        "promotion_status": {"enum": ["none", "eligible", "promoted", "revoked"]},
+        "promotion_event_id": {"type": ["string", "null"], "minLength": 1},
+        "admissible_levels": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
         },
-        "source_field": {
-          "$ref": "#/$defs/source_field"
+        "support_claim_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
         },
-        "value_type": {
-          "$ref": "#/$defs/value_type"
+        "contradict_claim_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
         },
-        "value": {
-          "$ref": "#/$defs/claim_value"
+        "rule_trace": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
         },
-        "admission_state": {
-          "$ref": "#/$defs/admission_state"
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "lifecycle_state": {
+          "enum": ["generated", "bound", "admitted", "promoted", "revoked", "rejected", "abstained"],
+          "readOnly": true
         }
       },
       "allOf": [
         {
           "if": {
             "properties": {
-              "claim_id_state": {
-                "enum": [
-                  "not_minted",
-                  "pending_review"
-                ]
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "claim_id": {
-                "type": "null"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "claim_id_state": {
-                "const": "minted_opaque"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "claim_id": {
-                "type": "string",
-                "pattern": "^clm_[A-Za-z0-9_-]{22,128}$"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "value_type": {
-                "const": "opaque_reference"
+              "modality": {"const": "observed"},
+              "epistemic_role": {"const": "case_evidence"},
+              "certification_authority": {
+                "properties": {"allowed": {"const": true}},
+                "required": ["allowed"]
               }
             },
-            "required": [
-              "value_type"
-            ]
+            "required": ["modality", "epistemic_role", "certification_authority"]
           },
           "then": {
             "properties": {
-              "value": {
-                "oneOf": [
-                  {
-                    "$ref": "#/$defs/opaque_reference_value"
-                  },
-                  {
-                    "type": "array",
-                    "maxItems": 4096,
-                    "items": {
-                      "$ref": "#/$defs/opaque_reference_value"
-                    }
-                  }
+              "pointer": {
+                "properties": {
+                  "source_id": {"type": "string", "minLength": 1},
+                  "record_id": {"type": "string", "minLength": 1},
+                  "content_hash": {"$ref": "#/$defs/sha256"}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "promotion_status": {"const": "promoted"},
+              "modality": {"const": "reported"}
+            },
+            "required": ["promotion_status", "modality"]
+          },
+          "then": {
+            "properties": {
+              "promotion_event_id": {"type": "string", "minLength": 1},
+              "pointer": {
+                "properties": {"source_id": {"type": "string", "minLength": 1}},
+                "anyOf": [
+                  {"properties": {"record_id": {"type": "string", "minLength": 1}}},
+                  {"properties": {"content_hash": {"$ref": "#/$defs/sha256"}}}
                 ]
               }
             }
@@ -327,81 +290,137 @@
         },
         {
           "if": {
-            "properties": {
-              "value_type": {
-                "const": "bounded_number"
-              }
-            },
-            "required": [
-              "value_type"
-            ]
+            "properties": {"promotion_status": {"const": "promoted"}},
+            "required": ["promotion_status"]
           },
-          "then": {
-            "properties": {
-              "value": {
-                "type": "number"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "value_type": {
-                "const": "bounded_boolean"
-              }
-            },
-            "required": [
-              "value_type"
-            ]
-          },
-          "then": {
-            "properties": {
-              "value": {
-                "type": "boolean"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "value_type": {
-                "const": "bounded_enum"
-              }
-            },
-            "required": [
-              "value_type"
-            ]
-          },
-          "then": {
-            "properties": {
-              "value": {
-                "$ref": "#/$defs/bounded_enum_value"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "value_type": {
-                "const": "bounded_public_text"
-              }
-            },
-            "required": [
-              "value_type"
-            ]
-          },
-          "then": {
-            "properties": {
-              "value": {
-                "$ref": "#/$defs/bounded_public_text_value"
-              }
-            }
-          }
+          "then": {"properties": {"promotion_event_id": {"type": "string", "minLength": 1}}}
         }
       ]
+    },
+    "candidateCompilerRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "request_id", "source_context", "source_excerpt"],
+      "properties": {
+        "schema_version": {"const": "0.8.0"},
+        "request_id": {"type": "string", "minLength": 1},
+        "source_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_id", "source_schema", "source_family", "modality", "epistemic_role", "pointer"],
+          "properties": {
+            "source_id": {"type": "string", "minLength": 1},
+            "source_schema": {"type": "string", "minLength": 1},
+            "source_family": {
+              "enum": [
+                "execution",
+                "identity",
+                "communication",
+                "data_access",
+                "control_plane",
+                "system_provenance",
+                "software_supply_chain",
+                "external_intel",
+                "human_investigation"
+              ]
+            },
+            "modality": {"enum": ["observed", "derived", "reported", "hypothesized", "unknown"]},
+            "epistemic_role": {
+              "enum": [
+                "case_evidence",
+                "mechanism_knowledge",
+                "background_intelligence",
+                "model_hypothesis",
+                "analyst_hypothesis",
+                "unknown"
+              ]
+            },
+            "pointer": {"$ref": "#/$defs/pointer"}
+          }
+        },
+        "source_excerpt": {"type": "string", "minLength": 1},
+        "allowed_predicates": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "allowed_entity_types": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    },
+    "bindingProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "entity_id"],
+      "properties": {
+        "field": {"enum": ["subject.entity_id", "object.entity_id", "location.host", "location.tenant", "location.zone"]},
+        "entity_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "candidateProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "subject",
+        "predicate",
+        "object",
+        "time",
+        "location",
+        "polarity",
+        "binding_proposals",
+        "abstention"
+      ],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "subject": {"$ref": "#/$defs/entityRef"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/claimObject"},
+        "time": {"$ref": "#/$defs/claimTime"},
+        "location": {"$ref": "#/$defs/claimLocation"},
+        "polarity": {"enum": ["positive", "negative", "unknown"]},
+        "binding_proposals": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/bindingProposal"},
+          "uniqueItems": true
+        },
+        "abstention": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["reason_code", "detail"],
+              "properties": {
+                "reason_code": {
+                  "enum": ["entity_unbound", "time_unresolved", "source_unsupported", "ambiguous_semantics"]
+                },
+                "detail": {"type": "string", "minLength": 1}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "candidateCompilerResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "request_id", "candidates"],
+      "properties": {
+        "schema_version": {"const": "0.8.0"},
+        "request_id": {"type": "string", "minLength": 1},
+        "candidates": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/candidateProposal"}
+        },
+        "response_abstention": {
+          "type": ["string", "null"],
+          "minLength": 1
+        }
+      }
     }
   }
 }

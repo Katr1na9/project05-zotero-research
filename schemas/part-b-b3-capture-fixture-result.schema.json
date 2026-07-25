@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b3-capture-fixture-result.schema.json",
+  "title": "Project05 B3 synthetic capture fixture result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "trace",
+    "provenance",
+    "fixture_hash",
+    "b3_policy_hash",
+    "scalarization_authority",
+    "performance_claim_authority",
+    "production_capture_authority",
+    "real_adapter_authority",
+    "holdout_release_authority",
+    "stop_authority",
+    "hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.8.0"},
+    "trace": {"$ref": "#/$defs/trace"},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "measurement_class",
+        "real_os_access",
+        "billing_connector_access",
+        "production_adapter_authority"
+      ],
+      "properties": {
+        "source_kind": {"const": "FIXTURE_SYNTHETIC"},
+        "measurement_class": {"const": "NOT_PRODUCTION_MEASUREMENT"},
+        "real_os_access": {"const": false},
+        "billing_connector_access": {"const": false},
+        "production_adapter_authority": {"const": false}
+      }
+    },
+    "fixture_hash": {"$ref": "#/$defs/sha256"},
+    "b3_policy_hash": {"$ref": "#/$defs/sha256"},
+    "scalarization_authority": {"const": false},
+    "performance_claim_authority": {"const": false},
+    "production_capture_authority": {"const": false},
+    "real_adapter_authority": {"const": false},
+    "holdout_release_authority": {"const": false},
+    "stop_authority": {"const": "NONE"},
+    "hash": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 1}
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension_id",
+        "unit",
+        "aggregation",
+        "measurement_status",
+        "value",
+        "source_event_ids",
+        "missing_reason"
+      ],
+      "properties": {
+        "dimension_id": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "aggregation": {"enum": ["sum", "elapsed", "integral"]},
+        "measurement_status": {"enum": ["MEASURED", "UNKNOWN"]},
+        "value": {
+          "anyOf": [{"$ref": "#/$defs/rational"}, {"type": "null"}]
+        },
+        "source_event_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "missing_reason": {
+          "anyOf": [{"type": "string", "minLength": 1}, {"type": "null"}]
+        }
+      }
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "trace_id",
+        "attempt_id",
+        "action_id",
+        "policy_hash",
+        "source_trace_hash",
+        "status",
+        "feasibility_status",
+        "reason_codes",
+        "currency_code",
+        "complete",
+        "dimensions",
+        "scalar_cost",
+        "performance_claim_authority",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {"const": "0.8.0"},
+        "trace_id": {"type": "string", "minLength": 1},
+        "attempt_id": {"type": "string", "minLength": 1},
+        "action_id": {"type": "string", "minLength": 1},
+        "policy_hash": {"$ref": "#/$defs/sha256"},
+        "source_trace_hash": {"$ref": "#/$defs/sha256"},
+        "status": {"type": "string", "minLength": 1},
+        "feasibility_status": {"type": "string", "minLength": 1},
+        "reason_codes": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "currency_code": {
+          "anyOf": [
+            {"type": "string", "pattern": "^[A-Z]{3}$"},
+            {"type": "null"}
+          ]
+        },
+        "complete": {"type": "boolean"},
+        "dimensions": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {"$ref": "#/$defs/dimension"}
+        },
+        "scalar_cost": {"type": "null"},
+        "performance_claim_authority": {"const": false},
+        "hash": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

@@ -26,7 +26,7 @@ ADMISSION_CONTRACT_PATH = (
     "llm-editor-v0.8-l2-claim-ir-admission-contract-design-v0.1-20260724.json"
 )
 ADMISSION_CONTRACT_SHA256 = (
-    "623cc44ce3d07f64e6c3f45b7fa96e11044d727703a0e27ec20578a980053ef3"
+    "8d74e9611d1377753b8280f33c9e3ae56ec2a54c4c45e0a4a7dc7c58568baf2e"
 )
 ADMISSION_AUTHORITY_DESIGN_PATH = (
     "docs/llm-editor/"
@@ -34,9 +34,9 @@ ADMISSION_AUTHORITY_DESIGN_PATH = (
     "v0.1-20260724.json"
 )
 ADMISSION_AUTHORITY_DESIGN_SHA256 = (
-    "44fc0900852cae0f325d2929cd6fc938949438e8b55cbdf56836532a16bc3d7b"
+    "0df723191f4522aead6f867fb2683cb059ae40b5cce1d0b6c42fb1b5ed11a286"
 )
-SCHEMA_PATH = "schemas/claim-ir-kernel.schema.json"
+SCHEMA_PATH = "schemas/claim-ir-external-envelope.schema.json"
 SCHEMA_SHA256 = (
     "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
 )

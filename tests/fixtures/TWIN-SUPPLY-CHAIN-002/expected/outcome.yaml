@@ -1,0 +1,23 @@
+schema_version: "0.8.0"
+case_id: TWIN-SUPPLY-CHAIN-002
+target_level: package_origin
+candidate_q: REGISTRY-A
+base: SAT
+support: SAT
+alternative: SAT
+checker_status: COUNTEREXAMPLE_FOUND
+system_status: CONTINUE
+mindiff_disagreement:
+  support_world: REGISTRY-A
+  alternative_world: MIRROR-B
+distinguishing_predicates:
+  - artifact_signature_state
+  - mirror_publish_chain
+  - registry_provenance
+allowed_actions:
+  - query_mirror_publish_chain_PKG-X
+  - query_registry_attestation_PKG-X
+  - verify_artifact_signature_PKG-X
+forbidden_actions:
+  - oracle_reveal_true_package_origin
+  - use_hidden_recoverable_claim_ids

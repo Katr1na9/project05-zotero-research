@@ -13,6 +13,9 @@ if str(SRC_ROOT) not in sys.path:
 
 from compiler.llm.claim_id_mint_executor import (  # noqa: E402
     ClaimIDMintError,
+    MAPPING_DESIGN_SHA256,
+    MINTING_DESIGN_SHA256,
+    SCHEMA_SHA256,
     UnavailableKeyProvider,
     load_and_validate_slot_mapping,
     mint_claim_ids,
@@ -118,15 +121,9 @@ class ClaimIDMintExecutorTests(unittest.TestCase):
             "status": "activated_single_mint_execute_authorized",
             "surface_id": "project05_depth2_public",
             "pinned_hashes": {
-                "minting_design_sha256": (
-                    "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe"
-                ),
-                "mapping_design_sha256": (
-                    "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
-                ),
-                "schema_sha256": (
-                    "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
-                ),
+                "minting_design_sha256": MINTING_DESIGN_SHA256,
+                "mapping_design_sha256": MAPPING_DESIGN_SHA256,
+                "schema_sha256": SCHEMA_SHA256,
             },
             "execute_ledger": {
                 "authorized": 1,

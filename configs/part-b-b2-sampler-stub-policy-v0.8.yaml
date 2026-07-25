@@ -1,0 +1,65 @@
+schema_version: "0.8.0"
+policy_id: part-b-b2-sampler-stub-policy-v0.8
+policy_version: "0.8.0"
+status: B2_SAMPLER_STUB_LOCAL_ONLY
+authorized_slice: B2_SAMPLER_STUB_LOCAL_FIXTURE_ONLY
+execution_scope: LOCAL_FIXTURE_ONLY
+generator:
+  algorithm: SHA256_COUNTER_V1
+  version: "1.0.0"
+  deterministic_replay: true
+  counter_origin: 0
+  uniform_mapping: UINT256_OVER_2_POW_256
+seed_commitment:
+  commitment_algorithm: SHA256_CANONICAL_JSON
+  required_before_sampling: true
+  post_hoc_change_forbidden: true
+  scope: LOCAL_FIXTURE_ONLY
+trial_budget:
+  minimum: 1
+  default: 32
+  maximum: 4096
+  adaptive_extension_forbidden: true
+trace_identity:
+  algorithm: SHA256_CANONICAL_JSON
+  binding_fields:
+    - catalog_hash
+    - policy_hash
+    - fixture_hash
+    - generator
+    - action_id
+    - world_id
+    - seed_commitment
+    - trial_budget
+  outcome_sequence_bound: true
+resource_policy:
+  budget_scope: PER_TRACE
+  exhaustion_stops_trace: true
+  partial_trace_implies_success: false
+failure_semantics:
+  TIMEOUT:
+    status: UNKNOWN
+    sample_emitted: false
+    unsat: false
+  RESOURCE_EXHAUSTED:
+    status: UNKNOWN
+    sample_emitted: false
+    unsat: false
+  MODEL_INVALID:
+    status: UNKNOWN
+    sample_emitted: false
+    unsat: false
+  INFEASIBLE:
+    status: INFEASIBLE
+    sample_emitted: false
+    unsat: false
+authority_boundary:
+  local_fixture_sampler: true
+  production_sampling: false
+  real_source_access: false
+  holdout_release: false
+  planner_execution: false
+  estimated_model_admission: false
+  certificate: false
+  stop_authority: NONE
+hash: "sha256:4a35eeab3849cafbf1b6c902f839fd0196a78eafbdea83c13513ec81ed1a8c14"

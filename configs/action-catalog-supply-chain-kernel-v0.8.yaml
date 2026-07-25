@@ -1,0 +1,131 @@
+schema_version: "0.8.0"
+catalog_id: action-catalog-supply-chain-kernel-v0.8
+catalog_version: "0.8.0"
+actions:
+  - action_id: query_registry_attestation_PKG-X
+    actor: automated_tool
+    authority:
+      required_permissions: [read:registry-attestation]
+      current_status: executable
+    target:
+      entity_ids: [PKG-X]
+      entity_type: package
+    scope:
+      time_window:
+        start: "2026-02-01T08:00:00Z"
+        end: "2026-02-01T09:00:00Z"
+      spatial_scope: registry:REGISTRY-A/package:PKG-X
+      resolution: attestation
+    preconditions: [registry_attestation_api_available]
+    invocation:
+      executor_id: registry-attestation-query-v0.8
+      query_template_id: package-attestation-by-digest
+      parameters: {package: PKG-X}
+    termination:
+      timeout_seconds: 30
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied]
+    observation_model:
+      observable_id: registry_attestation
+      output_schema: kernel.presence.v0.8
+      projection_rule_id: registry-provenance-v1
+      noise_model: deterministic
+      output_domain: [present, absent]
+      absence_semantics_ref: registry-attestation-PKG-X
+      world_dependencies: [registry_provenance]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [registry-attestation-observation-v1]
+      world_elimination_rule_ids: [presence-elimination-v1]
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: false
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+  - action_id: query_mirror_publish_chain_PKG-X
+    actor: automated_tool
+    authority:
+      required_permissions: [read:mirror-publish-log]
+      current_status: executable
+    target:
+      entity_ids: [PKG-X]
+      entity_type: package
+    scope:
+      time_window:
+        start: "2026-02-01T08:00:00Z"
+        end: "2026-02-01T09:00:00Z"
+      spatial_scope: mirror:MIRROR-B/package:PKG-X
+      resolution: publish_event
+    preconditions: [mirror_log_complete]
+    invocation:
+      executor_id: mirror-publish-query-v0.8
+      query_template_id: mirror-chain-by-package
+      parameters: {package: PKG-X}
+    termination:
+      timeout_seconds: 30
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, permission_denied]
+    observation_model:
+      observable_id: mirror_publish_chain
+      output_schema: kernel.presence.v0.8
+      projection_rule_id: mirror-chain-v1
+      noise_model: deterministic
+      output_domain: [present, absent]
+      absence_semantics_ref: mirror-publish-PKG-X
+      world_dependencies: [mirror_publish_chain]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [mirror-publish-observation-v1]
+      world_elimination_rule_ids: [bounded-zero-hit-elimination-v1]
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: false
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+  - action_id: verify_artifact_signature_PKG-X
+    actor: automated_tool
+    authority:
+      required_permissions: [read:artifact-signature]
+      current_status: executable
+    target:
+      entity_ids: [PKG-X]
+      entity_type: package
+    scope:
+      time_window:
+        start: "2026-02-01T08:00:00Z"
+        end: "2026-02-01T09:00:00Z"
+      spatial_scope: artifact-store/package:PKG-X
+      resolution: artifact
+    preconditions: [artifact_digest_frozen]
+    invocation:
+      executor_id: signature-verifier-v0.8
+      query_template_id: verify-package-signature
+      parameters: {package: PKG-X}
+    termination:
+      timeout_seconds: 20
+      success_conditions: [valid_output_schema]
+      failure_conditions: [timeout, artifact_missing]
+    observation_model:
+      observable_id: artifact_signature_state
+      output_schema: kernel.signature-state.v0.8
+      projection_rule_id: signature-state-v1
+      noise_model: deterministic
+      output_domain: [valid, unknown, invalid]
+      absence_semantics_ref: signature-store-PKG-X
+      world_dependencies: [artifact_signature_state]
+    formal_analysis_eligibility: formal
+    state_effect:
+      claim_template_ids: [artifact-signature-observation-v1]
+      world_elimination_rule_ids: [value-equality-elimination-v1]
+    feasibility: {status: executable, reason_codes: []}
+    resource_instrumentation:
+      wall_seconds: true
+      cpu_seconds: true
+      bytes_scanned: true
+      records_scanned: true
+      analyst_seconds: false
+hash: "sha256:d6f67e2c74a406f729384a26a65905752f3e425ba8cc74b6702760d9d43f0dd5"

@@ -1,0 +1,81 @@
+schema_version: "0.8.0"
+policy_id: part-b-planner-interface-policy-v0.8
+policy_version: "0.8.0"
+status: B5_CONTRACT_ONLY
+authorized_slice: B5_PLANNER_INTERFACE
+planner_interface_authority: true
+planner_execution_authority: false
+evaluation_execution_authority: false
+sampling_authority: false
+production_capture_authority: false
+scalarization_authority: false
+performance_claim_authority: false
+stop_authority: NONE
+b4_roster_binding:
+  b4_baseline_preregistration_hash: "sha256:c51ab64588441855a7ff8413e32695e4b168d6d2a2089674f2cdcd691959906d"
+  all_roster_ids:
+    - NO_ACQUISITION
+    - RANDOM_FEASIBLE
+    - COVERAGE_GREEDY
+    - CMI_PROXY
+    - M1_STATIC_EXPECTED_GAIN
+    - M2_TRANSPARENT
+    - M3A_GAP_COMPATIBILITY
+    - LOGISTIC_M3B
+    - XGBOOST_ACTION_VALUE
+    - AFA_VOI_MYOPIC
+    - AFA_VOI_ROLLOUT_H3
+    - DEPTH2_PUBLIC
+    - ORACLE_EVALUATION_ONLY
+  public_action_selector_ids:
+    - RANDOM_FEASIBLE
+    - COVERAGE_GREEDY
+    - CMI_PROXY
+    - M1_STATIC_EXPECTED_GAIN
+    - M2_TRANSPARENT
+    - M3A_GAP_COMPATIBILITY
+    - LOGISTIC_M3B
+    - XGBOOST_ACTION_VALUE
+    - AFA_VOI_MYOPIC
+    - AFA_VOI_ROLLOUT_H3
+    - DEPTH2_PUBLIC
+  unregistered_method_behavior: FAIL_CLOSED_NOT_ADMITTED
+role_enforcement:
+  oracle_evaluation_only: FORBIDDEN_AS_DEPLOYABLE_PLANNER
+  no_acquisition: CONTROL_NO_ACTION_ONLY
+  b4_role_preservation_required: true
+public_state_boundary:
+  input_semantics: PUBLIC_ONLY_CANONICAL_ID_STATE
+  finite_id_domains_required: true
+  unique_ids_required: true
+  canonical_sort_required: true
+  oracle_state_allowed: false
+  hidden_ground_truth_allowed: false
+  holdout_labels_allowed: false
+  realized_action_outcomes_allowed: false
+decision_enforcement:
+  output_semantics: ACTION_ID_OR_NULL_ONLY
+  no_action_allowed: true
+  unknown_action_behavior: FAIL_CLOSED_ACTION_NOT_FEASIBLE
+  state_hash_mismatch_behavior: FAIL_CLOSED_STATE_BINDING_MISMATCH
+  payload_allowed: false
+  prediction_side_channel_allowed: false
+  certificate_or_stop_allowed: false
+implementation_admission:
+  approved_implementations: []
+  legacy_m3star_status: NOT_ADMITTED_UNVERIFIED
+  legacy_runtime_identifiers:
+    - project05_m3star_h3_dual
+  shape_compatibility_grants_admission: false
+  executable_locator_allowed: false
+isolation_binding:
+  b4_baseline_isolation_policy_hash: "sha256:8e95dd5ae4ae87140de815101b26592e97432dbf64541474b8bcdacb386b5c1f"
+  partition_order: [TRAIN, TUNE, EVALUATION, HOLDOUT]
+  evaluation_feedback_to_train: false
+  holdout_visible_before_final_freeze: false
+  historical_result_access: false
+limitations:
+  - B5 freezes an interface contract and admits no implementation.
+  - Legacy M3star shape compatibility grants no execution authority.
+  - No Planner run, sampling, evaluation, performance claim, or stop follows.
+hash: "sha256:b0c9f9971d13efcfeabb39f829592b9502831ba1b94e8de54e3941ba7dd1c343"

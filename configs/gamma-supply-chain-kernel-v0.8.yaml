@@ -1,0 +1,121 @@
+schema_version: "0.8.0"
+gamma_id: gamma-supply-chain-kernel-v0.8
+gamma_version: "0.8.0"
+entity_types: [host, package, repository, build_system]
+event_types: [package_install, package_publish, artifact_sign]
+relation_types: [installed_on, published_by, signed_by]
+attribution_levels: [package_origin]
+result_domains:
+  package_origin:
+    type: repository_or_builder_id
+    generator: from_finite_candidate_list
+    finite_candidates: [REGISTRY-A, MIRROR-B, BUILDER-C]
+    coverage_mode: exhaustive
+    finiteness_basis: explicit_finite_candidates
+formal_model:
+  model_id: supply-chain-origin-worlds-v0.8
+  profile: explicit_legal_worlds_v0.8
+  target_variable: package_origin
+  auxiliary_domains:
+    delivery_path: [signed_registry, mirror_republish, local_injection]
+    signature_state: [valid, unknown, invalid]
+  legal_worlds:
+    - world_id: W-REGISTRY
+      assignments:
+        package_origin: REGISTRY-A
+        delivery_path: signed_registry
+        signature_state: valid
+      predicates: [registry_provenance, artifact_signature_state=valid]
+    - world_id: W-MIRROR
+      assignments:
+        package_origin: MIRROR-B
+        delivery_path: mirror_republish
+        signature_state: unknown
+      predicates: [mirror_publish_chain, artifact_signature_state=unknown]
+    - world_id: W-BUILDER
+      assignments:
+        package_origin: BUILDER-C
+        delivery_path: local_injection
+        signature_state: invalid
+      predicates: [local_build_injection, artifact_signature_state=invalid]
+  evidence_requirements:
+    - requirement_id: E-SC-INSTALL
+      predicate: installed_package
+      source_families: [software_supply_chain]
+      minimum_count: 1
+    - requirement_id: E-SC-BUILD
+      predicate: observed_build_system
+      source_families: [system_provenance]
+      minimum_count: 1
+mechanism_rules:
+  - signed_registry_path
+  - mirror_republish_path
+  - local_build_injection_path
+temporal_constraints:
+  ordering: [publish_or_build_before_install]
+  clock_skew_seconds: 5
+sensor_coverage:
+  - sensor_id: registry-attestation-PKG-X
+    observable_id: registry_attestation
+    entities: [PKG-X, REGISTRY-A]
+    time_windows: ["2026-02-01T08:00:00Z/2026-02-01T09:00:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [api_complete, digest_bound, query_authorized]
+  - sensor_id: mirror-publish-PKG-X
+    observable_id: mirror_publish_chain
+    entities: [PKG-X, MIRROR-B]
+    time_windows: ["2026-02-01T08:00:00Z/2026-02-01T09:00:00Z"]
+    absence_semantics: bounded_completeness
+    completeness_conditions: [retention_ok, mirror_log_complete, query_authorized]
+  - sensor_id: signature-store-PKG-X
+    observable_id: artifact_signature_state
+    entities: [PKG-X]
+    time_windows: ["2026-02-01T08:00:00Z/2026-02-01T09:00:00Z"]
+    absence_semantics: closed_world
+    completeness_conditions: [artifact_digest_frozen]
+retention_assumptions:
+  - assumption_id: mirror-log-1h
+    statement: Mirror publication records remain complete for the frozen hour.
+missingness_assumptions:
+  - assumption_id: registry-api-complete
+    statement: Registry attestation responses cover the frozen package digest.
+threat_assumptions:
+  log_deletion: none
+  log_forgery: bounded
+  sensor_compromise: none
+admission_policy:
+  policy_id: admission-policy-kernel-v0.8
+  version: "0.8.0"
+  rules: [A003, A004]
+  policy_hash: "sha256:8f34a5e99c2cba3d79304667acd5bb010492af74b8b99425352375a796825671"
+  approval_manifest_id: admission-policy-approval-kernel-v0.8
+  approval_manifest_hash: "sha256:2eda84dd347d1a0acdf8802edb01e7ba1cd00c6b8e767d02d78170e3d0fd1f8b"
+promotion_policy:
+  version: prom-0.8
+  rules: []
+action_catalog:
+  version: "0.8.0"
+  actions:
+    - query_registry_attestation_PKG-X
+    - query_mirror_publish_chain_PKG-X
+    - verify_artifact_signature_PKG-X
+candidate_protocol:
+  proposer_ids: [rule_seed]
+  solver_seed_enabled: true
+  coverage_reporting_required: true
+min_diff:
+  config_version: md-0.8
+  lambda_event: 1.0
+  lambda_entity: 1.0
+  lambda_assumption: 1.0
+  tie_break: lexicographic
+  timeout_ms: 2000
+solver_semantics:
+  engine: finite_domain_enumerator
+  engine_version: "0.8.0"
+  timeout_ms: 5000
+  incomplete_search_policy: UNKNOWN_NOT_CERTIFIED
+  proof_policy: reproducible_run
+closed_world_fields: [artifact_signature_state]
+open_world_fields: []
+hash: "sha256:c9131108991f4894a09d65ff9e47f5fafdb6eadb53f5bc51e0e5e6093d16076e"

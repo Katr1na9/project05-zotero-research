@@ -32,22 +32,22 @@ CONTRACT_PATH = (
     "llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json"
 )
 CONTRACT_SHA256 = (
-    "b9dbbb471bc69932bd6ef81e9824f492fb382125f7c5ef361153c4bf428c4eca"
+    "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98"
 )
 M1_FRAMEWORK_PATH = (
     "docs/llm-editor/"
     "llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json"
 )
 M1_FRAMEWORK_SHA256 = (
-    "a220eafde5eb0c38c381a23ba80e22571edfe932fca401a0e240ec562bb199dc"
+    "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
 )
-SCHEMA_PATH = "schemas/claim-ir-kernel.schema.json"
+SCHEMA_PATH = "schemas/claim-ir-external-envelope.schema.json"
 SCHEMA_SHA256 = (
     "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
 )
 COMPILER_PATH = "src/compiler/llm/m0_rule_compiler.py"
 COMPILER_SHA256 = (
-    "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+    "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57"
 )
 PROJECTION_PATH = (
     "docs/llm-editor/"
@@ -57,21 +57,21 @@ PROJECTION_SHA256 = (
     "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
 )
 MAPPING_SHA256 = (
-    "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
+    "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070"
 )
 AUTHORITY_DESIGN_PATH = (
     "docs/llm-editor/"
     "llm-editor-v0.8-l2-m1-planner-inputs-single-execute-authority-design-v0.1-20260724.json"
 )
 AUTHORITY_DESIGN_SHA256 = (
-    "ea451a7e709072b9ab5723fc17547d0d55807fe6e24243a77b46c6c8f9f60214"
+    "e09b51e4aa01758cbe481c6ecf7e6c14aa0c683f209f9a04f61d1890f4a15e37"
 )
 ADAPTER_DISPOSITION_PATH = (
     "docs/llm-editor/"
     "llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json"
 )
 ADAPTER_DISPOSITION_SHA256 = (
-    "e26fc1573bf312f6dd63e9716eebd0ed2ac8804a19fa6658de31b256df05fead"
+    "a891fd1f7b015a4ad50f198864543ae5d0eea2fcd2ade56728e19e33c1c6f700"
 )
 ADAPTER_IMPLEMENTATION_PATH = "src/compiler/llm/m1_planner_inputs_adapter.py"
 

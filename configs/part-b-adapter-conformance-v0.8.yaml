@@ -1,0 +1,132 @@
+schema_version: "0.8.0"
+contract_id: part-b-adapter-conformance-v0.8
+contract_version: "0.8.0"
+status: B1_CONTRACT_ONLY
+authorized_slice: B1_FEDERATION_SCHEMAS
+execution_authority: false
+federation_contract_hash: "sha256:6dd5ddb6b9b7c48b0d93fa8fe0637403596435f766f328895265041467bea23d"
+adapter_rules:
+  pointer_provenance: PRESERVE_EXACTLY
+  protected_fields:
+    - pointer
+    - modality
+    - truth_status
+    - epistemic_role
+    - certification_authority
+  certification_authority: POLICY_GATED_OUTSIDE_ADAPTER
+  unknown_input_policy: FAIL_CLOSED_WITH_ERROR
+  entity_identity:
+    namespace_required: true
+    binding_required: true
+    collision_policy: FAIL_CLOSED
+    collision_error_code: B1-FED-005_NAMESPACE_COLLISION
+error_semantics:
+  unknown_family: B1-FED-001_UNKNOWN_FAMILY
+  unknown_predicate: B1-FED-002_UNKNOWN_PREDICATE
+  unknown_schema_version: B1-FED-003_UNKNOWN_SCHEMA_VERSION
+  pointer_provenance_mismatch: B1-FED-004_POINTER_PROVENANCE_MISMATCH
+  namespace_collision: B1-FED-005_NAMESPACE_COLLISION
+  authority_self_grant: B1-FED-006_AUTHORITY_SELF_GRANT
+  open_world_zero_hit: B1-FED-007_OPEN_WORLD_ZERO_HIT
+  closed_world_incomplete: B1-FED-008_CLOSED_WORLD_INCOMPLETE
+  unauthorized_execution: B1-FED-009_UNAUTHORIZED_EXECUTION
+conformance_examples:
+  - example_id: B1-EXAMPLE-EXECUTION-001
+    family_id: execution
+    family_version: "0.8.0"
+    adapter_id: abstract-row-projection
+    adapter_version: "0.8.0"
+    input_shape: ABSTRACT_TABULAR_ROW
+    input_schema_id: abstract.process-event.v1
+    input_provenance:
+      source_id: abstract-execution-source
+      record_id: row-0001
+      content_hash: "sha256:0437e51d5c5ef27774258c8efee588c07cbb912c08252aba6ed0c39b9bbe55a2"
+      range:
+        kind: ROWS
+        start: 0
+        end: 1
+        end_semantics: EXCLUSIVE
+    field_mappings:
+      - input_field: process_ref
+        output_field: subject.entity_id
+      - input_field: event_kind
+        output_field: predicate
+      - input_field: executable_name
+        output_field: object.literal
+      - input_field: event_time
+        output_field: time.start
+    entity_binding:
+      namespace_id: abstract-execution-namespace
+      source_entity_id: process-17
+      canonical_entity_id: entity:process:17
+      binding_rule_id: B1-BIND-EXACT-001
+    projected_claim_envelope:
+      source_family: execution
+      source_schema: abstract.process-event.v1
+      subject_entity_id: entity:process:17
+      predicate: process.executed
+      object_value: abstract-binary
+      pointer:
+        source_id: abstract-execution-source
+        record_id: row-0001
+        content_hash: "sha256:0437e51d5c5ef27774258c8efee588c07cbb912c08252aba6ed0c39b9bbe55a2"
+        byte_or_row_range: [0, 1]
+        range_semantics: ROWS_HALF_OPEN
+      modality: observed
+      truth_status: unassessed
+      epistemic_role: case_evidence
+      certification_authority:
+        allowed: false
+        levels: []
+        basis_rule_id: null
+        policy_hash: null
+  - example_id: B1-EXAMPLE-EXTERNAL-INTEL-001
+    family_id: external_intel
+    family_version: "0.8.0"
+    adapter_id: abstract-fragment-projection
+    adapter_version: "0.8.0"
+    input_shape: ABSTRACT_DOCUMENT_FRAGMENT
+    input_schema_id: abstract.report-fragment.v1
+    input_provenance:
+      source_id: abstract-report-source
+      record_id: fragment-0001
+      content_hash: "sha256:b1d9d55906741813c7083bdb9320280194b6d64b64b427e7438b1c0e55fb9fb6"
+      range:
+        kind: BYTES
+        start: 12
+        end: 96
+        end_semantics: EXCLUSIVE
+    field_mappings:
+      - input_field: report_subject
+        output_field: subject.entity_id
+      - input_field: assertion_type
+        output_field: predicate
+      - input_field: assertion_text
+        output_field: object.literal
+    entity_binding:
+      namespace_id: abstract-report-namespace
+      source_entity_id: actor-label-4
+      canonical_entity_id: entity:reported-actor:4
+      binding_rule_id: B1-BIND-NAMESPACE-001
+    projected_claim_envelope:
+      source_family: external_intel
+      source_schema: abstract.report-fragment.v1
+      subject_entity_id: entity:reported-actor:4
+      predicate: report.attributes_activity
+      object_value: abstract-activity-cluster
+      pointer:
+        source_id: abstract-report-source
+        record_id: fragment-0001
+        content_hash: "sha256:b1d9d55906741813c7083bdb9320280194b6d64b64b427e7438b1c0e55fb9fb6"
+        byte_or_row_range: [12, 96]
+        range_semantics: BYTES_HALF_OPEN
+      modality: reported
+      truth_status: unassessed
+      epistemic_role: background_intelligence
+      certification_authority:
+        allowed: false
+        levels: []
+        basis_rule_id: null
+        policy_hash: null
+hash: "sha256:f0c3b5fe0a2fa8a1ac9d92a88058223fb12af21bf98f5fe5930d76b662ef7b6a"
