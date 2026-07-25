@@ -1,0 +1,71 @@
+{
+  "authority_id": "project05-qwen25-primary-preflight-v0.23",
+  "version": "0.23.0",
+  "status": "task3_zero_step_preflight_authorized_primary_training_closed",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "continue_with_task3_as_the_next_separately_authorized_step",
+    "authorized_scope": "zero_step_primary_preflight_only",
+    "primary_training_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.22.json",
+    "sha256": "A9F8FDBF60B0F7CD475D1957EDC11BCFBD1DA665F75B22268F050302032886D4"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-preflight-contract-v0.1.json": "3157AF193426778B745955698C49D936C63CA4AE4B424346A7DD1876360EDC39",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/preflight_qwen_qlora_primary.py": "4E83717C68DBE903975DA4DB0A4DCD4E6E72C024876AA7BAC4E0DABA06AFC337",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/run-local-preflight-v0.1.ps1": "2F65718592E372FD758D5FE929769BBD856CC26C2B150CA2DBB09F05CA84D6DE"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_primary_preflight.py": "08376F471F98174AF9E73EAE1222A35EC488693362FF6044E5878DB255BDDE87"
+  },
+  "preflight_gate": {
+    "authorized": true,
+    "contract_sha256": "3157AF193426778B745955698C49D936C63CA4AE4B424346A7DD1876360EDC39",
+    "primary_contract_sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "training_config_sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD",
+    "reuse_existing_runtime_and_snapshot_only": true,
+    "model_load_allowed": true,
+    "in_memory_lora_inventory_allowed": true,
+    "forward_backward_generation_allowed": false,
+    "optimizer_scheduler_creation_allowed": false,
+    "adapter_checkpoint_save_allowed": false,
+    "maximum_executions": 1,
+    "output_path": ".local-qwen25-smoke/local-output/primary-preflight-v0.1.json"
+  },
+  "next_gate": {
+    "status": "preflight_authorized_not_yet_executed",
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "network_or_download",
+    "runtime_install_or_change",
+    "model_forward_or_generation",
+    "loss_or_backward",
+    "optimizer_or_scheduler_creation",
+    "adapter_or_checkpoint_save",
+    "primary_training",
+    "checkpoint_selection",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

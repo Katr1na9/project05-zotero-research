@@ -1,0 +1,199 @@
+{
+  "schema_version": "project05-qwen25-primary-preflight-result-lock-v0.1",
+  "result_id": "project05-qwen25-primary-preflight-result-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "passed_zero_step_primary_preflight",
+  "source_audit": {
+    "local_gitignored_path": ".local-qwen25-smoke/local-output/primary-preflight-v0.1.json",
+    "bytes": 4442,
+    "sha256": "56BA67995A5CA5A0FEEAE3CAAF780F0A65A678B54579C213F5BA1CB5F1C7DF73",
+    "committed": false,
+    "sanitized_into_this_result": true
+  },
+  "contract_lock": {
+    "authority_sha256": "F7E41F7F1AE94DEEDC271AAA7C438FABA39C43ABEAEF4EE39C2570C81192C4B4",
+    "preflight_contract_sha256": "3157AF193426778B745955698C49D936C63CA4AE4B424346A7DD1876360EDC39",
+    "primary_training_contract_sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "training_config_sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "data_gate": {
+    "train": {
+      "examples": 1200,
+      "decisions": {
+        "supported": 600,
+        "unsupported_by_bound_pointer": 600
+      },
+      "families": {
+        "ait_cam_lds_manifestations_filtered": 300,
+        "beth_process_events": 300,
+        "fkie_socbed_acsac2021_winlogbeat": 300,
+        "redcanary_atomic_red_team": 300
+      }
+    },
+    "training_validation": {
+      "examples": 300,
+      "decisions": {
+        "supported": 150,
+        "unsupported_by_bound_pointer": 150
+      },
+      "families": {
+        "logpai_loghub_linux": 150,
+        "zeek_non_pcap_test_logs": 150
+      }
+    },
+    "family_overlap": []
+  },
+  "model_snapshot": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "all_allowlisted_files_rehashed": true,
+    "file_count": 14,
+    "repository_bytes": 15242807270,
+    "weight_bytes": 15231271888
+  },
+  "runtime": {
+    "location": "repository_local_windows",
+    "python": "3.11.15",
+    "torch": "2.3.1+cu121",
+    "torch_cuda": "12.1",
+    "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+    "compute_capability": [
+      7,
+      5
+    ],
+    "total_vram_bytes": 11810832384,
+    "packages": {
+      "accelerate": "0.34.2",
+      "bitsandbytes": "0.43.1",
+      "datasets": "3.0.1",
+      "huggingface-hub": "0.25.2",
+      "jsonschema": "4.23.0",
+      "numpy": "1.26.4",
+      "peft": "0.13.2",
+      "safetensors": "0.4.5",
+      "transformers": "4.45.2"
+    }
+  },
+  "lora_inventory": {
+    "adapter_attached_in_memory_only": true,
+    "adapter_saved": false,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "counts": {
+      "q_proj": 28,
+      "k_proj": 28,
+      "v_proj": 28,
+      "o_proj": 28,
+      "gate_proj": 28,
+      "up_proj": 28,
+      "down_proj": 28
+    },
+    "total_matches": 196,
+    "all_target_families_present": true,
+    "trainable_parameters": 40370176,
+    "total_parameters": 4393342464,
+    "trainable_ratio": 0.00918894357332759,
+    "maximum_trainable_ratio": 0.01,
+    "passed": true
+  },
+  "memory_gate": {
+    "peak_reserved_bytes": 10064232448,
+    "peak_limit_bytes": 11274289152,
+    "post_cleanup_reserved_bytes": 2097152,
+    "passed": true
+  },
+  "wall_time_projection": {
+    "interpretation": "capacity_projection_not_a_training_result",
+    "smoke_step_seconds": 82.78099999999904,
+    "optimizer_steps": 225,
+    "linear_training_hours": 5.17381249999994,
+    "conservative_multiplier": 2.0,
+    "validation_and_checkpoint_io_reserve_hours": 6.0,
+    "conservative_total_hours": 16.34762499999988,
+    "maximum_hours": 24.0,
+    "passed": true
+  },
+  "resource_gate": {
+    "current_runtime_cache_output_bytes": 24186006603,
+    "checkpoint_and_result_reserve_bytes": 2000000000,
+    "projected_total_bytes": 26186006603,
+    "maximum_total_bytes": 30000000000,
+    "disk_free_bytes": 716314472448,
+    "passed": true
+  },
+  "zero_step_proof": {
+    "preflight_wall_seconds": 63.53100000000268,
+    "model_forward_calls": 0,
+    "generation_calls": 0,
+    "loss_calls": 0,
+    "backward_calls": 0,
+    "optimizer_objects_created": 0,
+    "optimizer_steps": 0,
+    "scheduler_objects_created": 0,
+    "adapter_or_checkpoint_files_written": 0,
+    "network_or_download_used": false
+  },
+  "privacy_and_scope": {
+    "raw_pair_payload_recorded": false,
+    "raw_model_output_recorded": false,
+    "example_ids_recorded": false,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "m3_integrated": false,
+    "server_connected": false,
+    "paper_a_modified": false
+  },
+  "interpretation": {
+    "supported_claim": "The frozen local snapshot, runtime, data and in-memory LoRA topology pass the preregistered capacity checks without executing a model forward pass or optimizer step.",
+    "unsupported_claims": [
+      "primary_training_has_run",
+      "adapter_quality_improvement",
+      "formal_inference_performance",
+      "c07_c12_effectiveness",
+      "m3_integration_effect",
+      "paper_positive_result"
+    ]
+  },
+  "verification": {
+    "tracked_result_to_local_audit_cross_check": "passed",
+    "targeted_primary_smoke_preflight_and_result_tests": {
+      "tests_run": 51,
+      "passed": 51,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "adjacent_llm_compiler_regression": {
+      "tests_run": 149,
+      "passed": 145,
+      "skipped": 1,
+      "failures": 2,
+      "errors": 1,
+      "status": "existing_repository_conditions_outside_task3_diff",
+      "conditions": [
+        "citation_report_frozen_sha_mismatch",
+        "positive_remap_historical_records_root_missing",
+        "wp2_rule_snapshot_sidecar_sha_mismatch"
+      ],
+      "affected_paths_modified_by_task3": false
+    }
+  },
+  "next_gate": {
+    "status": "hard_stop_for_primary_training_authorization",
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  }
+}

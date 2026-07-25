@@ -1,0 +1,115 @@
+{
+  "authority_id": "project05-qwen25-rtx4090-cache-normalized-primary-v0.32",
+  "version": "0.32.0",
+  "status": "user_authorized_single_fresh_cache_normalized_primary_v0_2",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "批准 v0.32 单次 cache-normalized primary v0.2",
+    "interpreted_scope": "one_fresh_three_epoch_225_step_primary_v0_2_without_new_smoke",
+    "explicit_retry_authorization_received": true,
+    "multi_gpu_training_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.30.json",
+    "sha256": "BF2F9892E4D67765F0354A9B5B626A15A90C57573340B148575F6C871926F9BA",
+    "disposition": "preserve_passed_smoke_and_failed_first_primary_as_history"
+  },
+  "authoritative_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.2.json",
+    "sha256": "8130FCB529EA6D08A8B07320382489B40442780B928408D019290829296A3386"
+  },
+  "approved_capacity_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-4090-cache-normalization-amendment-v0.32-20260719.md",
+    "sha256": "11594CCAF78946BCFCE4C602C05ECDB497AC2503E9C1C7EAC0280A942F31321E"
+  },
+  "authoritative_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.2/training-config-v0.2.json",
+    "sha256": "161733CE73E02E4FD1D91033DEBE2907F6C1D1C005B54E86CE8333E7DD6F501A"
+  },
+  "first_primary_attempt": {
+    "status": "failed_memory_gate_after_optimizer_step_2",
+    "microbatches": 32,
+    "optimizer_steps": 2,
+    "completed_epochs": 0,
+    "checkpoint_epochs": [],
+    "cuda_oom": false,
+    "resume_state_exists": false,
+    "automatic_restart_authorized": false
+  },
+  "rtx4090_execution_gate": {
+    "authorized": true,
+    "contract_sha256": "8130FCB529EA6D08A8B07320382489B40442780B928408D019290829296A3386",
+    "training_config_sha256": "161733CE73E02E4FD1D91033DEBE2907F6C1D1C005B54E86CE8333E7DD6F501A",
+    "environment_and_weight_preparation_authorized": false,
+    "existing_preparation_reuse_authorized": true,
+    "longest_sequence_smoke_authorized": false,
+    "compatible_prior_smoke_reuse_authorized": true,
+    "primary_training_after_passed_smoke_authorized": true,
+    "maximum_smoke_executions": 0,
+    "maximum_primary_executions": 1,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "run_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "single_visible_idle_rtx4090_required": true,
+    "passed_smoke_gpu_uuid_binding_required": true,
+    "clean_login_environment_required": true
+  },
+  "frozen_scientific_configuration": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "method": "4bit_nf4_double_quant_fp16_qlora",
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "sequence_length": 1024,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "micro_batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "epochs": 3,
+    "optimizer_steps": 225,
+    "seed": 2026071601,
+    "adapter_only": true
+  },
+  "memory_revision": {
+    "maximum_peak_allocated_bytes": 23622320128,
+    "minimum_synchronized_free_bytes": 1073741824,
+    "thresholds_lowered": false,
+    "cache_normalized_free_memory_gate": true,
+    "scientific_configuration_changed": false
+  },
+  "current_user_authorization": {
+    "authorized_execution": "one_fresh_three_epoch_225_step_primary_without_new_smoke",
+    "maximum_executions": 1,
+    "does_not_authorize": "any_additional_retry_resume_hyperparameter_change_or_downstream_evaluation"
+  },
+  "next_gate": {
+    "status": "single_primary_v0_2_open_downstream_closed",
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "additional_optimizer_bearing_smoke",
+    "multi_gpu_training",
+    "automatic_retry_or_resume",
+    "hyperparameter_or_data_change",
+    "memory_threshold_reduction",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

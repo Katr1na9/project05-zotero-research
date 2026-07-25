@@ -1,0 +1,335 @@
+{
+  "schema_version": "project05-llm-editor-l2-endpoint-provenance-independent-run-search-v0.4",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "456b129bd98a317c3de85e78274b11e28ff61a41",
+  "review_type": "serial_metadata_only_search_for_third_and_fourth_label_independent_endpoint_or_provenance_families",
+  "status": "complete_one_reviewable_direction_found_fourth_slot_vacant",
+  "extends": [
+    "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.1-20260723.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.2-20260723.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.3-20260723.json"
+  ],
+  "purpose": "Search for a third and fourth independently reviewable endpoint or provenance family without weakening the source-native execution or capture boundary. The result may approve only a separate metadata-candidate review and cannot award source role, training admission, lineage, family, sample, or quota credit.",
+  "scope": {
+    "serial_execution": true,
+    "local_read_allowlist": [
+      "docs/llm-editor/**"
+    ],
+    "public_metadata_services_used": [
+      "Zenodo Records API",
+      "Crossref Works API",
+      "GitHub Search API repository metadata",
+      "Semantic Scholar metadata API",
+      "OpenAlex metadata API"
+    ],
+    "hard_excluded_path_hit": false,
+    "datasets_path_read": false,
+    "local_audit_cache_read": false,
+    "launcher_file_read": false,
+    "archive_or_member_read": false,
+    "central_directory_read": false,
+    "pid_process_or_runtime_log_read": false,
+    "ongoing_acquisition_touched": false,
+    "payload_or_archive_downloaded": false,
+    "reader_installed_or_executed": false,
+    "effective_catalog_written": false,
+    "family_role_or_quota_changed": false,
+    "baseline_fine_tuning_or_sample_generation_run": false,
+    "l2_gate_changed": false,
+    "git_commit_performed": false,
+    "git_push_performed": false
+  },
+  "search_contract": {
+    "minimum_curator_declared_label_independent_execution_or_capture_groups": 4,
+    "accepted_group_boundary": "A curator-declared source-native execution, job, run, session, or capture identifier that does not depend on class, attack, technique, verdict, directory, row, host, sensor view, or an analyst-created date window.",
+    "forbidden_pseudoreplication_sources": [
+      "file count",
+      "directory count",
+      "row count",
+      "host count",
+      "sensor-view count",
+      "date-window count",
+      "class count",
+      "attack count",
+      "technique count",
+      "verdict count"
+    ],
+    "excluded_from_repromotion": [
+      "reprod_ransomware_execution_provenance_2023",
+      "pandacap_ssh_honeypot_full_system_traces_2020",
+      "streamspot_all_provenance_graphs_2016",
+      "all candidates previously marked hold",
+      "all candidates previously rejected or disposed"
+    ],
+    "maximum_verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "maximum_credit": {
+      "family": 0,
+      "lineage": 0,
+      "sample": 0,
+      "quota": 0
+    }
+  },
+  "portfolio_before_search": {
+    "reviewable_direction_01": "reprod_ransomware_execution_provenance_2023",
+    "reviewable_direction_02": "pandacap_ssh_honeypot_full_system_traces_2020",
+    "third_direction_status": "vacant",
+    "fourth_direction_status": "vacant"
+  },
+  "reviewable_directions": [
+    {
+      "portfolio_ordinal": 3,
+      "candidate_id": "logchunks_travis_ci_build_log_captures_2020",
+      "verdict": "approve_for_separate_metadata_candidate_review_not_source_role",
+      "post_search_status": "pending_separate_metadata_candidate_review",
+      "candidate_risk_level": "high",
+      "source_identity": {
+        "title": "LogChunks: A Data Set for Build Log Analysis",
+        "official_record": "https://zenodo.org/records/3632351",
+        "official_api_record": "https://zenodo.org/api/records/3632351",
+        "record_id": 3632351,
+        "record_revision": 3,
+        "record_created_at": "2020-01-31T10:28:22.776676+00:00",
+        "record_updated_at": "2020-01-31T19:20:51.355126+00:00",
+        "doi": "10.5281/zenodo.3632351",
+        "concept_doi": "10.5281/zenodo.3632350",
+        "declared_version": "1.0.0",
+        "license": "CC-BY-4.0",
+        "creators": [
+          "Carolin Brandt",
+          "Annibale Panichella",
+          "Moritz Beller"
+        ]
+      },
+      "artifact_identity": {
+        "official_file_count": 1,
+        "official_total_bytes": 24108826,
+        "files": [
+          {
+            "key": "LogChunks.zip",
+            "bytes": 24108826,
+            "checksum": "md5:aafa45079bdae44e340f4474ca5c4340"
+          }
+        ],
+        "artifact_content_verified": false,
+        "nested_notice_verified": false
+      },
+      "curator_capture_declaration": {
+        "declared_travis_ci_log_captures": 797,
+        "declared_repository_count": 80,
+        "declared_main_language_count": 29,
+        "declaration": "The Zenodo curator description states that 797 Travis CI logs were collected from 80 GitHub repositories across 29 main development languages.",
+        "candidate_source_native_capture_unit": "one captured Travis CI build or job log",
+        "capture_count_is_not_derived_from_archive_file_count": true,
+        "capture_count_is_not_attack_class_technique_or_verdict_count": true,
+        "minimum_four_capture_declaration_met": true,
+        "one_log_to_one_unique_travis_job_or_build_verified": false,
+        "stable_source_native_build_or_job_id_verified": false,
+        "duplicate_or_rerun_policy_verified": false,
+        "repository_language_and_failure_labels_may_define_lineage": false,
+        "lineage_credit_awarded": 0
+      },
+      "associated_publication": {
+        "title": "LogChunks",
+        "doi": "10.1145/3379597.3387485",
+        "venue": "Proceedings of the 17th International Conference on Mining Software Repositories",
+        "publisher": "Association for Computing Machinery",
+        "publication_year": 2020,
+        "crossref_identity_verified": true,
+        "paper_full_text_read": false
+      },
+      "endpoint_or_provenance_fit": {
+        "fit": "conditional_ci_execution_provenance",
+        "evidence_surface": "continuous_integration_build_or_job_output_log",
+        "candidate_pointer_shape": "record DOI + immutable artifact identity + opaque Travis build or job identifier + log record position",
+        "pointer_shape_verified": false,
+        "scientific_limit": "CI build logs are endpoint-like execution evidence but are not security incident telemetry. A later review must justify their modality contribution to Candidate Claim IR rather than treating them as a generic log-volume source."
+      },
+      "label_and_supervision_isolation": {
+        "manual_failure_chunks_present": true,
+        "manual_keywords_and_failure_categories_present": true,
+        "failure_labels_may_be_model_visible": false,
+        "language_or_repository_category_may_be_used_as_lineage": false,
+        "future_physical_exclusion_required": true
+      },
+      "unclosed_risks": [
+        "The metadata does not yet prove one immutable log capture to one unique Travis job or build ID.",
+        "Build matrices may create multiple job views for one build; all related views must remain one lineage unless a source-native independence contract proves otherwise.",
+        "Retries, reruns, duplicate logs, and truncated logs are not characterized at metadata stage.",
+        "Manually labeled failure chunks, keywords, and structural categories must be physically excluded from model inputs, targets, pointers, and grouping.",
+        "Archive member identity, pointer recoverability, nested notices, privacy or secret content, and protected exact or near-duplicate exclusion are unverified.",
+        "The family has no current source role and its relevance is conditional CI execution provenance rather than security incident telemetry."
+      ],
+      "current_authority": {
+        "approved_for_separate_metadata_candidate_review": true,
+        "registered_in_effective_catalog": false,
+        "download_authorized": false,
+        "source_role_approved": false,
+        "train_admission_approved": false,
+        "family_credit": 0,
+        "lineage_credit": 0,
+        "sample_credit": 0,
+        "quota_credit": 0,
+        "l2_gate_passed": false
+      }
+    }
+  ],
+  "vacant_direction": {
+    "portfolio_ordinal": 4,
+    "status": "vacant_no_second_candidate_met_the_frozen_metadata_threshold",
+    "reason": "No second new family simultaneously exposed an explicit curator-declared count of at least four source-native execution or capture groups, immutable artifact identity, and a sufficiently clear label-independent grouping boundary. The search did not lower the threshold or promote a previously held or rejected source."
+  },
+  "screened_not_advanced": [
+    {
+      "candidate_id": "cibench_travistorrent_extension_2021",
+      "official_record": "https://zenodo.org/records/4682056",
+      "record_revision": 3,
+      "doi": "10.5281/zenodo.4682056",
+      "license": "CC-BY-4.0",
+      "official_total_bytes": 39175382254,
+      "files": [
+        {
+          "key": "data_set.tar.gz",
+          "bytes": 888949218,
+          "checksum": "md5:432f53674235892d5e6fea83a47d45aa"
+        },
+        {
+          "key": "raw_logs.tar.gz",
+          "bytes": 38286433036,
+          "checksum": "md5:5338a3a569031f44877779cab45c5f16"
+        }
+      ],
+      "status": "hold_no_curator_declared_execution_count_or_immutable_build_id_mapping_in_record_metadata",
+      "reason": "The record describes an original and extended TravisTorrent dataset plus raw logs, but it does not state a source-native build or job count or a stable build-ID grouping contract. A third-party repository description reporting 519373 builds was not treated as curator evidence."
+    },
+    {
+      "candidate_id": "java_oss_travis_ci_build_failure_dataset_2018",
+      "official_record": "https://zenodo.org/records/1745638",
+      "record_revision": 9,
+      "doi": "10.5281/zenodo.1745638",
+      "license": null,
+      "official_total_bytes": 7831293246,
+      "status": "hold_license_and_build_to_job_binding_unclosed",
+      "reason": "The curator states that each log object corresponds to one Travis job and commits carry Travis build IDs, but the upload omits the build-to-job association and the record exposes no license. File count cannot substitute for the missing mapping or rights Gate."
+    },
+    {
+      "candidate_id": "mining_branching_lsc_execution_traces_2017",
+      "official_record": "https://zenodo.org/records/581658",
+      "record_revision": 7,
+      "doi": "10.5281/zenodo.581658",
+      "license": "CC-BY-4.0",
+      "official_total_bytes": 4067366,
+      "status": "hold_trace_count_not_declared_in_registry_metadata",
+      "reason": "The curator defines each XES trace as one application execution from launch to termination, but the registry metadata declares only two trace sets and does not declare at least four traces. Reading the XES payload or index to manufacture the count is outside this metadata-only search."
+    },
+    {
+      "candidate_id": "wf4ever_prov_corpus_2015",
+      "official_record": "https://zenodo.org/records/11607",
+      "record_revision": 12,
+      "doi": "10.5281/zenodo.11607",
+      "license": "CC-BY-SA-4.0",
+      "official_total_bytes": 70000852,
+      "status": "hold_workflow_execution_count_and_group_key_not_declared",
+      "reason": "The curator states that provenance traces were obtained by running Taverna and Wings workflows, but does not state at least four executions or a stable run identifier in registry metadata. Workflow specifications and trace files cannot be counted without a separately authorized bounded audit."
+    },
+    {
+      "candidate_id": "malrec_record_replay_direction",
+      "status": "reject_no_matching_endpoint_execution_dataset_identity_located",
+      "reason": "The MALREC search resolved to unrelated papers and software concepts, not an immutable record/replay malware execution dataset with a license, revision, files, and source-native execution declaration."
+    }
+  ],
+  "source_verification": {
+    "verified_primary_metadata_sources": [
+      {
+        "source": "Zenodo Records API record 3632351 revision 3",
+        "outcome": "verified",
+        "supports": [
+          "LogChunks identity",
+          "version and CC-BY-4.0 license",
+          "797-log curator declaration",
+          "artifact bytes and MD5"
+        ]
+      },
+      {
+        "source": "Crossref DOI 10.1145/3379597.3387485",
+        "outcome": "verified",
+        "supports": [
+          "LogChunks publication identity",
+          "authors",
+          "venue and year"
+        ]
+      },
+      {
+        "source": "Zenodo Records API records 4682056, 1745638, 581658, and 11607",
+        "outcome": "verified_for_hold_decisions",
+        "supports": [
+          "identity",
+          "revision",
+          "record-scope license where present",
+          "artifact bytes and checksums",
+          "absence of sufficient execution-group declarations in registry metadata"
+        ]
+      },
+      {
+        "source": "GitHub Search API repository metadata",
+        "outcome": "verified_with_non_curator_result_excluded",
+        "supports": [
+          "TestRoots TravisTorrent tooling repository identity",
+          "exclusion of a third-party build-count claim from curator evidence"
+        ]
+      }
+    ],
+    "failed_or_non_contributory_metadata_checks": [
+      {
+        "source": "Semantic Scholar metadata API",
+        "outcome": "HTTP_429_not_retried",
+        "used_for_claims": false
+      },
+      {
+        "source": "OpenAlex DOI metadata API",
+        "outcome": "empty_result_not_used",
+        "used_for_claims": false
+      }
+    ],
+    "paper_or_repository_payload_read": false,
+    "artifact_content_read": false
+  },
+  "portfolio_after_search": {
+    "reviewable_direction_01": "reprod_ransomware_execution_provenance_2023",
+    "reviewable_direction_02": "pandacap_ssh_honeypot_full_system_traces_2020",
+    "reviewable_direction_03": "logchunks_travis_ci_build_log_captures_2020",
+    "reviewable_direction_04": null,
+    "reviewable_direction_04_status": "vacant",
+    "new_source_role_approved": false,
+    "new_train_admission_approved": false,
+    "new_family_credit": 0,
+    "new_lineage_credit": 0,
+    "new_sample_credit": 0,
+    "new_quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "step_a_complete": true,
+    "third_direction_found": true,
+    "fourth_direction_found": false,
+    "logchunks_approved_for_separate_metadata_candidate_review": true,
+    "logchunks_approved_as_source_role": false,
+    "effective_catalog_change_authorized": false,
+    "download_authorized": false,
+    "archive_or_payload_audit_authorized": false,
+    "family_role_change_authorized": false,
+    "family_lineage_sample_or_quota_credit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false,
+    "step_b_may_start_after_step_a_self_check": true
+  },
+  "step_self_check": {
+    "hard_excluded_path_hit": false,
+    "download_process_cache_archive_zip_or_launcher_touched": false,
+    "reader_installed_or_executed": false,
+    "outputs_only_under_docs_llm_editor": true,
+    "result": "pass"
+  }
+}

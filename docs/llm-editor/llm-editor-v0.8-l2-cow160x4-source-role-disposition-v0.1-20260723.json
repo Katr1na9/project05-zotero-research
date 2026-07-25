@@ -1,0 +1,181 @@
+{
+  "schema_version": "project05-llm-editor-l2-cow160x4-source-role-disposition-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "6708da1b85d54a6aa7072d52d11f324a6b381815",
+  "review_type": "independent_post_bounded_audit_source_role_disposition",
+  "candidate_id": "cow160x4_cowrie_ssh_session_provenance_2026",
+  "target_id": "cow160x4_session_aggregation_jsonl_gz",
+  "status": "disposed_inactive_metadata_only_replacement_rejected",
+  "input_evidence": {
+    "result_path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-bounded-audit-result-v0.1-20260723.json",
+    "result_sha256": "d1c165a6b9a12e089a9b3bf36f98520414cdbb5e12191e7c57fc1eee09fa0f9f",
+    "result_report_path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-bounded-audit-result-v0.1-20260723.md",
+    "result_report_sha256": "71402df9d9633ac7f3a032eb05287e1abb92f2118a35056cf1def31de822e54d",
+    "result_commit": "6708da1b85d54a6aa7072d52d11f324a6b381815",
+    "result_status": "fail_closed_sensitive_field_key_detected",
+    "compressed_identity_verified": true,
+    "bounded_jsonl_line_count": 4096,
+    "bounded_decompressed_bytes": 2486457,
+    "schema_probe_passed": true,
+    "schema_signature_count": 1,
+    "sensitive_key_record_count": 4096,
+    "sensitive_key_record_rate": 1.0,
+    "field_isolation_probe_passed": false,
+    "full_privacy_gate_passed": false,
+    "nested_notice_gate_passed": false,
+    "unique_opaque_session_candidates_in_bounded_probe": 4096,
+    "duplicate_session_candidates_in_bounded_probe": 0,
+    "minimum_four_session_candidates_present": true,
+    "one_session_to_one_record_globally_verified": false,
+    "duplicate_reconnect_retry_or_campaign_policy_verified": false,
+    "statistical_independence_verified": false,
+    "pointer_canonical_in_memory_round_trip_passed": true,
+    "pointer_binding_status": "unbound",
+    "normalization_to_source_round_trip_globally_verified": false,
+    "raw_line_key_or_value_persisted": false,
+    "lineage_credit": 0,
+    "quota_credit": 0
+  },
+  "evidence_interpretation": {
+    "schema_pass_is_source_role_pass": false,
+    "minimum_four_bounded_sessions_is_global_lineage_pass": false,
+    "zero_duplicates_in_bounded_prefix_is_global_duplicate_control": false,
+    "pointer_canonicalization_is_pointer_binding": false,
+    "record_scope_cc_by_4_0_closes_nested_notice": false,
+    "privacy_failure_is_marginal": false,
+    "privacy_failure_scope": "Every one of the 4096 bounded records matched at least one frozen sensitive-field-key rule.",
+    "exact_sensitive_keys_recovered_or_persisted": false,
+    "exact_sensitive_keys_need_not_be_recovered_to_apply_fail_closed_disposition": true,
+    "scientific_conclusion": "The selected derived aggregation has a stable bounded schema and abundant opaque session candidates, but it fails the pre-registered field-isolation Gate across the entire bounded panel and leaves notice, global lineage, statistical independence, and pointer binding unclosed. It is therefore unsuitable as a replacement train source."
+  },
+  "option_analysis": [
+    {
+      "option": "retain_as_active_replacement_candidate",
+      "decision": "reject",
+      "reason": "The bounded audit failed closed because all 4096 inspected records matched the frozen sensitive-key rule. Privacy and field isolation are hard source-role Gates and cannot be offset by schema validity, session count, or pointer canonicalization."
+    },
+    {
+      "option": "relax_or_remove_sensitive_field_tokens_and_rerun",
+      "decision": "reject",
+      "reason": "Changing the privacy rule after observing a 100 percent trigger rate would be post hoc Gate manipulation. The existing terminal audit authority permits no retry, and the replacement threshold may not be rescued by redefining sensitive fields."
+    },
+    {
+      "option": "allow_event_type_or_command_like_count_fields_as_model_visible",
+      "decision": "reject",
+      "reason": "Unknown or event-type count fields were explicitly provisional non-model fields. Reclassifying them after the audit would risk label, behavior, command, or nuisance leakage and would silently reverse the frozen field-isolation contract."
+    },
+    {
+      "option": "switch_to_data_all_zip",
+      "decision": "reject",
+      "reason": "The metadata review already identified raw credentials, commands, URLs, environment values, network or geolocation identifiers, fingerprints, filenames, and other high-risk raw-event material. A dirtier surface cannot remediate a privacy failure in the narrower aggregation."
+    },
+    {
+      "option": "switch_to_transferred_files_or_metadata",
+      "decision": "reject",
+      "reason": "Transferred files may contain malicious payloads, while their metadata may expose filenames, fingerprints, URLs, or related artifact context. Neither surface is needed for label-independent session grouping and neither can repair the failed privacy Gate."
+    },
+    {
+      "option": "treat_4096_unique_sessions_as_verified_lineage",
+      "decision": "reject",
+      "reason": "The audit sampled a bounded prefix only. It did not close global one-session-to-one-record behavior, reconnects, retries, duplicate campaigns, actor correlation, or statistical independence."
+    },
+    {
+      "option": "treat_pointer_canonicalization_as_bound_pointer",
+      "decision": "reject",
+      "reason": "The probe established only deterministic in-memory canonicalization. Gzip random access and global source round trip remain unverified, so binding_status must remain unbound."
+    },
+    {
+      "option": "downgrade_to_inactive_metadata_only_negative_evidence",
+      "decision": "approve",
+      "reason": "The committed acquisition and sanitized audit may remain as auditable negative source-gate evidence and, under separate authority, a parser or fail-closed regression fixture. The gzip object itself may not become model-visible or enter train or development."
+    },
+    {
+      "option": "reject_replacement_and_keep_direction_04_vacant",
+      "decision": "approve",
+      "reason": "The portfolio position must remain vacant until a distinct source passes pre-registered rights, privacy, field-isolation, lineage, pointer, and protected-exclusion Gates without post hoc rule changes or dirtier-surface substitution."
+    }
+  ],
+  "verdict": {
+    "decision": "reject_replacement_and_downgrade",
+    "candidate_status_before": "approved_metadata_candidate_pending_bounded_source_role_audit",
+    "candidate_status_after": "inactive_metadata_only_privacy_notice_failed",
+    "scientific_use_status": "negative_source_gate_evidence_not_training_source",
+    "effective_catalog_role_before": null,
+    "effective_catalog_role_after": null,
+    "recommended_catalog_disposition_if_separately_authorized": "inactive_metadata_only",
+    "effective_catalog_written_by_this_disposition": false,
+    "role_change_applied_by_this_disposition": false,
+    "approved_as_replacement_candidate": false,
+    "approved_as_source_role": false,
+    "approved_for_train_or_development": false,
+    "portfolio_direction_04_occupied_after_disposition": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "inactive_scope": {
+    "committed_sanitized_negative_result_may_be_cited": true,
+    "parser_or_fail_closed_regression_use_requires_separate_authority": true,
+    "verified_gzip_object_may_enter_model_view": false,
+    "verified_gzip_object_may_enter_train_or_development": false,
+    "gzip_may_be_reopened_under_this_disposition": false,
+    "jsonl_may_be_reread_under_this_disposition": false,
+    "may_generate_training_samples_or_targets": false,
+    "may_supply_null_benign_unsupported_or_abstention_samples": false,
+    "may_supply_temporal_candidate_q_or_polarity_supervision": false,
+    "may_supply_pointer_binding": false,
+    "may_be_rehabilitated_by_rule_relaxation_cap_change_or_surface_switch": false,
+    "second_cow160x4_audit_planned": false
+  },
+  "forbidden_remediation": [
+    "Remove, rename, narrow, or bypass sensitive-field tokens after observing the terminal result.",
+    "Allow unknown, event-type, command-like, credential-like, URL-like, filename-like, fingerprint-like, geolocation-like, payload-like, or message-like fields into model-visible evidence to improve quota.",
+    "Rerun the same gzip object with a changed field allowlist, parser, caps, notice rule, privacy rule, result interpretation, or execution authority.",
+    "Download or audit data_all.zip, transferred_files.zip, transferred_files_metadata.csv, malformed.txt, another record revision, mirror, local slice, or transformed table as an automatic fallback.",
+    "Count the 160 honeypots, four configurations, countries, days, files, event types, attacks, verdicts, or bounded-prefix lines as independent executions.",
+    "Promote 4096 bounded unique session candidates to global lineage or statistical independence.",
+    "Promote an in-memory pointer canonicalization check to a bound or source-recoverable pointer.",
+    "Use schema validity to override privacy, notice, rights, lineage, pointer, protected-overlap, or nuisance-independence Gates.",
+    "Recover or persist exact sensitive key names or values solely to seek a post hoc exception.",
+    "Treat Cowrie emulated commands or responses as real operating-system execution or host state."
+  ],
+  "reopen_conditions": [
+    "The curator publishes a new immutable record revision with a physically separate privacy-safe aggregation whose exact field allowlist excludes sensitive, label-like, event-target, command, credential, URL, filename, fingerprint, geolocation, payload, and raw-message material.",
+    "The new revision publishes machine-readable nested rights or notice metadata and a stable label-independent session manifest with duplicate, reconnect, retry, and campaign-correlation policy.",
+    "The new revision supports deterministic compressed-record pointer recovery without exposing raw session identifiers.",
+    "Any such revision must enter a new metadata candidate review and new acquisition and audit authorities. It is not a rerun or remediation of the rejected revision-6 replacement."
+  ],
+  "replacement_slot": {
+    "portfolio_ordinal": 4,
+    "slot_id": "train_executed_evidence_reviewable_direction_04",
+    "status": "vacant_cow160x4_rejected_privacy_notice_gate",
+    "current_family_credit": 0,
+    "current_lineage_credit": 0,
+    "current_sample_credit": 0,
+    "current_quota_credit": 0,
+    "required_evidence_shape": "A distinct endpoint or provenance family with at least four source-native label-independent execution, session, run, or capture groups and a physically isolated, privacy-safe evidence surface that passes immutable rights, notice, schema, field-isolation, lineage, pointer, protected-overlap, and nuisance-independence Gates.",
+    "cow160x4_candidate_removed_from_replacement_consideration": true,
+    "sensitive_rule_relaxation_forbidden": true,
+    "dirtier_surface_fallback_forbidden": true,
+    "automatic_next_candidate_promoted": false
+  },
+  "scope_audit": {
+    "disposition_used_only_committed_sanitized_result_and_prior_contracts": true,
+    "gzip_reopened_for_disposition": false,
+    "jsonl_or_payload_read_for_disposition": false,
+    "bounded_audit_rerun": false,
+    "sensitive_field_rule_or_threshold_changed": false,
+    "alternative_cow160x4_surface_downloaded_or_read": false,
+    "effective_catalog_written": false,
+    "role_or_credit_changed_in_catalog": false,
+    "training_samples_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_commit_performed": false,
+    "git_push_performed": false
+  },
+  "next_action": "Keep portfolio direction 04 vacant and retain COW160x4 only as inactive metadata-level negative source-gate evidence. Do not rerun, relax privacy rules, or switch to a dirtier COW160x4 surface. Any replacement search or catalog amendment requires separate authorization."
+}

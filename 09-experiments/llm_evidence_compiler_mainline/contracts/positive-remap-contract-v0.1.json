@@ -1,0 +1,46 @@
+{
+  "contract_id": "project05-positive-remap-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-18",
+  "status": "approved_dependency_free_parser_and_read_only_audit_only",
+  "parsers": {
+    "linux_audit_execve_v1": {
+      "source_family_id": "ait_cam_lds_manifestations_filtered",
+      "record_types": ["EXECVE"],
+      "required_fields": ["audit_timestamp", "argc", "a0"],
+      "output_shape": "process_executed_command"
+    },
+    "linux_audit_proctitle_hex_v1": {
+      "source_family_id": "ait_cam_lds_manifestations_filtered",
+      "record_types": ["PROCTITLE"],
+      "required_fields": ["audit_timestamp", "proctitle_hex"],
+      "output_shape": "process_executed_command"
+    },
+    "loghub_oom_killed_process_v1": {
+      "source_family_id": "logpai_loghub_linux",
+      "required_fields": ["host", "literal_kernel", "pid", "process_name"],
+      "output_shape": "system_terminated_process"
+    }
+  },
+  "expected_read_only_counts": {
+    "ait_cam_lds_manifestations_filtered": 166,
+    "logpai_loghub_linux": 193
+  },
+  "legacy_null_negative_credit": 0,
+  "beth_status": "metadata_candidate_not_download_authorized",
+  "formal_candidate_pair_construction_allowed": false,
+  "not_authorized": [
+    "beth_or_other_corpus_download",
+    "normalized_record_rewrite",
+    "formal_candidate_pair_construction",
+    "dependency_install_or_change",
+    "tokenizer_download",
+    "model_download",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "frozen_case_or_result_overwrite"
+  ]
+}

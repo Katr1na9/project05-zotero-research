@@ -1,0 +1,407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/claim-ir-kernel.schema.json",
+  "title": "Project05 external Claim IR kernel envelope",
+  "description": "Published M0 structural schema for the project05_depth2_public public planner surface. This schema defines shape and state values only; pending_kernel_schema is a blocking state, not an ingestion or execution authorization. No labels, verdicts, hidden/recoverable/required claim IDs, oracle data, mask membership, realized outcomes, certificates, or private evidence are representable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "package_id",
+    "surface_id",
+    "kernel_state",
+    "claim_id_state",
+    "admission_state",
+    "projection_ref",
+    "claims",
+    "manifest"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "claim-ir-external-v0.1"
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^pkg_[A-Za-z0-9_-]{16,128}$",
+      "description": "Opaque package reference. It must not be derived from labels, outcomes, private paths, or payload bytes."
+    },
+    "surface_id": {
+      "type": "string",
+      "const": "project05_depth2_public"
+    },
+    "kernel_state": {
+      "$ref": "#/$defs/kernel_state"
+    },
+    "claim_id_state": {
+      "$ref": "#/$defs/claim_id_state"
+    },
+    "admission_state": {
+      "$ref": "#/$defs/admission_state"
+    },
+    "projection_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "surface_id"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "const": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "surface_id": {
+          "type": "string",
+          "const": "project05_depth2_public"
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim_record"
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_count",
+        "field_path_set",
+        "projection_sha256",
+        "content_hash"
+      ],
+      "properties": {
+        "claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "field_path_set": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/source_field"
+          }
+        },
+        "projection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "kernel_state": {
+      "type": "string",
+      "enum": [
+        "pending_kernel_schema",
+        "ingested_under_separate_authority",
+        "rejected"
+      ],
+      "description": "pending_kernel_schema is a blocking state value only. It does not authorize execution, ingestion, admission, or approval."
+    },
+    "claim_id_state": {
+      "type": "string",
+      "enum": [
+        "not_minted",
+        "pending_review",
+        "minted_opaque",
+        "invalid"
+      ]
+    },
+    "admission_state": {
+      "type": "string",
+      "enum": [
+        "not_admitted",
+        "pending_review",
+        "admitted_under_separate_authority",
+        "rejected"
+      ],
+      "description": "Admission is separate from structural validity and does not grant source role, train admission, lineage, quota, credit, or L2 state."
+    },
+    "claim_kind": {
+      "type": "string",
+      "enum": [
+        "public_config",
+        "public_alignment_state",
+        "public_action_declaration",
+        "public_prospective_effect"
+      ]
+    },
+    "source_field": {
+      "type": "string",
+      "enum": [
+        "config.case_id",
+        "config.budget_total",
+        "config.cti_nodes.node_id",
+        "config.cti_nodes.stage",
+        "config.cti_nodes.critical",
+        "config.channel_reliability",
+        "state.case_id",
+        "state.step_index",
+        "state.matched_cti_node_ids",
+        "state.unmatched_cti_node_ids",
+        "state.matched_cti_edge_ids",
+        "state.unmatched_cti_edge_ids",
+        "state.coverage.cti_node_coverage",
+        "state.coverage.cti_edge_coverage",
+        "state.coverage.critical_gap_count",
+        "state.coverage.stage_coverage",
+        "state.coverage.evidence_type_coverage",
+        "state.budget.budget_total",
+        "state.budget.budget_used",
+        "state.budget.budget_remaining",
+        "state.remaining_action_ids",
+        "action.action_id",
+        "action.case_id",
+        "action.action_type",
+        "action.acquisition_channel",
+        "action.target.target_type",
+        "action.target.target_value",
+        "action.cost",
+        "action.intended_cti_node_ids",
+        "action.expected_evidence_types",
+        "action.expected_stages",
+        "action.expected_effects.expected_granularity_gain",
+        "action.expected_effects.expected_uncertainty_reduction",
+        "action.expected_effects.expected_over_attribution_risk_reduction",
+        "action.expected_effects.expected_conflict_resolution",
+        "action.expected_effects.expected_coverage_delta",
+        "action.status",
+        "action.natural_language_request"
+      ],
+      "description": "Only the pinned public projection paths are admissible. actions_taken and action_feedback.recovered_count are intentionally absent because realized feedback is outside M0."
+    },
+    "value_type": {
+      "type": "string",
+      "enum": [
+        "opaque_reference",
+        "bounded_number",
+        "bounded_boolean",
+        "bounded_enum",
+        "bounded_public_text"
+      ]
+    },
+    "claim_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^clm_[A-Za-z0-9_-]{22,128}$"
+    },
+    "claim_value": {
+      "description": "Value validation is selected by claim_record.value_type; no overlapping union is used here.",
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "array"
+      ]
+    },
+    "opaque_reference_value": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,256}$",
+      "description": "Opaque public reference only; not a Claim ID unless it conforms to the claim_id definition and the state/authority gates allow it."
+    },
+    "bounded_enum_value": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+    },
+    "bounded_public_text_value": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "Public action metadata only. Consumers must not parse it for labels, verdicts, hidden claims, or realized outcomes."
+    },
+    "claim_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "claim_id_state",
+        "claim_kind",
+        "source_field",
+        "value_type",
+        "value",
+        "admission_state"
+      ],
+      "properties": {
+        "claim_id": {
+          "$ref": "#/$defs/claim_id"
+        },
+        "claim_id_state": {
+          "$ref": "#/$defs/claim_id_state"
+        },
+        "claim_kind": {
+          "$ref": "#/$defs/claim_kind"
+        },
+        "source_field": {
+          "$ref": "#/$defs/source_field"
+        },
+        "value_type": {
+          "$ref": "#/$defs/value_type"
+        },
+        "value": {
+          "$ref": "#/$defs/claim_value"
+        },
+        "admission_state": {
+          "$ref": "#/$defs/admission_state"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "claim_id_state": {
+                "enum": [
+                  "not_minted",
+                  "pending_review"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claim_id_state": {
+                "const": "minted_opaque"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim_id": {
+                "type": "string",
+                "pattern": "^clm_[A-Za-z0-9_-]{22,128}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "opaque_reference"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/opaque_reference_value"
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 4096,
+                    "items": {
+                      "$ref": "#/$defs/opaque_reference_value"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_number"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_boolean"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_enum"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_enum_value"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_public_text"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_public_text_value"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "project05-qwen25-4090-adamw-primary-interruption-summary-v0.1",
+  "status": "externally_interrupted_incomplete_formal_primary",
+  "created_date": "2026-07-20",
+  "source_server_path": "/home/myy/project05-qwen25-4090-v0.1/server-output/primary-adamw-v0.35",
+  "formal_result_eligible": false,
+  "interruption_classification": {
+    "observed": "foreground_ssh_session_disappeared_and_training_process_was_no_longer_running",
+    "consistent_with": "external_terminal_hangup_or_session_termination",
+    "directly_proven_cause": false,
+    "cuda_failure_observed": false,
+    "oom_observed": false,
+    "numeric_failure_observed": false,
+    "memory_gate_failure_observed": false
+  },
+  "progress": {
+    "optimizer_steps_completed": 194,
+    "optimizer_steps_total": 225,
+    "microbatches_completed": 3104,
+    "microbatches_total": 3600,
+    "completed_epochs": 2,
+    "active_epoch_at_interruption": 3,
+    "progress_event_count": 197,
+    "progress_sha256": "50E1462B2E2C30C11E352DE1110BFA7F34562698FBA343E84E57F18596951E288",
+    "success_audit_present": false,
+    "python_failure_audit_present": false
+  },
+  "last_completed_step": {
+    "optimizer_step": 194,
+    "epoch": 3,
+    "elapsed_seconds": 3164.549123175442,
+    "loss_mean_for_step": 0.00006256204648025232,
+    "gradient_norm": 0.004699285142123699,
+    "learning_rate": 0.000009813980088796562,
+    "allocated_bytes": 8301579264,
+    "free_bytes": 1180827648,
+    "reserved_bytes_diagnostic": 23590862848,
+    "allocator_cache_release_attempted": false
+  },
+  "checkpoint_inventory": {
+    "complete_epoch_directories_observed": [
+      1,
+      2
+    ],
+    "epoch_3_checkpoint_present": false,
+    "checkpoint_selection_authorized": false,
+    "checkpoint_downloaded": false
+  },
+  "post_interruption_gpu_observation": {
+    "bound_gpu_index": 2,
+    "bound_gpu_uuid": "GPU-b0302acd-64e2-8218-7b5c-07a152007357",
+    "memory_total_mib": 24564,
+    "memory_used_mib": 18,
+    "memory_free_mib": 24094,
+    "training_process_present": false
+  },
+  "scientific_disposition": {
+    "optimizer_stability_evidence": "the run passed the former step-173 failure point and reached step 194 without an observed optimizer, CUDA, OOM, numeric, or memory-gate failure",
+    "training_completion_claim_allowed": false,
+    "adapter_effectiveness_claim_allowed": false,
+    "partial_checkpoint_evaluation_allowed": false,
+    "automatic_retry_or_resume_allowed": false,
+    "next_action": "obtain an explicit recovery authority for either a fresh detached rerun or a separately amended checkpoint resume"
+  },
+  "artifact_policy": "All checkpoints, adapters, optimizer states, scheduler states, RNG states, raw training text, and full progress logs remain on the server. This repository artifact contains only a sanitized summary."
+}

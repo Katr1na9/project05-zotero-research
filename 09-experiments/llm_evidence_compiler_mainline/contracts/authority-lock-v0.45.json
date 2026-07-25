@@ -1,0 +1,143 @@
+{
+  "authority_id": "project05-constrained-decoder-isolated-compatibility-preflight-v0.45",
+  "version": "0.45.0",
+  "status": "single_dependency_install_and_zero_model_call_preflight_authorized",
+  "created_date": "2026-07-20",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.45.json",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.44.json",
+    "sha256": "FB80FD7ABE816984AAA17EDAE46C8929346B7DC192AB97F4FF3ECBC91A675C0E",
+    "disposition": "model_free_pointer_bound_implementation_is_frozen_and_model_execution_remains_closed"
+  },
+  "hash_locked_artifacts": {
+    "parent_v044_authority": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.44.json",
+      "sha256": "FB80FD7ABE816984AAA17EDAE46C8929346B7DC192AB97F4FF3ECBC91A675C0E"
+    },
+    "v044_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-pointer-bound-constrained-atomic-contract-v0.1.json",
+      "sha256": "73A9230794AD93CB5956273A0BB6F8C412435BED12E758124672B942FB1A71B6"
+    },
+    "v044_config": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/pointer_bound_atomic_v0.1/pointer-bound-atomic-config-v0.1.json",
+      "sha256": "50C7B93D59413B43998CA4D24CC0309DC1CA4EFD1B1CD4ECB0C0692A0E3C0B55"
+    },
+    "runtime_requirement": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/pointer_bound_atomic_v0.1/requirements-constrained-decoding-v0.1.txt",
+      "sha256": "AC4DE93B916DCABE276600D908C711958437B04401F8495B24C6093675DE94F1"
+    },
+    "model_output_schema": {
+      "path": "09-experiments/data_schema/pointer_bound_compiler_output.schema.json",
+      "sha256": "B7E96A4C5F08AE5E98D857C9BB5B4F92F40A9736DE9BD56E2EAD342833047117"
+    },
+    "serialization_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/pointer-bound-serialization-contract-v0.1.json",
+      "sha256": "E47B5A0BA35B0DEC70A3BD9D718EA420A583CDE73813C73B5CA999C76EDB35C2"
+    },
+    "preflight_amendment": {
+      "path": "08-writing/llm-evidence-compiler-constrained-decoder-preflight-amendment-v0.45-20260720.md",
+      "sha256": "F5D72B4B97FFF365F6651873B037D7F478757D2246C08CA9D4B2A3C94068C2B8"
+    },
+    "preflight_script": {
+      "path": "09-experiments/scripts/preflight_pointer_bound_constrained_decoder.py",
+      "sha256": "0ED6E7BB967AB54D33648BFBF14C9C6A3B5FBFACA02D66E005A281FC63339B39"
+    },
+    "preflight_launcher": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/pointer_bound_atomic_v0.1/run-constrained-decoder-preflight-4090-v0.1.sh",
+      "sha256": "573FE5AEB62834C29139E810F1D87562413A3C8B25B20D25089C0F8821CFB688"
+    },
+    "model_free_tests": {
+      "path": "09-experiments/tests/test_pointer_bound_constrained_preflight.py",
+      "sha256": "2E1278D41272B3DA2AB0C46A12890078B93574EC3DC5CECB974D82D4B259DD13"
+    }
+  },
+  "compatibility_preflight_gate": {
+    "authorized": true,
+    "maximum_attempts": 1,
+    "maximum_model_calls": 0,
+    "dependency_distribution": "lm-format-enforcer",
+    "dependency_version": "0.10.6",
+    "dependency_target": "local-runtime/constrained-v0.1",
+    "maximum_dependency_target_bytes": 100000000,
+    "preparation_audit_relative_path": "server-output/preparation-audit-v0.1.json",
+    "preparation_audit_sha256": "12F73CE159E72F08C08533B8CA8A79BBF79ECAF7FEF118CB24F702FA1BDDC38A",
+    "output": "server-output/pointer-bound-constrained-preflight-v0.45.json",
+    "failure_output": "server-output/pointer-bound-constrained-preflight-failure-v0.45.json",
+    "isolated_target_install_authorized": true,
+    "pip_cache_below_authorized_root_required": true,
+    "temporary_directory_below_authorized_root_required": true,
+    "qwen_tokenizer_loading_authorized": true,
+    "synthetic_fixture_only": true,
+    "model_loading_authorized": false,
+    "model_inference_authorized": false,
+    "training_validation_payload_access_authorized": false,
+    "train_access_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_access_authorized": false,
+    "m3_access_authorized": false,
+    "automatic_retry_authorized": false,
+    "unconstrained_fallback_authorized": false
+  },
+  "server_boundary": {
+    "allowed_root": "/home/myy/project05-qwen25-4090-v0.1",
+    "deployment_subdirectory": "bundle-v045",
+    "read_or_write_other_server_directory_authorized": false,
+    "existing_venv_modification_authorized": false,
+    "model_tokenizer_adapter_or_checkpoint_download_authorized": false
+  },
+  "probe_contract": {
+    "draft_2020_12_schema_validation_required": true,
+    "two_branch_json_schema_parser_required": true,
+    "frozen_qwen_tokenizer_required": true,
+    "canonical_supported_path_every_token_allowed": true,
+    "canonical_unsupported_path_every_token_allowed": true,
+    "nonempty_allowed_token_set_every_step": true,
+    "eos_allowed_after_both_complete_paths": true,
+    "prompt_or_fixture_content_may_not_enter_retrieved_audit": true,
+    "model_class_import_allowed": false,
+    "model_weight_file_read_allowed": false
+  },
+  "artifact_policy": {
+    "success_audit_retrieval_authorized": true,
+    "failure_audit_retrieval_authorized": true,
+    "pip_stdout_or_stderr_retrieval_authorized": false,
+    "raw_generation_exists": false,
+    "adapter_or_checkpoint_access_authorized": false
+  },
+  "failure_policy": {
+    "automatic_retry_or_resume": false,
+    "change_package_version": false,
+    "change_schema_or_tokenizer": false,
+    "fall_back_to_unconstrained_generation": false,
+    "failure_audit_required": true
+  },
+  "next_gate": {
+    "status": "hard_stop_after_preflight_for_a_new_single_atomic_execution_authority",
+    "model_execution_authorized": false,
+    "atomic_panel_execution_authorized": false,
+    "s0_s3_data_design_authorized": false,
+    "new_qlora_training_authorized": false,
+    "development_or_test_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "not_authorized": [
+    "model_loading_or_inference",
+    "training_validation_payload_access",
+    "train_split_access",
+    "development_or_test_access",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "automatic_retry_or_unconstrained_fallback",
+    "v0_43_rescore_or_checkpoint_reselection",
+    "s0_s3_data_construction_or_new_qlora",
+    "model_tokenizer_adapter_or_checkpoint_download",
+    "existing_venv_site_packages_modification",
+    "server_path_access_outside_authorized_root",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

@@ -1,0 +1,231 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-mainline-handoff-merge-readiness-disposition-v0.1-20260725",
+  "artifact_type": "claim_id_mainline_handoff_merge_readiness_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "234c9b9ddcc063dfccb7e8d7ea754429dab03be4",
+  "status": "draft_merge_readiness_not_effective",
+  "surface_id": "project05_depth2_public",
+  "certificate_surface": "vacant",
+  "scope": {
+    "purpose": "pre-merge self-check of the pinned M1 through mainline-handoff rule path",
+    "merge_readiness_only": true,
+    "effective_runtime_authority": false,
+    "production_registration_authorized": false,
+    "kernel_store_or_e_case_authorized": false
+  },
+  "pinned_closed_chain": {
+    "m1_structural": {
+      "adapter": {
+        "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+        "sha256": "752072cf0596657a4bf6f9a60af5b667d8476731cb89f04a73544d87d9e07797",
+        "commit": "3527457ed5907f584bebaf46a38e65fec9df7a9e"
+      },
+      "exhausted_activation": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-single-execute-activation-v0.1-20260724.json",
+        "sha256": "070c86604af03cff9c21174c6fc316a608365c55e3104a8ff59df3df78d0e79a",
+        "commit": "373a00dbaa9ccd1fe7c69f6b2cc5b0e44e1fc62a",
+        "execute_ledger": {
+          "authorized": 1,
+          "maximum": 1,
+          "started": 1,
+          "consumed": 1,
+          "remaining": 0
+        }
+      },
+      "local_audit_output": {
+        "path": ".tmp/m1-planner-inputs-single-execute-v0.1/package.json",
+        "sha256": "a97dcdd63974cb86afd1cd76de23df41f178fbcedf4657c3345d5253f0e9a650",
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "repository_authority": false
+      }
+    },
+    "claim_id_mint": {
+      "executor": {
+        "path": "src/compiler/llm/claim_id_mint_executor.py",
+        "sha256": "b0460b331402bfa35a7db8e62cd6366d00121e7241a766181a5e396c7601522d",
+        "commit": "7100c2470507c5a6ea35dadef79e7a03436176d3"
+      },
+      "exhausted_activation": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-production-claim-id-mint-single-execute-activation-v0.1-20260724.json",
+        "sha256": "7a90a32280118d2c747542c6503af8b43faa9698f78f8bfa3ec6287a67d21416",
+        "commit": "e8d69b0a36bc06289eac2524cf918cda98541c9b",
+        "execute_ledger": {
+          "authorized": 1,
+          "maximum": 1,
+          "started": 1,
+          "consumed": 1,
+          "remaining": 0
+        }
+      },
+      "local_audit_output": {
+        "path": ".tmp/production-claim-id-mint-single-execute-v0.1/package.json",
+        "sha256": "29a260fe46c3ccf45822e4e2b8d2085cfb6fef0b6a9a0edddfe9a30462cbb1a9",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "repository_authority": false,
+        "key_or_secret_material_in_repository": false
+      }
+    },
+    "claim_ir_admission": {
+      "executor": {
+        "path": "src/compiler/llm/claim_ir_admission_executor.py",
+        "sha256": "7ed0af8a9af72d0dd31c33558a45ad3aef9634952b84c856ee2b9a4a4058e199",
+        "commit": "aaa47602f6298a84bdd5cb4c071b59374c70a55b"
+      },
+      "exhausted_activation": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-ir-admission-single-execute-activation-v0.1-20260724.json",
+        "sha256": "ea58e17096c8ed7e2b72afbb24e46f34746e7840640b3ea0d062a7c163e6e6b6",
+        "commit": "07fbcd9064f0ad1c8b37cc6084b2bc4cce489445",
+        "execute_ledger": {
+          "authorized": 1,
+          "maximum": 1,
+          "started": 1,
+          "consumed": 1,
+          "remaining": 0
+        }
+      },
+      "versioned_replay_fixture": {
+        "path": "docs/llm-editor/fixtures/claim-ir-admitted/project05-depth2-public-minted-admitted-v0.1/package.json",
+        "sha256": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "admitted_under_separate_authority",
+        "kernel_state": "pending_kernel_schema",
+        "is_kernel_store_record": false,
+        "is_e_case": false,
+        "is_certificate": false
+      }
+    },
+    "kernel_ingestion": {
+      "executor": {
+        "path": "src/compiler/llm/kernel_claim_ir_ingestion_executor.py",
+        "sha256": "4f619b6c802638541e08e6e3ba45a99fada8e8f261c46d89fcda2f6b4f07ae3f",
+        "commit": "c24efac5e77364d62485e10b602f30a1bf87fc08"
+      },
+      "effective_consumer_contract": {
+        "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+        "sha256": "21766e5d4885170baabfd76eda4e053e2f03778dc32ece778fd3374123009af6",
+        "status": "effective_consumer_contract_semantics_only_ingestion_not_authorized",
+        "draft_or_revision_identity_used_as_effective": false
+      },
+      "exhausted_activation": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-claim-ir-ingestion-single-execute-activation-v0.1-20260725.json",
+        "sha256": "708229bef9e00d13e623d384c87ab8dcde27f34cb9e0becbbb5b96c3b006f06e",
+        "commit": "d9ed6665ff491b639edf54a762f1eab440947dab",
+        "execute_ledger": {
+          "authorized": 1,
+          "maximum": 1,
+          "started": 1,
+          "consumed": 1,
+          "remaining": 0
+        }
+      },
+      "versioned_replay_fixture": {
+        "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+        "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+        "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "admitted_under_separate_authority",
+        "kernel_state": "ingested_under_separate_authority",
+        "is_kernel_store_record": false,
+        "is_e_case": false,
+        "is_certificate": false
+      },
+      "versioned_sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json",
+        "sha256": "4e737e896dc97a2f4a78cb022745405e14acd961b47ed7c4b720d94501c5f954"
+      }
+    },
+    "mainline_handoff": {
+      "design": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mainline-handoff-design-v0.1-20260724.json",
+        "sha256": "d1a618b8f6c7ec03d89ddf87a1eff6a7ffa04dcf6ba3b453f04a558aaec9b23a"
+      },
+      "implementation": {
+        "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+        "sha256": "ea3acaa9134a0d59b3a4ddffbcd385871ab0c9f5b11fa0b41c04979e8618bc22",
+        "commit": "234c9b9ddcc063dfccb7e8d7ea754429dab03be4",
+        "production_registration_enabled": false
+      },
+      "tests": {
+        "path": "tests/compiler_contract/test_claim_id_mainline_handoff.py",
+        "sha256": "6b72f86bb43360d61a5f135e8e1f4c8031f4eadfed921d7748950437f1d910ac"
+      },
+      "emitted_payload_boundary": {
+        "read_only_identity_reference": true,
+        "claim_values_or_raw_paths_included": false,
+        "claim_id_or_lifecycle_state_mutation": false,
+        "production_control_loop_wiring": false
+      }
+    }
+  },
+  "single_smoke_evidence": {
+    "executed": true,
+    "handoff_call_count": 1,
+    "mode": "audit_only_not_registered",
+    "payload": {
+      "path": ".tmp/claim-id-mainline-handoff-smoke-v0.1/payload.json",
+      "sha256": "9f3a04941315fe95b7cfcb09ce9545fd3d2e904c34635c990fa2c032b829cc9a",
+      "repository_authority": false
+    },
+    "run_report": {
+      "path": ".tmp/claim-id-mainline-handoff-smoke-v0.1/run-report.json",
+      "sha256": "24bf731a57dce3edcc9eba23e7e8229e038bf5fbaa99050f1073d8bdaf50839f",
+      "repository_authority": false
+    },
+    "production_registration_changed": false,
+    "kernel_store_or_e_case_write": false,
+    "certificate_generated": false
+  },
+  "merge_readiness_assertion": {
+    "m1_mint_admission_ingestion_handoff_pin_chain_closed": true,
+    "closed_for_versioned_replay_and_fail_closed_contract_verification": true,
+    "closed_for_production_control_loop_registration": false,
+    "compiler_contract_test_result": {
+      "command": "python -B -m pytest tests/compiler_contract -q",
+      "passed": 77,
+      "subtests_passed": 75,
+      "failed": 0
+    },
+    "minted_opaque_is_admission": false,
+    "admission_is_kernel_ingestion": false,
+    "kernel_ingestion_is_e_case_or_certificate": false,
+    "handoff_is_l2_gate_pass": false
+  },
+  "artifact_authority_policy": {
+    "tmp_paths_are_authoritative": false,
+    "tmp_outputs_are_local_audit_only": true,
+    "versioned_fixtures_are_replayable": true,
+    "versioned_fixtures_are_kernel_store_records": false,
+    "versioned_fixtures_are_e_case_records": false,
+    "versioned_fixtures_are_certificates": false,
+    "this_disposition_is_execution_authority": false,
+    "this_disposition_is_effective_registration": false
+  },
+  "still_blocked": {
+    "production_control_loop_permanent_registration": true,
+    "kernel_store_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "si_llm_001_closure": true,
+    "l2_gate_pass": true,
+    "part_b_elevation": true,
+    "four_family_llm_finetune": true
+  },
+  "explicit_non_authorizations": {
+    "production_control_loop_registration": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "four_family_llm_training_or_inference": false,
+    "git_commit": false,
+    "git_push": false
+  }
+}

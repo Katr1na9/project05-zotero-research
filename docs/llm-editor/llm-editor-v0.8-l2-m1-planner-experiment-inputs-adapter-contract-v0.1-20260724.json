@@ -1,0 +1,275 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724",
+  "artifact_type": "m1_adapter_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "a608fe0c9e1d1ae43ed5263e9c268bca3d63bb35",
+  "status": "design_only_adapter_not_registered",
+  "registry_state": {
+    "adapter_registered": false,
+    "adapter_implementation_authorized": false,
+    "adapter_execution_authorized": false,
+    "registry_activation_authorized": false
+  },
+  "adapter_identity": {
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "adapter_id_pattern": "^m1a_[a-z0-9_-]{1,48}$",
+    "adapter_id_pattern_valid": true,
+    "adapter_version": "0.1.0",
+    "source_class": "planner_experiment_inputs",
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "certificate_surface": "vacant"
+  },
+  "inherited_framework_pins": {
+    "m1_framework_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+    },
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57"
+    },
+    "m0_depth2_public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    },
+    "source_field_slot_mapping": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070"
+    },
+    "mint_capability_boundary": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mint-capability-completion-disposition-v0.1-20260724.json",
+      "sha256": "dec22233f33fac12a20fb215ed8058ab5f6e4c05292939a15dc48f3209385301",
+      "mint_authorized_by_this_contract": false
+    }
+  },
+  "input_contract": {
+    "input_kind": "declared_planner_experiment_public_projection",
+    "accepted_surface_id": "project05_depth2_public",
+    "accepted_source_class": "planner_experiment_inputs",
+    "accepted_descriptor_fields": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version",
+      "opaque_record_reference",
+      "declared_source_fields"
+    ],
+    "opaque_record_reference": {
+      "required": true,
+      "semantic_content": false,
+      "filesystem_path_allowed": false,
+      "archive_member_path_allowed": false,
+      "raw_payload_allowed": false,
+      "credentials_or_secrets_allowed": false
+    },
+    "declared_source_fields": {
+      "allowlist_source": "pinned_m0_depth2_public_projection_and_source_field_slot_mapping",
+      "unknown_source_field": "reject",
+      "duplicate_source_field": "reject",
+      "field_order": "canonical_order_from_pinned_projection",
+      "hidden_or_recoverable_claim_id_fields": "reject"
+    },
+    "input_material_boundary": {
+      "accepted": [
+        "publicly declared planner config/state/action fields represented by the pinned projection",
+        "opaque case or record references that are not paths, labels, outcomes, or payload bytes",
+        "schema-valid scalar, enum, array, and object values defined by the pinned M0 schema"
+      ],
+      "rejected": [
+        "labels, verdicts, classes, attacks, techniques, or ground truth",
+        "realized outcomes, recovery results, or post-hoc success values",
+        "oracle state, oracle paths, mask membership, random seeds used as authority",
+        "hidden or recoverable claim IDs",
+        "filesystem paths, archive member paths, raw payload bytes, or extracted content",
+        "credentials, secrets, private keys, or unallowlisted network identifiers",
+        "fields from any surface other than project05_depth2_public"
+      ]
+    }
+  },
+  "normalization_contract": {
+    "normalization_status": "design_only_not_executable",
+    "mapping_reference": {
+      "mapping_kind": "total_bijection",
+      "mapping_sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070",
+      "source_field_text_in_claim_id_tuple": false,
+      "raw_path_in_claim_id_tuple": false,
+      "payload_bytes_in_claim_id_tuple": false
+    },
+    "steps": [
+      "Verify exact surface_id, source_class, adapter_id, and adapter_version.",
+      "Verify all input fields against the pinned projection and 38-slot mapping.",
+      "Map every accepted source_field to its opaque allowlisted_source_slot; missing or duplicate mapping rejects.",
+      "Apply only schema-declared type, enum, ordering, and canonicalization rules.",
+      "Preserve explicit public values; do not infer, impute, or reconstruct values from hidden or realized state.",
+      "Emit a structural projection envelope for the existing M0 compiler boundary only."
+    ],
+    "determinism": {
+      "same_pinned_input_same_projection": true,
+      "nondeterministic_sampling": false,
+      "external_model_call": false,
+      "semantic_relabeling": false,
+      "cross_adapter_merge": false
+    },
+    "missing_value_policy": {
+      "required_schema_value_missing": "reject",
+      "optional_schema_value_missing": "retain_only_if_schema_allows",
+      "hidden_value_substitution": "reject",
+      "realized_outcome_substitution": "reject",
+      "silent_defaulting": false
+    },
+    "normalization_errors": [
+      "unknown_source_field",
+      "unmapped_source_field",
+      "duplicate_source_field",
+      "schema_type_mismatch",
+      "enum_value_mismatch",
+      "ambiguous_record",
+      "forbidden_authority_field",
+      "surface_or_source_class_mismatch"
+    ]
+  },
+  "privacy_and_authority_exclusions": {
+    "labels": false,
+    "verdicts": false,
+    "realized_outcomes": false,
+    "oracle_state": false,
+    "mask_membership": false,
+    "hidden_or_recoverable_claim_ids": false,
+    "raw_filesystem_paths": false,
+    "raw_archive_member_paths": false,
+    "raw_payload_bytes": false,
+    "credentials": false,
+    "secrets": false,
+    "unallowlisted_pii": false,
+    "unallowlisted_network_identifiers": false,
+    "privacy_policy": "Any excluded field or value causes a fail-closed rejection; the adapter may not redact-and-continue or emit a partial projection."
+  },
+  "fail_closed_contract": {
+    "policy": "reject_without_projection",
+    "reject_if": [
+      "surface_id is not exactly project05_depth2_public",
+      "source_class is not exactly planner_experiment_inputs",
+      "adapter_id or adapter_version does not match this design",
+      "the adapter is not present in a separately activated registry",
+      "any pinned schema, projection, mapping, or M0 compiler SHA differs",
+      "any source_field is unknown, unmapped, duplicated, or outside the projection allowlist",
+      "any forbidden label, outcome, oracle, mask, hidden ID, raw path, payload, credential, secret, or unallowlisted identifier appears",
+      "input is malformed, ambiguous, nondeterministic, or missing a required schema value",
+      "a second surface, mirror, fallback adapter, or cross-adapter merge is requested"
+    ],
+    "silent_fallback": false,
+    "silent_field_drop": false,
+    "partial_output": false,
+    "retry_or_resume": false,
+    "unknown_adapter_behavior": "reject_unknown_adapter",
+    "pin_mismatch_behavior": "reject_contract_pin_mismatch"
+  },
+  "output_contract": {
+    "output_kind": "structural_projection_only",
+    "output_authorized_by_this_document": false,
+    "proposed_envelope_fields": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version",
+      "opaque_record_reference",
+      "normalized_allowlisted_fields",
+      "claim_id",
+      "claim_id_state",
+      "admission_state",
+      "kernel_state"
+    ],
+    "fixed_state_values": {
+      "surface_id": "project05_depth2_public",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "output_exclusions": [
+      "Claim-ID values",
+      "labels or verdicts",
+      "realized outcomes",
+      "oracle or mask evidence",
+      "hidden or recoverable claim IDs",
+      "raw paths or payload bytes",
+      "credentials or secrets",
+      "certificate, source-role, lineage, quota, or credit assertions"
+    ],
+    "persistence": {
+      "raw_input_persistence": false,
+      "raw_path_persistence": false,
+      "projection_persistence_authorized_by_this_contract": false,
+      "package_file_write_authorized": false
+    }
+  },
+  "m0_handoff_boundary": {
+    "downstream_reference": {
+      "compiler_path": "src/compiler/llm/m0_rule_compiler.py",
+      "compiler_sha256": "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57",
+      "schema_path": "schemas/claim-ir-external-envelope.schema.json",
+      "schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "handoff_semantics": [
+      "This adapter contract describes a future normalized input boundary; it does not invoke the M0 compiler.",
+      "M0 remains the sole structural compiler for project05_depth2_public.",
+      "A future M0 package remains not_minted, not_admitted, and pending_kernel_schema until separately authorized minting.",
+      "Adapter selection or normalization never grants mint, admission, Kernel, certificate, role, lineage, quota, credit, or L2 state."
+    ],
+    "kernel_ingestion_authorized": false,
+    "mint_authorized": false,
+    "admission_authorized": false
+  },
+  "explicit_non_authorizations": {
+    "registry_activation": false,
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "claim_id_mint": false,
+    "production_mint_authority_creation": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "training": false,
+    "download": false,
+    "m2_residual_fit": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "The planner_experiment_inputs adapter contract is specified for one public surface with explicit normalization, privacy exclusions, fail-closed behavior, and structural M0 output states.",
+    "not_registered": true,
+    "not_implemented": true,
+    "not_executed": true,
+    "effective": false,
+    "future_requirements": [
+      "Separate registry activation and implementation authorization.",
+      "Separate execution authority pinning this contract and all inherited hashes.",
+      "Independent review of input provenance and privacy behavior before any adapter output is emitted."
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "adapter_registered_in_this_turn": false,
+    "adapter_executed_in_this_turn": false,
+    "training_started": false,
+    "download_performed": false,
+    "catalog_or_role_or_credit_write": false,
+    "kernel_or_admission_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

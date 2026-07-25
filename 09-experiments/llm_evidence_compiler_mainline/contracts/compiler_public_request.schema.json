@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/compiler_public_request.schema.json",
+  "title": "CompilerPublicRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "request_content_sha256",
+    "case_id",
+    "split",
+    "step_index",
+    "visible_artifacts",
+    "target_nodes",
+    "predicate_allowlist"
+  ],
+  "properties": {
+    "request_id": {"type": "string", "pattern": "^REQ-[A-F0-9]{24}$"},
+    "request_content_sha256": {"$ref": "#/$defs/sha256"},
+    "case_id": {"type": "string", "pattern": "^C[0-9]{2}.*$"},
+    "split": {"enum": ["unit", "development", "test"]},
+    "step_index": {"type": "integer", "minimum": 0},
+    "visible_artifacts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/artifact"},
+      "uniqueItems": true
+    },
+    "target_nodes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/target_node"},
+      "uniqueItems": true
+    },
+    "predicate_allowlist": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {"type": "string", "minLength": 1},
+        "uniqueItems": true
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host_id": {"type": "string", "minLength": 1},
+        "tenant_id": {"type": "string", "minLength": 1},
+        "process_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "time_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {"type": "string", "format": "date-time"},
+        "end": {"type": "string", "format": "date-time"}
+      },
+      "anyOf": [{"required": ["start"]}, {"required": ["end"]}]
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_id", "record_sha256", "payload"],
+      "properties": {
+        "record_id": {"type": "string", "pattern": "^REC-[A-F0-9]{16}$"},
+        "record_sha256": {"$ref": "#/$defs/sha256"},
+        "payload": {"type": "object"},
+        "location": {"type": "string"},
+        "line_start": {"type": "integer", "minimum": 1},
+        "line_end": {"type": "integer", "minimum": 1},
+        "scope": {"$ref": "#/$defs/scope"},
+        "time_window": {"$ref": "#/$defs/time_window"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "source_type", "artifact_sha256", "records"],
+      "properties": {
+        "artifact_id": {"type": "string", "pattern": "^ART-[A-F0-9]{16}$"},
+        "source_type": {
+          "enum": [
+            "cti_text",
+            "attck_knowledge",
+            "local_log",
+            "host_forensics",
+            "provenance_graph",
+            "network_summary",
+            "ioc_enrichment",
+            "malware_analysis",
+            "infrastructure_history",
+            "human_review",
+            "synthetic"
+          ]
+        },
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "records": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/record"}
+        },
+        "scope": {"$ref": "#/$defs/scope"}
+      }
+    },
+    "target_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "description",
+        "allowed_claim_types",
+        "allowed_predicates"
+      ],
+      "properties": {
+        "node_id": {"type": "string", "pattern": "^NODE-[A-F0-9]{16}$"},
+        "description": {"type": "string", "minLength": 1},
+        "allowed_claim_types": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "allowed_predicates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "source_pointer": {"$ref": "#/$defs/source_pointer"}
+      }
+    },
+    "source_pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id"],
+      "properties": {
+        "artifact_id": {"type": "string"},
+        "record_id": {"type": "string"},
+        "location": {"type": "string"},
+        "line_start": {"type": "integer", "minimum": 1},
+        "line_end": {"type": "integer", "minimum": 1},
+        "hash": {"type": "string"}
+      }
+    }
+  }
+}
+

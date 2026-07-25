@@ -1,0 +1,103 @@
+{
+  "report_id": "project05-mainline-evidence-compiler-wp3-component-reuse-audit-v0.1",
+  "searched_at": "2026-07-17",
+  "parallel_cli": {
+    "executable": "C:/Users/35393/.local/bin/parallel-cli.exe",
+    "version": "0.7.1",
+    "authenticated": false,
+    "search_executed": false,
+    "fallback": "existing systematic prior-art package plus GitHub, PyPI, arXiv, Crossref and paper full text"
+  },
+  "components": [
+    {
+      "component_id": "ctinexus",
+      "repository": "https://github.com/peng-gao-lab/ctinexus",
+      "status": "available",
+      "commit_sha": "0c688536d85eae72f6055723492b573b0a1ff865",
+      "commit_date": "2026-02-25T00:45:21Z",
+      "license": "MIT",
+      "license_git_blob_sha": "2e5a61f3161329dec860ff7878400fbe512a5de1",
+      "python": ">=3.10,<3.14",
+      "package_version": "0.2.1",
+      "wheel_sha256": "ee45eef7d719b5eda187455ddc9262967a36a1595785f190e9062080d4a1c003",
+      "sdist_sha256": "d57e7e7ab3b1b253d4208ce5b789f79ce352684aeba04931458dadcb0d78962e",
+      "input": "CTI text, file or URL",
+      "output": "IE triplets, entity-aligned triplets, predicted links and graph visualization",
+      "runtime_dependencies": [
+        "litellm-backed generation model",
+        "embedding model",
+        "networkx",
+        "scikit-learn",
+        "optional external API or local Ollama"
+      ],
+      "wp3_decision": "primary_output_contract_profile_only_runtime_not_authorized",
+      "reason": "MIT and package-ready, but IE, typing, entity alignment and link prediction are model-dependent; no model-free formal component result is possible"
+    },
+    {
+      "component_id": "ontologx",
+      "repository": "https://github.com/LucaCtt/ontologx",
+      "status": "available",
+      "commit_sha": "6ed386e6850870656a78abf83f70f06688c16b7f",
+      "commit_date": "2026-03-16T13:45:44Z",
+      "license": "MIT",
+      "license_git_blob_sha": "0234890c8bc58468a34e6a7d06e4be8463a637e1",
+      "python": ">=3.13,<3.14",
+      "input": "individual log event plus context and ontology",
+      "output": "ontology-grounded GraphDocument with nodes, relationships and originating source event",
+      "runtime_dependencies": [
+        "LLM backend",
+        "embedding backend",
+        "Neo4j",
+        "LangChain",
+        "RDFLib",
+        "SHACL",
+        "default experiments use large parser and evaluation models"
+      ],
+      "wp3_decision": "schema_and_method_reference_only",
+      "reason": "source-traceability design is useful, but the full stack is heavier than the compiler contract and cannot run under the current no-model/no-environment authority"
+    },
+    {
+      "component_id": "matryoshka",
+      "repository": "https://github.com/julien-piet/matryoshka",
+      "status": "available",
+      "commit_sha": "2ee96934823ce3d01f70bdf84ff8cd4aa64acd2a",
+      "commit_date": "2026-06-28T03:49:00Z",
+      "license": "GPL-3.0",
+      "license_git_blob_sha": "e72bfddabc15be5718a7cc061ac10e47741d8219",
+      "input": "unlabeled raw log samples",
+      "output": "deterministic semantic parsers and common-schema mappings",
+      "wp3_decision": "algorithm_reference_only_no_vendor",
+      "reason": "strong deterministic-parser precedent, but direct vendoring would introduce GPL obligations"
+    },
+    {
+      "component_id": "auto_prov",
+      "repository": "https://github.com/intelligenceafa-cloud/Auto-Prov",
+      "status": "http_404_on_2026_07_17",
+      "paper": "https://arxiv.org/abs/2603.17100",
+      "license": "unavailable",
+      "wp3_decision": "paper_reference_only",
+      "reason": "the paper is the strongest raw-log-to-provenance precedent, but the claimed repository remains unavailable"
+    },
+    {
+      "component_id": "tactic_kg",
+      "repository": "https://github.com/mohaminemed/TACTIC-KG",
+      "status": "available",
+      "commit_sha": "5df3b6302bbf83f2439a9755b3eb55c25a39ed4d",
+      "commit_date": "2026-07-10T08:54:15Z",
+      "license": null,
+      "readme_git_blob_sha": "45844fad320ba0666d6c5f97228e2454cf35bb05",
+      "input": "CTI text",
+      "output": "extracted and verified cybersecurity knowledge graph",
+      "wp3_decision": "paper_and_interface_reference_only_no_code_copy",
+      "reason": "the repository has no code license; paper licensing does not authorize copying repository code"
+    }
+  ],
+  "selected_profile": {
+    "component_id": "ctinexus",
+    "scope": "normalized aligned-triplet output contract and source-span recovery wrapper only",
+    "third_party_code_copied": false,
+    "package_installed": false,
+    "runtime_executed": false,
+    "model_or_embedding_downloaded": false
+  }
+}

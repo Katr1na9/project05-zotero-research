@@ -1,0 +1,113 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-m3-shared-claim-ir-consumer-contract-review-response-v0.1-20260724",
+  "artifact_type": "kernel_m3_shared_claim_ir_consumer_contract_review_response",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "owner": "Kernel/M3*",
+  "status": "request_revision_not_effective",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-claim-ir-consumer-contract-review-packet-v0.1-20260724.json",
+    "commit": "e09e5fa9955befbd31d18fcb9bffd7eee2a087a9",
+    "content_sha256": "83985ea8d208f166ccc30a9482b6c47c73a6d7f703a8921260aa56259c48b7e5",
+    "git_blob_oid_sha1": "b8460af87247627e553b70685a67bf445f71e5ba"
+  },
+  "overall_contract_decision": "request_revision",
+  "effective_consumer_contract_identity": {
+    "artifact_id": null,
+    "version": null,
+    "path": null,
+    "content_sha256": null,
+    "git_blob_oid_sha1": null,
+    "owner": "Kernel/M3*",
+    "status": null,
+    "reason": "No effective contract is issued in this response. A future Kernel-owned versioned immutable contract must be newly minted after revision; draft SHA must never fill effective_sha256."
+  },
+  "external_schema_acceptance": {
+    "decision": "accept_exact_identity_deferred_until_effective_contract",
+    "provisional_intent": "accept_exact_identity",
+    "proposed_schema_id": "https://project05.invalid/schemas/claim-ir-kernel.schema.json",
+    "proposed_schema_version": "claim-ir-external-v0.1",
+    "proposed_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "effective_now": false,
+    "replacement_schema_identity": null,
+    "note": "Exact schema identity is provisionally acceptable and may be written into a future effective contract after the revision loop closes; this response alone does not make schema acceptance effective."
+  },
+  "admitted_package_identity_or_eligibility": {
+    "decision": "reject_for_current_submission",
+    "proposed_exact_package_sha256": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32",
+    "proposed_package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "proposed_path_observed": ".tmp/claim-ir-admission-single-execute-v0.1/package.json",
+    "reason": "Exact package bytes are not re-verifiable from a versioned path in the Owner review worktree used for this decision (.tmp is not an Owner-reproducible authority location).",
+    "revision_required": "Promote byte-identical package out of .tmp to a versioned repository path (or otherwise supply re-verifiable bytes), then resubmit for accept_exact_package_identity; alternatively submit a versioned eligibility rule with its own pinnable SHA.",
+    "replacement_eligibility_rule": {
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "content_sha256": null
+    }
+  },
+  "kernel_intake_vs_e_case_boundary": {
+    "confirmed_by_owner": true,
+    "confirmed_boundary": "Kernel intake is a structural package receipt only; it performs no E_case write, Checker decision, Promote/Revoke, certificate generation, truth assertion, CERTIFIED_STOP, or L2 transition.",
+    "owner_revision_if_not_confirmed": null
+  },
+  "si_llm_001_disposition": {
+    "issue_currently_closed": false,
+    "owner_will_issue_separate_closure_record": true,
+    "closure_timing": "later_separate_disposition",
+    "closure_record_if_issued": {
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "content_sha256": null
+    },
+    "no_silent_closure_from_contract_approval": true,
+    "observed_branch_delta": "schemas/claim-ir-kernel.schema.json is present on e09e5fa with content SHA-256 5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e while SI-LLM-001 text still describes schemas/ as absent; closure must reconcile that delta explicitly and must not be inferred from consumer-contract approval."
+  },
+  "revision_requirements": [
+    {
+      "id": 1,
+      "title": "effective_artifact_must_be_newly_minted",
+      "requirement": "Do not treat the assisted draft as the effective contract. After revision acceptance, Kernel/M3* will mint a new Kernel-owned versioned immutable effective contract with a new path and new content SHA-256."
+    },
+    {
+      "id": 2,
+      "title": "admitted_package_must_be_owner_reproducible",
+      "requirement": "Move the admitted package out of .tmp to a versioned path with byte-identical SHA-256 f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32, or supply another Owner-reproducible byte source / versioned eligibility rule."
+    },
+    {
+      "id": 3,
+      "title": "target_token_consumption_semantics_must_be_owner_defined",
+      "requirement": "Before any effective contract can be issued for executor consumption, Kernel/M3* must define consumption semantics for kernel_state token ingested_under_separate_authority. LLM-editor may propose text for review, but Owner definition/approval is mandatory."
+    },
+    {
+      "id": 4,
+      "title": "si_llm_001_separate_disposition_later",
+      "requirement": "Do not close SI-LLM-001 in this loop. Owner will later issue a separate closure disposition; provisional note may record that the schema artifact now exists and that closure conditions include an effective consumer contract plus fixture alignment."
+    },
+    {
+      "id": 5,
+      "title": "authority_base_commit_must_match_review_commit",
+      "requirement": "Revision artifacts and any future effective contract must pin the review commit used for Owner audit (e09e5fa9955befbd31d18fcb9bffd7eee2a087a9 or a later merge tip that contains it), not the older draft authority_base_commit cbc3976."
+    }
+  ],
+  "explicit_non_authorizations": {
+    "kernel_ingestion_implementation": false,
+    "kernel_ingestion_activation": false,
+    "kernel_ingestion_execute": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "mainline_handoff_implementation_or_execute": false,
+    "l2_gate_change": false,
+    "part_b_claim_promotion": false,
+    "si_llm_001_closure": false,
+    "this_response_is_effective_consumer_contract": false
+  },
+  "next_gate": {
+    "llm_editor_action": "produce_revision_packet_addressing_revision_requirements_1_through_5",
+    "kernel_owner_action_after_revision": "re_review_then_optionally_mint_effective_contract_path_plus_content_sha256",
+    "ingestion_authorized_now": false
+  }
+}

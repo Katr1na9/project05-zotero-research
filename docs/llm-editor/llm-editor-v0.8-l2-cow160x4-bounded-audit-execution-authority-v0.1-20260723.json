@@ -1,0 +1,97 @@
+{
+  "schema_version": "project05-llm-editor-l2-cow160x4-bounded-audit-execution-authority-v0.1",
+  "created_at_utc": "2026-07-23T13:14:28.2401819Z",
+  "authority_base_commit": "c3a05ca2200b580fd979f1e25950cca34936e8df",
+  "status": "authorized_once",
+  "target_id": "cow160x4_session_aggregation_jsonl_gz",
+  "purpose": "Authorize exactly one bounded execution of the hash-pinned COW160x4 gzip privacy, notice, schema, manifest, lineage, and pointer audit after this authority JSON is committed. No retry, resume, reader substitution, source-role admission, catalog mutation, credit, training, baseline, or fine-tuning is authorized.",
+  "audit_execution_authorized": true,
+  "gzip_open_authorized": true,
+  "decompression_authorized": true,
+  "execution_count_authorized": 1,
+  "automatic_retry_authorized": false,
+  "resume_authorized": false,
+  "reader_substitution_authorized": false,
+  "source_substitution_authorized": false,
+  "audit_contract_path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-gzip-reader-privacy-notice-schema-manifest-lineage-pointer-audit-contract-v0.1-20260723.json",
+  "audit_contract_sha256": "0b029e5b0e4ba7c854ae307416712f46bc3c979ce7f523f63c45fe56859a7c7a",
+  "audit_script_path": "datasets/llm/audit_cow160x4_session_aggregation_v0_1.py",
+  "audit_script_sha256": "a2157bdce0fb939aee2898ef0c4f14e33b8df98fd115cfabdb6831e37836bcb6",
+  "reader_amendment_path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-gzip-reader-tool-amendment-v0.1-20260723.json",
+  "reader_amendment_sha256": "cc3020aedb2528fe81cbee0f8036c2b2cf225d90973ac92de49755d17c7198cd",
+  "source_identity": {
+    "record_id": 21260400,
+    "record_revision": 6,
+    "source_key": "session_aggregation.jsonl.gz",
+    "expected_compressed_bytes": 1328104319,
+    "expected_compressed_md5": "1f3897650fb420c97c14ff452398c3f8",
+    "reverify_exact_size_before_open": true,
+    "reverify_md5_before_open": true
+  },
+  "caps": {
+    "maximum_wall_seconds": 300,
+    "maximum_decompressed_bytes_returned": 33554432,
+    "maximum_jsonl_lines": 4096,
+    "maximum_line_bytes": 262144,
+    "maximum_object_keys": 256,
+    "maximum_json_depth": 4,
+    "maximum_result_bytes": 262144
+  },
+  "additional_frozen_caps": {
+    "maximum_compressed_source_bytes": 1328104319,
+    "maximum_session_utf8_bytes": 256,
+    "maximum_scalar_string_utf8_bytes": 16384,
+    "maximum_notice_envelope_records": 16,
+    "maximum_result_file_count": 2
+  },
+  "result_contract": {
+    "json_path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-bounded-audit-result-v0.1-20260723.json",
+    "markdown_path": "docs/llm-editor/llm-editor-v0.8-l2-cow160x4-bounded-audit-result-v0.1-20260723.md",
+    "both_paths_must_not_preexist": true,
+    "raw_local_path_allowed": false,
+    "raw_line_key_or_value_allowed": false,
+    "raw_session_or_pointer_allowed": false,
+    "only_sanitized_aggregate_output_allowed": true
+  },
+  "execution_boundary": {
+    "reader_identity_mismatch_action": "fail_closed_before_source_access",
+    "source_identity_mismatch_action": "fail_closed_before_gzip_open",
+    "authority_script_contract_or_cap_mismatch_action": "fail_closed_before_source_access",
+    "cap_exceeded_action": "write_sanitized_terminal_failure_and_stop",
+    "terminal_failure_allows_second_execution": false,
+    "successful_execution_allows_automatic_source_role_review": false,
+    "successful_execution_allows_automatic_next_stage": false,
+    "result_requires_review_before_commit": true
+  },
+  "scientific_boundary": {
+    "bounded_probe_may_close_global_unique_session_gate": false,
+    "bounded_probe_may_close_duplicate_reconnect_retry_or_campaign_gate": false,
+    "bounded_probe_may_close_statistical_independence_gate": false,
+    "bounded_probe_may_close_nested_notice_gate": false,
+    "bounded_probe_may_close_full_privacy_gate": false,
+    "bounded_pointer_candidate_may_be_bound": false,
+    "pointer_binding_status": "unbound",
+    "source_role_approved": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "forbidden_actions": [
+    "Run a second execution after success or terminal failure.",
+    "Retry, resume, substitute the reader, script, contract, source, target, or caps.",
+    "Extract or persist decompressed content, raw JSONL, raw keys, raw values, raw session identifiers, per-record pointers, or local payload paths.",
+    "Expose IP addresses, timestamps, credentials, commands, URLs, filenames, fingerprints, geolocation, payloads, messages, labels, or ground truth.",
+    "Write the effective catalog, approve a source role, award family, lineage, sample, or quota credit, generate training samples, run baseline or fine-tuning, modify Kernel or Gamma, connect M3, or mark L2 passed."
+  ],
+  "authority": {
+    "authority_json_commit_required_before_execute": true,
+    "audit_execution_authorized_once": true,
+    "automatic_retry_or_resume_authorized": false,
+    "source_role_or_credit_change_authorized": false,
+    "result_commit_authorized": false,
+    "git_push_authorized": false,
+    "next_action": "Commit this authority JSON, verify the committed script and contract hashes plus exact caps, then invoke exactly once with --mode execute and this authority JSON. On success or failure, stop and wait for review."
+  }
+}

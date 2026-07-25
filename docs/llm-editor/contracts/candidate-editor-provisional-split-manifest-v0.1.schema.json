@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:project05:llm-editor:split-manifest:provisional:v0.1",
+  "title": "Project05 L2 provisional split manifest",
+  "description": "Metadata-only split manifest. Raw payload and private gold are excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "contract_sha256",
+    "quota_amendment_sha256",
+    "source_inventory_sha256",
+    "split_algorithm",
+    "stable_hash",
+    "tie_break_seed",
+    "payload_embedded",
+    "private_gold_embedded",
+    "baseline_authorized",
+    "fine_tuning_authorized",
+    "source_family_assignments",
+    "entries",
+    "quota_status",
+    "leakage_audit_status",
+    "test_seal_status"
+  ],
+  "properties": {
+    "manifest_version": {
+      "const": "project05-llm-editor-split-manifest-provisional-v0.1"
+    },
+    "contract_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "quota_amendment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source_inventory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "split_algorithm": {
+      "const": "corpus-family-lock_then-lineage-cluster"
+    },
+    "stable_hash": {
+      "const": "sha256"
+    },
+    "tie_break_seed": {
+      "const": 20260722
+    },
+    "payload_embedded": {
+      "const": false
+    },
+    "private_gold_embedded": {
+      "const": false
+    },
+    "baseline_authorized": {
+      "const": false
+    },
+    "fine_tuning_authorized": {
+      "const": false
+    },
+    "source_family_assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "corpus_family_id",
+          "split_role",
+          "source_revision",
+          "l2_approval_status"
+        ],
+        "properties": {
+          "corpus_family_id": {
+            "$ref": "#/$defs/nonemptyString"
+          },
+          "split_role": {
+            "$ref": "#/$defs/splitRole"
+          },
+          "source_revision": {
+            "$ref": "#/$defs/nonemptyString"
+          },
+          "l2_approval_status": {
+            "enum": [
+              "pending",
+              "approved",
+              "rejected",
+              "quarantined"
+            ]
+          }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sample_id",
+          "sample_envelope_sha256",
+          "corpus_family_id",
+          "lineage_group_id",
+          "split_role"
+        ],
+        "properties": {
+          "sample_id": {
+            "$ref": "#/$defs/nonemptyString"
+          },
+          "sample_envelope_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "corpus_family_id": {
+            "$ref": "#/$defs/nonemptyString"
+          },
+          "lineage_group_id": {
+            "$ref": "#/$defs/sha256"
+          },
+          "split_role": {
+            "$ref": "#/$defs/splitRole"
+          }
+        }
+      }
+    },
+    "quota_status": {
+      "enum": [
+        "not_audited",
+        "failed",
+        "passed"
+      ]
+    },
+    "leakage_audit_status": {
+      "enum": [
+        "not_run",
+        "failed",
+        "passed"
+      ]
+    },
+    "test_seal_status": {
+      "enum": [
+        "not_created",
+        "failed",
+        "sealed"
+      ]
+    }
+  },
+  "$defs": {
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "splitRole": {
+      "enum": [
+        "train",
+        "development",
+        "test",
+        "quarantine"
+      ]
+    }
+  }
+}

@@ -4,11 +4,18 @@
   "title": "Project05 operational acquisition-cost measurement batch",
   "type": "object",
   "additionalProperties": false,
-  "required": ["batch_id", "version", "created_utc", "records", "source_files"],
+  "required": [
+    "batch_id",
+    "version",
+    "created_utc",
+    "records",
+    "source_files"
+  ],
   "properties": {
     "batch_id": {"type": "string", "minLength": 1},
     "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "created_utc": {"type": "string", "format": "date-time"},
+    "measurement_protocol": {"$ref": "#/$defs/measurementProtocol"},
     "records": {
       "type": "array",
       "items": {"$ref": "#/$defs/measurement"}
@@ -18,8 +25,38 @@
       "items": {"$ref": "#/$defs/sourceFile"}
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"version": {"not": {"const": "0.1.0"}}},
+        "required": ["version"]
+      },
+      "then": {"required": ["measurement_protocol"]}
+    }
+  ],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "measurementProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_id",
+        "minimum_completed_attempts_per_action",
+        "coverage_execution_status",
+        "aggregation_unit",
+        "independent_attempt_definition"
+      ],
+      "properties": {
+        "protocol_id": {"type": "string", "minLength": 1},
+        "minimum_completed_attempts_per_action": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "coverage_execution_status": {"const": "completed"},
+        "aggregation_unit": {"const": "case_action"},
+        "independent_attempt_definition": {"type": "string", "minLength": 1}
+      }
+    },
     "sourceFile": {
       "type": "object",
       "additionalProperties": false,
@@ -41,10 +78,13 @@
         "started_utc",
         "ended_utc",
         "analyst_seconds",
+        "compute_seconds",
+        "records_scanned",
         "bytes_scanned",
         "host_count",
         "retention_window_days",
         "authorization",
+        "system_perturbation_events",
         "execution_status",
         "collector",
         "source_system",
@@ -60,6 +100,8 @@
         "started_utc": {"type": "string", "format": "date-time"},
         "ended_utc": {"type": "string", "format": "date-time"},
         "analyst_seconds": {"type": "number", "minimum": 0},
+        "compute_seconds": {"type": "number", "minimum": 0},
+        "records_scanned": {"type": "integer", "minimum": 0},
         "bytes_scanned": {"type": "integer", "minimum": 0},
         "host_count": {"type": "integer", "minimum": 0},
         "retention_window_days": {"type": "number", "minimum": 0},
@@ -75,6 +117,7 @@
             "approval_reference": {"type": ["string", "null"]}
           }
         },
+        "system_perturbation_events": {"type": "integer", "minimum": 0},
         "execution_status": {
           "enum": ["completed", "partial", "failed", "cancelled"]
         },

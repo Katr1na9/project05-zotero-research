@@ -1,0 +1,76 @@
+{
+  "config": {
+    "case_id": "case_public_001",
+    "budget_total": 4,
+    "cti_nodes": [
+      {
+        "node_id": "node_initial_access",
+        "stage": "initial_access",
+        "critical": true
+      },
+      {
+        "node_id": "node_execution",
+        "stage": "execution",
+        "critical": false
+      }
+    ],
+    "channel_reliability": 0.8
+  },
+  "state": {
+    "case_id": "case_public_001",
+    "step_index": 0,
+    "matched_cti_node_ids": [],
+    "unmatched_cti_node_ids": [
+      "node_initial_access",
+      "node_execution"
+    ],
+    "matched_cti_edge_ids": [],
+    "unmatched_cti_edge_ids": [
+      "edge_initial_to_execution"
+    ],
+    "coverage": {
+      "cti_node_coverage": 0.0,
+      "cti_edge_coverage": 0.0,
+      "critical_gap_count": 1,
+      "stage_coverage": 0.0,
+      "evidence_type_coverage": 0.0
+    },
+    "budget": {
+      "budget_total": 4,
+      "budget_used": 0,
+      "budget_remaining": 4
+    },
+    "remaining_action_ids": [
+      "action_collect_public_metadata"
+    ]
+  },
+  "action": {
+    "action_id": "action_collect_public_metadata",
+    "case_id": "case_public_001",
+    "action_type": "collect",
+    "acquisition_channel": "endpoint",
+    "target": {
+      "target_type": "public_surface",
+      "target_value": "case_public_001"
+    },
+    "cost": 1,
+    "intended_cti_node_ids": [
+      "node_initial_access"
+    ],
+    "expected_evidence_types": [
+      "public_alignment_metadata"
+    ],
+    "expected_stages": [
+      "initial_access"
+    ],
+    "expected_effects": {
+      "expected_granularity_gain": 0.25,
+      "expected_uncertainty_reduction": 0.2,
+      "expected_over_attribution_risk_reduction": 0.1,
+      "expected_conflict_resolution": 0.0,
+      "expected_coverage_delta": 0.25
+    },
+    "status": "available",
+    "natural_language_request": "Collect public alignment metadata only."
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "contract_id": "project05-candidate-edge-verification-draft-v0.1",
+  "version": "0.1.0-draft",
+  "created_date": "2026-07-18",
+  "status": "draft_non_authorizing_pending_user_review",
+  "authority": false,
+  "evidence_review": "08-writing/train-null-alternative-source-literature-audit-v0.1-20260718/train-null-alternative-source-literature-audit-v0.1.md",
+  "amendment_document": "08-writing/llm-evidence-compiler-candidate-verification-amendment-draft-v0.1-20260718.md",
+  "supersedes_packet_null_gate": false,
+  "proposed_training_unit": "source_record_plus_exact_pointer_plus_candidate_spo_time",
+  "proposed_labels": [
+    "supported",
+    "unsupported_by_bound_pointer",
+    "abstain"
+  ],
+  "negative_semantics": {
+    "claim": "the bound source record does not support this candidate",
+    "world_false_claim": false,
+    "benign_or_normal_claim": false,
+    "whole_packet_empty_claim": false
+  },
+  "proposed_negative_generators": [
+    "same_type_object_swap_within_packet",
+    "pointer_swap_within_packet",
+    "frozen_predicate_field_incompatibility",
+    "explicit_timestamp_mismatch"
+  ],
+  "required_proof_fields": [
+    "proof_version",
+    "generator",
+    "positive_record_sha256",
+    "bound_record_sha256",
+    "candidate_before",
+    "candidate_after",
+    "field_map_id",
+    "mechanical_checks"
+  ],
+  "proposed_data_gate": {
+    "minimum_train_candidate_pairs": 1200,
+    "minimum_training_validation_candidate_pairs": 300,
+    "minimum_train_source_families": 4,
+    "minimum_training_validation_source_families": 2,
+    "minimum_supported_fraction": 0.4,
+    "maximum_supported_fraction": 0.6,
+    "minimum_negative_generator_families": 3,
+    "maximum_single_negative_generator_fraction": 0.5,
+    "minimum_same_packet_negative_fraction": 0.75,
+    "source_modality_match_fraction": 1.0,
+    "proof_validator_pass_fraction": 1.0,
+    "maximum_token_p95": 1024,
+    "maximum_final_tokens": 1024,
+    "truncation_allowed": false
+  },
+  "not_authorized": [
+    "reinterpret_old_packet_null_rows",
+    "construct_formal_candidate_pairs",
+    "download_new_corpus",
+    "download_tokenizer_or_model",
+    "install_or_modify_runtime",
+    "train_adapter",
+    "run_formal_inference",
+    "modify_run_mvp",
+    "modify_frozen_cases_or_results"
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "config_id": "project05-qwen25-pointer-bound-constrained-atomic-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-20",
+  "status": "model_free_implementation_only_execution_closed",
+  "conditions": [
+    "QWEN-GENERAL",
+    "QWEN-ADAPTED"
+  ],
+  "panel": {
+    "split": "training-validation",
+    "source_examples": 300,
+    "exact_examples": 16,
+    "families": {
+      "logpai_loghub_linux": 150,
+      "zeek_non_pcap_test_logs": 150
+    },
+    "decisions_per_family": {
+      "supported": 75,
+      "unsupported_by_bound_pointer": 75
+    },
+    "examples_per_family_decision": 4,
+    "selection_seed": 2026072002,
+    "must_differ_from_v041_panel_seed": 2026072001,
+    "without_replacement": true,
+    "panel_identity_server_only": true
+  },
+  "condition_order": {
+    "seed": 2026071802,
+    "blocking_factors": [
+      "source_family_id",
+      "support_decision"
+    ],
+    "exactly_balanced_within_block": true
+  },
+  "model": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "selected_adapter_epoch": 2,
+    "selected_adapter_optimizer_step": 150,
+    "selected_adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11",
+    "adapter_status": "diagnostic_only_not_mainline_eligible"
+  },
+  "model_difference": {
+    "only_allowed_difference": "adapter_state",
+    "general": "off",
+    "adapted": "project05_obs_compiler:on",
+    "same_loaded_base_process_required": true
+  },
+  "constrained_decoding": {
+    "engine_distribution": "lm-format-enforcer",
+    "engine_version": "0.10.6",
+    "integration": "transformers_prefix_allowed_tokens_fn",
+    "json_schema_path": "09-experiments/data_schema/pointer_bound_compiler_output.schema.json",
+    "schema_support_preflight_required": true,
+    "unconstrained_fallback_allowed": false,
+    "repair_invalid_output_allowed": false,
+    "retry_allowed": false,
+    "pointer_in_model_output_allowed": false
+  },
+  "quantization": {
+    "bits": 4,
+    "type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16"
+  },
+  "sequence_length": 1024,
+  "decode": {
+    "do_sample": false,
+    "maximum_new_tokens": 192,
+    "require_eos_termination": true,
+    "batch_size": 1
+  },
+  "hardware": {
+    "execution_target": "NVIDIA GeForce RTX 4090",
+    "minimum_compute_capability": [
+      8,
+      9
+    ],
+    "minimum_total_vram_bytes": 24696061952,
+    "maximum_peak_allocated_bytes": 23622320128,
+    "minimum_synchronized_free_bytes": 1073741824,
+    "cache_normalized_free_memory_gate": true
+  },
+  "resource_limits": {
+    "maximum_wall_hours": 2,
+    "maximum_runtime_cache_checkpoint_output_bytes": 34000000000
+  },
+  "gates": {
+    "technical": {
+      "exact_examples": 16,
+      "exact_calls": 32,
+      "both_conditions_per_example": true,
+      "same_loaded_base_process": true,
+      "constrained_schema_required": true,
+      "raw_generation_server_only": true,
+      "controller_eligible": false
+    },
+    "positive_generation": {
+      "minimum_supported_schema_valid_rate_overall": 0.5,
+      "minimum_supported_schema_valid_rate_each_family": 0.5,
+      "minimum_exclusive_supported_class_f1_overall": 0.0,
+      "minimum_exclusive_supported_class_f1_each_family": 0.0,
+      "minimum_exclusive_unsupported_class_f1_overall": 0.0,
+      "minimum_exclusive_unsupported_class_f1_each_family": 0.0,
+      "required_pointer_binding_integrity_rate": 1.0,
+      "macro_f1_may_override_failed_positive_gate": false,
+      "training_validation_only": true
+    }
+  },
+  "checkpoint_selection_policy": {
+    "eligibility_precedes_ranking": true,
+    "hard_eligibility_metrics": [
+      "supported_schema_valid_rate_overall",
+      "supported_schema_valid_rate_each_family",
+      "supported_class_f1_overall",
+      "supported_class_f1_each_family"
+    ],
+    "ranking_after_eligibility": [
+      "supported_schema_valid_rate_overall",
+      "supported_class_f1_overall",
+      "supported_edge_exact_rate",
+      "unsupported_class_f1_overall",
+      "family_macro_support_decision_f1",
+      "assistant_token_nll",
+      "earlier_epoch"
+    ],
+    "no_eligible_checkpoint_action": "stop_without_checkpoint_selection_or_test"
+  },
+  "output_policy": {
+    "run_subdirectory": "server-output/pointer-bound-constrained-atomic-v0.44",
+    "raw_generation": "server_only",
+    "raw_generation_download_authorized": false,
+    "sanitized_metrics_download_authorized_after_completion": true,
+    "allow_overwrite_or_resume": false,
+    "allow_automatic_retry": false,
+    "controller_eligible": false
+  }
+}

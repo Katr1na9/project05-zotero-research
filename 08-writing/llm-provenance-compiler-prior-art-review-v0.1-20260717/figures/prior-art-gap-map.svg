@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1050" viewBox="0 0 1800 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Prior-art coverage and Project05 research gap</title>
+  <desc id="desc">A left-to-right architecture map showing existing prior-art components for logs, CTI, semantic alignment, and provenance analysis, and the remaining Project05 gap: evidence pointers, case anchoring, semantic ceilings, and cost-aware control with STOP.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#334155"/></marker>
+    <style>
+      .title{font:700 36px Arial,sans-serif;fill:#0f172a}.subtitle{font:400 21px Arial,sans-serif;fill:#475569}
+      .head{font:700 23px Arial,sans-serif;fill:#0f172a}.body{font:400 18px Arial,sans-serif;fill:#1e293b}
+      .small{font:400 16px Arial,sans-serif;fill:#334155}.box{stroke-width:3;rx:18;ry:18}
+      .arrow{stroke:#334155;stroke-width:4;fill:none;marker-end:url(#arrow)}.dash{stroke-dasharray:12 9}
+    </style>
+  </defs>
+  <rect width="1800" height="1050" fill="#ffffff"/>
+  <text x="80" y="75" class="title">Prior art covers the parts; the verified compiler–controller loop remains open</text>
+  <text x="80" y="112" class="subtitle">Evidence status as of 17 July 2026 · no located work satisfies all six preregistered criteria</text>
+
+  <rect x="70" y="180" width="330" height="190" class="box" fill="#e8f4fb" stroke="#0072b2"/>
+  <text x="95" y="220" class="head">Raw logs / provenance events</text>
+  <text x="95" y="260" class="body">Auto-Prov: logs → provenance graph</text>
+  <text x="95" y="295" class="body">Matryoshka: logs → normalized fields</text>
+  <text x="95" y="330" class="small">OntoLogX: per-event ontology KG</text>
+
+  <rect x="70" y="505" width="330" height="190" class="box" fill="#f2eaf1" stroke="#cc79a7"/>
+  <text x="95" y="545" class="head">CTI text</text>
+  <text x="95" y="585" class="body">CTINexus / AttacKG+: CTI → KG</text>
+  <text x="95" y="620" class="body">TACTIC-KG: supported triples</text>
+  <text x="95" y="655" class="small">Minimal supporting sentence returned</text>
+
+  <rect x="505" y="290" width="330" height="275" class="box" fill="#fff4dc" stroke="#e69f00"/>
+  <text x="535" y="335" class="head">Partial cross-source alignment</text>
+  <text x="535" y="380" class="body">MultiKG</text>
+  <text x="535" y="412" class="small">audit + CTI + code → technique KG</text>
+  <text x="535" y="458" class="body">APT-CGLP</text>
+  <text x="535" y="490" class="small">CTI ↔ prebuilt provenance matching</text>
+  <text x="535" y="535" class="small">No case-level pointer contract</text>
+
+  <rect x="950" y="225" width="390" height="410" class="box" fill="#e9f6f0" stroke="#009e73"/>
+  <text x="985" y="270" class="head">Project05 missing interface</text>
+  <text x="985" y="320" class="body">1. Host / entity / time case anchoring</text>
+  <text x="985" y="365" class="body">2. Per-edge source or span pointer</text>
+  <text x="985" y="410" class="body">3. Mechanical admission + abstention</text>
+  <text x="985" y="455" class="body">4. Semantic ceiling propagation</text>
+  <text x="985" y="500" class="body">5. EvidenceClaim[] contract</text>
+  <line x1="985" y1="535" x2="1305" y2="535" stroke="#009e73" stroke-width="2"/>
+  <text x="985" y="575" class="small">This is integration research,</text>
+  <text x="985" y="603" class="small">not a new generic LLM parser.</text>
+
+  <rect x="1460" y="290" width="275" height="275" class="box" fill="#feece5" stroke="#d55e00"/>
+  <text x="1490" y="335" class="head">Frozen main controller</text>
+  <text x="1490" y="385" class="body">Traceability ceiling</text>
+  <text x="1490" y="425" class="body">Acquisition cost</text>
+  <text x="1490" y="465" class="body">Action ordering</text>
+  <text x="1490" y="505" class="body">STOP / degrade</text>
+
+  <path d="M400 275 C455 275 455 365 505 365" class="arrow"/>
+  <path d="M400 600 C455 600 455 500 505 500" class="arrow"/>
+  <path d="M835 430 L950 430" class="arrow"/>
+  <path d="M1340 430 L1460 430" class="arrow"/>
+
+  <rect x="110" y="800" width="1580" height="145" class="box" fill="#f8fafc" stroke="#64748b"/>
+  <text x="145" y="842" class="head">Novelty boundary</text>
+  <text x="145" y="884" class="body">Not novel: parsing logs · building CTI KGs · constructing provenance graphs · CTI–provenance similarity</text>
+  <text x="145" y="925" class="body">Testable gap: source-verifiable case compilation whose errors measurably affect path quality, cost, and STOP correctness</text>
+
+  <path d="M1075 635 C1075 735 900 745 900 800" class="arrow dash"/>
+  <text x="1095" y="735" class="small">must be validated end-to-end</text>
+</svg>

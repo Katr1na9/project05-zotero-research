@@ -1,0 +1,100 @@
+{
+  "readiness_id": "project05-qwen25-mainline-data-reuse-v0.2",
+  "version": "0.2.0",
+  "created_date": "2026-07-18",
+  "status": "formal_data_gate_failed_no_qualified_train_null_source",
+  "supersedes": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qwen-data-reuse-readiness-v0.1.json",
+    "reason": "CISA KEV literature audit rejected V3-BN-01 as formal case-level train-null and removed the obsolete single-author review dependency."
+  },
+  "scope": "read_only_reaudit_plus_external_evidence_gate_for_candidate_train_null_sources",
+  "corpus_copied_into_mainline": false,
+  "new_corpus_downloaded": false,
+  "tokenizer_used": false,
+  "model_runtime_used": false,
+  "historical_candidate_counts_after_exclusion": {
+    "train": {
+      "total": 2396,
+      "observation": 2394,
+      "eligible_null": 2,
+      "source_family_count": 4
+    },
+    "training_validation": {
+      "total": 1000,
+      "observation": 483,
+      "null": 517,
+      "source_family_count": 2,
+      "role_balance": "pass_candidate_only"
+    }
+  },
+  "formal_gate_requirements": {
+    "minimum_train_packets": 1200,
+    "minimum_training_validation_packets": 300,
+    "minimum_train_source_families": 4,
+    "minimum_training_validation_source_families": 2,
+    "minimum_role_fraction": 0.4,
+    "maximum_role_fraction": 0.6,
+    "minimum_formal_train_null": 480,
+    "minimum_interference_packet_fraction": 0.5,
+    "minimum_author_audit_acceptance": 0.95,
+    "author_audit_minimum_stratified_fraction": 0.2,
+    "token_p95_maximum": 1024,
+    "token_final_maximum": 1024
+  },
+  "external_evidence_gate": {
+    "contract_path": "contracts/train-null-source-literature-gate-v0.1.json",
+    "candidate_source_family": "cisagov_kev_static_reference",
+    "license_processing_status": "permitted_cc0_root_artifacts_only",
+    "direct_same_task_precedent_found": false,
+    "statistical_unit_match": false,
+    "formal_train_null_status": "rejected",
+    "diagnostic_status": "non_entailing_contract_negative_only",
+    "single_author_feasibility_review_required": false,
+    "formal_train_null_gate_credit": 0
+  },
+  "train_null_arithmetic": {
+    "minimum_train_null_for_1200_packet_formal_set": 480,
+    "currently_eligible_train_null": 2,
+    "cisa_kev_eligible_train_null": 0,
+    "current_minimum_deficit": 478,
+    "interpretation": "KEV is license-permitted but scientifically ineligible as a case-level training null. The earlier hypothetical 240 contribution and 238 residual deficit are superseded."
+  },
+  "formal_gate_evaluation": {
+    "train_total_count": "pass_candidate_only",
+    "train_source_family_count": "pass_candidate_only",
+    "training_validation_total_count": "pass_candidate_only",
+    "training_validation_source_family_count": "pass_candidate_only",
+    "training_validation_role_balance": "pass_candidate_only",
+    "train_role_balance": "fail",
+    "qualified_train_null_source": "fail",
+    "author_review": "not_started_and_not_requested_until_source_truth_contract_passes",
+    "interference_ratio": "not_measured",
+    "token_length": "not_measured_tokenizer_not_authorized",
+    "overall": "fail"
+  },
+  "v3_bn_01": {
+    "historical_contract_status": "approved_bounded_feasibility",
+    "current_disposition": "rejected_for_formal_train_null_after_literature_audit",
+    "downloaded_root_artifacts_retained": true,
+    "exclusion_audit_retained": true,
+    "blank_50_row_queue_retained": true,
+    "user_review_required": false,
+    "formal_training_use_authorized": false,
+    "diagnostic_only": true
+  },
+  "hard_stops": [
+    "do_not_construct_formal_training_packets",
+    "do_not_invent_null_labels",
+    "do_not_request_single_author_kev_feasibility_labels",
+    "do_not_use_kev_as_benign_normal_or_world_negative",
+    "do_not_use_validation_null_as_train_null",
+    "do_not_download_tokenizer_or_model",
+    "do_not_train"
+  ],
+  "next_actions": [
+    "research_independent_train_null_sources_with_explicit_non_entailment_sensor_coverage_or_controlled_counterfactual_truth",
+    "apply_license_and_external_evidence_gate_before_any_row_level_author_quality_check",
+    "retain_qwen_general_and_reuse_hybrid_as_fail_closed_fallbacks",
+    "request_tokenizer_runtime_or_training_authority_only_after_non_token_data_gates_become_plausible"
+  ]
+}

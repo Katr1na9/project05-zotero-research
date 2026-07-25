@@ -1,0 +1,65 @@
+{
+  "config_id": "project05-qwen25-checkpoint-selection-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-20",
+  "data": {
+    "split": "training-validation",
+    "examples": 300,
+    "families": {
+      "logpai_loghub_linux": 150,
+      "zeek_non_pcap_test_logs": 150
+    },
+    "decisions_per_family": {
+      "supported": 75,
+      "unsupported_by_bound_pointer": 75
+    },
+    "sha256": "7607F79387CD2139640B2DB323C45C87815D2E8780B84D979092432ADAFBF552"
+  },
+  "checkpoints": [
+    {"epoch": 1, "optimizer_step": 75, "adapter_sha256": "9762070065DB311A04FD8AF362F882EE3AA5D3045E7E6E286A56D9011CBF5E1F"},
+    {"epoch": 2, "optimizer_step": 150, "adapter_sha256": "D29F2BE6DF4310B22535FE8FB0D59BEDB23BF7CDCC431D3BBDD6882F4FA3DF11"},
+    {"epoch": 3, "optimizer_step": 225, "adapter_sha256": "E0484CC1D95F38D30EFA8D81A9C6E2419875CF7E64F47AB3411C0F803EC53BED"}
+  ],
+  "decode": {
+    "do_sample": false,
+    "maximum_new_tokens": 256,
+    "repair_invalid_output": false,
+    "batch_size": 1,
+    "require_eos_termination": true
+  },
+  "selection": {
+    "primary_metric": "family_macro_support_decision_f1",
+    "tie_breakers": [
+      "canonical_json_exact_match_rate",
+      "normalized_edge_exact_match_rate",
+      "pointer_exact_match_rate",
+      "assistant_token_nll",
+      "earlier_epoch"
+    ]
+  },
+  "reproducibility": {
+    "seed": 2026072001,
+    "examples_per_family_decision": 4,
+    "total_examples_per_checkpoint": 16,
+    "exact_raw_output_sha256_required": true
+  },
+  "hardware": {
+    "execution_target": "NVIDIA GeForce RTX 4090",
+    "minimum_compute_capability": [8, 9],
+    "minimum_total_vram_bytes": 24696061952,
+    "maximum_peak_allocated_bytes": 23622320128,
+    "minimum_synchronized_free_bytes": 1073741824,
+    "cache_normalized_free_memory_gate": true
+  },
+  "resource_limits": {
+    "maximum_wall_hours": 24,
+    "maximum_runtime_cache_checkpoint_output_bytes": 34000000000
+  },
+  "output_policy": {
+    "run_subdirectory": "server-output/checkpoint-selection-v0.39",
+    "raw_generation_server_only": true,
+    "allow_raw_generation_in_committed_audit": false,
+    "allow_checkpoint_download": false,
+    "controller_eligible": false
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "contract_id": "project05-beth-single-file-transport-wrapper-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-18",
+  "status": "authorized_exact_single_member_zip_transport_only",
+  "direct_csv_transport_allowed": true,
+  "zip_transport": {
+    "allowlisted_transport_name": "labelled_2021may-ip-10-100-1-105.csv.zip",
+    "required_member_count": 1,
+    "required_member_name": "labelled_2021may-ip-10-100-1-105.csv",
+    "directory_member_allowed": false,
+    "path_component_allowed": false,
+    "path_traversal_allowed": false,
+    "encrypted_member_allowed": false,
+    "symbolic_link_member_allowed": false,
+    "second_member_allowed": false,
+    "whole_dataset_archive_allowed": false,
+    "allowed_compression_methods": [
+      "stored",
+      "deflated"
+    ],
+    "maximum_archive_bytes": 536870912,
+    "maximum_uncompressed_member_bytes": 536870912,
+    "maximum_compression_ratio": 100,
+    "crc_validation_required": true,
+    "atomic_extraction_required": true,
+    "cleanup_on_failure_required": true
+  },
+  "manifest": {
+    "top_level_identity": "extracted_csv",
+    "transport_evidence_required_for_zip": true,
+    "credential_or_signed_query_persistence_allowed": false
+  },
+  "not_authorized": [
+    "whole_beth_dataset_download",
+    "second_beth_file_download",
+    "multi_member_archive",
+    "normalized_record_output",
+    "formal_candidate_pair_construction",
+    "dependency_install_or_change",
+    "tokenizer_download",
+    "model_download",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "m3_runtime_integration"
+  ]
+}

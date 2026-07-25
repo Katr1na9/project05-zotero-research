@@ -1,0 +1,116 @@
+{
+  "contract_id": "project05-label-blind-pair-construction-v0.3",
+  "version": "0.3.0",
+  "created_date": "2026-07-19",
+  "status": "authorized_token_aware_candidate_pair_reconstruction_only",
+  "inputs": {
+    "positive_remap_readiness_path": "09-experiments/llm_evidence_compiler_mainline/qwen-positive-remap-readiness-v0.1.json",
+    "positive_remap_readiness_sha256": "171736E29958DAAE42B8CF978D7C7F159D2B4A8A6B5025A5046D7CCA5FE645F4",
+    "beth_acquisition_manifest_path": "09-experiments/llm_evidence_compiler_mainline/beth_source_gate_v0.1/generated/acquisition-manifest-v0.1.json",
+    "beth_acquisition_manifest_sha256": "B0B44A408403FA0656D549599B1BC9E2A673A7B41B9F4E88D48EDA9D15C449C1",
+    "beth_source_gate_audit_path": "09-experiments/llm_evidence_compiler_mainline/beth_source_gate_v0.1/generated/source-gate-audit-v0.1.json",
+    "beth_source_gate_audit_sha256": "EF54A56C23BDA4988F49C4C2694F2C08EBD69A4664252CE1962C822DA13BDB5E",
+    "field_map_path": "09-experiments/llm_evidence_compiler_mainline/field_maps/v0.3/source-field-maps.json",
+    "field_map_sha256": "3078C7AF57C13937C64C2A05E4F42D1891002ECA1AF8EEAF0172B004B2A09BE2",
+    "protected_lock_path": "09-experiments/llm_evidence_compiler_mainline/wp4/generated/retrieval-v0.1/protected-signature-lock-v0.1.json",
+    "protected_lock_sha256": "0BFFA67783368DFD91101E737BCC5E2D869A8D9818FD220E6DC4C21C1CEF9E30",
+    "token_aware_selection_contract_path": "09-experiments/llm_evidence_compiler_mainline/contracts/token-aware-pair-selection-contract-v0.1.json",
+    "token_aware_selection_contract_sha256": "CA268DEB793C2269EF75A584873A73C2598C9F22C099BF1C98AF751C2105DE35",
+    "tokenizer_lock_path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.1/generated/tokenizer-lock-v0.1.json",
+    "tokenizer_lock_sha256": "FD848D6ABCF5CF79537C41DFC81F371D2C98ED1B1E42707B4934A82654CCFBA8"
+  },
+  "positive_quotas": {
+    "train": {
+      "ait_cam_lds_manifestations_filtered": 150,
+      "beth_process_events": 150,
+      "fkie_socbed_acsac2021_winlogbeat": 150,
+      "redcanary_atomic_red_team": 150
+    },
+    "training-validation": {
+      "logpai_loghub_linux": 75,
+      "zeek_non_pcap_test_logs": 75
+    }
+  },
+  "negative_generator_quotas": {
+    "train": {
+      "ait_cam_lds_manifestations_filtered": {"N1": 0, "N2": 0, "N3": 0, "N4": 150},
+      "beth_process_events": {"N1": 50, "N2": 50, "N3": 50, "N4": 0},
+      "fkie_socbed_acsac2021_winlogbeat": {"N1": 50, "N2": 50, "N3": 50, "N4": 0},
+      "redcanary_atomic_red_team": {"N1": 50, "N2": 50, "N3": 50, "N4": 0}
+    },
+    "training-validation": {
+      "logpai_loghub_linux": {"N1": 25, "N2": 25, "N3": 25, "N4": 0},
+      "zeek_non_pcap_test_logs": {"N1": 36, "N2": 4, "N3": 35, "N4": 0}
+    }
+  },
+  "beth_normalization": {
+    "selection_pool_max_eligible_rows": 2000,
+    "standalone_normalized_record_output_allowed": false,
+    "pair_embedded_source_snapshot_allowed": true,
+    "label_fields_read_for_schema_width_only": ["sus", "evil"],
+    "label_fields_used_or_emitted": [],
+    "missing_field_imputation_allowed": false
+  },
+  "deduplication": {
+    "exact_full_record_sha256_with_identical_pointer_allowed": true,
+    "content_only_or_fuzzy_deduplication_allowed": false,
+    "removed_counts_must_be_reported_by_family": true
+  },
+  "data_gate": {
+    "exact_train_candidate_pairs": 1200,
+    "exact_training_validation_candidate_pairs": 300,
+    "exact_supported_fraction": 0.5,
+    "minimum_train_positive_families": 4,
+    "minimum_training_validation_positive_families": 2,
+    "training_validation_family_disjoint": true,
+    "minimum_negative_generator_families": 3,
+    "maximum_single_negative_generator_fraction": 0.5,
+    "minimum_same_packet_negative_fraction": 0.75,
+    "source_modality_match_fraction": 1.0,
+    "proof_validator_pass_fraction": 1.0,
+    "protected_exact_matches": 0,
+    "protected_near_matches": 0,
+    "token_gate_status": "pending_independent_full_audit",
+    "maximum_token_p95": 1024,
+    "maximum_example_tokens": 1024,
+    "truncation_allowed": false
+  },
+  "forbidden_supervision_keys": [
+    "sus",
+    "evil",
+    "label",
+    "labels",
+    "original_split",
+    "filename",
+    "host_role",
+    "attack_narrative",
+    "actor",
+    "tactic",
+    "technique_id",
+    "attack_pattern_id"
+  ],
+  "output": {
+    "pair_files_git_ignored": true,
+    "pair_file_format": "deterministic_gzip_jsonl",
+    "audit_counts_and_hashes_committable": true,
+    "raw_examples_in_audit_allowed": false,
+    "supersedes_payload_version": "candidate_pairs_v0.1_without_overwriting_history"
+  },
+  "formal_candidate_pair_construction_allowed": true,
+  "formal_data_gate_passed_by_this_contract": false,
+  "not_authorized": [
+    "new_corpus_or_tokenizer_download",
+    "dependency_install_or_change",
+    "model_config_or_weight_download",
+    "payload_truncation_summarization_or_rewrite",
+    "cross_family_or_cross_generator_quota_substitution",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite"
+  ]
+}

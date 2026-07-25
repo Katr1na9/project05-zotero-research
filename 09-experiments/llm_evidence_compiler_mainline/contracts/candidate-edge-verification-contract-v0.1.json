@@ -1,0 +1,76 @@
+{
+  "contract_id": "project05-candidate-edge-verification-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-18",
+  "status": "approved_dependency_free_implementation_only",
+  "authority": true,
+  "approved_scope": [
+    "candidate_edge_training_schema",
+    "pointer_bounded_negative_proof_schema",
+    "source_specific_field_maps",
+    "field_map_hash_lock",
+    "explicit_n1_n4_generator_functions",
+    "fail_closed_unit_tests",
+    "read_only_historical_quantity_audit"
+  ],
+  "training_unit": "source_record_plus_exact_pointer_plus_candidate_spo_time",
+  "labels": [
+    "supported",
+    "unsupported_by_bound_pointer",
+    "abstain"
+  ],
+  "negative_semantics": {
+    "claim": "the bound source record does not support this candidate",
+    "world_false_claim": false,
+    "benign_or_normal_claim": false,
+    "whole_packet_empty_claim": false,
+    "missing_annotation_is_false_claim": false
+  },
+  "positive_contract": {
+    "field_map_required": true,
+    "explicit_or_frozen_mechanical_fields_only": true,
+    "record_sha256_required": true,
+    "provenance_required": true,
+    "pointer_match_required": true,
+    "placeholder_subject_allowed": false,
+    "path_ttp_actor_scenario_supervision_allowed": false,
+    "legacy_packet_null_reinterpretation_allowed": false
+  },
+  "negative_generators": [
+    "same_type_object_swap_within_packet",
+    "pointer_swap_within_packet",
+    "frozen_predicate_field_incompatibility",
+    "explicit_timestamp_mismatch"
+  ],
+  "data_gate": {
+    "minimum_train_candidate_pairs": 1200,
+    "minimum_training_validation_candidate_pairs": 300,
+    "minimum_train_g0_positive_families": 4,
+    "minimum_training_validation_g0_positive_families": 2,
+    "training_validation_family_disjoint": true,
+    "minimum_supported_fraction": 0.4,
+    "maximum_supported_fraction": 0.6,
+    "minimum_negative_generator_families": 3,
+    "maximum_single_negative_generator_fraction": 0.5,
+    "minimum_same_packet_negative_fraction": 0.75,
+    "source_modality_match_fraction": 1.0,
+    "proof_validator_pass_fraction": 1.0,
+    "token_gate_status": "not_measured_not_authorized",
+    "maximum_token_p95": 1024,
+    "maximum_final_tokens": 1024,
+    "truncation_allowed": false
+  },
+  "formal_candidate_pair_construction_allowed": false,
+  "not_authorized": [
+    "reinterpret_old_packet_null_rows",
+    "construct_formal_candidate_pairs",
+    "download_new_corpus",
+    "dependency_install_or_change",
+    "download_tokenizer_or_model",
+    "train_adapter",
+    "run_formal_inference",
+    "m3_runtime_integration",
+    "modify_run_mvp",
+    "modify_frozen_cases_or_results"
+  ]
+}

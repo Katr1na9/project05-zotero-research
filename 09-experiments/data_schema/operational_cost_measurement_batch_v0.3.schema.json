@@ -1,0 +1,367 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/operational_cost_measurement_batch_v0.3.schema.json",
+  "title": "Project05 operational acquisition-cost measurement batch v0.3",
+  "description": "Attempt-level raw telemetry. Unit-bearing resources, context, operational impact, hard constraints, and observations are kept separate; this schema never defines a scalar cost by itself.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "batch_id",
+    "version",
+    "created_utc",
+    "protocol",
+    "schedule",
+    "records",
+    "source_files"
+  ],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1},
+    "version": {"const": "0.3.0"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "protocol": {"$ref": "#/$defs/protocol"},
+    "schedule": {"$ref": "#/$defs/schedule"},
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/measurement"}
+    },
+    "source_files": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/sourceFile"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nonnegativeNumberOrNull": {"type": ["number", "null"], "minimum": 0},
+    "nonnegativeIntegerOrNull": {"type": ["integer", "null"], "minimum": 0},
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_id",
+        "ontology_profile",
+        "action_executor_registry",
+        "execution_readiness",
+        "schedule_authorization",
+        "experimental_unit",
+        "coverage_gate",
+        "statistical_sufficiency",
+        "randomization",
+        "blocking",
+        "failure_policy",
+        "retry_policy",
+        "shared_overhead_policy",
+        "scalar_cost_status"
+      ],
+      "properties": {
+        "protocol_id": {"const": "project05-operational-cost-measurement-protocol-v0.3"},
+        "ontology_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "action_executor_registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "execution_readiness": {"enum": ["blocked_no_real_action_executor", "authorized_action_adapters_frozen"]},
+        "schedule_authorization": {"enum": ["template_only_do_not_execute_until_action_adapters_are_frozen", "execution_authorized"]},
+        "experimental_unit": {"const": "independent_execution_attempt_from_declared_initial_state"},
+        "coverage_gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["purpose", "minimum_completed_primary_attempts_per_action", "formal_statistical_claim_authorized"],
+          "properties": {
+            "purpose": {"const": "coverage_and_smoke_only"},
+            "minimum_completed_primary_attempts_per_action": {"type": "integer", "minimum": 3},
+            "formal_statistical_claim_authorized": {"const": false}
+          }
+        },
+        "statistical_sufficiency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "required_separate_analysis"],
+          "properties": {
+            "status": {"const": "not_established_by_coverage_gate"},
+            "required_separate_analysis": {"const": true}
+          }
+        },
+        "randomization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["method", "seed", "within_block_order"],
+          "properties": {
+            "method": {"const": "seeded_blocked_permutation"},
+            "seed": {"type": "integer", "minimum": 0},
+            "within_block_order": {"const": "randomized"}
+          }
+        },
+        "blocking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["design_blocks", "recorded_nuisance_factors"],
+          "properties": {
+            "design_blocks": {
+              "type": "array",
+              "items": {"enum": ["phase", "attempt_round"]},
+              "minItems": 2,
+              "uniqueItems": true
+            },
+            "recorded_nuisance_factors": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "case_id",
+                  "machine_id",
+                  "cache_state",
+                  "executor_id",
+                  "execution_date",
+                  "environment_id"
+                ]
+              },
+              "minItems": 6,
+              "uniqueItems": true
+            }
+          }
+        },
+        "failure_policy": {"const": "retain_and_include_all_attempts_in_failure_and_resource_distributions"},
+        "retry_policy": {"const": "each_retry_is_a_new_linked_execution_attempt_not_an_independent_coverage_replicate"},
+        "shared_overhead_policy": {"enum": ["track_unallocated", "allocate_by_declared_rule"]},
+        "scalar_cost_status": {"const": "undefined_until_transformation_model_is_separately_calibrated_and_frozen"}
+      }
+    },
+    "schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schedule_id", "path", "sha256", "scheduled_primary_attempt_count"],
+      "properties": {
+        "schedule_id": {"const": "project05-operational-cost-minimum-coverage-schedule-v0.3"},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "scheduled_primary_attempt_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "record_count"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "record_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measurement_id",
+        "case_id",
+        "action_id",
+        "phase",
+        "planner_decision_id",
+        "execution_attempt_id",
+        "retry_of_attempt_id",
+        "attempt_round",
+        "scheduled_run_index",
+        "block_id",
+        "randomization_deviation",
+        "started_utc",
+        "ended_utc",
+        "execution_status",
+        "termination_reason",
+        "primitive_operation_count",
+        "resource_trace",
+        "context_covariates",
+        "hard_constraints",
+        "observation_summary",
+        "source_file",
+        "source_file_sha256",
+        "record_sha256"
+      ],
+      "properties": {
+        "measurement_id": {"type": "string", "minLength": 1},
+        "case_id": {"type": "string", "pattern": "^C(?:0[1-9]|1[0-2]).*$"},
+        "action_id": {"type": "string", "minLength": 1},
+        "phase": {"enum": ["calibration", "development"]},
+        "planner_decision_id": {"type": "string", "minLength": 1},
+        "execution_attempt_id": {"type": "string", "minLength": 1},
+        "retry_of_attempt_id": {"type": ["string", "null"]},
+        "attempt_round": {"type": "integer", "minimum": 1},
+        "scheduled_run_index": {"type": "integer", "minimum": 1},
+        "block_id": {"type": "string", "minLength": 1},
+        "randomization_deviation": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["deviation_type", "reason", "adjudication_status"],
+              "properties": {
+                "deviation_type": {"type": "string", "minLength": 1},
+                "reason": {"type": "string", "minLength": 1},
+                "adjudication_status": {"enum": ["pending", "accepted", "rejected"]}
+              }
+            }
+          ]
+        },
+        "started_utc": {"type": "string", "format": "date-time"},
+        "ended_utc": {"type": "string", "format": "date-time"},
+        "execution_status": {"enum": ["completed", "partial", "failed", "cancelled"]},
+        "termination_reason": {"type": "string", "minLength": 1},
+        "primitive_operation_count": {"type": "integer", "minimum": 0},
+        "resource_trace": {"$ref": "#/$defs/resourceTrace"},
+        "context_covariates": {"$ref": "#/$defs/contextCovariates"},
+        "hard_constraints": {"$ref": "#/$defs/hardConstraints"},
+        "observation_summary": {"$ref": "#/$defs/observationSummary"},
+        "source_file": {"type": "string", "minLength": 1},
+        "source_file_sha256": {"$ref": "#/$defs/sha256"},
+        "record_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "resourceTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "analyst_time_by_role",
+        "compute",
+        "data_access",
+        "direct_currency",
+        "authorization_wait_seconds",
+        "shared_overhead"
+      ],
+      "properties": {
+        "analyst_time_by_role": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "seconds"],
+            "properties": {
+              "role": {"type": "string", "minLength": 1},
+              "seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"}
+            }
+          }
+        },
+        "compute": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["wall_seconds", "cpu_seconds", "memory_byte_seconds"],
+          "properties": {
+            "wall_seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"},
+            "cpu_seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"},
+            "memory_byte_seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"}
+          }
+        },
+        "data_access": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["bytes_scanned", "records_scanned"],
+          "properties": {
+            "bytes_scanned": {"$ref": "#/$defs/nonnegativeIntegerOrNull"},
+            "records_scanned": {"$ref": "#/$defs/nonnegativeIntegerOrNull"}
+          }
+        },
+        "direct_currency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["amount", "currency"],
+          "properties": {
+            "amount": {"$ref": "#/$defs/nonnegativeNumberOrNull"},
+            "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"}
+          }
+        },
+        "authorization_wait_seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"},
+        "shared_overhead": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["setup_seconds", "allocation_status", "allocation_rule"],
+          "properties": {
+            "setup_seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"},
+            "allocation_status": {"enum": ["unallocated", "allocated"]},
+            "allocation_rule": {"type": ["string", "null"]}
+          }
+        }
+      }
+    },
+    "contextCovariates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host_count",
+        "retention_window_days",
+        "authorization",
+        "machine_id",
+        "cache_state",
+        "executor_id",
+        "execution_date",
+        "environment_id",
+        "initial_state_id",
+        "initial_state_reset"
+      ],
+      "properties": {
+        "host_count": {"$ref": "#/$defs/nonnegativeIntegerOrNull"},
+        "retention_window_days": {"$ref": "#/$defs/nonnegativeNumberOrNull"},
+        "authorization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required", "boundary", "approval_reference"],
+          "properties": {
+            "required": {"type": "boolean"},
+            "boundary": {"type": "string", "minLength": 1},
+            "approval_reference": {"type": ["string", "null"]}
+          }
+        },
+        "machine_id": {"type": "string", "minLength": 1},
+        "cache_state": {"enum": ["cold", "warm", "controlled", "unknown"]},
+        "executor_id": {"type": "string", "minLength": 1},
+        "execution_date": {"type": "string", "format": "date"},
+        "environment_id": {"type": "string", "minLength": 1},
+        "initial_state_id": {"type": "string", "minLength": 1},
+        "initial_state_reset": {"type": "boolean"}
+      }
+    },
+    "hardConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorization_satisfied", "data_available", "safety_gate_passed", "violations"],
+      "properties": {
+        "authorization_satisfied": {"type": "boolean"},
+        "data_available": {"type": "boolean"},
+        "safety_gate_passed": {"type": "boolean"},
+        "violations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "observationSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["returned_evidence_count", "evidence_perturbations", "downtime_seconds"],
+      "properties": {
+        "returned_evidence_count": {"$ref": "#/$defs/nonnegativeIntegerOrNull"},
+        "evidence_perturbations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["event_type", "affected_artifact_count", "reversible", "notes"],
+            "properties": {
+              "event_type": {"type": "string", "minLength": 1},
+              "affected_artifact_count": {"type": "integer", "minimum": 0},
+              "reversible": {"type": "boolean"},
+              "notes": {"type": "string"}
+            }
+          }
+        },
+        "downtime_seconds": {"$ref": "#/$defs/nonnegativeNumberOrNull"}
+      }
+    }
+  }
+}

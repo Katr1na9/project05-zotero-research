@@ -253,13 +253,14 @@ def build_profiles(
         ],
         "scoring": {
             "method": "weighted_sum_scaled_round",
+            "volatility_treatment": "separate_delay_loss",
             "weights": {component: 1.0 for component in COMPONENTS},
             "scale": rubric_scale,
             "rounding": "half_up",
             "minimum_cost": 1.0,
             "maximum_cost": 4.0,
             "unit": "relative_acquisition_cost_band",
-            "formula": "clip(round_half_up(sum(w_i * component_i) / scale), 1, 4)",
+            "formula": "clip(round_half_up(sum(w_i * component_i for i in E,D,A,R) / scale), 1, 4); V is modeled separately as delay loss",
         },
     }
     measured = {
@@ -366,14 +367,23 @@ def build(
 
     collection_fields = [
         "item_id",
-        "analyst_minutes",
+        "measurement_id",
+        "attempt_id",
+        "started_utc",
+        "ended_utc",
+        "analyst_seconds",
         "compute_seconds",
         "records_scanned",
         "bytes_scanned",
         "host_count",
         "retention_window_days",
-        "authorization_tier",
+        "authorization_required",
+        "authorization_boundary",
+        "approval_reference",
         "system_perturbation_events",
+        "execution_status",
+        "collector",
+        "source_system",
         "measurement_notes",
     ]
     write_csv(

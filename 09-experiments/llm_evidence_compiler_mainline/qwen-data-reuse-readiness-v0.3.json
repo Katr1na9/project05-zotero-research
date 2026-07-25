@@ -1,0 +1,90 @@
+{
+  "readiness_id": "project05-qwen25-mainline-data-reuse-v0.3",
+  "version": "0.3.0",
+  "created_date": "2026-07-18",
+  "status": "formal_packet_null_gate_failed_candidate_verification_amendment_pending",
+  "supersedes": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qwen-data-reuse-readiness-v0.2.json",
+    "sha256": "79A0D1A05217BE2D0620733E9D775A40D88BA649EC96C13D9344422B14FEE2AA",
+    "reason": "A frozen alternative-source review found no valid external packet-null source and identified a structural mismatch between benign attack labels and unconditioned observation extraction."
+  },
+  "scope": "read_only_external_evidence_review_plus_non_authorizing_candidate_verification_draft",
+  "corpus_copied_into_mainline": false,
+  "new_corpus_downloaded": false,
+  "tokenizer_used": false,
+  "model_runtime_used": false,
+  "historical_candidate_counts_after_exclusion": {
+    "train": {
+      "total": 2396,
+      "observation_proposals": 2394,
+      "eligible_packet_null": 2,
+      "source_family_count": 4
+    },
+    "training_validation": {
+      "total": 1000,
+      "observation": 483,
+      "packet_null": 517,
+      "source_family_count": 2,
+      "role_balance": "pass_candidate_only"
+    }
+  },
+  "current_formal_packet_gate": {
+    "minimum_train_packets": 1200,
+    "minimum_packet_null": 480,
+    "currently_eligible_packet_null": 2,
+    "current_minimum_deficit": 478,
+    "external_review_candidate_credit": 0,
+    "status": "fail"
+  },
+  "alternative_source_review": {
+    "contract_path": "contracts/train-null-source-literature-gate-v0.2.json",
+    "contract_sha256": "A999F6C0396080A8DF82D07C01290155D0C4712E212C3EFCBFE28DE0626D4FC9",
+    "formal_external_packet_null_source_found": false,
+    "benign_log_route_closed_as_default": true,
+    "single_author_row_review_requested": false,
+    "reason": "No row-level review can turn an explicit benign process/file/network event into an empty observation packet."
+  },
+  "candidate_verification_draft": {
+    "status": "recommended_not_authorized",
+    "contract_path": "contracts/candidate-edge-verification-contract-draft-v0.1.json",
+    "contract_sha256": "73B5620C8E69EEDC077B4F93D1D4A8FB5102412F2B87C38F12F533DC5110F8DD",
+    "proposed_unit": "source_record_plus_exact_pointer_plus_candidate_spo_time",
+    "proposed_labels": [
+      "supported",
+      "unsupported_by_bound_pointer",
+      "abstain"
+    ],
+    "historical_observation_proposals": 2394,
+    "minimum_g0_positive_needed_for_balanced_1200_pair_candidate_set": 600,
+    "candidate_pair_quantity_plausible": true,
+    "g0_positive_count_measured": false,
+    "formal_data_gate_passed": false,
+    "old_packet_null_rows_reinterpreted": false
+  },
+  "current_gate_evaluation": {
+    "packet_null_truth": "fail",
+    "qualified_external_packet_null_source": "fail",
+    "candidate_verification_amendment_authority": "pending_user_review",
+    "g0_field_maps": "not_built",
+    "mechanical_negative_proofs": "not_built",
+    "source_modality_balance": "not_measured",
+    "interference_ratio": "not_measured",
+    "token_length": "not_measured_tokenizer_not_authorized",
+    "overall": "fail"
+  },
+  "hard_stops": [
+    "do_not_construct_formal_packet_null_training_set",
+    "do_not_request_single_author_benign_log_labels",
+    "do_not_reinterpret_old_packet_null_rows",
+    "do_not_construct_candidate_pairs_before_amendment_approval",
+    "do_not_download_new_corpus_tokenizer_or_model",
+    "do_not_install_or_modify_runtime",
+    "do_not_train_or_run_formal_inference"
+  ],
+  "next_actions": [
+    "obtain_user_review_of_candidate_verification_amendment",
+    "if_approved_implement_dependency_free_schemas_field_maps_proof_generators_and_tests_only",
+    "recompute_g0_positive_and_candidate_pair_counts_before_any_tokenizer_or_runtime_request",
+    "retain_qwen_general_and_reuse_hybrid_as_fail_closed_fallbacks"
+  ]
+}

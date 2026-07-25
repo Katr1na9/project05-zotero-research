@@ -1,0 +1,293 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-rule-path-phase-progress-summary-disposition-v0.1-20260724",
+  "artifact_type": "claim_id_rule_path_phase_progress_summary_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "1114f8aec4d901522249dec0478d9a91ff61de12",
+  "status": "draft_phase_summary_not_effective",
+  "phase_state": "safe_pause_point_no_execution_authorized",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "certificate_surface": "vacant",
+    "summary_only": true,
+    "new_implementation_opened": false
+  },
+  "authority_semantics": {
+    "is_execution_authority": false,
+    "is_registry_activation": false,
+    "is_mint_authority": false,
+    "is_admission_authority": false,
+    "is_kernel_or_certificate_authority": false,
+    "is_l2_gate_pass": false,
+    "effective": false
+  },
+  "completed_phases": {
+    "m0_schema_rule_compiler_and_fixtures": {
+      "status": "structural_compilation_complete",
+      "implementation_commit": "7d67898472bb616b29a1954f1ccb8e84548c9157",
+      "implementation_commit_subject": "feat(llm): add M0 rule compiler with disambiguated Claim IR schema",
+      "structural_disposition_commit": "c0dc780f12af9a1c0e019cf0d9bf032983ce8ab0",
+      "artifacts": {
+        "claim_ir_schema": {
+          "path": "schemas/claim-ir-external-envelope.schema.json",
+          "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+        },
+        "m0_rule_compiler": {
+          "path": "src/compiler/llm/m0_rule_compiler.py",
+          "sha256": "a132dd140ab13e3fe762f169b8799b4e35886ecf8ea07271e8482a1046c14de1"
+        },
+        "m0_rule_compiler_tests": {
+          "path": "tests/compiler_contract/test_m0_rule_compiler.py",
+          "sha256": "8fea939b604be4e0186a66f402a34d450257539f48122b90db2e73bc0d630ae3"
+        },
+        "m0_schema_validation_tests": {
+          "path": "tests/compiler_contract/test_m0_claim_ir_schema_validation.py",
+          "sha256": "ccb57f49e27a60007819b27010a10def565cd0d80a8a9b55fc2e911395e1aff9"
+        },
+        "structural_disposition": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-m0-structural-completion-disposition-v0.1-20260724.json",
+          "sha256": "03a6014177960b51e25e1c18acaef334bfd48f0015995b5637006666e6d4c60f"
+        }
+      },
+      "fixture_pins": [
+        {
+          "fixture_id": "m0_valid_public_projection",
+          "path": "tests/compiler_contract/fixtures/m0_rule_compiler/m0_valid_public_projection.json",
+          "sha256": "b7cae6b152082c71006c9cf545c1bc2a898a1024649f3ba9f02f26781260625b",
+          "observed_outcome": "accepted_structural"
+        },
+        {
+          "fixture_id": "m0_authority_leak_labels",
+          "path": "tests/compiler_contract/fixtures/m0_rule_compiler/m0_authority_leak_labels.json",
+          "sha256": "480eadaa6d4f9b0fab105344849dce5931ce2bf06689b51f909a0cd750596680",
+          "observed_outcome": "rejected_forbidden_field"
+        },
+        {
+          "fixture_id": "m0_authority_leak_hidden_claims",
+          "path": "tests/compiler_contract/fixtures/m0_rule_compiler/m0_authority_leak_hidden_claims.json",
+          "sha256": "5d27d5927072fc4d78b8f70dc3ad4f654e9772c11de0743f8ca5623b6ba38f46",
+          "observed_outcome": "rejected_forbidden_field"
+        },
+        {
+          "fixture_id": "m0_authority_leak_realized_outcome",
+          "path": "tests/compiler_contract/fixtures/m0_rule_compiler/m0_authority_leak_realized_outcome.json",
+          "sha256": "a623d9f2612535cd1df0096b951d99699885875ab49e6cbe9969e50f76a0a07f",
+          "observed_outcome": "rejected_forbidden_field"
+        },
+        {
+          "fixture_id": "m0_authority_leak_oracle_mask",
+          "path": "tests/compiler_contract/fixtures/m0_rule_compiler/m0_authority_leak_oracle_mask.json",
+          "sha256": "e8c8029afb07121c53f961a110e4b5ab4314f6abd189bb202ed9137994aeba78",
+          "observed_outcome": "rejected_forbidden_field"
+        }
+      ],
+      "output_boundary": {
+        "claim_id": null,
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema"
+      }
+    },
+    "claim_id_mint_design_mapping_executor_and_ephemeral_proof": {
+      "status": "capability_implemented_ephemeral_test_proven_production_mint_blocked",
+      "commits": {
+        "minting_design": "68cbd04e535904996b467a4216bfabdbfdfc8f58",
+        "source_field_slot_mapping": "8dbd11c0afa04d47cc11f497f5bbfa27cfc4d3bf",
+        "fail_closed_executor": "7100c2470507c5a6ea35dadef79e7a03436176d3",
+        "ephemeral_happy_path_proof": "9e3658ae32e13223e985001457f78cd090bac472",
+        "capability_disposition": "3423332bec80811b21bcc7b0b267b7c40c4f6a1d"
+      },
+      "artifacts": {
+        "minting_design": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-minting-design-v0.1-20260724.json",
+          "sha256": "8f7ee8bd6808ea443f04f8f2cbef253c6f948a8708fa93b58ef643b7955bcabe"
+        },
+        "source_field_slot_mapping": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+          "sha256": "c9ed6df54c0f23389a33679abac8d80929eee2dc290885975878f14d92b77799"
+        },
+        "mint_executor": {
+          "path": "src/compiler/llm/claim_id_mint_executor.py",
+          "sha256": "b0460b331402bfa35a7db8e62cd6366d00121e7241a766181a5e396c7601522d"
+        },
+        "mint_executor_tests_and_ephemeral_proof": {
+          "path": "tests/compiler_contract/test_claim_id_mint_executor.py",
+          "sha256": "9bdd8935d4b6edd0e66d5fddd239dcdacaf59864dd2d7bc528aaa12e0e55cf48"
+        },
+        "capability_disposition": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mint-capability-completion-disposition-v0.1-20260724.json",
+          "sha256": "9fd898eb0e0ea5c7d14104589175ac6bbb2d44847a962c0c45c9d71169e3e409"
+        }
+      },
+      "ephemeral_proof_boundary": {
+        "authority_in_memory_only": true,
+        "key_in_memory_only_and_zeroized": true,
+        "package_persisted": false,
+        "production_authority_created": false,
+        "production_mint_performed": false
+      }
+    },
+    "m1_framework_planner_adapter_contract_implementation_and_disposition": {
+      "status": "framework_and_fail_closed_adapter_implemented_registry_not_effective",
+      "commits": {
+        "framework_design": "a608fe0c9e1d1ae43ed5263e9c268bca3d63bb35",
+        "planner_adapter_contract": "494d7dcdb3fddacdaa09329039545a3d23b51e55",
+        "planner_adapter_implementation": "10152d647b95020dedaa59aa67156ac7a5c871a9",
+        "planner_adapter_disposition": "ae66f9c2c8214110ef3250e5264dc621608e7394"
+      },
+      "artifacts": {
+        "m1_framework_design": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+          "sha256": "a220eafde5eb0c38c381a23ba80e22571edfe932fca401a0e240ec562bb199dc"
+        },
+        "planner_adapter_contract": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+          "sha256": "b9dbbb471bc69932bd6ef81e9824f492fb382125f7c5ef361153c4bf428c4eca",
+          "status": "design_only_adapter_not_registered"
+        },
+        "planner_adapter_implementation": {
+          "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+          "sha256": "40b68761fa56c01327427b1e096b05785a58b545f8dc6e53df25a2100f6cf8fb"
+        },
+        "planner_adapter_tests": {
+          "path": "tests/compiler_contract/test_m1_planner_inputs_adapter.py",
+          "sha256": "b933e84313e88586eb37f909065f8408ad5c9c72a89bb07bb9cd1bd47f804867"
+        },
+        "planner_adapter_disposition": {
+          "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json",
+          "sha256": "e26fc1573bf312f6dd63e9716eebd0ed2ac8804a19fa6658de31b256df05fead",
+          "status": "draft_disposition_not_effective"
+        }
+      },
+      "observed_boundary": {
+        "valid_structural_path": "passed",
+        "authority_leak_fixture_count": 4,
+        "authority_leak_outcome": "all_rejected",
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "registry_activated": false,
+        "adapter_registered_effective": false
+      }
+    },
+    "m2_optional_residual_design_placeholder": {
+      "status": "design_placeholder_complete_fit_not_authorized",
+      "design_commit": "1114f8aec4d901522249dec0478d9a91ff61de12",
+      "artifact": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m2-optional-residual-normalizer-design-v0.1-20260724.json",
+        "sha256": "7a7d5677466b82134a1862dfa1a51d1a1129490d1cb6c46777b5613e087da94b",
+        "status": "design_only_m2_not_authorized"
+      },
+      "approver_role_to_freeze": "PI",
+      "fit_authorized": false,
+      "implementation_authorized": false,
+      "future_requirements": [
+        "new gold/adjudication contract",
+        "source-disjoint and lineage-disjoint splits",
+        "new single-use execute authority"
+      ],
+      "existing_action_value_xgboost_retask_or_reuse": false
+    }
+  },
+  "remaining_blocked_gates": {
+    "production_claim_id_mint": {
+      "blocked": true,
+      "reason": "No production mint execute authority or persistent production namespace key is authorized."
+    },
+    "admission": {
+      "blocked": true,
+      "reason": "Structural compilation, adapter success, and ephemeral mint proof do not grant admission."
+    },
+    "kernel_e_case_certificate": {
+      "blocked": true,
+      "reason": "kernel_state remains pending_kernel_schema and certificate_surface remains vacant."
+    },
+    "registry_effective_activation": {
+      "blocked": true,
+      "reason": "The M1 framework and planner adapter contract remain design-only; no effective registry activation exists."
+    },
+    "source_role_catalog_credit_l2": {
+      "blocked": true,
+      "reason": "No source role, effective catalog entry, lineage/quota credit, or L2 Gate transition is authorized."
+    },
+    "m2_fit": {
+      "blocked": true,
+      "reason": "M2 is a design placeholder only; no gold contract, disjoint split manifest, implementation, or execute authority exists."
+    },
+    "four_family_llm_finetune": {
+      "status": "deferred_non_blocking_for_claim_id_rule_path",
+      "blocked_for_its_own_execution": true,
+      "blocks_this_rule_path": false,
+      "reason": "Four-family fine-tuning remains separately deferred and is recorded here only as a non-blocking dependency for this rule path."
+    }
+  },
+  "current_state_summary": {
+    "surface_id": "project05_depth2_public",
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "certificate_surface": "vacant",
+    "production_mint_performed": false,
+    "registry_activated_effective": false,
+    "source_role_assigned": false,
+    "catalog_written": false,
+    "credit_awarded": 0,
+    "l2_gate_passed": false,
+    "m2_fit_performed": false,
+    "llm_finetune_performed": false
+  },
+  "pause_and_resume_boundary": {
+    "safe_to_pause": true,
+    "active_execute_attempt": false,
+    "background_training_or_download": false,
+    "resume_requires_new_explicit_authority_for": [
+      "production Claim-ID mint",
+      "effective M1 registry activation or adapter execution",
+      "Kernel, E_case, certificate, or admission transition",
+      "M2 implementation or fit",
+      "four-family LLM fine-tuning"
+    ],
+    "this_summary_may_not_be_reused_as_authority": true
+  },
+  "explicit_non_authorizations": {
+    "code_or_schema_change": false,
+    "production_claim_id_mint": false,
+    "registry_activation": false,
+    "adapter_execution": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_implementation_or_fit": false,
+    "llm_finetune": false,
+    "training": false,
+    "download": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "summary_boundary": {
+    "progress_claim": "M0 structural compilation, fail-closed mint capability with ephemeral proof, M1 framework and planner adapter implementation, and the M2 residual design placeholder are archived at a safe pause point.",
+    "not_a_scientific_or_governance_claim": "This summary does not establish production mint readiness, source role, admission, certificate validity, Kernel acceptance, credit, L2 completion, M2 fit validity, or four-family LLM fine-tuning.",
+    "not_an_execution_authority": true,
+    "not_an_l2_gate_pass": true,
+    "effective": false
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "registry_activated_in_this_turn": false,
+    "minting_performed": false,
+    "training_or_fit_started": false,
+    "download_performed": false,
+    "kernel_admission_catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

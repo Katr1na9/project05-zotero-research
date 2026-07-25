@@ -1,0 +1,94 @@
+{
+  "contract_id": "project05-qwen25-qlora-4090-optimizer-stability-v0.3",
+  "version": "0.3.0",
+  "created_date": "2026-07-19",
+  "status": "user_authorized_single_torch_adamw_stability_diagnostic",
+  "contract_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.3.json",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.33.json",
+  "extends_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.2.json",
+    "sha256": "8130FCB529EA6D08A8B07320382489B40442780B928408D019290829296A3386"
+  },
+  "approved_optimizer_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-4090-optimizer-stability-amendment-v0.33-20260719.md",
+    "sha256": "892FBFF04113EFD9DD6067FBA5B207AEF6134D73A380A13C0BF5B46B296B7D0D"
+  },
+  "training_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.3/training-config-v0.3.json",
+    "sha256": "783217674EEF9FF6E7B1FD93344F2E4C9E7AB655A5AABF019B8D858B1312883D"
+  },
+  "implementation": {
+    "optimizer_diagnostic_executor": {
+      "path": "09-experiments/scripts/diagnose_qwen_qlora_optimizer_4090.py",
+      "sha256": "A56B1DD6AC9BC31040CC33749A39D4E83509EC0C1B547BA991D66916B8FFFA89"
+    },
+    "optimizer_diagnostic_launcher": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.3/run-optimizer-stability-4090-v0.3.sh",
+      "sha256": "40B134D715E5A6F5BB1C9A7B9AB4D70746B28168A24E73ADAC2763FD89B3ED0F"
+    }
+  },
+  "optimizer_failure_diagnosis": {
+    "source_summary": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-primary-v0.2-failure-summary-v0.1.json",
+      "sha256": "FB95D5E2DCF2950AAED3F77BE04B5E491BC76EC4712C51BFFD885893D2BE13DE"
+    },
+    "failed_optimizer": "bitsandbytes.PagedAdamW8bit",
+    "failed_optimizer_step": 173,
+    "memory_gate_passed": true,
+    "loss_and_gradient_finite_before_failure": true,
+    "diagnostic_classification": "optimizer_runtime_stability_failure_not_memory_gate_failure"
+  },
+  "phase_gate": {
+    "prepare": {
+      "authorized": false,
+      "reuse_existing_exact_audit_only": true,
+      "forward_calls": 0,
+      "optimizer_steps": 0
+    },
+    "smoke": {
+      "authorized": false,
+      "maximum_executions": 0,
+      "reuse_for_gpu_uuid_binding_only": true,
+      "optimizer_steps": 0,
+      "adapter_or_checkpoint_save": false
+    },
+    "optimizer_stability_diagnostic": {
+      "authorized": true,
+      "maximum_executions": 1,
+      "fresh_initialization": true,
+      "optimizer": "adamw_torch",
+      "optimizer_steps": 180,
+      "microbatches": 2880,
+      "must_exceed_failed_step": 173,
+      "cuda_launch_blocking_required": true,
+      "adapter_or_checkpoint_save": false,
+      "formal_training_result": false
+    },
+    "primary": {
+      "authorized_after_passed_smoke": false,
+      "authorized_after_explicit_user_reauthorization": false,
+      "maximum_executions": 0,
+      "resume_authorized": false
+    }
+  },
+  "not_authorized": [
+    "second_optimizer_stability_diagnostic",
+    "formal_primary_training",
+    "automatic_retry_or_resume",
+    "v0_2_checkpoint_selection_or_resume",
+    "optimizer_hyperparameter_search",
+    "sequence_rank_batch_data_seed_scheduler_change",
+    "memory_threshold_reduction",
+    "multi_gpu_training",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ]
+}

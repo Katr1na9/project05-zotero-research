@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/wp3/normalized_aligned_triplet_bundle.schema.json",
+  "title": "NormalizedAlignedTripletBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "output_profile",
+    "component_id",
+    "component_revision",
+    "component_license",
+    "component_runtime_executed",
+    "request_id",
+    "triplets"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "output_profile": {"const": "ctinexus_aligned_triplets_compatible_v0.1"},
+    "component_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "component_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "component_license": {"type": "string", "minLength": 1},
+    "component_runtime_executed": {"type": "boolean"},
+    "request_id": {"type": "string", "pattern": "^REQ-[A-F0-9]{24}$"},
+    "triplets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/triplet"}
+    }
+  },
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_type", "value"],
+      "properties": {
+        "entity_type": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "record_id"],
+      "properties": {
+        "artifact_id": {"type": "string", "pattern": "^ART-[A-F0-9]{16}$"},
+        "record_id": {"type": "string", "pattern": "^REC-[A-F0-9]{16}$"}
+      }
+    },
+    "triplet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "triplet_id",
+        "subject",
+        "relation",
+        "object",
+        "source_pointer"
+      ],
+      "properties": {
+        "triplet_id": {"type": "string", "pattern": "^TRIP-[A-F0-9]{24}$"},
+        "subject": {"$ref": "#/$defs/entity"},
+        "relation": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/entity"},
+        "source_pointer": {"$ref": "#/$defs/source_pointer"}
+      }
+    }
+  }
+}

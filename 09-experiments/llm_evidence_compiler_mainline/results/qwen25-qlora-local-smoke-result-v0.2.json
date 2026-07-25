@@ -1,0 +1,183 @@
+{
+  "schema_version": "project05-qwen25-qlora-local-smoke-result-lock-v0.1",
+  "result_id": "project05-qwen25-qlora-local-smoke-result-v0.2",
+  "version": "0.2.0",
+  "created_date": "2026-07-19",
+  "status": "passed_one_step_adapter_only_smoke",
+  "execution": {
+    "location": "repository_local_windows",
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "method": "4bit_nf4_double_quant_fp16_qlora",
+    "optimizer_steps": 1,
+    "primary_training_run": false
+  },
+  "source_audits": {
+    "preparation": {
+      "local_gitignored_path": ".local-qwen25-smoke/local-output/preparation-audit-v0.2.json",
+      "bytes": 3686,
+      "sha256": "315837270E84C020D097B471D44A63E1C933B7534E52831882F575D3401F206A",
+      "committed": false
+    },
+    "smoke": {
+      "local_gitignored_path": ".local-qwen25-smoke/local-output/smoke-audit-v0.2.json",
+      "bytes": 5463,
+      "sha256": "00A952B64A467FBF638DE84FBA06C1A5EEE44447DF3D448D1F23A0EF64435C73",
+      "committed": false
+    }
+  },
+  "preparation_gate": {
+    "status": "passed_runtime_and_fixed_revision_weight_gate",
+    "file_count": 14,
+    "repository_bytes": 15242807270,
+    "weight_bytes": 15231271888,
+    "weight_files": [
+      {
+        "path": "model-00001-of-00004.safetensors",
+        "bytes": 3945441440,
+        "sha256": "A1333E6293854747C481288EA83B348226AF178DD565C49B6F9495BA1966ABA7"
+      },
+      {
+        "path": "model-00002-of-00004.safetensors",
+        "bytes": 3864726352,
+        "sha256": "F5D25A2772CB825164A2A2C0FB6D51A87E282ABF21E4DD75BC5CFB3CD0EA6185"
+      },
+      {
+        "path": "model-00003-of-00004.safetensors",
+        "bytes": 3864726424,
+        "sha256": "8EFDEC4C1BC12317AE1A38DC42B595CE777738A64DEEA3FCB8A0A91381BCDFD5"
+      },
+      {
+        "path": "model-00004-of-00004.safetensors",
+        "bytes": 3556377672,
+        "sha256": "1A72D403CDF0C1EC3CB7F289F17B394A01E64394C2E9B3C0F94DBCE3FAF879BD"
+      }
+    ],
+    "runtime": {
+      "python": "3.11.15",
+      "torch": "2.3.1+cu121",
+      "torch_cuda": "12.1",
+      "compute_capability": [
+        7,
+        5
+      ],
+      "total_vram_bytes": 11810832384,
+      "nf4_cuda_probe": "passed"
+    },
+    "resource_bytes": 24023078772,
+    "resource_limit_bytes": 30000000000
+  },
+  "smoke_gate": {
+    "selected_examples": 20,
+    "selected_counts": {
+      "supported": 10,
+      "unsupported_by_bound_pointer": 10
+    },
+    "training_microbatches": 16,
+    "training_counts": {
+      "supported": 8,
+      "unsupported_by_bound_pointer": 8
+    },
+    "optimizer_steps": 1,
+    "loss_first": 0.9473253488540649,
+    "loss_last": 0.8813380599021912,
+    "loss_mean": 0.6207229122519493,
+    "losses_finite": true,
+    "gradient_norm": 1.8352330923080444,
+    "trainable_parameters": 40370176,
+    "total_parameters": 4393342464,
+    "trainable_ratio": 0.00918894357332759,
+    "maximum_trainable_ratio": 0.01,
+    "peak_vram_bytes": 11186208768,
+    "peak_vram_limit_bytes": 11274289152,
+    "peak_vram_margin_bytes": 88080384,
+    "wall_seconds": 82.78099999999904
+  },
+  "adapter": {
+    "adapter_only": true,
+    "merged_model_saved": false,
+    "saved_and_reloaded": true,
+    "files": [
+      {
+        "name": "adapter_config.json",
+        "bytes": 962,
+        "sha256": "96C58030D7A636D70CE7BE23F805E24686D0FEA3F87B702DFB0C389E31141F6D"
+      },
+      {
+        "name": "adapter_model.safetensors",
+        "bytes": 161533192,
+        "sha256": "67667314AA952CAF7AEEA59D5C7DD552C8D4AB5D8AB622B3B2FF6C091B6A2A49"
+      },
+      {
+        "name": "README.md",
+        "bytes": 5287,
+        "sha256": "0BCAEE4E25DF8ED94AF8CBCC201440517EF003900929F47F8D6186D434170A38"
+      }
+    ],
+    "local_artifacts_committed": false
+  },
+  "validation_generation": {
+    "examples": 1,
+    "maximum_new_tokens": 8,
+    "generated_token_count": 6,
+    "generated_text_sha256": "03CC01275E7D0690B2ECDA8FA97097635EF3F1D127A72058A5C39420612076A1",
+    "raw_generation_recorded": false
+  },
+  "privacy_and_scope": {
+    "raw_pair_payload_recorded": false,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "formal_inference_run": false,
+    "m3_integrated": false,
+    "paper_a_modified": false,
+    "parallel_m3_processes_stopped": false
+  },
+  "interpretation": {
+    "supported_claim": "The fixed local runtime can complete one bounded adapter-only QLoRA optimizer step under the preregistered gates.",
+    "unsupported_claims": [
+      "adapter_quality_improvement",
+      "primary_training_readiness_without_new_authority",
+      "formal_inference_performance",
+      "c07_c12_effectiveness",
+      "m3_integration_effect",
+      "paper_positive_result"
+    ],
+    "peak_vram_margin_is_narrow": true
+  },
+  "verification": {
+    "targeted_smoke_tests": {
+      "command": "python -m unittest 09-experiments/tests/test_qwen_qlora_smoke.py -v",
+      "tests_run": 17,
+      "passed": 17,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "llm_compiler_regression": {
+      "command": "python -m unittest discover -s 09-experiments/tests -p test_llm_evidence_compiler*.py -v",
+      "tests_run": 149,
+      "passed": 145,
+      "skipped": 1,
+      "failures": 2,
+      "errors": 1,
+      "status": "existing_repository_conditions_outside_task_diff",
+      "conditions": [
+        "citation_report_frozen_sha_mismatch",
+        "positive_remap_historical_records_root_missing",
+        "wp2_rule_snapshot_sidecar_sha_mismatch"
+      ],
+      "affected_paths_modified_by_this_task": false
+    },
+    "local_audit_to_result_cross_check": "passed"
+  },
+  "next_gate": {
+    "status": "hard_stop_for_result_review",
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  }
+}

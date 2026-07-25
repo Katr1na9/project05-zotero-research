@@ -1,0 +1,91 @@
+{
+  "authority_id": "project05-llm-evidence-compiler-tokenizer-gate-result-v0.16",
+  "version": "0.16.0",
+  "status": "formal_data_gate_passed_model_and_training_gates_closed",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.15.json",
+    "sha256": "0C78BDE59ECDE38C44945B064F2BF59F377727D712FBAE403840D54EA098B065",
+    "disposition": "consumed_only_the_v0_2_pair_reconstruction_and_token_reaudit_authority"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/token-aware-pair-selection-contract-v0.1.json": "CA268DEB793C2269EF75A584873A73C2598C9F22C099BF1C98AF751C2105DE35",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/label-blind-pair-construction-contract-v0.3.json": "99A18AC145CB15FC4B183DF20194A3ED5316C7781EF1FDCB8B3D3D7D09BBC8E8",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.2.json": "47C6BDFCCBC4693102D4FF225CFFFB081473BDC78749779D2B52B41B7851E385"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/construct_label_blind_candidate_pairs.py": "4553AB4D74891362B1B3465A526BFCD06A5A51F49EFD21AEC3A5E0C9C300F4BB",
+    "09-experiments/scripts/audit_label_blind_pair_tokens.py": "079E1F4CD7448FC8A6B4F3DC4F1DFCAF3D12FE25878C3424F3214A0C2CB70439",
+    "09-experiments/scripts/verify_label_blind_pair_determinism.py": "BF10227C9F4B458F30494845C0FD127B74E45AE9D18E6076121CF34212A78143"
+  },
+  "authoritative_evidence": {
+    "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/data-gate-audit-v0.2.json": "008AA9C131C142862671FB1CDB27DB5133AE1C89F13CF29CCEC90A967BDCB370",
+    "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/determinism-audit-v0.2.json": "3AF640FCE90BDF52813A1DDFA94E15AAC073CF8FBBEA7E5466F095F7C75D7C98",
+    "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.2/generated/tokenizer-lock-v0.2.json": "D2CC9220EBFFF8C6E47476FCBD6E5DB3A572571B039A5446FFF7D6912C109B26",
+    "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.2/generated/token-length-audit-v0.2.json": "9F8B9A4DA5CC2A79EB5845ADE61C8A41D4D78B5DFDA423DA0187171F977E72DC"
+  },
+  "formal_data_gate": {
+    "passed": true,
+    "examples": 1500,
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "supported": 750,
+    "unsupported_by_bound_pointer": 750,
+    "source_families": 6,
+    "negative_proof_pass_fraction": 1.0,
+    "pointer_pass_fraction": 1.0,
+    "modality_pass_fraction": 1.0,
+    "protected_exact_matches": 0,
+    "protected_near_matches": 0,
+    "pair_byte_identical_reproduction": true
+  },
+  "tokenizer_gate_result": {
+    "passed": true,
+    "overall_p50": 589,
+    "overall_p95": 881,
+    "overall_max": 1021,
+    "over_1024": 0,
+    "train_p95": 897,
+    "training_validation_p95": 580,
+    "examples_truncated": 0,
+    "examples_rewritten": 0,
+    "byte_identical_reproduction": true,
+    "audit_sha256": "9F8B9A4DA5CC2A79EB5845ADE61C8A41D4D78B5DFDA423DA0187171F977E72DC"
+  },
+  "length_aware_selection": {
+    "same_family_same_negative_generator_only": true,
+    "candidate_serialization_attempts_rejected": 1541,
+    "socbed_rejected_attempts": 1136,
+    "atomic_rejected_attempts": 405,
+    "other_family_rejected_attempts": 0,
+    "accepted_examples_truncated": 0,
+    "accepted_examples_rewritten": 0,
+    "family_or_generator_quota_changed": false
+  },
+  "next_gate": {
+    "status": "requires_separate_explicit_user_authorization",
+    "formal_data_gate_passed": true,
+    "model_and_training_gate_open": false,
+    "candidate_actions": [
+      "training_runtime_installation_plan",
+      "fixed_revision_qwen_weight_download_plan",
+      "qlora_smoke_training_plan"
+    ]
+  },
+  "not_authorized": [
+    "model_config_or_weight_download",
+    "transformers_torch_peft_or_bitsandbytes_install",
+    "adapter_or_optimizer_creation",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

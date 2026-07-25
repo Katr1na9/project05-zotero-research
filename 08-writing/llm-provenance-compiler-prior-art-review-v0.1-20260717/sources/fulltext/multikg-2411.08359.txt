@@ -1,0 +1,1609 @@
+MultiKG: Multi-Source Threat Intelligence Aggregation for High-Quality Knowledge Graph Representation of Attack Techniques
+1 Introduction
+2 Motivation & Limitation
+2.1 Existing Tools Limitations
+2.2 Motivating Example
+3 Preliminary
+3.1 Threat Model
+3.2 Definition of Attack Knowledge Graph
+3.3 Data Collection
+3.4 System Architecture
+4 Threat Knowledge Extraction from Different Source
+4.1 Local attack technique graph from audit log
+4.1.1 Automated Script Execution and System Event Collection
+4.1.2 Process Association Chain Analysis
+4.1.3 Attack Event Selection
+4.1.4 Non-Attack Object Node Filtering
+4.1.5 Edge and Label Aggregation
+4.2 Attack Script Static Analysis
+4.2.1 AST Node Selection
+4.2.2 Node Information Analysis and Processing
+4.3 CTI Reports Analyis
+4.3.1 Attack Technique Procedure
+4.3.2 CTI Reports Parser
+4.3.3 Attack Knowledge Graph Generation
+5 Knowledge Graph Construction
+5.1 Merging of Technical Graphs from the Same Resource
+5.2 Construction of technique-level attack knowledge graph from multi-source
+6 Evaluation
+6.1 Evaluation Setup
+6.2 Evaluation Results
+6.2.1 Accuracy of information on attack techniques extracted from various sources
+6.2.2 Effectiveness of the Subtechnique Graph Aggregation Module
+6.2.3 Effectiveness of multi-source technical knowledge graphs
+6.2.4 Case Study.
+7 Related Wrok
+7.1 Threat Intelligence Gathering
+7.2 LLMs for Cyber Security
+7.3 Attack Investigation
+7.3.1 Anomaly-based attack investigation
+7.3.2 Attack Investigation Based on Cyber Threat Intelligence Knowledge
+8 Conclusion
+A Cases of Attack Knowledge Graphs Constructed by MultiKG
+MultiKG: Multi-Source Threat Intelligence Aggregation for High-Quality Knowledge Graph Representation of Attack Techniques
+Jian Wang
+College of Computer Science and Technology, Zhejiang University Hangzhou 310027 China
+wangjian1998@zju.edu.cn
+,
+Tiantian Zhu
+College of Computer Science and Technology, Zhejiang University of Technology Hangzhou 310027 China
+ttzhu@zjut.edu.cn
+,
+Chunlin Xiong
+China Unicom (Guangdong) Industrial Internet Co., Ltd. Guangdong 510000 China
+chunlinxiong@gmail.com
+and
+Yan Chen
+Department of Computer Science, Northwestern University Evanston Illinois 60208 USA
+ychen@northwestern.edu
+Abstract.
+The construction of attack technique knowledge graphs aims to transform different types of attack knowledge into structured representations that can be used to represent the attack procedure more effectively. Although previous studies have proposed various methods for constructing attack knowledge graphs, these methods generally limit their knowledge sources to textualized data such as Cyber threat intelligence (CTI) reports, which are coarse-grained and unstructured, making the knowledge graphs constructed based on them incomplete and inaccurate.
+To address these limitations, we attempt to expand the attack knowledge sources by introducing audit logs and static code analysis on top of CTI reports to provide finer-grained knowledge for constructing attack technique knowledge graphs.
+Therefore, we propose a fully automated framework across threat knowledge sources called MultiKG automates the processing of data from different sources generates knowledge graphs separately, and then builds a unified attack knowledge graph representation.
+Through system design and the utilization of the Large Language Model (LLM), MultiKG automates the analysis, construction, and merging of attack graphs from CTI reports, dynamic logs, and static code, respectively. MultiKG then aggregates the attack graphs across sources and merges them into a fine-grained unified attack technology knowledge graph representation that encompasses multiple sources.
+We implemented and deployed MultiKG, then evaluated it using 1015 real attack techniques, and corresponding 9006 attack technique intelligence from real-world CTI reports.
+The results show that MultiKG is capable of accurately extracting attack knowledge graphs from different sources, and efficiently aggregating and summarizing technical attack knowledge across different resources to generate accurate and complete technique attack knowledge graphs. We also show through concrete case studies that our attack knowledge graph directly benefits downstream security practices tasks such as attack reconstruction and attack detection.
+Attack Knowledge Graph Construction, Cyber Threat Intelligence Analysis, Provenance Graph
+1. Introduction
+Cyber attacks have evolved rapidly in recent years, using increasingly advanced, sophisticated, and versatile attack tactics and techniques to construct covert attack operations, making intrusion detection increasingly challenging.
+A publicly-available test conducted by MITRE ATT&CK (MITRE ATT&CK, 2024 ) Evaluation on intrusion detection products from top security companies such as Symantec (Symantec, 2024 ) and Crowd Strike (CrowdStrike, 2024 ) shows that most products would be bypassed by Live-off-the-Land, attack variants, and other advanced attack methods to bypass.
+To combat the rapidly evolving threat landscape, security practitioners are actively sharing and collecting intelligence of real attack cases, including structured Indicators of Compromises (IOCs), unstructured attack analysis reports, and so on, on public platforms.
+However, collecting and summarizing intelligence from the heterogeneous multi-source platforms is time- and labor-expensive.
+Moreover, the question of how to integrate data from different sources, formats, and representations so that it can represent attack knowledge more accurately and efficiently has not yet been addressed.
+(a) How to collect and summarize this multi-source and heterogeneous threat knowledge to accurately represent and cover complex attack variants? and (b) How to effectively integrate this threat knowledge to represent attacks in a more efficient and unified way? are still open questions that require further research.
+Table 1 list existing.
+We list relevant threat intelligence analysis efforts in Table 1 . For Extractor (Satvat et al . , 2021 ) , ThreatRap (Gao et al . , 2021b ) , and AttacKG (Zhenyuan et al . , 2022 ) , they try to summarize information in threat intelligence to more effectively summarize attack-related knowledge and use it to reconstruct attacks. However, because it does not consider the correlation between security threat intelligence content and real attack logs, it cannot be used for attack detection, but only for a more complete summary of attack-related knowledge. Then, for TTPDrill (Husari et al . , 2017 ) and rcATT (Legoy et al . , 2020 ) , they only focus on single entity information without considering the correlation between these nodes, and the lack of necessary structural and semantic information, which makes it easy to generate false positives and a low detection rate. In addition, for the work of Poirot (Milajerdi et al . , 2019a ) , iACE (Liao et al . , 2016 ) , etc., they use the complete attack process in the report as a graph to detect the attack, which makes it easy to bypass by the extension of the attack chain and the replacement of the attack technology.
+More importantly, all the articles mentioned in the table, use a single threat intelligence information as the information source, that is, structured and unstructured text, and do not consider other information sources except text descriptions, which makes their representation of the attack very coarse-grained, and the effect of practical application is limited.
+This reliance on a single source of information fails to capture a broader attack surface and complex threat patterns. In real-world environments, attackers often utilize multiple means and vectors to execute attacks, and these behaviors are dispersed and recorded in different sources, such as threat reports, audit logs, and attack codes, which are equally critical and can provide more granular threat intelligence. Therefore, future research should explore ways to integrate multiple sources of information to build a more detailed and comprehensive threat intelligence mapping in order to improve threat detection and response capabilities.
+In summary, the threat intelligence graph extracted from existing work has the following limitations:
+1) Attack knowledge is dispersed across multiple sources, and individual sources usually focus on limited/incomplete attack representations, which do not allow for a complete restoration of the attack.
+2) There is a lack of fine-grained information about the underlying attack behavior, such as audit logs during the attack process and information about the attack execution code, which leads to a lack of fine-grained semantic information about the attack semantics in its representation of the attack technique, and prevents it from accurately representing the attack.
+The MultiKG we propose combines three sources of information: threat intelligence, static code analysis, and dynamic log analysis. MultiKG can realize the automatic structured representation of information from different sources, as well as the fusion and summary of attack knowledge from different sources.
+We refine the granularity to the graph structure level of single atomic attack techniques, which can accurately restore the attack graph structure, thus realizing real attack reconstruction at the level of technique.
+Table 1. Comparison with cyber threat intelligence gathering approaches
+Mapping-to
+-audit-logs
+Graph
+-structure
+Technique
+-aware
+Cross
+-sources
+Poirot ( Milajerdi et al . , 2019a )
+✓
+✓
+✗
+✗
+iACE ( Liao et al . , 2016 )
+✓
+✗
+✗
+✗
+Extractor ( Satvat et al . , 2021 ) & ThreatRaptor ( Gao et al . , 2021b )
+✗
+✓
+✗
+✗
+TTPDrill ( Husari et al . , 2017 ) & rcATT ( Legoy et al . , 2020 ) , etc.
+✓
+✗
+✓
+✗
+AttacKG ( Zhenyuan et al . , 2022 )
+✗
+✓
+✓
+✗
+MultiKG
+✓
+✓
+✓
+✓
+The main challenge comes from:
+•
+How to collect and summarize the attack information from different sources(including CTI reports, static code, and dynamically executed audit logs) and handle the attack data separately to get the representation of the attack technique in different sources.
+•
+How to integrate the information from different sources and different granularities, fusing multiple sources to get accurate and complete coverage of the attack techniques.
+To overcome these challenges, we proposed MultiKG, the first cross-source threat intelligence collection and aggregation system.
+In summary, this paper makes the following contributions:
+•
+Multi-source threat knowledge gathering and aggregation. We proposed the first framework MultiKG in this paper for aggregation of knowledge from different threat intelligence sources with respective advantages. Specifically, we combine three sources of information: threat intelligence, static code analysis, and dynamic log analysis. Dynamic logs can provide the topology (including edge and node information) of the actual execution process of attack techniques. Static codes can help complete missing nodes and edges in dynamic graphs. Threat intelligence can help us obtain different variants of a certain attack technology as much as possible so that our final representation of a single technology is not only accurate but also universal.
+•
+We design the complete MultiKG system to realize the above details. Specifically, we propose an effective algorithm to extract attack technique graphs from huge audit logs, we obtain attack nodes from static code by abstracting syntax trees, and we utilize LLM to analyze entities, entity types, and relationships in threat reports to obtain attack knowledge graphs. We also design single-resource fusion and multi-resource merging algorithms to process the above data to achieve a complete and unified knowledge representation at the attack technique level.
+•
+We implemented MultiKG, then evaluated it with 1015 real attack techniques and corresponding 9006 attack technique intelligence from real-world CTI reports. The results show that MultiKG can accurately extract attack knowledge graphs from different sources and efficiently summarize and aggregate technical-level attack knowledge across resources to generate technical-level accurate and complete attack representations. We also show the benefits of MultiKG through specific case studies.
+2. Motivation & Limitation
+In this subsection, we present the shortcomings of existing tools, as well as a motivating example to illustrate the advantages of the threat knowledge presented in this paper over existing work.
+2.1. Existing Tools Limitations
+At present, the existing attack investigation system has two general ideas: one is to detect attacks by learning normal events in the system through anomaly detection. The other is to match intrusion attacks by learning attack knowledge in threat reports.
+Anomaly detection methods can detect unknown attacks but require a stable system environment, otherwise, a large number of false positives may be generated and need to be relearned. And it may be bypassed by super nodes or imitation attacks.
+Using real attack data provided by threat intelligence can effectively construct attack templates and conduct attack investigations. However, due to the limited information that threat reports written in natural language can provide, only coarse-grained attack knowledge graphs can be generated, which will affect the efficiency and accuracy of matching, and there is an urgent need to improve it by adding newer information sources.
+2.2. Motivating Example
+As shown in Figure 1 , we reconstructed the complete attack graph based on the spear-phishing attack described in the latest APT-C-36 attack report (APT-C-36: From NJRat to APT-C-36, 2024 ; BlackBerry, 2023 ; APT-C-36, Blind Eagle ) .
+We have supplemented and refined the graph by incorporating cross-source knowledge. The entire attack process involves seven distinct attack techniques.
+Figure 1. Complete Attack Flow of APT-C-36 Reproduced Based on the Report.
+Figure 2. Multi-Source Information Aggregation on Attack Technique T1059.005
+However, if threat intelligence is obtained from a single source alone, for each attack technique, we can only get extremely limited and incomplete entity information from that report, and its representation of inter-entity relationships will ignore some of the nodes and edges in the detailed execution process, leading to the incompleteness of its construction. Secondly, due to its single source of data, it can also not cover different variant types about the same attack technique, further making it incomplete and inaccurate.
+This makes attack graphs that only obtain their knowledge sources from reports ineffective for practical application.
+As shown in Figure 2 , we take one of the attack techniques T1059.005 , and use it as a specific example to illustrate the benefits of cross-source knowledge fusion.
+Through the report, we can only learn that the attacker utilizes pdf.exe to release .vbs to launch the attack, but we lack the specific execution details of it and can only use it to build a coarse-grained attack graph.
+Through the audit log, we were able to get the real execution process of the event, the attacker used Explore.exe to execute the pdf file and then started the cscript.exe process to load and execute the .vbs attack script, thereby executing the next attack technique. (Using powershell.exe to modify the system startup folder and Reg.exe to modify the registry, thereby achieving persistent operations.)
+By analyzing the static code, we extracted a complete list of entities involved in the attack, such as NEW0509.vbs , ad00000000000000000000000.pdf , etc., and supplemented and refined the relevant nodes and edges in the log-based dynamic graph. In other words, static code analysis provided valuable information for selecting appropriate events and nodes within the extensive audit logs.
+Finally, through the fusion of multi-source information, we obtained a complete, fine-grained knowledge graph representation of the T1059.005 attack technique.
+We combine static and dynamic analysis to effectively fill the information gap in the CIT report. Note that in our actual implementation, there is more than one audit log and threat intelligence description of a particular attack technique, and we perform the merging algorithm on its content before cross-source merging. We will introduce this part in detail in § 4 and § 5 .
+The collection and aggregation of multi-source threat intelligence makes the attack technique graph we finally obtain more complete and fine-grained, more similar to real attacks, and even covers different variants of the same technique.
+This enables it to be actually used in the detection and reconstruction work of real attacks, such as reproducing the work of Figure 2 or detecting and recognizing different attack techniques in it.
+We will explain this in more detail in § 6 with the case study.
+3. Preliminary
+3.1. Threat Model
+We assume the underlying OS, the auditing engine, and monitoring data to be part of the trusted computing base (TCB). Attacks that can compromise these two auditing systems are beyond the scope of this study. This assumption is consistent with previous literature (Milajerdi et al . , 2019b ) (Xiong et al . , 2020 ) (Yang et al . , 2020 ) (Zeng et al . , 2021a ) .
+3.2. Definition of Attack Knowledge Graph
+We want to find an event set E, where each event e is related to an attack, thus forming a complete attack subgraph.
+An event E 𝐸 E italic_E can be defined as a triple ( S ⁢ u ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t , R ⁢ e ⁢ l ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n , O ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t ) 𝑆 𝑢 𝑏 𝑗 𝑒 𝑐 𝑡 𝑅 𝑒 𝑙 𝑎 𝑡 𝑖 𝑜 𝑛 𝑂 𝑏 𝑗 𝑒 𝑐 𝑡 (Subject,Relation,Object) ( italic_S italic_u italic_b italic_j italic_e italic_c italic_t , italic_R italic_e italic_l italic_a italic_t italic_i italic_o italic_n , italic_O italic_b italic_j italic_e italic_c italic_t ) , where the Subject is a Process entity, the Object is a system entity (ie registry, file, or network socket), and the Relation is the action that the subject points to the object.
+A provenance graph is defined as G ⁢ r ⁢ a ⁢ p ⁢ h = ( V , E ) 𝐺 𝑟 𝑎 𝑝 ℎ 𝑉 𝐸 Graph=(V,E) italic_G italic_r italic_a italic_p italic_h = ( italic_V , italic_E ) , where the node set V 𝑉 V italic_V represents all system entities and the edge set E 𝐸 E italic_E represents all system events. Each edge E = ( S ⁢ u ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t , R ⁢ e ⁢ l ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n , O ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t ) 𝐸 𝑆 𝑢 𝑏 𝑗 𝑒 𝑐 𝑡 𝑅 𝑒 𝑙 𝑎 𝑡 𝑖 𝑜 𝑛 𝑂 𝑏 𝑗 𝑒 𝑐 𝑡 E=(Subject,Relation,Object) italic_E = ( italic_S italic_u italic_b italic_j italic_e italic_c italic_t , italic_R italic_e italic_l italic_a italic_t italic_i italic_o italic_n , italic_O italic_b italic_j italic_e italic_c italic_t ) denotes that system entity S ⁢ u ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t 𝑆 𝑢 𝑏 𝑗 𝑒 𝑐 𝑡 Subject italic_S italic_u italic_b italic_j italic_e italic_c italic_t performs operation R ⁢ e ⁢ l ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n 𝑅 𝑒 𝑙 𝑎 𝑡 𝑖 𝑜 𝑛 Relation italic_R italic_e italic_l italic_a italic_t italic_i italic_o italic_n on system entity O ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t 𝑂 𝑏 𝑗 𝑒 𝑐 𝑡 Object italic_O italic_b italic_j italic_e italic_c italic_t .
+The attack technique graph is a subgraph of the provenance graph and represents the complete set of nodes and edges involved in executing a specific attack technique.
+For example, Figure 1 is the provenance graph of a complete attack process involving all the attack steps. (which we call Tactics). Figure 2 shows the technique responsible for the execution of the Command and Scripting Interpreter .
+For an attack knowledge graph, we first need to filter the attack-related entities and relationships from different sources of data that constitute the attack events and do the analysis of the attack-related events.
+After all the components ( s ⁢ u ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t , o ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t , a ⁢ n ⁢ d ⁢ r ⁢ e ⁢ l ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n ⁢ s ⁢ h ⁢ i ⁢ p ) 𝑠 𝑢 𝑏 𝑗 𝑒 𝑐 𝑡 𝑜 𝑏 𝑗 𝑒 𝑐 𝑡 𝑎 𝑛 𝑑 𝑟 𝑒 𝑙 𝑎 𝑡 𝑖 𝑜 𝑛 𝑠 ℎ 𝑖 𝑝 (subject,object,andrelationship) ( italic_s italic_u italic_b italic_j italic_e italic_c italic_t , italic_o italic_b italic_j italic_e italic_c italic_t , italic_a italic_n italic_d italic_r italic_e italic_l italic_a italic_t italic_i italic_o italic_n italic_s italic_h italic_i italic_p ) are identified and categorized, we start constructing the attack knowledge graph. This is a structured representation where attack technique-related nodes represent entities ( s ⁢ u ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t ⁢ o ⁢ r ⁢ o ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t ) 𝑠 𝑢 𝑏 𝑗 𝑒 𝑐 𝑡 𝑜 𝑟 𝑜 𝑏 𝑗 𝑒 𝑐 𝑡 (subjectorobject) ( italic_s italic_u italic_b italic_j italic_e italic_c italic_t italic_o italic_r italic_o italic_b italic_j italic_e italic_c italic_t ) and edges represent relationships between them and the whole graph represents the complete execution of an attack technique.
+To enhance the richness of the knowledge graph, we integrate additional contextual information such as threat intelligence reports, audit logs, and static code. This enrichment helps to place events in the broader context of cyber threats, making the knowledge graph more accurate and all-encompassing.
+By following the above principles, we have developed a framework for building comprehensive and accurate attack knowledge graphs.
+It provides security analysts with a clearer and more detailed understanding of attacker behavior, enabling them to design robust defense strategies and enhance the overall security posture. In addition, this graph facilitates more effective detection and response to attacks, as well as threat analysis.
+3.3. Data Collection
+To gather large-scale audit log data encompassing APT techniques from ATT&CK (MITRE ATT&CK, 2024 ) , we leverage Atomic Red Team (AtomicRedTeam, 2024 ) , a security testing tool by Red Canary that provides code implementations for various attack techniques, as well as an automated execution framework 1 1 1 https://github.com/redcanaryco/atomic-red-team based on Atomic Red Team. We also use our ETW-based (ETW, 2024 ) automated data collector to capture audit logs.
+Specifically, each script provided by the Atomic Red Team covers a specific APT technique in ATT&CK. To simulate the APT techniques, we created a secure virtual environment on Windows using VMware and then used PowerShell tools to satisfy the attack pre-conditions and fully execute the scripts by granting them system privileges.
+Then, the provenance graph data was collected through an automated ETW-based data collector that we designed.
+Each collected event is a triple ( s ⁢ u ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t , o ⁢ p ⁢ e ⁢ r ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n , o ⁢ b ⁢ j ⁢ e ⁢ c ⁢ t ) 𝑠 𝑢 𝑏 𝑗 𝑒 𝑐 𝑡 𝑜 𝑝 𝑒 𝑟 𝑎 𝑡 𝑖 𝑜 𝑛 𝑜 𝑏 𝑗 𝑒 𝑐 𝑡 (subject,operation,object) ( italic_s italic_u italic_b italic_j italic_e italic_c italic_t , italic_o italic_p italic_e italic_r italic_a italic_t italic_i italic_o italic_n , italic_o italic_b italic_j italic_e italic_c italic_t ) and is modeled as two nodes connected by an edge of a specific relationship.
+Additionally, the Atomic Red Team provided the execution source code for each attack technique, which we parsed using an abstract syntax tree to extract the required node information.
+Finally, ATT&CK provides multiple descriptions from different reports about each attack technique, and we benefit from Openai’s GPT-4 API to analyze this threat intelligence and get the attack threat graph.
+We utilized the source code and executable frameworks of the 1015 attack procedures of the 282 attack techniques crawled from the atomic red team as the source of the base dataset.
+Based on the technique numbers corresponding to these attack techniques in the atomic red team, we crawled all the threat report procedure descriptions corresponding to a single attack technique from the technique details page in MITRE ATT&CK, respectively, totaling 9006 attack report descriptions.
+3.4. System Architecture
+Figure 3 shows the architecture of
+MultiKG. Overall, MultiKG mainly consists of two subsystems: 1) single-source threat knowledge analysis module: used for data parsing and attack graph construction for each threat knowledge data source separately; 2) multi-source attack knowledge graph analysis module: used for internal aggregation of single-source attack graphs and aggregation of different cross-source attack graphs in order to realize a unified representation of cross-source attack knowledge graphs.
+In § 4 , we introduce how to deal with (1) System Audit Logs (§ 4.1 ), (2) Static Code (§ 4.2 ), and (3) Cyber Threat Intelligence Report (§ 4.3 ), respectively, and in § 5 , we introduce how to do internal aggregation for single-source attack graphs (§ 5.1 ) and cross-source aggregation (§ 5.2 ). We experimentally validate the above two modules in § 6 to show the effectiveness of our system.
+Figure 3. Overview of MultiKG Architecture
+4. Threat Knowledge Extraction from Different Source
+In this section, we systematically describe how attack data is collected and analyzed from different sources to achieve an independent representation of attack knowledge within each source.
+In § 4.1 , we describe how to restore attack graphs from audit logs, in § 4.2 , we show the process of obtaining information about attack nodes via ASTs, and in § 4.3 , we show how to analyze the information reported by the MITRE ATT&CK and the CIT using the GPT-4 API, to extract attack knowledge representations from textual descriptions.
+As presented in Figure 4 , the local audit logs, which capture the real execution processes of different attacks, can help us obtain the most complete and realistic topology information about the attacks.
+Static code analysis can further refine the selection of nodes and their corresponding edges in the dynamic attack graph, making the attack graph representation more accurate.
+Additionally, the extensive descriptions of the same attack technique across different threat reports can help us maximize the generalization of attack knowledge and supplement the knowledge of attack technique variants.
+Figure 4. Attack Knowledge Graph Construction
+4.1. Local attack technique graph from audit log
+The first step in building an atomic attack knowledge graph is to obtain the log event data dynamically executed by the attacker, then select the attack-related nodes and edges we need from it with a specific strategy, and finally complete the preliminary construction of the attack behavior knowledge graph.
+Note that we define an independent attack technique as an atomic attack.
+Although it requires the execution of scripts or software, appropriate environment configurations as well as manual operations, and a corresponding log collector to obtain the data, this is the richest source for obtaining details about the execution of the attack technique and is necessary for constructing a fine-grained knowledge graph of the attack.
+It is also a challenge to locate attack-related events from the whole system logs. A running system generates numerous entities and events continuously.
+For a complete attack chain with different attack phases, accurately identifying each attack technique and its interrelationships is more complex.
+In many cases, the starting process of an attack in a Provenance Graph will be connected to other nodes and edges that represent the different stages of the attack.
+However, our goal is to accurately identify the attack graph formed by the complete operation of a single atomic attack in a short time.
+Since the execution of the attack is within our control, we have a lot of known information, such as the initial attack execution process ID, the execution period of the atomic attack, etc., which can effectively help us identify and construct attack subgraphs. We briefly present the entire process in algorithm 1 , the specific steps are as follows.
+1
+Data: System audit logs from attack execution
+Result: Atomic attack knowledge graph: A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h
+2
+// Step 1: Automated Script Execution and System Event Collection
+3
+ConfigureAttackEnvironment();
+4
+InitializeETWLogCollector();
+5
+ExecuteAttackScript();
+6
+L ⁢ o ⁢ g ⁢ D ⁢ a ⁢ t ⁢ a ← C ⁢ o ⁢ l ⁢ l ⁢ e ⁢ c ⁢ t ⁢ E ⁢ v ⁢ e ⁢ n ⁢ t ⁢ L ⁢ o ⁢ g ⁢ s ⁢ ( ) ← 𝐿 𝑜 𝑔 𝐷 𝑎 𝑡 𝑎 𝐶 𝑜 𝑙 𝑙 𝑒 𝑐 𝑡 𝐸 𝑣 𝑒 𝑛 𝑡 𝐿 𝑜 𝑔 𝑠 LogData\leftarrow CollectEventLogs() italic_L italic_o italic_g italic_D italic_a italic_t italic_a ← italic_C italic_o italic_l italic_l italic_e italic_c italic_t italic_E italic_v italic_e italic_n italic_t italic_L italic_o italic_g italic_s ( ) ;
+7
+ExtractAttackDetails( L ⁢ o ⁢ g ⁢ D ⁢ a ⁢ t ⁢ a 𝐿 𝑜 𝑔 𝐷 𝑎 𝑡 𝑎 LogData italic_L italic_o italic_g italic_D italic_a italic_t italic_a );
+8
+// Step 2: Process Association Chain Analysis
+9
+I ⁢ n ⁢ i ⁢ t ⁢ i ⁢ a ⁢ l ⁢ P ⁢ I ⁢ D ← G ⁢ e ⁢ t ⁢ A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ P ⁢ r ⁢ o ⁢ c ⁢ e ⁢ s ⁢ s ⁢ I ⁢ D ⁢ ( ) ← 𝐼 𝑛 𝑖 𝑡 𝑖 𝑎 𝑙 𝑃 𝐼 𝐷 𝐺 𝑒 𝑡 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝑃 𝑟 𝑜 𝑐 𝑒 𝑠 𝑠 𝐼 𝐷 InitialPID\leftarrow GetAttackProcessID() italic_I italic_n italic_i italic_t italic_i italic_a italic_l italic_P italic_I italic_D ← italic_G italic_e italic_t italic_A italic_t italic_t italic_a italic_c italic_k italic_P italic_r italic_o italic_c italic_e italic_s italic_s italic_I italic_D ( ) ;
+10
+P ⁢ r ⁢ o ⁢ c ⁢ e ⁢ s ⁢ s ⁢ C ⁢ h ⁢ a ⁢ i ⁢ n ← { I ⁢ n ⁢ i ⁢ t ⁢ i ⁢ a ⁢ l ⁢ P ⁢ I ⁢ D } ← 𝑃 𝑟 𝑜 𝑐 𝑒 𝑠 𝑠 𝐶 ℎ 𝑎 𝑖 𝑛 𝐼 𝑛 𝑖 𝑡 𝑖 𝑎 𝑙 𝑃 𝐼 𝐷 ProcessChain\leftarrow\{InitialPID\} italic_P italic_r italic_o italic_c italic_e italic_s italic_s italic_C italic_h italic_a italic_i italic_n ← { italic_I italic_n italic_i italic_t italic_i italic_a italic_l italic_P italic_I italic_D } ;
+11
+for each event e 𝑒 e italic_e in L ⁢ o ⁢ g ⁢ D ⁢ a ⁢ t ⁢ a 𝐿 𝑜 𝑔 𝐷 𝑎 𝑡 𝑎 LogData italic_L italic_o italic_g italic_D italic_a italic_t italic_a do
+12
+if e 𝑒 e italic_e is associated with I ⁢ n ⁢ i ⁢ t ⁢ i ⁢ a ⁢ l ⁢ P ⁢ I ⁢ D 𝐼 𝑛 𝑖 𝑡 𝑖 𝑎 𝑙 𝑃 𝐼 𝐷 InitialPID italic_I italic_n italic_i italic_t italic_i italic_a italic_l italic_P italic_I italic_D then
+13
+UpdateProcessChain( e 𝑒 e italic_e , P ⁢ r ⁢ o ⁢ c ⁢ e ⁢ s ⁢ s ⁢ C ⁢ h ⁢ a ⁢ i ⁢ n 𝑃 𝑟 𝑜 𝑐 𝑒 𝑠 𝑠 𝐶 ℎ 𝑎 𝑖 𝑛 ProcessChain italic_P italic_r italic_o italic_c italic_e italic_s italic_s italic_C italic_h italic_a italic_i italic_n );
+14
+15 end if
+16
+17 end for
+18 RemoveCommonProcesses( P ⁢ r ⁢ o ⁢ c ⁢ e ⁢ s ⁢ s ⁢ C ⁢ h ⁢ a ⁢ i ⁢ n 𝑃 𝑟 𝑜 𝑐 𝑒 𝑠 𝑠 𝐶 ℎ 𝑎 𝑖 𝑛 ProcessChain italic_P italic_r italic_o italic_c italic_e italic_s italic_s italic_C italic_h italic_a italic_i italic_n );
+19
+// Step 3: Attack Event Selection
+20
+S ⁢ e ⁢ l ⁢ e ⁢ c ⁢ t ⁢ e ⁢ d ⁢ E ⁢ v ⁢ e ⁢ n ⁢ t ⁢ s ← ∅ ← 𝑆 𝑒 𝑙 𝑒 𝑐 𝑡 𝑒 𝑑 𝐸 𝑣 𝑒 𝑛 𝑡 𝑠 SelectedEvents\leftarrow\emptyset italic_S italic_e italic_l italic_e italic_c italic_t italic_e italic_d italic_E italic_v italic_e italic_n italic_t italic_s ← ∅ ;
+21
+for each event e 𝑒 e italic_e in L ⁢ o ⁢ g ⁢ D ⁢ a ⁢ t ⁢ a 𝐿 𝑜 𝑔 𝐷 𝑎 𝑡 𝑎 LogData italic_L italic_o italic_g italic_D italic_a italic_t italic_a do
+22
+if e 𝑒 e italic_e is of relevant event type (e.g., ProcessStart, FileCreate, RegistrySet, etc.) then
+23
+if e 𝑒 e italic_e is not an irrelevant event type (e.g., ProcessEnd, ThreadEnd, FileioCreate, RegistryOpen) then
+24
+AddToSelectedEvents( e 𝑒 e italic_e );
+25
+26 end if
+27
+28 end if
+29
+30 end for
+31
+// Step 4: Non-Attack Object Node Filtering
+32
+W ⁢ h ⁢ i ⁢ t ⁢ e ⁢ l ⁢ i ⁢ s ⁢ t ← C ⁢ o ⁢ l ⁢ l ⁢ e ⁢ c ⁢ t ⁢ N ⁢ o ⁢ n ⁢ A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ⁢ ( ) ← 𝑊 ℎ 𝑖 𝑡 𝑒 𝑙 𝑖 𝑠 𝑡 𝐶 𝑜 𝑙 𝑙 𝑒 𝑐 𝑡 𝑁 𝑜 𝑛 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝑁 𝑜 𝑑 𝑒 𝑠 Whitelist\leftarrow CollectNonAttackNodes() italic_W italic_h italic_i italic_t italic_e italic_l italic_i italic_s italic_t ← italic_C italic_o italic_l italic_l italic_e italic_c italic_t italic_N italic_o italic_n italic_A italic_t italic_t italic_a italic_c italic_k italic_N italic_o italic_d italic_e italic_s ( ) ;
+33
+for each node n ∈ S ⁢ e ⁢ l ⁢ e ⁢ c ⁢ t ⁢ e ⁢ d ⁢ E ⁢ v ⁢ e ⁢ n ⁢ t ⁢ s 𝑛 𝑆 𝑒 𝑙 𝑒 𝑐 𝑡 𝑒 𝑑 𝐸 𝑣 𝑒 𝑛 𝑡 𝑠 n\in SelectedEvents italic_n ∈ italic_S italic_e italic_l italic_e italic_c italic_t italic_e italic_d italic_E italic_v italic_e italic_n italic_t italic_s do
+34
+if n ∉ W ⁢ h ⁢ i ⁢ t ⁢ e ⁢ l ⁢ i ⁢ s ⁢ t 𝑛 𝑊 ℎ 𝑖 𝑡 𝑒 𝑙 𝑖 𝑠 𝑡 n\notin Whitelist italic_n ∉ italic_W italic_h italic_i italic_t italic_e italic_l italic_i italic_s italic_t then
+35
+AddToAttackGraph( n 𝑛 n italic_n );
+36
+37 end if
+38
+39 end for
+40
+// Step 5: Edge and Label Aggregation
+41
+for each node n ∈ A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑛 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ n\in AttackGraph italic_n ∈ italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h do
+42
+AggregateEdges( n 𝑛 n italic_n );
+43
+SummarizeLabels( n 𝑛 n italic_n );
+44
+45 end for
+46
+47 return A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h ;
+Algorithm 1 Construction of Local Attack Technique Graph from Audit Log
+4.1.1. Automated Script Execution and System Event Collection
+we will combine automated tools and some manual operations to complete the attack environment configuration, and then realize script execution and system event data collection. We can fully automate the execution of the attack and collect the corresponding audit logs during execution.
+First, we built a fully controllable system environment and implemented a lightweight log collection tool based on ETW.
+Next, we configured the framework of the Atomic Red Team. Based on this, we implement scripts to automate the patching of dependencies for the execution of atomic attacks.
+Finally, we implemented scripts to automate the execution of atomic attacks and the collection of system audit log data during their execution.
+Based on this, we obtain information about the execution of the attack technique (e.g., execution period, attack-related process IDs, etc.), as well as complete system event data during execution.
+4.1.2. Process Association Chain Analysis
+Then, after getting the log event data, we began to screen the attack-related process chain. Since the environment in which the attack is performed is fully controllable, we can obtain the PID of the process where the attack started. Then, according to this Process ID (PID), we can find a series of associated process and thread chains that are subsequently associated, and these events constitute the Subject node in our attack graph.
+We set a dynamically updated list of process IDs to selectively add specific processes associated with attack execution during the construction of the provenance graph to complete the construction of a complete attack process call chain.
+The result is shown in Figure 4 (a), Due to our prior understanding of the attack execution information, the integrity of the associated chain of the attack process that is screened out is very high. We can further filter out those common processes, such as hostname.exe, whoami.exe, etc., and add them in subsequent analysis.
+4.1.3. Attack Event Selection
+According to our statistics on the scale of system events, as shown in Figure 5 , ETW (ETW, 2024 ) can generate more than 6,000 system events per second under a low load state of the system, among which registry events, file events, and process events account for a relatively high proportion.
+When executing the attack technique, the system can generate more than 30,000 audit log events per second.
+Figure 5. Statistics on the Percentage of Events in the System Audit Log
+However, even if we have selected process and thread nodes in the previous step, there are still many events attached to these processes, and they are all regular system events that have nothing to do with the attack.
+As a result, our graph of atomic attack techniques can become very large, even involving hundreds of nodes and edges, which is far more than what is covered by a real attack execution.
+In order to accurately represent an attack, we first have to make a choice about the event type. The event types we finally selected are shown in Table 2 . We filtered a large number of useless events such as ProcessEnd, ThreadEnd, FileioCreate (for file handle acquisition), RegistryOpen, RegistryClose, and other irrelevant events, so as to more accurately represent atomic attacks. In addition, we only keep thread startup events under different processes, and the behavior of threads under the same process is merged into the parent process.
+Table 2. Dependency Event Relationships based on Audit Log
+Event Type
+Event Nmae
+Process
+Start, DCStart
+Thread
+Start, DCStart
+File
+Create, Read, Write, Rename
+Registry
+Query, Create, SetValue
+Internet
+Receive, Send
+Image
+Load, DCStart
+4.1.4. Non-Attack Object Node Filtering
+After the event filtering process, many reserved event object nodes are irrelevant to the attack. For example, when a process starts normally, it generates a large number of registry events, and file events, and generates and accesses temporary files. These specific registry or file paths are normal behavior of the process and have nothing to do with the attack.
+We can also see from Figure 5 that there is a large percentage of such events.
+In addition, there are also such things as random name files temporarily created by some programs for storing data or performing tasks, as well as registry paths associated with specific folders and their functions, and some specific system processes, etc., which need to be filtered.
+Therefore, we need to filter the content of all reserved event nodes in order to retain the real attack-associated nodes. Since we execute the attack in a controlled environment, the security of the entire system can be guaranteed.
+Therefore, we can collect the non-malicious event node data of the system without performing any attack behavior and generate a whitelist for locating non-attack events. And, this data is utilized to filter the nodes when generating the attack graph to ensure the accuracy of the atomic attack graph.
+4.1.5. Edge and Label Aggregation
+Finally, after the screening of the above steps, we found that some atomic attack graphs still retain a large number of nodes. As a result of manual analysis, we found that most of these were a large number of operations of the same type, such as recursively accessing .doc files in the system directory, transferring to temporary files, and so on. We merge different operations on the same file and preserve all event-type labels. In addition, based on common file types and event types, we will merge edges and summarize node information to express attack knowledge more concisely and universally.
+4.2. Attack Script Static Analysis
+Although a relatively complete attack subgraph structure can be obtained through the audit log, however, due to various screening and filtering methods in order to obtain an accurate and concise attack subgraph, we may lose individual nodes of the subgraph in some specific attack techniques.
+We realized that missing nodes and edges in dynamic graphs could be completed from the most informative static code analysis. We use the Abstract Syntax Tree (AST) to parse the static code, obtain the nodes we need from the AST through a specific algorithm, and then complete the supplement to the dynamic execution subgraph.
+Specifically, we can extract the attack-related entity information from the AST and match it with the corresponding data in the audit logs. This helps us to select the node and the events related to the entity, and then add them to the dynamic attack graph, which makes the representation of the attack more accurate. We have shared the entire processing procedure in algorithm 2 .
+1
+Data: Attack script source code
+Result: Enhanced attack knowledge graph: A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h
+2
+// Step 1: Parse AST from Source Code
+3
+A ⁢ S ⁢ T ← G ⁢ e ⁢ n ⁢ e ⁢ r ⁢ a ⁢ t ⁢ e ⁢ A ⁢ S ⁢ T ⁢ ( S ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e ⁢ C ⁢ o ⁢ d ⁢ e ) ← 𝐴 𝑆 𝑇 𝐺 𝑒 𝑛 𝑒 𝑟 𝑎 𝑡 𝑒 𝐴 𝑆 𝑇 𝑆 𝑜 𝑢 𝑟 𝑐 𝑒 𝐶 𝑜 𝑑 𝑒 AST\leftarrow GenerateAST(SourceCode) italic_A italic_S italic_T ← italic_G italic_e italic_n italic_e italic_r italic_a italic_t italic_e italic_A italic_S italic_T ( italic_S italic_o italic_u italic_r italic_c italic_e italic_C italic_o italic_d italic_e ) ;
+4
+S ⁢ t ⁢ a ⁢ t ⁢ i ⁢ c ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ← ∅ ← 𝑆 𝑡 𝑎 𝑡 𝑖 𝑐 𝑁 𝑜 𝑑 𝑒 𝑠 StaticNodes\leftarrow\emptyset italic_S italic_t italic_a italic_t italic_i italic_c italic_N italic_o italic_d italic_e italic_s ← ∅ ;
+5
+S ⁢ u ⁢ p ⁢ p ⁢ l ⁢ e ⁢ m ⁢ e ⁢ n ⁢ t ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← ∅ ← 𝑆 𝑢 𝑝 𝑝 𝑙 𝑒 𝑚 𝑒 𝑛 𝑡 𝐺 𝑟 𝑎 𝑝 ℎ SupplementGraph\leftarrow\emptyset italic_S italic_u italic_p italic_p italic_l italic_e italic_m italic_e italic_n italic_t italic_G italic_r italic_a italic_p italic_h ← ∅ ;
+6
+// Step 2: AST Node Selection
+7
+for each node n 𝑛 n italic_n in A ⁢ S ⁢ T 𝐴 𝑆 𝑇 AST italic_A italic_S italic_T do
+8
+if n 𝑛 n italic_n is of type StringConstantExpressionAst then
+9
+SaveNodeValue( n 𝑛 n italic_n , S ⁢ t ⁢ a ⁢ t ⁢ i ⁢ c ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s 𝑆 𝑡 𝑎 𝑡 𝑖 𝑐 𝑁 𝑜 𝑑 𝑒 𝑠 StaticNodes italic_S italic_t italic_a italic_t italic_i italic_c italic_N italic_o italic_d italic_e italic_s );
+10
+11 end if
+12 if n 𝑛 n italic_n is of type VariableExpressionAst then
+13
+V ⁢ a ⁢ r ⁢ i ⁢ a ⁢ b ⁢ l ⁢ e ⁢ M ⁢ a ⁢ p ← E ⁢ x ⁢ t ⁢ r ⁢ a ⁢ c ⁢ t ⁢ V ⁢ a ⁢ r ⁢ i ⁢ a ⁢ b ⁢ l ⁢ e ⁢ M ⁢ a ⁢ p ⁢ p ⁢ i ⁢ n ⁢ g ⁢ ( n ) ← 𝑉 𝑎 𝑟 𝑖 𝑎 𝑏 𝑙 𝑒 𝑀 𝑎 𝑝 𝐸 𝑥 𝑡 𝑟 𝑎 𝑐 𝑡 𝑉 𝑎 𝑟 𝑖 𝑎 𝑏 𝑙 𝑒 𝑀 𝑎 𝑝 𝑝 𝑖 𝑛 𝑔 𝑛 VariableMap\leftarrow ExtractVariableMapping(n) italic_V italic_a italic_r italic_i italic_a italic_b italic_l italic_e italic_M italic_a italic_p ← italic_E italic_x italic_t italic_r italic_a italic_c italic_t italic_V italic_a italic_r italic_i italic_a italic_b italic_l italic_e italic_M italic_a italic_p italic_p italic_i italic_n italic_g ( italic_n ) ;
+14
+SaveToMap( V ⁢ a ⁢ r ⁢ i ⁢ a ⁢ b ⁢ l ⁢ e ⁢ M ⁢ a ⁢ p 𝑉 𝑎 𝑟 𝑖 𝑎 𝑏 𝑙 𝑒 𝑀 𝑎 𝑝 VariableMap italic_V italic_a italic_r italic_i italic_a italic_b italic_l italic_e italic_M italic_a italic_p );
+15
+16 end if
+17 if n 𝑛 n italic_n is of type ExpandableStringExpressionAst then
+18
+E x p a n d e d V a l u e ← S i m u l a t e A n d E x p a n d ( ExpandedValue\leftarrow SimulateAndExpand( italic_E italic_x italic_p italic_a italic_n italic_d italic_e italic_d italic_V italic_a italic_l italic_u italic_e ← italic_S italic_i italic_m italic_u italic_l italic_a italic_t italic_e italic_A italic_n italic_d italic_E italic_x italic_p italic_a italic_n italic_d ( n ) ) ) ) ;
+19
+AddToStaticNodes( E ⁢ x ⁢ p ⁢ a ⁢ n ⁢ d ⁢ e ⁢ d ⁢ V ⁢ a ⁢ l ⁢ u ⁢ e 𝐸 𝑥 𝑝 𝑎 𝑛 𝑑 𝑒 𝑑 𝑉 𝑎 𝑙 𝑢 𝑒 ExpandedValue italic_E italic_x italic_p italic_a italic_n italic_d italic_e italic_d italic_V italic_a italic_l italic_u italic_e );
+20
+21 end if
+22 if n 𝑛 n italic_n is a CommandAst node then
+23
+C ⁢ o ⁢ m ⁢ m ⁢ a ⁢ n ⁢ d ← E ⁢ x ⁢ t ⁢ r ⁢ a ⁢ c ⁢ t ⁢ F ⁢ i ⁢ r ⁢ s ⁢ t ⁢ S ⁢ t ⁢ r ⁢ i ⁢ n ⁢ g ⁢ C ⁢ o ⁢ n ⁢ s ⁢ t ⁢ a ⁢ n ⁢ t ⁢ ( n ) ← 𝐶 𝑜 𝑚 𝑚 𝑎 𝑛 𝑑 𝐸 𝑥 𝑡 𝑟 𝑎 𝑐 𝑡 𝐹 𝑖 𝑟 𝑠 𝑡 𝑆 𝑡 𝑟 𝑖 𝑛 𝑔 𝐶 𝑜 𝑛 𝑠 𝑡 𝑎 𝑛 𝑡 𝑛 Command\leftarrow ExtractFirstStringConstant(n) italic_C italic_o italic_m italic_m italic_a italic_n italic_d ← italic_E italic_x italic_t italic_r italic_a italic_c italic_t italic_F italic_i italic_r italic_s italic_t italic_S italic_t italic_r italic_i italic_n italic_g italic_C italic_o italic_n italic_s italic_t italic_a italic_n italic_t ( italic_n ) ;
+24
+SaveCommand( C ⁢ o ⁢ m ⁢ m ⁢ a ⁢ n ⁢ d 𝐶 𝑜 𝑚 𝑚 𝑎 𝑛 𝑑 Command italic_C italic_o italic_m italic_m italic_a italic_n italic_d , S ⁢ t ⁢ a ⁢ t ⁢ i ⁢ c ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s 𝑆 𝑡 𝑎 𝑡 𝑖 𝑐 𝑁 𝑜 𝑑 𝑒 𝑠 StaticNodes italic_S italic_t italic_a italic_t italic_i italic_c italic_N italic_o italic_d italic_e italic_s );
+25
+26 end if
+27
+28 end for
+29
+// Step 3: Node Information Analysis and Mapping
+30
+for each node s 𝑠 s italic_s in S ⁢ t ⁢ a ⁢ t ⁢ i ⁢ c ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s 𝑆 𝑡 𝑎 𝑡 𝑖 𝑐 𝑁 𝑜 𝑑 𝑒 𝑠 StaticNodes italic_S italic_t italic_a italic_t italic_i italic_c italic_N italic_o italic_d italic_e italic_s do
+31
+if s 𝑠 s italic_s is relevant to registry, file, or process entity then
+32
+MatchWithAuditLog( s 𝑠 s italic_s );
+33
+AddToSupplementGraph( s 𝑠 s italic_s );
+34
+35 end if
+36
+37 end for
+38
+// Step 4: Construct Enhanced Attack Graph
+39
+MergeGraphs( A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h , S ⁢ u ⁢ p ⁢ p ⁢ l ⁢ e ⁢ m ⁢ e ⁢ n ⁢ t ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑆 𝑢 𝑝 𝑝 𝑙 𝑒 𝑚 𝑒 𝑛 𝑡 𝐺 𝑟 𝑎 𝑝 ℎ SupplementGraph italic_S italic_u italic_p italic_p italic_l italic_e italic_m italic_e italic_n italic_t italic_G italic_r italic_a italic_p italic_h );
+40
+41 return A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h ;
+Algorithm 2 Construction of Attack Technique Graph using Static Analysis
+4.2.1. AST Node Selection
+Figure 6(a) is an example of AST, which is a tree-shaped hierarchical structure composed of several nodes, such as ScriptBlockAst,
+PipelineAst, StringConstantExpressionAst, etc.
+(a) An example graph of an abstract syntax tree
+(b) The information we select from the abstract syntax tree.
+Figure 6. Static Analysis of Attack Scripts Based on Abstract Syntax Tree.
+Since we have identified the process association chain, we now need to find the object node pointed to by the process through the AST. Therefore, we need to retrieve the relevant entity names such as registry and file names in the AST and save them to determine whether we need to add edges to related object nodes during the dynamic construction process.
+We mainly focus on the contents of the following nodes, namely StringConstantExpressionAst, VariableExpressionAst, and ExpandableStringExpressionAst. The node types that assist us in node content processing are CommandAst and AssignmentStatementAst.
+4.2.2. Node Information Analysis and Processing
+As shown in Figure 6(b) , first, we save StringConstantExpressionAst, which is a static variable, so we can directly save its value, followed by VariableExpressionAst, which is a dynamic variable name. We need to save AssignmentStatementAst in the syntax tree in the form of a map, and replace it here, so as to achieve and audit The content of the log is unified. Next is ExpandableStringExpressionAst, this type of node requires us to do dynamic simulation to restore its full name in the system. Finally, we found that the first StringConstantExpressionAst node under the CommandAst node generally stores the relevant command or process name, and we also save it to assist in the construction of our process chain.
+We conduct static analysis to filter out a series of entity nodes related to processes, files, and registries. These nodes are then used to recover their corresponding events and relationships when we construct the dynamic graph with the audit log.
+4.3. CTI Reports Analyis
+Through dynamic audit logs and static source code analysis, we have ensured that we can obtain a complete attack subgraph of an atomic attack technology. However, such a limitation is that we cannot obtain a relatively complete implementation of a certain attack method. At the same time, threat intelligence just provides rich and high-value information for guiding log analysis of real attack behaviors, which can help us improve the construction of attack subgraphs.
+For example, in the persistent attack technique T1547, one of the ways is to modify the registry to realize the self-starting of malware. There are many registry directories that can be used to modify, such as:
+•
+HKEY_CURRENT_USER\Software\…\CurrentVersion\Explorer
+•
+HKEY_LOCAL_MACHINE\Software\…\RunServicesOnce
+•
+HKEY_CURRENT_USER\Software\…\Policies\Explorer\Run
+•
+HKEY_LOCAL_MACHINE\System\…\Control\Session Manager
+In addition to this, many more registry directories can be used to help attackers achieve persistence. However, for a specific executable file and attack code, may only contain a specific registry directory to complete the attack. If we want to fully represent this type of attack, for example by modifying the registry to achieve persistence, then Cyber Threat Intelligence (CTI) is undoubtedly the best choice. There are tens of thousands of reports available on the Internet, providing a large number of different implementations of the same technology with nuances, which can be used by us to improve the attack subgraph generated above, so as to make our subgraph representation more generalized and more accurate.
+Through algorithm 3 , we briefly describe the entire procedure.
+We will perform the following operation to manipulate the attack knowledge from the CTI reports:
+•
+Technique procedure example crawled from MITER ATT&CK contains descriptions of the same attack technique from different reports.
+•
+Based on the GPT4 API and a well-designed prompt, we can parse the report text and get the entities, entity types, and inter-entity relationships.
+•
+For multiple reports on the same technique, proper alignment and merging of the knowledge graph allows us to obtain a unified representation of a specific attack technique.
+1
+Data: CTI reports on attack techniques
+Result: Enhanced attack knowledge graph: A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h
+2
+// Step 1: Retrieve Technique Descriptions from MITRE ATT&CK
+3
+T ⁢ e ⁢ c ⁢ h ⁢ n ⁢ i ⁢ q ⁢ u ⁢ e ⁢ D ⁢ e ⁢ s ⁢ c ⁢ r ⁢ i ⁢ p ⁢ t ⁢ i ⁢ o ⁢ n ⁢ s ← C ⁢ r ⁢ a ⁢ w ⁢ l ⁢ M ⁢ I ⁢ T ⁢ R ⁢ E ⁢ A ⁢ T ⁢ T ⁢ A ⁢ C ⁢ K ⁢ ( ) ← 𝑇 𝑒 𝑐 ℎ 𝑛 𝑖 𝑞 𝑢 𝑒 𝐷 𝑒 𝑠 𝑐 𝑟 𝑖 𝑝 𝑡 𝑖 𝑜 𝑛 𝑠 𝐶 𝑟 𝑎 𝑤 𝑙 𝑀 𝐼 𝑇 𝑅 𝐸 𝐴 𝑇 𝑇 𝐴 𝐶 𝐾 TechniqueDescriptions\leftarrow CrawlMITREATTACK() italic_T italic_e italic_c italic_h italic_n italic_i italic_q italic_u italic_e italic_D italic_e italic_s italic_c italic_r italic_i italic_p italic_t italic_i italic_o italic_n italic_s ← italic_C italic_r italic_a italic_w italic_l italic_M italic_I italic_T italic_R italic_E italic_A italic_T italic_T italic_A italic_C italic_K ( ) ;
+4
+T ⁢ e ⁢ c ⁢ h ⁢ n ⁢ i ⁢ q ⁢ u ⁢ e ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s ← ∅ ← 𝑇 𝑒 𝑐 ℎ 𝑛 𝑖 𝑞 𝑢 𝑒 𝐺 𝑟 𝑎 𝑝 ℎ 𝑠 TechniqueGraphs\leftarrow\emptyset italic_T italic_e italic_c italic_h italic_n italic_i italic_q italic_u italic_e italic_G italic_r italic_a italic_p italic_h italic_s ← ∅ ;
+5
+6 for each description d 𝑑 d italic_d in T ⁢ e ⁢ c ⁢ h ⁢ n ⁢ i ⁢ q ⁢ u ⁢ e ⁢ D ⁢ e ⁢ s ⁢ c ⁢ r ⁢ i ⁢ p ⁢ t ⁢ i ⁢ o ⁢ n ⁢ s 𝑇 𝑒 𝑐 ℎ 𝑛 𝑖 𝑞 𝑢 𝑒 𝐷 𝑒 𝑠 𝑐 𝑟 𝑖 𝑝 𝑡 𝑖 𝑜 𝑛 𝑠 TechniqueDescriptions italic_T italic_e italic_c italic_h italic_n italic_i italic_q italic_u italic_e italic_D italic_e italic_s italic_c italic_r italic_i italic_p italic_t italic_i italic_o italic_n italic_s do
+7
+T ⁢ e ⁢ c ⁢ h ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← G ⁢ e ⁢ n ⁢ e ⁢ r ⁢ a ⁢ t ⁢ e ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ F ⁢ r ⁢ o ⁢ m ⁢ D ⁢ e ⁢ s ⁢ c ⁢ r ⁢ i ⁢ p ⁢ t ⁢ i ⁢ o ⁢ n ⁢ ( d ) ← 𝑇 𝑒 𝑐 ℎ 𝐺 𝑟 𝑎 𝑝 ℎ 𝐺 𝑒 𝑛 𝑒 𝑟 𝑎 𝑡 𝑒 𝐺 𝑟 𝑎 𝑝 ℎ 𝐹 𝑟 𝑜 𝑚 𝐷 𝑒 𝑠 𝑐 𝑟 𝑖 𝑝 𝑡 𝑖 𝑜 𝑛 𝑑 TechGraph\leftarrow GenerateGraphFromDescription(d) italic_T italic_e italic_c italic_h italic_G italic_r italic_a italic_p italic_h ← italic_G italic_e italic_n italic_e italic_r italic_a italic_t italic_e italic_G italic_r italic_a italic_p italic_h italic_F italic_r italic_o italic_m italic_D italic_e italic_s italic_c italic_r italic_i italic_p italic_t italic_i italic_o italic_n ( italic_d ) ;
+8
+AddToTechniqueGraphs( T ⁢ e ⁢ c ⁢ h ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑇 𝑒 𝑐 ℎ 𝐺 𝑟 𝑎 𝑝 ℎ TechGraph italic_T italic_e italic_c italic_h italic_G italic_r italic_a italic_p italic_h , T ⁢ e ⁢ c ⁢ h ⁢ n ⁢ i ⁢ q ⁢ u ⁢ e ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s 𝑇 𝑒 𝑐 ℎ 𝑛 𝑖 𝑞 𝑢 𝑒 𝐺 𝑟 𝑎 𝑝 ℎ 𝑠 TechniqueGraphs italic_T italic_e italic_c italic_h italic_n italic_i italic_q italic_u italic_e italic_G italic_r italic_a italic_p italic_h italic_s );
+9
+10 end for
+11
+// Step 2: Parse CTI Reports for Entity and Relationship Extraction
+12
+for each report r 𝑟 r italic_r in C ⁢ T ⁢ I ⁢ R ⁢ e ⁢ p ⁢ o ⁢ r ⁢ t ⁢ s 𝐶 𝑇 𝐼 𝑅 𝑒 𝑝 𝑜 𝑟 𝑡 𝑠 CTIReports italic_C italic_T italic_I italic_R italic_e italic_p italic_o italic_r italic_t italic_s do
+13
+E ⁢ n ⁢ t ⁢ i ⁢ t ⁢ i ⁢ e ⁢ s , R ⁢ e ⁢ l ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n ⁢ s ⁢ h ⁢ i ⁢ p ⁢ s ← P ⁢ a ⁢ r ⁢ s ⁢ e ⁢ R ⁢ e ⁢ p ⁢ o ⁢ r ⁢ t ⁢ W ⁢ i ⁢ t ⁢ h ⁢ G ⁢ P ⁢ T ⁢ 4 ⁢ ( r ) ← 𝐸 𝑛 𝑡 𝑖 𝑡 𝑖 𝑒 𝑠 𝑅 𝑒 𝑙 𝑎 𝑡 𝑖 𝑜 𝑛 𝑠 ℎ 𝑖 𝑝 𝑠 𝑃 𝑎 𝑟 𝑠 𝑒 𝑅 𝑒 𝑝 𝑜 𝑟 𝑡 𝑊 𝑖 𝑡 ℎ 𝐺 𝑃 𝑇 4 𝑟 Entities,Relationships\leftarrow ParseReportWithGPT4(r) italic_E italic_n italic_t italic_i italic_t italic_i italic_e italic_s , italic_R italic_e italic_l italic_a italic_t italic_i italic_o italic_n italic_s italic_h italic_i italic_p italic_s ← italic_P italic_a italic_r italic_s italic_e italic_R italic_e italic_p italic_o italic_r italic_t italic_W italic_i italic_t italic_h italic_G italic_P italic_T 4 ( italic_r ) ;
+14
+ExtractIOCInfo( E ⁢ n ⁢ t ⁢ i ⁢ t ⁢ i ⁢ e ⁢ s 𝐸 𝑛 𝑡 𝑖 𝑡 𝑖 𝑒 𝑠 Entities italic_E italic_n italic_t italic_i italic_t italic_i italic_e italic_s );
+15
+GeneratePartialGraph( E ⁢ n ⁢ t ⁢ i ⁢ t ⁢ i ⁢ e ⁢ s 𝐸 𝑛 𝑡 𝑖 𝑡 𝑖 𝑒 𝑠 Entities italic_E italic_n italic_t italic_i italic_t italic_i italic_e italic_s , R ⁢ e ⁢ l ⁢ a ⁢ t ⁢ i ⁢ o ⁢ n ⁢ s ⁢ h ⁢ i ⁢ p ⁢ s 𝑅 𝑒 𝑙 𝑎 𝑡 𝑖 𝑜 𝑛 𝑠 ℎ 𝑖 𝑝 𝑠 Relationships italic_R italic_e italic_l italic_a italic_t italic_i italic_o italic_n italic_s italic_h italic_i italic_p italic_s );
+16
+17 end for
+18
+// Step 3: Aggregate Technique Graphs Across Reports
+19
+for each technique t 𝑡 t italic_t in T ⁢ e ⁢ c ⁢ h ⁢ n ⁢ i ⁢ q ⁢ u ⁢ e ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s 𝑇 𝑒 𝑐 ℎ 𝑛 𝑖 𝑞 𝑢 𝑒 𝐺 𝑟 𝑎 𝑝 ℎ 𝑠 TechniqueGraphs italic_T italic_e italic_c italic_h italic_n italic_i italic_q italic_u italic_e italic_G italic_r italic_a italic_p italic_h italic_s do
+20
+U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← I ⁢ n ⁢ i ⁢ t ⁢ i ⁢ a ⁢ l ⁢ i ⁢ z ⁢ e ⁢ U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ ( t ) ← 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝐼 𝑛 𝑖 𝑡 𝑖 𝑎 𝑙 𝑖 𝑧 𝑒 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑡 UnifiedGraph\leftarrow InitializeUnifiedGraph(t) italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← italic_I italic_n italic_i italic_t italic_i italic_a italic_l italic_i italic_z italic_e italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h ( italic_t ) ;
+21
+22 for each partial graph g 𝑔 g italic_g for technique t 𝑡 t italic_t do
+23
+AlignAndMergeGraph( g 𝑔 g italic_g , U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h );
+24
+25 end for
+26
+27 A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ I ⁢ n ⁢ t ⁢ o ⁢ A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ ( U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h , A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ) ← 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝐼 𝑛 𝑡 𝑜 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph\leftarrow MergeIntoAttackGraph(UnifiedGraph,AttackGraph) italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h ← italic_M italic_e italic_r italic_g italic_e italic_I italic_n italic_t italic_o italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h ( italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h , italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h ) ;
+28
+29 end for
+30
+31 return A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝐺 𝑟 𝑎 𝑝 ℎ AttackGraph italic_A italic_t italic_t italic_a italic_c italic_k italic_G italic_r italic_a italic_p italic_h ;
+Algorithm 3 CTI Reports Analysis for Attack Knowledge Graph Enhancement
+While CTI reports provide detailed contexts about an attack (e.g., the sequence of adversarial actions), manually extracting attack-relevant information from uninstructed texts is labor-intensive and error-prone, hindering CTI’s practice applications.
+Based on the observation that IoCs often share similar context terms, iACE (Liao et al . , 2016 ) presents a graph mining technique to collect IoCs available in tens of thousands of security articles.
+ChainSmith (Zhu and Dumitras, 2018 ) further makes use of neural networks to classify IoCs into different attack campaign stages (e.g., baiting and C&C).
+TTPDrill (Husari et al . , 2017 ) derives threat actions from Symantec reports and maps them to attack patterns (e.g., techniques in MITRE ATT&CK (MITRE ATT&CK, 2024 ) ) pre-defined as ontology.
+EXTRACTOR (Satvat et al . , 2021 ) and ThreatRaptor (Gao et al . , 2021b ) customize NLP techniques to model attack behaviors in texts as provenance graphs. AttacKG (Zhenyuan et al . , 2022 ) adapting NLP models based on limited data to recognize entities as well as their relationships.
+However, MultiKG differs from these works in that it parses CIT reports and constructs knowledge graphs by using LLM, which has a large amount of security domain knowledge data and strong contextual understanding and knowledge inference capabilities (Touvron et al . , 2023 ; Brown, 2020 ) .
+4.3.1. Attack Technique Procedure
+First, we need general textual descriptions of individual attack techniques. In this paper, with the threat report descriptions on attack technique procedure provided in MITRE ATT&CK, we construct multiple graph-structured technique descriptions for each technique.
+Specifically, we use the crawler algorithm to obtain attack technology cases from MITRE ATT&CK, and the attack technology cases describe the details of each attack technology.
+Based on the behavioral descriptions of each attack technique described in the crawled reports, we construct multiple attack knowledge graphs about the same technique using LLMs, which are then aggregated by algorithms.
+4.3.2. CTI Reports Parser
+Well-written CTI reports include detailed technical descriptions of how attack-related entities interact to accomplish adversarial objectives
+in attack campaigns. Despite the rich information, it is challenging to accurately
+extract attack behaviors from CTI reports written in natural language.
+To solve this problem, we design a new CTI report parsing scheme based on the existing one, which sequentially performs the identification of entities and entity types, as well as the judgment of inter-entity relationships.
+Specifically, we build a parser to parse the CTI report based on the API provided by the large language model GPT-4, design a prompt to extract the entities and entity dependencies related to the attack and use regular expressions to recognize fine-grained IOC information to construct, generate, and simplify the attack graph. Eventually, we were able to develop a concise and clear attack graph describing the various attack behaviors reported.
+4.3.3. Attack Knowledge Graph Generation
+A single attack report often only describes an implementation of several attack techniques, lacking a summary of its overall implementation. We therefore compensate for this by aggregating threat intelligence across reports.
+Now, we utilized a graph alignment algorithm to match technical templates in attack graphs.
+We need to merge the multiple attack knowledge graphs about the same technique extracted from the analysis of the above example technique descriptions.
+We designed graph alignment algorithms to identify the attack techniques and find the corresponding nodes and edges in the attack graphs and as a way to merge the attack graphs of techniques extracted from multiple CTI reports.
+After finding the corresponding nodes and edges, we can utilize the information contained in both to complement each other. In this case, the single-technique graph contains the execution process of a certain technique, and the multi-technique attack graph from CTI reports contains real attack cases consisting of multiple techniques and their realization details.
+Clearly, we can accurately align and refine entities in CTI reports and technology templates, building a knowledge summary graph of attack-related knowledge across multiple reports. We will introduce in § 5 the way to merge multiple descriptive attack resolution graphs from multiple CIT reports about the same attack technique.
+5. Knowledge Graph Construction
+In this section, we introduce two parts: 1) how to do aggregation of multiple knowledge graphs about the same attack technique from a single data source. 2) how to do a fusion of knowledge graphs from different sources to generate a unified and complete attack knowledge graph representation.
+5.1. Merging of Technical Graphs from the Same Resource
+Based on the above design, we obtained multiple technical graphs from audit logs and CTI reports respectively.
+Before getting the final cross-source technical representation, we need to merge multiple technical diagrams from the same source into one complete representation, respectively. In other words, multiple same-source graphs corresponding to the same technique are merged.
+1
+Data: Multiple technical graphs from audit logs or CTI reports: G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 Graphs_{source} italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT
+Result: Merged technical graph: M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ MergedGraph italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h
+2
+3 M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← ∅ ← 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ MergedGraph\leftarrow\emptyset italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← ∅ ;
+// Step 1: Merge attacker nodes from different attack graphs
+4
+for each graph G ∈ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e 𝐺 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 G\in Graphs_{source} italic_G ∈ italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT do
+5
+A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ e ⁢ r ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ← { n ∣ n ⁢ is an attacker node in ⁢ G } ← 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝑒 𝑟 𝑁 𝑜 𝑑 𝑒 𝑠 conditional-set 𝑛 𝑛 is an attacker node in 𝐺 AttackerNodes\leftarrow\{n\mid n\text{ is an attacker node in }G\} italic_A italic_t italic_t italic_a italic_c italic_k italic_e italic_r italic_N italic_o italic_d italic_e italic_s ← { italic_n ∣ italic_n is an attacker node in italic_G } ;
+6
+M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ∪ A ⁢ t ⁢ t ⁢ a ⁢ c ⁢ k ⁢ e ⁢ r ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ← 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝐴 𝑡 𝑡 𝑎 𝑐 𝑘 𝑒 𝑟 𝑁 𝑜 𝑑 𝑒 𝑠 MergedGraph\leftarrow MergedGraph\cup AttackerNodes italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ∪ italic_A italic_t italic_t italic_a italic_c italic_k italic_e italic_r italic_N italic_o italic_d italic_e italic_s ;
+7
+8 end for
+9
+// Step 2: Merge nodes at the same hierarchical level
+10
+for each level l 𝑙 l italic_l in G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 Graphs_{source} italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT do
+11
+for each node type t 𝑡 t italic_t at level l 𝑙 l italic_l do
+12
+if t 𝑡 t italic_t is Process type then
+13
+S ⁢ a ⁢ m ⁢ e ⁢ L ⁢ e ⁢ v ⁢ e ⁢ l ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ← { n ∣ n ⁢ is at level ⁢ l ⁢ with same process name in ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e } ← 𝑆 𝑎 𝑚 𝑒 𝐿 𝑒 𝑣 𝑒 𝑙 𝑁 𝑜 𝑑 𝑒 𝑠 conditional-set 𝑛 𝑛 is at level 𝑙 with same process name in 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 SameLevelNodes\leftarrow\{n\mid n\text{ is at level }l\text{ with same process%
+name in }Graphs_{source}\} italic_S italic_a italic_m italic_e italic_L italic_e italic_v italic_e italic_l italic_N italic_o italic_d italic_e italic_s ← { italic_n ∣ italic_n is at level italic_l with same process name in italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT } ;
+14
+15
+else
+16
+S ⁢ a ⁢ m ⁢ e ⁢ L ⁢ e ⁢ v ⁢ e ⁢ l ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ← { n ∣ n ⁢ is at level ⁢ l ⁢ with type ⁢ t ⁢ in ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e } ← 𝑆 𝑎 𝑚 𝑒 𝐿 𝑒 𝑣 𝑒 𝑙 𝑁 𝑜 𝑑 𝑒 𝑠 conditional-set 𝑛 𝑛 is at level 𝑙 with type 𝑡 in 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 SameLevelNodes\leftarrow\{n\mid n\text{ is at level }l\text{ with type }t\text%
+{ in }Graphs_{source}\} italic_S italic_a italic_m italic_e italic_L italic_e italic_v italic_e italic_l italic_N italic_o italic_d italic_e italic_s ← { italic_n ∣ italic_n is at level italic_l with type italic_t in italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT } ;
+17
+18 end if
+19 M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ∪ M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ ( S ⁢ a ⁢ m ⁢ e ⁢ L ⁢ e ⁢ v ⁢ e ⁢ l ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ) ← 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝑆 𝑎 𝑚 𝑒 𝐿 𝑒 𝑣 𝑒 𝑙 𝑁 𝑜 𝑑 𝑒 𝑠 MergedGraph\leftarrow MergedGraph\cup Merge(SameLevelNodes) italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ∪ italic_M italic_e italic_r italic_g italic_e ( italic_S italic_a italic_m italic_e italic_L italic_e italic_v italic_e italic_l italic_N italic_o italic_d italic_e italic_s ) ;
+20
+21 end for
+22
+23 end for
+24
+// Step 3: Merge nodes across layers with identical attributes
+25
+for each attribute a ⁢ t ⁢ t ⁢ r 𝑎 𝑡 𝑡 𝑟 attr italic_a italic_t italic_t italic_r in G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 Graphs_{source} italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT do
+26
+N ⁢ o ⁢ d ⁢ e ⁢ s ⁢ W ⁢ i ⁢ t ⁢ h ⁢ A ⁢ t ⁢ t ⁢ r ← { n ∣ n ⁢ has attribute ⁢ a ⁢ t ⁢ t ⁢ r ⁢ in ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e } ← 𝑁 𝑜 𝑑 𝑒 𝑠 𝑊 𝑖 𝑡 ℎ 𝐴 𝑡 𝑡 𝑟 conditional-set 𝑛 𝑛 has attribute 𝑎 𝑡 𝑡 𝑟 in 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 NodesWithAttr\leftarrow\{n\mid n\text{ has attribute }attr\text{ in }Graphs_{%
+source}\} italic_N italic_o italic_d italic_e italic_s italic_W italic_i italic_t italic_h italic_A italic_t italic_t italic_r ← { italic_n ∣ italic_n has attribute italic_a italic_t italic_t italic_r in italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT } ;
+27
+M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ∪ M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ A ⁢ c ⁢ r ⁢ o ⁢ s ⁢ s ⁢ L ⁢ a ⁢ y ⁢ e ⁢ r ⁢ s ⁢ ( N ⁢ o ⁢ d ⁢ e ⁢ s ⁢ W ⁢ i ⁢ t ⁢ h ⁢ A ⁢ t ⁢ t ⁢ r ) ← 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝐴 𝑐 𝑟 𝑜 𝑠 𝑠 𝐿 𝑎 𝑦 𝑒 𝑟 𝑠 𝑁 𝑜 𝑑 𝑒 𝑠 𝑊 𝑖 𝑡 ℎ 𝐴 𝑡 𝑡 𝑟 MergedGraph\leftarrow MergedGraph\cup MergeAcrossLayers(NodesWithAttr) italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ∪ italic_M italic_e italic_r italic_g italic_e italic_A italic_c italic_r italic_o italic_s italic_s italic_L italic_a italic_y italic_e italic_r italic_s ( italic_N italic_o italic_d italic_e italic_s italic_W italic_i italic_t italic_h italic_A italic_t italic_t italic_r ) ;
+28
+29 end for
+30
+// Step 4: Merge leaf nodes based on content similarity (e.g., images, files)
+31
+for each leaf node n 𝑛 n italic_n in G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 Graphs_{source} italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e end_POSTSUBSCRIPT do
+32
+S ⁢ i ⁢ m ⁢ i ⁢ l ⁢ a ⁢ r ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ← F ⁢ i ⁢ n ⁢ d ⁢ S ⁢ i ⁢ m ⁢ i ⁢ l ⁢ a ⁢ r ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ⁢ ( n ) ← 𝑆 𝑖 𝑚 𝑖 𝑙 𝑎 𝑟 𝑁 𝑜 𝑑 𝑒 𝑠 𝐹 𝑖 𝑛 𝑑 𝑆 𝑖 𝑚 𝑖 𝑙 𝑎 𝑟 𝑁 𝑜 𝑑 𝑒 𝑠 𝑛 SimilarNodes\leftarrow FindSimilarNodes(n) italic_S italic_i italic_m italic_i italic_l italic_a italic_r italic_N italic_o italic_d italic_e italic_s ← italic_F italic_i italic_n italic_d italic_S italic_i italic_m italic_i italic_l italic_a italic_r italic_N italic_o italic_d italic_e italic_s ( italic_n ) ;
+33
+M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ∪ C ⁢ l ⁢ u ⁢ s ⁢ t ⁢ e ⁢ r ⁢ A ⁢ n ⁢ d ⁢ M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ ( S ⁢ i ⁢ m ⁢ i ⁢ l ⁢ a ⁢ r ⁢ N ⁢ o ⁢ d ⁢ e ⁢ s ) ← 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ 𝐶 𝑙 𝑢 𝑠 𝑡 𝑒 𝑟 𝐴 𝑛 𝑑 𝑀 𝑒 𝑟 𝑔 𝑒 𝑆 𝑖 𝑚 𝑖 𝑙 𝑎 𝑟 𝑁 𝑜 𝑑 𝑒 𝑠 MergedGraph\leftarrow MergedGraph\cup ClusterAndMerge(SimilarNodes) italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ∪ italic_C italic_l italic_u italic_s italic_t italic_e italic_r italic_A italic_n italic_d italic_M italic_e italic_r italic_g italic_e ( italic_S italic_i italic_m italic_i italic_l italic_a italic_r italic_N italic_o italic_d italic_e italic_s ) ;
+34
+35 end for
+36
+// Step 5: Preserve edges and add extra attributes to merged nodes
+37
+for each merged node m ∈ M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑚 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ m\in MergedGraph italic_m ∈ italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h do
+38
+RetainEdges( m 𝑚 m italic_m );
+39
+AddExtraAttributes( m 𝑚 m italic_m );
+40
+41 end for
+42
+// Step 6: Generalize node information for universal representation
+43
+GeneralizePaths( M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ MergedGraph italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h );
+44
+ApplyWildcardSubstitutions( M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ MergedGraph italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h );
+45
+46 return M ⁢ e ⁢ r ⁢ g ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑀 𝑒 𝑟 𝑔 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ MergedGraph italic_M italic_e italic_r italic_g italic_e italic_d italic_G italic_r italic_a italic_p italic_h ;
+Algorithm 4 Merging of Technical Graphs from the Same Source
+First, we merge the attacker nodes from the different attack graphs generated by the logs to make a connected graph.
+Then, we do the merging strategy for its nodes of the same level (level refers to the hierarchy of each associated entity from the starting node, directly connected as level-1, subsequent as level-2, etc.). The starting node is the first node in the GML format description, i.e., the attacker node (id attribute is 0)).
+For Process type nodes, we merge nodes at the same level with the same process name.
+For the rest of the nodes, we merge the nodes at the same level and of the same type.
+The idea of merging at the same level is easy to understand, similar nodes follow similar calling relationships, share the same calling logic and are more likely to appear at the same level of the calling chain, which is confirmed by our experimental results.
+This means that the contents of the nodes corresponding to the same entity are all recorded among the additional attributes, and the corresponding nodes are merged in the construction of the attack graph.
+In addition, for nodes with the same attribute content, we will also merge them across layers so that the technical graph is more concise without redundant nodes.
+Then, we also merge the object nodes such as images, files, and registries located in the leaf nodes of the technical graph by extracting the common prefix. We do node clustering and merging based on the similarity of node contents, which makes the attack graph representation more generalized.
+Note that for nodes that have been merged, we first ensure that the relationships of the edges previously attached to that node remain unchanged. Then, we add an extra attribute to the merged node, which includes all the label attributes for the merged node.
+Finally, we will generalize and de-duplicate some node information to make its representation more universal. For example, we will represent
+C\:\\Users\\Alice\\AppData\\Local
+as C\:\\Users\\.*\\AppData\\Local , and HKEY_LOCAL_MACHINE\System\.* to match specific registry sets and so on. In addition, we will also do wildcard substitutions for some temporary system file names and so on.
+In the end, for the same attack technique, we get one merged technique diagram from the audit log and CIT report respectively. We present the complete algorithmic processing logic in algorithm 4 .
+5.2. Construction of technique-level attack knowledge graph from multi-source
+With the above analysis, we get a separate technical graph from each of the different sources of attack information.
+For now, we need to merge the technology graphs across sources to get a unified and complete attack knowledge graph for each technology. We aim to merge different graphs corresponding to the same technique across sources.
+We find the eligible technique graphs based on the technique number. Then, load them and represent them as a unified technology graph following the merging strategy.
+For all nodes of the technical graph under different resources, we create multiple lists storing the breadth-first search order of the nodes in each graph.
+Then, we define the graphs that are produced based on both the audit log and static code as the base graph. The ones based on CIT reports are defined as the additional graph. Lastly, we create a new graph to be the final results graph.
+For each node in the additional graph, we iterate according to the node queue order. We check whether there is a matching node of the same type in the basic graph and its content similarity with the corresponding type of node, respectively, to determine whether it matches and needs to be merged.
+If a match is found, we update the list of nodes in the new graph, remove the merged node from the list of nodes in the base graph and the additional graph, and update the data of the merged node and its corresponding edges to the new graph.
+If no match is found in the base graph, we add the node to the new graph and set an edge connecting the node to its parent.
+This parent node is the upper-level node corresponding to this node in the additional graph, which must exist in the current new graph due to the traversal according to the breadth-first search.
+Lastly, since the merged node will contain the data of all the nodes that were merged, we will perform deduplication and generalization to ensure the universality of the final technique knowledge graph.
+1
+Data: Technical graphs from different sources: T ⁢ e ⁢ c ⁢ h ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e ⁢ s 𝑇 𝑒 𝑐 ℎ 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 𝑠 TechGraphs_{sources} italic_T italic_e italic_c italic_h italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e italic_s end_POSTSUBSCRIPT
+Result: Unified attack knowledge graph: U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h
+2
+// Step 1: Initialize base and additional graphs
+3
+B ⁢ a ⁢ s ⁢ e ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← graph from audit log or static code ← 𝐵 𝑎 𝑠 𝑒 𝐺 𝑟 𝑎 𝑝 ℎ graph from audit log or static code BaseGraph\leftarrow\text{graph from audit log or static code} italic_B italic_a italic_s italic_e italic_G italic_r italic_a italic_p italic_h ← graph from audit log or static code ;
+4
+A ⁢ d ⁢ d ⁢ i ⁢ t ⁢ i ⁢ o ⁢ n ⁢ a ⁢ l ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← graph from CTI reports ← 𝐴 𝑑 𝑑 𝑖 𝑡 𝑖 𝑜 𝑛 𝑎 𝑙 𝐺 𝑟 𝑎 𝑝 ℎ graph from CTI reports AdditionalGraph\leftarrow\text{graph from CTI reports} italic_A italic_d italic_d italic_i italic_t italic_i italic_o italic_n italic_a italic_l italic_G italic_r italic_a italic_p italic_h ← graph from CTI reports ;
+5
+U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ← ∅ ← 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph\leftarrow\emptyset italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h ← ∅ ;
+6
+// Step 2: Select and load eligible technique graphs by technique number
+7
+for each technique number t 𝑡 t italic_t in T ⁢ e ⁢ c ⁢ h ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s s ⁢ o ⁢ u ⁢ r ⁢ c ⁢ e ⁢ s 𝑇 𝑒 𝑐 ℎ 𝐺 𝑟 𝑎 𝑝 ℎ subscript 𝑠 𝑠 𝑜 𝑢 𝑟 𝑐 𝑒 𝑠 TechGraphs_{sources} italic_T italic_e italic_c italic_h italic_G italic_r italic_a italic_p italic_h italic_s start_POSTSUBSCRIPT italic_s italic_o italic_u italic_r italic_c italic_e italic_s end_POSTSUBSCRIPT do
+8
+G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s ⁢ T ⁢ o ⁢ M ⁢ e ⁢ r ⁢ g ⁢ e ← { G ∣ G ⁢ corresponds to technique ⁢ t } ← 𝐺 𝑟 𝑎 𝑝 ℎ 𝑠 𝑇 𝑜 𝑀 𝑒 𝑟 𝑔 𝑒 conditional-set 𝐺 𝐺 corresponds to technique 𝑡 GraphsToMerge\leftarrow\{G\mid G\text{ corresponds to technique }t\} italic_G italic_r italic_a italic_p italic_h italic_s italic_T italic_o italic_M italic_e italic_r italic_g italic_e ← { italic_G ∣ italic_G corresponds to technique italic_t } ;
+9
+LoadGraphs( G ⁢ r ⁢ a ⁢ p ⁢ h ⁢ s ⁢ T ⁢ o ⁢ M ⁢ e ⁢ r ⁢ g ⁢ e 𝐺 𝑟 𝑎 𝑝 ℎ 𝑠 𝑇 𝑜 𝑀 𝑒 𝑟 𝑔 𝑒 GraphsToMerge italic_G italic_r italic_a italic_p italic_h italic_s italic_T italic_o italic_M italic_e italic_r italic_g italic_e );
+10
+11 end for
+12
+// Step 3: Prepare BFS order lists for each source graph
+13
+B ⁢ F ⁢ S ⁢ O ⁢ r ⁢ d ⁢ e ⁢ r B ⁢ a ⁢ s ⁢ e ← B ⁢ F ⁢ S ⁢ ( B ⁢ a ⁢ s ⁢ e ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ) ← 𝐵 𝐹 𝑆 𝑂 𝑟 𝑑 𝑒 subscript 𝑟 𝐵 𝑎 𝑠 𝑒 𝐵 𝐹 𝑆 𝐵 𝑎 𝑠 𝑒 𝐺 𝑟 𝑎 𝑝 ℎ BFSOrder_{Base}\leftarrow BFS(BaseGraph) italic_B italic_F italic_S italic_O italic_r italic_d italic_e italic_r start_POSTSUBSCRIPT italic_B italic_a italic_s italic_e end_POSTSUBSCRIPT ← italic_B italic_F italic_S ( italic_B italic_a italic_s italic_e italic_G italic_r italic_a italic_p italic_h ) ;
+14
+B ⁢ F ⁢ S ⁢ O ⁢ r ⁢ d ⁢ e ⁢ r A ⁢ d ⁢ d ⁢ i ⁢ t ⁢ i ⁢ o ⁢ n ⁢ a ⁢ l ← B ⁢ F ⁢ S ⁢ ( A ⁢ d ⁢ d ⁢ i ⁢ t ⁢ i ⁢ o ⁢ n ⁢ a ⁢ l ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ) ← 𝐵 𝐹 𝑆 𝑂 𝑟 𝑑 𝑒 subscript 𝑟 𝐴 𝑑 𝑑 𝑖 𝑡 𝑖 𝑜 𝑛 𝑎 𝑙 𝐵 𝐹 𝑆 𝐴 𝑑 𝑑 𝑖 𝑡 𝑖 𝑜 𝑛 𝑎 𝑙 𝐺 𝑟 𝑎 𝑝 ℎ BFSOrder_{Additional}\leftarrow BFS(AdditionalGraph) italic_B italic_F italic_S italic_O italic_r italic_d italic_e italic_r start_POSTSUBSCRIPT italic_A italic_d italic_d italic_i italic_t italic_i italic_o italic_n italic_a italic_l end_POSTSUBSCRIPT ← italic_B italic_F italic_S ( italic_A italic_d italic_d italic_i italic_t italic_i italic_o italic_n italic_a italic_l italic_G italic_r italic_a italic_p italic_h ) ;
+15
+// Step 4: Merge nodes from additional graph into base graph
+16
+for each node n a ⁢ d ⁢ d ∈ B ⁢ F ⁢ S ⁢ O ⁢ r ⁢ d ⁢ e ⁢ r A ⁢ d ⁢ d ⁢ i ⁢ t ⁢ i ⁢ o ⁢ n ⁢ a ⁢ l subscript 𝑛 𝑎 𝑑 𝑑 𝐵 𝐹 𝑆 𝑂 𝑟 𝑑 𝑒 subscript 𝑟 𝐴 𝑑 𝑑 𝑖 𝑡 𝑖 𝑜 𝑛 𝑎 𝑙 n_{add}\in BFSOrder_{Additional} italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT ∈ italic_B italic_F italic_S italic_O italic_r italic_d italic_e italic_r start_POSTSUBSCRIPT italic_A italic_d italic_d italic_i italic_t italic_i italic_o italic_n italic_a italic_l end_POSTSUBSCRIPT do
+17
+M ⁢ a ⁢ t ⁢ c ⁢ h ⁢ i ⁢ n ⁢ g ⁢ N ⁢ o ⁢ d ⁢ e ← F ⁢ i ⁢ n ⁢ d ⁢ M ⁢ a ⁢ t ⁢ c ⁢ h ⁢ i ⁢ n ⁢ g ⁢ N ⁢ o ⁢ d ⁢ e ⁢ ( n a ⁢ d ⁢ d , B ⁢ F ⁢ S ⁢ O ⁢ r ⁢ d ⁢ e ⁢ r B ⁢ a ⁢ s ⁢ e ) ← 𝑀 𝑎 𝑡 𝑐 ℎ 𝑖 𝑛 𝑔 𝑁 𝑜 𝑑 𝑒 𝐹 𝑖 𝑛 𝑑 𝑀 𝑎 𝑡 𝑐 ℎ 𝑖 𝑛 𝑔 𝑁 𝑜 𝑑 𝑒 subscript 𝑛 𝑎 𝑑 𝑑 𝐵 𝐹 𝑆 𝑂 𝑟 𝑑 𝑒 subscript 𝑟 𝐵 𝑎 𝑠 𝑒 MatchingNode\leftarrow FindMatchingNode(n_{add},BFSOrder_{Base}) italic_M italic_a italic_t italic_c italic_h italic_i italic_n italic_g italic_N italic_o italic_d italic_e ← italic_F italic_i italic_n italic_d italic_M italic_a italic_t italic_c italic_h italic_i italic_n italic_g italic_N italic_o italic_d italic_e ( italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT , italic_B italic_F italic_S italic_O italic_r italic_d italic_e italic_r start_POSTSUBSCRIPT italic_B italic_a italic_s italic_e end_POSTSUBSCRIPT ) ;
+18
+19 if M ⁢ a ⁢ t ⁢ c ⁢ h ⁢ i ⁢ n ⁢ g ⁢ N ⁢ o ⁢ d ⁢ e 𝑀 𝑎 𝑡 𝑐 ℎ 𝑖 𝑛 𝑔 𝑁 𝑜 𝑑 𝑒 MatchingNode italic_M italic_a italic_t italic_c italic_h italic_i italic_n italic_g italic_N italic_o italic_d italic_e exists and ContentSimilarity( n a ⁢ d ⁢ d subscript 𝑛 𝑎 𝑑 𝑑 n_{add} italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT , M ⁢ a ⁢ t ⁢ c ⁢ h ⁢ i ⁢ n ⁢ g ⁢ N ⁢ o ⁢ d ⁢ e 𝑀 𝑎 𝑡 𝑐 ℎ 𝑖 𝑛 𝑔 𝑁 𝑜 𝑑 𝑒 MatchingNode italic_M italic_a italic_t italic_c italic_h italic_i italic_n italic_g italic_N italic_o italic_d italic_e ) is high then
+20
+UpdateNodeList( U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h , M ⁢ a ⁢ t ⁢ c ⁢ h ⁢ i ⁢ n ⁢ g ⁢ N ⁢ o ⁢ d ⁢ e 𝑀 𝑎 𝑡 𝑐 ℎ 𝑖 𝑛 𝑔 𝑁 𝑜 𝑑 𝑒 MatchingNode italic_M italic_a italic_t italic_c italic_h italic_i italic_n italic_g italic_N italic_o italic_d italic_e );
+21
+RemoveNode( n a ⁢ d ⁢ d subscript 𝑛 𝑎 𝑑 𝑑 n_{add} italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT , B ⁢ F ⁢ S ⁢ O ⁢ r ⁢ d ⁢ e ⁢ r B ⁢ a ⁢ s ⁢ e 𝐵 𝐹 𝑆 𝑂 𝑟 𝑑 𝑒 subscript 𝑟 𝐵 𝑎 𝑠 𝑒 BFSOrder_{Base} italic_B italic_F italic_S italic_O italic_r italic_d italic_e italic_r start_POSTSUBSCRIPT italic_B italic_a italic_s italic_e end_POSTSUBSCRIPT );
+22
+UpdateEdges( U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h , M ⁢ a ⁢ t ⁢ c ⁢ h ⁢ i ⁢ n ⁢ g ⁢ N ⁢ o ⁢ d ⁢ e 𝑀 𝑎 𝑡 𝑐 ℎ 𝑖 𝑛 𝑔 𝑁 𝑜 𝑑 𝑒 MatchingNode italic_M italic_a italic_t italic_c italic_h italic_i italic_n italic_g italic_N italic_o italic_d italic_e );
+23
+24
+else
+25
+AddNode( U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h , n a ⁢ d ⁢ d subscript 𝑛 𝑎 𝑑 𝑑 n_{add} italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT );
+26
+P ⁢ a ⁢ r ⁢ e ⁢ n ⁢ t ⁢ N ⁢ o ⁢ d ⁢ e ← F ⁢ i ⁢ n ⁢ d ⁢ P ⁢ a ⁢ r ⁢ e ⁢ n ⁢ t ⁢ N ⁢ o ⁢ d ⁢ e ⁢ ( n a ⁢ d ⁢ d , U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h ) ← 𝑃 𝑎 𝑟 𝑒 𝑛 𝑡 𝑁 𝑜 𝑑 𝑒 𝐹 𝑖 𝑛 𝑑 𝑃 𝑎 𝑟 𝑒 𝑛 𝑡 𝑁 𝑜 𝑑 𝑒 subscript 𝑛 𝑎 𝑑 𝑑 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ ParentNode\leftarrow FindParentNode(n_{add},UnifiedGraph) italic_P italic_a italic_r italic_e italic_n italic_t italic_N italic_o italic_d italic_e ← italic_F italic_i italic_n italic_d italic_P italic_a italic_r italic_e italic_n italic_t italic_N italic_o italic_d italic_e ( italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT , italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h ) ;
+27
+SetEdge( P ⁢ a ⁢ r ⁢ e ⁢ n ⁢ t ⁢ N ⁢ o ⁢ d ⁢ e 𝑃 𝑎 𝑟 𝑒 𝑛 𝑡 𝑁 𝑜 𝑑 𝑒 ParentNode italic_P italic_a italic_r italic_e italic_n italic_t italic_N italic_o italic_d italic_e , n a ⁢ d ⁢ d subscript 𝑛 𝑎 𝑑 𝑑 n_{add} italic_n start_POSTSUBSCRIPT italic_a italic_d italic_d end_POSTSUBSCRIPT , U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h );
+28
+29 end if
+30
+31 end for
+32
+// Step 5: Perform deduplication and generalization for universal representation
+33
+DeduplicateNodes( U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h );
+34
+GeneralizeNodeInfo( U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h );
+35
+36 return U ⁢ n ⁢ i ⁢ f ⁢ i ⁢ e ⁢ d ⁢ G ⁢ r ⁢ a ⁢ p ⁢ h 𝑈 𝑛 𝑖 𝑓 𝑖 𝑒 𝑑 𝐺 𝑟 𝑎 𝑝 ℎ UnifiedGraph italic_U italic_n italic_i italic_f italic_i italic_e italic_d italic_G italic_r italic_a italic_p italic_h ;
+Algorithm 5 Construction of Technique-Level Attack Knowledge Graph from Multiple Sources
+6. Evaluation
+6.1. Evaluation Setup
+To evaluate the MultiKG, we utilized the source code and executable frameworks of the 1015 attack procedures of the 282 attack techniques crawled from the atomic red team as the source of the base dataset.
+Then, based on the technique numbers corresponding to these attack techniques in the atomic red team, we crawled all the threat report procedure descriptions corresponding to a single attack technique from the technique details page in MITRE ATT&CK, respectively, totaling 9006 attack report descriptions. Statistics for the 1,015 attack techniques involved are provided in Table 3 .
+Table 3. Statistical Overview of the Atomic Attack Techniques Dataset
+Tactic
+Technique
+Sub-Technique
+Description in MITRE ATT&CK
+Defense-Evasion
+71
+323
+avoid being detected.
+Privilege-Escalation
+43
+122
+gain higher-level permissions.
+Execution
+11
+72
+run malicious code.
+Persistence
+46
+104
+maintain attack foothold.
+Collection
+14
+26
+gather data of interest to their goal.
+Lateral-Movement
+9
+21
+move through your environment.
+Credential-Access
+30
+109
+steal account names and passwords.
+Discovery
+27
+147
+figure out your environment.
+Command-and-Control
+11
+49
+communicate with compromised systems to control them.
+Reconnaissance
+1
+1
+gather information they can use to plan future operations.
+Impact
+7
+22
+manipulate, interrupt, or destroy your systems and data.
+Initial-Access
+6
+10
+get into your network.
+Exfiltration
+6
+9
+steal data from your network.
+Overall
+282
+1015
+-
+We have implemented an efficient data collection system based on the native Windows ETW in C++ to ensure efficient and high-fidelity collection of system logs during the execution of the attack technique.
+We also implemented AST parsing and node analysis of the attack code based on C# to achieve static analysis and attack information acquisition.
+In addition, we utilize the GPT-4 API to complete the text parsing and processing of attack technique descriptions in CIT reports.
+Also, we manually annotate the entities, entity types, and relationships of a portion of the attack techniques in the audit logs and reports, respectively. This is used as our ground truth for manual evaluation to show the accuracy of our method.
+6.2. Evaluation Results
+We evaluate MultiKG by answering the following questions.
+•
+RQ1: How accurate is MultiKG in extracting attack technique information from various sources?
+•
+RQ2: How effective is MultiKG in aggregating technical level knowledge?
+•
+RQ3: How effective is the attack knowledge graph constructed by MultiKG at the technique level?
+•
+RQ4: How accurate is MultiKG in attack investigation?
+To answer RQ1, we manually analyzed the execution logs of the ten attack techniques that appeared with high frequency and manually labeled the attack techniques from the different phases involved in eleven reports of real-world APT activity to compare with the results generated by MultiKG.
+To answer RQ2, we statistically represent all the attack knowledge graphs from the atomic red team and CTI reports, and show some of the before and after aggregation results to demonstrate the effectiveness of our aggregation algorithm.
+To answer RQ3, we compare MultiKG with AttacKG (Zhenyuan et al . , 2022 ) which is also at the Technique-aware level and has a graph structure.
+We demonstrate the effectiveness of our method in terms of the information content of the nodes and edges in the graph, and in comparison with the manually generated ground-truth, respectively.
+Finally, we give a case study to illustrate how MultiKG can benefit downstream security tasks.
+6.2.1. Accuracy of information on attack techniques extracted from various sources
+Table 4. Accuracy of 10 attack technique graph extraction from the dynamic audit log with static code assistance. (Columns 3-6 show nodes and edges for manual extraction of attack techniques, and +false
+_positive ( -false_negative ) for MultiKG-generated graphs. Rows 13-15 represent the overall Precision, Recall, and F1-Score.)
+Technique
+Description
+Node
+Edge
+Manual
+MultiKG
+Manual
+MultiKG
+T1547.001-1
+Registry Run Keys / Startup Folder
+6
++0 ( -0 )
+5
++0 ( -0 )
+T1003.003-6
+OS Credential Dumping: NTDS
+5
++1 ( -1 )
+4
++0 ( -2 )
+T1562.001-30
+Kill the event log services for stealth via function of WinPwn
+5
++0 ( -0 )
+4
++0 ( -0 )
+T1105-9
+Utilize BITSAdmin to schedule jobs for downloading malware
+7
++0 ( -1 )
+7
++1 ( -2 )
+T1112-14
+Executes signed PubPrn script with options to execute the payload
+7
++0 ( -0 )
+6
++1 ( -1 )
+T1216.001-1
+Modify the configuration to disable shutdown button.
+9
++0 ( -0 )
+8
++0 ( -0 )
+T1078.001-1
+Default Guest activated, added to Admin and RDP group
+18
++3 ( -2 )
+24
++3 ( -2 )
+T1485-1
+Overwrite file with SysInternals SDelete
+6
++1 ( -0 )
+5
++1 ( -0 )
+T1490-9
+Disable System Restore Through Registry
+12
++0 ( -1 )
+14
++1 ( -1 )
+T1037.001-1
+Add registry value to run the batch script created in temp directory
+6
++0 ( -0 )
+5
++0 ( -0 )
+Overall Precious
+1.000
+0.938
+1.000
+0.914
+Overall Recall
+-
+1.000
+0.938
+1.000
+0.902
+Overall F-1 Score
+1.000
+0.938
+1.000
+0.908
+Table 5. Comparison of Accuracy in Extracting Attack Technique Graphs from 11 CTI Reports. (Columns 2-5 list the manually generated counts of ground truths and +false_positive ( -false_negative ) in extracting entity nodes and entity relationships. Columns 6-10 list the counts of manually generated ground truths and +false_positive ( -false_negative ) in extracting and determining the type of entity nodes associated with the attack. Rows 14-16 present the overall Precision, Recall, and F1-Score.)
+Technique & Procedure
+Node
+Edge
+Node Type
+Manual
+MultiKG
+Manual
+MultiKG
+Process
+File
+Registry
+Image
+Network
+T1547-BoxCaon
+2
++0 ( -0 )
+1
++0 ( -0 )
++0 ( -0 )
+-
++0 ( -0 )
+-
+-
+T1218.008-Bumblebee
+4
++0 ( -0 )
+3
++0 ( -0 )
++0 ( -0 )
++0 ( -0 )
+-
+-
++0 ( -0 )
+T1036.003-CozyCar
+3
++1 ( -0 )
+3
++1 ( -1 )
++0 ( -1 )
++2 ( -0 )
+-
++0 ( -0 )
+-
+T1115-Attor
+5
++1 ( -0 )
+8
++1 ( -0 )
++0 ( -0 )
++1 ( -0 )
+-
+-
+-
+T1490-BlackCat
+7
++1 ( -1 )
+6
++1 ( -1 )
++0 ( -0 )
++0 ( -0 )
+-
+-
+-
+T1489-Industroyer
+3
++2 ( -0 )
+2
++3 ( -1 )
++0 ( -0 )
+-
++1 ( -0 )
+-
+-
+T1218.011-APT38
+7
++1 ( -0 )
+6
++2 ( -1 )
++0 ( -0 )
++0 ( -0 )
+-
+-
++0 ( -0 )
+T1036.005-Aoqin Dragon
+5
++0 ( -0 )
+5
++0 ( -0 )
++0 ( -0 )
++0 ( -0 )
+-
++0 ( -0 )
+-
+T1071.001-APT32
+6
++1 ( -0 )
+5
++1 ( -0 )
++0 ( -0 )
++0 ( -0 )
+-
+-
++1 ( -0 )
+T1047-APT32
+4
++0 ( -0 )
+3
++0 ( -0 )
++0 ( -0 )
++0 ( -0 )
+-
+-
++1 ( -0 )
+T1204.002-EXOTIC LILY
+6
++1 ( -0 )
+5
++1 ( -0 )
++0 ( -0 )
++1 ( -0 )
+-
++0 ( -1 )
+-
+Overall Precision
+1.000
+0.864
+1.000
+0.811
+1.000
+0.929
+0.981
+1.000
+0.963
+Overall Recall
+1.000
+0.981
+1.000
+0.915
+0.981
+1.000
+1.000
+0.981
+1.000
+Overall F-1 Score
+1.000
+0.919
+1.000
+0.860
+0.990
+0.963
+0.990
+0.990
+0.981
+An attack technique generally consists of several attack behaviors, which are represented in an attack graph as a series of subgraphs consisting of interconnected system entities.
+To accurately assess the performance of MultiKG in extracting attack graphs from a single source, we compare the dynamic log-generated graphs and GPT-4 parsed CTI report-generated graphs with their respective manually constructed ground truth graphs to validate the accuracy of the attack knowledge graphs generated by our method.
+For the attack graphs based on logs and static code sections, we used ten attack techniques labeled by hand, and by combining dynamic and static analyses, we labeled as many attack-related entities as possible and correlated the entities.
+The results show in table 4 that MultiKG achieves 93.8% accuracy in recognizing entities and 91.4% accuracy in recognizing relationships between entities.
+Next, we manually analyzed the different attack techniques involved in eleven attack reports and labeled their related entities, inter-entity associations, and entity types. We compare the results with those obtained after analyzing them using GPT-4 and our designed prompt. As shown in Table 5 , we recognize entities with 86.4% accuracy, inter-entity associations with 81.1% accuracy, and the minimum recognition rate is higher than 92.2% for entity types.
+The above experiments show that we can construct the technology graph effectively on a single resource.
+6.2.2. Effectiveness of the Subtechnique Graph Aggregation Module
+For the same attack technique, information from different sources provides different perspectives on the attack knowledge.
+Even for the same attack technique under the same data source, there are different code implementations and modes of operation, as well as descriptions from different CIT reports.
+For example, the atomic red team provides 17 implementations for T1547.001 , while the MITRE ATT&CK species provides Procedure Examples for the T1087 description from five reports.
+We need to aggregate graphs of different techniques from the same source for the same attack technique in order to represent the attack more efficiently and concisely. We describe the specific algorithmic process for merging technique graphs from the same source in § 5.1 .
+We have selected some of the results in Table 6 for presentation, and the statistics of all the attack technique graphs are shown in Figure 7 and Figure 8 .
+For log-based and code-sourced technical graphs, the average compression ratios of nodes and edges are respectively
+47.41% and 44.45%.
+For the technical graph based on CTI report sources, the average compression ratio of nodes and edges is 69.97% and 57.38% respectively.
+The compression rate of the audit log-based approach is lower than that of the report-based approach because the atomic red team provides only a single code implementation for some of the technologies, which cannot be further compressed. This is also the reason why we introduced threat reports, where a large number of threat reports can provide more implementation details about the same technology.
+The effectiveness of our graph aggregation algorithm is demonstrated by comparing the number of procedures included in each attack technique, and the number of its nodes and edges, before and after aggregation.
+Table 6. The number of instances of attack techniques from different sources, and the retention ratio of entities and edges of their technique graphs before and after aggregation.
+(We randomly select attack techniques collected from the atomic red team and CTI reports and count the audit log graph and report description graph information for each technique, as well as its post-aggregation data, to exemplify the effectiveness of our algorithm.)
+Technique
+Audit Log
+MultiKG-Log
+CTI Report
+MultiKG-CTI
+Procedure
+Entity
+Edge
+Entity
+Edge
+Entity
+Retention(%)
+Edge
+Retention(%)
+Procedure
+Entity
+Edge
+Entity
+Edge
+Entity
+Retention(%)
+Edge
+Retention(%)
+T1003.001
+11
+59
+49
+7
+7
+11.864
+14.286
+57
+135
+143
+13
+25
+9.630
+17.483
+T1018
+13
+195
+421
+24
+24
+12.308
+5.701
+72
+202
+188
+16
+33
+7.921
+17.553
+T1021.002
+4
+39
+37
+12
+15
+30.769
+40.541
+47
+123
+118
+10
+30
+8.130
+25.424
+T1040
+4
+41
+39
+12
+12
+29.268
+30.769
+15
+62
+61
+13
+26
+20.968
+42.623
+T1036.003
+8
+88
+95
+29
+39
+32.955
+41.053
+5
+14
+9
+4
+3
+28.571
+33.333
+T1059.001
+19
+73
+56
+11
+14
+15.068
+25.000
+148
+295
+211
+14
+35
+4.746
+16.588
+T1548.002
+20
+155
+143
+43
+56
+27.742
+39.161
+50
+122
+94
+10
+20
+8.197
+21.277
+T1546.002
+1
+15
+18
+8
+7
+53.333
+38.889
+1
+3
+2
+3
+2
+100.000
+100.000
+T1090.003
+2
+44
+51
+17
+22
+38.636
+43.137
+20
+59
+52
+10
+20
+83.051
+61.538
+T1615
+5
+28
+27
+12
+16
+42.857
+59.259
+20
+59
+52
+10
+20
+16.949
+38.462
+Average
+8.7
+73.7
+93.6
+17.5
+21.2
+23.745
+22.650
+43.5
+107.4
+93
+10.3
+21.4
+28.816
+37.428
+(a) Entity Compression Rate Distribution
+(b) Edge Compression Rate Distribution
+Figure 7. Compression ratio distribution of nodes and edges before and after aggregation for multiple procedure audit log knowledge graphs under each technology.
+(a) Entity Compression Rate Distribution
+(b) Edge Compression Rate Distribution
+Figure 8. Compression ratio distribution of nodes and edges before and after aggregation for multiple knowledge graphs on the same technology from different CIT reports.
+6.2.3. Effectiveness of multi-source technical knowledge graphs
+To validate the effectiveness of cross-resource data integration, we compare the resulting final attack knowledge graph with the open-source CTI report parser AttacKG (Zhenyuan et al . , 2022 ) , which is the state-of-the-art work on cross-report, graph-structure-based, attack technique awareness.
+It is worth noting that some techniques could not be matched due to the non-corresponding technique granularity between the two parties, e.g., MITRE ATT&CK defines T1558.001 to T1558.004 , but AttacKG analyzes it simply as T1558 , which leads to the impossibility of comparison.
+In addition, since we added two new data sources, static code, and dynamic logs, it resulted in a large gap between node information and types.
+Therefore, we found 65 matching techniques from the 179 techniques in AttacKG’s work and compared their edges and nodes. Table 7 summarizes the statistical results of entity and relation extraction by MultiKG and AttacKG in 6 techniques. The experimental results are in the statistics: Manual identifies manually labeled real data. AttacKG identifies the result data of AttacKG. MultiKG identifies the result data by cross-source attack data.
+Table 7. The accuracy of MultiKG and AttacKG for node and edge extraction compared to attack graphs after manually performing cross-source technique merging.(Nodes and edges for manual extraction of attack techniques, and +false
+_positive ( -false_negative ) for MultiKG-generated graphs are presented separately, and finally the overall accuracy results.)
+Technique
+Node
+Edge
+Manual
+MultiKG
+AttacKG (Zhenyuan et al . , 2022 )
+Manual
+MultiKG
+AttacKG (Zhenyuan et al . , 2022 )
+T1007
+18
++0 ( -0 )
++3 ( -13 )
+18
++0 ( -0 )
++3 ( -11 )
+T1027
+9
++1 ( -0 )
++4 ( -4 )
+9
++1 ( -0 )
++10 ( -3 )
+T1070
+8
++1 ( -0 )
++9 ( -2 )
+7
++1 ( -0 )
++30 ( -2 )
+T1120
+7
++2 ( -0 )
++0 ( -4 )
+7
++2 ( -0 )
++1 ( -5 )
+T1137
+7
++0 ( -0 )
++0 ( -4 )
+7
++0 ( -0 )
++1 ( -6 )
+T1547
+10
++1 ( -0 )
++5 ( -2 )
+9
++1 ( -0 )
++25 ( -1 )
+Overall Precision
+1.000
+0.922
+0.588
+1.000
+0.919
+0.293
+Overall Recall
+1.000
+1.000
+0.508
+1.000
+1.000
+0.509
+Overall F-1 Score
+1.000
+0.959
+0.545
+1.000
+0.958
+0.372
+It can be seen that the overall performance of MultiKG is better than that of AttacKG. mainly because AttacKG simply extracts the rough textual information from the reports.
+Although AttacKG also uses a graph structure, the nodes are not recognized accurately enough, and many unarticulated nodes and edges appear.
+Due to the lack of information sources, the nodes related to the real attacks are not complete enough, but more inclined to produce a large number of false alarm nodes and edges.
+In addition, AttacKG produces many discrete subgraphs, isolated nodes, and self-looping edges.
+As a result, MultiKG’s F-1 score is approximately twice as high as AttacKG’s, both for node and edge comparison results. The experimental data suggests that for the construction of attack techniques, MultiKG outperforms previous methods.
+Similarly, the complete comparison results show that AttacKG has 43.76% of the average number of nodes and 76.46% of the number of edges of MultiKG. Some of the results are shown in Table 8 .
+By integrating the information across resources, we have greatly enriched the representation of individual attack techniques in terms of node information and their relationships.
+In addition, we manually completed the merging of cross-source knowledge graphs and used this as ground truth to compare the two methods.
+The results are shown in Table 7 , where MultiKG outperforms AttacKG in terms of both node and edge accuracy (92.2% and 91.9%, respectively).
+Table 8. Results of MultiKG vs. AttacKG. (only some comparison data are shown, the Total Average is the average of all experiments). (NODES —V— AND EDGES —E—, Ratio represents AttacKG’s proportion of MultiKG).
+Technique
+MultiKG
+AttacKG (Zhenyuan et al . , 2022 )
+| V | 𝑉 |V| | italic_V |
+| E | 𝐸 |E| | italic_E |
+| V | 𝑉 |V| | italic_V | /Ratio
+| E | 𝐸 |E| | italic_E | /Ratio
+T1007
+18
+18
+8/44.44%
+10/55.56%
+T1010
+11
+10
+2/18.18%
+1/10.0%
+T1012
+14
+15
+9/64.29%
+13/86.67%
+T1016
+25
+25
+8/32.0%
+23/92.0%
+T1018
+28
+28
+8/28.57%
+13/46.43%
+T1046
+11
+11
+4/36.36%
+4/36.36%
+T1047
+13
+15
+16/123.08%
+20/133.33%
+T1048
+6
+5
+3/50.0%
+3/60.0%
+T1049
+18
+19
+7/38.89%
+10/52.63%
+T1055
+12
+12
+9/75.0%
+17/141.67%
+T1070
+9
+8
+15/166.67%
+35/437.5%
+T1057
+12
+12
+10/83.33%
+23/191.67%
+T1113
+15
+17
+8/53.33%
+12/70.59%
+T1115
+11
+14
+2/18.18%
+1/7.14%
+T1070
+9
+8
+15/166.67%
+35/437.5%
+Total Average
+-
+-
+-/43.76%
+-/76.46%
+6.2.4. Case Study.
+This subsection discusses how MultiKG can be employed in real-world security tasks through a case study. Specifically, MultiKG utilizes multi-sourced knowledge to refine the representation of an attack technique, thereby helping to detect and identify different variants of the executed attack technique and their constituent attack chains in real-world systems.
+Furthermore, MultiKG can supplement the understanding of attack techniques among security professionals, supporting tasks related to attack reconstruction and replication.
+MultiKG for Attack Technique Reconstruction. Our final cross-resource merged technology knowledge graph is a fine-grained reconstruction of specific attack techniques, which contains structured information from multiple sources and is richer and more complete.
+Compared to previous work, cross-resource knowledge of attack techniques can bridge the knowledge gap between real attacks and CTI reports. We not only analyze the attack techniques across reports but also add static code analysis and dynamic log analysis, which can restore the details of the attack techniques at a finer granularity and more completely, which can be used to achieve the attack reconstruction goals.
+Specifically, as shown in Figure 9 , compared to the single-source-based approach, MultiKG’s ability to summarize attack knowledge across resources and achieve reconstruction and enhancement effects on attacks in audit logs, static code, and threat reports can help to reconstruct the involved attacks and detect them, and the cross-resource information can also enhance the detection of attack variants.
+Figure 9. Cross-Source Knowledge Fusion Based on Multi-Source Threat Intelligence: A Case Study of T1055.001 .
+Based on the entities involved in our attack knowledge graph, inter-entity relationships, etc., we can infer the execution environment, execution path, and corresponding operations of the attack techniques, which in turn can realize their reconstruction work.
+MultiKG for Attack Technique Detection. Single-source and coarse-grained data make it difficult to reflect the details of a real attack execution due to the limited amount of information and limited coverage of different variants of attack techniques.
+We can effectively improve the detection of attack techniques and their various related variants by collecting and integrating fine-grained attack technique data across resources and generalizing the information.
+Thus, MultiKG can enhance any detector that relies on the Tactics-Techniques-Procedures (TTP) heuristic to provide a richer and complete attack knowledge base for downstream tasks.
+As shown in Figure 10 , we can use the attack knowledge graph after integrating cross-source information to identify individual attack techniques and their variants in real attack scenarios by methods such as graph matching and construct attack chains by combining attack techniques based on timestamps and public nodes.
+Figure 10. MultiKG for Attack Detection (APT-C-36)
+7. Related Wrok
+7.1. Threat Intelligence Gathering
+Cyber threat intelligence (CTI) plays a vital role in security warfare to keep up with the rapidly evolving landscape of cyber attacks (Mu et al . , 2018 ; Gao et al . , 2021a ) .
+To facilitate CTI knowledge exchange and management, the security community has standardized open formats (e.g., OpenIoC (Mandiant, 2021 ) , STIX (OASIS Open, 2021 ) , and CybOX (CybOX Project, 2021 ) ) to describe Indicators of Compromises (IoCs).
+Though structured and machine-readable, such intelligence lacks semantic information about how entities/IoCs interact to form the kill chain.
+Attack techniques cannot be accurately represented if only by unconnected isolated IoCs (such as the names and types of malicious files, the number and names of malicious processes, etc.), and are easily evaded by attackers.
+In addition, existing graph construction methods rely on a small number of manually labeled datasets, lack sufficient security knowledge to learn (Zhao et al . , 2018 ; Kodelja et al . , 2019 ) , and require the expert design of natural language processing or graph matching models, which greatly limits the accuracy and validity of the extracted results and challenges security personnel’s workload and technical background.
+In this paper, we try to improve this technical gap by using LLM to aggregate technical-level knowledge from CTI reports and perform graphical construction.
+LLM uses a large amount of open-knowledge data in the pre-training process, which does not require the preparation of sufficient datasets and well-designed network structures and can achieve good contextual understanding and knowledge reasoning capability only through few-shot learning or zero-shot learning, so we perform attack knowledge graph construction based on LLM (Touvron et al . , 2023 ; Brown, 2020 ) .
+Poirot (Milajerdi et al . , 2019a ) utilizes manually extracted CTI query graphs for intrusion detection in a provenance graph constructed based on system logs.
+However, it does not consider the huge information gap between CIT reports and real attack logs, which leads to poor results for matching and detection.
+In MultiKG, we introduce system audit logs to bridge the gap between the two, and we also introduce a more practical static code analysis to help refine the selection of events in dynamic log graphs, by which we construct a more comprehensive and close-to-real attack knowledge graph by using the above three attack knowledge sources.
+7.2. LLMs for Cyber Security
+Currently, In recent years, many studies have explored the practical applications of LLMs in the field of cyber security.
+Maxime et al. (Würsch et al . , 2023 ) LLMs to extract relevant knowledge entities from cybersecurity-related texts. AttacKG+ (Zhang et al . , 2024 ) leverages LLM to convert CTI reports into structured representations and then parses entities and relationships from which attack techniques are identified and summarized.
+Maxime uses LLM to improve the effectiveness of existing extractors by extracting relevant knowledge entities from cybersecurity-related text. KGV (Wu et al . , 2024 ) proposed a Cyber Threat Intelligence (CTI) quality assessment framework based on LLMs for fact-checking knowledge graphs constructed from paragraphs. (Wang et al . , 2024 ) can autonomously build multi-stage cyberattack plans based on Cyber Threat Intelligence (CTI) reports, construct the emulation infrastructures, and execute the attack procedures.
+7.3. Attack Investigation
+7.3.1. Anomaly-based attack investigation
+Threat alerting based on anomalies is a more common approach to network security.
+EIGER utilizes the Indicator of Compromise (IOC) extracted from CTI reports for attack alerting, while NODOZE (Hassan et al . , 2019 ) constructs a database of event frequencies that is analyzed to derive anomaly scores and give an alert event dependency graph.
+Detection based on a single IOC is prone to many false positives, and the number of alerts to be handled will be much larger than the number of analysts. Attack analysis based on normal event frequencies, on the other hand, is likely to be bypassed by the latest mimic attacks and variants of attack techniques.
+7.3.2. Attack Investigation Based on Cyber Threat Intelligence Knowledge
+Recent advancements of causality analysis in provenance graph (King and Chen, 2003 ; King et al . , 2005 ; Pohly et al . , 2012 ; Bates et al . , 2015 ) have enabled security investigators to detect cyber attacks with multiple stages.
+However, audit logs monitor general-purpose system activities and thus lack the knowledge of high-level behaviors (Zeng et al . , 2021b ) .
+In most cases, analysts act as the backbone in SOCs (security operations centers) to correlate various attack stages through reviewing numerous system logs (van Ede et al . , 2022 ) .
+Unfortunately, as the volume of audit data is typically overwhelming even after reducing noisy logs irrelevant to attacks (Lee et al . , 2013 ; Xu et al . , 2016 ; Liu et al . , 2018 ; Tang et al . , 2018 ; Michael et al . , 2020 ; Hassan et al . , 2020b ) , it is infeasible to manually analyze cyber threats directly based on audit logs (Gao et al . , 2018b , a ) .
+CTI has proved to be valuable information in navigating audit logs and pinpointing behaviors associated with known attacks (Momeni Milajerdi et al . , 2019 ; Milajerdi et al . , 2019a ; Hossain et al . , 2020 ; Hassan et al . , 2020a ; Gao et al . , 2021b ) .
+For example, RapSheet (Hassan et al . , 2020a ) matches audit logs against a TTP knowledge base from MITRE and correlates TTPs in logs, and constructs a TPG (tactic provenance graph) to recover kill chains in APT campaigns.
+We envision that the deployment of MultiKG can enhance any detector that relies on TTP heuristics by providing a fully automated solution for building attack knowledge graphs from multiple sources.
+8. Conclusion
+In this paper, we propose a feasible scheme to extract and process attack knowledge across information sources and do a fusion representation of it to build fine-grained attack knowledge graphs.
+First, we utilize system audit logs and static code analysis to construct a technology-level dynamic attack graph. Then, we utilize LLM to parse the threat report knowledge provided by MITRE ATT&CK to construct a technology-level attack graph. Finally, we aggregate same-source attack graphs and merge cross-source attack graphs to generate the final attack knowledge graph, which improves the accuracy and completeness of the attack knowledge graph representation.
+We implemented and deployed the MultiKG system and evaluated it with 1015 real attack techniques and corresponding 9006 attack technique intelligence from real-world CTI reports.
+The results show that MultiKG can accurately extract attack graphs from different data sources, aggregate them, and efficiently summarize and merge cross-source technique-level attack knowledge to produce an accurate and complete knowledge graph of attack techniques.
+References
+(1)
+APT-C-36 (Blind Eagle)
+APT-C-36 (Blind Eagle) 2023.
+APT-C-36 (Blind Eagle) Recent Attack Techniques Analysis.
+https://mp.weixin.qq.com/s/6YDnMAf0laiLKukJ04XLTQ .
+APT-C-36: From NJRat to APT-C-36 (2024)
+APT-C-36: From NJRat to APT-C-36 2024.
+APT-C-36: From NJRat to APT-C-36 Attack Chain Analysis.
+https://cn-sec.com/archives/1482654.html .
+AtomicRedTeam (2024)
+AtomicRedTeam 2024.
+Atomic Red Team.
+https://www.atomicredteam.io/atomic-red-team/atomics/ .
+Bates et al . (2015)
+Adam Bates, Dave Jing Tian, Kevin RB Butler, and Thomas Moyer. 2015.
+Trustworthy whole-system provenance for the Linux kernel. In USENIX Security Symposium .
+BlackBerry (2023)
+BlackBerry 2023.
+Blind Eagle APT-C-36 Targets Colombia.
+https://blogs.blackberry.com/en/2023/02/blind-eagle-apt-c-36-targets-colombia .
+Brown (2020)
+Tom B Brown. 2020.
+Language models are few-shot learners.
+arXiv preprint arXiv:2005.14165 (2020).
+CrowdStrike (2024)
+CrowdStrike 2024.
+CrowdStrike.
+https://www.crowdstrike.com/ .
+CybOX Project (2021)
+CybOX Project. 2021.
+CybOX - Cyber Observable Expression.
+https://cyboxproject.github.io/ (accessed on 2021-09-17).
+ETW (2024)
+ETW 2024.
+Event Tracing for Windows (ETW).
+https://learn.microsoft.com/en-us/windows-hardware/drivers/devtest/event-tracing-for-windows--etw- .
+Gao et al . (2021a)
+Peng Gao, Xiaoyuan Liu, Edward Choi, et al . 2021a.
+A System for Automated Open-Source Threat Intelligence Gathering and Management. In SIGMOD .
+Gao et al . (2021b)
+Peng Gao, Fei Shao, Xiaoyuan Liu, et al . 2021b.
+Enabling Efficient Cyber Threat Hunting With Cyber Threat Intelligence.
+ICDE (2021).
+Gao et al . (2018a)
+Peng Gao, Xusheng Xiao, Ding Li, Zhichun Li, Kangkook Jee, Zhenyu Wu, Chung Hwan Kim, Sanjeev R Kulkarni, and Prateek Mittal. 2018a.
+SAQL: A Stream-based Query System for Real-Time Abnormal System Behavior Detection. In USENIX Security Symposium .
+Gao et al . (2018b)
+Peng Gao, Xusheng Xiao, Zhichun Li, Fengyuan Xu, Sanjeev R Kulkarni, and Prateek Mittal. 2018b.
+AIQL: Enabling Efficient Attack Investigation from System Monitoring Data. In USENIX ATC .
+Hassan et al . (2020a)
+Wajih Ul Hassan, Adam Bates, and Daniel Marino. 2020a.
+Tactical provenance analysis for endpoint detection and response systems. In IEEE S&P .
+Hassan et al . (2019)
+Wajih Ul Hassan, Shengjian Guo, Ding Li, Zhengzhang Chen, Kangkook Jee, Zhichun Li, and Adam Bates. 2019.
+Nodoze: Combatting threat alert fatigue with automated provenance triage. In network and distributed systems security symposium .
+Hassan et al . (2020b)
+Wajih Ul Hassan, Ding Li, Kangkook Jee, Xiao Yu, Kexuan Zou, Dawei Wang, Zhengzhang Chen, Zhichun Li, Junghwan Rhee, Jiaping Gui, et al . 2020b.
+This is Why We Can’t Cache Nice Things: Lightning-Fast Threat Hunting using Suspicion-Based Hierarchical Storage. In ACSAC .
+Hossain et al . (2020)
+Md Nahid Hossain, Sanaz Sheikhi, and R Sekar. 2020.
+Combating Dependence Explosion in Forensic Analysis Using Alternative Tag Propagation Semantics. In IEEE S&P .
+Husari et al . (2017)
+Ghaith Husari, Ehab Al-Shaer, Mohiuddin Ahmed, Bill Chu, and Xi Niu. 2017.
+TTPDrill: Automatic and accurate extraction of threat actions from unstructured text of CTI Sources. In ACM International Conference Proceeding Series , Vol. Part F1325.
+King and Chen (2003)
+Samuel T King and Peter M Chen. 2003.
+Backtracking intrusions. In SOSP .
+King et al . (2005)
+Samuel T King, Zhuoqing Morley Mao, Dominic G Lucchetti, and Peter M Chen. 2005.
+Enriching Intrusion Alerts Through Multi-Host Causality.. In NDSS .
+Kodelja et al . (2019)
+Dorian Kodelja, Romaric Besançon, and Olivier Ferret. 2019.
+Exploiting a more global context for event detection through bootstrapping. In European conference on information retrieval . Springer, 763–770.
+Lee et al . (2013)
+Kyu Hyung Lee, Xiangyu Zhang, and Dongyan Xu. 2013.
+LogGC: garbage collecting audit log. In ACM CCS .
+Legoy et al . (2020)
+Valentine Legoy, Marco Caselli, Christin Seifert, and Andreas Peter. 2020.
+Automated retrieval of att&ck tactics and techniques for cyber threat reports.
+arXiv preprint arXiv:2004.14322 (2020).
+Liao et al . (2016)
+Xiaojing Liao, Kan Yuan, Xiaofeng Wang, et al . 2016.
+Acing the IOC Game: Toward Automatic Discovery and Analysis of Open-Source Cyber Threat Intelligence. In CCS .
+Liu et al . (2018)
+Yushan Liu, Mu Zhang, Ding Li, Kangkook Jee, Zhichun Li, Zhenyu Wu, Junghwan Rhee, and Prateek Mittal. 2018.
+Towards a Timely Causality Analysis for Enterprise Security.. In NDSS .
+Mandiant (2021)
+Mandiant. 2021.
+mandiant/OpenIOC_1.1.
+https://github.com/mandiant/OpenIOC_1.1 (accessed on 2021-09-17).
+Michael et al . (2020)
+Noor Michael, Jaron Mink, Jason Liu, Sneha Gaur, Wajih Ul Hassan, and Adam Bates. 2020.
+On the Forensic Validity of Approximated Audit Logs. In ACSAC .
+Milajerdi et al . (2019a)
+Sadegh M. Milajerdi, Rigel Gjomemo, Birhanu Eshete, et al . 2019a.
+Poirot: Aligning attack behavior with kernel audit records for cyber threat hunting. In CCS .
+arXiv:1910.00056
+Milajerdi et al . (2019b)
+Sadegh M Milajerdi, Rigel Gjomemo, Birhanu Eshete, Ramachandran Sekar, and VN Venkatakrishnan. 2019b.
+Holmes: real-time apt detection through correlation of suspicious information flows. In 2019 IEEE Symposium on Security and Privacy (SP) . IEEE, 1137–1152.
+MITRE ATT&CK (2024)
+MITRE ATT&CK 2024.
+MITRE ATTCK.
+https://attack.mitre.org/ .
+Momeni Milajerdi et al . (2019)
+Sadegh Momeni Milajerdi, Rigel Gjomemo, et al . 2019.
+HOLMES: Real-time APT detection through correlation of suspicious information flows. In IEEE S&P .
+Mu et al . (2018)
+Dongliang Mu, Alejandro Cuevas, Limin Yang, et al . 2018.
+Understanding the reproducibility of crowd-reported security vulnerabilities. In Usenix Security Symposium .
+OASIS Open (2021)
+OASIS Open. 2021.
+Introduction to STIX.
+https://oasis-open.github.io/cti-documentation/stix/intro.html (accessed on 2021-09-17).
+Pohly et al . (2012)
+Devin J Pohly, Stephen McLaughlin, Patrick McDaniel, and Kevin Butler. 2012.
+Hi-Fi: collecting high-fidelity whole-system provenance. In ACSAC .
+Satvat et al . (2021)
+Kiavash Satvat, Rigel Gjomemo, and VN Venkatakrishnan. 2021.
+EXTRACTOR: Extracting Attack Behavior from Threat Reports. In IEEE EuroS&P .
+Symantec (2024)
+Symantec 2024.
+Symantec.
+https://www.symantec.com/ .
+Tang et al . (2018)
+Yutao Tang, Ding Li, Zhichun Li, Mu Zhang, Kangkook Jee, Xusheng Xiao, Zhenyu Wu, Junghwan Rhee, Fengyuan Xu, and Qun Li. 2018.
+Nodemerge: template based efficient data reduction for big-data causality analysis. In ACM CCS .
+Touvron et al . (2023)
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timothée Lacroix, Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal Azhar, et al . 2023.
+Llama: Open and efficient foundation language models.
+arXiv preprint arXiv:2302.13971 (2023).
+van Ede et al . (2022)
+Thijs van Ede, Hojjat Aghakhani, Noah Spahn, Riccardo Bortolameotti, Marco Cova, Andrea Continella, Maarten van Steen, Andreas Peter, Christopher Kruegel, and Giovanni Vigna. 2022.
+DeepCASE: Semi-Supervised Contextual Analysis of Security Events. In IEEE Security and Privacy .
+Wang et al . (2024)
+Lingzhi Wang, Jiahui Wang, Kyle Jung, Kedar Thiagarajan, Emily Wei, Xiangmin Shen, Yan Chen, and Zhenyuan Li. 2024.
+From Sands to Mansions: Enabling Automatic Full-Life-Cycle Cyberattack Construction with LLM.
+arXiv:2407.16928 [cs.CR]
+https://arxiv.org/abs/2407.16928
+Wu et al . (2024)
+Zongzong Wu, Fengxiao Tang, Ming Zhao, and Yufeng Li. 2024.
+KGV: Integrating Large Language Models with Knowledge Graphs for Cyber Threat Intelligence Credibility Assessment.
+arXiv:2408.08088 [cs.CR]
+https://arxiv.org/abs/2408.08088
+Würsch et al . (2023)
+Maxime Würsch, Andrei Kucharavy, Dimitri Percia David, and Alain Mermoud. 2023.
+LLMs Perform Poorly at Concept Extraction in Cyber-security Research Literature.
+arXiv preprint arXiv:2312.07110 (2023).
+Xiong et al . (2020)
+Chunlin Xiong, Tiantian Zhu, Weihao Dong, Linqi Ruan, Runqing Yang, Yueqiang Cheng, Yan Chen, Shuai Cheng, and Xutong Chen. 2020.
+CONAN: A practical real-time APT detection system with high accuracy and efficiency.
+IEEE Transactions on Dependable and Secure Computing 19, 1 (2020), 551–565.
+Xu et al . (2016)
+Zhang Xu, Zhenyu Wu, Zhichun Li, Kangkook Jee, Junghwan Rhee, Xusheng Xiao, Fengyuan Xu, Haining Wang, and Guofei Jiang. 2016.
+High fidelity data reduction for big data security dependency analyses. In ACM CCS .
+Yang et al . (2020)
+Runqing Yang, Shiqing Ma, Haitao Xu, Xiangyu Zhang, and Yan Chen. 2020.
+UIScope: Accurate, Instrumentation-free, and Visible Attack Investigation for GUI Applications.. In NDSS .
+Zeng et al . (2021a)
+Jun Zeng, Zheng Leong Chua, Yinfang Chen, Kaihang Ji, Zhenkai Liang, and Jian Mao. 2021a.
+WATSON: Abstracting Behaviors from Audit Logs via Aggregation of Contextual Semantics.. In NDSS .
+Zeng et al . (2021b)
+Jun Zeng, Zheng Leong Chua, Yinfang Chen, Kaihang Ji, Zhenkai Liang, and Jian Mao. 2021b.
+WATSON: Abstracting Behaviors from Audit Logs via Aggregation of Contextual Semantics. In NDSS .
+Zhang et al . (2024)
+Yongheng Zhang, Tingwen Du, Yunshan Ma, Xiang Wang, Yi Xie, Guozheng Yang, Yuliang Lu, and Ee-Chien Chang. 2024.
+AttacKG+:Boosting Attack Knowledge Graph Construction with Large Language Models.
+arXiv:2405.04753 [cs.CR]
+https://arxiv.org/abs/2405.04753
+Zhao et al . (2018)
+Yue Zhao, Xiaolong Jin, Yuanzhuo Wang, and Xueqi Cheng. 2018.
+Document embedding enhanced event detection with hierarchical and supervised attention. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers) . 414–419.
+Zhenyuan et al . (2022)
+Li Zhenyuan, Soltani Ahmad, Yusof Anis, Cahyadi Risdianto Aris, Huang Kang, Zeng Jun, Liang Zhenkai, and Chen Yan. 2022.
+Poster: Towards Automated and Large-scale Cyber Attack Reconstruction with APT Reports. In The annual Network and Distributed System Security (NDSS) Symposium 2022 .
+Zhu and Dumitras (2018)
+Ziyun Zhu and Tudor Dumitras. 2018.
+ChainSmith: Automatically Learning the Semantics of Malicious Campaigns by Mining Threat Intelligence Reports. In IEEE European Symposium on Security and Privacy .
+Appendix A Cases of Attack Knowledge Graphs Constructed by MultiKG
+Appendix A provides a series of examples demonstrating the visualization of attack knowledge graphs extracted from cyber-attack events described in attack knowledge from various sources, the example sources being system audit logs, CTI reports, and static code, respectively.
+Figure 11 and Figure 12 show the attack knowledge graphs extracted based on audit logs and their comparison before and after aggregation, respectively.
+Figure 13 and Figure 14 show the attack knowledge graph of CIT reports extracted based on LLM, and its result after aggregation, respectively.
+Figure 15 shows an example presentation of a simple AST.
+Figure 11. Example of Audit Log Based Attack Graph Visualization Constructed by MultiKG ( T1105 )
+Figure 12. Example of Post-Aggregation Attack Knowledge Graph Based on Audit Log ( T1012 )
+Figure 13. Attack Knowledge Graph Based on LLM Parsing ( T1082 technique from four different CTI reports, respectively)
+Figure 14. Example of Attack Knowledge graphs Based on LLM Parsing and Processed by the Aggregation Algorithm
+Figure 15. Example Graph of Abstract Syntax Tree Visualization
+Generated on Wed Nov 13 05:59:28 2024 by L a T e XML

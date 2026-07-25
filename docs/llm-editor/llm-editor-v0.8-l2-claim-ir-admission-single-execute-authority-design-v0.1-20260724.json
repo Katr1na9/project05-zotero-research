@@ -1,0 +1,217 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-ir-admission-single-execute-authority-design-v0.1-20260724",
+  "artifact_type": "claim_ir_admission_single_execute_authority_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "d18ef9fccd13db775fc840aebac24d91e275115a",
+  "status": "design_only_admission_authority_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "certificate_surface": "vacant"
+  },
+  "pinned_authority_chain": {
+    "admission_contract_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-ir-admission-contract-design-v0.1-20260724.json",
+      "sha256": "8d74e9611d1377753b8280f33c9e3ae56ec2a54c4c45e0a4a7dc7c58568baf2e",
+      "status_observed": "design_only_admission_not_authorized"
+    },
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "m0_depth2_public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    },
+    "dual_path_completion_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-dual-path-single-execute-completion-disposition-v0.1-20260724.json",
+      "sha256": "101edb00b14dd548d9a579a6ffb9457e4a5b5605a24813e261222ffef8838cf2"
+    }
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "admission_execute_authorized_now": 0,
+    "admission_execute_started": 0,
+    "admission_execute_consumed": 0,
+    "admission_execute_remaining": 0,
+    "candidate_selected_now": false,
+    "selected_candidate": null,
+    "pi_approval_artifact_present_now": false,
+    "admission_executed": false
+  },
+  "eligible_candidate_set": {
+    "selection_cardinality_at_activation": "exactly_one",
+    "both_candidates_selectable_in_this_design": true,
+    "both_candidates_selectable_in_one_activation": false,
+    "activation_must_pin_exactly_one_candidate": true,
+    "candidates": [
+      {
+        "candidate_id": "structural_planner_inputs_package",
+        "candidate_kind": "structural_package",
+        "path": ".tmp/m1-planner-inputs-single-execute-v0.1/package.json",
+        "sha256": "a97dcdd63974cb86afd1cd76de23df41f178fbcedf4657c3345d5253f0e9a650",
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "selected_now": false
+      },
+      {
+        "candidate_id": "minted_planner_inputs_package",
+        "candidate_kind": "minted_package",
+        "path": ".tmp/production-claim-id-mint-single-execute-v0.1/package.json",
+        "sha256": "29a260fe46c3ccf45822e4e2b8d2085cfb6fef0b6a9a0edddfe9a30462cbb1a9",
+        "claim_id_state": "minted_opaque",
+        "admission_state": "not_admitted",
+        "kernel_state": "pending_kernel_schema",
+        "selected_now": false
+      }
+    ]
+  },
+  "future_activation_shape": {
+    "status": "activated_single_admission_execute_authorized",
+    "target": {
+      "surface_id": "project05_depth2_public",
+      "source_class": "planner_experiment_inputs",
+      "adapter_id": "m1a_planner_inputs_v0_1",
+      "only_target": true
+    },
+    "selected_candidate_requirement": {
+      "candidate_id": "one_exact_member_of_eligible_candidate_set",
+      "candidate_kind": "structural_package_or_minted_package",
+      "path": "exact_repo_relative_local_audit_path",
+      "sha256": "exact_64_lowercase_hex",
+      "selection_count": 1,
+      "selection_count_must_equal": 1,
+      "unselected_candidate_must_not_be_implied": true
+    },
+    "execute_ledger": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "pi_approval_requirement": {
+      "approval_artifact_required": true,
+      "approver_role": "PI",
+      "approval_artifact_path_required": true,
+      "approval_artifact_sha256_required": true,
+      "approval_must_name_exact_selected_candidate": true,
+      "this_design_is_pi_approval": false,
+      "person_name_required": false
+    },
+    "result_requirement": {
+      "unique_admission_result_path_required": true,
+      "result_must_not_exist_before_execute": true,
+      "aggregate_and_governance_state_only": true
+    },
+    "activated_now": false,
+    "execute_authorized_now_by_this_design": false
+  },
+  "future_success_state": {
+    "package_admission_state": "admitted_under_separate_authority",
+    "per_claim_admission_state": "admitted_under_separate_authority",
+    "claim_id_state_transition": false,
+    "claim_id_state_after": "unchanged_from_selected_candidate",
+    "mint_performed": false,
+    "kernel_state": "pending_kernel_schema",
+    "kernel_write_performed": false,
+    "certificate_surface": "vacant",
+    "certificate_generated": false,
+    "catalog_role_credit_or_l2_effect": false
+  },
+  "authority_separation": {
+    "this_is_mint_authority": false,
+    "this_is_m1_adapter_authority": false,
+    "this_is_kernel_authority": false,
+    "this_is_certificate_authority": false,
+    "mint_authority_implies_admission_authority": false,
+    "m1_adapter_authority_implies_admission_authority": false,
+    "admission_authority_implies_kernel_authority": false,
+    "admission_authority_implies_certificate_authority": false,
+    "admission_implies_l2_gate_pass": false
+  },
+  "fail_closed_rejection_rules": {
+    "wrong_surface": "reject",
+    "cross_surface_input_or_join": "reject",
+    "wrong_source_class_or_adapter_id": "reject",
+    "candidate_not_selected": "reject",
+    "zero_or_multiple_candidates_selected": "reject",
+    "candidate_not_in_eligible_set": "reject",
+    "candidate_path_or_sha_mismatch": "reject",
+    "schema_projection_contract_or_disposition_pin_mismatch": "reject",
+    "missing_pi_approval_artifact": "reject",
+    "pi_approval_role_not_pi": "reject",
+    "pi_approval_candidate_mismatch": "reject",
+    "missing_or_inactive_authority": "reject",
+    "authority_ledger_used_or_invalid": "reject",
+    "result_path_already_exists": "reject",
+    "labels_or_realized_outcomes": "reject",
+    "oracle_mask_hidden_or_recoverable_ids": "reject",
+    "raw_path_or_payload_bytes": "reject",
+    "mint_kernel_or_certificate_write_requested": "reject"
+  },
+  "still_blocked": {
+    "authority_activation": true,
+    "admission_execute": true,
+    "claim_id_mint": true,
+    "kernel_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "catalog_write": true,
+    "source_role_assignment": true,
+    "lineage_credit": true,
+    "quota_credit": true,
+    "l2_gate_change": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true,
+    "unreviewed_adapter_activation_or_execution": true
+  },
+  "explicit_non_authorizations": {
+    "admission_code_implementation": false,
+    "pi_approval_issued": false,
+    "authority_activation": false,
+    "admission_execute": false,
+    "claim_id_mint": false,
+    "key_or_secret_creation": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "The exact fail-closed shape for a future single-use admission authority is defined, including one-of-two candidate selection and separate PI approval.",
+    "not_an_approval": true,
+    "not_an_activation": true,
+    "not_an_admission": true,
+    "not_a_mint_kernel_or_certificate_authority": true,
+    "not_an_l2_gate_pass": true,
+    "effective": false
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "candidate_package_changed_in_this_turn": false,
+    "pi_approval_created_in_this_turn": false,
+    "authority_activated_in_this_turn": false,
+    "admission_executed_in_this_turn": false,
+    "key_or_secret_created_or_read_in_this_turn": false,
+    "kernel_admission_catalog_role_credit_l2_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

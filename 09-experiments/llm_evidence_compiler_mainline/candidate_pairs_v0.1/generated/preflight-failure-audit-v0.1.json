@@ -1,0 +1,67 @@
+{
+  "audit_id": "project05-label-blind-pair-preflight-failure-v0.1",
+  "created_date": "2026-07-19",
+  "status": "failed_closed_pending_quota_amendment",
+  "frozen_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/label-blind-pair-construction-contract-v0.1.json",
+    "sha256": "3F9F2A57885E31EAF233898BDEA94C65FC52270283CF8B06725FF802CEC8C5AB"
+  },
+  "source_evidence": {
+    "positive_readiness_path": "09-experiments/llm_evidence_compiler_mainline/qwen-positive-remap-readiness-v0.1.json",
+    "positive_readiness_sha256": "171736E29958DAAE42B8CF978D7C7F159D2B4A8A6B5025A5046D7CCA5FE645F4",
+    "zeek_manifest_relative_path": "training-validation/zeek_non_pcap_test_logs.jsonl.gz",
+    "zeek_manifest_sha256": "BE540CB5206B6CF663BC8F90FBCCE2D81461D8EB8A8917B655625B6A749A55CF",
+    "field_map_path": "09-experiments/llm_evidence_compiler_mainline/field_maps/v0.3/source-field-maps.json",
+    "field_map_sha256": "3078C7AF57C13937C64C2A05E4F42D1891002ECA1AF8EEAF0172B004B2A09BE2"
+  },
+  "failure": {
+    "split_role": "training-validation",
+    "source_family_id": "zeek_non_pcap_test_logs",
+    "generator": "N2",
+    "frozen_quota": 25,
+    "maximum_unique_one_to_one_pairs": 4,
+    "reason": "same-packet pointer swaps are unsupported only across distinct observation semantics; the sole mixed-semantic packet contains two semantic groups with counts 435 and 2"
+  },
+  "capacity_evidence": {
+    "eligible_records_after_exact_deduplication": 482,
+    "exact_full_record_duplicates_removed": 1,
+    "packet_count": 24,
+    "mixed_semantic_packet_count": 1,
+    "mixed_packet_records": 437,
+    "mixed_packet_semantic_group_sizes": [435, 2],
+    "other_packets_have_single_observation_semantics": true
+  },
+  "proposed_minimal_revision": {
+    "source_family_id": "zeek_non_pcap_test_logs",
+    "positive_quota": 75,
+    "negative_generator_quotas": {
+      "N1": 36,
+      "N2": 4,
+      "N3": 35,
+      "N4": 0
+    },
+    "in_memory_preflight_examples": 150,
+    "in_memory_preflight_supported": 75,
+    "in_memory_preflight_negatives": 75,
+    "in_memory_preflight_unique_example_ids": 150,
+    "in_memory_preflight_proof_pass_fraction": 1.0,
+    "validation_split_generator_totals_with_loghub_unchanged": {
+      "N1": 61,
+      "N2": 29,
+      "N3": 60,
+      "N4": 0
+    },
+    "validation_split_maximum_single_generator_fraction": 0.4066666666666667
+  },
+  "write_boundary": {
+    "pair_payload_written": false,
+    "data_gate_audit_written": false,
+    "tokenizer_used": false,
+    "model_downloaded": false,
+    "model_used": false,
+    "training_run": false,
+    "formal_inference_run": false,
+    "m3_runtime_integrated": false
+  },
+  "authorization_required": "explicit_user_approval_of_the_zeek_quota_amendment"
+}

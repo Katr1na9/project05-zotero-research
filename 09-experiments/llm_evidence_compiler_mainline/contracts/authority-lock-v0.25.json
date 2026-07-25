@@ -1,0 +1,123 @@
+{
+  "authority_id": "project05-qwen25-single-primary-training-v0.25",
+  "version": "0.25.0",
+  "status": "task4_single_primary_training_authorized_downstream_closed",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "continue_after_explicit_task4_gate",
+    "interpreted_scope": "execute_the_single_frozen_primary_qlora_training_run_only",
+    "primary_training_authorized": true,
+    "checkpoint_selection_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.24.json",
+    "sha256": "578839BA0AC41836C6B747383C3D3CD8D16C3F83A42B9B3F13DB195111CF2701",
+    "disposition": "inherits_the_passed_zero_step_preflight_and_opens_only_task4"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-preflight-contract-v0.1.json": "3157AF193426778B745955698C49D936C63CA4AE4B424346A7DD1876360EDC39",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/execute_qwen_qlora_primary.py": "DB766F398DC19B359E5B3D9B64F289ADC4FC0AD770C4EDFB314117D23AA09DCB",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/run-local-primary-v0.1.ps1": "7667F609B4D5765530BC84E522B79AB5B8AC8AEFB6467F3C520B436D29DA2041"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_primary_execution.py": "7139A62F7F2B33A06B8F0FEA8748BE1071C918088F9425E545573B281C45C7B8"
+  },
+  "authoritative_results": {
+    "09-experiments/llm_evidence_compiler_mainline/results/qwen25-primary-preflight-result-v0.1.json": "C7FB9159DEB45FBBA00CB11DC26D7FDE5A98CE397B025677DF97047F5CA93B44"
+  },
+  "local_execution_evidence": {
+    "primary_preflight_audit": {
+      "path": ".local-qwen25-smoke/local-output/primary-preflight-v0.1.json",
+      "bytes": 4442,
+      "sha256": "56BA67995A5CA5A0FEEAE3CAAF780F0A65A678B54579C213F5BA1CB5F1C7DF73",
+      "status": "passed_zero_step_primary_preflight"
+    },
+    "runtime_and_snapshot_preparation_audit": {
+      "path": ".local-qwen25-smoke/local-output/preparation-audit-v0.2.json",
+      "bytes": 3686,
+      "sha256": "315837270E84C020D097B471D44A63E1C933B7534E52831882F575D3401F206A",
+      "status": "passed_runtime_and_fixed_revision_weight_gate"
+    }
+  },
+  "primary_training_gate": {
+    "authorized": true,
+    "contract_sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "training_config_sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD",
+    "preflight_required": true,
+    "preflight_passed": true,
+    "preflight_audit_sha256": "56BA67995A5CA5A0FEEAE3CAAF780F0A65A678B54579C213F5BA1CB5F1C7DF73",
+    "preparation_audit_sha256": "315837270E84C020D097B471D44A63E1C933B7534E52831882F575D3401F206A",
+    "maximum_executions": 1,
+    "resume_authorized": false,
+    "run_root": ".local-qwen25-smoke",
+    "output_root": ".local-qwen25-smoke/local-output/primary-v0.1",
+    "fresh_output_root_required": true,
+    "reuse_existing_runtime_and_snapshot_only": true,
+    "network_or_download_allowed": false
+  },
+  "frozen_execution": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "method": "4bit_nf4_double_quant_fp16_qlora",
+    "train_examples": 1200,
+    "training_validation_examples_revalidated_but_not_used_for_selection": 300,
+    "epochs": 3,
+    "microbatches": 3600,
+    "gradient_accumulation_steps": 16,
+    "optimizer_steps": 225,
+    "seed": 2026071601,
+    "checkpoint_epochs": [
+      1,
+      2,
+      3
+    ],
+    "adapter_only": true,
+    "maximum_wall_hours": 24,
+    "maximum_peak_reserved_vram_gib": 10.5,
+    "maximum_total_resource_bytes": 30000000000
+  },
+  "failure_policy": {
+    "write_sanitized_failure_manifest": true,
+    "automatic_restart_allowed": false,
+    "automatic_hyperparameter_or_data_change_allowed": false,
+    "resume_requires_new_authority": true,
+    "checkpoint_selection_after_incomplete_training_allowed": false
+  },
+  "next_gate": {
+    "status": "task4_primary_training_open_all_downstream_gates_closed",
+    "primary_training_authorized": true,
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "network_or_download",
+    "runtime_install_or_change",
+    "second_fresh_training_execution",
+    "automatic_resume_after_failure",
+    "hyperparameter_or_data_change",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

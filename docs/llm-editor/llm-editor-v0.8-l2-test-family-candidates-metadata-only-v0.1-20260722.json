@@ -1,0 +1,375 @@
+{
+  "schema_version": "project05-llm-editor-l2-test-family-candidates-metadata-only-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "266313f75f861995369443a71415c82dbce530b0",
+  "status": "candidate_inventory_only_no_source_approval",
+  "scope": {
+    "official_metadata_endpoints_read": true,
+    "dataset_payload_downloaded": false,
+    "dataset_payload_opened": false,
+    "private_gold_read": false,
+    "model_output_read": false,
+    "model_used": false,
+    "baseline_or_training_run": false,
+    "source_materialized": false,
+    "test_family_approved": false
+  },
+  "search": {
+    "date": "2026-07-22",
+    "mode": "targeted_public_source_candidate_search",
+    "authoritative_endpoints": [
+      "GitHub repository and Git tree APIs",
+      "CMU Figshare public article API",
+      "Zenodo public record API",
+      "LANL Cyber Security Research dataset page",
+      "Stratosphere Laboratory IoT-23 dataset page",
+      "UNSW Research dataset pages",
+      "committed Project05 source-review metadata"
+    ],
+    "inclusion_criteria": [
+      "publisher or repository identity is public",
+      "license or public-domain status is explicit at the official endpoint",
+      "revision, DOI version, checksum, or immutable commit can be pinned",
+      "publisher and source-generation family do not overlap the four train and two development families",
+      "directory-level metadata makes at least four future lineage groups plausible",
+      "source can yield security event or security-text packets without hidden labels in the model view"
+    ],
+    "exclusion_criteria": [
+      "unclear or incompatible license",
+      "same corpus family or data-generating testbed as train or development",
+      "only one parser fixture or no plausible independent lineage groups",
+      "labels, tactic names, actor names, or answer keys cannot be physically detached",
+      "source is vulnerability knowledge only and does not test the candidate evidence editor",
+      "immutable version cannot be pinned from examined metadata"
+    ],
+    "screened_record_count": 11,
+    "search_limitations": [
+      "This is a targeted source-gate search, not a systematic census of all security datasets.",
+      "No archive member or data record was opened, so exact lineage, sample-kind, pointer, and trusted-modality capacity remains unverified.",
+      "Pretraining contamination is unknown for every public candidate.",
+      "A metadata candidate is not an approved test family and does not satisfy the L2 quota."
+    ]
+  },
+  "current_family_exclusion_set": {
+    "train": [
+      "redcanary_atomic_red_team",
+      "ait_cam_lds_manifestations_filtered",
+      "fkie_socbed_acsac2021_winlogbeat",
+      "beth_process_events"
+    ],
+    "development": [
+      "logpai_loghub_linux",
+      "zeek_non_pcap_test_logs"
+    ],
+    "inactive_or_prior_exposure": [
+      "splunk_attack_data_manifests",
+      "cisagov_kev_static_reference"
+    ]
+  },
+  "metadata_candidates": [
+    {
+      "candidate_id": "cmu_cert_insider_threat_test_dataset",
+      "candidate_status": "metadata_candidate_not_approved",
+      "recommended_split_role": "test_candidate",
+      "publisher": "Carnegie Mellon University Software Engineering Institute CERT Division, ExactData LLC, and DARPA I2O",
+      "source_identity": {
+        "official_api": "https://api.figshare.com/v2/articles/12841247",
+        "public_page": "https://kilthub.cmu.edu/articles/dataset/Insider_Threat_Test_Dataset/12841247",
+        "figshare_article_id": 12841247,
+        "doi": "10.1184/R1/12841247.v1",
+        "version": 1,
+        "published_date": "2020-09-30T15:36:53Z",
+        "modified_date": "2023-05-30T10:25:18Z",
+        "license_id": "CC-BY-4.0",
+        "file_count": 14,
+        "release_archive_count": 10,
+        "release_archives": [
+          {
+            "file_id": 24857825,
+            "name": "r1.tar.bz2",
+            "bytes": 87541633,
+            "md5": "9fa964eeb89bd0cfafedf22feff77618"
+          },
+          {
+            "file_id": 24852656,
+            "name": "r2.tar.bz2",
+            "bytes": 8655227129,
+            "md5": "b92b65220e35451bd00bab3cf7d86d77"
+          },
+          {
+            "file_id": 24857777,
+            "name": "r3.1.tar.bz2",
+            "bytes": 4249740376,
+            "md5": "747c5b215ab115a34738142ab973d4a6"
+          },
+          {
+            "file_id": 24856979,
+            "name": "r3.2.tar.bz2",
+            "bytes": 4285343561,
+            "md5": "ca3c2ce29887acf019bdd957b5601bcd"
+          },
+          {
+            "file_id": 24855644,
+            "name": "r4.1.tar.bz2",
+            "bytes": 5018970347,
+            "md5": "d2fbed1684dd09a6e44072bf05248912"
+          },
+          {
+            "file_id": 24856766,
+            "name": "r4.2.tar.bz2",
+            "bytes": 4824287500,
+            "md5": "cf64caa378acb77cd0c608a5576d998c"
+          },
+          {
+            "file_id": 24849308,
+            "name": "r5.1.tar.bz2",
+            "bytes": 11236061031,
+            "md5": "26b6bda75ffd50c0e8adf3e30fe18746"
+          },
+          {
+            "file_id": 24849938,
+            "name": "r5.2.tar.bz2",
+            "bytes": 11137370937,
+            "md5": "e24c10807f4923b731276c3421a13c9f"
+          },
+          {
+            "file_id": 24848018,
+            "name": "r6.1.tar.bz2",
+            "bytes": 20360461443,
+            "md5": "e52c8e4134624bb8cbb6ee773a592044"
+          },
+          {
+            "file_id": 24844280,
+            "name": "r6.2.tar.bz2",
+            "bytes": 23811144737,
+            "md5": "2f99ec7dfa3e17a29691cbf80c8a662b"
+          }
+        ],
+        "excluded_answer_artifact": {
+          "file_id": 24857828,
+          "name": "answers.tar.bz2",
+          "bytes": 1254678,
+          "md5": "c0c96eaa06915e417504f932756f58d8"
+        }
+      },
+      "metadata_findings": {
+        "synthetic_dataset": true,
+        "contains_background_and_malicious_actor_data": true,
+        "later_releases_are_supersets": true,
+        "multiple_datasets_per_release_reported": true,
+        "publisher_overlaps_current_six": false,
+        "format_overlaps_current_six": "possible_activity_log_field_overlap_only",
+        "lineage_candidate_count": null,
+        "lineage_capacity_status": "plausible_but_not_countable_without_archive_directory_authority",
+        "candidate_modalities": [
+          "observed_or_unknown_pending_si_llm_005"
+        ]
+      },
+      "approval_conditions": [
+        "Select exactly one release archive; do not mix superseding releases.",
+        "Keep answers.tar.bz2 physically excluded from model view and source normalization.",
+        "Run nested notice, checksum, protected exclusion, and duplicate scans before any payload read is accepted.",
+        "Define lineage from synthetic scenario, user, and bounded time metadata; archive or row count is not lineage.",
+        "Strip scenario, malicious-user, and answer-key labels from paths and model-visible fields.",
+        "Report the source as synthetic and do not claim real-enterprise generalization.",
+        "Re-audit sample-kind and modality capacity before source approval."
+      ],
+      "payload_acquired": false,
+      "metadata_endpoint_verified": true
+    },
+    {
+      "candidate_id": "stratosphere_iot23_v1",
+      "candidate_status": "metadata_candidate_not_approved",
+      "recommended_split_role": "test_candidate",
+      "publisher": "Stratosphere Laboratory / Czech Technical University",
+      "source_identity": {
+        "official_record_api": "https://zenodo.org/api/records/4743746",
+        "official_page": "https://www.stratosphereips.org/datasets-iot23",
+        "zenodo_record_id": 4743746,
+        "doi": "10.5281/zenodo.4743746",
+        "version": "1.0.0",
+        "publication_date": "2020-01-20",
+        "record_updated": "2021-09-03T10:36:55.109660+00:00",
+        "license_id": "CC-BY-4.0",
+        "full_archive": {
+          "name": "iot_23_datasets_full.tar.gz",
+          "bytes": 21510801277,
+          "md5": "7132e603f9750b8580b6cebdbcd43e9c"
+        },
+        "official_page_etag": "W/\"242076fec79ef2f62dbdf96c868cddc3\"",
+        "official_page_reports_non_pcap_light_archive": true,
+        "light_archive_reported_size_text": "8.8 GB",
+        "light_archive_checksum_verified": false
+      },
+      "metadata_findings": {
+        "scenario_capture_count": 23,
+        "malware_capture_count": 20,
+        "benign_capture_count": 3,
+        "non_pcap_labeled_flow_variant_reported": true,
+        "publisher_overlaps_current_six": false,
+        "format_overlap_with_development": "Zeek conn.log format overlaps zeek_non_pcap_test_logs, but capture corpus and publisher are independent.",
+        "lineage_candidate_count": 23,
+        "lineage_capacity_status": "scenario_level_candidate_only",
+        "candidate_modalities": [
+          "derived_or_unknown_pending_si_llm_005"
+        ]
+      },
+      "approval_conditions": [
+        "Use only non-PCAP flow/log artifacts; PCAP payload remains out of scope.",
+        "If the light archive is used, compute and freeze its own checksum because the examined Zenodo record pins only the full archive.",
+        "Treat one capture scenario as at most one lineage group; rows and flows do not create replicates.",
+        "Remove malware, device, scenario, and label fields from model-visible input and source paths.",
+        "Do not use the label spreadsheet or labeled suffix as model input; any future private scorer use requires separate gold authority.",
+        "Measure and disclose Zeek-format correlation with the development family.",
+        "Run nested notice, protected exclusion, and near-duplicate scans before source approval."
+      ],
+      "payload_acquired": false,
+      "metadata_endpoint_verified": true
+    }
+  ],
+  "conditional_reserve": [
+    {
+      "candidate_id": "lanl_unified_host_network_2017",
+      "candidate_status": "conditional_reserve_not_revision_complete",
+      "recommended_split_role": "test_reserve",
+      "publisher": "Los Alamos National Laboratory",
+      "source_identity": {
+        "official_page": "https://csr.lanl.gov/data/2017/",
+        "official_page_etag": "\"6a0b6de4-45dd\"",
+        "official_page_last_modified": "Mon, 18 May 2026 19:52:04 GMT",
+        "publication_doi": "10.1142/9781786345646_001",
+        "license_statement": "To the extent possible under law, LANL waived copyright and related or neighboring rights to the Unified Host and Network DataSet.",
+        "host_event_daily_file_template": "wls/wls_day-01..90.bz2",
+        "host_event_daily_file_count": 90,
+        "netflow_daily_file_template": "netflow/netflow_day-02..90.bz2",
+        "netflow_daily_file_count": 89,
+        "data_file_head_probe_status": 401,
+        "data_file_hash_manifest_available_without_registration": false
+      },
+      "metadata_findings": {
+        "enterprise_collection_days_reported": 90,
+        "deidentified_cross_host_network_identity": true,
+        "publisher_overlaps_current_six": false,
+        "lineage_candidate_count": 90,
+        "lineage_capacity_status": "day_level_candidate_only",
+        "candidate_modalities": [
+          "observed_or_derived_or_unknown_pending_si_llm_005"
+        ]
+      },
+      "hold_reasons": [
+        "Data endpoints require registration and returned HTTP 401 to metadata-only HEAD probes.",
+        "No immutable per-file checksum manifest was available from the examined public page.",
+        "Day-level files are correlated observations from one enterprise and cannot be treated as 90 independent enterprises.",
+        "A future source gate must pin file checksums and a day/host lineage rule before this reserve can count."
+      ],
+      "payload_acquired": false,
+      "metadata_endpoint_verified": true
+    }
+  ],
+  "screened_out": [
+    {
+      "candidate_id": "sbousseaden_evtx_attack_samples",
+      "official_source": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES",
+      "pinned_revision": "git:4ceed2f4706daf601c212a8f91c113dd85349a2c",
+      "license_id": "GPL-3.0",
+      "metadata_scale": {
+        "evtx_files": 278,
+        "parent_directories": 13,
+        "bytes": 48717824
+      },
+      "decision": "hard_reject",
+      "reasons": [
+        "Existing Project05 metadata already rejects the family for TTP/path-label leakage.",
+        "Some file names explicitly report Atomic Red Team generation, creating source-generation overlap with the Atomic training family.",
+        "Tactic directories are labels, not independent lineages.",
+        "Third-party event provenance and nested notices are not established by the repository-level GPL license."
+      ]
+    },
+    {
+      "candidate_id": "unsw_adfa_ld_wd",
+      "official_source": "https://research.unsw.edu.au/projects/adfa-ids-datasets",
+      "license_id": "custom_academic_only_commercial_prohibited",
+      "decision": "reject_not_metadata_ready",
+      "reasons": [
+        "The official page grants academic use but reserves other rights and prohibits commercial use; no standard dataset license was identified.",
+        "The examined page did not expose an immutable dataset revision and checksum manifest.",
+        "System-call sequence traces provide narrow transport coverage and do not resolve the current trusted-modality quota."
+      ]
+    },
+    {
+      "candidate_id": "unsw_ton_iot",
+      "official_source": "https://research.unsw.edu.au/projects/toniot-datasets",
+      "license_id": "custom_academic_use_commercial_permission_required",
+      "decision": "hold_not_metadata_ready",
+      "reasons": [
+        "The official page grants academic use but requires author permission for commercial use.",
+        "The examined page did not provide one immutable dataset revision and checksum manifest.",
+        "Its heterogeneous subdatasets would require separate corpus-family and lineage decisions rather than being counted as one convenient family."
+      ]
+    },
+    {
+      "candidate_id": "icsdataset_hai",
+      "official_source": "https://github.com/icsdataset/hai",
+      "license_id": null,
+      "decision": "reject_license_unverified",
+      "reasons": [
+        "GitHub repository metadata did not declare an SPDX license.",
+        "Repository size and time-series files do not establish candidate Claim IR sample-kind capacity."
+      ]
+    },
+    {
+      "candidate_id": "cisagov_vulnrichment",
+      "official_source": "https://github.com/cisagov/vulnrichment",
+      "license_id": "CC0-1.0",
+      "decision": "reject_for_current_test_role",
+      "reasons": [
+        "The source is vulnerability-enrichment knowledge rather than host/network evidence packets.",
+        "The project already performed bounded CISA KEV feasibility work, creating same-publisher and record-overlap risk.",
+        "Using CVE identifiers as test entities would add public-pretraining contamination and would not test independent provenance reconstruction."
+      ]
+    },
+    {
+      "candidate_id": "ait_aecid_anomaly_detection_log_datasets",
+      "pinned_revision": "git:5296693689e855576689ee0b98ea497bf7d8f513",
+      "license_id": "GPL-3.0_plus_underlying_terms",
+      "decision": "scientific_reject",
+      "reasons": [
+        "Existing Project05 metadata marks the source as not independent of the AIT CAM-LDS training family.",
+        "Underlying dataset terms are heterogeneous."
+      ]
+    },
+    {
+      "candidate_id": "parisakalaki_openstack_nova_logs",
+      "pinned_revision": "git:953cfe41d2669ca2b630c42d15b6dcbf8d77bb63",
+      "license_id": "GPL-3.0",
+      "decision": "scientific_reject",
+      "reasons": [
+        "Existing Project05 metadata found routine operational logs but no defensible source-pointer/object relation for the required candidate sample kinds.",
+        "Large row counts would be pseudoreplication within one operational log family."
+      ]
+    },
+    {
+      "candidate_id": "omerbenamram_evtx_security_fixture",
+      "pinned_revision": "git:99a6def7e88ec23a92fc995885d33635a3c3f761",
+      "license_id": "MIT_OR_Apache-2.0",
+      "decision": "reject_test_family_quota",
+      "reasons": [
+        "It is one parser fixture, not a family with at least four independent lineage groups.",
+        "A parser fixture would primarily measure EVTX parsing compatibility, not cross-source semantic editing."
+      ]
+    }
+  ],
+  "gate": {
+    "metadata_candidate_count": 2,
+    "minimum_candidate_success_criterion_met": true,
+    "approved_test_family_count": 0,
+    "test_family_quota_passed": false,
+    "lineage_quota_passed": false,
+    "sample_kind_quota_passed": false,
+    "trusted_modality_quota_passed": false,
+    "l2_gate_passed": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "next_required_decision": "separate_user_review_of_test_family_candidates_and_source_gate_conditions"
+  }
+}

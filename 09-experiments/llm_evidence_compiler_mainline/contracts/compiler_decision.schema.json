@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/compiler_decision.schema.json",
+  "title": "CompilerAdmissionDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "compiler_run_id",
+    "status",
+    "admitted_claims",
+    "entity_bindings",
+    "claim_node_links",
+    "unlinked_claim_ids",
+    "rejections",
+    "link_rejections",
+    "abstention_reasons",
+    "counts"
+  ],
+  "properties": {
+    "request_id": {"type": "string", "pattern": "^REQ-[A-F0-9]{24}$"},
+    "compiler_run_id": {"type": "string", "pattern": "^RUN-[A-F0-9]{24}$"},
+    "status": {"enum": ["completed", "abstain", "rejected", "invalid"]},
+    "admitted_claims": {"type": "array", "items": {"type": "object"}},
+    "entity_bindings": {"type": "array", "items": {"type": "object"}},
+    "claim_node_links": {"type": "array", "items": {"type": "object"}},
+    "unlinked_claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^ADM-[A-F0-9]{24}$"},
+      "uniqueItems": true
+    },
+    "rejections": {"type": "array", "items": {"$ref": "#/$defs/rejection"}},
+    "link_rejections": {"type": "array", "items": {"$ref": "#/$defs/link_rejection"}},
+    "abstention_reasons": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_candidates",
+        "admitted_claims",
+        "rejected_candidates",
+        "admitted_links",
+        "rejected_links",
+        "duplicates_merged"
+      ],
+      "properties": {
+        "input_candidates": {"type": "integer", "minimum": 0},
+        "admitted_claims": {"type": "integer", "minimum": 0},
+        "rejected_candidates": {"type": "integer", "minimum": 0},
+        "admitted_links": {"type": "integer", "minimum": 0},
+        "rejected_links": {"type": "integer", "minimum": 0},
+        "duplicates_merged": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "rejection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "reason_codes"],
+      "properties": {
+        "candidate_id": {"type": "string"},
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    },
+    "link_rejection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "target_node_id", "reason_codes"],
+      "properties": {
+        "candidate_id": {"type": "string"},
+        "target_node_id": {"type": "string"},
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
+

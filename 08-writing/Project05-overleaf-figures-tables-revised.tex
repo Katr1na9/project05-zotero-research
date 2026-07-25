@@ -1,0 +1,508 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+\documentclass[UTF8,a4paper,twocolumn,zihao=5,fontset=fandol]{ctexart}
+
+\usepackage[left=1.08cm,right=1.08cm,top=1.10cm,bottom=1.18cm,columnsep=0.62cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{makecell}
+\usepackage{dblfloatfix}
+\usepackage[section]{placeins}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage{cite}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{balance}
+
+
+\hypersetup{
+  pdftitle={不完整证据下的可审计 APT 调查控制：信息边界、参数治理与证据获取},
+  pdfauthor={匿名作者},
+  pdfkeywords={APT 调查, 不完整证据, 主动取证, 信息边界, 参数治理}
+}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setlength{\columnseprule}{0pt}
+\setlength{\textfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\floatsep}{5pt plus 2pt minus 2pt}
+\setlength{\intextsep}{5pt plus 2pt minus 2pt}
+\setlength{\abovedisplayskip}{4pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{4pt plus 1pt minus 1pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+\linespread{1.02}
+\flushbottom
+
+\titleformat{\section}
+  {\centering\normalfont\zihao{5}}
+  {\Roman{section}.}{0.55em}{}
+\titlespacing*{\section}{0pt}{1.15ex plus .2ex minus .1ex}{0.75ex}
+
+\titleformat{\subsection}
+  {\normalfont\kaishu\zihao{-5}}
+  {\textit{\Alph{subsection}.}}{0.55em}{}
+\titlespacing*{\subsection}{0pt}{1.00ex plus .2ex minus .1ex}{0.45ex}
+
+% ===== Publication-ready figure and table style =====
+\definecolor{oiBlue}{HTML}{0072B2}
+\definecolor{oiOrange}{HTML}{E69F00}
+\definecolor{oiGreen}{HTML}{009E73}
+\definecolor{softBlue}{HTML}{EAF3F8}
+\definecolor{softOrange}{HTML}{FFF3DF}
+\definecolor{softGreen}{HTML}{EAF6F1}
+\definecolor{softGray}{HTML}{F1F3F5}
+\definecolor{tableHeader}{HTML}{E8EDF2}
+
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  textfont=normalfont,
+  format=plain,
+  justification=justified,
+  singlelinecheck=true,
+  skip=4pt
+}
+\captionsetup[figure]{labelsep=quad,position=bottom}
+\captionsetup[table]{labelsep=quad,position=top}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\thetable}{\arabic{table}}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\setlength{\heavyrulewidth}{0.8pt}
+\setlength{\lightrulewidth}{0.45pt}
+\setlength{\cmidrulewidth}{0.4pt}
+\newcommand{\publishtable}{%
+  \small
+  \setlength{\tabcolsep}{4pt}%
+  \renewcommand{\arraystretch}{1.16}%
+  \arrayrulecolor{black!75}%
+}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\eng}[1]{\textit{#1}}
+
+\begin{document}
+\zihao{-5}
+\pagestyle{empty}
+
+\twocolumn[
+\begin{@twocolumnfalse}
+\vspace*{0.05cm}
+\begin{center}
+{\songti\zihao{2}
+不完整证据下的可审计 APT 调查控制：\\[-0.20em]
+信息边界、参数治理与证据获取\par}
+\vspace{-0.18em}
+{\fontsize{10.5pt}{12.5pt}\selectfont
+Auditable APT Investigation Control under Incomplete Evidence:\par}
+\vspace{0.55em}
+{\fontsize{10.5pt}{12.5pt}\selectfont
+Information Boundaries, Parameter Governance, and Evidence Acquisition\par}
+\end{center}
+\vspace{1.15cm}
+\end{@twocolumnfalse}
+]
+
+\noindent\textbf{摘要—}由审计日志开始构建、压缩和学习溯源图，以及把威胁情报对齐到本地事件，已经能够在既有证据的基础上定位异常实体、恢复攻击路径并有效溯源。然而，当日志只被部分保留、采集通道可能失败、不同来源的证据角色不一致且预算受限时，部分对齐结果仍不能回答下一步应获取什么证据、何时停止，以及当前证据最多允许支持何种结论。本文把这一困境形式化为信息边界约束的调查控制问题。系统以具有可追溯来源的证据声明（evidence claims）构造证据缺口状态；规划器只能读取预执行动作目标、版本化成本和公开状态，不能读取动作实际恢复集合、随机遮蔽、实现通道状态或结果标签；执行后再根据新增证据或零收益反馈更新状态，并以可支持结论上限和停止动作（STOP）约束输出。
+
+与仅固定一套人工参数并据此报告结果的做法不同，本文将动作成本、粒度阈值、证据相互印证机制（corroboration）、收益—成本换算系数和通道可靠性先验纳入版本化治理。评估单位为 C07--C12 六个独立案例或攻击链（case/attack chain）；每个案例设置 45 组由遮蔽策略（mask strategy）、遮蔽强度（mask intensity）和随机种子（seed）构成的条件，作为案例内配对重复测量，合计 270 条条件，但并不意味着可以作为 270 次独立攻击看待。在冻结的历史基线（legacy）成本口径下，XGBoost、透明 M2 和 Logistic/M3b 分别在 270、270 和 267 条重复条件达到内部目标，平均成功成本为 3.8926、3.8704 和 4.0000。将全部动作统一为单位成本后，三者分别为 1.6852、1.7296 和 1.6630，且均为 270/270；AFA-VOI Myopic、AFA-VOI Rollout-H3 和 Depth-2 也保持全成功，但平均动作数分别为 1.7333、1.7778 和 1.8963。
+
+在 40 个粒度阈值组合、6 种 n 项证据中至少 k 项相互印证机制（k-of-n corroboration）配置和 7 个 M2 成本换算系数上，M2 的内部成功率保持 1.0 且不产生粒度越界，但最低动作序列一致率分别为 1.0000、0.8148 和 0.8407。先验敏感性进一步显示，将规划器先验（planner prior）缩放为 0.75 时，AFA-VOI Myopic 出现 2 个成功损失，Rollout-H3 虽无成功损失但改变动作序列；Depth-2 出现 1 个损失与 1 个修复。1.25 倍缩放没有改变动作或结果。本文贡献在于提出了一个可执行、可审计且能暴露参数依赖性的调查控制接口，以及对其成立边界的可复核报告。
+
+\noindent\textbf{关键词—}APT 溯源；不完整证据；主动取证；信息边界；参数治理；主动特征获取
+
+\section{引言}
+
+近年来，DEPCOMM、PROGRAPHER、KAIROS 和 MAGIC 等权威文献已经显著推进了审计图压缩、异常检测和攻击摘要恢复~\cite{depcomm,prographer,kairos,magic} 的整体流程，而 POIROT、EXTRACTOR、CLIProv 和 APT-CGLP 等则聚焦于从查询图、不精确匹配、日志—情报对比学习和图—语言预训练缩小高层情报与低层事件之间的语义鸿沟~\cite{poirot,extractor,cliprov,aptcglp}。在调研相关文献的过程中，真正未闭合的问题发生于“部分对齐之后、归因输出之前”。现场证据可能因保留窗口、采集代理、权限、网络遥测和数据模式差异而缺失；一个动作又可能因通道失效而没有任何产出。此时，没有匹配到某项行为不等于该行为不存在，自动关联图或 ATT\&CK 标签也不等于独立的攻击主体或攻击活动真实标签。若动作的公开描述由其实际可恢复结果反向生成，离线规划器还会在执行前间接读到答案键。
+
+针对上述问题，本文提出一种调查控制层（investigation control layer）。该控制层以上游对齐结果、具有可追溯来源的证据声明、候选证据采集动作、采集预算以及可支持结论的上限为输入，输出下一项证据采集动作或 STOP。
+
+在动作执行之前，规划器仅能访问经过版本控制的公开视图，无法获知隐藏的实际证据恢复集合。动作执行之后，系统接收新增证据，或者接收该动作未产生有效增益的反馈，并据此重新计算当前证据能够支持的结论上限。语言模型可作为离线语义编译器或结果解释器，但并非本文在线决策流程中的必要组成部分。
+
+此类系统面临的风险并不只来源于模型误差。动作成本、证据粒度阈值、析取与合取覆盖语义（OR/AND coverage semantics）、收益权重以及不同证据通道的可靠性先验，均可能在缺乏显式约束的情况下影响最终结论，进而成为潜在的“隐性结论开关”。因此，本文将主要贡献概括为以下四个方面。
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2.25em,itemsep=0pt,topsep=1pt,parsep=0pt]
+  \item 定义部分对齐完成后的证据获取控制任务，并通过可测试的运行时接口（runtime interface），将公开的动作目标与隐藏的实际证据恢复集合相分离。
+  \item 构建由可更新的证据缺口状态、n 项证据中至少 k 项相互印证机制、可支持结论上限、证据通道反馈以及显式停止动作共同组成的闭环控制流程。
+  \item 采用版本化配置文件（versioned profile）、SHA-256 摘要、正式运行准入门控（run gate）以及配对敏感性分析，对动作成本、粒度阈值、收益函数和可靠性先验进行治理，避免以单次参数重新调整替代参数设置依据和过程记录。
+  \item 在六个相互独立的案例中，同时报告正向结果、动作排序反转、先验敏感性、人工构念失效以及外部真实标签不足等现象，据此明确本文方法能够支持的结论范围及其不能支持的结论。
+\end{enumerate}
+
+\section{问题定义}
+
+\subsection{状态、动作和统计单位}
+
+设攻击行为图为
+\[
+G=(V,E).
+\]
+时刻 $t$ 可见且可回指来源的证据声明为 $C_t$。调查状态定义为
+\[
+s_t=\left(V_t^{\mathrm{cov}},E_t^{\mathrm{cov}},U_t,K_t,D_t,g_t,B_t,H_t\right),
+\]
+其中 $V_t^{\mathrm{cov}}$ 和 $E_t^{\mathrm{cov}}$ 分别表示已覆盖节点和边，$U_t$ 表示未覆盖节点，$K_t$ 表示关键缺口，$D_t$ 表示阶段与证据类型摘要，$g_t$ 表示当前可支撑结论粒度，$B_t$ 表示剩余预算，$H_t$ 表示动作和反馈历史。
+
+候选动作 $a$ 具有公开目标 $I(a)$、采集通道 $q(a)$、版本化成本 $c_p(a)$ 和可选的公开先验；实际可恢复声明集合 $R(a)$ 对普通规划器隐藏，只有作为上界基准的预知器（Oracle）可以读取。STOP 定义为零成本公共动作：
+\[
+c_p(a_{\mathrm{STOP}})=0.
+\]
+实验中的独立分析单位为案例或攻击链；遮蔽策略、遮蔽强度与随机种子仅作为同一案例内的重复测量变量。本文主评估包含 6 个独立案例和 270 个配对重复条件，因此
+\[
+N_{\mathrm{case}}=6,\qquad N_{\mathrm{repeat}}=270.
+\]
+其中 270 条条件不作为独立样本，不进行将重复条件视为独立观测的显著性检验，即
+\[
+n_{\mathrm{ind}}=6\ne270.
+\]
+
+\subsection{n 项证据中至少 k 项相互印证机制与可支持结论上限}
+
+对节点 $v$ 的所需证据声明集合（required claims）记为 $Q_v$，按来源独立性分组后的可见支持数记为 $m_v(C_t)$。版本化相互印证配置文件（corroboration profile）为每个节点指定阈值 $k_v$，并定义
+\[
+v\in V_t^{\mathrm{cov}}\Longleftrightarrow m_v(C_t)\ge k_v.
+\]
+其中，$k_v=1$ 对应乐观析取（OR）策略，$k_v=|Q_v|$ 对应保守合取（AND）策略，中间取值表示部分相互印证。该推广不改写已有结果：C11 冻结 AND 主结果与 OR 敏感性仍作为两个端点；新增扫描均通过独立配置文件记录。粒度梯度 G0--G3 仍作为实验性结构代理，而不是攻击主体识别准确率。默认数值阈值保留为冻结参照，同时在节点覆盖集合 $\{0.60,0.65,0.70,0.75,0.80\}$、边覆盖集合 $\{0.50,0.55,0.60,0.65\}$、阶段数集合 $\{2,3\}$ 组成的 40 个组合上报告稳健性。最终输出由案例级可支持结论上限（\code{support_ceiling}）截断。
+
+\subsection{信息边界}
+
+动作的公开目标必须在执行前由动作模板、通道能力或调查请求生成并版本化，不能在读取 $R(a)$ 后反向构造。运行时采用递归允许列表（allowlist）：配置、状态和动作仅暴露批准字段，并禁止访问 \code{recoverable_claim_ids}、\code{required_claim_ids}、\code{mask}、\code{seed}、运行标识符（run ID）、实际通道状态、Oracle 路径和结果标签。AFA、Depth-2、XGBoost 和 Logistic 的正式入口均执行公开视图约束及隐藏结果不变性测试。规划器返回动作标识符（\code{action_id}）后，执行器才读取完整动作并实现恢复结果。该隔离属于软件接口约束，而非密码学访问控制。
+
+若
+\[
+I(a)=\operatorname{Cover}(R(a)),
+\]
+且 $I(a)$ 由 $R(a)$ 确定，则 $I(a)$ 已泄漏该动作的节点级恢复范围。编译审计因此将该等式作为高风险信号；但集合偶然相等本身不构成充分泄漏证据，关键在于生成过程是否读取隐藏结果。
+
+图~\ref{fig:control-loop} 展示调查控制闭环与信息边界。规划器仅访问公开动作目标、成本、当前缺口、预算及历史反馈；执行器和 Oracle 隐藏域保存实际恢复集合与实现通道状态。
+
+\begin{figure*}[!t]
+  \centering
+  \begin{tikzpicture}[
+    >=Latex,
+    node distance=9mm and 8mm,
+    font=\small,
+    base/.style={draw, rounded corners=2pt, align=center, minimum height=13mm,
+                 text width=33mm, inner sep=3.5pt, line width=0.6pt},
+    public/.style={base, draw=oiBlue, fill=softBlue},
+    execute/.style={base, draw=oiOrange!85!black, fill=softOrange},
+    update/.style={base, draw=oiGreen!80!black, fill=softGreen},
+    hidden/.style={base, draw=black!65, fill=softGray, dashed},
+    flow/.style={-{Latex[length=2.2mm]}, line width=0.7pt, draw=black!80},
+    feedback/.style={-{Latex[length=2.2mm]}, line width=0.7pt, dashed, draw=oiGreen!80!black},
+    hiddenflow/.style={-{Latex[length=2.2mm]}, line width=0.7pt, densely dashed, draw=black!65},
+    boundary/.style={rounded corners=3pt, dashed, line width=0.55pt, inner sep=4mm}
+  ]
+    \node[public] (state) {公开调查状态\\证据缺口、预算、历史};
+    \node[public, right=of state] (planner) {非预知器规划器\\选择动作标识符或 STOP};
+    \node[execute, right=of planner] (executor) {执行器\\读取完整动作并采集};
+    \node[update, right=of executor] (feedback) {反馈与状态更新\\新增证据声明或零收益};
+    \node[hidden, below=12mm of executor] (hidden) {隐藏域\\实际恢复集合、真实通道状态、结果标签};
+
+    \draw[flow] (state) -- node[above,font=\scriptsize]{公开视图} (planner);
+    \draw[flow] (planner) -- node[above,font=\scriptsize]{动作标识符} (executor);
+    \draw[flow] (executor) -- node[above,font=\scriptsize]{采集结果} (feedback);
+    \draw[hiddenflow] (hidden) -- node[right,font=\scriptsize]{执行后访问} (executor);
+    \draw[feedback] (feedback.south) |- ([yshift=-9mm]hidden.south) -|
+      node[pos=0.82,below,font=\scriptsize]{可审计反馈} (state.south);
+
+    \node[boundary, draw=oiBlue, fit=(state)(planner),
+          label={[font=\scriptsize\bfseries,text=oiBlue]below:规划器可见域}] {};
+    \node[boundary, draw=black!65, fit=(executor)(hidden),
+          label={[font=\scriptsize\bfseries]below:执行器/预知器隐藏域}] {};
+  \end{tikzpicture}
+  \caption{调查控制闭环与信息边界。实线表示公开控制流，虚线表示受限访问或执行后反馈；规划器无法在动作选定前读取实际恢复集合与真实通道状态。}
+  \label{fig:control-loop}
+\end{figure*}
+
+
+\subsection{决策、反馈和停止}
+
+系统在预算约束下选择动作，执行后接收新增证据声明或零收益反馈。成功表示内部目标粒度在预算内达到，而不是攻击主体/攻击活动识别准确率。设 STOP 的终端效用为 $U(s)$，则在有限时域内，STOP 最优当且仅当
+\[
+U(s)\ge\max_{a\ne\mathrm{STOP}}
+\left\{-c_p(a)+\mathbb{E}\left[V^\star(s')\mid s,a\right]\right\}.
+\]
+单步增益小于成本并不足以推出停止，因为低即时收益动作可能解锁后续关键动作。若目标结构不可达、预算不足或延续价值（continuation value）不高于 STOP，则系统返回当前支持粒度、未覆盖关键节点以及停止原因。
+
+\section{参数治理与实现}
+
+\subsection{成本配置文件}
+
+运行器支持四种成本口径，如表~\ref{tab:cost-profile} 所示。
+
+\begin{table*}[!t]
+  \caption{成本配置文件的语义、状态与解释边界}
+  \label{tab:cost-profile}
+  \centering
+  \publishtable
+  \begin{tabularx}{\textwidth}{@{}>{\bfseries}lYYY@{}}
+    \toprule
+    \rowcolor{tableHeader}
+    配置文件 & \textbf{含义} & \textbf{当前状态} & \textbf{可作何种解释} \\
+    \midrule
+    历史基线 & 原案例中的历史相对成本 & 正式运行完成；与旧输出逐字节兼容 & 冻结历史基线，不代表真实运营成本 \\
+    \addlinespace[2pt]
+    单位成本（uniform） & 所有非 STOP 动作为 1 & 正式运行完成 & 动作步数对照，去除人工成本排序 \\
+    \addlinespace[2pt]
+    评分量表（rubric） & 由工作量（E）、易失性（V）、数据量（D）、访问合规性（A）和侵入风险（R）五个分量构成 & 360 个独立人工评分分量待完成 & 冻结前不得进入正式实验 \\
+    \addlinespace[2pt]
+    实测成本（measured） & 动作级运营测量归一化后的连续成本 & 72/72 动作待测；基础设施已完成 & 当前不得报告数值或替代真实成本 \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}
+
+
+每个正式配置文件均包含标识符（ID）、语义版本、状态和 SHA-256。评分量表/实测成本草案、动作覆盖不完整的配置文件，以及非空旧结果目录均被拒绝。当前仅有 41/72 个动作具有案例级扫描总量，40/72 个动作具有产出量或事件跨度；动作级扫描字节、保留期和主机数均为
+\[
+0/72.
+\]
+案例总量不能冒充动作扫描量，事件跨度不能冒充保留期，旧成本也不能用于回填评分缺失。
+
+\subsection{收益权重与先验配置文件}
+
+透明 M2 被解释为信息价值（Value of Information，VoI）与成本之差的领域线性化：
+\[
+\operatorname{VoI}(a,s)-\alpha c_p(a).
+\]
+该表达式是领域线性近似，而非具有唯一理论系数的真值模型。冻结实现保留原权重，新增实验仅通过外部配置文件扫描
+\[
+\alpha\in\{0,0.25,0.50,0.75,1.00,1.50,2.00\}.
+\]
+预期效果（expected effects）和通道可靠性同时区分实测、标准值（standard）与专家先验（expert-prior）三类来源；先验缩放仅改变规划器信念，而不改变执行器实际可靠性，从而避免将环境退化误写为先验敏感性（prior sensitivity）。
+
+\subsection{规划器}
+
+比较对象包括透明 M2、M3a 缺口兼容性（gap compatibility）、XGBoost、Logistic/M3b、AFA-VOI Myopic、AFA-VOI Rollout-H3、Depth-2 和仅供上界解释的 Oracle。XGBoost 与 Logistic 只使用公开状态—动作特征；AFA 和 Depth-2 使用相同的公开通道先验；预知器可以读取隐藏结果但不属于部署候选。所有正式输出记录配置文件哈希、运行契约和输入哈希。
+
+
+\section{实验设计}
+
+\subsection{案例}
+
+C01--C06 仅用于开发、训练或规则校验，不进入本文的独立评估案例数。C07--C10 是 DARPA TC E5 与 OpTC 的四个参数锁定 G3 案例；C11 是一个 OTRF APT29 仿真链，因冻结锚点自然缺失而截断为 G2；C12 是从生产 SOC 衍生数据经元数据和事件来源两级准入门控筛出的一个双流安全事件（incident），支持上限为 G1。C11 的多项提供方证据声明（provider claims）来自同一主机归档，不等于独立网络传感器之间的相互印证；C12 的厂商 GraphML、自动 ATT\&CK 标签和中断状态（Disrupted）只作上下文，不作为攻击主体真实标签。
+
+\subsection{重复测量}
+
+每个案例运行 45 组由遮蔽策略、遮蔽强度和随机种子构成的条件，共形成 270 条重复条件。所有条件在配置文件对照中逐行配对。描述性汇总可以按 270 条条件计算成功次数和平均成本，但科学外推的独立 $n$ 始终为 6。由于案例数很小且来源异质，本文不报告把重复条件当独立样本得到的置信区间或 $p$ 值。
+
+\subsection{终点}
+
+主要内部终点为是否达到案例目标、成功条件下累计成本、相对预知器的遗憾值（Oracle regret）、零收益动作、过早停止和粒度越界。附加证据受限终点包括过度归因（over-attribution）、弃权（abstention）或降级和来源覆盖。攻击主体/攻击活动识别准确率与分析师效用只有在外部真实标签包（ground-truth bundle）完整时才计算；当前二者均不可识别。
+
+\subsection{治理扫描}
+
+除历史基线/单位成本对照外，本文报告 40 个阈值组合、6 种证据声明/来源组的 n 项证据中至少 k 项相互印证配置、7 个 M2 $\alpha$ 值、预期效果专家先验缩放和 AFA/Depth-2 通道先验缩放。所有变体在查看结果前由配置文件固定，并写入新结果目录；不改写原始 \code{acquisition_actions.json} 或旧结果。
+
+\subsection{复现与完整性}
+
+15 个正式输出由统一审计重新验证。测试状态为 411 项通过、6 项跳过、0 项失败。该数字是软件验证记录，不是科学样本量。审计清单明确记录实验完整性标识 \code{all_experiments_complete=false}：自动化实现已完成，但人工、测量和外部真实标签准入门控仍开放。
+
+\section{结果}
+
+\subsection{冻结的历史基线结果}
+
+在 C07--C10 的 180 个案例内重复条件中，M2 全部达到内部 G3 目标，平均成功成本为 4.5333；XGBoost、M3a、AFA-VOI 和公开 Depth-2 均未降低该聚合成本。C11 中，M2 为 45/45、平均成本 3.6667；XGBoost 和 Logistic 均为 3.0667，Depth-2 则在 1 个条件出现成功退化。C12 中，所有实现均保持零粒度越界，但策略排序再次变化，Depth-2 在该单一 G1 案例中与 Oracle 同为 0.8889。三层结果表明接口可以在不同上限下运行，却不支持固定策略排序跨来源泛化。
+
+在统一的 C07--C12 机器学习（ML）正式入口中，结果如表~\ref{tab:legacy-ml} 所示。这些数字使用历史相对成本，只能回答冻结实现下发生了什么，不能回答真实运营中哪个规划器更便宜。
+
+\begin{table*}[!t]
+  \caption{冻结的历史基线成本下的机器学习正式入口结果}
+  \label{tab:legacy-ml}
+  \centering
+  \publishtable
+  \begin{tabularx}{\textwidth}{@{}lCCCY@{}}
+    \toprule
+    \rowcolor{tableHeader}
+    \textbf{规划器} & \textbf{达标条件} & \textbf{成功率} & \makecell[c]{\textbf{成功条件下}\\\textbf{平均成本}} & \textbf{解释} \\
+    \midrule
+    XGBoost & 270/270 & 1.0000 & 3.8926 & 冻结训练、公开特征 \\
+    M2 & 270/270 & 1.0000 & 3.8704 & 透明部署锚点 \\
+    Logistic/M3b & 267/270 & 0.9889 & 4.0000 & 3 个失败均保留 \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}
+
+
+\subsection{单位成本对照}
+
+单位成本配置文件把每个非 STOP 动作成本固定为 1，因此平均成本等于平均动作数。三个正式入口得到表~\ref{tab:uniform-cost} 所示结果。
+
+\begin{table*}[!t]
+  \caption{单位成本口径下各正式入口的平均动作数}
+  \label{tab:uniform-cost}
+  \centering
+  \publishtable
+  \begin{tabularx}{\textwidth}{@{}lYCC@{}}
+    \toprule
+    \rowcolor{tableHeader}
+    \textbf{正式入口} & \textbf{规划器} & \textbf{达标条件} & \makecell[c]{\textbf{单位成本下}\\\textbf{平均成本}} \\
+    \midrule
+    \multirow{4}{*}{AFA}
+      & M2 & 270/270 & 1.7296 \\
+      & AFA-VOI Myopic & 270/270 & 1.7333 \\
+      & AFA-VOI Rollout-H3 & 270/270 & 1.7778 \\
+      & Oracle & 270/270 & 1.4852 \\
+    \addlinespace[2pt]
+    \cmidrule(lr){1-4}
+    \multirow{3}{*}{Depth-2}
+      & M2 & 270/270 & 1.7296 \\
+      & Depth-2 & 270/270 & 1.8963 \\
+      & Oracle & 270/270 & 1.4852 \\
+    \addlinespace[2pt]
+    \cmidrule(lr){1-4}
+    \multirow{5}{*}{ML}
+      & XGBoost & 270/270 & 1.6852 \\
+      & Logistic/M3b & 270/270 & 1.6630 \\
+      & M2 & 270/270 & 1.7296 \\
+      & M3a & 270/270 & 1.7333 \\
+      & Oracle & 270/270 & 1.4852 \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}
+
+
+成功闭环在单位成本口径下没有退化，但历史基线口径中 M2 略低于 XGBoost，单位成本口径中 XGBoost 与 Logistic/M3b 都低于 M2。该排序变化是成本口径敏感性的直接证据。单位成本口径仅衡量动作数；它既不证明学习器真实更省资源，也不能替代评分量表成本或实测成本。
+
+
+\subsection{阈值、相互印证机制与 \texorpdfstring{$\alpha$}{alpha} 稳健性}
+
+表~\ref{tab:governance-scan} 汇总参数治理扫描与动作序列稳定性。
+
+\begin{table*}[!t]
+  \caption{参数治理扫描与动作序列稳定性}
+  \label{tab:governance-scan}
+  \centering
+  \publishtable
+  \begin{tabularx}{\textwidth}{@{}YCCCC@{}}
+    \toprule
+    \rowcolor{tableHeader}
+    \textbf{治理项} & \textbf{变体数} & \makecell[c]{\textbf{M2 成功率}\\\textbf{范围}} & \makecell[c]{\textbf{最低动作序列}\\\textbf{一致率}} & \makecell[c]{\textbf{最大粒度}\\\textbf{越界率}} \\
+    \midrule
+    成本（历史基线/单位成本） & 2 & 1.0000--1.0000 & 0.9111 & 0 \\
+    G3 阈值网格 & 40 & 1.0000--1.0000 & 1.0000 & 0 \\
+    n 项证据中至少 k 项相互印证 & 6 & 1.0000--1.0000 & 0.8148 & 0 \\
+    M2 $\alpha$ & 7 & 1.0000--1.0000 & 0.8407 & 0 \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}
+
+
+因此可以说 M2 的内部达标与不越界在这些扫描中稳定；不能说动作选择或成本排序不受参数影响。阈值网格在当前六例上没有触发序列变化，主要因为冻结关键节点和支持上限主导达标；这不是阈值已获外部校准的证据。
+
+\subsection{预期效果与规划器先验}
+
+修正后的 W6 实验把规划器信念（planner belief）与执行可靠性分离。相对历史基线，开发实测基线（dev-measured base）在 C11 的 3 个重复条件使 M2 过早停止；将专家先验提高 25\% 修复这 3 个条件。仅改变 M2 不消费的通道信念字段不会改变结果，这一零效应是契约行为而不是先验稳健性证明。
+
+对实际消费通道先验的规划器，0.75 倍缩放使 AFA-VOI Myopic 在 C09 出现 2 个成功损失；Rollout-H3 的成功数不变，但动作序列在部分条件发生变化。Depth-2 出现 1 个成功损失和 1 个成功修复，聚合成功数相互抵消。1.25 倍缩放未改变 AFA 或 Depth-2 的动作和结果。M2 与 Oracle 不读取该规划器先验，因而保持不变。结论是低估通道可靠性会实质改变部分策略，而不是某个固定先验已经得到验证。
+
+\subsection{外部终点和人工构念准入门控}
+
+外部真实标签接口已实现，但 12 个案例中当前没有可接受的攻击主体/攻击活动真实标签或分析师效用记录；字段 \code{external_actor_accuracy} 因而标记为 \code{not_identifiable}。内部成功结果、G1--G3 或厂商标签均不能填补该空缺。
+
+第 1 轮中，27 个证据声明项和 27 个意图项具备来源独立的双人可比记录。证据声明支持度加权 $\kappa=-0.1455$；意图平均杰卡德系数为 0.3673、微平均 F1 为 0.4878，均未过预注册门槛。另 60 个粒度项目的 A/B 两组源文件 SHA-256 完全相同，故全部作废。第三人裁决不能把首轮一致性改写为通过；第 2 轮尚未启动。证据声明、意图和粒度因此仍是待验证工程构念。
+
+\newpage
+\section{讨论}
+
+\subsection{可以成立的主张}
+
+第一，本文已实现一个由来源声明、公开动作视图、通道执行、反馈、STOP 和可支持结论上限组成的调查控制闭环。第二，运行时允许列表和结果不变性测试使非预知器规划器不能通过主入口读取恢复集合、遮蔽信息、实际通道状态或标签。第三，六个来源异质的案例表明闭环可在 G3、G2 和 G1 上限下运行，并能保留自然降级。第四，参数治理将成本、阈值、相互印证机制、收益权重和先验从隐含常量转化为版本化、可审计和可配对比较的实验对象。
+
+\subsection{参数治理改变了什么}
+
+参数治理没有“找到更漂亮的一组数”，也没有回写旧结果。它改变的是证据标准：每个数必须有来源类型、版本和哈希；影响规划器可见字段（planner-visible fields）的配置文件必须先冻结再运行；比较必须逐条件配对；结果方向若只在单一口径成立，则只能报告为条件性结果。由此，论文的主要经验结论从“M2 成本最低”收缩为“闭环成功较稳定，但动作路径和成本排序依赖尚未完全外部校准的参数”。这一较弱结论更符合现有证据。
+
+\subsection{大语言模型与学习器的位置}
+
+大语言模型（LLM）可以用于模式约束（schema-constrained）的离线证据声明编译、来源解释和异常提示，学习器可以在公开特征上估计动作价值。但在来源真实性、构念复现和外部终点未关闭前，它们都不应获得不可审计的在线权限。当前 XGBoost 和 Logistic 结果说明学习器可以接入统一契约；单位成本口径下的排序又说明其表现必须与成本口径共同解释，而不能凭模型类型获得普遍优势。
+
+\newpage
+\section{结论}
+
+本文把不完整证据下的 APT 前置调查定义为信息边界约束的序贯控制问题：规划器依据公开且版本化的证据缺口状态、动作目标、成本和先验选择证据采集动作或 STOP，执行器随后返回新增证据或零收益反馈，最终输出由来源和可支持结论上限约束。六个独立案例上的 270 个案例内重复条件表明，该闭环在历史基线与单位成本口径下都能维持较高内部成功；同时，成本排序、动作路径和部分规划器的成功会随成本与先验变化。
+
+\section*{数据与代码可用性}
+
+原始 DARPA、OTRF 和生产 SOC 衍生数据受各自发布与访问条件约束，仓库不重新分发受限大体量原始数据。
+
+案例配置、来源指针、配置文件模式（profile schema）、配置文件标识符（profile ID）、版本和 SHA-256 摘要、运行契约、正式结果、配对审计和回归测试保存在 GitHub 代码仓库。统一审计清单位于 \path{09-experiments/results/nonhuman_completion_audit_v0.1/}。对任何结果复现，必须同时报告独立案例数、重复条件定义、成本配置文件和运行契约；不得只复制汇总数据文件（CSV）而省略配置文件哈希。
+
+
+\balance
+\renewcommand{\refname}{References}
+\begin{thebibliography}{99}
+\small
+
+\bibitem{depcomm}
+Zhiqiang Xu; Pengcheng Fang; Changlin Liu; Xiangyu Xiao; Yinqian Wen; Dinghao Meng. (2022). DEPCOMM: graph summarization on system audit logs for attack investigation. DOI: \url{https://doi.org/10.1109/SP46214.2022.9833632}
+
+\bibitem{prographer}
+Fan Yang; Jiacen Xu; Chunlin Xiong; Zhou Li; Kehuan Zhang. (2023). PROGRAPHER: an anomaly detection system based on provenance graph embedding. USENIX Security 2023. \url{https://www.usenix.org/conference/usenixsecurity23/presentation/yang-fan}
+
+\bibitem{kairos}
+Zijun Cheng; Qiujian Lv; Jinyuan Liang; Yan Wang; Degang Sun; Thomas Pasquier; Xueyuan Han. (2024). Kairos: practical intrusion detection and investigation using whole-system provenance. DOI: \url{https://doi.org/10.1109/SP54263.2024.00005}
+
+\bibitem{magic}
+Jia, Zian; Xiong, Yun; Nan, Yuhong; Zhang, Yao; Zhao, Jinjing; Wen, Mi. (2024). MAGIC: Detecting Advanced Persistent Threats via Masked Graph Representation Learning. 33rd USENIX Security Symposium (USENIX Security 24), pp. 5197--5214. \url{https://www.usenix.org/conference/usenixsecurity24/presentation/jia-zian}
+
+\bibitem{poirot}
+Milajerdi, Sadegh M.; Eshete, Birhanu; Gjomemo, Rigel; Venkatakrishnan, V. N. (2019). POIROT: Aligning Attack Behavior with Kernel Audit Records for Cyber Threat Hunting. DOI: \url{https://doi.org/10.1145/3319535.3363217}
+
+\bibitem{extractor}
+Kiavash Satvat; Rigel Gjomemo; V. N. Venkatakrishnan. (2021). EXTRACTOR: extracting attack behavior from threat reports. DOI: \url{https://doi.org/10.1109/EuroSP51992.2021.00046}
+
+\bibitem{cliprov}
+Li, Jingwen; Zhang, Ru; Liu, Jianyi; Zhao, Wanguo. (2025). CLIProv: A Contrastive Log-to-Intelligence Multimodal Approach for Threat Detection and Provenance Analysis. arXiv: \url{https://arxiv.org/abs/2507.09133}
+
+\bibitem{aptcglp}
+Qiu, Xuebo; Lv, Mingqi; Zhang, Yimei; Chen, Tieming; Zhu, Tiantian; Song, Qijie; Ji, Shouling. (2025). APT-CGLP: Advanced Persistent Threat Hunting via Contrastive Graph-Language Pre-Training. arXiv: \url{https://arxiv.org/abs/2511.20290}
+
+\bibitem{mezzi}
+Emanuele Mezzi; Fabio Massacci; Katja Tuma. (2025). Large language models are unreliable for cyber threat intelligence. arXiv: \url{https://arxiv.org/abs/2503.23175}
+
+\bibitem{vandhorst}
+Max Van Der Horst; Ricky Kho; Olga Gadyatskaya; Michel Mollema; Michel Van Eeten; Yury Zhauniarovich. (2025). High stakes, low certainty: evaluating the efficacy of high-level indicators of compromise in ransomware attribution. USENIX Security 2025. \url{https://www.usenix.org/conference/usenixsecurity25/presentation/van-der-horst}
+
+\bibitem{afasurvey}
+Aronsson, Linus; Rahbar, Arman; Chehreghani, Morteza Haghir. (2025). A Survey on Active Feature Acquisition Strategies. arXiv: \url{https://arxiv.org/abs/2502.11067}
+
+\bibitem{valancius}
+Valancius, Michael; Lennon, Maxwell; Oliva, Junier. (2024). Acquisition Conditioned Oracle for Nongreedy Active Feature Acquisition. Proceedings of the 41st International Conference on Machine Learning, 235, pp. 48957--48975. \url{https://proceedings.mlr.press/v235/valancius24a.html}
+
+\bibitem{nocta}
+Dinh, Dzung; Chen, Boqi; Qu, Yunni; Niethammer, Marc; Oliva, Junier. (2025). NOCTA: Non-Greedy Objective Cost-Tradeoff Acquisition for Longitudinal Data. arXiv: \url{https://arxiv.org/abs/2507.12412}
+
+\bibitem{afabench}
+Schütz, Valter; Wu, Han; Rezvan, Reza; Aronsson, Linus; Haghir Chehreghani, Morteza. (2026). AFABench: A Generic Framework for Benchmarking Active Feature Acquisition. Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining. DOI: \url{https://doi.org/10.1145/3770855.3817493}
+
+\bibitem{registryrl}
+Ghanem, Mohamed Chahine; Wojtczak, Dominik; Benkhelifa, Elhadj; Kheddar, Hamza; Nepomuceno, Erivelton G.; Li, Wanpeng. (2026). Leveraging Reinforcement Learning for an Efficient Windows Registry Analysis during Cyber Incident Response. Scientific Reports. DOI: \url{https://doi.org/10.1038/s41598-026-57787-6}
+
+\bibitem{turney}
+Turney, Peter D. (2000). Types of Cost in Inductive Concept Learning. Proceedings of the Workshop on Cost-Sensitive Learning at ICML 2000, pp. 15--21.
+
+\bibitem{saar}
+Saar-Tsechansky, Maytal; Melville, Prem; Provost, Foster. (2009). Active Feature-Value Acquisition. Management Science, 55(4), pp. 664--684. DOI: \url{https://doi.org/10.1287/mnsc.1080.0952}
+
+\bibitem{howard}
+Howard, Ronald A. (1966). Information Value Theory. IEEE Transactions on Systems Science and Cybernetics, 2(1), pp. 22--26. DOI: \url{https://doi.org/10.1109/TSSC.1966.300074}
+
+\bibitem{rfc3227}
+Brezinski, Dominique; Killalea, Tom. (2002). Guidelines for Evidence Collection and Archiving. Internet Engineering Task Force. DOI: \url{https://doi.org/10.17487/RFC3227}
+
+\bibitem{nist}
+Kent, Karen; Chevalier, Suzanne; Grance, Tim; Dang, Hung. (2006). Guide to Integrating Forensic Techniques into Incident Response. National Institute of Standards and Technology. DOI: \url{https://doi.org/10.6028/NIST.SP.800-86}
+
+\end{thebibliography}
+
+\end{document}

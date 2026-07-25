@@ -1,0 +1,195 @@
+{
+  "schema_version": "project05-llm-editor-l2-bounded-lineage-audit-contract-v0.1",
+  "frozen_date": "2026-07-22",
+  "authority_base_commit": "a96730b5f7caf05a46e4198ab23c0281c7c3e273",
+  "status": "frozen_before_payload_lineage_audit",
+  "purpose": "Assess source-native lineage grouping feasibility for CAM-LDS and SOCBED without using labels, supervision fields, semantic event content, or model outputs.",
+  "scope": {
+    "authorized_families": [
+      "ait_cam_lds_manifestations_filtered",
+      "fkie_socbed_acsac2021_winlogbeat"
+    ],
+    "lineage_only_payload_read_authorized": true,
+    "label_read_authorized": false,
+    "supervision_generation_authorized": false,
+    "normalization_generation_authorized": false,
+    "family_role_change_authorized": false,
+    "quota_status_change_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "hdfs_replacement_authorized": false,
+    "cert_or_iot23_download_authorized": false,
+    "l2_gate_passed": false
+  },
+  "global_read_policy": {
+    "archive_central_directory_fields_allowed": [
+      "member_path",
+      "is_directory",
+      "compressed_bytes",
+      "uncompressed_bytes",
+      "crc32"
+    ],
+    "payload_scalar_fields_allowed": [
+      "@timestamp",
+      "timestamp",
+      "ts",
+      "host.name",
+      "hostname",
+      "host",
+      "agent.hostname",
+      "agent.name",
+      "observer.hostname"
+    ],
+    "plain_text_prefix_fields_allowed": [
+      "timestamp_prefix",
+      "hostname_token"
+    ],
+    "forbidden_path_tokens": [
+      "label",
+      "labels",
+      "answer",
+      "answers",
+      "ground_truth",
+      "ground-truth",
+      "technique",
+      "techniques",
+      "sequence",
+      "sequences",
+      "attacker"
+    ],
+    "forbidden_field_tokens": [
+      "label",
+      "labels",
+      "class",
+      "target",
+      "ground_truth",
+      "groundtruth",
+      "answer",
+      "attack",
+      "technique",
+      "tactic",
+      "actor",
+      "malware",
+      "decision",
+      "supported",
+      "gold"
+    ],
+    "forbidden_semantic_fields": [
+      "message",
+      "event.original",
+      "event.code",
+      "process",
+      "process.command_line",
+      "winlog.event_data",
+      "source.ip",
+      "destination.ip",
+      "file.path",
+      "registry",
+      "user",
+      "observation_candidates",
+      "null_eligible_candidate"
+    ],
+    "forbidden_field_precedence": "A forbidden path or field token overrides every allowlist entry.",
+    "raw_values_persisted": false,
+    "allowed_persisted_values": [
+      "archive hashes",
+      "member counts and byte counts",
+      "hashed collection, step, host, and run identifiers",
+      "timestamp parse counts",
+      "timestamp interval summaries",
+      "group cardinalities",
+      "structural consistency booleans",
+      "verdicts and reasons"
+    ],
+    "fail_closed_rules": [
+      "Abort the family audit if the archive SHA-256 does not match the frozen value.",
+      "Skip any member outside the frozen path allowlist.",
+      "Do not widen the field allowlist when an expected timestamp or host field is absent.",
+      "Do not open any member whose normalized path contains a forbidden token.",
+      "Do not persist raw paths, hostnames, timestamps at sub-day precision, or event text.",
+      "Do not infer an independent run from arbitrary row counts or arbitrary time windows."
+    ]
+  },
+  "families": [
+    {
+      "source_family_id": "ait_cam_lds_manifestations_filtered",
+      "archive": {
+        "path_suffix": "public_sources/ait_cam_lds_manifestations_filtered/raw/manifestations_filtered.zip",
+        "sha256": "BA824F500AF6D64925792D6A693E54AFB761D1CFB5FE515EFB2206035772BADE",
+        "maximum_archive_bytes": 213771977,
+        "maximum_member_uncompressed_bytes": 33554432,
+        "maximum_payload_members_read": 2000,
+        "maximum_payload_bytes_read": 134217728
+      },
+      "member_allowlist": {
+        "required_path_markers": ["steps", "logs"],
+        "allowed_suffixes": [".log", ".json", ".jsonl", ".txt"],
+        "forbidden_path_markers": [
+          "techniques",
+          "sequences",
+          "configs",
+          "attacker",
+          "facts.json",
+          "eve.json"
+        ]
+      },
+      "deterministic_sampling": {
+        "unit": "step_anchor",
+        "rule": "For every step_anchor, select the lexicographically first and last eligible member; if identical, read it once. Stop fail-closed if the global member or byte cap would be exceeded.",
+        "maximum_members_per_step_anchor": 2,
+        "maximum_lines_per_member": 256
+      },
+      "grouping_rule": {
+        "collection_anchor": "Normalized path prefix before the first /steps/ segment.",
+        "step_anchor": "Normalized path prefix before the first /logs/ segment, including the collection anchor and source-native step path.",
+        "host_scope": "First directory component after /logs/ when present; otherwise missing.",
+        "lineage_candidate_key": "collection_anchor",
+        "repeated_measure_key": "step_anchor",
+        "independence_rule": "Multiple steps or hosts under one collection_anchor are repeated views of one candidate lineage, never independent replicates.",
+        "verified_independent_rule": "This bounded audit may report source-native collection candidates and structural coherence only. It cannot mark CAM-LDS collection anchors as statistically independent runs without external run/reset metadata."
+      }
+    },
+    {
+      "source_family_id": "fkie_socbed_acsac2021_winlogbeat",
+      "archive": {
+        "path_suffix": "public_sources/fkie_socbed_acsac2021_winlogbeat/raw/dataset.zip",
+        "sha256": "7EDA65F08BBE6F274C1FEFF178AE132CFD0E8EDBDF0A10EF08321259B6FACC54",
+        "maximum_archive_bytes": 77984817,
+        "maximum_member_uncompressed_bytes": 268435456,
+        "maximum_payload_members_read": 40,
+        "maximum_payload_bytes_read": 2147483648
+      },
+      "member_allowlist": {
+        "path_regex": "(?i)(?:^|/)winlogbeat_([0-9]+)\\.jsonl$",
+        "allowed_suffixes": [".jsonl"]
+      },
+      "deterministic_sampling": {
+        "unit": "eligible_member",
+        "rule": "Read at most the first 512 records of every eligible member and retain only allowlisted timestamp/host scalars.",
+        "maximum_lines_per_member": 512
+      },
+      "grouping_rule": {
+        "run_key": "Numeric suffix captured from winlogbeat_<run>.jsonl.",
+        "view_key": "Normalized parent directory of the eligible member.",
+        "lineage_candidate_key": "run_key across all parent-directory views",
+        "independence_rule": "All files sharing one run_key form one run candidate, not multiple replicates. Distinct run suffixes remain candidate runs until structural and temporal checks pass.",
+        "structural_gate": "Each run_key must have exactly one eligible file in each distinct parent-directory view, with no duplicate path or duplicate member hash.",
+        "temporal_gate": "Every view must yield at least one parseable timestamp and the sampled day sets for views in one run must intersect. Distinct run keys with identical view-level content hashes or identical sampled timestamp signatures are flagged and not independently counted.",
+        "verified_independent_rule": "Passing structural and temporal gates establishes a bounded source-native run group, not statistical independence from shared testbed state. Independent-lineage quota remains unchanged by this audit."
+      }
+    }
+  ],
+  "output_contract": {
+    "machine_report_path": "docs/llm-editor/llm-editor-v0.8-l2-cam-socbed-bounded-lineage-audit-result-v0.1-20260722.json",
+    "human_report_path": "docs/llm-editor/llm-editor-v0.8-l2-cam-socbed-bounded-lineage-audit-result-v0.1-20260722.md",
+    "raw_generation_output_allowed": false,
+    "raw_payload_excerpt_allowed": false,
+    "raw_member_path_allowed": false,
+    "raw_hostname_allowed": false,
+    "role_change_allowed": false,
+    "quota_change_allowed": false,
+    "l2_gate_change_allowed": false
+  }
+}

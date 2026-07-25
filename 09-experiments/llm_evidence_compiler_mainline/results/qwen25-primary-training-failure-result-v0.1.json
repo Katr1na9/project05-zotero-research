@@ -1,0 +1,116 @@
+{
+  "schema_version": "project05-qwen25-primary-training-failure-result-lock-v0.1",
+  "result_id": "project05-qwen25-primary-training-failure-result-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-19",
+  "status": "failed_primary_capacity_gate_no_checkpoint",
+  "source_audits": {
+    "failure": {
+      "local_gitignored_path": ".local-qwen25-smoke/local-output/primary-v0.1/primary-training-failure-v0.1.json",
+      "bytes": 841,
+      "sha256": "D18D4A58875C45602D2ADF767345D5234D9B5D8286D2881D5169F785B2222DEB",
+      "committed": false
+    },
+    "progress": {
+      "local_gitignored_path": ".local-qwen25-smoke/local-output/primary-v0.1/primary-training-progress-v0.1.jsonl",
+      "bytes": 699,
+      "sha256": "A7CECF88D484B790AA533731B6E20DB899283DA95E28A5722A55A07A988465FF",
+      "committed": false
+    }
+  },
+  "contract_lock": {
+    "execution_authority_sha256": "5DADC3CFD6DCC4805767F516364DC493CBDEA633C8FF508BB7A43A99C04EF397",
+    "primary_training_contract_sha256": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "training_config_sha256": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD",
+    "preflight_audit_sha256": "56BA67995A5CA5A0FEEAE3CAAF780F0A65A678B54579C213F5BA1CB5F1C7DF73"
+  },
+  "attempt": {
+    "execution_count": 1,
+    "fresh_run": true,
+    "automatic_restart_used": false,
+    "completed_epochs": 0,
+    "microbatches_completed": 48,
+    "optimizer_steps_completed": 3,
+    "optimizer_steps_planned": 225,
+    "elapsed_seconds": 328.28199999999924,
+    "checkpoint_epochs": [],
+    "checkpoint_count": 0,
+    "adapter_saved": false,
+    "final_training_audit_written": false
+  },
+  "failure_gate": {
+    "failure_type": "ValueError",
+    "failure_message": "operational peak GPU memory exceeds the frozen limit",
+    "frozen_peak_reserved_vram_limit_bytes": 11274289152,
+    "last_accepted_recorded_peak_reserved_vram_bytes": 11249123328,
+    "last_accepted_margin_bytes": 25165824,
+    "exceeding_step": 3,
+    "exceeding_peak_reserved_vram_bytes_recorded": false,
+    "gate_action": "immediate_stop_without_automatic_retry",
+    "passed": false
+  },
+  "recorded_steps_before_failure": [
+    {
+      "optimizer_step": 1,
+      "epoch": 1,
+      "loss_mean_for_step": 0.5986944139003754,
+      "gradient_norm": 1.6828999519348145,
+      "peak_reserved_vram_bytes": 11240734720,
+      "elapsed_seconds": 110.06299999999828
+    },
+    {
+      "optimizer_step": 2,
+      "epoch": 1,
+      "loss_mean_for_step": 0.6697899345308542,
+      "gradient_norm": 1.8846434354782104,
+      "peak_reserved_vram_bytes": 11249123328,
+      "elapsed_seconds": 166.875
+    }
+  ],
+  "post_failure_state": {
+    "gpu_memory_used_mib": 0,
+    "gpu_utilization_percent": 0,
+    "checkpoint_directories": 0,
+    "final_training_audit_exists": false,
+    "failure_manifest_exists": true
+  },
+  "privacy_and_scope": {
+    "raw_pair_payload_recorded": false,
+    "raw_generation_recorded": false,
+    "model_generation_calls": 0,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "m3_integrated": false,
+    "server_connected": false,
+    "paper_a_modified": false,
+    "merged_model_saved": false,
+    "hub_upload_used": false
+  },
+  "interpretation": {
+    "supported_claim": "The sole authorized local primary run exceeded the preregistered 10.5 GiB reserved-memory limit during optimizer step 3 and stopped without producing an eligible checkpoint.",
+    "unsupported_claims": [
+      "primary_training_completed",
+      "adapter_checkpoint_exists",
+      "adapter_quality_improvement",
+      "checkpoint_selection_is_possible",
+      "formal_inference_performance",
+      "c07_c12_effectiveness",
+      "m3_integration_effect",
+      "paper_positive_result"
+    ],
+    "preflight_capacity_projection_was_not_a_completion_guarantee": true,
+    "this_is_not_a_model_quality_result": true
+  },
+  "next_gate": {
+    "status": "hard_stop_for_new_memory_amendment_and_explicit_retry_authorization",
+    "primary_training_authorized": false,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  }
+}

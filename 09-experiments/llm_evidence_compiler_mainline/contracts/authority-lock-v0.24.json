@@ -1,0 +1,133 @@
+{
+  "authority_id": "project05-qwen25-primary-preflight-result-v0.24",
+  "version": "0.24.0",
+  "status": "task3_preflight_passed_task4_primary_training_closed",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "continue_task3_after_tasks_1_2",
+    "authorized_scope": "one_zero_step_primary_preflight_and_result_freeze_only",
+    "primary_training_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.23.json",
+    "sha256": "F7E41F7F1AE94DEEDC271AAA7C438FABA39C43ABEAEF4EE39C2570C81192C4B4"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-preflight-contract-v0.1.json": "3157AF193426778B745955698C49D936C63CA4AE4B424346A7DD1876360EDC39",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/preflight_qwen_qlora_primary.py": "4E83717C68DBE903975DA4DB0A4DCD4E6E72C024876AA7BAC4E0DABA06AFC337",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/run-local-preflight-v0.1.ps1": "2F65718592E372FD758D5FE929769BBD856CC26C2B150CA2DBB09F05CA84D6DE"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_primary_preflight.py": "08376F471F98174AF9E73EAE1222A35EC488693362FF6044E5878DB255BDDE87",
+    "09-experiments/tests/test_qwen_qlora_primary_preflight_result.py": "82B573FFF7309989F8FAAB1A313BD3CC675C72649BE536FF43013427FE1526D3"
+  },
+  "authoritative_results": {
+    "09-experiments/llm_evidence_compiler_mainline/results/qwen25-primary-preflight-result-v0.1.json": "C7FB9159DEB45FBBA00CB11DC26D7FDE5A98CE397B025677DF97047F5CA93B44"
+  },
+  "authoritative_documentation": {
+    "04-progress/llm-evidence-compiler-qwen25-primary-preflight-20260719.md": "3811A61E531FEA74ABA8695AA130230D302F0EC4214868172DCA63191BACA1F5"
+  },
+  "local_execution_audit": {
+    "path": ".local-qwen25-smoke/local-output/primary-preflight-v0.1.json",
+    "bytes": 4442,
+    "sha256": "56BA67995A5CA5A0FEEAE3CAAF780F0A65A678B54579C213F5BA1CB5F1C7DF73",
+    "gitignored": true,
+    "raw_payload_or_output_recorded": false
+  },
+  "preflight_result_gate": {
+    "execution_completed": true,
+    "execution_passed": true,
+    "zero_step": true,
+    "model_forward_calls": 0,
+    "generation_calls": 0,
+    "loss_calls": 0,
+    "backward_calls": 0,
+    "optimizer_objects_created": 0,
+    "optimizer_steps": 0,
+    "adapter_or_checkpoint_files_written": 0,
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "source_families": "4+2_disjoint",
+    "trainable_parameters": 40370176,
+    "total_parameters": 4393342464,
+    "trainable_ratio": 0.00918894357332759,
+    "trainable_ratio_maximum": 0.01,
+    "peak_reserved_vram_bytes": 10064232448,
+    "peak_reserved_vram_limit_bytes": 11274289152,
+    "conservative_projected_hours": 16.34762499999988,
+    "maximum_projected_hours": 24.0,
+    "projected_resource_bytes": 26186006603,
+    "maximum_resource_bytes": 30000000000,
+    "interpretation": "engineering_capacity_gate_only_not_a_training_or_quality_result"
+  },
+  "verification": {
+    "targeted_primary_smoke_preflight_and_result_tests": {
+      "tests_run": 51,
+      "passed": 51,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "adjacent_llm_compiler_regression": {
+      "tests_run": 149,
+      "passed": 145,
+      "skipped": 1,
+      "failures": 2,
+      "errors": 1,
+      "status": "existing_repository_conditions_outside_task3_diff",
+      "conditions": [
+        "citation_report_frozen_sha_mismatch",
+        "positive_remap_historical_records_root_missing",
+        "wp2_rule_snapshot_sidecar_sha_mismatch"
+      ],
+      "affected_paths_modified_by_task3": false
+    },
+    "local_audit_to_tracked_result_cross_check": "passed"
+  },
+  "scope_audit": {
+    "network_or_download_used": false,
+    "runtime_installed_or_changed": false,
+    "primary_training_run": false,
+    "checkpoint_written": false,
+    "paired_runner_implemented": false,
+    "formal_inference_run": false,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "m3_integrated": false,
+    "server_connected": false,
+    "paper_a_modified": false
+  },
+  "next_gate": {
+    "status": "hard_stop_for_explicit_task4_primary_training_authorization",
+    "primary_training_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "network_or_download",
+    "runtime_install_or_change",
+    "primary_training",
+    "checkpoint_generation_or_selection",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

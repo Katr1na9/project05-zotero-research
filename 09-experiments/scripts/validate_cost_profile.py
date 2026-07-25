@@ -17,7 +17,7 @@ EXPERIMENT_ROOT = ROOT / "09-experiments"
 DEFAULT_SCHEMA = EXPERIMENT_ROOT / "data_schema" / "cost_profile.schema.json"
 DEFAULT_EXAMPLES_DIR = EXPERIMENT_ROOT / "examples"
 DEFAULT_REAL_CASES_DIR = EXPERIMENT_ROOT / "real_cases"
-MVP_PATH = Path(__file__).with_name("run_mvp.py")
+MVP_PATH = Path(__file__).with_name("cost_profile_runtime.py")
 
 
 def load_json(path: Path) -> Any:
@@ -28,7 +28,7 @@ def load_json(path: Path) -> Any:
 def load_mvp() -> Any:
     spec = importlib.util.spec_from_file_location("project05_cost_profile_mvp", MVP_PATH)
     if spec is None or spec.loader is None:
-        raise ImportError(f"Cannot load simulator from {MVP_PATH}")
+        raise ImportError(f"Cannot load governed cost runtime from {MVP_PATH}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -158,6 +158,11 @@ def readiness_report(
         "action_count": len(actions),
         "pending_component_values": pending_components,
         "pending_measured_costs": pending_measured,
+        "volatility_treatment": (
+            profile.get("scoring", {}).get("volatility_treatment")
+            if regime == "rubric"
+            else None
+        ),
         "errors": structural_errors + coverage_errors + formal_errors,
     }
 

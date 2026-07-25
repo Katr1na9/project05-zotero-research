@@ -1,0 +1,443 @@
+{
+  "schema_version": "project05-llm-editor-l2-stgallen-smart-factory-metadata-candidate-review-v0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "a2a9204b8e40338d45f357aec999f4c767115550",
+  "authority_note": {
+    "observed_current_head": "a2a9204b8e40338d45f357aec999f4c767115550",
+    "resolution": "The committed v0.8 search artifact at current HEAD is the authority input. No checkout, reset, merge, or branch mutation was performed."
+  },
+  "review_type": "single_family_metadata_only_candidate_review",
+  "candidate_id": "stgallen_smart_factory_process_execution_sensor_traces_2024",
+  "candidate_status_before_review": "approved_for_separate_metadata_candidate_review_not_source_role",
+  "verdict": "approve_as_metadata_candidate_not_source_role",
+  "post_review_status": "metadata_candidate_pending_exact_bounded_dual_surface_acquisition_and_ground_truth_lineage_pointer_privacy_semantic_fit_review",
+  "candidate_risk_level": "high",
+  "verdict_ceiling": "approve_as_metadata_candidate_not_source_role",
+  "review_input": {
+    "search_artifact": "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.8-20260724.json",
+    "search_artifact_sha256": "3061a862e32aebcc4657417874392219fdae16aec35f50272848c959f9cfa939",
+    "search_artifact_state_at_review": "committed_at_authority_base",
+    "search_artifact_commit": "a2a9204b8e40338d45f357aec999f4c767115550",
+    "search_verdict": "approve_for_separate_metadata_candidate_review_not_source_role"
+  },
+  "scope": {
+    "metadata_only": true,
+    "official_registry_metadata_rechecked": true,
+    "zenodo_version_chain_rechecked": true,
+    "publication_registry_metadata_rechecked": true,
+    "github_repository_metadata_query_performed": true,
+    "matching_official_repository_binding_found": false,
+    "publication_full_text_read": false,
+    "repository_source_or_payload_read": false,
+    "payload_or_artifact_downloaded": false,
+    "text_json_bpmn_or_other_artifact_opened": false,
+    "artifact_record_or_member_content_read": false,
+    "private_gold_or_model_output_read": false,
+    "training_sample_generated": false,
+    "effective_catalog_written": false,
+    "family_role_changed": false,
+    "lineage_sample_or_quota_credit_awarded": false,
+    "baseline_or_fine_tuning_run": false,
+    "kernel_schema_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_commit_performed": false,
+    "git_push_performed": false
+  },
+  "source_identity": {
+    "title": "Dataset from a Smart Factory to evaluate a Semi-automated Approach to Detecting Process-Level Activities from Sensor Data",
+    "official_record": "https://zenodo.org/records/14441997",
+    "official_api_record": "https://zenodo.org/api/records/14441997",
+    "record_id": 14441997,
+    "record_revision": 8,
+    "record_created_at": "2024-12-13T11:12:45.713265+00:00",
+    "record_updated_at": "2025-07-09T07:08:04.380403+00:00",
+    "publication_date": "2024-12-13",
+    "doi": "10.5281/zenodo.14441997",
+    "concept_doi": "10.5281/zenodo.14441996",
+    "resource_type": "Dataset",
+    "datacite_state": "findable",
+    "datacite_publisher": "Zenodo",
+    "license_id": "CC-BY-4.0",
+    "license_uri": "https://creativecommons.org/licenses/by/4.0/legalcode",
+    "creator": {
+      "name": "Seiger, Ronny",
+      "orcid": "0000-0003-1675-2592"
+    },
+    "facility": "University of St.Gallen Fischertechnik Industry 9.0V smart factory model",
+    "collection_stack": [
+      "custom Python control software",
+      "Camunda Platform",
+      "Python Flask web services",
+      "10 Hz smart-factory sensor collection"
+    ],
+    "zenodo_version_count": 1,
+    "single_release_pinned_at_metadata_level": true,
+    "matching_official_repository_found": false,
+    "identity_gate_passed": true
+  },
+  "artifact_identity": {
+    "official_file_count": 6,
+    "official_total_bytes": 176571317,
+    "all_files_have_md5": true,
+    "files": [
+      {
+        "key": "camunda-activity.json",
+        "bytes": 1382197,
+        "checksum": "md5:6ec66ad7eddba76c7dedf28a86afb170",
+        "curator_role": "activity instance execution event log ground truth",
+        "candidate_role": "protected_ground_truth_exclude_from_model_view"
+      },
+      {
+        "key": "camunda-process.json",
+        "bytes": 111548,
+        "checksum": "md5:a56fb7b92ad99a8106ff3c75a2d94c6f",
+        "curator_role": "process instance execution event log ground truth",
+        "candidate_role": "protected_manifest_candidate_exclude_from_model_view"
+      },
+      {
+        "key": "storage_process.bpmn",
+        "bytes": 10597,
+        "checksum": "md5:135657b8811c65e0472463abc6ae19af",
+        "curator_role": "executable storage process model",
+        "candidate_role": "process_definition_not_execution_evidence"
+      },
+      {
+        "key": "test_tenhertz_log_20230411-103455.txt",
+        "bytes": 115149795,
+        "checksum": "md5:fe0af3675a35156a25c37c18d5e1d2c3",
+        "curator_role": "larger 10 Hz sensor dataset with several storage and production process executions",
+        "candidate_role": "hold_external_test_named_surface_exact_execution_count_unclosed"
+      },
+      {
+        "key": "production_process.bpmn",
+        "bytes": 15949,
+        "checksum": "md5:52991ff8d58878d6ef1ae94a9c8d3bf3",
+        "curator_role": "executable production process model",
+        "candidate_role": "process_definition_not_execution_evidence"
+      },
+      {
+        "key": "training_tenhertz_log_20230411-095748.txt",
+        "bytes": 59901231,
+        "checksum": "md5:1b310fe1bbbbe53511db015375df8a41",
+        "curator_role": "10 Hz sensor dataset containing five executions each of the storage and production processes",
+        "candidate_role": "narrowest_count_closed_future_model_surface_not_authorized"
+      }
+    ],
+    "description_to_key_mismatch": {
+      "curator_description_process_log_name": "camunda_process-instance.json",
+      "immutable_artifact_process_log_key": "camunda-process.json",
+      "curator_description_activity_log_name": "camunda_activity-instance.json",
+      "immutable_artifact_activity_log_key": "camunda-activity.json",
+      "mapping_verified": false,
+      "impact": "A future audit must verify that the shorter immutable keys are the ground-truth objects described by the curator; names may not be silently equated."
+    },
+    "artifact_identity_gate_passed": true,
+    "artifact_content_verified": false,
+    "download_authorized": false
+  },
+  "associated_publication": {
+    "title": "A semi-automated approach to detecting process-level activities from sensor data",
+    "doi": "10.1016/j.procs.2025.03.110",
+    "publication_type": "journal-article",
+    "venue": "Procedia Computer Science",
+    "publisher": "Elsevier BV",
+    "publication_year": 2025,
+    "crossref_author_set": [
+      "Luciano Garcia-Banuelos",
+      "Mauricio Jacobo Gonzalez Gonzalez",
+      "Ronny Seiger",
+      "Marco Franceschetti",
+      "Alejandra Guadalupe Silva Trujillo"
+    ],
+    "version_of_record_license": "CC-BY-4.0",
+    "publication_to_dataset_binding": "The Zenodo curator description explicitly names the publication and DOI.",
+    "publication_identity_gate_passed": true,
+    "publication_full_text_read": false,
+    "scientific_implication": "The publication identity supports a process-activity detection research use case. It does not establish suitability for security incident evidence, LLM semantic editing, independent lineage, protected-field isolation, or pointer recoverability."
+  },
+  "curator_execution_declaration": {
+    "declared_storage_process_executions_in_training_sensor_log": 5,
+    "declared_production_process_executions_in_training_sensor_log": 5,
+    "declared_total_process_executions_in_training_sensor_log": 10,
+    "declared_test_sensor_log_execution_count": null,
+    "declared_test_sensor_log_wording": "several executions of the storage and production processes",
+    "candidate_source_native_execution_unit": "one Camunda-controlled storage or production process instance execution",
+    "process_type_is_not_counted_as_an_execution": true,
+    "sensor_row_is_not_counted_as_an_execution": true,
+    "timestamp_or_date_window_is_not_counted_as_an_execution": true,
+    "station_component_sensor_or_actuator_view_is_not_counted_as_an_execution": true,
+    "minimum_four_curator_declared_execution_gate_passed": true,
+    "metadata_candidate_group_count": 10
+  },
+  "execution_group_and_lineage_assessment": {
+    "camunda_process_instance_execution_log_declared": true,
+    "camunda_activity_instance_execution_log_declared": true,
+    "stable_source_native_process_instance_identifier_verified": false,
+    "exact_ten_process_instances_verified_in_manifest": false,
+    "one_process_instance_to_one_complete_sensor_interval_verified": false,
+    "process_instance_start_and_end_boundary_verified": false,
+    "process_instance_completion_status_verified": false,
+    "duplicate_retry_partial_abort_and_reset_policy_verified": false,
+    "same_factory_repeated_system_nuisance_policy_verified": false,
+    "storage_and_production_interleaving_policy_verified": false,
+    "sensor_row_timestamp_station_component_activity_or_process_type_may_define_lineage": false,
+    "metadata_candidate_group_count": 10,
+    "verified_independent_lineage_count": null,
+    "lineage_gate_passed": false,
+    "lineage_credit_awarded": 0,
+    "fail_closed_rule": "Until a protected manifest audit establishes ten stable opaque process-instance identifiers, complete non-overlapping sensor intervals, and duplicate, retry, partial, abort, reset, and repeated-system policies, the source remains uncredited and cannot be split into lineages."
+  },
+  "external_split_and_ground_truth_isolation": {
+    "curator_files_named_training_and_test": true,
+    "curator_training_name_inherited_as_project05_train_role": false,
+    "curator_test_name_inherited_as_project05_development_or_test_role": false,
+    "historical_external_split_may_be_reused_without_review": false,
+    "camunda_process_log_declared_ground_truth": true,
+    "camunda_activity_log_declared_ground_truth": true,
+    "ground_truth_is_physically_separate_at_top_level_file_identity": true,
+    "ground_truth_absent_from_sensor_log_payload_verified": false,
+    "process_activity_station_or_stage_identity_absent_from_sensor_log_verified": false,
+    "ground_truth_allowed_in_model_input_prompt_or_target": false,
+    "ground_truth_allowed_to_generate_supervision_or_candidate_claims": false,
+    "ground_truth_allowed_as_pointer_surface": false,
+    "protected_manifest_use_requires_separate_authority": true,
+    "future_split_must_be_by_whole_verified_process_instance": true,
+    "sensor_row_timestamp_activity_station_component_or_process_type_split_permitted": false,
+    "label_and_ground_truth_physical_isolation_gate_passed": false,
+    "fail_closed_rule": "If process, activity, station, stage, completion, or other ground-truth identity cannot be physically excluded from the model-visible sensor surface while retaining source recoverability, the candidate must be rejected or downgraded."
+  },
+  "candidate_claim_ir_fit": {
+    "evidence_surface": "10 Hz JSON-like messages containing sensor, actuator, and additional component data from a controlled smart-factory process execution",
+    "endpoint_or_provenance_fit": "conditional_industrial_cyber_physical_execution_provenance",
+    "security_incident_telemetry": false,
+    "real_malware_or_apt_evidence": false,
+    "potential_visible_entities": [
+      "smart-factory component",
+      "sensor",
+      "actuator",
+      "timestamp",
+      "reported or measured state",
+      "reported or measured value"
+    ],
+    "potential_candidate_relations": [
+      "component_reported_sensor_state",
+      "component_reported_actuator_state",
+      "sensor_reported_value_at_time",
+      "candidate_process_activity_hypothesis"
+    ],
+    "trusted_modality_requirement": "Observed, reported, derived, and hypothesized status must be supplied by trusted source metadata and guards; the LLM may not promote an inferred process activity to observed evidence.",
+    "candidate_q_boundary": "A process-activity interpretation may only be emitted as a candidate q or conditional hypothesis until separately admitted by rules or a checker outside the LLM.",
+    "relation_and_entity_presence_verified": false,
+    "canonical_predicate_mapping_verified": false,
+    "entity_type_mapping_verified": false,
+    "modality_mapping_verified": false,
+    "temporal_normalization_verified": false,
+    "candidate_q_support_verified": false,
+    "abstention_capacity_verified": false,
+    "llm_increment_over_rule_parser_verified": false,
+    "machine_readable_numeric_surface_may_favor_rule_or_reuse_compiler": true,
+    "scientific_limit": "Most declared input is already structured low-level telemetry. A future review must demonstrate that the LLM adds evidence-safe semantic normalization or candidate-q value beyond deterministic JSON parsing and rule/reuse compilation. Otherwise the family should remain engineering-only or be assigned to the rule compiler.",
+    "fit_for_metadata_candidate": true,
+    "fit_for_source_role": false
+  },
+  "pointer_assessment": {
+    "candidate_pointer_shape": "record DOI + immutable sensor artifact identity + opaque protected process-instance identifier + sensor message record locator",
+    "protected_binder_required": true,
+    "process_instance_identifier_verified": false,
+    "sensor_message_record_boundary_verified": false,
+    "process_instance_to_sensor_interval_mapping_verified": false,
+    "line_number_byte_offset_or_record_index_recoverability_verified": false,
+    "normalization_to_source_round_trip_verified": false,
+    "pointer_suggestion_precision_measurable_now": false,
+    "pointer_binding_authorized": false,
+    "pointer_gate_passed": false,
+    "fail_closed_rule": "The model may never copy or invent Camunda process-instance identifiers. A future binder must inject an opaque verified process identifier and preserve deterministic recovery to an allowed sensor record without exposing ground truth."
+  },
+  "rights_privacy_and_notice_assessment": {
+    "record_scope_license_verified": true,
+    "record_scope_license": "CC-BY-4.0",
+    "datacite_rights_consistent": true,
+    "publication_version_of_record_license_consistent": true,
+    "artifact_specific_or_embedded_notice_verified": false,
+    "third_party_camunda_bpmn_or_component_rights_verified": false,
+    "top_level_files_are_not_archives": true,
+    "nested_archive_notice_gate_applicable_now": false,
+    "field_level_notice_or_attribution_requirements_verified": false,
+    "human_personal_data_declared": false,
+    "timestamp_device_station_component_or_network_identifier_inventory_verified": false,
+    "secret_credential_url_or_environment_value_absence_verified": false,
+    "ordinary_sensor_or_ground_truth_content_read_at_metadata_stage": false,
+    "privacy_and_secret_gate_passed": false,
+    "notice_gate_passed": false,
+    "rights_gate_for_metadata_candidate": true,
+    "rights_gate_for_source_role": false
+  },
+  "portfolio_distinctness": {
+    "same_record_or_artifact_as_known_active_train_development_or_test_family": false,
+    "known_metadata_level_overlap_with_cert_or_iot23": false,
+    "known_metadata_level_overlap_with_reprod_pandacap_or_logchunks": false,
+    "known_metadata_level_overlap_with_beth_loghub_atomic_zeek_camlds_socbed": false,
+    "known_metadata_level_overlap_with_ait_lds": false,
+    "payload_exact_or_near_duplicate_audit_performed": false,
+    "curator_facility_process_or_sensor_overlap_audit_performed": false,
+    "modality": "controlled_industrial_smart_factory_sensor_and_process_execution",
+    "distinctness_verdict": "plausibly_distinct_at_metadata_level_but_payload_facility_process_and_nuisance_overlap_unverified",
+    "scientific_role_risk": "Distinct modality does not by itself justify a security evidence role. The source may be useful only for general executed-evidence semantics or candidate-q evaluation."
+  },
+  "future_bounded_acquisition_recommendation": {
+    "authorized_by_this_review": false,
+    "recommended_contract_type": "exact_bounded_dual_surface_acquisition_contract",
+    "model_candidate_surface": {
+      "target_key": "training_tenhertz_log_20230411-095748.txt",
+      "bytes": 59901231,
+      "checksum": "md5:1b310fe1bbbbe53511db015375df8a41",
+      "reason": "This is the only sensor surface with an exact curator-declared ten-execution count."
+    },
+    "protected_manifest_surface": {
+      "target_key": "camunda-process.json",
+      "bytes": 111548,
+      "checksum": "md5:a56fb7b92ad99a8106ff3c75a2d94c6f",
+      "reason": "This is the narrowest top-level object declared to contain process-instance execution ground truth. It must remain physically separate and never enter model view."
+    },
+    "excluded_from_first_acquisition": [
+      "camunda-activity.json",
+      "storage_process.bpmn",
+      "production_process.bpmn",
+      "test_tenhertz_log_20230411-103455.txt"
+    ],
+    "acquisition_semantics": "A future acquisition would only verify exact identity. It would not authorize opening either object, reading sensor or ground-truth content, assigning role, awarding credit, or generating samples.",
+    "requires_separate_user_authorization": true
+  },
+  "source_verification": {
+    "verified_primary_sources": [
+      {
+        "source": "Zenodo Records API record 14441997 revision 8",
+        "grade": "A_artifact_identity_curator_description_and_execution_count",
+        "supports": [
+          "record identity, revision, creator, facility, collection stack, and record-scope CC-BY-4.0 license",
+          "six exact artifact keys, byte sizes, and MD5 checksums",
+          "five storage and five production process executions in the training sensor log",
+          "Camunda process-instance and activity-instance logs as ground truth",
+          "10 Hz collection and the external training and test naming"
+        ]
+      },
+      {
+        "source": "Zenodo versions endpoint for concept record 14441996",
+        "grade": "A_version_chain",
+        "supports": [
+          "one published DOI version in the inspected version chain",
+          "concept DOI 10.5281/zenodo.14441996",
+          "revision-8 artifact identity"
+        ]
+      },
+      {
+        "source": "DataCite DOI metadata for 10.5281/zenodo.14441997",
+        "grade": "A_doi_rights_and_resource_identity",
+        "supports": [
+          "findable DOI",
+          "Zenodo publisher",
+          "CC-BY-4.0 rights identifier and legal-code URI"
+        ]
+      },
+      {
+        "source": "Crossref DOI metadata for 10.1016/j.procs.2025.03.110",
+        "grade": "A_publication_identity",
+        "supports": [
+          "publication title, authors, journal, publisher, and year",
+          "CC-BY-4.0 version-of-record license"
+        ]
+      }
+    ],
+    "non_contributory_check": {
+      "source": "GitHub repository search metadata",
+      "outcome": "no matching official repository returned for the focused curator and dataset query",
+      "used_for_official_repository_claim": false
+    },
+    "artifact_content_read": false,
+    "publication_full_text_read": false,
+    "repository_source_read": false
+  },
+  "evidence_inference_recommendation": {
+    "evidence": [
+      "Zenodo exposes one inspected DOI version, six top-level objects totaling 176571317 bytes, and an MD5 for every object.",
+      "Zenodo, DataCite, and the publication version-of-record consistently identify CC-BY-4.0 rights.",
+      "The curator explicitly states that the narrower sensor log contains five executions each of storage and production processes, yielding ten candidate executions without inferring count from rows, files, timestamps, sensor views, process types, or scenarios.",
+      "The curator explicitly describes the Camunda process and activity event logs as ground truth and keeps them in separate top-level objects.",
+      "No reviewed metadata proves the immutable process-instance IDs, one-to-one process-to-sensor interval mapping, completion, duplicate, retry, partial, reset, repeated-system nuisance, sensor-field label absence, privacy, notice, or pointer round trip.",
+      "The immutable Camunda file keys differ from the names used in the curator description and require explicit mapping verification.",
+      "The sensor surface is structured low-level telemetry, so LLM benefit over deterministic rule/reuse parsing is not established."
+    ],
+    "inference": [
+      "Immutable identity, consistent rights, and the curator-declared ten executions are sufficient to retain the family as a metadata candidate.",
+      "Ground-truth isolation is plausible because the declared ground truth is in separate files, but it is not passed until the sensor payload is shown not to contain process, activity, station, stage, completion, or other protected identity.",
+      "The candidate cannot receive source role, lineage, sample, quota, or pointer credit before a protected dual-surface audit.",
+      "The external training and test filenames have no authority over Project05 splits.",
+      "Even a technically successful audit would support only a controlled industrial process-execution role unless a separate scientific review establishes security relevance and measurable LLM semantic-editor value."
+    ],
+    "recommendation": [
+      "Retain approve_as_metadata_candidate_not_source_role.",
+      "Do not write the effective catalog, assign a role, award credit, download an object, or generate samples under the current authority.",
+      "If separately authorized, first freeze an exact bounded dual-surface acquisition contract for only the narrower sensor log and protected Camunda process manifest.",
+      "Before any ordinary content read, freeze independent readers, strict field and token caps, protected-ground-truth exclusion, privacy and notice probes, process-instance manifest rules, process-to-sensor binding, duplicate and reset policy, and pointer round-trip rules.",
+      "Fail closed if the sensor surface embeds protected process or activity identity, if ten stable complete process instances cannot be verified, if the protected manifest cannot remain outside model view, or if the LLM adds no defensible value beyond the rule/reuse compiler."
+    ]
+  },
+  "verdict_constraints": {
+    "approved_as_metadata_candidate": true,
+    "registered_in_effective_catalog": false,
+    "approved_as_source_role": false,
+    "approved_for_download": false,
+    "approved_for_artifact_or_payload_audit": false,
+    "approved_for_training_sample_generation": false,
+    "counts_as_family_now": false,
+    "counts_as_lineage_now": false,
+    "counts_as_samples_now": false,
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "metadata_identity_gate_passed": true,
+    "single_release_gate_passed": true,
+    "artifact_identity_gate_passed": true,
+    "record_scope_license_gate_passed": true,
+    "publication_binding_gate_passed": true,
+    "minimum_four_curator_declared_execution_gate_passed": true,
+    "metadata_candidate_approved": true,
+    "source_native_process_instance_identity_gate_passed": false,
+    "lineage_independence_gate_passed": false,
+    "duplicate_retry_partial_reset_and_repeated_system_gate_passed": false,
+    "ground_truth_physical_isolation_gate_passed": false,
+    "sensor_field_label_isolation_gate_passed": false,
+    "candidate_claim_ir_semantic_fit_gate_passed": false,
+    "llm_increment_over_rule_reuse_gate_passed": false,
+    "pointer_recoverability_gate_passed": false,
+    "notice_gate_passed": false,
+    "privacy_and_secret_gate_passed": false,
+    "protected_overlap_gate_passed": false,
+    "security_evidence_role_fit_gate_passed": false,
+    "source_role_approved": false,
+    "effective_catalog_write_authorized": false,
+    "download_authorized": false,
+    "family_role_change_authorized": false,
+    "family_lineage_sample_or_quota_credit_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  },
+  "step_self_check": {
+    "payload_artifact_or_compressed_object_downloaded_or_opened": false,
+    "sensor_ground_truth_bpmn_or_other_artifact_content_read": false,
+    "effective_catalog_written": false,
+    "role_or_quota_changed": false,
+    "training_sample_generated": false,
+    "baseline_or_fine_tuning_run": false,
+    "git_commit_or_push_performed": false,
+    "outputs_only_under_docs_llm_editor": true,
+    "result": "pass"
+  }
+}

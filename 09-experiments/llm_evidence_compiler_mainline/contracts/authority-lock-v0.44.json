@@ -1,0 +1,151 @@
+{
+  "authority_id": "project05-pointer-bound-constrained-model-free-implementation-v0.44",
+  "version": "0.44.0",
+  "status": "model_free_implementation_complete_dependency_and_execution_closed",
+  "created_date": "2026-07-20",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.44.json",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.43.json",
+    "sha256": "9564B571583F65CB5E47FA4C2DEC222B4ADA0C4DA11EB93C060462F3285E7616",
+    "disposition": "completed_negative_result_preserved_without_repair_or_rescore"
+  },
+  "hash_locked_artifacts": {
+    "redesign_amendment": {
+      "path": "08-writing/llm-evidence-compiler-pointer-bound-constrained-redesign-v0.44-20260720.md",
+      "sha256": "E7CD13008A52CDA6901E151A52EC53848908EC2051D6DA5D31324A1F9CD0219A"
+    },
+    "implementation_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-pointer-bound-constrained-atomic-contract-v0.1.json",
+      "sha256": "73A9230794AD93CB5956273A0BB6F8C412435BED12E758124672B942FB1A71B6"
+    },
+    "serialization_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/contracts/pointer-bound-serialization-contract-v0.1.json",
+      "sha256": "E47B5A0BA35B0DEC70A3BD9D718EA420A583CDE73813C73B5CA999C76EDB35C2"
+    },
+    "model_output_schema": {
+      "path": "09-experiments/data_schema/pointer_bound_compiler_output.schema.json",
+      "sha256": "B7E96A4C5F08AE5E98D857C9BB5B4F92F40A9736DE9BD56E2EAD342833047117"
+    },
+    "runtime_requirement": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/pointer_bound_atomic_v0.1/requirements-constrained-decoding-v0.1.txt",
+      "sha256": "AC4DE93B916DCABE276600D908C711958437B04401F8495B24C6093675DE94F1"
+    },
+    "config": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/pointer_bound_atomic_v0.1/pointer-bound-atomic-config-v0.1.json",
+      "sha256": "50C7B93D59413B43998CA4D24CC0309DC1CA4EFD1B1CD4ECB0C0692A0E3C0B55"
+    },
+    "pointer_binder": {
+      "path": "09-experiments/scripts/bind_pointer_bound_compiler_output.py",
+      "sha256": "064B587785F71363C13B142C3799930A17DF5A5C579F7AB19541BF0FFE41A74D"
+    },
+    "runner": {
+      "path": "09-experiments/scripts/run_qwen_pointer_bound_constrained_atomic.py",
+      "sha256": "3EC4F32F8C862748833E271B8AEE5184D3595D0DC6115513BA189CE0DA34A3C0"
+    },
+    "scorer": {
+      "path": "09-experiments/scripts/score_qwen_pointer_bound_constrained_atomic.py",
+      "sha256": "AF2DD23887EB60888925E5F5EA40A139369E37F14A250BD125D6C9C2984529CC"
+    },
+    "model_free_tests": {
+      "path": "09-experiments/tests/test_qwen_pointer_bound_constrained_atomic.py",
+      "sha256": "F680F7999DBEA757D79D00F0FB4E2B2E50780DEDA5BA4E647C617E06B6F04F9C"
+    }
+  },
+  "implementation_gate": {
+    "contract_sha256": "73A9230794AD93CB5956273A0BB6F8C412435BED12E758124672B942FB1A71B6",
+    "model_free_implementation_authorized": true,
+    "model_free_implementation_complete": true,
+    "dependency_install_authorized": false,
+    "model_execution_authorized": false,
+    "training_validation_payload_access_authorized": false,
+    "train_access_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "run_mvp_modification_authorized": false,
+    "paper_a_change_authorized": false
+  },
+  "frozen_method_changes": {
+    "model_output_pointer_removed": true,
+    "pointer_binding_owner": "trusted_program_only",
+    "constrained_decoder_required": true,
+    "unconstrained_fallback_allowed": false,
+    "positive_schema_and_f1_gate_precedes_macro_f1": true,
+    "checkpoint_eligibility_precedes_ranking": true,
+    "no_eligible_checkpoint_means_stop": true,
+    "v0_43_changed_or_rescored": false
+  },
+  "atomic_diagnostic": {
+    "split": "training-validation",
+    "examples": 16,
+    "model_calls": 32,
+    "conditions": [
+      "QWEN-GENERAL",
+      "QWEN-ADAPTED"
+    ],
+    "panel_seed": 2026072002,
+    "same_loaded_base_process_required": true,
+    "only_allowed_model_difference": "adapter_state",
+    "selected_adapter_remains_diagnostic_only": true,
+    "execution_count_under_this_authority": 0
+  },
+  "dependency_gate": {
+    "distribution": "lm-format-enforcer",
+    "version": "0.10.6",
+    "license": "Apache-2.0",
+    "isolated_install_below_authorized_server_root_required": true,
+    "transformers_4_45_2_compatibility_required": true,
+    "qwen_tokenizer_schema_parser_probe_required": true,
+    "two_branch_schema_eos_probe_required": true,
+    "dependency_download_or_install_authorized": false,
+    "new_authority_required": true
+  },
+  "result_gate": {
+    "supported_schema_valid_rate_overall_minimum": 0.5,
+    "supported_schema_valid_rate_each_family_minimum": 0.5,
+    "supported_f1_overall_and_each_family_must_be_positive": true,
+    "unsupported_f1_overall_and_each_family_must_be_positive": true,
+    "pointer_binding_integrity_rate_required": 1.0,
+    "macro_f1_override_allowed": false,
+    "passing_only_opens_s0_s3_design_consideration": true,
+    "passing_does_not_authorize_training_formal_test_or_mainline": true,
+    "both_conditions_fail_fallback": "RULE-STRONG_and_REUSE-HYBRID"
+  },
+  "privacy_and_scope": {
+    "raw_generation_server_only": true,
+    "raw_generation_download_authorized": false,
+    "checkpoint_or_adapter_download_authorized": false,
+    "training_validation_panel_identity_server_only": true,
+    "paper_positive_claim_authorized": false,
+    "controller_eligible": false
+  },
+  "next_gate": {
+    "status": "hard_stop_for_isolated_constrained_decoder_compatibility_preflight_authority",
+    "dependency_install_authorized": false,
+    "model_execution_authorized": false,
+    "s0_s3_data_design_authorized": false,
+    "new_qlora_training_authorized": false,
+    "development_or_test_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false
+  },
+  "not_authorized": [
+    "dependency_install_or_runtime_change",
+    "model_tokenizer_adapter_or_weight_download",
+    "pointer_bound_model_execution",
+    "second_v0_43_execution_or_old_output_rescore",
+    "automatic_retry_resume_repair_or_unconstrained_fallback",
+    "checkpoint_reselection_or_adapter_substitution",
+    "s0_s3_data_construction_or_new_qlora",
+    "train_split_access",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "raw_generation_checkpoint_or_adapter_download",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

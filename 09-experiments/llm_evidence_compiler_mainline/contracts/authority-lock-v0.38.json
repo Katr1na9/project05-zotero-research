@@ -1,0 +1,74 @@
+{
+  "authority_id": "project05-qwen25-rtx4090-formal-training-completion-v0.38",
+  "version": "0.38.0",
+  "status": "formal_training_passed_hard_stop_for_checkpoint_selection_authorization",
+  "created_date": "2026-07-20",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.37.json",
+    "sha256": "8D140DF15BB175E033BB068A9DA603C28A2DA223FB1B913DD33B333D828F39CC",
+    "disposition": "the_single_detached_fresh_primary_execution_completed_and_its_execution_quota_is_consumed"
+  },
+  "formal_result": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-adamw-detached-primary-success-audit-v0.1.json",
+    "sha256": "EF46A654F741DD521DA7922E01A559B7545EB501047C3594D2F808F006AE7AE5",
+    "remote_progress_sha256": "FA4BDFB4F055A2F386AB0A12062CB7B39025EBE36509BAE4E7F2C6A80FE72501"
+  },
+  "result_record": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-4090-formal-training-result-v0.38-20260720.md",
+    "sha256": "FA69DBB8CC971EE845A4E900AAFBCE18F0C5B2765A2C4793695B500F04DCCC03"
+  },
+  "completion_gate": {
+    "passed": true,
+    "status": "passed_single_4090_adamw_primary_adapter_training",
+    "completed_epochs": 3,
+    "optimizer_steps": 225,
+    "microbatches": 3600,
+    "checkpoint_epochs": [1, 2, 3],
+    "memory_gate_passed": true,
+    "resource_gate_passed": true,
+    "failure_audit_present": false,
+    "training_process_present_after_completion": false,
+    "gpu_released_after_completion": true,
+    "formal_result_eligible": true,
+    "adapter_effectiveness_proven": false
+  },
+  "next_gate": {
+    "status": "hard_stop_for_checkpoint_selection_and_evaluation_authorization",
+    "checkpoint_selection_authorized": false,
+    "training_validation_generation_authorized": false,
+    "paired_general_vs_adapted_evaluation_authorized": false,
+    "development_or_test_access_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "formal_inference_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false,
+    "required_selection_split": "training-validation",
+    "required_selection_examples": 300,
+    "required_primary_metric": "family_macro_support_decision_f1"
+  },
+  "artifact_policy": {
+    "checkpoint_and_adapter_location": "server_only",
+    "checkpoint_download_authorized": false,
+    "merged_model_save_authorized": false,
+    "hub_upload_authorized": false,
+    "committed_artifact": "sanitized_success_audit_only"
+  },
+  "not_authorized": [
+    "additional_training_or_resume",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "paired_general_vs_adapted_evaluation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "checkpoint_or_adapter_download",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "paper_positive_claim",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

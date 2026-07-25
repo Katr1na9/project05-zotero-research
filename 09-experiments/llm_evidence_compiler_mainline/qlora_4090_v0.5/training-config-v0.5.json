@@ -1,0 +1,65 @@
+{
+  "config_id": "project05-qwen25-qlora-4090-adamw-detached-primary-v0.5",
+  "version": "0.5.0",
+  "created_date": "2026-07-20",
+  "base_model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "base_resolved_commit": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "adapter_id": "Project05-Evidence-Compiler-Adapter-v0.1",
+  "adapter_key": "project05_obs_compiler",
+  "method": "qlora_causal_sft_single_rtx4090_adamw_primary",
+  "quantization": {"bits": 4, "type": "nf4", "double_quantization": true, "compute_dtype": "float16"},
+  "lora": {
+    "rank": 16, "alpha": 32, "dropout": 0.05, "bias": "none",
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  },
+  "data": {
+    "train_examples": 1200, "training_validation_examples": 300,
+    "train_source_families": 4, "training_validation_source_families": 2,
+    "supported_fraction": 0.5, "family_overlap_allowed": false
+  },
+  "sequence_length": 1024,
+  "allow_truncation": false,
+  "micro_batch_size": 1,
+  "gradient_accumulation_steps": 16,
+  "effective_batch_size": 16,
+  "epochs": 3,
+  "optimizer_steps": 225,
+  "optimizer_steps_per_epoch": 75,
+  "learning_rate": 0.0002,
+  "optimizer": "adamw_torch",
+  "optimizer_parameters": {"betas": [0.9, 0.999], "eps": 1e-8, "foreach": false, "fused": false, "capturable": false},
+  "weight_decay": 0.0,
+  "scheduler": {"name": "cosine", "warmup_ratio": 0.03, "warmup_steps": 7},
+  "gradient_checkpointing": true,
+  "maximum_gradient_norm": 1.0,
+  "seed": 2026071601,
+  "loss_mask": "assistant_target_only",
+  "checkpointing": {
+    "save_strategy": "epoch", "epochs": [1, 2, 3], "save_adapter": true,
+    "save_optimizer": true, "save_scheduler": true, "save_rng_state": true,
+    "maximum_checkpoint_count": 3
+  },
+  "hardware": {
+    "execution_target": "NVIDIA GeForce RTX 4090",
+    "minimum_compute_capability": [8, 9],
+    "minimum_total_vram_bytes": 24696061952,
+    "maximum_peak_allocated_bytes": 23622320128,
+    "minimum_synchronized_free_bytes": 1073741824,
+    "maximum_post_cleanup_reserved_bytes": 268435456,
+    "peak_reserved_is_diagnostic_only": true,
+    "cache_normalized_free_memory_gate": true
+  },
+  "resource_limits": {
+    "minimum_initial_disk_free_bytes": 32000000000,
+    "maximum_environment_cache_checkpoint_output_bytes": 34000000000,
+    "maximum_primary_wall_hours": 24,
+    "maximum_adapter_file_bytes": 1000000000
+  },
+  "output_policy": {
+    "run_subdirectory": "server-output/primary-adamw-detached-v0.37",
+    "adapter_only": true, "allow_merged_model": false, "allow_hub_upload": false,
+    "allow_raw_pair_payload_in_audit": false,
+    "allow_raw_generation_in_committed_audit": false,
+    "controller_eligible": false
+  }
+}

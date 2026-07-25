@@ -1,0 +1,130 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m0-structural-completion-disposition-v0.1-20260724",
+  "artifact_type": "m0_structural_completion_disposition",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "7d67898472bb616b29a1954f1ccb8e84548c9157",
+  "status": "draft_disposition_not_effective",
+  "disposition_code": "structural_compilation_complete_blocked_for_kernel_and_admission",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "certificate_surface": "vacant",
+    "claim_ir_schema_path": "schemas/claim-ir-external-envelope.schema.json",
+    "claim_ir_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "compiler_path": "src/compiler/llm/m0_rule_compiler.py",
+    "compiler_sha256": "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57",
+    "source_commit": "7d67898472bb616b29a1954f1ccb8e84548c9157"
+  },
+  "structural_completion": {
+    "compiler_implemented": true,
+    "schema_published": true,
+    "fail_closed_allowlist_enforced": true,
+    "draft202012_valid_package_errors": 0,
+    "m0_compiler_tests": {
+      "tests_run": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "schema_validation_test": {
+      "tests_run": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "run_report_path": ".tmp/m0-rule-compiler-run-v0.1/run-report.json",
+    "run_report_sha256": "c4de73cb1b7c776dbeb710833358871d50540c365bc497e1577e78935035ca70"
+  },
+  "fixture_observations": [
+    {
+      "fixture_id": "m0_valid_public_projection",
+      "fixture_kind": "valid",
+      "outcome": "accepted_structural",
+      "claim_count": 41,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema",
+      "claim_ids_null": true,
+      "package_emitted": true
+    },
+    {
+      "fixture_id": "m0_authority_leak_labels",
+      "fixture_kind": "authority_leak",
+      "outcome": "rejected",
+      "error_code": "forbidden_field",
+      "package_emitted": false
+    },
+    {
+      "fixture_id": "m0_authority_leak_hidden_claims",
+      "fixture_kind": "authority_leak",
+      "outcome": "rejected",
+      "error_code": "forbidden_field",
+      "package_emitted": false
+    },
+    {
+      "fixture_id": "m0_authority_leak_realized_outcome",
+      "fixture_kind": "authority_leak",
+      "outcome": "rejected",
+      "error_code": "forbidden_field",
+      "package_emitted": false
+    },
+    {
+      "fixture_id": "m0_authority_leak_oracle_mask",
+      "fixture_kind": "authority_leak",
+      "outcome": "rejected",
+      "error_code": "forbidden_field",
+      "package_emitted": false
+    }
+  ],
+  "current_package_states": {
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "certificate_surface": "vacant"
+  },
+  "blocked_gates": {
+    "claim_id_mint": {
+      "blocked": true,
+      "reason": "No separate mint authority; structural compilation emits claim_id=null only."
+    },
+    "kernel_ingestion": {
+      "blocked": true,
+      "reason": "pending_kernel_schema is a blocking state and does not authorize Kernel ingestion."
+    },
+    "admission": {
+      "blocked": true,
+      "reason": "Structural validity is not admission and grants no source role, lineage, quota, or credit."
+    },
+    "certificate": {
+      "blocked": true,
+      "reason": "certificate_surface remains vacant; no Checker, E_case, Promote, or STOP state exists."
+    }
+  },
+  "explicit_non_authorizations": {
+    "claim_id_mint": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m1_implementation": false,
+    "m2_implementation": false,
+    "push": false
+  },
+  "disposition_boundary": {
+    "structural_completion_claim": "M0 public-surface structural compilation and fail-closed fixture behavior are complete.",
+    "scientific_or_governance_claim": "This draft does not establish source role, train admission, certificate validity, Kernel acceptance, quota credit, or L2 completion.",
+    "review_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "effective": false
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

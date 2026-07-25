@@ -1,0 +1,195 @@
+{
+  "schema_version": "project05-llm-editor-l2-liwa-ad-telemetry-metadata-candidate-review-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "0f53540c1969e68c39988291c6f8cc3f93d02e9d",
+  "review_type": "single_family_metadata_only_train_candidate_review",
+  "candidate_id": "liwa_ad_endpoint_telemetry_30run_2026",
+  "candidate_status_before_review": "pending_metadata_candidate_review",
+  "verdict": "approve_as_metadata_candidate",
+  "post_review_status": "approved_metadata_candidate_pending_bounded_acquisition_authorization",
+  "candidate_risk_level": "high",
+  "scope": {
+    "official_metadata_read": true,
+    "zenodo_metadata_reverified": true,
+    "datacite_metadata_reverified": true,
+    "payload_downloaded": false,
+    "payload_opened": false,
+    "archive_member_names_read": false,
+    "archive_member_contents_read": false,
+    "private_gold_read": false,
+    "model_output_read": false,
+    "family_role_changed": false,
+    "counts_toward_train_family_quota": false,
+    "counts_toward_lineage_quota": false,
+    "counts_toward_sample_quota": false,
+    "bounded_download_authorized": false,
+    "manifest_or_lineage_audit_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_or_gamma_modified": false,
+    "m3_integrated": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false
+  },
+  "metadata_identity": {
+    "title": "Forensic Value of Enhanced Endpoint Telemetry in Active Directory Attack Detection: A Controlled Comparative Study",
+    "official_record": "https://zenodo.org/records/20618083",
+    "official_api_record": "https://zenodo.org/api/records/20618083",
+    "record_id": 20618083,
+    "record_revision": 7,
+    "doi": "10.5281/zenodo.20618083",
+    "concept_doi": "10.5281/zenodo.20618082",
+    "publication_date": "2026-06-10",
+    "creator": "Khan, Adil",
+    "creator_affiliation": "Liwa University",
+    "creator_orcid": "0000-0001-6269-1191",
+    "resource_type": "dataset",
+    "access_right": "open",
+    "license_id": "CC-BY-4.0",
+    "file_count": 1,
+    "archive_key": "Forensic Value of Enhanced Endpoint Telemetry in Active Directory Attack Detection A Controlled Co.zip",
+    "archive_bytes": 7357185,
+    "archive_mib_approx": 7.02,
+    "archive_checksum": "md5:94f2af6a756a0841126d51a55bd8fe85",
+    "datacite_state": "findable",
+    "datacite_publisher": "Zenodo",
+    "datacite_rights_identifier": "cc-by-4.0"
+  },
+  "official_metadata_verification": {
+    "verified_on": "2026-07-22",
+    "official_sources": [
+      "https://zenodo.org/api/records/20618083",
+      "https://doi.org/10.5281/zenodo.20618083",
+      "https://api.datacite.org/dois/10.5281/zenodo.20618083"
+    ],
+    "doi_title_year_match": true,
+    "license_cross_source_match": true,
+    "record_revision_verified": true,
+    "artifact_name_verified": true,
+    "artifact_size_verified": true,
+    "artifact_md5_verified": true,
+    "declared_attack_run_csv_count_verified_from_record_description": 30,
+    "archive_member_manifest_published_outside_archive": false,
+    "peer_reviewed_dataset_publication_established": false,
+    "payload_bytes_retrieved": false
+  },
+  "capacity_and_lineage_assessment": {
+    "metadata_declared_attack_run_csv_count": 30,
+    "metadata_declared_attack_types": [
+      "Kerberoasting",
+      "AS-REP Roasting",
+      "DCSync"
+    ],
+    "metadata_declared_logging_conditions": [
+      "native Windows Security channel",
+      "Sysmon plus Wazuh enhanced telemetry"
+    ],
+    "metadata_lineage_candidate_count": 30,
+    "verified_independent_lineage_count": null,
+    "minimum_required_independent_lineages_per_family": 4,
+    "lineage_quota_demonstrated": false,
+    "frozen_lineage_rule": "One source-declared attack-run CSV may contribute at most one lineage candidate. Two logging views of the same execution remain one lineage. Rows, attack types, logging conditions, screenshots, graph exports, file names, and arbitrary windows do not create additional lineage credit.",
+    "paired_view_and_template_risk": "Three attack types under two logging conditions may represent repeated scripted executions or paired views rather than 30 nuisance-independent lineages."
+  },
+  "evidence_shape_assessment": {
+    "metadata_declares_endpoint_telemetry": true,
+    "metadata_declares_windows_security_channel": true,
+    "metadata_declares_sysmon": true,
+    "metadata_declares_wazuh_alert_material": true,
+    "raw_event_rows_verified": false,
+    "detector_summary_only_risk": true,
+    "pointer_recoverability_verified": false,
+    "candidate_editor_sample_capacity_verified": false,
+    "benign_or_abstention_capacity_verified": false,
+    "positive_candidate_capacity_verified": false,
+    "modality_capacity_verified": false,
+    "null_or_benign_quota_credit_allowed": false
+  },
+  "mandatory_exclusion_contract": {
+    "contract_status": "frozen_for_any_future_acquisition_authorization",
+    "excluded_from_model_view_and_supervision": [
+      "Wazuh alert screenshots",
+      "BloodHound pre-remediation and post-remediation graphs",
+      "custom detection rules",
+      "Sysmon configuration",
+      "statistical analysis",
+      "attack and technique names as targets or path hints",
+      "ATT&CK identifiers",
+      "file names and directory names as supervision",
+      "any run label or condition label not present in the raw event itself"
+    ],
+    "model_visible_family_and_lineage_ids_must_be_opaque": true,
+    "path_or_archive_name_may_be_used_as_label": false,
+    "absence_of_alert_may_define_null": false,
+    "excluded_material_may_define_training_target": false,
+    "excluded_material_may_feed_validator_or_admission": false
+  },
+  "source_quality_assessment": {
+    "source_type": "official descriptive dataset release record",
+    "evidence_level_equivalent": "VI",
+    "metadata_identity_fitness_grade": "A",
+    "scientific_train_fitness_grade_before_payload_audit": "D",
+    "peer_review_status": "not_established_from_reviewed_official_metadata",
+    "predatory_journal_check": "not_applicable_dataset_record_not_journal_article",
+    "conflict_of_interest": "single_producer_self_deposited_dataset_and_study_description",
+    "coi_severity": "moderate_high",
+    "currency": "current",
+    "interpretation": "The official record is strong evidence for identity, license, revision, size, checksum, and the producer's declaration of 30 CSVs. It is weak evidence that those CSVs are raw pointer-recoverable execution telemetry, scientifically independent runs, or fit Candidate Claim IR examples."
+  },
+  "future_bounded_acquisition_and_audit_requirements": {
+    "requires_new_user_authorization": true,
+    "only_exact_single_archive_may_be_authorized": true,
+    "archive_key_size_and_md5_must_be_pinned": true,
+    "required_audit_steps": [
+      "Verify the exact 7,357,185-byte archive against MD5 94f2af6a756a0841126d51a55bd8fe85 before opening it.",
+      "Inspect the authorized archive manifest first and record member names, sizes, types, and nested notices without treating path labels as supervision.",
+      "Verify that the declared 30 CSVs exist and identify stable source-native run identifiers.",
+      "Determine whether CSV rows are raw Windows or Sysmon event telemetry with recoverable record pointers, or detector and statistical summaries only.",
+      "Pair native and enhanced views of the same execution into one lineage and detect scripted duplicates across attack types and conditions.",
+      "Physically isolate screenshots, BloodHound graphs, rules, configuration, statistics, attack labels, technique IDs, and path-derived labels before candidate sample inspection.",
+      "Do not create benign, null, or abstention examples from missing alerts or unreported ground truth.",
+      "Run exact and preregistered near-duplicate exclusion against protected E3, E5, OpTC, OTRF, and WitFoo material before sample construction.",
+      "Report family-by-lineage-by-modality-by-sample-kind capacity without awarding quota automatically."
+    ],
+    "fail_closed_outcomes": [
+      "reject_as_train_candidate_if_csvs_are_detector_or_statistical_summaries_without_recoverable_raw_event_pointers",
+      "reject_as_train_candidate_if_four_independent_execution_lineages_cannot_be_verified",
+      "engineering_only_if_only_screenshots_graphs_rules_or_alert_aggregates_are_usable",
+      "quarantine_if_nested_notice_scope_or_run_pairing_is_ambiguous"
+    ]
+  },
+  "verdict_rationale": {
+    "positive": [
+      "Zenodo and DataCite independently agree on DOI identity, title, year, and CC-BY-4.0 rights.",
+      "The fixed Zenodo revision publishes an exact archive name, byte size, and MD5.",
+      "The official record declares 30 attack-run CSVs across endpoint logging conditions, which is sufficient to justify a small, separately authorized manifest-first audit."
+    ],
+    "limitations": [
+      "The public metadata does not expose an archive-member manifest, so the 30 CSV identities and schemas have not been independently verified.",
+      "The title and description emphasize Wazuh detection performance, creating a substantial risk that the CSVs contain alert or statistical summaries rather than raw event evidence.",
+      "No peer-reviewed publication identifier was established from the reviewed official metadata surfaces.",
+      "No benign runs are declared, so the candidate receives no null, abstention, or benign quota credit.",
+      "Pointer recoverability, view pairing, independent lineage count, and Candidate Claim IR sample capacity remain unknown."
+    ],
+    "meaning": "approve_as_metadata_candidate records that the source identity is sufficiently pinned to justify asking for a separately authorized exact-archive acquisition and manifest/lineage audit. It is not train approval, role assignment, quota credit, payload access authorization, or L2 Gate passage."
+  },
+  "gate": {
+    "metadata_identity_gate_passed": true,
+    "metadata_candidate_approved": true,
+    "train_source_approved": false,
+    "family_role_change_applied": false,
+    "bounded_download_authorized": false,
+    "payload_access_authorized": false,
+    "manifest_or_lineage_audit_authorized": false,
+    "verified_independent_lineages": null,
+    "lineage_quota_demonstrated": false,
+    "counts_toward_train_family_quota": false,
+    "counts_toward_lineage_or_sample_quota": false,
+    "null_or_benign_quota_credit": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false,
+    "next_action_requires_separate_user_authorization": true
+  }
+}

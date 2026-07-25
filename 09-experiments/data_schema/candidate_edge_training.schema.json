@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schema/candidate_edge_training.schema.json",
+  "title": "Project05 pointer-bounded candidate-edge training example",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "example_id",
+    "split_role",
+    "source_family_id",
+    "source_modality",
+    "packet_key",
+    "source_record",
+    "candidate",
+    "support_decision",
+    "normalized_edge",
+    "pointer",
+    "reason_code",
+    "field_map_id",
+    "negative_proof"
+  ],
+  "properties": {
+    "schema_version": {"const": "project05-candidate-edge-training-v0.1"},
+    "example_id": {"type": "string", "pattern": "^CEDGE-[A-F0-9]{24}$"},
+    "split_role": {"enum": ["train", "training-validation"]},
+    "source_family_id": {"type": "string", "minLength": 1},
+    "source_modality": {"enum": ["endpoint_event", "network_event", "security_text"]},
+    "packet_key": {"type": "string", "minLength": 1},
+    "source_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "document_id",
+        "record_id",
+        "record_sha256",
+        "payload",
+        "provenance"
+      ],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "document_id": {"type": "string", "minLength": 1},
+        "record_id": {"type": "string", "minLength": 1},
+        "record_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+        "payload": {"type": "object"},
+        "provenance": {
+          "type": "object",
+          "required": ["license_id", "license_sha256", "source_file_sha256", "source_url"]
+        }
+      }
+    },
+    "candidate": {"$ref": "#/$defs/candidate"},
+    "support_decision": {
+      "enum": ["supported", "unsupported_by_bound_pointer", "abstain"]
+    },
+    "normalized_edge": {"oneOf": [{"$ref": "#/$defs/candidate"}, {"type": "null"}]},
+    "pointer": {"oneOf": [{"$ref": "#/$defs/pointer"}, {"type": "null"}]},
+    "reason_code": {
+      "enum": [
+        "field_map_supported",
+        "same_type_object_swap",
+        "pointer_swap",
+        "predicate_field_incompatibility",
+        "explicit_timestamp_mismatch",
+        "abstain_unmapped"
+      ]
+    },
+    "field_map_id": {"type": "string", "minLength": 1},
+    "negative_proof": {
+      "oneOf": [
+        {"$ref": "pointer_bounded_negative_proof.schema.json"},
+        {"type": "null"}
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"support_decision": {"const": "supported"}}},
+      "then": {
+        "properties": {
+          "negative_proof": {"type": "null"},
+          "pointer": {"$ref": "#/$defs/pointer"},
+          "normalized_edge": {"$ref": "#/$defs/candidate"}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"support_decision": {"const": "unsupported_by_bound_pointer"}}
+      },
+      "then": {
+        "properties": {
+          "negative_proof": {"$ref": "pointer_bounded_negative_proof.schema.json"},
+          "pointer": {"$ref": "#/$defs/pointer"},
+          "normalized_edge": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"support_decision": {"const": "abstain"}}},
+      "then": {
+        "properties": {
+          "negative_proof": {"type": "null"},
+          "pointer": {"type": "null"},
+          "normalized_edge": {"type": "null"}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "record_id", "record_sha256"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "record_id": {"type": "string", "minLength": 1},
+        "record_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_type",
+        "subject_value",
+        "predicate",
+        "object_type",
+        "object_value"
+      ],
+      "properties": {
+        "subject_type": {"type": "string", "minLength": 1},
+        "subject_value": {"type": "string", "minLength": 1},
+        "predicate": {"type": "string", "minLength": 1},
+        "object_type": {"type": "string", "minLength": 1},
+        "object_value": {"type": "string", "minLength": 1},
+        "event_time": {"type": "string", "minLength": 1},
+        "source_pointer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["artifact_id", "record_id"],
+          "properties": {
+            "artifact_id": {"type": "string", "minLength": 1},
+            "record_id": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    }
+  }
+}

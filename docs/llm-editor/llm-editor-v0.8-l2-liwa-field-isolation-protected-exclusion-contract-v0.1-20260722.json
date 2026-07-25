@@ -1,0 +1,304 @@
+{
+  "schema_version": "project05-llm-editor-l2-liwa-field-isolation-protected-exclusion-contract-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "b486d99544e61c92de53b8845bf74e071263f3ba",
+  "status": "draft_frozen_not_execution_authority",
+  "candidate_id": "liwa_ad_endpoint_telemetry_30run_2026",
+  "purpose": "Freeze a fail-closed design for physically isolating label, detector-summary, and path-derived supervision from any model-visible Liwa record, then excluding overlap with protected E3, E5, OpTC, OTRF, and WitFoo material before normalization or sample construction.",
+  "authority_boundary": {
+    "catalog_role_may_be_train_candidate": true,
+    "family_quota_credit": 0,
+    "lineage_quota_credit": 0,
+    "sample_quota_credit": 0,
+    "contract_execution_authorized": false,
+    "additional_payload_read_authorized": false,
+    "protected_payload_read_authorized": false,
+    "normalization_authorized": false,
+    "sample_materialization_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "l2_gate_passage_authorized": false,
+    "kernel_or_m3_work_authorized": false,
+    "git_push_authorized": false
+  },
+  "frozen_source_identity": {
+    "official_record_id": 20618083,
+    "record_revision": 7,
+    "doi": "10.5281/zenodo.20618083",
+    "license": "CC-BY-4.0",
+    "archive_bytes": 7357185,
+    "archive_md5": "94f2af6a756a0841126d51a55bd8fe85",
+    "bounded_audit_result": "llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.json",
+    "bounded_audit_result_commit": "221e94656018e5bcacdbc9d622a5ac30b21459d7",
+    "source_role_review": "llm-editor-v0.8-l2-liwa-source-role-review-v0.1-20260722.json",
+    "source_role_review_commit": "b486d99544e61c92de53b8845bf74e071263f3ba"
+  },
+  "known_risks": {
+    "bounded_csv_probe_count": 31,
+    "stable_source_native_run_group_count": 30,
+    "unstable_run_member_count": 1,
+    "forbidden_supervision_field_occurrence_count": 1884,
+    "statistical_independence_verified": false,
+    "null_or_benign_lineage_verified": false,
+    "day_level_temporal_parsing_verified": false
+  },
+  "isolation_zones": {
+    "control_plane_only": [
+      "archive identity and digest",
+      "raw archive member path",
+      "member-path SHA-256",
+      "member content hash",
+      "source-native run grouping token",
+      "row index or source-native record identifier",
+      "field-classification map",
+      "quarantine reason and audit counters"
+    ],
+    "program_binder_only": [
+      "archive digest",
+      "member-path SHA-256",
+      "member content hash",
+      "record identity or raw-record content hash",
+      "record offset or zero-based row index when no stable record identifier exists"
+    ],
+    "model_view_eligible_only_after_all_gates": [
+      "explicitly mapped raw-event fields whose field names are neither forbidden supervision nor detector-summary fields",
+      "trusted source metadata separately approved by the L2 mapping contract"
+    ],
+    "never_model_visible": [
+      "archive name",
+      "directory name",
+      "raw member path or basename",
+      "source-native attack, technique, TTP, condition, logging-view, scenario, or run label",
+      "ground-truth, answer, class, target, gold, support-decision, or other forbidden-supervision column",
+      "alert, detection-rule, score, precision, recall, accuracy, confusion-count, or aggregate-statistics column",
+      "screenshots, graphs, BloodHound exports, rules, configurations, narratives, and statistical reports"
+    ]
+  },
+  "field_isolation_contract": {
+    "stage_order": [
+      "Verify the exact frozen archive size and MD5 without changing the selected artifact.",
+      "Use the prior safe central-directory manifest or a separately authorized manifest verification; do not infer supervision from member names.",
+      "Read only the header needed to compile a field-action map before any row value is materialized.",
+      "Classify every field as forbidden_supervision, detector_summary, binder_only, candidate_raw_event, or unknown.",
+      "Fail closed on every unknown field until an amended field map is reviewed; denylisted fields always override allowlisted categories.",
+      "Stream-decode only candidate_raw_event and binder_only fields; never instantiate denied values in model-view, target, prompt, validator, admission, or training-record objects.",
+      "Build the exclusion-only candidate text from candidate_raw_event fields; do not construct normalized packets or supervision.",
+      "Run protected exclusion and quarantine all hits before any future normalizer or packet constructor is allowed to observe the record.",
+      "Only after a separately authorized clean rescan may a program binder emit an unbound or ambiguous pointer suggestion for downstream validation."
+    ],
+    "field_name_normalization": {
+      "algorithm": "Unicode NFKC, trim, casefold, then replace each maximal non-alphanumeric run with one underscore and strip leading or trailing underscores",
+      "matching_rule": "A deny token matches only a complete normalized underscore-delimited token or a complete frozen normalized field key; substring matching inside ordinary words is forbidden.",
+      "deny_precedence_over_allow": true,
+      "unknown_field_action": "fail_closed"
+    },
+    "forbidden_supervision_tokens": [
+      "label",
+      "class",
+      "target",
+      "ground_truth",
+      "answer",
+      "attack",
+      "technique",
+      "tactic",
+      "ttp",
+      "actor",
+      "malware",
+      "supported",
+      "gold"
+    ],
+    "detector_summary_tokens": [
+      "alert",
+      "rule",
+      "detection",
+      "score",
+      "precision",
+      "recall",
+      "accuracy",
+      "true_positive",
+      "false_positive",
+      "true_negative",
+      "false_negative",
+      "statistic",
+      "mean",
+      "median"
+    ],
+    "binder_only_default_tokens": [
+      "record_id",
+      "recordid",
+      "event_record_id",
+      "eventrecordid",
+      "row_id",
+      "sequence"
+    ],
+    "path_and_name_policy": {
+      "raw_path_may_be_used_for_control_plane_grouping": true,
+      "raw_path_may_be_hashed_for_pointer_identity": true,
+      "raw_path_or_basename_may_enter_model_view": false,
+      "raw_path_or_basename_may_enter_target": false,
+      "raw_path_or_basename_may_enter_pointer_hint": false,
+      "path_derived_attack_or_condition_label_may_enter_any_learned_feature": false
+    },
+    "natural_event_text_preservation": {
+      "policy": "Do not delete or rewrite an allowed raw-event scalar merely because its value contains an attack, technique, actor, malware, or condition-like word. Field isolation is decided by field identity and member class, not by keyword censorship of admissible event text.",
+      "exception": "A later protected-exclusion match quarantines the whole record; it does not selectively redact the matching phrase and admit the remainder."
+    },
+    "no_fabrication": {
+      "null_or_benign_from_absence_of_alert": false,
+      "unsupported_or_abstention_from_missing_label": false,
+      "conflict_from_paired_logging_views": false,
+      "temporal_label_from_member_name": false,
+      "candidate_q_or_polarity_from_attack_label": false
+    }
+  },
+  "programmatic_pointer_contract": {
+    "model_generates_bound_pointer": false,
+    "model_sees_raw_member_path": false,
+    "binding_status_before_verified_binder": "unbound_or_ambiguous",
+    "pointer_components": [
+      "frozen archive digest and record revision",
+      "SHA-256 of the normalized member path, never the raw path in model-visible form",
+      "member content hash",
+      "source-native record identifier when stable, otherwise zero-based row index plus SHA-256 of raw record bytes",
+      "SHA-256 of the admitted source span bytes"
+    ],
+    "verification_rules": [
+      "The binder must deterministically recompute every pointer component from the frozen archive and selected record.",
+      "A missing, duplicate, or non-recomputable record identity yields binding_status=ambiguous and no bound case evidence.",
+      "The pointer may be attached only after field isolation and protected exclusion pass for the record.",
+      "The LLM may suggest a pointer candidate but cannot set binding_status=bound, write E_case, Promote, or acquire certification authority."
+    ]
+  },
+  "protected_exclusion_contract": {
+    "protected_family_ids": [
+      "darpa_tc_e3",
+      "darpa_tc_e5",
+      "darpa_optc",
+      "otrf_apt29",
+      "witfoo_precinct6"
+    ],
+    "reference_lock": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/wp4/generated/retrieval-v0.1/protected-signature-lock-v0.1.json",
+      "file_sha256": "0BFFA67783368DFD91101E737BCC5E2D869A8D9818FD220E6DC4C21C1CEF9E30",
+      "declared_semantic_lock_sha256": "597A167723C2A7306D49E95C2D449548EFAD9799190C893A586255CBFAD45A7F",
+      "contains_raw_private_gold": false,
+      "contains_raw_test_payload": false,
+      "protected_value_count": 2535,
+      "near_duplicate_signature_count": 1177
+    },
+    "execution_order": [
+      "Verify the frozen reference-lock file SHA-256 and declared semantic lock before inspecting candidate content.",
+      "Compare archive and member content hashes against the protected source-file and manifest hashes for exact artifact overlap.",
+      "After field isolation, compute the frozen normalized hash for every model-visible candidate scalar and deterministic record serialization.",
+      "For text of at least 16 characters, compute frozen normalized character 5-gram hashes and Jaccard similarity against the 1,177 protected signatures.",
+      "Quarantine every exact, normalized, or near-duplicate hit and every future derivative of that record.",
+      "Run a post-quarantine rescan over the candidate-admissible set; only zero remaining matches may be reported as exclusion_passed."
+    ],
+    "exact_checks": [
+      "candidate archive or member content SHA-256 equals a protected source-file or manifest SHA-256",
+      "candidate model-visible scalar or deterministic record serialization SHA-256 equals a protected exact hash when available"
+    ],
+    "normalized_exact_check": {
+      "normalization": "NFKC+casefold+whitespace-collapse",
+      "digest": "SHA-256",
+      "protected_hash_count": 2535
+    },
+    "near_duplicate_check": {
+      "method": "normalized_5gram_jaccard_v0.1",
+      "character_ngram_n": 5,
+      "minimum_text_chars": 16,
+      "threshold": 0.85,
+      "match_operator": "greater_than_or_equal",
+      "threshold_change_after_observing_results_allowed": false,
+      "selective_redaction_to_evade_match_allowed": false
+    },
+    "quarantine_policy": {
+      "hit_action": "quarantine_entire_source_record_and_all_derived_packets",
+      "matched_text_persisted": false,
+      "protected_text_recovered_or_persisted": false,
+      "record_may_contribute_family_lineage_or_sample_quota": false,
+      "post_filter_counts_must_be_recomputed": true,
+      "pre_filter_hit_audit_must_be_retained_as_hash_and_reason_only": true
+    }
+  },
+  "required_pre_execution_tests": [
+    {
+      "test_id": "FI-01",
+      "requirement": "A unique canary placed in every forbidden-supervision field is absent from model view, target, prompt, pointer hint, validator input, admission input, logs, and serialized training records."
+    },
+    {
+      "test_id": "FI-02",
+      "requirement": "A path-only attack or logging-condition token cannot influence any learned feature, target, candidate q, modality, or support decision."
+    },
+    {
+      "test_id": "FI-03",
+      "requirement": "An attack-like word naturally present inside an admitted raw event is preserved byte-for-byte unless the whole record is quarantined by protected exclusion."
+    },
+    {
+      "test_id": "FI-04",
+      "requirement": "Unknown headers and deny/allow conflicts fail closed before any row value is materialized."
+    },
+    {
+      "test_id": "PTR-01",
+      "requirement": "The program binder reconstructs the same pointer identity from archive digest, member-path hash, member hash, record identity, and span hash without exposing the raw path to the model."
+    },
+    {
+      "test_id": "PE-01",
+      "requirement": "Synthetic exact, normalized-exact, and Jaccard-at-threshold matches are quarantined; a below-threshold control remains eligible."
+    },
+    {
+      "test_id": "PE-02",
+      "requirement": "Changing the threshold, reference-lock hash, normalization, or n-gram size causes a hard contract failure rather than a rescan."
+    },
+    {
+      "test_id": "SAFE-01",
+      "requirement": "All emitted candidate records retain admission_status=candidate, certification_authority.allowed=false, certification_authority.levels=[], promotion_status=none, and unbound or ambiguous binding status."
+    }
+  ],
+  "machine_output_contract": {
+    "future_result_status_values": [
+      "passed_no_authority_transition",
+      "blocked_field_isolation",
+      "blocked_protected_exclusion",
+      "blocked_reference_lock_mismatch",
+      "blocked_contract_or_input_mismatch"
+    ],
+    "allowed_output": [
+      "contract and input hashes",
+      "field-class counts",
+      "record counts by source-native run group",
+      "candidate record and member hashes",
+      "exact, normalized, and near-duplicate match counts",
+      "maximum Jaccard value without matched text",
+      "quarantine counts and reason codes",
+      "post-quarantine rescan counts",
+      "pointer-shape validation counts",
+      "pass or fail-closed verdicts"
+    ],
+    "forbidden_output": [
+      "raw protected payload",
+      "raw private gold",
+      "raw Liwa event values or excerpts",
+      "raw forbidden-supervision values",
+      "raw member paths",
+      "model generations",
+      "training examples or targets"
+    ]
+  },
+  "success_gate_for_a_future_separately_authorized_execution": {
+    "all_field_isolation_tests_pass": true,
+    "reference_lock_hash_matches": true,
+    "post_quarantine_exact_match_count": 0,
+    "post_quarantine_normalized_match_count": 0,
+    "post_quarantine_near_duplicate_match_count": 0,
+    "raw_or_protected_values_persisted": false,
+    "quota_credit_awarded_by_this_gate": 0,
+    "sample_materialization_authorized_by_this_gate": false,
+    "next_gate": "separate quota-capacity, lineage, and source-role admission review"
+  },
+  "amendment_rules": [
+    "Any change to the source archive, field-name normalization, deny tokens, protected reference lock, exact or near-duplicate method, threshold, pointer identity, or quarantine unit requires a new versioned contract before execution.",
+    "Observed failures may not be repaired by weakening the denylist, lowering the quarantine unit, increasing the near-duplicate threshold, selectively redacting matched text, or fabricating supervision.",
+    "Passing this contract cannot change Liwa quota from zero, mark L2 passed, or authorize baseline or fine-tuning."
+  ]
+}

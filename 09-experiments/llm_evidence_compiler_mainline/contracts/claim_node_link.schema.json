@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/claim_node_link.schema.json",
+  "title": "ClaimNodeLink",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "link_id",
+    "request_id",
+    "compiler_run_id",
+    "admitted_claim_id",
+    "target_node_id",
+    "link_type",
+    "source_pointer",
+    "mechanical_eligibility",
+    "controller_eligible"
+  ],
+  "properties": {
+    "link_id": {"type": "string", "pattern": "^LINK-[A-F0-9]{24}$"},
+    "request_id": {"type": "string", "pattern": "^REQ-[A-F0-9]{24}$"},
+    "compiler_run_id": {"type": "string", "pattern": "^RUN-[A-F0-9]{24}$"},
+    "admitted_claim_id": {"type": "string", "pattern": "^ADM-[A-F0-9]{24}$"},
+    "target_node_id": {"type": "string", "pattern": "^NODE-[A-F0-9]{16}$"},
+    "link_type": {"enum": ["supports", "contradicts", "context_only", "unresolved"]},
+    "source_pointer": {"type": "object"},
+    "mechanical_eligibility": {"const": "passed"},
+    "controller_eligible": {"type": "boolean"}
+  }
+}
+

@@ -1,0 +1,63 @@
+{
+  "authority_id": "project05-llm-evidence-compiler-tokenizer-gate-result-v0.14",
+  "version": "0.14.0",
+  "status": "tokenizer_length_gate_failed_closed_model_gate_closed",
+  "created_date": "2026-07-19",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.13.json",
+    "sha256": "A0C6CC0C3D2CEC806628C93DBE2C27E1F0D54ED8A7442D05E65DA8C1B59F488A",
+    "disposition": "consumed_the_tokenizer_audit_authority_and_failed_closed_without_opening_model_or_training_gates"
+  },
+  "authoritative_documents": {},
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/token-length-gate-contract-v0.1.json": "7B9334A43A91863765C167ED7C80F48E9BB2A26B6FF6206B8D153587E8E32117"
+  },
+  "authoritative_evidence": {
+    "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.1/generated/tokenizer-lock-v0.1.json": "FD848D6ABCF5CF79537C41DFC81F371D2C98ED1B1E42707B4934A82654CCFBA8",
+    "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.1/generated/token-length-audit-v0.1.json": "C00267542C0CAC3A7D4CD9ED1EBF5FBC1EFF8969DCFDF54D19989534606AFDC6"
+  },
+  "tokenizer_gate_result": {
+    "passed": false,
+    "examples": 1500,
+    "overall_p50": 808,
+    "overall_p95": 1131,
+    "overall_max": 2094,
+    "over_1024": 173,
+    "train_p95": 1144,
+    "training_validation_p95": 800,
+    "examples_truncated": 0,
+    "examples_excluded": 0,
+    "byte_identical_reproduction": true,
+    "reproduction_sha256": "C00267542C0CAC3A7D4CD9ED1EBF5FBC1EFF8969DCFDF54D19989534606AFDC6",
+    "formal_data_gate_passed": false
+  },
+  "failure_localization": {
+    "ait_cam_lds_manifestations_filtered_over_1024": 17,
+    "fkie_socbed_acsac2021_winlogbeat_over_1024": 131,
+    "redcanary_atomic_red_team_over_1024": 25,
+    "beth_process_events_over_1024": 0,
+    "logpai_loghub_linux_over_1024": 0,
+    "zeek_non_pcap_test_logs_over_1024": 0
+  },
+  "not_authorized": [
+    "silent_truncation",
+    "drop_or_replace_examples_without_amendment",
+    "model_config_download",
+    "model_weight_download",
+    "transformers_install",
+    "torch_install",
+    "peft_install",
+    "bitsandbytes_install",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_overwrite",
+    "frozen_result_overwrite"
+  ],
+  "controller_eligible": false
+}

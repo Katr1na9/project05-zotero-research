@@ -1,0 +1,79 @@
+{
+  "adapter_id": "project05-recover-network-summary-r02-case-pilot-v0.1",
+  "adapter_source": {
+    "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/scripts/recover_network_summary_adapter.py",
+    "sha256": "a1b76bfa65a1aa41cbcc47c89f58b1859f336796daa2cee34b0ea777656aa275"
+  },
+  "invocation": {
+    "case_id": "C02",
+    "action_id": "C02-AA-003",
+    "action_type": "recover_network_summary",
+    "target": {
+      "target_type": "case",
+      "target_value": "R02 external endpoints"
+    }
+  },
+  "started_utc": "2026-07-18T07:04:10.582957Z",
+  "ended_utc": "2026-07-18T07:04:10.749668Z",
+  "execution_status": "completed",
+  "termination_reason": "completed_observed_remote_endpoint_summary_external_classification_unresolved",
+  "primitive_operation_definition": "one raw JSONL source line read, including immutable-input integrity scans",
+  "primitive_operation_count": 33292,
+  "resource_trace": {
+    "analyst_time_by_role": [],
+    "compute": {
+      "wall_seconds": 0.17153010000038194,
+      "cpu_seconds": 0.171875,
+      "memory_byte_seconds": 4061438.209631577
+    },
+    "data_access": {
+      "bytes_scanned": 14101676,
+      "records_scanned": 33292
+    },
+    "direct_currency": {
+      "amount": 0.0,
+      "currency": "CNY"
+    },
+    "authorization_wait_seconds": 0.0,
+    "shared_overhead": {
+      "setup_seconds": 0.0,
+      "allocation_status": "unallocated",
+      "allocation_rule": null
+    }
+  },
+  "input_integrity": {
+    "nodes": {
+      "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/real_data/darpa_tc_e3/extracted/R02/nodes.jsonl",
+      "sha256": "f7c874aaac39260e4c67515f9041876d72b7a54fb0a30e1f9eab11f036d47301"
+    },
+    "node_shards": [
+      {
+        "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/real_data/darpa_tc_e3/extracted/R02/nodes.jsonl",
+        "sha256": "f7c874aaac39260e4c67515f9041876d72b7a54fb0a30e1f9eab11f036d47301"
+      }
+    ]
+  },
+  "observation": {
+    "schema_id": "project05-cdm18-observed-remote-endpoint-summary-v0.1",
+    "summarization_key": "exact (remoteAddress, remotePort, ipProtocol) tuple; missing protocol retained as null",
+    "requested_scope_status": "partial_external_classification_unresolved",
+    "external_classification": {
+      "status": "unresolved",
+      "reason": "No pre-registered local-network boundary is available for R02; RFC1918 membership is not a valid substitute because observed local addresses include publicly routable space.",
+      "external_endpoint_count": null
+    },
+    "netflow_object_count": 1378,
+    "unusable_netflow_object_count": 0,
+    "missing_protocol_object_count": 1378,
+    "unknown_local_port_count": 234,
+    "observed_remote_endpoint_count": 143,
+    "evidence_perturbations": [],
+    "downtime_seconds": 0.0,
+    "artifacts": {
+      "remote_endpoints": {
+        "path": "C:/Users/35393/Desktop/workspace/Project05-Zotero/09-experiments/governance/measurement_v0.3/pilots/c02-aa-003-r02-observed-remote-endpoints-v0.1/observation/observed-remote-endpoints.jsonl",
+        "sha256": "947716a20c063a4719a6acb9eda2966b0777c4758760984381e083b26a6a207a"
+      }
+    }
+  }
+}

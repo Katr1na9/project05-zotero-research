@@ -1,0 +1,430 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/planner_runtime_contract_m3star.schema.json",
+  "title": "Project05 M3* learned planner runtime and evidence contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contract_id",
+    "version",
+    "status",
+    "created_utc",
+    "supersedes",
+    "scope",
+    "planner_visibility",
+    "ml_feature_contract",
+    "selection_contract",
+    "audit_contract",
+    "leakage_controls",
+    "statistical_unit",
+    "development_evidence"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../data_schema/planner_runtime_contract_m3star.schema.json"
+    },
+    "contract_id": {"const": "project05-m3star-runtime-contract-v0.2"},
+    "version": {"const": "0.2.0"},
+    "status": {"const": "frozen_for_new_runs"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "supersedes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_id", "sha256", "reason"],
+      "properties": {
+        "contract_id": {"const": "project05-m3star-runtime-contract-v0.1"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planner_families", "official_external_implementation_claimed"],
+      "properties": {
+        "planner_families": {
+          "type": "array",
+          "const": ["project05_m3star"]
+        },
+        "official_external_implementation_claimed": {"const": false}
+      }
+    },
+    "planner_visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["config", "state", "action", "recursive_forbidden_keys"],
+      "properties": {
+        "config": {"$ref": "#/$defs/visibilitySpec"},
+        "state": {"$ref": "#/$defs/visibilitySpec"},
+        "action": {"$ref": "#/$defs/visibilitySpec"},
+        "recursive_forbidden_keys": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "ml_feature_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transition_feature_columns",
+        "action_feature_columns",
+        "heads",
+        "labels_runtime_visible",
+        "feature_source",
+        "case_split_before_mask_generation"
+      ],
+      "properties": {
+        "transition_feature_columns": {"$ref": "#/$defs/featureColumns"},
+        "action_feature_columns": {"$ref": "#/$defs/featureColumns"},
+        "heads": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "graph_transition",
+            "action_optimality",
+            "action_reachability",
+            "action_cost_to_go"
+          ],
+          "properties": {
+            "graph_transition": {"$ref": "#/$defs/headSpec"},
+            "action_optimality": {"$ref": "#/$defs/headSpec"},
+            "action_reachability": {"$ref": "#/$defs/headSpec"},
+            "action_cost_to_go": {"$ref": "#/$defs/headSpec"}
+          }
+        },
+        "labels_runtime_visible": {"const": false},
+        "feature_source": {
+          "const": "allowlisted_public_graph_state_action_only"
+        },
+        "case_split_before_mask_generation": {"const": true}
+      }
+    },
+    "selection_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frozen_components",
+        "reference_configuration",
+        "experimental_options",
+        "post_selection_stochastic_dominance"
+      ],
+      "properties": {
+        "frozen_components": {
+          "type": "array",
+          "const": [
+            "public_graph_transition_learning",
+            "action_optimality_learning",
+            "action_reachability_learning",
+            "action_cost_to_go_learning",
+            "post_selection_stochastic_dominance"
+          ]
+        },
+        "reference_configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "planner_id",
+            "planning_horizon",
+            "target_reach_threshold",
+            "max_outcome_nodes",
+            "myopic_safety_shield",
+            "stochastic_dominance_shield"
+          ],
+          "properties": {
+            "planner_id": {"const": "project05_m3star_h3_dual"},
+            "planning_horizon": {"const": 3},
+            "target_reach_threshold": {"const": 0.9},
+            "max_outcome_nodes": {"const": 8},
+            "myopic_safety_shield": {"const": true},
+            "stochastic_dominance_shield": {"const": true}
+          }
+        },
+        "experimental_options": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["planning_horizon", "myopic_safety_shield"],
+          "properties": {
+            "planning_horizon": {
+              "const": "not_independently_supported_on_legacy_development_matrix"
+            },
+            "myopic_safety_shield": {
+              "const": "not_independently_supported_on_legacy_development_matrix"
+            }
+          }
+        },
+        "post_selection_stochastic_dominance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requires_nonempty_exact_intended_cti_node_set",
+            "requires_strictly_higher_channel_reliability",
+            "noninferior_expected_effect_fields",
+            "risk_adjusted_cost_rule",
+            "replacement_must_use_precomputed_plan",
+            "source_selection_preserved_when_no_eligible_replacement"
+          ],
+          "properties": {
+            "requires_nonempty_exact_intended_cti_node_set": {"const": true},
+            "requires_strictly_higher_channel_reliability": {"const": true},
+            "noninferior_expected_effect_fields": {
+              "type": "array",
+              "const": [
+                "expected_granularity_gain",
+                "expected_uncertainty_reduction",
+                "expected_over_attribution_risk_reduction",
+                "expected_conflict_resolution",
+                "expected_coverage_delta"
+              ]
+            },
+            "risk_adjusted_cost_rule": {
+              "const": "alternative_cost <= source_cost / max(0.05, source_reliability)"
+            },
+            "replacement_must_use_precomputed_plan": {"const": true},
+            "source_selection_preserved_when_no_eligible_replacement": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "audit_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_fields",
+        "learned_signal_fields",
+        "model_identity_fields",
+        "runtime_contract_fields",
+        "episode_fields"
+      ],
+      "properties": {
+        "decision_fields": {
+          "type": "array",
+          "const": [
+            "pre_dominance_action_id",
+            "dominance_substitution_applied",
+            "dominance_selection_reason",
+            "dominance_source_action_id",
+            "dominance_target_action_id",
+            "dominance_source_reliability",
+            "dominance_target_reliability",
+            "dominance_source_cost",
+            "dominance_target_cost",
+            "dominance_source_risk_adjusted_cost"
+          ]
+        },
+        "learned_signal_fields": {
+          "type": "array",
+          "const": [
+            "action_value_probability",
+            "action_reachability_probability",
+            "action_cost_to_go"
+          ]
+        },
+        "model_identity_fields": {
+          "type": "array",
+          "const": [
+            "transition_model_family",
+            "action_value_model_family",
+            "action_reachability_model_family",
+            "action_cost_model_family"
+          ]
+        },
+        "runtime_contract_fields": {
+          "type": "array",
+          "const": [
+            "runtime_contract_id",
+            "runtime_contract_version",
+            "runtime_contract_sha256"
+          ]
+        },
+        "episode_fields": {
+          "type": "array",
+          "const": [
+            "stochastic_dominance_shield",
+            "dominance_substitution_count"
+          ]
+        }
+      }
+    },
+    "leakage_controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_allowlist_required",
+        "recoverable_outcomes_visible",
+        "mask_membership_visible",
+        "realized_channel_state_visible_before_action",
+        "target_case_labels_visible",
+        "selector_invariance_tests_required"
+      ],
+      "properties": {
+        "runtime_allowlist_required": {"const": true},
+        "recoverable_outcomes_visible": {"const": false},
+        "mask_membership_visible": {"const": false},
+        "realized_channel_state_visible_before_action": {"const": false},
+        "target_case_labels_visible": {"const": false},
+        "selector_invariance_tests_required": {"const": true}
+      }
+    },
+    "statistical_unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent", "repeated", "pseudoreplication_forbidden"],
+      "properties": {
+        "independent": {"const": "case_or_attack_chain"},
+        "repeated": {"const": "mask_strategy_x_mask_intensity_x_seed"},
+        "pseudoreplication_forbidden": {"const": true}
+      }
+    },
+    "development_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_id",
+        "result_directory",
+        "cost_regime",
+        "evidence_scope",
+        "binding_mode",
+        "runtime_contract_sha256_during_run",
+        "train_case_ids",
+        "development_case_ids",
+        "independent_case_count",
+        "repeated_condition_count",
+        "method_count",
+        "row_count",
+        "core_method",
+        "strict_core_gate_passed",
+        "formal_cost_claim_allowed",
+        "final_blind_cases_loaded",
+        "component_findings",
+        "artifact_sha256"
+      ],
+      "properties": {
+        "experiment_id": {
+          "const": "project05-m3star-post-selection-dominance-method-development-v0.8"
+        },
+        "result_directory": {"type": "string", "minLength": 1},
+        "cost_regime": {"const": "legacy"},
+        "evidence_scope": {"const": "legacy_cost_method_development_only"},
+        "binding_mode": {
+          "const": "post_run_freeze_of_unchanged_visibility_boundary"
+        },
+        "runtime_contract_sha256_during_run": {"$ref": "#/$defs/sha256"},
+        "train_case_ids": {"$ref": "#/$defs/caseIds"},
+        "development_case_ids": {"$ref": "#/$defs/caseIds"},
+        "independent_case_count": {"const": 6},
+        "repeated_condition_count": {"const": 270},
+        "method_count": {"const": 9},
+        "row_count": {"const": 2430},
+        "core_method": {"const": "project05_m3star_h3_dual"},
+        "strict_core_gate_passed": {"const": true},
+        "formal_cost_claim_allowed": {"const": false},
+        "final_blind_cases_loaded": {"const": false},
+        "component_findings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action_heads_vs_transition_only",
+            "post_selection_dominance_vs_no_dominance",
+            "h3_vs_h1",
+            "myopic_safety_shield_vs_unshielded"
+          ],
+          "properties": {
+            "action_heads_vs_transition_only": {"$ref": "#/$defs/comparison"},
+            "post_selection_dominance_vs_no_dominance": {
+              "$ref": "#/$defs/comparison"
+            },
+            "h3_vs_h1": {"$ref": "#/$defs/comparison"},
+            "myopic_safety_shield_vs_unshielded": {
+              "$ref": "#/$defs/comparison"
+            }
+          }
+        },
+        "artifact_sha256": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "featureColumns": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "headSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offline_label", "runtime_output", "training_only_label"],
+      "properties": {
+        "offline_label": {"type": "string", "minLength": 1},
+        "runtime_output": {"type": "string", "minLength": 1},
+        "training_only_label": {"const": true}
+      }
+    },
+    "visibilitySpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["top_level_fields", "nested_fields"],
+      "properties": {
+        "top_level_fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "nested_fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "caseIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline",
+        "paired_conditions",
+        "success_loss_count",
+        "success_gain_count",
+        "cost_win_count",
+        "cost_tie_count",
+        "cost_loss_count",
+        "total_cost_delta_on_both_success",
+        "action_sequence_change_count"
+      ],
+      "properties": {
+        "baseline": {"type": "string", "minLength": 1},
+        "paired_conditions": {"type": "integer", "minimum": 1},
+        "success_loss_count": {"type": "integer", "minimum": 0},
+        "success_gain_count": {"type": "integer", "minimum": 0},
+        "cost_win_count": {"type": "integer", "minimum": 0},
+        "cost_tie_count": {"type": "integer", "minimum": 0},
+        "cost_loss_count": {"type": "integer", "minimum": 0},
+        "total_cost_delta_on_both_success": {"type": "number"},
+        "action_sequence_change_count": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

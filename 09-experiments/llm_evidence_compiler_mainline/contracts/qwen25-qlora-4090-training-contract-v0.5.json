@@ -1,0 +1,68 @@
+{
+  "contract_id": "project05-qwen25-qlora-4090-adamw-detached-primary-v0.5",
+  "version": "0.5.0",
+  "created_date": "2026-07-20",
+  "status": "user_authorized_single_fresh_detached_adamw_primary",
+  "contract_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.5.json",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.37.json",
+  "extends_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.4.json",
+    "sha256": "4CD197EC3DDA57A0C2569133611A3C8C54B2FE4F0A8D9901EC7C4CAD62788876"
+  },
+  "approved_recovery_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-4090-detached-recovery-amendment-v0.37-20260720.md",
+    "sha256": "E01BDE8D32B1C25B6C6E89EFDDE4C38FD26DBD23AAD00B7A02931FA00181A995"
+  },
+  "interruption_closure_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.36.json",
+    "sha256": "72D5ED7306E1F1AA744F7D3EFD336ABCC1CFB034D7EDAF765BAB67B26DFC1E65"
+  },
+  "training_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.5/training-config-v0.5.json",
+    "sha256": "FA821CC41AF16F2FE4D32A6A00041BAE13377046435A3A03A14FD4689C88E6BE"
+  },
+  "implementation": {
+    "adamw_primary_executor": {
+      "path": "09-experiments/scripts/execute_qwen_qlora_4090_adamw_primary.py",
+      "sha256": "CBB50B90654F394D54F0EF938EC462EB2BD672EADABE5B3C735A35277C3E4387"
+    },
+    "adamw_primary_launcher": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.5/run-adamw-primary-detached-4090-v0.5.sh",
+      "sha256": "F45F38ADDA2471F3A3624F949814775FC0F3E960D1ECB857934A7D3992683783"
+    }
+  },
+  "phase_gate": {
+    "optimizer_stability_diagnostic": {"authorized": false, "maximum_executions": 0},
+    "primary": {
+      "authorized_after_interruption_closure": true,
+      "maximum_executions": 1,
+      "fresh_initialization": true,
+      "detached_worker_required": true,
+      "optimizer": "adamw_torch",
+      "epochs": 3,
+      "optimizer_steps": 225,
+      "microbatches": 3600,
+      "resume_authorized": false
+    }
+  },
+  "not_authorized": [
+    "additional_formal_primary",
+    "automatic_retry_or_resume",
+    "v035_checkpoint_selection_or_resume",
+    "optimizer_hyperparameter_search",
+    "sequence_rank_batch_data_seed_scheduler_change",
+    "memory_threshold_reduction",
+    "multi_gpu_training",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ]
+}

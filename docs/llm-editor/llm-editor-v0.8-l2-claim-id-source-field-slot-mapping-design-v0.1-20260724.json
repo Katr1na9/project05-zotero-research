@@ -1,0 +1,272 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724",
+  "artifact_type": "source_field_allowlisted_slot_mapping_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "68cbd04e535904996b467a4216bfabdbfdfc8f58",
+  "status": "design_only_mapping_not_implemented",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "minting_design_path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-minting-design-v0.1-20260724.json",
+    "minting_design_sha256": "9f57e9c93cdf5ed2493a428177f434f280859789accdbf50ff01483fef91b21c",
+    "schema_path": "schemas/claim-ir-external-envelope.schema.json",
+    "schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "projection_path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+    "projection_sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+  },
+  "mapping_contract": {
+    "source_field_enum_count": 38,
+    "allowlisted_source_slot_count": 38,
+    "mapping_kind": "total_bijection",
+    "ordering_rule": "The ordinal follows the exact order of the pinned schema source_field enum; ordinals are identifiers only and carry no domain meaning.",
+    "slot_token_rules": {
+      "regex": "^afs_[0-9]{4}$",
+      "charset": "lowercase_ascii_letters_digits_underscore_only",
+      "length": 8,
+      "prefix": "afs_",
+      "filesystem_separator_allowed": false,
+      "dot_allowed": false,
+      "raw_path_allowed": false,
+      "semantic_words_allowed": false
+    },
+    "hmac_usage": {
+      "canonical_tuple_component": "allowlisted_source_slot",
+      "source_field_text_in_canonical_tuple": false,
+      "raw_filesystem_path_in_canonical_tuple": false,
+      "archive_member_path_in_canonical_tuple": false,
+      "payload_bytes_in_canonical_tuple": false
+    }
+  },
+  "source_field_to_slot": [
+    {
+      "ordinal": 1,
+      "source_field": "config.case_id",
+      "allowlisted_source_slot": "afs_0001"
+    },
+    {
+      "ordinal": 2,
+      "source_field": "config.budget_total",
+      "allowlisted_source_slot": "afs_0002"
+    },
+    {
+      "ordinal": 3,
+      "source_field": "config.cti_nodes.node_id",
+      "allowlisted_source_slot": "afs_0003"
+    },
+    {
+      "ordinal": 4,
+      "source_field": "config.cti_nodes.stage",
+      "allowlisted_source_slot": "afs_0004"
+    },
+    {
+      "ordinal": 5,
+      "source_field": "config.cti_nodes.critical",
+      "allowlisted_source_slot": "afs_0005"
+    },
+    {
+      "ordinal": 6,
+      "source_field": "config.channel_reliability",
+      "allowlisted_source_slot": "afs_0006"
+    },
+    {
+      "ordinal": 7,
+      "source_field": "state.case_id",
+      "allowlisted_source_slot": "afs_0007"
+    },
+    {
+      "ordinal": 8,
+      "source_field": "state.step_index",
+      "allowlisted_source_slot": "afs_0008"
+    },
+    {
+      "ordinal": 9,
+      "source_field": "state.matched_cti_node_ids",
+      "allowlisted_source_slot": "afs_0009"
+    },
+    {
+      "ordinal": 10,
+      "source_field": "state.unmatched_cti_node_ids",
+      "allowlisted_source_slot": "afs_0010"
+    },
+    {
+      "ordinal": 11,
+      "source_field": "state.matched_cti_edge_ids",
+      "allowlisted_source_slot": "afs_0011"
+    },
+    {
+      "ordinal": 12,
+      "source_field": "state.unmatched_cti_edge_ids",
+      "allowlisted_source_slot": "afs_0012"
+    },
+    {
+      "ordinal": 13,
+      "source_field": "state.coverage.cti_node_coverage",
+      "allowlisted_source_slot": "afs_0013"
+    },
+    {
+      "ordinal": 14,
+      "source_field": "state.coverage.cti_edge_coverage",
+      "allowlisted_source_slot": "afs_0014"
+    },
+    {
+      "ordinal": 15,
+      "source_field": "state.coverage.critical_gap_count",
+      "allowlisted_source_slot": "afs_0015"
+    },
+    {
+      "ordinal": 16,
+      "source_field": "state.coverage.stage_coverage",
+      "allowlisted_source_slot": "afs_0016"
+    },
+    {
+      "ordinal": 17,
+      "source_field": "state.coverage.evidence_type_coverage",
+      "allowlisted_source_slot": "afs_0017"
+    },
+    {
+      "ordinal": 18,
+      "source_field": "state.budget.budget_total",
+      "allowlisted_source_slot": "afs_0018"
+    },
+    {
+      "ordinal": 19,
+      "source_field": "state.budget.budget_used",
+      "allowlisted_source_slot": "afs_0019"
+    },
+    {
+      "ordinal": 20,
+      "source_field": "state.budget.budget_remaining",
+      "allowlisted_source_slot": "afs_0020"
+    },
+    {
+      "ordinal": 21,
+      "source_field": "state.remaining_action_ids",
+      "allowlisted_source_slot": "afs_0021"
+    },
+    {
+      "ordinal": 22,
+      "source_field": "action.action_id",
+      "allowlisted_source_slot": "afs_0022"
+    },
+    {
+      "ordinal": 23,
+      "source_field": "action.case_id",
+      "allowlisted_source_slot": "afs_0023"
+    },
+    {
+      "ordinal": 24,
+      "source_field": "action.action_type",
+      "allowlisted_source_slot": "afs_0024"
+    },
+    {
+      "ordinal": 25,
+      "source_field": "action.acquisition_channel",
+      "allowlisted_source_slot": "afs_0025"
+    },
+    {
+      "ordinal": 26,
+      "source_field": "action.target.target_type",
+      "allowlisted_source_slot": "afs_0026"
+    },
+    {
+      "ordinal": 27,
+      "source_field": "action.target.target_value",
+      "allowlisted_source_slot": "afs_0027"
+    },
+    {
+      "ordinal": 28,
+      "source_field": "action.cost",
+      "allowlisted_source_slot": "afs_0028"
+    },
+    {
+      "ordinal": 29,
+      "source_field": "action.intended_cti_node_ids",
+      "allowlisted_source_slot": "afs_0029"
+    },
+    {
+      "ordinal": 30,
+      "source_field": "action.expected_evidence_types",
+      "allowlisted_source_slot": "afs_0030"
+    },
+    {
+      "ordinal": 31,
+      "source_field": "action.expected_stages",
+      "allowlisted_source_slot": "afs_0031"
+    },
+    {
+      "ordinal": 32,
+      "source_field": "action.expected_effects.expected_granularity_gain",
+      "allowlisted_source_slot": "afs_0032"
+    },
+    {
+      "ordinal": 33,
+      "source_field": "action.expected_effects.expected_uncertainty_reduction",
+      "allowlisted_source_slot": "afs_0033"
+    },
+    {
+      "ordinal": 34,
+      "source_field": "action.expected_effects.expected_over_attribution_risk_reduction",
+      "allowlisted_source_slot": "afs_0034"
+    },
+    {
+      "ordinal": 35,
+      "source_field": "action.expected_effects.expected_conflict_resolution",
+      "allowlisted_source_slot": "afs_0035"
+    },
+    {
+      "ordinal": 36,
+      "source_field": "action.expected_effects.expected_coverage_delta",
+      "allowlisted_source_slot": "afs_0036"
+    },
+    {
+      "ordinal": 37,
+      "source_field": "action.status",
+      "allowlisted_source_slot": "afs_0037"
+    },
+    {
+      "ordinal": 38,
+      "source_field": "action.natural_language_request",
+      "allowlisted_source_slot": "afs_0038"
+    }
+  ],
+  "fail_closed_rules": [
+    "Reject any source_field not present in the pinned schema enum.",
+    "Reject any allowlisted source_field with no mapping entry.",
+    "Reject duplicate source_field entries, duplicate allowlisted_source_slot tokens, or ordinal gaps.",
+    "Reject tokens that fail the exact afs_[0-9]{4} charset and length rule.",
+    "Reject any token containing a filesystem separator, dot, raw path fragment, payload fragment, label, verdict, outcome, or semantic field name.",
+    "Do not fall back to the source_field text, ordinal text, or a generated token when a mapping lookup fails."
+  ],
+  "non_authorization": {
+    "mint_implementation_authorized": false,
+    "mint_execution_authorized": false,
+    "hmac_key_created": false,
+    "admission_authorized": false,
+    "kernel_ingestion_authorized": false,
+    "certificate_authorized": false,
+    "catalog_write_authorized": false,
+    "source_role_authorized": false,
+    "lineage_credit_authorized": false,
+    "quota_credit_authorized": false,
+    "l2_change_authorized": false,
+    "m1_m2_authorized": false,
+    "fixtures_created": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false
+  },
+  "review_boundary": {
+    "decision_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "effective": false,
+    "next_step_requires_new_mint_execute_authority": true
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "fixtures_created_in_this_turn": false,
+    "secrets_created_in_this_turn": false,
+    "minting_run": false,
+    "kernel_or_admission_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

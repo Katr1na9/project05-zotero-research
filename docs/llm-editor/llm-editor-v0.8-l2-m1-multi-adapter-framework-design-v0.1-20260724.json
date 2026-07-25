@@ -1,0 +1,304 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724",
+  "artifact_type": "m1_multi_adapter_framework_design",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "3423332bec80811b21bcc7b0b267b7c40c4f6a1d",
+  "status": "design_only_m1_not_authorized",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_input_surface": true,
+    "certificate_surface": "vacant",
+    "surface_expansion_authorized": false,
+    "cross_surface_join_authorized": false
+  },
+  "m0_inheritance_and_boundary": {
+    "claim_ir_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "mint_capability_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mint-capability-completion-disposition-v0.1-20260724.json",
+      "sha256": "dec22233f33fac12a20fb215ed8058ab5f6e4c05292939a15dc48f3209385301"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57"
+    },
+    "source_field_slot_mapping": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070"
+    },
+    "inherited_structural_states": {
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "inherited_mint_gate": {
+      "m1_minting": false,
+      "activated_single_use_authority_required_for_future_mint": true,
+      "external_key_id_attestation_required_for_future_mint": true,
+      "key_material_persistence": false,
+      "minted_opaque_does_not_imply_admission": true
+    },
+    "kernel_ingestion_authorized": false
+  },
+  "design_objective": {
+    "statement": "Define a registry, exact-selection, and contract framework for multiple declared source-type adapters that can later normalize inputs on the one approved surface into the existing M0 Claim IR boundary.",
+    "m1_role": "framework_and_contract_definition_only",
+    "m1_does_not_claim": [
+      "semantic_alignment solved",
+      "source role granted",
+      "train-family independence established",
+      "certificate validity established",
+      "Kernel acceptance established",
+      "L2 completion established"
+    ],
+    "implementation_authorized_by_this_design": false
+  },
+  "adapter_registry_design": {
+    "registry_status": "design_only_no_active_adapter_registration",
+    "registry_key": [
+      "adapter_id",
+      "adapter_version"
+    ],
+    "registration_record_fields": [
+      "adapter_id",
+      "adapter_version",
+      "surface_id",
+      "source_class",
+      "input_descriptor_schema_id",
+      "input_descriptor_schema_sha256",
+      "projection_allowlist_path",
+      "projection_allowlist_sha256",
+      "claim_ir_schema_path",
+      "claim_ir_schema_sha256",
+      "m0_compiler_path",
+      "m0_compiler_sha256",
+      "normalization_contract_version",
+      "determinism_statement",
+      "accepted_input_modes",
+      "unknown_field_policy",
+      "privacy_exclusion_policy",
+      "failure_mode_policy",
+      "lineage_statement",
+      "review_status"
+    ],
+    "identifier_rules": {
+      "adapter_id_pattern": "^m1a_[a-z0-9_-]{1,48}$",
+      "adapter_id_is_claim_id": false,
+      "adapter_id_is_source_role": false,
+      "adapter_id_is_semantic_label": false,
+      "version_rule": "semantic_version_or_explicitly_frozen_design_revision",
+      "filesystem_or_payload_bytes_in_id": false
+    },
+    "candidate_source_classes": {
+      "status": "reference_only_not_registered",
+      "values": [
+        "planner_experiment_inputs",
+        "certificate_experiment_inputs",
+        "claim_ir_valid_fixture",
+        "claim_ir_authority_leak_or_invalid_fixture"
+      ],
+      "active_adapter_count": 0
+    },
+    "registration_acceptance_rules": [
+      "The registration must pin surface_id exactly to project05_depth2_public.",
+      "The registration must pin the external Claim IR schema and the M0 compiler by exact SHA-256.",
+      "The registration must identify one source_class and one normalization contract; an implicit or catch-all adapter is rejected.",
+      "A duplicate adapter_id plus adapter_version is rejected; no silent replacement or shadow registration is allowed.",
+      "A registration with unknown, unmapped, or non-allowlisted source fields is rejected.",
+      "A registration that advertises labels, realized outcomes, oracle state, mask membership, hidden or recoverable claim IDs, raw paths, payload bytes, credentials, secrets, or PII as input is rejected.",
+      "A registration is metadata only and never grants source role, quota, lineage credit, admission, mint authority, or Kernel access.",
+      "An active registration would require a separate implementation authorization; this design creates none."
+    ]
+  },
+  "adapter_contract_framework": {
+    "contract_purpose": "Make adapter behavior explicit before any implementation or execution.",
+    "required_contract_sections": {
+      "input_boundary": [
+        "exact surface_id",
+        "source_class",
+        "input descriptor shape",
+        "allowlisted source fields",
+        "accepted modality and encoding"
+      ],
+      "normalization": [
+        "field-to-slot mapping reference",
+        "type coercion rules",
+        "ordering and canonicalization rules",
+        "determinism and replay statement",
+        "unknown-field behavior"
+      ],
+      "privacy_and_authority_exclusions": [
+        "labels and verdicts",
+        "realized outcomes and recovery results",
+        "oracle or mask membership",
+        "hidden or recoverable claim IDs",
+        "raw filesystem or archive paths",
+        "raw payload bytes",
+        "credentials, secrets, and network identifiers unless explicitly allowlisted as opaque references"
+      ],
+      "failure_behavior": [
+        "unknown adapter",
+        "unknown source class",
+        "surface mismatch",
+        "schema or projection pin mismatch",
+        "duplicate or ambiguous selection",
+        "malformed input",
+        "forbidden-field or authority-leak detection",
+        "lineage or provenance declaration missing where the contract requires it"
+      ],
+      "output_boundary": [
+        "normalized structural projection only",
+        "same project05_depth2_public surface",
+        "M0 Claim IR schema pin",
+        "claim_id remains null until a separate mint authority is activated",
+        "admission_state remains not_admitted",
+        "kernel_state remains pending_kernel_schema"
+      ]
+    },
+    "failure_mode_semantics": {
+      "policy": "fail_closed",
+      "allowed_outcomes": [
+        "selected_design_only",
+        "rejected_unknown_adapter",
+        "rejected_surface_mismatch",
+        "rejected_contract_pin_mismatch",
+        "rejected_forbidden_field",
+        "rejected_ambiguous_selection",
+        "rejected_malformed_input",
+        "held_missing_provenance"
+      ],
+      "silent_fallback": false,
+      "silent_field_drop": false,
+      "partial_packet_emission": false
+    },
+    "versioning_and_reproducibility": {
+      "exact_version_required": true,
+      "contract_sha_required_before_execution": true,
+      "adapter_code_sha_required_if_implementation_is_later_authorized": true,
+      "replay_requires_same_surface_and_pinned_chain": true,
+      "cross_surface_replay": false
+    }
+  },
+  "adapter_selection_design": {
+    "selection_status_in_this_draft": "not_executable",
+    "selection_input_fields": [
+      "surface_id",
+      "source_class",
+      "requested_adapter_id",
+      "requested_adapter_version",
+      "input_descriptor_schema_id",
+      "input_descriptor_schema_sha256"
+    ],
+    "exact_selection_order": [
+      "Require surface_id == project05_depth2_public.",
+      "Require an explicit source_class and exact adapter_id plus adapter_version.",
+      "Resolve exactly one registry record with the matching pinned schema and projection.",
+      "Reject zero matches, more than one match, stale hashes, or unregistered versions.",
+      "Validate the adapter contract's privacy exclusions and failure policy before any normalization.",
+      "Emit only a design-level selection record; no adapter execution is authorized by this artifact."
+    ],
+    "selection_guards": {
+      "implicit_default_adapter": false,
+      "wildcard_adapter": false,
+      "automatic_version_fallback": false,
+      "automatic_source_class_fallback": false,
+      "cross_surface_join": false,
+      "half_adapter_composition": false,
+      "silent_adapter_substitution": false,
+      "selection_grants_mint_authority": false,
+      "selection_grants_admission": false
+    },
+    "composition_policy": {
+      "default": "one_exact_adapter_per_input_packet",
+      "multiple_adapters_in_one_batch": "requires_a_future_explicit_batch_contract",
+      "cross_adapter_claim_merge": "rejected_by_default",
+      "half_one_adapter_plus_half_another": "rejected",
+      "lineage_or_family_credit_from_selection": false
+    }
+  },
+  "m0_handoff_contract": {
+    "proposed_interface": [
+      "declared_input_descriptor",
+      "exact_adapter_selection_record",
+      "normalized_public_projection",
+      "existing_m0_rule_compiler",
+      "structural_claim_ir_package"
+    ],
+    "adapter_must_not": [
+      "mint Claim-IDs",
+      "write Kernel or E_case",
+      "set admission or certificate state",
+      "write the effective catalog",
+      "assign source role, quota, lineage, or credit",
+      "change the pinned M0 schema or compiler"
+    ],
+    "structural_output_state_without_future_mint_authority": {
+      "claim_id_state": "not_minted",
+      "claim_id": null,
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "handoff_is_not_execution": true,
+    "handoff_requires_separate_implementation_and_execute_authority": true
+  },
+  "m2_optional_residual_placeholder": {
+    "status": "placeholder_only_not_authorized",
+    "purpose": "A possible later residual normalizer after a frozen rule baseline; not part of M1 implementation or execution.",
+    "fit_authorized_by_this_design": false,
+    "gold_or_adjudication_contract_required": true,
+    "source_and_lineage_disjoint_splits_required": true,
+    "new_execute_authority_required": true,
+    "approver_role_to_freeze": "must_be_named_in_a_future_M2_gold_or_adjudication_contract",
+    "existing_action_value_xgboost": {
+      "status": "separate_existing_protocol",
+      "retask_as_claim_alignment": false,
+      "reuse_as_claim_id_target": false,
+      "reuse_of_weights_or_labels_for_claim_ir": false,
+      "reinterpretation_as_semantic_claim_evidence": false
+    }
+  },
+  "explicit_non_authorizations": {
+    "m1_code_implementation": false,
+    "adapter_registry_activation": false,
+    "adapter_execution": false,
+    "claim_id_mint": false,
+    "production_mint_authority_creation": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "admission": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_residual_fit": false,
+    "training": false,
+    "download": false,
+    "archive_open": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "design_claim": "M1 adapter registry, exact-selection, failure, and M0 handoff contracts are specified at design level for one input surface.",
+    "not_a_scientific_claim": "The design does not establish multi-source semantic alignment, independent source families, certificate validity, source role, or L2 readiness.",
+    "implementation_requires_new_authority": true,
+    "execution_requires_new_single_use_authority": true,
+    "effective": false
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "training_started": false,
+    "download_performed": false,
+    "archive_opened": false,
+    "kernel_or_admission_write": false,
+    "catalog_or_role_or_credit_write": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

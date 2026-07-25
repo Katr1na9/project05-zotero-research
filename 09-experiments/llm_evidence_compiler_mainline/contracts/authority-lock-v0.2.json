@@ -1,0 +1,84 @@
+{
+  "authority_id": "project05-llm-evidence-compiler-qwen25-paired-v0.2",
+  "version": "0.2.0",
+  "status": "qwen25_paired_route_approved_design_only",
+  "created_date": "2026-07-18",
+  "authoritative_route": "mainline_evidence_compiler_qwen25_general_vs_qlora",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.1.json",
+    "sha256": "04FAA16BB575A043BB0173368C70E59DEC78318ACC4973A30C763C261FBF46A9"
+  },
+  "model_selection_supersession": {
+    "superseded_route": "olmo2_open_base_candidate",
+    "superseded_document": "08-writing/llm-evidence-compiler-open-base-finetuning-amendment-v0.1-20260718.md",
+    "superseded_document_sha256": "6F437E93C49D6D181038381AB804D6E2D85D69A42774D7C86B875B12DC2BAA09",
+    "historical_record_preserved": true
+  },
+  "authoritative_documents": {
+    "08-writing/llm-evidence-compiler-mainline-integration-design-v0.1-20260717.md": "A99D4895BF0BD95DF40B2E2A342ADCF07A5BBD10369FCD84935AE0C58D00B002",
+    "08-writing/llm-evidence-compiler-qwen25-paired-route-amendment-v0.1-20260718.md": "9FAEF06836D33C794607C6C5012BEAE259DC13D192CFE61446FDB79937B0200F"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen-paired-fairness-contract-v0.1.json": "AC570A99C275706C715937F30E4B80B788E68257FB793C509C1CFAB158558AB9",
+    "09-experiments/llm_evidence_compiler_mainline/qwen-data-reuse-readiness-v0.1.json": "EA489FB544F4C38306071211EAF48A66A641F6CD722138AA601807EEE1F329F7"
+  },
+  "model_contract": {
+    "base_model_id": "Qwen/Qwen2.5-7B-Instruct",
+    "base_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "license_metadata": "apache-2.0",
+    "general_condition": {
+      "condition_id": "QWEN-GENERAL",
+      "adapter_enabled": false,
+      "base_trainable": false
+    },
+    "adapted_condition": {
+      "condition_id": "QWEN-ADAPTED",
+      "adapter_enabled": true,
+      "adapter_key": "project05_obs_compiler",
+      "base_trainable": false,
+      "maximum_trainable_parameter_fraction": 0.01,
+      "save_adapter_only": true,
+      "merged_full_model_forbidden": true
+    },
+    "only_intended_model_difference": "adapter_state",
+    "training_method": "causal_sft_4bit_nf4_qlora",
+    "sequence_length_candidate": 1024
+  },
+  "required_conditions": [
+    "RULE-STRONG",
+    "QWEN-GENERAL",
+    "QWEN-ADAPTED",
+    "REUSE-HYBRID",
+    "GENERAL-CONSTRAINED",
+    "GENERAL-DIRECT"
+  ],
+  "statistical_unit": {
+    "independent": "case_or_attack_chain",
+    "test_case_count": 6,
+    "generation_repeats_are_independent": false
+  },
+  "authorized_scope": [
+    "qwen_route_amendment",
+    "authority_lock_v0_2",
+    "dependency_free_contracts",
+    "offline_tests",
+    "existing_source_metadata_hash_and_exclusion_reaudit",
+    "data_gate_readiness_report"
+  ],
+  "not_authorized": [
+    "new_corpus_download",
+    "dependency_install_or_change",
+    "tokenizer_download",
+    "model_download",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "frozen_case_overwrite",
+    "frozen_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

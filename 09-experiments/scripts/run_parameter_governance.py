@@ -16,7 +16,7 @@ from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[2]
 EXPERIMENT_ROOT = ROOT / "09-experiments"
-MVP_PATH = Path(__file__).with_name("run_mvp.py")
+MVP_PATH = Path(__file__).with_name("cost_profile_runtime.py")
 DEFAULT_GOVERNANCE = (
     EXPERIMENT_ROOT / "governance" / "parameter-governance-v0.2.json"
 )

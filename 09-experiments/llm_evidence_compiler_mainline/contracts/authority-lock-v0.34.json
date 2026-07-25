@@ -1,0 +1,85 @@
+{
+  "authority_id": "project05-qwen25-rtx4090-optimizer-stability-result-v0.34",
+  "version": "0.34.0",
+  "status": "optimizer_stability_passed_fresh_formal_primary_requires_user_authorization",
+  "created_date": "2026-07-19",
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.33.json",
+    "sha256": "7F215A7CFFCD4E414BB821512D3653AF165B3EA066AA36C71373080F47910F5D",
+    "disposition": "the_single_authorized_optimizer_stability_diagnostic_was_consumed_and_passed"
+  },
+  "result_artifacts": {
+    "diagnostic": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-optimizer-stability-diagnostic-v0.1.json",
+      "sha256": "DCDF92669636D589831BD0D44363EF684F4BCB481146BE0B75D0F8691A978158"
+    },
+    "sanitized_progress": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-optimizer-stability-progress-v0.1.jsonl",
+      "sha256": "851681BFC6B8ED5E12842E8248E3DA2610E1F77297B72C18105A771E01E05E86"
+    },
+    "progress_report": {
+      "path": "04-progress/llm-evidence-compiler-qwen25-4090-optimizer-stability-passed-20260719.md",
+      "sha256": "D223F3E10C062A7DDDA598FBD1AD3BA6588508E1AB3B0A95AAFE16CAEB39314B"
+    }
+  },
+  "result_gate": {
+    "status": "passed_torch_adamw_180_step_stability_diagnostic",
+    "optimizer": "torch_adamw_single_tensor",
+    "optimizer_steps": 180,
+    "microbatches": 2880,
+    "old_failed_optimizer_step": 173,
+    "old_failure_step_exceeded": true,
+    "losses_finite": true,
+    "gradient_norms_finite": true,
+    "memory_gate_passed": true,
+    "peak_allocated_bytes": 8301579264,
+    "minimum_synchronized_free_bytes_observed": 1075970048,
+    "post_cleanup_reserved_bytes": 69206016,
+    "adapter_saved": false,
+    "checkpoint_saved": false,
+    "generation_calls": 0,
+    "gpu_released_after_diagnostic": true
+  },
+  "scientific_interpretation": {
+    "allowed": "torch_adamw_is_a_stable_optimizer_candidate_for_one_fresh_formal_primary",
+    "not_allowed": [
+      "adapter_training_completed",
+      "fine_tuned_model_quality_improved",
+      "original_qwen_vs_adapted_qwen_result",
+      "llm_evidence_compiler_effectiveness_claim",
+      "m3_integration_claim"
+    ]
+  },
+  "next_gate": {
+    "status": "hard_stop_for_fresh_formal_primary_user_authorization",
+    "recommended_optimizer": "adamw_torch",
+    "fresh_225_step_three_epoch_primary_authorized": false,
+    "v0_2_checkpoint_selection_authorized": false,
+    "automatic_retry_or_resume_authorized": false,
+    "training_validation_generation_authorized": false,
+    "formal_inference_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "second_optimizer_stability_diagnostic",
+    "formal_primary_training",
+    "automatic_retry_or_resume",
+    "v0_2_checkpoint_selection_or_resume",
+    "optimizer_hyperparameter_search",
+    "memory_threshold_reduction",
+    "multi_gpu_training",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

@@ -1,0 +1,103 @@
+{
+  "contract_id": "project05-label-blind-token-length-gate-v0.2",
+  "version": "0.2.0",
+  "created_date": "2026-07-19",
+  "status": "authorized_independent_tokenizer_reaudit_only",
+  "inputs": {
+    "pair_data_gate_audit_path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/data-gate-audit-v0.2.json",
+    "pair_data_gate_audit_sha256": "008AA9C131C142862671FB1CDB27DB5133AE1C89F13CF29CCEC90A967BDCB370",
+    "pair_determinism_audit_path": "09-experiments/llm_evidence_compiler_mainline/candidate_pairs_v0.2/generated/determinism-audit-v0.2.json",
+    "pair_determinism_audit_sha256": "3AF640FCE90BDF52813A1DDFA94E15AAC073CF8FBBEA7E5466F095F7C75D7C98",
+    "qwen_fairness_contract_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen-paired-fairness-contract-v0.1.json",
+    "qwen_fairness_contract_sha256": "AC570A99C275706C715937F30E4B80B788E68257FB793C509C1CFAB158558AB9",
+    "selection_contract_path": "09-experiments/llm_evidence_compiler_mainline/contracts/token-aware-pair-selection-contract-v0.1.json",
+    "selection_contract_sha256": "CA268DEB793C2269EF75A584873A73C2598C9F22C099BF1C98AF751C2105DE35"
+  },
+  "tokenizer": {
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "allowlisted_files": [
+      "merges.txt",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "vocab.json"
+    ],
+    "maximum_total_download_bytes": 20000000,
+    "engine_package": "tokenizers",
+    "engine_version": "0.21.4",
+    "engine_install_mode": "isolated_target_no_dependencies",
+    "transformers_allowed": false,
+    "model_files_allowed": false
+  },
+  "serialization": {
+    "serialization_id": "project05-qwen25-pointer-support-chat-v0.2",
+    "system_message": "Decide whether candidate is supported by the bound evidence. Use only the payload and pointer. Return only JSON. Unsupported means unsupported by this record, not false or benign.",
+    "user_field_sources": {
+      "source_modality": "source_modality",
+      "bound_pointer": "pointer",
+      "payload": "source_record.payload",
+      "candidate": "candidate"
+    },
+    "assistant_fields": [
+      "support_decision",
+      "normalized_edge",
+      "pointer"
+    ],
+    "forbidden_message_fields": [
+      "negative_proof",
+      "example_id",
+      "split_role",
+      "packet_key",
+      "reason_code",
+      "field_map_id",
+      "source_family_id",
+      "provenance",
+      "license_id",
+      "license_sha256",
+      "source_file_sha256"
+    ],
+    "json": {
+      "encoding": "utf-8",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [",", ":"]
+    },
+    "chat_turn_template": "<|im_start|>{role}\n{content}<|im_end|>\n",
+    "role_order": ["system", "user", "assistant"],
+    "add_special_tokens": false,
+    "truncation": false,
+    "padding": false
+  },
+  "gate": {
+    "exact_total_examples": 1500,
+    "exact_train_examples": 1200,
+    "exact_training_validation_examples": 300,
+    "percentile_definition": "nearest_rank_sorted_values_ceil_qn_minus_1",
+    "maximum_p95_tokens": 1024,
+    "maximum_example_tokens": 1024,
+    "maximum_over_limit_examples": 0,
+    "example_exclusion_allowed": false,
+    "truncation_allowed": false,
+    "deterministic_second_run_required": true
+  },
+  "authorized_actions": [
+    "reuse_locked_four_file_tokenizer_snapshot_and_isolated_engine",
+    "render_frozen_v0_2_prompt_and_target_serialization",
+    "count_all_admitted_examples_without_truncation",
+    "write_counts_hashes_and_gate_audit",
+    "run_byte_identical_second_audit"
+  ],
+  "not_authorized": [
+    "download_any_new_tokenizer_model_config_or_weight",
+    "install_transformers_torch_peft_bitsandbytes_or_training_runtime",
+    "modify_or_exclude_admitted_pair_payload",
+    "smoke_training",
+    "formal_training",
+    "formal_inference",
+    "c07_c12_model_execution",
+    "m3_runtime_integration",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite"
+  ]
+}

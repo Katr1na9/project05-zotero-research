@@ -1,0 +1,252 @@
+{
+  "catalog_id": "project05-mainline-compiler-cti-text-source-catalog-v0.1",
+  "version": "0.1.1",
+  "date": "2026-07-17",
+  "status": "user_reviewed_bounded_retrieval_authorized",
+  "scope": "metadata-only source review for the WP4 CTI component bench",
+  "approval_record": {
+    "date": "2026-07-17",
+    "user_authorization_text": "推进",
+    "interpreted_scope": "conditional approval of the three eligible sources for fixed-revision bounded retrieval, per-document license and origin verification, and protected-family payload exclusion scan only",
+    "component_runtime_authorized": false,
+    "model_or_embedding_authorized": false,
+    "training_authorized": false,
+    "formal_inference_authorized": false,
+    "C07_C12_execution_authorized": false,
+    "controller_integration_authorized": false
+  },
+  "raw_cti_text_present": false,
+  "corpus_downloaded": false,
+  "component_runtime_authorized": false,
+  "model_or_embedding_authorized": false,
+  "training_authorized": false,
+  "formal_inference_authorized": false,
+  "controller_integration_authorized": false,
+  "concurrency_boundary": {
+    "parallel_work_allowed": true,
+    "llm_write_roots": [
+      "08-writing/llm-evidence-compiler-*",
+      "04-progress/llm-evidence-compiler-*",
+      "09-experiments/llm_evidence_compiler_mainline/",
+      "09-experiments/scripts/*compiler*",
+      "09-experiments/tests/test_llm_evidence_compiler_*"
+    ],
+    "llm_forbidden_write_roots": [
+      "09-experiments/scripts/run_mvp.py",
+      "09-experiments/scripts/run_m3star.py",
+      "09-experiments/scripts/run_m3star_experiment.py",
+      "09-experiments/results/m3star_*",
+      "09-experiments/real_cases/C07-*",
+      "09-experiments/real_cases/C08-*",
+      "09-experiments/real_cases/C09-*",
+      "09-experiments/real_cases/C10-*",
+      "09-experiments/real_cases/C11-*",
+      "09-experiments/real_cases/C12-*",
+      "09-experiments/data_schema/evidence_claim.schema.json",
+      "09-experiments/data_schema/alignment_state.schema.json"
+    ],
+    "integration_rule": "LLM sidecars remain controller_eligible=false until both the compiler contract and the selected M3 controller interface are independently frozen"
+  },
+  "legacy_inheritance_lock": {
+    "09-experiments/scripts/run_mvp.py": "A7EBCF2739B7CD708011DB378D0F18AF3EB970C6236813BE7F8258D5394A952E",
+    "09-experiments/data_schema/evidence_claim.schema.json": "5FCA1B77512C5C966860781214DCB83BEE76CFECA56B9E4AE3B91657D73CA63A",
+    "09-experiments/data_schema/alignment_state.schema.json": "462C8E5F657A4467FC4B945FBAB60A2FF86D1D1470DBA8D5C3937F46E14EA61E"
+  },
+  "design": {
+    "unit": "source_document_or_external_reference_family",
+    "repeated_sentences_are_not_independent": true,
+    "split_block": "publisher_family",
+    "unit_role": "schema_and_failure_path_only",
+    "development_role": "prompt_adapter_and_contract_debugging_only",
+    "component_validation_role": "held-out component interface evaluation only",
+    "case_test_role": "none; C07-C12 remain untouched",
+    "sample_seed": 20260717,
+    "primary_machine_metrics": [
+      "schema_valid_rate",
+      "source_pointer_resolution_rate",
+      "same_record_support_rate",
+      "forbidden_conclusion_rejection_rate",
+      "explicit_abstention_rate"
+    ],
+    "semantic_recall_claim_authorized": false,
+    "human_validated_grounding_claim_authorized": false
+  },
+  "source_gate_policy": {
+    "required_roles": [
+      "unit",
+      "development",
+      "component_validation"
+    ],
+    "minimum_distinct_publisher_families": 3,
+    "publisher_family_may_cross_roles": false,
+    "component_validation_requires_natural_report": true,
+    "per_document_license_and_origin_required": true,
+    "payload_exclusion_scan_required_after_retrieval": true,
+    "blocked_test_families": [
+      "darpa_tc_e3",
+      "darpa_tc_e5",
+      "darpa_optc",
+      "otrf_apt29",
+      "witfoo_precinct6"
+    ],
+    "near_duplicate_method": "normalized_5gram_jaccard_v0.1",
+    "near_duplicate_threshold": 0.85,
+    "minimum_protected_text_chars": 16,
+    "formal_data_gate_before_payload_scan": false
+  },
+  "candidates": [
+    {
+      "source_id": "ctid_blueprints_intrusion_sample",
+      "publisher_family": "ctid_blueprints",
+      "repository": "https://github.com/center-for-threat-informed-defense/cti-blueprints",
+      "revision": "c412b54af6473d49b43863fa094f3a9d0febaca4",
+      "revision_date": "2025-03-20T15:58:16Z",
+      "content_class": "synthetic_author_created_cti_sample",
+      "split_role": "unit",
+      "eligible_paths": [
+        "src/cti_publishing_tool/data/An Example Intrusion Analysis Report.json"
+      ],
+      "excluded_paths": [
+        "samples/*.pdf",
+        "templates/**",
+        "src/cti_publishing_tool/data/An Example Campaign Report.json",
+        "src/cti_publishing_tool/data/An Example Executive Report.json",
+        "src/cti_publishing_tool/data/An Example Threat Actor Report.json"
+      ],
+      "license": {
+        "id": "Apache-2.0",
+        "evidence_url": "https://github.com/center-for-threat-informed-defense/cti-blueprints/blob/c412b54af6473d49b43863fa094f3a9d0febaca4/LICENSE",
+        "evidence_blob_sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        "verification_status": "verified_repository_authored_content"
+      },
+      "case_match_status": "not_case_matched_by_repository_path_metadata",
+      "screening_status": "eligible_pending_user_review",
+      "pi_recommendation": "conditional_approve_unit_only",
+      "user_decision": "conditional_approve",
+      "retrieval_authorized": true,
+      "controller_eligible": false
+    },
+    {
+      "source_id": "mitre_attack_software_procedure_text",
+      "publisher_family": "mitre_attack",
+      "repository": "https://github.com/mitre-attack/attack-stix-data",
+      "revision": "a6c366439edee3a87b79cf90dc0b93f5d7975956",
+      "revision_date": "2026-06-25T14:39:40Z",
+      "content_class": "curated_real_world_procedure_descriptions",
+      "split_role": "development",
+      "eligible_paths": [
+        "enterprise-attack/enterprise-attack.json"
+      ],
+      "eligible_record_filter": "relationship objects whose source_ref type is malware or tool and whose description has an external reference",
+      "excluded_record_filter": "intrusion-set, campaign, actor attribution, revoked/deprecated objects, APT29 aliases, and any post-retrieval protected-family match",
+      "license": {
+        "id": "MITRE-ATTACK-CUSTOM-PERMISSIVE-2026",
+        "evidence_url": "https://github.com/mitre-attack/attack-stix-data/blob/a6c366439edee3a87b79cf90dc0b93f5d7975956/LICENSE.txt",
+        "evidence_blob_sha": "7d8dc97542672cc9ec78de1b643b5b39ca7e2fba",
+        "required_attribution": "© 2026 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.",
+        "verification_status": "verified_repository_license"
+      },
+      "case_match_status": "pending_payload_exclusion_scan",
+      "screening_status": "eligible_pending_user_review",
+      "pi_recommendation": "conditional_approve_development_only",
+      "user_decision": "conditional_approve",
+      "retrieval_authorized": true,
+      "controller_eligible": false
+    },
+    {
+      "source_id": "tram_cisa_first_party_advisory_subset",
+      "publisher_family": "cisa_first_party_advisories",
+      "repository": "https://github.com/center-for-threat-informed-defense/tram",
+      "revision": "f29793d8d665f7f552898696e00065ef24a29a20",
+      "revision_date": "2025-05-06T13:37:55Z",
+      "content_class": "natural_public_security_advisory",
+      "split_role": "component_validation",
+      "eligible_path_titles": [
+        "AA20258A Chinese Ministry of State SecurityAffiliated Cyber Threat Actor Activity.mjson",
+        "AA20336A Advanced Persistent Threat Actors Targeting US Think Tanks.mjson",
+        "AA21076A TrickBot Malware.mjson",
+        "AA21200A Tactics Techniques and Procedures of Indicted APT40 Actors Associated with Chinas MSS Hainan State Security Department.mjson",
+        "AA21200B Chinese StateSponsored Cyber Operations Observed TTPs.mjson",
+        "AA22320A Iranian GovernmentSponsored APT Actors Compromise Federal Network Deploy Crypto Miner Credential Harvester.mjson",
+        "CISA Red Team Shares Key Findings to Improve Monitoring and Hardening of Networks.mjson"
+      ],
+      "eligible_path_prefix": "data/training/tram2_data/mjson_files/",
+      "excluded_record_filter": "any document without an original cisa.gov URL and first-party US-government authorship; any third-party embedded media; any actor/campaign target edge; any protected-family match",
+      "license": {
+        "id": "US-GOV-WORK-CONDITIONAL-PER-DOCUMENT",
+        "repository_code_license": "Apache-2.0",
+        "repository_license_blob_sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        "verification_status": "pending_original_url_and_government_authorship_per_document"
+      },
+      "case_match_status": "pending_payload_exclusion_scan",
+      "screening_status": "eligible_pending_user_review",
+      "pi_recommendation": "conditional_approve_metadata_retrieval_then_fail_closed_per_document",
+      "user_decision": "conditional_approve",
+      "retrieval_authorized": true,
+      "controller_eligible": false
+    },
+    {
+      "source_id": "misp_galaxy_non_attribution_reserve",
+      "publisher_family": "misp_galaxy",
+      "repository": "https://github.com/MISP/misp-galaxy",
+      "revision": "5d3d5f44d6ece36b36204f57cb21f9de3be5720f",
+      "revision_date": "2026-07-14T03:48:57Z",
+      "content_class": "structured_cti_descriptions_not_natural_report",
+      "split_role": "none",
+      "eligible_record_filter": "non-actor, non-campaign malware/tool/observable descriptions only",
+      "license": {
+        "id": "CC0-1.0-OR-BSD-2-Clause-like",
+        "evidence_url": "https://github.com/MISP/misp-galaxy/blob/5d3d5f44d6ece36b36204f57cb21f9de3be5720f/LICENSE.md",
+        "evidence_blob_sha": "26f372176c89d9b21d2e2bdee4f50a038807918d",
+        "verification_status": "verified_repository_license"
+      },
+      "case_match_status": "not_assessed_inactive",
+      "screening_status": "inactive_reserve",
+      "pi_recommendation": "reserve_only",
+      "user_decision": "not_applicable",
+      "retrieval_authorized": false,
+      "controller_eligible": false
+    },
+    {
+      "source_id": "tram_full_mjson_corpus",
+      "publisher_family": "tram_mixed_publishers",
+      "repository": "https://github.com/center-for-threat-informed-defense/tram",
+      "revision": "f29793d8d665f7f552898696e00065ef24a29a20",
+      "content_class": "mixed_copies_of_commercial_and_government_reports",
+      "split_role": "none",
+      "screening_status": "scientific_and_license_reject",
+      "rejection_reason": "repository Apache license does not establish redistribution rights for every copied third-party report and the corpus includes APT29 material overlapping C11",
+      "user_decision": "not_applicable",
+      "retrieval_authorized": false,
+      "controller_eligible": false
+    },
+    {
+      "source_id": "cisa_csaf_full_repository",
+      "publisher_family": "cisa_csaf_mixed",
+      "repository": "https://github.com/cisagov/CSAF",
+      "revision": "7697117e077389d667db86bed3efa45f4ec634cf",
+      "revision_date": "2026-07-17T11:58:18Z",
+      "content_class": "mixed_first_party_and_vendor_republication_advisories",
+      "split_role": "none",
+      "screening_status": "scientific_and_license_reject",
+      "rejection_reason": "repository has no root license and its README states that CISA republishes vendor CSAFs; full-repository rights and independence are not uniform",
+      "user_decision": "not_applicable",
+      "retrieval_authorized": false,
+      "controller_eligible": false
+    },
+    {
+      "source_id": "ctid_adversary_emulation_library",
+      "publisher_family": "ctid_adversary_emulation",
+      "repository": "https://github.com/center-for-threat-informed-defense/adversary_emulation_library",
+      "revision": "4467a6eed6e67d25009704130e1d27d1a8007f57",
+      "revision_date": "2025-05-28T19:37:04Z",
+      "content_class": "synthetic_adversary_emulation_procedures",
+      "split_role": "none",
+      "screening_status": "scientific_reject",
+      "rejection_reason": "not natural CTI text and contains APT29 emulation material overlapping the C11 OTRF family",
+      "user_decision": "not_applicable",
+      "retrieval_authorized": false,
+      "controller_eligible": false
+    }
+  ]
+}

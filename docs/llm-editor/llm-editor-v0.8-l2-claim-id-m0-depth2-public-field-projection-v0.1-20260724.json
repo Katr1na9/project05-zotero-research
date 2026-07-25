@@ -1,0 +1,239 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724",
+  "artifact_type": "claim_id_ir_field_projection_contract_draft",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "d9d5b7f32fddaa441d22fb3957be4860908a7101",
+  "status": "draft_projection_not_implementation",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "source_contract": {
+      "path": "09-experiments/governance/contracts/planner-runtime-contract-v0.1.json",
+      "sha256": "6e8c297e8cdac18b6f5349e6878c567aa524411e37b66187da30409da704c053",
+      "contract_id": "project05-depth2-ml-runtime-contract-v0.1",
+      "contract_status": "frozen_for_new_runs"
+    },
+    "purpose": "Propose a field-level boundary for a future rule-only Claim-ID/IR review of the public planner surface.",
+    "not_a_schema": true,
+    "not_an_implementation": true,
+    "not_an_execution_authority": true
+  },
+  "runtime_public_field_allowlist": {
+    "config": {
+      "top_level_fields": [
+        "case_id",
+        "budget_total",
+        "cti_nodes",
+        "channel_reliability"
+      ],
+      "nested_fields": {
+        "cti_nodes": [
+          "node_id",
+          "stage",
+          "critical"
+        ]
+      },
+      "rule_compiler_constraints": [
+        "case_id is an opaque public case reference and is not a Claim ID.",
+        "cti_nodes.node_id is a public CTI/action-space reference and must not be resolved to hidden or recoverable claims.",
+        "budget_total and channel_reliability are public configuration values only."
+      ]
+    },
+    "state": {
+      "top_level_fields": [
+        "case_id",
+        "step_index",
+        "matched_cti_node_ids",
+        "unmatched_cti_node_ids",
+        "matched_cti_edge_ids",
+        "unmatched_cti_edge_ids",
+        "coverage",
+        "budget",
+        "remaining_action_ids"
+      ],
+      "nested_fields": {
+        "coverage": [
+          "cti_node_coverage",
+          "cti_edge_coverage",
+          "critical_gap_count",
+          "stage_coverage",
+          "evidence_type_coverage"
+        ],
+        "budget": [
+          "budget_total",
+          "budget_used",
+          "budget_remaining"
+        ]
+      },
+      "rule_compiler_constraints": [
+        "All state references remain public alignment/action-space references; they are not claim identifiers.",
+        "State may be used only as declared public alignment state and may not be joined to hidden evidence, labels, verdicts, or outcomes.",
+        "actions_taken and action_feedback are not admitted to this M0 rule projection because post-action feedback can encode realized outcomes."
+      ]
+    },
+    "action": {
+      "top_level_fields": [
+        "action_id",
+        "case_id",
+        "action_type",
+        "acquisition_channel",
+        "target",
+        "cost",
+        "intended_cti_node_ids",
+        "expected_evidence_types",
+        "expected_stages",
+        "expected_effects",
+        "status",
+        "natural_language_request"
+      ],
+      "nested_fields": {
+        "target": [
+          "target_type",
+          "target_value"
+        ],
+        "expected_effects": [
+          "expected_granularity_gain",
+          "expected_uncertainty_reduction",
+          "expected_over_attribution_risk_reduction",
+          "expected_conflict_resolution",
+          "expected_coverage_delta"
+        ]
+      },
+      "rule_compiler_constraints": [
+        "Action fields are public declarations and expectations only.",
+        "target.target_value and natural_language_request must remain public action metadata and must not be parsed for labels, verdicts, hidden claims, or outcome proxies.",
+        "status may be used only as a declared public action-lifecycle value; realized execution results are excluded.",
+        "expected_effects are prospective declarations, not observed outcomes."
+      ]
+    }
+  },
+  "contract_fields_not_projected_into_m0": [
+    {
+      "field": "state.actions_taken",
+      "reason": "Action history can encode post-action or realized behavior; it is outside the rule-only Claim-ID/IR projection."
+    },
+    {
+      "field": "state.action_feedback",
+      "nested_field": "recovered_count",
+      "reason": "Recovered count is a realized recovery outcome and is explicitly excluded from M0 rule compilation."
+    }
+  ],
+  "explicitly_forbidden_fields_and_sources": [
+    "label",
+    "labels",
+    "verdict",
+    "class",
+    "attack",
+    "technique",
+    "recoverable_claim_ids",
+    "hidden_claim_ids",
+    "recovered_claim_ids",
+    "required_claim_ids",
+    "actual_recovered_claims",
+    "oracle",
+    "oracle_path",
+    "target_case_outcome_prior",
+    "realized_recovery",
+    "realized_outcomes",
+    "mask_strategy",
+    "mask_intensity",
+    "mask_membership",
+    "random_seed",
+    "run_id",
+    "channel_up",
+    "private_evidence",
+    "hidden_evidence",
+    "credentials",
+    "secrets"
+  ],
+  "claim_id_ir_projection": {
+    "projection_kind": "public_rule_surface_candidate",
+    "identifier_policy": {
+      "input_claim_ids_present": false,
+      "case_id_and_cti_ids_are_claim_ids": false,
+      "opaque_reference_only": true,
+      "deterministic_derivation_from_labels_or_outcomes": false
+    },
+    "field_roles": {
+      "config": "public_planner_configuration",
+      "state": "public_alignment_and_budget_state_without_realized_feedback",
+      "action": "public_action_declaration_and_prospective_effects"
+    },
+    "output_shape_status": "not_published_pending_schema_review",
+    "kernel_ingestion_authorized": false
+  },
+  "state_semantics": {
+    "claim_id_minting": {
+      "current_state": "not_minted",
+      "allowed_future_states": [
+        "not_minted",
+        "pending_review",
+        "minted_under_separate_authority"
+      ],
+      "meaning": "This draft mints no Claim IDs. Any future minting would require an approved schema, a separately authorized compiler, and opaque identifiers that cannot encode labels, outcomes, hidden evidence, or source-role status.",
+      "authorized_now": false
+    },
+    "admission": {
+      "current_state": "not_admitted",
+      "allowed_future_states": [
+        "not_admitted",
+        "pending_review",
+        "admitted_under_separate_authority"
+      ],
+      "meaning": "A field projection candidate is not admission to a Claim IR, train split, source role, lineage family, quota, or credit. Admission requires a separate review and authority.",
+      "authorized_now": false
+    },
+    "kernel": {
+      "current_state": "pending_kernel_schema",
+      "allowed_future_states": [
+        "pending_kernel_schema",
+        "ingested_under_separate_authority",
+        "rejected"
+      ],
+      "meaning": "The shared Kernel schema is not published and no ingestion may occur. pending_kernel_schema is a blocking state, not an implied approval.",
+      "authorized_now": false
+    }
+  },
+  "certificate_surface": {
+    "status": "vacant",
+    "certificate_input_present": false,
+    "certificate_generation_authorized": false,
+    "checker_execution_authorized": false
+  },
+  "governance_controls": {
+    "publish_schema": false,
+    "schema_path_not_published": "schemas/claim-ir-kernel.schema.json",
+    "compile_rules_authorized": false,
+    "m0_implementation_authorized": false,
+    "m1_implementation_authorized": false,
+    "m2_implementation_authorized": false,
+    "xgboost_fit_authorized": false,
+    "kernel_write_authorized": false,
+    "e_case_write_authorized": false,
+    "catalog_write_authorized": false,
+    "role_assignment_authorized": false,
+    "credit_assignment_authorized": false,
+    "l2_change_authorized": false,
+    "experiment_execution_performed": false,
+    "archive_access_performed": false
+  },
+  "review_boundary": {
+    "decision_limit": "approve_for_separate_metadata_candidate_review_not_source_role",
+    "next_step_requires_new_authority": true,
+    "open_questions": [
+      "Which exact field projection, if any, should a future reviewer freeze as the public rule compiler input?",
+      "What opaque Claim-ID namespace and collision policy would be acceptable once a Kernel schema is separately approved?",
+      "How will reviewers demonstrate that public alignment state remains independent of labels and realized outcomes?"
+    ]
+  },
+  "audit_trail": {
+    "read_only_source_review": true,
+    "schemas_created_or_modified": false,
+    "compiler_created_or_modified": false,
+    "kernel_written": false,
+    "experiments_run": false,
+    "catalog_modified": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

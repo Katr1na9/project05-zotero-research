@@ -1,0 +1,96 @@
+{
+  "contract_id": "project05-cost-pipeline-contract",
+  "version": "0.2.0",
+  "status": "frozen_infrastructure_blocked_data",
+  "created_utc": "2026-07-18T00:00:00Z",
+  "canonical_pipeline": {
+    "builder": "09-experiments/scripts/build_cost_profile_drafts.py",
+    "cost_runtime": "09-experiments/scripts/cost_profile_runtime.py",
+    "profile_validator": "09-experiments/scripts/validate_cost_profile.py",
+    "measurement_importer": "09-experiments/scripts/import_operational_cost_measurements.py",
+    "measurement_validator": "09-experiments/scripts/validate_operational_cost_measurements.py",
+    "cost_profile_schema": "09-experiments/data_schema/cost_profile.schema.json",
+    "measurement_batch_schema": "09-experiments/data_schema/operational_cost_measurement_batch.schema.json"
+  },
+  "noncanonical_pipelines": [
+    {
+      "builder": "09-experiments/scripts/build_cost_governance.py",
+      "status": "deprecated_compatibility_only",
+      "reason": "Historical draft layout retained for tests and artifact replay; it must not generate the next formal profile."
+    }
+  ],
+  "data_boundary": {
+    "training_cases": ["C01", "C02", "C03", "C04", "C05", "C06"],
+    "repeatable_development_cases": ["C07", "C08", "C09", "C10", "C11", "C12"],
+    "C13_plus": "sealed"
+  },
+  "cost_semantics": {
+    "planner_visible_cost_meaning": "acquisition_burden",
+    "burden_components": ["E", "D", "A", "R"],
+    "timeliness_component": "V",
+    "normative_volatility_treatment": "separate_delay_loss",
+    "legacy_compatibility_treatment": "legacy_positive_burden",
+    "implicit_positive_volatility_burden_allowed": false,
+    "formal_legacy_compatibility_cost_claim_allowed": false
+  },
+  "rubric_provenance": {
+    "minimum_independent_raters": 2,
+    "legacy_cost_visible_to_raters": false,
+    "planner_outcomes_visible_to_raters": false,
+    "agreement_required": true,
+    "agreement_statistics": [
+      "weighted_kappa_per_component",
+      "exact_agreement_per_component"
+    ],
+    "adjudication_required_for_disagreement": true,
+    "rating_packet_sha256_required_before_freeze": true
+  },
+  "operational_measurement": {
+    "minimum_completed_attempts_per_action": 3,
+    "coverage_execution_status": "completed",
+    "required_metrics": [
+      "analyst_seconds",
+      "compute_seconds",
+      "records_scanned",
+      "bytes_scanned",
+      "host_count",
+      "retention_window_days",
+      "authorization",
+      "system_perturbation_events"
+    ],
+    "source_file_sha256_required": true,
+    "record_sha256_required": true,
+    "source_replay_required": true,
+    "failed_partial_cancelled_attempts_count_as_coverage": false
+  },
+  "formal_execution_gates": {
+    "rubric_profile": [
+      "all_360_component_values_resolved",
+      "two_independent_rating_packets_hashed",
+      "agreement_report_hashed",
+      "all_disagreements_adjudicated",
+      "weights_scale_rounding_bounds_frozen",
+      "volatility_delay_loss_mapping_frozen",
+      "profile_status_frozen"
+    ],
+    "measured_profile": [
+      "all_72_actions_have_minimum_completed_replication",
+      "raw_measurement_batch_replays_from_source_hashes",
+      "normalization_and_aggregation_formula_frozen",
+      "measurement_batch_sha256_bound",
+      "profile_status_frozen"
+    ],
+    "currently_allowed": false,
+    "blocking_reasons": [
+      "rubric_scores_not_collected",
+      "operational_measurements_not_collected",
+      "rubric_scaling_not_frozen",
+      "volatility_delay_loss_mapping_not_frozen",
+      "measured_normalization_not_frozen"
+    ]
+  },
+  "writing_gate": {
+    "paper_or_patent_updated": false,
+    "opens_after": "full_experimental_validation"
+  }
+}

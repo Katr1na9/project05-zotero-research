@@ -1,0 +1,113 @@
+{
+  "report_id": "project05-mainline-evidence-compiler-m3-wp3-readiness-v0.1",
+  "date": "2026-07-17",
+  "status": "ready_for_user_m3_review",
+  "scope": "WP3 clean-room component contract, source-span adapter and development-only explicit-abstention stub",
+  "component_audit": {
+    "metadata_path": "08-writing/llm-evidence-compiler-wp3-component-reuse-metadata-v0.1-20260717.json",
+    "metadata_sha256": "C51F32B48768DCC7A8CB9583089ED275E4304A21AF5ED85375711B34544E526A",
+    "audit_path": "08-writing/llm-evidence-compiler-wp3-component-reuse-audit-v0.1-20260717.md",
+    "audit_sha256": "24C0CB0071E0EE36EC3C7DA465EE71F81380B3F7DBD8CB2C90D1F1767B96BB4C",
+    "selected_profile": "ctinexus_aligned_triplets_compatible_v0.1",
+    "third_party_code_copied": false,
+    "package_installed": false,
+    "runtime_executed": false
+  },
+  "frozen_artifacts": {
+    "component_catalog": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/wp3/component-catalog-v0.1.json",
+      "sha256": "A3C820D87843BB9C702BD8BD58C5FE89A2B121ACAC61BA3BE7330DBF41E7BC73"
+    },
+    "normalized_bundle_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/wp3/contracts/normalized_aligned_triplet_bundle.schema.json",
+      "sha256": "B4A160261A23A6CC32D5F7EF33647827AF7A4A2256F037A1D03AF995B086ECB8"
+    },
+    "sidecar_contract": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/wp3/contracts/source_grounded_target_graph_sidecar.schema.json",
+      "sha256": "819A8C6118F862A7117DEF13E54BB66D09CF0B7F2F7AB7F7545EA6B789ECCC2A"
+    },
+    "adapter": {
+      "path": "09-experiments/scripts/adapt_reuse_component_graph.py",
+      "sha256": "4DD8CD3C12B0F6640C374E02A1F12A80B93A656CBDF5C45FA1FC4B70C0C6A977"
+    },
+    "development_runner": {
+      "path": "09-experiments/scripts/run_compiler_reuse_hybrid.py",
+      "sha256": "8ED7E0589F1A861A37A53B30B0F48B964B2C0AA6CE62557E0F4D8FBABEEC4253"
+    },
+    "wp3_tests": {
+      "path": "09-experiments/tests/test_llm_evidence_compiler_wp3.py",
+      "sha256": "6BB921DF4DD960F96FF5B01DD3AF0AA49798D9CFAD579654711E114CC0C5D0B4"
+    }
+  },
+  "adapter_contract": {
+    "input_only_from_current_public_request_cti_text": true,
+    "same_record_both_endpoint_surface_required": true,
+    "minimal_support_sentence_recovered": true,
+    "unknown_component_revision_fails_closed": true,
+    "unapproved_component_runtime_fails_closed": true,
+    "unknown_or_non_cti_pointer_fails_closed": true,
+    "actor_or_campaign_elevation_fails_closed": true,
+    "duplicate_edges_all_rejected": true,
+    "request_scoped_node_and_edge_ids": true,
+    "controller_eligible": false
+  },
+  "development_stub": {
+    "condition_id": "REUSE-HYBRID",
+    "status": "interface_only_explicit_cti_abstention",
+    "case_ids": [
+      "C04-compiler-evaluation",
+      "C05-compiler-evaluation",
+      "C06-compiler-evaluation"
+    ],
+    "test_case_ids_processed": [],
+    "rule_admitted_claim_count": 26,
+    "rule_admitted_link_count": 15,
+    "visible_cti_artifact_count": 0,
+    "cti_request_count": 3,
+    "cti_abstention_count": 3,
+    "cti_accepted_edge_count": 0,
+    "results_path": "09-experiments/llm_evidence_compiler_mainline/generated/wp3/reuse-hybrid-development/reuse-hybrid-development-results.json",
+    "results_file_sha256": "F8C0F6ACFB0B1127A3A7BD2C564EA03D71B47D448181D04F70A99B973166008F",
+    "results_canonical_sha256": "154C8C7E3262EAA6B60BEE63A170D63F612152260AB4F764C691E83936B0B236",
+    "snapshot_path": "09-experiments/llm_evidence_compiler_mainline/generated/wp3/reuse-hybrid-development/reuse-hybrid-development-snapshot.json",
+    "snapshot_file_sha256": "84DFBD6607F4E73BAAC6271C4019C9D41F49D82C91646F9573B45C613650B37A"
+  },
+  "verification": {
+    "python_compile": "passed",
+    "wp3_tests": "12 passed",
+    "all_compiler_tests": "47 passed",
+    "full_repository_tests": "491 passed, 6 skipped, 0 failed",
+    "model_runtime_imported": false,
+    "private_reference_read": false,
+    "controller_payload_emitted": false
+  },
+  "legacy_inheritance_lock": {
+    "09-experiments/scripts/run_mvp.py": "A7EBCF2739B7CD708011DB378D0F18AF3EB970C6236813BE7F8258D5394A952E",
+    "09-experiments/data_schema/evidence_claim.schema.json": "5FCA1B77512C5C966860781214DCB83BEE76CFECA56B9E4AE3B91657D73CA63A",
+    "09-experiments/data_schema/alignment_state.schema.json": "462C8E5F657A4467FC4B945FBAB60A2FF86D1D1470DBA8D5C3937F46E14EA61E"
+  },
+  "claim_posture": {
+    "adapter_interface_pass": true,
+    "component_performance_evaluable": false,
+    "component_performance_claim_authorized": false,
+    "llm_performance_claim_authorized": false,
+    "end_to_end_gain_claim_authorized": false,
+    "human_validated_grounding_claim_authorized": false
+  },
+  "still_prohibited": [
+    "dependency_install",
+    "component_runtime_execution",
+    "model_or_embedding_download",
+    "training",
+    "formal_inference",
+    "C07-C12 automatic execution",
+    "controller_integration",
+    "paper_or_patent_positive_result_writeup"
+  ],
+  "next_gate": {
+    "status": "hard_stop_pending_user_review",
+    "required_amendment": "source-licensed CTI text artifact amendment",
+    "separate_later_authority": "component runtime and any model or embedding dependency",
+    "double_human_audit_required_now": false
+  }
+}

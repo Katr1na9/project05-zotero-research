@@ -1,0 +1,241 @@
+{
+  "schema_version": "project05-llm-editor-l2-liwa-source-role-review-v0.1",
+  "created_date": "2026-07-22",
+  "authority_base_commit": "221e94656018e5bcacdbc9d622a5ac30b21459d7",
+  "review_type": "single_family_artifact_only_source_role_review",
+  "candidate_id": "liwa_ad_endpoint_telemetry_30run_2026",
+  "candidate_status_before_review": "approved_metadata_candidate_with_bounded_role_review_evidence",
+  "verdict": {
+    "decision": "conditional_approve_as_provisional_train_candidate_review_only",
+    "risk_level": "high",
+    "meaning": "The source is scientifically eligible to be considered for one provisional train-family slot under the frozen restrictions. This review does not apply a catalog role, award quota, authorize sample materialization, or approve training.",
+    "catalog_role_change_applied": false,
+    "train_materialization_authorized": false,
+    "quota_credit_awarded": false
+  },
+  "review_prerequisite": {
+    "machine_result_contract_assertions_passed": true,
+    "bounded_audit_status": "blocked_no_authority_transition",
+    "liwa_future_role_review_evidence_gate_passed": true,
+    "ainception_future_role_review_evidence_gate_passed": false,
+    "ainception_remains_fail_closed": true,
+    "archive_reopened_for_this_review": false,
+    "external_sources_consulted_for_this_review": false
+  },
+  "evidence_summary": {
+    "identity_and_rights": {
+      "official_record_id": 20618083,
+      "record_revision": 7,
+      "doi": "10.5281/zenodo.20618083",
+      "license": "CC-BY-4.0",
+      "archive_bytes": 7357185,
+      "archive_md5": "94f2af6a756a0841126d51a55bd8fe85",
+      "nested_notice_conflict_detected": false
+    },
+    "bounded_manifest_and_probe": {
+      "manifest_member_count": 86,
+      "unsafe_path_count": 0,
+      "duplicate_member_path_count": 0,
+      "eligible_csv_member_count": 31,
+      "bounded_probe_member_count": 31,
+      "raw_event_schema_member_count": 31,
+      "pointer_capable_schema_member_count": 31,
+      "detector_only_member_count": 0,
+      "forbidden_supervision_field_occurrence_count": 1884,
+      "parseable_timestamp_day_count": 0,
+      "raw_values_persisted": false
+    },
+    "bounded_lineage": {
+      "stable_source_native_run_group_count": 30,
+      "bounded_source_native_group_passed_count": 30,
+      "unstable_run_member_count": 1,
+      "minimum_required_for_future_role_review": 4,
+      "statistical_independence_verified": false,
+      "null_or_benign_lineage_verified": false
+    }
+  },
+  "approved_provisional_role_constraints": {
+    "eligible_role": "train_candidate_only",
+    "maximum_future_family_credit": 1,
+    "current_family_credit": 0,
+    "current_lineage_credit": 0,
+    "current_sample_credit": 0,
+    "maximum_bounded_source_native_lineage_candidates_before_dedup_and_capacity_audit": 30,
+    "paired_native_enhanced_or_security_sysmon_wazuh_views_share_one_lineage": true,
+    "all_views_and_packets_from_one_run_group_must_remain_in_one_split": true,
+    "family_row_share_cap_if_later_admitted": 0.35,
+    "lineage_row_share_cap_if_later_admitted": 0.10,
+    "family_and_lineage_ids_visible_to_model_must_be_opaque": true,
+    "source_file_or_path_labels_may_enter_model_view": false,
+    "attack_or_technique_names_may_be_targets_or_pointer_hints": false,
+    "screenshots_graphs_rules_configuration_statistics_may_enter_model_view": false,
+    "forbidden_supervision_fields_may_enter_model_view_or_target": false,
+    "absence_of_alert_may_define_null_or_benign": false,
+    "candidate_unsupported_or_abstention_credit_available_now": false,
+    "conflict_group_credit_available_now": false,
+    "temporal_normalization_samples_available_now": false,
+    "candidate_q_samples_available_now": false,
+    "polarity_supervision_available_now": false,
+    "trusted_modality": "unknown_until_approved_ingestion_mapping",
+    "binding_status_before_program_binder": "unbound_or_ambiguous",
+    "certification_authority_allowed": false,
+    "promotion_status": "none"
+  },
+  "mandatory_gates_before_catalog_role_application": [
+    "A separate catalog amendment must explicitly assign Liwa to one provisional train-family slot.",
+    "The field-level isolation contract must prove that the 1,884 forbidden-supervision field occurrences never enter model view, targets, pointer hints, validator input, or admission logic.",
+    "Exact, normalized, and preregistered near-duplicate exclusion against E3, E5, OpTC, OTRF, and WitFoo must pass before sample construction.",
+    "A frozen normalizer and pointer-catalog builder must preserve source span hashes and program-verifiable record identity.",
+    "A quota-capacity audit must report available, selected, quarantined, and rejected counts by family, run group, sample kind, and trusted modality.",
+    "CC-BY-4.0 attribution and source-notice hashes must be attached to every derived artifact manifest.",
+    "The user must separately approve catalog role application; this review cannot mutate the effective source catalog."
+  ],
+  "mandatory_gates_before_sample_materialization_or_training": [
+    "Catalog role application and split-family lock must be complete before any sample conversion.",
+    "All source-native run views must be grouped before packet generation; rows and windows cannot create lineage credit.",
+    "No null, benign, unsupported, abstention, conflict, temporal, candidate-q, or polarity sample may be fabricated from unavailable supervision.",
+    "Candidate-only guard, authority leakage, modality leakage, pointer binding, and split leakage checks must all pass.",
+    "Train family, lineage, row, outcome-balance, sample-kind, and modality quotas must be satisfied without counting Liwa as statistically independent evidence beyond its bounded source-native groups.",
+    "Baseline, fine-tuning, and L2 passage require separate authorization after the complete L2 data Gate."
+  ],
+  "rigor_review": {
+    "review_framework": "ARA Seal Level 2 semantic epistemic dimensions adapted to a source-role evidence package",
+    "overall_grade": "Accept",
+    "mean_score": 4.0,
+    "dimensions": {
+      "D1_evidence_relevance": {
+        "score": 4,
+        "strengths": [
+          "All 31 bounded CSV probes exhibit raw-event and pointer-capable schema rather than detector-only summaries.",
+          "The evidence directly addresses the Candidate-only Semantic Editor's need for source-recoverable executed endpoint telemetry."
+        ],
+        "weaknesses": [
+          "The bounded probe establishes schema shape, not downstream Candidate Claim IR sample correctness."
+        ]
+      },
+      "D2_falsifiability_quality": {
+        "score": 5,
+        "strengths": [
+          "The prior metadata review preregistered concrete rejection conditions for detector-only data, fewer than four source-native groups, and missing pointer recoverability.",
+          "The audit recorded a positive Liwa result and a negative AInception result without relaxing frozen rules."
+        ],
+        "weaknesses": []
+      },
+      "D3_scope_calibration": {
+        "score": 4,
+        "strengths": [
+          "The decision is limited to provisional train candidacy and explicitly withholds quota, statistical-independence, null, benign, and training claims."
+        ],
+        "weaknesses": [
+          "Thirty source-native groups arise from one producer, three attack types, and paired logging conditions, so cross-environment generalization cannot be inferred."
+        ]
+      },
+      "D4_argument_coherence": {
+        "score": 4,
+        "strengths": [
+          "Metadata identity, bounded acquisition, pointer/schema evidence, lineage grouping, and role restrictions form a consistent staged argument."
+        ],
+        "weaknesses": [
+          "The final source-role decision remains intentionally disconnected from catalog mutation and capacity admission."
+        ]
+      },
+      "D5_exploration_integrity": {
+        "score": 4,
+        "strengths": [
+          "The process preserved high-risk status at metadata review, recorded forbidden-field and temporal limitations, and retained the AInception negative result."
+        ],
+        "weaknesses": [
+          "No full sample-conversion failure distribution exists because sample materialization remains unauthorized."
+        ]
+      },
+      "D6_methodological_rigor": {
+        "score": 3,
+        "strengths": [
+          "Checksums, bounded read limits, source-native run grouping, pointer schema, nested notices, and no-authority-transition outputs are reproducibly recorded."
+        ],
+        "weaknesses": [
+          "Protected-family payload exclusion, full field isolation, sample capacity, temporal parsing, and statistical independence remain unverified."
+        ]
+      }
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "F01",
+      "dimension": "D6_methodological_rigor",
+      "severity": "major",
+      "target_file": "llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.md",
+      "evidence_span": "Probe 识别到 1,884 次 forbidden-supervision 字段出现；",
+      "observation": "The bounded probes encountered 1,884 forbidden-supervision field occurrences.",
+      "reasoning": "Schema fitness does not itself prove that labels, attack descriptors, or detector fields can be physically isolated from future model-visible packets.",
+      "suggestion": "Require a fail-closed column/category isolation audit before catalog role application and preserve only exclusion counts and hashes."
+    },
+    {
+      "finding_id": "F02",
+      "dimension": "D6_methodological_rigor",
+      "severity": "major",
+      "target_file": "llm-editor-v0.8-l2-provisional-data-split-contract-v0.1-20260722.md",
+      "observation": "Protected-family exact and near-duplicate exclusion has not yet been executed for Liwa.",
+      "reasoning": "Without the frozen exclusion scan, Liwa cannot safely contribute train samples even though its internal pointer and lineage evidence is promising.",
+      "suggestion": "Run the separately authorized protected-family exclusion scan before any normalization or packet construction."
+    },
+    {
+      "finding_id": "F03",
+      "dimension": "D3_scope_calibration",
+      "severity": "major",
+      "target_file": "llm-editor-v0.8-l2-liwa-ad-telemetry-metadata-candidate-review-v0.1-20260722.json",
+      "evidence_span": "\"null_or_benign_quota_credit_allowed\": false",
+      "observation": "The source has no verified benign or null lineage and cannot support unsupported or abstention examples by absence of alerts.",
+      "reasoning": "Using Liwa to balance positive and negative outcomes would fabricate supervision and bias the editor toward path-derived attack labels.",
+      "suggestion": "Restrict Liwa to positive candidate generation potential; obtain negative and abstention coverage from separately approved families."
+    },
+    {
+      "finding_id": "F04",
+      "dimension": "D3_scope_calibration",
+      "severity": "minor",
+      "target_file": "llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.json",
+      "evidence_span": "\"statistical_independence_verified\": false",
+      "observation": "The 30 passed run groups are bounded source-native candidates, not statistically independent replications.",
+      "reasoning": "All groups come from one producer and a narrow controlled study with correlated attack and logging conditions.",
+      "suggestion": "Use family and run-group macro reporting and avoid any claim of cross-environment independence or generalization."
+    },
+    {
+      "finding_id": "F05",
+      "dimension": "D6_methodological_rigor",
+      "severity": "minor",
+      "target_file": "llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.json",
+      "observation": "No parseable day-level timestamp range was established by the bounded probe.",
+      "reasoning": "The source cannot presently support formal temporal-normalization samples or temporal accuracy claims.",
+      "suggestion": "Keep temporal normalization disabled until a separate frozen timestamp parser and gold contract pass."
+    }
+  ],
+  "gate": {
+    "source_role_review_completed": true,
+    "provisional_train_candidate_review_approved": true,
+    "catalog_role_change_applied": false,
+    "train_source_admitted": false,
+    "family_quota_credit_awarded": false,
+    "lineage_quota_credit_awarded": false,
+    "sample_quota_credit_awarded": false,
+    "protected_payload_exclusion_passed": false,
+    "sample_capacity_verified": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false,
+    "next_action_requires_separate_user_authorization": true,
+    "next_gate": "liwa_catalog_role_application_and_field_exclusion_contract_review"
+  },
+  "read_order": [
+    "llm-editor-v0.8-l2-liwa-ad-telemetry-metadata-candidate-review-v0.1-20260722.json",
+    "llm-editor-v0.8-l2-liwa-ad-telemetry-metadata-candidate-review-v0.1-20260722.md",
+    "llm-editor-v0.8-l2-train-executed-evidence-candidates-metadata-only-v0.1-20260722.json",
+    "llm-editor-v0.8-l2-train-executed-evidence-candidates-metadata-only-v0.1-20260722.md",
+    "llm-editor-v0.8-l2-effective-source-catalog-role-amendment-v0.3-20260722.json",
+    "llm-editor-v0.8-l2-provisional-data-split-contract-v0.1-20260722.md",
+    "llm-editor-v0.8-l2-quota-amendment-v0.1-20260722.md",
+    "llm-editor-v0.8-l2-ainception-liwa-bounded-acquisition-audit-contract-v0.1-20260722.json",
+    "llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.json",
+    "llm-editor-v0.8-l2-ainception-liwa-bounded-manifest-lineage-audit-result-v0.1-20260722.md"
+  ]
+}

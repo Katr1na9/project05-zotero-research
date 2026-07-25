@@ -1,0 +1,65 @@
+{
+  "config_id": "project05-qwen25-qlora-local-smoke-training-v0.2",
+  "version": "0.2.0",
+  "created_date": "2026-07-19",
+  "base_model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "base_resolved_commit": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "adapter_id": "Project05-Evidence-Compiler-Adapter-Local-Smoke-v0.2",
+  "adapter_key": "project05_obs_compiler",
+  "method": "qlora_causal_sft_local_smoke_only",
+  "quantization": {
+    "bits": 4,
+    "type": "nf4",
+    "double_quantization": true,
+    "compute_dtype": "float16"
+  },
+  "lora": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "bias": "none",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "sequence_length": 1024,
+  "allow_truncation": false,
+  "micro_batch_size": 1,
+  "gradient_accumulation_steps": 16,
+  "optimizer_steps": 1,
+  "learning_rate": 0.0002,
+  "optimizer": "paged_adamw_8bit",
+  "gradient_checkpointing": true,
+  "maximum_gradient_norm": 1.0,
+  "seed": 2026071601,
+  "smoke_packet_limit": 20,
+  "smoke_supported": 10,
+  "smoke_pointer_unsupported": 10,
+  "validation_generation_max_new_tokens": 8,
+  "hardware": {
+    "execution_target": "NVIDIA GeForce RTX 2080 Ti",
+    "minimum_compute_capability": 7.5,
+    "minimum_total_vram_gib": 10.5,
+    "maximum_operational_peak_vram_gib": 10.5,
+    "local_memory_gate_is_blocking": true
+  },
+  "resource_limits": {
+    "maximum_environment_cache_adapter_bytes": 30000000000,
+    "minimum_free_disk_bytes_before_install": 40000000000,
+    "maximum_smoke_wall_minutes": 180,
+    "maximum_adapter_file_bytes": 1000000000
+  },
+  "output_policy": {
+    "adapter_only": true,
+    "allow_merged_model": false,
+    "allow_hub_upload": false,
+    "allow_optimizer_checkpoint_retention": false,
+    "allow_raw_generation_in_committed_audit": false
+  }
+}

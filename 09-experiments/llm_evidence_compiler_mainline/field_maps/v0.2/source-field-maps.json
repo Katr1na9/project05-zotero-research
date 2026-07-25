@@ -1,0 +1,132 @@
+{
+  "schema_version": "project05-source-field-maps-v0.2",
+  "map_version": "0.2.0",
+  "created_date": "2026-07-18",
+  "parent_map": {
+    "path": "../v0.1/source-field-maps.json",
+    "sha256": "2A555AE54D8F976D01170C38DBA7D0438AD78A4F1A9915DE60DED54A1F20E12D"
+  },
+  "families": {
+    "ait_cam_lds_manifestations_filtered": {
+      "split_role": "train",
+      "source_modality": "endpoint_event",
+      "g0_status": "eligible",
+      "templates": [
+        {
+          "template_id": "cam_linux_audit_execve_v1",
+          "subject_type": "process",
+          "predicate": "executed",
+          "object_type": "command",
+          "candidate_parser": "linux_audit_execve_v1",
+          "incompatible_predicates": ["accessed", "connected_to", "terminated"]
+        },
+        {
+          "template_id": "cam_linux_audit_proctitle_hex_v1",
+          "subject_type": "process",
+          "predicate": "executed",
+          "object_type": "command",
+          "candidate_parser": "linux_audit_proctitle_hex_v1",
+          "incompatible_predicates": ["accessed", "connected_to", "terminated"]
+        }
+      ]
+    },
+    "fkie_socbed_acsac2021_winlogbeat": {
+      "split_role": "train",
+      "source_modality": "endpoint_event",
+      "g0_status": "eligible",
+      "templates": [
+        {
+          "template_id": "socbed_process_executed_command_v1",
+          "subject_type": "process",
+          "predicate": "executed",
+          "object_type": "command",
+          "subject_rule": {"transform": "field", "fields": ["process_name"]},
+          "object_rule": {"transform": "field", "fields": ["command_line"]},
+          "time_rule": {"transform": "field", "fields": ["timestamp"]},
+          "incompatible_predicates": ["connected_to", "accessed"]
+        },
+        {
+          "template_id": "socbed_process_accessed_file_v1",
+          "subject_type": "process",
+          "predicate": "accessed",
+          "object_type": "file",
+          "subject_rule": {"transform": "field", "fields": ["process_name"]},
+          "object_rule": {"transform": "field", "fields": ["file_path"]},
+          "time_rule": {"transform": "field", "fields": ["timestamp"]},
+          "incompatible_predicates": ["executed", "connected_to"]
+        },
+        {
+          "template_id": "socbed_network_connected_v1",
+          "subject_type": "network_address",
+          "predicate": "connected_to",
+          "object_type": "network_endpoint",
+          "subject_rule": {"transform": "field", "fields": ["source_address"]},
+          "object_rule": {
+            "transform": "join_host_port",
+            "fields": ["destination_address", "destination_port"]
+          },
+          "time_rule": {"transform": "field", "fields": ["timestamp"]},
+          "incompatible_predicates": ["executed", "accessed"]
+        }
+      ]
+    },
+    "logpai_loghub_linux": {
+      "split_role": "training-validation",
+      "source_modality": "endpoint_event",
+      "g0_status": "eligible",
+      "templates": [
+        {
+          "template_id": "loghub_oom_killed_process_v1",
+          "subject_type": "system",
+          "predicate": "terminated",
+          "object_type": "process",
+          "candidate_parser": "loghub_oom_killed_process_v1",
+          "incompatible_predicates": ["executed", "accessed", "connected_to"]
+        }
+      ]
+    },
+    "redcanary_atomic_red_team": {
+      "split_role": "train",
+      "source_modality": "endpoint_event",
+      "g0_status": "eligible",
+      "templates": [
+        {
+          "template_id": "atomic_process_executed_command_v1",
+          "subject_type": "process",
+          "predicate": "executed",
+          "object_type": "command",
+          "subject_rule": {"transform": "field", "fields": ["process_name"]},
+          "object_rule": {"transform": "field", "fields": ["command_line"]},
+          "incompatible_predicates": ["connected_to", "accessed"]
+        }
+      ]
+    },
+    "splunk_attack_data_manifests": {
+      "split_role": "train",
+      "source_modality": "endpoint_event",
+      "g0_status": "ineligible",
+      "ineligible_reason_codes": ["legacy_observation_candidate_missing"],
+      "templates": []
+    },
+    "zeek_non_pcap_test_logs": {
+      "split_role": "training-validation",
+      "source_modality": "network_event",
+      "g0_status": "eligible",
+      "templates": [
+        {
+          "template_id": "zeek_network_connected_v1",
+          "subject_type": "network_address",
+          "predicate": "connected_to",
+          "object_type": "network_endpoint",
+          "subject_rule": {"transform": "field", "fields": ["source_address"]},
+          "object_rule": {
+            "transform": "join_host_port",
+            "fields": ["destination_address", "destination_port"]
+          },
+          "time_rule": {"transform": "field", "fields": ["timestamp"]},
+          "incompatible_predicates": ["executed", "accessed"]
+        }
+      ]
+    }
+  }
+}

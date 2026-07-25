@@ -1,0 +1,122 @@
+{
+  "authority_id": "project05-qwen25-memory-stress-preflight-failure-v0.28",
+  "version": "0.28.0",
+  "status": "memory_stress_failed_peak_reserved_all_execution_closed",
+  "created_date": "2026-07-19",
+  "trigger": {
+    "type": "automatic_contract_hard_stop",
+    "source_authority": "project05-qwen25-memory-stabilization-stress-preflight-v0.27",
+    "reason": "longest_sequence_stress_peak_reserved_exceeded_10_5_gib",
+    "new_user_authority_inferred": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.27.json",
+    "sha256": "8EFDD05F782A1C21C95F963CAF4F1F9BE27D0054C6459DEDAE75AB3B0CB8711F",
+    "disposition": "the_single_memory_stress_execution_was_consumed_and_failed"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_memory_stress_result.py": "B7B3208A020DA6AEFCDB1B1F444E8C22D8A45305D1EF8C054C11889FFB387036"
+  },
+  "authoritative_results": {
+    "09-experiments/llm_evidence_compiler_mainline/results/qwen25-memory-stress-preflight-failure-result-v0.1.json": "F6745477EEA5C10638F550123D7C458C691DE4EF56750D52D77DCBA7B1072E7B"
+  },
+  "authoritative_documentation": {
+    "04-progress/llm-evidence-compiler-qwen25-memory-stress-preflight-failure-20260719.md": "6339664DC83D402CDCE68AF6A606FE2FC28F802689ABCA305DC1DC6E09DC4CF0"
+  },
+  "local_execution_evidence": {
+    "stress_result": {
+      "path": ".local-qwen25-smoke/local-output/memory-stress-preflight-v0.1.json",
+      "bytes": 6284,
+      "sha256": "AFF78D98210515E675729BE0A5A5D812EB145701AB6725E9DA45098E3388C272",
+      "gitignored": true
+    }
+  },
+  "memory_stress_result_gate": {
+    "attempt_completed": true,
+    "attempt_passed": false,
+    "execution_count": 1,
+    "microbatches_completed": 16,
+    "optimizer_steps_completed": 1,
+    "numerical_values_finite": true,
+    "cuda_oom": false,
+    "checkpoint_count": 0,
+    "adapter_saved": false,
+    "failure_gate": "peak_reserved_vram",
+    "frozen_limit_bytes": 11274289152,
+    "actual_peak_reserved_bytes": 13788774400,
+    "excess_reserved_bytes": 2514485248,
+    "post_cleanup_reserved_bytes": 50331648,
+    "automatic_restart_used": false,
+    "gpu_released_after_failure": true,
+    "interpretation": "capacity_failure_not_model_quality_result"
+  },
+  "verification": {
+    "memory_stress_result_tests": {
+      "tests_run": 7,
+      "passed": 7,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "memory_stress_primary_smoke_execution_chain_tests": {
+      "tests_run": 98,
+      "passed": 98,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "adjacent_llm_compiler_regression": {
+      "tests_run": 149,
+      "passed": 145,
+      "skipped": 1,
+      "failures": 2,
+      "errors": 1,
+      "status": "existing_repository_conditions_outside_v0_27_diff",
+      "conditions": [
+        "citation_report_frozen_sha_mismatch",
+        "positive_remap_historical_records_root_missing",
+        "wp2_rule_snapshot_sidecar_sha_mismatch"
+      ],
+      "affected_paths_modified_by_v0_27": false
+    }
+  },
+  "next_gate": {
+    "status": "hard_stop_for_new_capacity_decision_and_explicit_user_authority",
+    "memory_stress_preflight_authorized": false,
+    "primary_training_authorized": false,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "second_memory_stress_execution",
+    "second_allocator_trial",
+    "primary_training_retry_or_resume",
+    "resource_metric_or_limit_change_without_amendment",
+    "sequence_rank_batch_data_seed_optimizer_scheduler_or_hardware_change",
+    "network_or_download",
+    "runtime_install_or_change",
+    "adapter_or_checkpoint_save",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

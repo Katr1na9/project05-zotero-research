@@ -1,0 +1,196 @@
+{
+  "schema_version": "project05-llm-editor-l2-quota-role-negative-result-amendment-v0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "0d8865592fb738855c61c00e3c89efc30fd44634",
+  "status": "draft_for_review_not_effective",
+  "purpose": "Propose an A/B evidence-tier split and a preregistered negative-result track without weakening the existing fail-closed, independence, privacy, or anti-pseudorep boundaries. This draft does not lower the registered quota, admit a source role, write the effective catalog, award credit, authorize training, or change the L2 Gate.",
+  "source_basis": {
+    "quota_amendment_path": "docs/llm-editor/llm-editor-v0.8-l2-quota-amendment-v0.1-20260722.md",
+    "quota_amendment_semantics": [
+      "The train family and lineage numbers are provisional pilot operating lower bounds, not statistical power proof.",
+      "Independent family and lineage requirements prevent a single source, run, or repeated view from masquerading as sample size.",
+      "The registered amendment permits adding independent families, narrowing metrics or paper claims, or publishing a new amendment before model invocation; it does not permit post-result quota lowering."
+    ],
+    "current_project_state": {
+      "train_quota_status": "registered_not_satisfied",
+      "direction_04_source_role_slot": "vacant",
+      "admitted_source_role_families": 0,
+      "required_source_role_families_for_current_train_pilot": 4
+    },
+    "examples_used_as_design_evidence_only": [
+      "Toyota HSR bounded probe: technical completion with source-role rejection.",
+      "LO2v2 and COW bounded paths: audit evidence does not automatically become train admission.",
+      "LogChunks and other metadata-only candidates: stop-loss is preferred absent prior evidence for B-tier gates."
+    ]
+  },
+  "non_effective_status": {
+    "amendment_effective": false,
+    "current_quota_numbers_changed": false,
+    "current_role_rules_changed": false,
+    "effective_catalog_written": false,
+    "source_role_changed": false,
+    "family_credit_awarded": 0,
+    "lineage_credit_awarded": 0,
+    "sample_credit_awarded": 0,
+    "quota_credit_awarded": 0,
+    "train_or_model_execution_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false
+  },
+  "proposed_policy": {
+    "tier_names": {
+      "A": "metadata_audit_candidate",
+      "B": "train_eligible_source_candidate"
+    },
+    "tier_A": {
+      "meaning": "A is an audit-evidence tier, not a train source role. It records identity and bounded structural/Gate evidence while preserving all source-role and credit prohibitions.",
+      "minimum_evidence": [
+        "Frozen identity contract and exact source identity when an acquisition exists.",
+        "Reader and bounded probe identity are pinned and the result is sanitized aggregate-only.",
+        "The probe records privacy, notice, outcome, lineage, pointer, and source-role Gate booleans without persisting raw paths, raw member content, protected labels, ground truth, or PII.",
+        "Any failed Gate is retained as a first-class negative or hold finding; it is not silently dropped."
+      ],
+      "allowed_outputs": [
+        "A separate metadata/audit catalog or evidence register, if separately authorized and clearly marked audit-only.",
+        "Sanitized Gate maps, failure dispositions, search coverage, and negative-result evidence."
+      ],
+      "forbidden_outputs": [
+        "Effective train catalog entries.",
+        "Source-role admission, quota or lineage credit, sample generation, or L2 passage.",
+        "Automatic promotion to B."
+      ],
+      "credit": {
+        "family": 0,
+        "lineage": 0,
+        "sample": 0,
+        "quota": 0
+      }
+    },
+    "tier_B": {
+      "meaning": "B is the only tier that may be considered for train source-role admission, subject to a separate source-role review and the registered quota audit.",
+      "required_gates": {
+        "identity_verified": true,
+        "privacy_header_gate": true,
+        "nested_notice_gate": true,
+        "outcome_blind_candidate_manifest_gate": true,
+        "external_outcome_composition_gate": true,
+        "lineage_independence_gate": true,
+        "source_role_gate": true,
+        "pointer_and_credit_semantics": "Must be explicitly closed by the B-specific contract. An unbound pointer never yields pointer, lineage, or quota credit."
+      },
+      "required_quota_checks": {
+        "quota_capacity_audit_required": true,
+        "current_train_family_target": "at_least_4_independent_corpus_family_id",
+        "current_train_lineage_target": "at_least_4_independent_lineage_group_id_per_family",
+        "current_train_total_lineage_target": "at_least_16",
+        "row_counts_do_not_substitute_for_family_or_lineage": true,
+        "single_family_or_lineage_concentration_limits_remain_in_force": true
+      },
+      "admission_boundary": [
+        "A does not count toward B or toward the train quota.",
+        "A partial surface, failed Gate, or repeated view cannot be combined with another partial surface to manufacture one B family.",
+        "B admission requires a new explicit source-role disposition after the relevant evidence and quota audit; it is never automatic from a successful technical probe."
+      ],
+      "credit": {
+        "family": "Only after explicit B admission and quota audit; not created by this draft.",
+        "lineage": "Only after independent lineage closure; not created by this draft.",
+        "sample": "Only after separate training-scope authorization; not created by this draft.",
+        "quota": "Only after the effective catalog is separately amended; not created by this draft."
+      }
+    }
+  },
+  "invariants_not_open_for_relaxation": [
+    "Identity is not role; role is not credit; credit is not L2 passage.",
+    "Independent family and lineage evidence remain mandatory for any B-tier train claim.",
+    "No half-family, composite-family, repeated-view, packet-window, template, prompt-view, or duplicate-row counting may close an independence gate.",
+    "No protected outcome, label, ground truth, credential, command, payload, PII, raw path, raw notice, or ordinary member content may enter model-visible or persistent audit output.",
+    "Fail-closed behavior, Bypass prohibition, and exhausted-attempt hard stops remain unchanged.",
+    "A result observed after model invocation may not be used to retroactively lower a quota or gate."
+  ],
+  "negative_result_track": {
+    "track_id": "public-gated-supply-negative-result-v0.1",
+    "status": "proposed_not_effective",
+    "permitted_claim": "Within the frozen privacy, notice, outcome, lineage, and independence gates and the declared public metadata-search universe, the current search path has not identified enough B-tier families to support the registered train L2 pilot target.",
+    "claim_scope": [
+        "The claim is bounded by the declared search universe, date, query protocol, and exclusion rules.",
+        "The claim reports a supply and gate-closure boundary, not a universal statement that no qualifying data exists.",
+        "The claim does not establish statistical power, model quality, prevalence, or general-world validity."
+    ],
+    "required_evidence_ledger": [
+      "Search-universe definition and public registry sources.",
+      "Search date range, query terms, revision policy, and candidate deduplication rule.",
+      "Candidate-level identity, license, revision, and metadata-only reason codes.",
+      "Independent-family and lineage evidence available before any model call.",
+      "Disposition for every screened candidate: B candidate, A hold, reject, failed acquisition, or vacant.",
+      "A denominator and stop rule; do not report B≈0/4 without naming the screened set."
+    ],
+    "non_claims": [
+      "No claim that public corpora universally cannot satisfy the quota.",
+      "No claim that a technical A-tier audit is a trainable B-tier source.",
+      "No claim that a negative result passes L2 or authorizes training.",
+      "No claim that the current search is exhaustive beyond its declared universe."
+    ],
+    "publication_or_paper_use": {
+      "allowed_after_separate_review": true,
+      "must_report_a_coverage_and_b_gap_separately": true,
+      "must_include_failures_and_holds_not_only_successes": true,
+      "must_not_convert_negative_result_into_quota_credit": true
+    }
+  },
+  "search_stop_loss": {
+    "default_action_for_logchunks_and_similar_metadata_only_candidates": "metadata_stop_loss_hold",
+    "full_audit_not_default": true,
+    "continue_only_if_prior_evidence_exists": [
+      "Curator or official metadata already declares at least four independent, label-independent execution or capture groups.",
+      "The declaration is not merely files, directories, rows, hosts, sensors, date windows, or repeated views.",
+      "Outcome-blind lineage and protected-outcome exclusion are plausibly defensible before payload access.",
+      "A new topic-specific contract and execution-authority are prepared and separately approved."
+    ],
+    "no_silent_reopen": true,
+    "failed_acquisition_paths": {
+      "REPROD": "remain failed; do not resume or retry without a new contract and authority",
+      "PANDAcap": "remain failed or under existing disposition; do not reopen silently",
+      "Toyota": "remain held metadata candidate and rejected source role",
+      "St_Gallen": "remain held/rejected for the existing path; a v0.2 method requires a new contract"
+    }
+  },
+  "direction_04_and_quota_transition": {
+    "direction_04_source_role_slot": "vacant",
+    "current_train_family_progress": "0/4",
+    "this_draft_fills_direction_04": false,
+    "this_draft_reduces_current_quota": false,
+    "this_draft_allows_fractional_or_composite_family_counting": false,
+    "future_quota_change_requires": [
+      "A separate amendment before model invocation.",
+      "A written scientific rationale independent of observed model results.",
+      "An updated capacity audit and explicit review of train/development/test implications."
+    ]
+  },
+  "change_control": {
+    "review_required_before_effective": true,
+    "effective_catalog_update_required_for_B_admission": true,
+    "new_execution_authority_required_for_new_content_audit": true,
+    "new_contract_required_for_new_surface_or_new_gate_method": true,
+    "existing_exhausted_execute_may_be_reused": false,
+    "automatic_next_stage_authorized": false,
+    "automatic_source_role_review_authorized": false
+  },
+  "review_questions": [
+    "Should A-tier metadata evidence be recorded in a separate audit-only register, or remain documents-only?",
+    "Should B-tier pointer binding be a hard requirement, or should a future B contract define a safe unbound exception without awarding pointer credit?",
+    "What exact search universe and denominator should be preregistered for the negative-result claim?",
+    "What review authority should approve an effective quota change, if any, before model invocation?"
+  ],
+  "hard_stop": {
+    "archive_opened": false,
+    "download_performed": false,
+    "audit_performed": false,
+    "catalog_changed": false,
+    "role_changed": false,
+    "credit_changed": false,
+    "l2_gate_changed": false,
+    "next_action": "Review this draft. It is not effective until a separately authorized amendment is approved and committed; until then the existing quota and L2 Gate remain unchanged."
+  }
+}

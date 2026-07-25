@@ -1,0 +1,159 @@
+{
+  "readiness_id": "project05-qwen25-mainline-data-reuse-v0.1",
+  "version": "0.1.0",
+  "created_date": "2026-07-18",
+  "status": "formal_data_gate_failed_train_null_and_review_pending",
+  "scope": "read_only_reaudit_of_existing_historical_qwen_source_artifacts",
+  "authority_lock": "contracts/authority-lock-v0.2.json",
+  "corpus_copied_into_mainline": false,
+  "new_corpus_downloaded": false,
+  "tokenizer_used": false,
+  "model_runtime_used": false,
+  "historical_origin": {
+    "workspace_relative_root": ".worktrees/llm-apt-phase1/09-experiments/llm_finetuning_v0.3",
+    "portable_runtime_dependency": false,
+    "source_catalog": {
+      "path": "source_catalog.json",
+      "sha256": "1C97F43FAA87D74C9209A77B8018992F4FFCAD398F0262A3A22D14B7AAF8DD04",
+      "status": "user_reviewed",
+      "source_family_count": 6
+    },
+    "normalization_report": {
+      "path": "generated/normalization-report.json",
+      "sha256": "916709E2F2885002D2E97B3FEC9E2B02A39657CDC86D795E3F21812D4C898F41",
+      "proposed_record_count": 3402
+    },
+    "label_hardening_audit": {
+      "path": "generated/label-value-hardening-audit.json",
+      "sha256": "7CD2FF4A0B09E79ED646D2B433FD385ABF3CAB93458C46ACC6FE5319D9D860FD",
+      "status": "passed",
+      "remaining_ttp_pattern_count": 0
+    },
+    "payload_exclusion_audit": {
+      "path": "generated/payload-exclusion-audit.json",
+      "sha256": "DCDA9065A3A7B7AC77A272858C320CA14EEC4DB1D592A188B4D3CA47E3887A7C",
+      "status": "passed",
+      "input_record_count": 3396,
+      "exact_match_count": 0,
+      "near_duplicate_match_count": 0,
+      "blocked_family_match_count": 0,
+      "maximum_jaccard": 0.485714285714,
+      "threshold": 0.85
+    },
+    "author_review_queue": {
+      "path": "generated/author-review.csv",
+      "sha256": "1319D6DCA7FADDF6AC7C53433A27830CCE09D5C04471C842C7554920C45EA828",
+      "row_count": 3396,
+      "completed_decision_count": 0,
+      "blank_decision_count": 3396,
+      "is_g2": false
+    }
+  },
+  "candidate_counts_after_exclusion": {
+    "train": {
+      "total": 2396,
+      "observation": 2394,
+      "null": 2,
+      "observation_fraction": 0.999165275459,
+      "null_fraction": 0.000834724541,
+      "source_family_count": 4,
+      "families": {
+        "redcanary_atomic_red_team": {
+          "observation": 799,
+          "null": 0
+        },
+        "splunk_attack_data_manifests": {
+          "observation": 0,
+          "null": 2
+        },
+        "ait_cam_lds_manifestations_filtered": {
+          "observation": 800,
+          "null": 0
+        },
+        "fkie_socbed_acsac2021_winlogbeat": {
+          "observation": 795,
+          "null": 0
+        }
+      }
+    },
+    "training_validation": {
+      "total": 1000,
+      "observation": 483,
+      "null": 517,
+      "observation_fraction": 0.483,
+      "null_fraction": 0.517,
+      "source_family_count": 2,
+      "families": {
+        "logpai_loghub_linux": {
+          "observation": 0,
+          "null": 500
+        },
+        "zeek_non_pcap_test_logs": {
+          "observation": 483,
+          "null": 17
+        }
+      }
+    }
+  },
+  "formal_gate_requirements": {
+    "minimum_train_packets": 1200,
+    "minimum_training_validation_packets": 300,
+    "minimum_train_source_families": 4,
+    "minimum_training_validation_source_families": 2,
+    "minimum_role_fraction": 0.4,
+    "maximum_role_fraction": 0.6,
+    "minimum_interference_packet_fraction": 0.5,
+    "minimum_author_audit_acceptance": 0.95,
+    "author_audit_minimum_stratified_fraction": 0.2,
+    "token_p95_maximum": 1024,
+    "token_final_maximum": 1024
+  },
+  "formal_gate_evaluation": {
+    "train_total_count": "pass_candidate_only",
+    "train_source_family_count": "pass_candidate_only",
+    "training_validation_total_count": "pass_candidate_only",
+    "training_validation_source_family_count": "pass_candidate_only",
+    "training_validation_role_balance": "pass_candidate_only",
+    "train_role_balance": "fail",
+    "author_review": "fail_not_started",
+    "interference_ratio": "not_measured",
+    "token_length": "not_measured_tokenizer_not_authorized",
+    "current_exclusion_scan": "historical_pass_requires_mainline_recheck_before_import",
+    "overall": "fail"
+  },
+  "train_null_arithmetic": {
+    "minimum_train_null_for_1200_packet_formal_set": 480,
+    "currently_available_train_null": 2,
+    "current_minimum_deficit": 478,
+    "v3_bn_01": {
+      "source_family_id": "cisagov_kev_static_reference",
+      "contract_status": "approved_bounded_feasibility",
+      "post_exclusion_population": 1647,
+      "feasibility_review_sample_count": 50,
+      "completed_review_count": 0,
+      "blank_review_count": 50,
+      "feasibility_gate_status": "pending_author_review",
+      "projected_minimum_if_gate_passes": 240,
+      "maximum_fraction_of_final_train_null": 0.5,
+      "authorizes_task7": false
+    },
+    "minimum_remaining_deficit_even_if_v3_bn_01_contributes_240": 238,
+    "interpretation": "V3-BN-01 alone cannot satisfy the formal train-null gate under its 50 percent cap; another independently approved null source or bounded protocol is required."
+  },
+  "hard_stops": [
+    "do_not_construct_formal_training_packets",
+    "do_not_invent_null_labels",
+    "do_not_relax_cam_lds_null_prohibition",
+    "do_not_count_blank_author_review_rows_as_accepted",
+    "do_not_use_validation_null_as_train_null",
+    "do_not_download_tokenizer_or_model",
+    "do_not_train"
+  ],
+  "next_actions": [
+    "complete_or_explicitly_abandon_the_50_row_v3_bn_01_single_author_feasibility_review",
+    "approve_and_audit_at_least_one_additional_independent_train_null_source_or_protocol_capable_of_supplying_at_least_238_usable_null_packets",
+    "freeze_author_review_sampling_and_acceptance_results",
+    "measure_interference_ratio",
+    "request_separate_tokenizer_authority_for_token_length_gate_only_after_non_token_gates_are_plausible"
+  ]
+}

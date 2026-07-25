@@ -91,6 +91,14 @@
             "precomputed_continuous"
           ]
         },
+        "volatility_treatment": {
+          "type": "string",
+          "enum": [
+            "separate_delay_loss",
+            "legacy_positive_burden"
+          ],
+          "description": "Whether V is separated as delay loss (normative) or explicitly reproduced as positive acquisition burden (legacy compatibility only)."
+        },
         "weights": {
           "$ref": "#/$defs/componentWeights"
         },
@@ -445,7 +453,8 @@
               "scale",
               "rounding",
               "minimum_cost",
-              "maximum_cost"
+              "maximum_cost",
+              "volatility_treatment"
             ],
             "properties": {
               "rounding": {

@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<title>Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection</title>
+<!--Generated on Tue Mar 25 20:10:42 2025 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/browse/0.3.4/css/ar5iv.0.7.9.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/browse/0.3.4/css/ar5iv-fonts.0.7.9.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/browse/0.3.4/css/latexml_styles.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
+<script src="/static/browse/0.3.4/js/addons_new.js"></script>
+<script src="/static/browse/0.3.4/js/feedbackOverlay.js"></script>
+<meta content="Intrusion Detection,  APT Detection,  Provenance Analysis,  GPT,  Large Language Models" lang="en" name="keywords"/>
+<base href="/html/2503.18316v2/"/></head>
+<body>
+<nav class="ltx_page_navbar">
+<nav class="ltx_TOC">
+<ol class="ltx_toclist">
+<li class="ltx_tocentry ltx_tocentry_section"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S1" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">1 </span>Introduction</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S2" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2 </span>Background</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S2.SS1" title="In 2. Background ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.1 </span>Provenance Data</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S2.SS2" title="In 2. Background ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.2 </span>Large Language Models</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S2.SS3" title="In 2. Background ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.3 </span>Unstructured Data Embeddings</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3 </span>Methodology</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3.SS1" title="In 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.1 </span>Pre-processing</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3.SS2" title="In 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.2 </span>Explanatory texts generation</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3.SS3" title="In 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.3 </span>Notable Details in LLM Explanations</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3.SS4" title="In 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.4 </span>Embeddings and Dimension Adjustment</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3.SS5" title="In 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.5 </span>Threat detection</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4 </span>Evaluation</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS1" title="In 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.1 </span>Dataset</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS2" title="In 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.2 </span>Environment Settings</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection">
+<a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS3" title="In 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.3 </span>Analysis of Embedding Quality</span></a>
+<ol class="ltx_toclist ltx_toclist_subsection">
+<li class="ltx_tocentry ltx_tocentry_subsubsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS3.SSS1" title="In 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.3.1 </span>Embedding Visualization</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsubsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS3.SSS2" title="In 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.3.2 </span>Explicability of Embedding Model</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS4" title="In 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.4 </span>Comparison</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS5" title="In 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.5 </span>Detection Performance</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.SS6" title="In 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.6 </span>Case Study: Detecting Unseen Attacks</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S5" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5 </span>Related Work</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S5.SS1" title="In 5. Related Work ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5.1 </span>Provenance Analysis</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S5.SS2" title="In 5. Related Work ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5.2 </span>Threat Detection</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S5.SS3" title="In 5. Related Work ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5.3 </span>LLMs for Cybersecurity</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S6" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">6 </span>Discussion and Future Work</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_section"><a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S7" title="In Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">7 </span>Conclusion</span></a></li>
+</ol></nav>
+</nav>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document ltx_authors_1line ltx_leqno">
+<div class="ltx_para" id="p1">
+<span class="ltx_ERROR undefined" id="p1.1">\usetikzlibrary</span>
+<p class="ltx_p" id="p1.2">shadows</p>
+</div>
+<div class="ltx_para" id="p2">
+<span class="ltx_ERROR undefined" id="p2.1">\AddToShipoutPictureBG</span>
+<p class="ltx_p" id="p2.2">*<span class="ltx_ERROR undefined" id="p2.2.1">\AtPageUpperLeft</span>                                                                                                                                                                                         <span class="ltx_text" id="p2.2.2" style="position:relative; bottom:-12.0pt;"><span class="ltx_text ltx_font_bold ltx_align_right ltx_inline-block" id="p2.2.2.1" style="width:-12.0pt;">SAND2025-03552C</span>
+</span></p>
+</div>
+<h1 class="ltx_title ltx_title_document">Knowledge Transfer from LLMs to Provenance Analysis:
+<br class="ltx_break"/>A Semantic-Augmented Method for APT Detection</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Fei Zuo
+</span><span class="ltx_author_notes">
+<span class="ltx_contact ltx_role_email"><a href="mailto:fzuo@uco.edu">fzuo@uco.edu</a>
+</span>
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_text ltx_affiliation_institution" id="id1.1.id1">University of Central Oklahoma</span><span class="ltx_text ltx_affiliation_city" id="id2.2.id2">Edmond</span><span class="ltx_text ltx_affiliation_state" id="id3.3.id3">Oklahoma</span><span class="ltx_text ltx_affiliation_country" id="id4.4.id4">USA</span>
+</span></span></span>
+<span class="ltx_author_before">, </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Junghwan Rhee
+</span><span class="ltx_author_notes">
+<span class="ltx_contact ltx_role_email"><a href="mailto:jrhee2@uco.edu">jrhee2@uco.edu</a>
+</span>
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_text ltx_affiliation_institution" id="id5.1.id1">University of Central Oklahoma</span><span class="ltx_text ltx_affiliation_city" id="id6.2.id2">Edmond</span><span class="ltx_text ltx_affiliation_state" id="id7.3.id3">Oklahoma</span><span class="ltx_text ltx_affiliation_country" id="id8.4.id4">USA</span>
+</span></span></span>
+<span class="ltx_author_before"> and </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Yung Ryn Choe
+</span><span class="ltx_author_notes">
+<span class="ltx_contact ltx_role_email"><a href="mailto:yrchoe@sandia.gov">yrchoe@sandia.gov</a>
+</span>
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_text ltx_affiliation_institution" id="id9.1.id1">Sandia National Laboratories</span><span class="ltx_text ltx_affiliation_city" id="id10.2.id2">Livermore</span><span class="ltx_text ltx_affiliation_state" id="id11.3.id3">California</span><span class="ltx_text ltx_affiliation_country" id="id12.4.id4">USA</span>
+</span></span></span>
+</div>
+<div class="ltx_dates">(2025)</div>
+<div class="ltx_abstract">
+<h6 class="ltx_title ltx_title_abstract">Abstract.</h6>
+<p class="ltx_p" id="id13.id1">Advanced Persistent Threats (APTs) have caused significant losses across a wide range of sectors, including the theft of sensitive data and harm to system integrity. As attack techniques grow increasingly sophisticated and stealthy, the arms race between cyber defenders and attackers continues to intensify. The revolutionary impact of Large Language Models (LLMs) has opened up numerous opportunities in various fields, including cybersecurity. An intriguing question arises: can the extensive knowledge embedded in LLMs be harnessed for provenance analysis and play a positive role in identifying previously unknown malicious events? To seek a deeper understanding of this issue, we propose a new strategy for taking advantage of LLMs in provenance-based threat detection. In our design, the state-of-the-art LLM offers additional details in provenance data interpretation, leveraging their knowledge of system calls, software identity, and high-level understanding of application execution context. The advanced contextualized embedding capability is further utilized to capture the rich semantics of event descriptions. We comprehensively examine the quality of the resulting embeddings, and it turns out that they offer promising avenues. Subsequently, machine learning models built upon these embeddings demonstrated outstanding performance on real-world data. In our evaluation, supervised threat detection achieves a precision of 99.0%, and semi-supervised anomaly detection attains a precision of 96.9%.</p>
+</div>
+<div class="ltx_keywords">Intrusion Detection, APT Detection, Provenance Analysis, GPT, Large Language Models
+</div>
+<span class="ltx_note ltx_note_frontmatter ltx_role_copyright" id="id1"><sup class="ltx_note_mark">†</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">†</sup><span class="ltx_note_type">copyright: </span>acmlicensed</span></span></span><span class="ltx_note ltx_note_frontmatter ltx_role_journalyear" id="id2"><sup class="ltx_note_mark">†</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">†</sup><span class="ltx_note_type">journalyear: </span>2025</span></span></span><span class="ltx_note ltx_note_frontmatter ltx_role_doi" id="id3"><sup class="ltx_note_mark">†</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">†</sup><span class="ltx_note_type">doi: </span>XXXXXXX.XXXXXXX</span></span></span><span class="ltx_note ltx_note_frontmatter ltx_role_conference" id="id4"><sup class="ltx_note_mark">†</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">†</sup><span class="ltx_note_type">conference: </span>; ; </span></span></span><span class="ltx_note ltx_note_frontmatter ltx_role_ccs" id="id5"><sup class="ltx_note_mark">†</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">†</sup><span class="ltx_note_type">ccs: </span>Security and privacy Intrusion detection systems</span></span></span><span class="ltx_note ltx_note_frontmatter ltx_role_ccs" id="id6"><sup class="ltx_note_mark">†</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">†</sup><span class="ltx_note_type">ccs: </span>Computing methodologies Machine learning</span></span></span>
+<section class="ltx_section" id="S1">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">1. </span>Introduction</h2>
+<div class="ltx_para" id="S1.p1">
+<p class="ltx_p" id="S1.p1.1">In recent years, advanced persistent threats (APTs) targeting key sectors such as government, finance, and business have been on the rise. These cyberattacks employ increasingly complex techniques, are prolonged in duration, and are difficult to detect, resulting in significant economic losses. As early as 2017, APT actors breached the network of the credit reporting agency Equifax, ultimately resulting in losses exceeding 425 million US dollars <cite class="ltx_cite ltx_citemacro_citep">(Commission, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib4" title="">2024</a>)</cite>. According to CrowdStrike’s report <cite class="ltx_cite ltx_citemacro_citep">(CrowdStrike, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib5" title="">2024</a>)</cite>, “<span class="ltx_text ltx_font_italic" id="S1.p1.1.1">cloud environment intrusions increased by 75% from 2022 to 2023</span>”. Meanwhile, the number of victims named on dedicated leak sites increased by 76%, indicating that data-theft extortion remains rampant.</p>
+</div>
+<div class="ltx_para" id="S1.p2">
+<p class="ltx_p" id="S1.p2.1">Among the emerging technologies for robust APT detection, system provenance analysis is being considered as a promising mechanism, thus attracting widespread attention. As cyber threats become more complex and frequent, traditional approaches to threat detection and response are proving inadequate. Therefore, we also notice that leveraging the progress in AI to assist and automate system provenance analysis has become more of a need than an option.
+Industry statistics show that in practical incident response applications, fully deployed AI-driven systems
+“<span class="ltx_text ltx_font_italic" id="S1.p2.1.1">were able to identify and contain a breach 28 days faster than those that didn’t, saving USD 3.05 million in costs</span>” for the organizations <cite class="ltx_cite ltx_citemacro_citep">(Security, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib27" title="">2022</a>)</cite>. The recent survey <cite class="ltx_cite ltx_citemacro_citep">(Fox, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib6" title="">2024</a>)</cite> indicates that “<span class="ltx_text ltx_font_italic" id="S1.p2.1.2">70% of cybersecurity professionals believe AI is highly effective in detecting previously undetectable threats</span>”. Additionally, 73% of cybersecurity teams want to shift their focus to an AI-powered preventive strategy.</p>
+</div>
+<figure class="ltx_float ltx_lstlisting" id="LST1">
+<div class="ltx_listing ltx_lstlisting ltx_framed ltx_framed_rectangle ltx_listing" id="LST1.1">
+<div class="ltx_listing_data"><a download="figures/eg01.tex" href="data:text/plain;base64,IFRoZSB0ZXh0IGVkaXRvciB2aW0gcGVyZm9ybWVkIGEgcmVhZCBvcGVyYXRpb24gdG8gCiBhY2Nlc3MgdGhlIHN5c3RlbSBmaWxlIC9ldGMvbG9jYWx0aW1lLCB3aGljaCBpcyAKIHR5cGljYWxseSB1c2VkIHRvIHJldHJpZXZlIHRpbWV6b25lIGNvbmZpZ3VyYXRpb24gCiBpbmZvcm1hdGlvbi4=">⬇</a></div>
+<div class="ltx_listingline" id="lstnumberx1">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.2" style="font-size:80%;">The</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.3" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.4" style="font-size:80%;">text</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.5" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.6" style="font-size:80%;">editor</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.7" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_keyword ltx_font_typewriter ltx_font_bold" id="lstnumberx1.8" style="font-size:80%;">vim</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.9" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.10" style="font-size:80%;">performed</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.11" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.12" style="font-size:80%;">a</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.13" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_keyword ltx_font_typewriter ltx_font_bold" id="lstnumberx1.14" style="font-size:80%;">read</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.15" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.16" style="font-size:80%;">operation</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx1.17" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx1.18" style="font-size:80%;">to</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx2">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx2.2" style="font-size:80%;">access</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.3" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx2.4" style="font-size:80%;">the</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.5" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx2.6" style="font-size:80%;">system</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.7" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx2.8" style="font-size:80%;">file</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.9" style="font-size:80%;"> </span><span class="ltx_text ltx_font_typewriter" id="lstnumberx2.10" style="font-size:80%;">/</span><span class="ltx_text ltx_lst_keyword ltx_font_typewriter ltx_font_bold" id="lstnumberx2.11" style="font-size:80%;">etc</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx2.12" style="font-size:80%;">/</span><span class="ltx_text ltx_lst_keyword ltx_font_typewriter ltx_font_bold" id="lstnumberx2.13" style="font-size:80%;">localtime</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx2.14" style="font-size:80%;">,</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.15" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx2.16" style="font-size:80%;">which</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx2.17" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx2.18" style="font-size:80%;">is</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx3">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx3.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx3.2" style="font-size:80%;">typically</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx3.3" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx3.4" style="font-size:80%;">used</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx3.5" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx3.6" style="font-size:80%;">to</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx3.7" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx3.8" style="font-size:80%;">retrieve</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx3.9" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx3.10" style="font-size:80%;">timezone</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx3.11" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx3.12" style="font-size:80%;">configuration</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx4">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx4.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_identifier ltx_font_typewriter" id="lstnumberx4.2" style="font-size:80%;">information</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx4.3" style="font-size:80%;">.</span>
+</div>
+</div>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_float">Listing 1: </span>The explanation of a system event (expressed using a triplet “<span class="ltx_text ltx_font_typewriter" id="LST1.3.1">vim read /etc/localtime</span>”) provided by GPT-4.</figcaption>
+</figure>
+<div class="ltx_para" id="S1.p3">
+<p class="ltx_p" id="S1.p3.1">Existing AI-powered threat detection techniques have either approached provenance analysis from a graph perspective or from a natural language perspective <cite class="ltx_cite ltx_citemacro_citep">(Cheng et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib3" title="">2024</a>; Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite>. In this work, we follow the latter approach, considering the system entities and the interaction between them as various components of a sentence.
+But unlike previous work, we will take advantage of the recent advancements in large language models (LLMs) to enhance provenance analysis. This approach offers several obvious benefits. First of all, <span class="ltx_text ltx_font_bold" id="S1.p3.1.1">the extensive knowledge possessed by LLMs can be leveraged to augment the semantics of system event descriptions</span>. For example, given a simple system event described by the triplet “<span class="ltx_text ltx_font_typewriter" id="S1.p3.1.2">vim read /etc/localtime</span>”, the descriptive text generated by GPT-4 through being guided by appropriate prompt engineering is shown in Listing <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#LST1" title="Listing 1 ‣ 1. Introduction ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">1</span></a>. Compared to the original input triplet, GPT-4 accurately supplemented the information that “<span class="ltx_text ltx_font_typewriter" id="S1.p3.1.3">vim</span> is a text editor”. Moreover, based on the characteristics of the second system entity, it inferred that the purpose of this file reading behavior was to obtain timezone configuration information. Previous research <cite class="ltx_cite ltx_citemacro_citep">(Ming et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib22" title="">2017</a>)</cite> has shown that understanding such information is highly useful when analyzing malicious behavior by attackers. This is because some adversaries deliberately exclude certain areas from their attacks. For instance, a family of immensely dangerous and destructive crypto-ransomware are used to first checking the infected machine’s UI language before launching the attack. If the language is Russian, Ukrainian, or another language from former Soviet Union countries, the attack will not be triggered. However, without the additional information offered by LLMs, similar tasks would typically require significant human effort and expertise. More examples will be provided later in Section 3.3.</p>
+</div>
+<div class="ltx_para" id="S1.p4">
+<p class="ltx_p" id="S1.p4.1">It is worth noting that the descriptive texts used to interpret system events are unstructured data. Therefore, to facilitate subsequent learning by artificial intelligence models, we also need to use appropriate embedding models to learn numerical representations of data. This highlights another benefit of introducing LLMs: <span class="ltx_text ltx_font_bold" id="S1.p4.1.1">their powerful embedding models can accurately capture and retain more semantic information</span>. In the natural language processing domain, different embedding techniques have been proposed
+for words <cite class="ltx_cite ltx_citemacro_citep">(Mikolov et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib20" title="">2013</a>)</cite>, sentences <cite class="ltx_cite ltx_citemacro_citep">(Pagliardini et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib24" title="">2018</a>)</cite>, and documents <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite>. The prior work <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite> used <span class="ltx_text ltx_font_typewriter" id="S1.p4.1.2">Doc2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite> to generate embeddings for a series of selected system events. However, when using traditional models like <span class="ltx_text ltx_font_typewriter" id="S1.p4.1.3">Word2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Mikolov et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib20" title="">2013</a>)</cite> or <span class="ltx_text ltx_font_typewriter" id="S1.p4.1.4">Doc2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite>, the out-of-vocabulary (OOV) issue will be an unavoidable challenge. For provenance analysis in the wild, it is unrealistic to exhaustively collect words such as file names or executable paths. A usual approach is to ignore words that have never appeared in the vocabulary when generating numerical representations of sentences. However, this leads to information loss. In our proposed method, we offer two targeted solutions. First, for system entities with indicators that have special significance, we make full use of the extensive knowledge of LLMs to interpret them. Second, for entities like system-generated temporary files or hash values, we have designed a heuristic approach to preprocess them. We will show more details in Section 3.</p>
+</div>
+<figure class="ltx_figure" id="S1.F1">
+<p class="ltx_p ltx_align_center" id="S1.F1.1"><span class="ltx_text" id="S1.F1.1.1"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="93" id="S1.F1.1.1.g1" src="x1.png" width="373"/></span></p>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 1. </span>A simplified provenance graph example.</figcaption>
+</figure>
+<div class="ltx_para" id="S1.p5">
+<p class="ltx_p" id="S1.p5.1">Though we have witnessed a number of meaningful attempts to integrate LLMs into various cybersecurity applications <cite class="ltx_cite ltx_citemacro_citep">(Yan et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib33" title="">2023</a>; Qu et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib25" title="">2024</a>; Zhang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib35" title="">2024</a>)</cite>, the extent to which LLMs can assist in provenance analysis remains an open question. In this work, we aim to gain a deeper understanding of the potential of LLMs in enhancing provenance analysis. To this end, we developed a proof-of-concept prototype which fully takes advantage of the extensive knowledge of LLMs. Our approach leverages LLMs to augment the semantics of system events’ descriptions, and further generate high-quality embeddings. In the later threat detection phase, we comprehensively consider supervised and semi-supervised anomaly detection models. Our evaluation was conducted based on a publicly accessible dataset, with samples derived from real-world attacks. The experiment results show that our proposed technique is able to distinguish malicious events from benign ones, maintaining a high level of accuracy even the attack was previously unseen.</p>
+</div>
+<div class="ltx_para" id="S1.p6">
+<p class="ltx_p" id="S1.p6.1">The main contributions of our work are as follows:</p>
+<ul class="ltx_itemize" id="S1.I1">
+<li class="ltx_item" id="S1.I1.i1" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S1.I1.i1.p1">
+<p class="ltx_p" id="S1.I1.i1.p1.1">We have explored a systematic strategy for applying the extensive knowledge of LLMs in APT detection through provenance analysis. Our innovative approach leverages LLMs to augment system event descriptions and further utilizes the assistance of LLMs for high-quality representation learning.</p>
+</div>
+</li>
+<li class="ltx_item" id="S1.I1.i2" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S1.I1.i2.p1">
+<p class="ltx_p" id="S1.I1.i2.p1.1">We conducted comprehensive studies on the performance of the advanced contextualized embedding approach
+in learning the semantics of system event descriptive texts. Subsequently, both the supervised and unsupervised detection methods built based on this achieved high precision.</p>
+</div>
+</li>
+<li class="ltx_item" id="S1.I1.i3" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S1.I1.i3.p1">
+<p class="ltx_p" id="S1.I1.i3.p1.1">Our study utilizes a dataset collected from real-world cyber-attacks. Based on this, we showcased the capability of LLMs in improving provenance analysis through extensive experiments. The research resources are available upon request to facilitate future related studies.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="ltx_para" id="S1.p7">
+<p class="ltx_p" id="S1.p7.1">The remainder of this paper is organized as follows: First, to help readers better understand this article, we briefly introduce the necessary preliminary knowledge in Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S2" title="2. Background ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">2</span></a>. Next, Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3" title="3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">3</span></a> describes our system architecture and design in detail. Then, we conduct evaluations and show the results in Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4" title="4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">4</span></a>. The related work is then reviewed in Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S5" title="5. Related Work ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">5</span></a>. The limitations of this work and potential future directions are discussed in Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S6" title="6. Discussion and Future Work ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">6</span></a>. Finally, we draw conclusions in Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S7" title="7. Conclusion ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">7</span></a>.</p>
+</div>
+</section>
+<section class="ltx_section" id="S2">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">2. </span>Background</h2>
+<div class="ltx_para" id="S2.p1">
+<p class="ltx_p" id="S2.p1.1">In this section, we briefly introduce the necessary background on system-level provenance analysis and large language models.</p>
+</div>
+<section class="ltx_subsection" id="S2.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.1. </span>Provenance Data</h3>
+<div class="ltx_para" id="S2.SS1.p1">
+<p class="ltx_p" id="S2.SS1.p1.1">Provenance data records complex dependencies across various system events, thus reflecting the interactions between entities within a historical context. System-level provenance is usually presented in the form of graphs, where each node represents a system entity (e.g., a process or a file); edges are system call and timestamp labels related to the nodes. A system call is the programmatic way in which a user app can request a service from an OS kernel.</p>
+</div>
+<figure class="ltx_figure" id="S2.F2">
+<p class="ltx_p ltx_align_center" id="S2.F2.1"><span class="ltx_text" id="S2.F2.1.1"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="162" id="S2.F2.1.1.g1" src="x2.png" width="747"/></span></p>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 2. </span>System overview.</figcaption>
+</figure>
+<div class="ltx_para" id="S2.SS1.p2">
+<p class="ltx_p" id="S2.SS1.p2.1">Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S1.F1" title="Figure 1 ‣ 1. Introduction ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">1</span></a> shows a provenance graph example, which includes four system entities represented by the four nodes in the graph. An entity refers to a component within a system responsible for producing, modifying, or processing information and resources. The operation exerted by one system entity on another is described using a system call, for instance, <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p2.1.1">read</span> and <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p2.1.2">write</span> in Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S1.F1" title="Figure 1 ‣ 1. Introduction ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">1</span></a>. It should be noted that system provenance graphs in reality are very complex and extensive; herein, we only use a simplified example for demonstration purposes. Provenance data is often represented as a graph because graphs can intuitively depict dependencies between events or their chronological order. However, considering that hackers launch multi-stage attacks, extracting attack-relevant events from a vast number of system events over a long time span and linking them is non-trivial. As a result, the generated provenance graph often contains significant noise, posing challenges for attack detection. Therefore, it should be noted that <span class="ltx_text ltx_font_bold" id="S2.SS1.p2.1.3">the proposed approach focuses on system events</span> in provenance data.</p>
+</div>
+<div class="ltx_para" id="S2.SS1.p3">
+<p class="ltx_p" id="S2.SS1.p3.1">The two interrelated system entities, along with the operation between them, collectively constitute an event. For example, we can observe three system events in Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S1.F1" title="Figure 1 ‣ 1. Introduction ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">1</span></a>. In temporal order, they are (1) the text editor <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p3.1.1">vim</span> reads a temporary file; (2) the process <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p3.1.2">vim</span> saves its content to a file named <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p3.1.3">output.txt</span>; and (3) <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p3.1.4">vim</span> checks the system’s time zone by reading the <span class="ltx_text ltx_font_typewriter" id="S2.SS1.p3.1.5">/etc/localtime</span> file. A system event is a basic unit in provenance data for tracking and recording system-level behaviors. Hence, system events extracted from a provenance data are regarded as informative features for describing a cyber incident in intrusion detection.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S2.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.2. </span>Large Language Models</h3>
+<div class="ltx_para" id="S2.SS2.p1">
+<p class="ltx_p" id="S2.SS2.p1.1">In recent years, the emergence of large language models (LLMs) is undoubtedly one of the most impactful breakthroughs of AI. A large language model, as the name suggests, is a language model trained on massive amounts of text data and has billions of parameters. As a widely recognized instance of an LLM, the Generative Pre-trained Transformer (GPT) has attracted widespread attention worldwide since its emergence in 2018 <cite class="ltx_cite ltx_citemacro_citep">(Radford et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib26" title="">2018</a>)</cite>. As an implementation of GPT, OpenAI launched ChatGPT<span class="ltx_note ltx_role_footnote" id="footnote1"><sup class="ltx_note_mark">1</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">1</sup><span class="ltx_tag ltx_tag_note">1</span><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://chatgpt.com/" title="">https://chatgpt.com/</a></span></span></span> to the public in 2022, which demonstrates a powerful ability to generate human-like responses in conversational interactions. Microsoft’s Copilot<span class="ltx_note ltx_role_footnote" id="footnote2"><sup class="ltx_note_mark">2</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">2</sup><span class="ltx_tag ltx_tag_note">2</span><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://copilot.microsoft.com/" title="">https://copilot.microsoft.com/</a></span></span></span> is another representative commercial product of generative AI, which adopts GPT as the core model. Another main competitor in the same field, Gemini<span class="ltx_note ltx_role_footnote" id="footnote3"><sup class="ltx_note_mark">3</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">3</sup><span class="ltx_tag ltx_tag_note">3</span><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://gemini.google.com/" title="">https://gemini.google.com/</a></span></span></span> was launched by Google in December 2023.</p>
+</div>
+<div class="ltx_para" id="S2.SS2.p2">
+<p class="ltx_p" id="S2.SS2.p2.1">In this work, we chose GPT as our primary LLM because OpenAI has also released a corresponding API for external users to access the advanced LLMs developed by OpenAI. Applying the API offered by OpenAI in applications has three main benefits. First, developers are allowed to interact with a vast knowledge base provided by OpenAI’s state-of-the-art AI models in a programmatical manner. Second, it provides a straightforward way to leverage the cutting-edge capabilities in NLP, thus enabling tasks like text generation, interpretation, and summarization. Lastly, other functionalities provided by OpenAI, such as fine-tuning, facilitate users to optimize their application’s performance on customized tasks.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S2.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.3. </span>Unstructured Data Embeddings</h3>
+<div class="ltx_para" id="S2.SS3.p1">
+<p class="ltx_p" id="S2.SS3.p1.1">Provenance data is recorded in an unstructured form, such as file names or executable paths, which are textual in nature. To facilitate subsequent machine learning tasks, embedding methods are required to learn the numerical representations for the unstructured data. Multiple embedding techniques have been proposed in the field of natural language processing. In some previous security-related applications <cite class="ltx_cite ltx_citemacro_citep">(Zuo and Rhee, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib38" title="">2024</a>; Zuo et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib39" title="">2023</a>)</cite>, the practice of embedding text has played a crucial role. Currently, mainstream embedding methods can be categorized into two main types: static embeddings and contextualized embeddings. When using static embeddings, the same word always has the same representation, even when it appears in different contexts. For example, the word “mouse” can refer to either a computer hardware or an animal, but regardless of the context, it only has one vector representation. In contrast, contextualized embeddings generate dynamic, context-dependent vector representations for text, meaning that the representation changes depending on the surrounding context.</p>
+</div>
+<div class="ltx_para" id="S2.SS3.p2">
+<p class="ltx_p" id="S2.SS3.p2.6">The strength of analogical reasoning ability is an important indicator of whether text embeddings are meaningful. An analogical question typically consists of two pairs of texts, such as (“man”, “king”) and (“woman”, “queen”). To assess how related the two pairs are, the analogy “man is to king as woman is to queen” is formed, and its validity is tested. In the feature space, the analogical question can be represented as <math alttext="|E_{1}-E_{2}|\approx|E_{3}-E_{4}|" class="ltx_Math" display="inline" id="S2.SS3.p2.1.m1.2"><semantics id="S2.SS3.p2.1.m1.2a"><mrow id="S2.SS3.p2.1.m1.2.2" xref="S2.SS3.p2.1.m1.2.2.cmml"><mrow id="S2.SS3.p2.1.m1.1.1.1.1" xref="S2.SS3.p2.1.m1.1.1.1.2.cmml"><mo id="S2.SS3.p2.1.m1.1.1.1.1.2" stretchy="false" xref="S2.SS3.p2.1.m1.1.1.1.2.1.cmml">|</mo><mrow id="S2.SS3.p2.1.m1.1.1.1.1.1" xref="S2.SS3.p2.1.m1.1.1.1.1.1.cmml"><msub id="S2.SS3.p2.1.m1.1.1.1.1.1.2" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2.cmml"><mi id="S2.SS3.p2.1.m1.1.1.1.1.1.2.2" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2.2.cmml">E</mi><mn id="S2.SS3.p2.1.m1.1.1.1.1.1.2.3" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2.3.cmml">1</mn></msub><mo id="S2.SS3.p2.1.m1.1.1.1.1.1.1" xref="S2.SS3.p2.1.m1.1.1.1.1.1.1.cmml">−</mo><msub id="S2.SS3.p2.1.m1.1.1.1.1.1.3" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3.cmml"><mi id="S2.SS3.p2.1.m1.1.1.1.1.1.3.2" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3.2.cmml">E</mi><mn id="S2.SS3.p2.1.m1.1.1.1.1.1.3.3" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3.3.cmml">2</mn></msub></mrow><mo id="S2.SS3.p2.1.m1.1.1.1.1.3" stretchy="false" xref="S2.SS3.p2.1.m1.1.1.1.2.1.cmml">|</mo></mrow><mo id="S2.SS3.p2.1.m1.2.2.3" xref="S2.SS3.p2.1.m1.2.2.3.cmml">≈</mo><mrow id="S2.SS3.p2.1.m1.2.2.2.1" xref="S2.SS3.p2.1.m1.2.2.2.2.cmml"><mo id="S2.SS3.p2.1.m1.2.2.2.1.2" stretchy="false" xref="S2.SS3.p2.1.m1.2.2.2.2.1.cmml">|</mo><mrow id="S2.SS3.p2.1.m1.2.2.2.1.1" xref="S2.SS3.p2.1.m1.2.2.2.1.1.cmml"><msub id="S2.SS3.p2.1.m1.2.2.2.1.1.2" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2.cmml"><mi id="S2.SS3.p2.1.m1.2.2.2.1.1.2.2" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2.2.cmml">E</mi><mn id="S2.SS3.p2.1.m1.2.2.2.1.1.2.3" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2.3.cmml">3</mn></msub><mo id="S2.SS3.p2.1.m1.2.2.2.1.1.1" xref="S2.SS3.p2.1.m1.2.2.2.1.1.1.cmml">−</mo><msub id="S2.SS3.p2.1.m1.2.2.2.1.1.3" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3.cmml"><mi id="S2.SS3.p2.1.m1.2.2.2.1.1.3.2" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3.2.cmml">E</mi><mn id="S2.SS3.p2.1.m1.2.2.2.1.1.3.3" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3.3.cmml">4</mn></msub></mrow><mo id="S2.SS3.p2.1.m1.2.2.2.1.3" stretchy="false" xref="S2.SS3.p2.1.m1.2.2.2.2.1.cmml">|</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S2.SS3.p2.1.m1.2b"><apply id="S2.SS3.p2.1.m1.2.2.cmml" xref="S2.SS3.p2.1.m1.2.2"><approx id="S2.SS3.p2.1.m1.2.2.3.cmml" xref="S2.SS3.p2.1.m1.2.2.3"></approx><apply id="S2.SS3.p2.1.m1.1.1.1.2.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1"><abs id="S2.SS3.p2.1.m1.1.1.1.2.1.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.2"></abs><apply id="S2.SS3.p2.1.m1.1.1.1.1.1.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1"><minus id="S2.SS3.p2.1.m1.1.1.1.1.1.1.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.1"></minus><apply id="S2.SS3.p2.1.m1.1.1.1.1.1.2.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2"><csymbol cd="ambiguous" id="S2.SS3.p2.1.m1.1.1.1.1.1.2.1.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2">subscript</csymbol><ci id="S2.SS3.p2.1.m1.1.1.1.1.1.2.2.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2.2">𝐸</ci><cn id="S2.SS3.p2.1.m1.1.1.1.1.1.2.3.cmml" type="integer" xref="S2.SS3.p2.1.m1.1.1.1.1.1.2.3">1</cn></apply><apply id="S2.SS3.p2.1.m1.1.1.1.1.1.3.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3"><csymbol cd="ambiguous" id="S2.SS3.p2.1.m1.1.1.1.1.1.3.1.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3">subscript</csymbol><ci id="S2.SS3.p2.1.m1.1.1.1.1.1.3.2.cmml" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3.2">𝐸</ci><cn id="S2.SS3.p2.1.m1.1.1.1.1.1.3.3.cmml" type="integer" xref="S2.SS3.p2.1.m1.1.1.1.1.1.3.3">2</cn></apply></apply></apply><apply id="S2.SS3.p2.1.m1.2.2.2.2.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1"><abs id="S2.SS3.p2.1.m1.2.2.2.2.1.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.2"></abs><apply id="S2.SS3.p2.1.m1.2.2.2.1.1.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1"><minus id="S2.SS3.p2.1.m1.2.2.2.1.1.1.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.1"></minus><apply id="S2.SS3.p2.1.m1.2.2.2.1.1.2.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2"><csymbol cd="ambiguous" id="S2.SS3.p2.1.m1.2.2.2.1.1.2.1.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2">subscript</csymbol><ci id="S2.SS3.p2.1.m1.2.2.2.1.1.2.2.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2.2">𝐸</ci><cn id="S2.SS3.p2.1.m1.2.2.2.1.1.2.3.cmml" type="integer" xref="S2.SS3.p2.1.m1.2.2.2.1.1.2.3">3</cn></apply><apply id="S2.SS3.p2.1.m1.2.2.2.1.1.3.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3"><csymbol cd="ambiguous" id="S2.SS3.p2.1.m1.2.2.2.1.1.3.1.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3">subscript</csymbol><ci id="S2.SS3.p2.1.m1.2.2.2.1.1.3.2.cmml" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3.2">𝐸</ci><cn id="S2.SS3.p2.1.m1.2.2.2.1.1.3.3.cmml" type="integer" xref="S2.SS3.p2.1.m1.2.2.2.1.1.3.3">4</cn></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS3.p2.1.m1.2c">|E_{1}-E_{2}|\approx|E_{3}-E_{4}|</annotation><annotation encoding="application/x-llamapun" id="S2.SS3.p2.1.m1.2d">| italic_E start_POSTSUBSCRIPT 1 end_POSTSUBSCRIPT - italic_E start_POSTSUBSCRIPT 2 end_POSTSUBSCRIPT | ≈ | italic_E start_POSTSUBSCRIPT 3 end_POSTSUBSCRIPT - italic_E start_POSTSUBSCRIPT 4 end_POSTSUBSCRIPT |</annotation></semantics></math>, where <math alttext="E_{1}" class="ltx_Math" display="inline" id="S2.SS3.p2.2.m2.1"><semantics id="S2.SS3.p2.2.m2.1a"><msub id="S2.SS3.p2.2.m2.1.1" xref="S2.SS3.p2.2.m2.1.1.cmml"><mi id="S2.SS3.p2.2.m2.1.1.2" xref="S2.SS3.p2.2.m2.1.1.2.cmml">E</mi><mn id="S2.SS3.p2.2.m2.1.1.3" xref="S2.SS3.p2.2.m2.1.1.3.cmml">1</mn></msub><annotation-xml encoding="MathML-Content" id="S2.SS3.p2.2.m2.1b"><apply id="S2.SS3.p2.2.m2.1.1.cmml" xref="S2.SS3.p2.2.m2.1.1"><csymbol cd="ambiguous" id="S2.SS3.p2.2.m2.1.1.1.cmml" xref="S2.SS3.p2.2.m2.1.1">subscript</csymbol><ci id="S2.SS3.p2.2.m2.1.1.2.cmml" xref="S2.SS3.p2.2.m2.1.1.2">𝐸</ci><cn id="S2.SS3.p2.2.m2.1.1.3.cmml" type="integer" xref="S2.SS3.p2.2.m2.1.1.3">1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS3.p2.2.m2.1c">E_{1}</annotation><annotation encoding="application/x-llamapun" id="S2.SS3.p2.2.m2.1d">italic_E start_POSTSUBSCRIPT 1 end_POSTSUBSCRIPT</annotation></semantics></math>, <math alttext="E_{2}" class="ltx_Math" display="inline" id="S2.SS3.p2.3.m3.1"><semantics id="S2.SS3.p2.3.m3.1a"><msub id="S2.SS3.p2.3.m3.1.1" xref="S2.SS3.p2.3.m3.1.1.cmml"><mi id="S2.SS3.p2.3.m3.1.1.2" xref="S2.SS3.p2.3.m3.1.1.2.cmml">E</mi><mn id="S2.SS3.p2.3.m3.1.1.3" xref="S2.SS3.p2.3.m3.1.1.3.cmml">2</mn></msub><annotation-xml encoding="MathML-Content" id="S2.SS3.p2.3.m3.1b"><apply id="S2.SS3.p2.3.m3.1.1.cmml" xref="S2.SS3.p2.3.m3.1.1"><csymbol cd="ambiguous" id="S2.SS3.p2.3.m3.1.1.1.cmml" xref="S2.SS3.p2.3.m3.1.1">subscript</csymbol><ci id="S2.SS3.p2.3.m3.1.1.2.cmml" xref="S2.SS3.p2.3.m3.1.1.2">𝐸</ci><cn id="S2.SS3.p2.3.m3.1.1.3.cmml" type="integer" xref="S2.SS3.p2.3.m3.1.1.3">2</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS3.p2.3.m3.1c">E_{2}</annotation><annotation encoding="application/x-llamapun" id="S2.SS3.p2.3.m3.1d">italic_E start_POSTSUBSCRIPT 2 end_POSTSUBSCRIPT</annotation></semantics></math>, <math alttext="E_{3}" class="ltx_Math" display="inline" id="S2.SS3.p2.4.m4.1"><semantics id="S2.SS3.p2.4.m4.1a"><msub id="S2.SS3.p2.4.m4.1.1" xref="S2.SS3.p2.4.m4.1.1.cmml"><mi id="S2.SS3.p2.4.m4.1.1.2" xref="S2.SS3.p2.4.m4.1.1.2.cmml">E</mi><mn id="S2.SS3.p2.4.m4.1.1.3" xref="S2.SS3.p2.4.m4.1.1.3.cmml">3</mn></msub><annotation-xml encoding="MathML-Content" id="S2.SS3.p2.4.m4.1b"><apply id="S2.SS3.p2.4.m4.1.1.cmml" xref="S2.SS3.p2.4.m4.1.1"><csymbol cd="ambiguous" id="S2.SS3.p2.4.m4.1.1.1.cmml" xref="S2.SS3.p2.4.m4.1.1">subscript</csymbol><ci id="S2.SS3.p2.4.m4.1.1.2.cmml" xref="S2.SS3.p2.4.m4.1.1.2">𝐸</ci><cn id="S2.SS3.p2.4.m4.1.1.3.cmml" type="integer" xref="S2.SS3.p2.4.m4.1.1.3">3</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS3.p2.4.m4.1c">E_{3}</annotation><annotation encoding="application/x-llamapun" id="S2.SS3.p2.4.m4.1d">italic_E start_POSTSUBSCRIPT 3 end_POSTSUBSCRIPT</annotation></semantics></math>, and <math alttext="E_{4}" class="ltx_Math" display="inline" id="S2.SS3.p2.5.m5.1"><semantics id="S2.SS3.p2.5.m5.1a"><msub id="S2.SS3.p2.5.m5.1.1" xref="S2.SS3.p2.5.m5.1.1.cmml"><mi id="S2.SS3.p2.5.m5.1.1.2" xref="S2.SS3.p2.5.m5.1.1.2.cmml">E</mi><mn id="S2.SS3.p2.5.m5.1.1.3" xref="S2.SS3.p2.5.m5.1.1.3.cmml">4</mn></msub><annotation-xml encoding="MathML-Content" id="S2.SS3.p2.5.m5.1b"><apply id="S2.SS3.p2.5.m5.1.1.cmml" xref="S2.SS3.p2.5.m5.1.1"><csymbol cd="ambiguous" id="S2.SS3.p2.5.m5.1.1.1.cmml" xref="S2.SS3.p2.5.m5.1.1">subscript</csymbol><ci id="S2.SS3.p2.5.m5.1.1.2.cmml" xref="S2.SS3.p2.5.m5.1.1.2">𝐸</ci><cn id="S2.SS3.p2.5.m5.1.1.3.cmml" type="integer" xref="S2.SS3.p2.5.m5.1.1.3">4</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS3.p2.5.m5.1c">E_{4}</annotation><annotation encoding="application/x-llamapun" id="S2.SS3.p2.5.m5.1d">italic_E start_POSTSUBSCRIPT 4 end_POSTSUBSCRIPT</annotation></semantics></math> are the embedding vectors, and <math alttext="|\cdot|" class="ltx_math_unparsed" display="inline" id="S2.SS3.p2.6.m6.1"><semantics id="S2.SS3.p2.6.m6.1a"><mrow id="S2.SS3.p2.6.m6.1b"><mo fence="false" id="S2.SS3.p2.6.m6.1.1" stretchy="false">|</mo><mo id="S2.SS3.p2.6.m6.1.2" lspace="0em" rspace="0em">⋅</mo><mo fence="false" id="S2.SS3.p2.6.m6.1.3" stretchy="false">|</mo></mrow><annotation encoding="application/x-tex" id="S2.SS3.p2.6.m6.1c">|\cdot|</annotation><annotation encoding="application/x-llamapun" id="S2.SS3.p2.6.m6.1d">| ⋅ |</annotation></semantics></math> represents the norm. This means that the two pairs of texts being examined can form an approximately parallelogram-like relationship in the feature space. Applying this concept to our problem, we can find similar analogies between one pair of system event descriptions and others. If these analogies align with our prior knowledge expected in provenance analysis, we can confirm that the embeddings generated by LLMs are semantically meaningful.</p>
+</div>
+</section>
+</section>
+<section class="ltx_section" id="S3">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">3. </span>Methodology</h2>
+<div class="ltx_para" id="S3.p1">
+<p class="ltx_p" id="S3.p1.1">In this study, we employ OpenAI API to access and integrate the capabilities of GPT-4o into our applications. GPT-4o is a state-of-the-art multimodal LLM created by OpenAI, which has been trained on data up to October 2023, ensuring its responses are informed by the most recent and relevant information available.
+Through the API, we can automatically interact with GPT-4o to perform various tasks, such as generating text in batches.</p>
+</div>
+<div class="ltx_para" id="S3.p2">
+<p class="ltx_p" id="S3.p2.1">Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S2.F2" title="Figure 2 ‣ 2.1. Provenance Data ‣ 2. Background ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">2</span></a> illustrates the overall pipeline of our system.
+Given the provenance system data, we first pre-process the raw data according to the specific characteristics of different types of system events. Second, using the LLM service, explanatory texts with augmented semantics for system events are generated with proper prompt engineering. Third, the text embeddings are further produced by taking advantage of the facilities of the LLM. Next, we employ some manifold learning method such as Kernel PCA to adjust the dimensionality of the original embeddings. Lastly, the threat is detected by a well-trained machine-learning model.</p>
+</div>
+<section class="ltx_subsection" id="S3.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.1. </span>Pre-processing</h3>
+<div class="ltx_para" id="S3.SS1.p1">
+<p class="ltx_p" id="S3.SS1.p1.1"><span class="ltx_text ltx_font_bold" id="S3.SS1.p1.1.1">Input data:</span>
+We use a system call event whose several properties are extracted such as the system call name, user name, user shell, process name for all events. The file descriptor name is included for file events.
+For process creation events such as <span class="ltx_text ltx_font_typewriter" id="S3.SS1.p1.1.2">clone</span> and <span class="ltx_text ltx_font_typewriter" id="S3.SS1.p1.1.3">execve</span>, system call arguments are included because they include specific information about what program is executed. This information is essential for interpreter programs such as Python and Bash because the main program names do not show the script names. For network events, network type (IPv4), client IP, server IP, and server port are used. These fields are provided as a JSON object to the LLM service.</p>
+</div>
+<div class="ltx_para" id="S3.SS1.p2">
+<p class="ltx_p" id="S3.SS1.p2.1"><span class="ltx_text ltx_font_bold" id="S3.SS1.p2.1.1">Path normalization:</span>
+Using the raw data sometimes could create unnecessary noise to the LLM as seen in the randomly generated data or timestamps. Therefore, we applied several data normalization methods to avoid such noise. First, temporary files tend to have less meaningful names due to their nature. We utilized several well-known file extensions for the temporary files such as “.tmp” and “.temp” to generalize their names.
+Second, the files under certain directories such as the <span class="ltx_text ltx_font_typewriter" id="S3.SS1.p2.1.2">proc</span> file system can be noisy because they reflect the internal states of the operating system kernel and their file paths may include the process IDs (PIDs) which are dynamically determined. Therefore, such file names are generalized by excluding the PIDs.
+Lastly, if file names are like hashes based on known patterns (e.g., MD5 and SHA), their names are normalized using a uniform pattern “hash value”.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S3.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.2. </span>Explanatory texts generation</h3>
+<div class="ltx_para" id="S3.SS2.p1">
+<p class="ltx_p" id="S3.SS2.p1.1">The request messages are structured to
+include two types of content: one for the “system” role and another for the “user”
+role. The “system” role content outlines general instructions, detailing the input
+required from the user and the expected output from GPT-4o. Meanwhile, the
+“user” role content provides the details of a system call as a query.</p>
+</div>
+<div class="ltx_para" id="S3.SS2.p2">
+<p class="ltx_p" id="S3.SS2.p2.1"><span class="ltx_text ltx_font_bold" id="S3.SS2.p2.1.1">System role:</span> For the “system” role, we used a prompt <span class="ltx_text ltx_font_italic" id="S3.SS2.p2.1.2">“here is a json object where the keys are sysdig event fields and the values are the data for the corresponding keys. Please generate only the final summary of the meaning of this event and the event type as a paragraph”</span>. Our implementation of system call events utilizes the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p2.1.3">Sysdig</span> <cite class="ltx_cite ltx_citemacro_citep">(Inc., <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib11" title="">2024</a>)</cite> system which happens to be recognized by the LLM service that we use. This is one example of system call formats and other formats can be utilized as well by instructing the LLM on how to understand them accordingly. This prompt describes that we are providing our data in the JSON format and we would like to have a summary of the meaning of this event. Since the LLM may use verbose expressions, we instruct to produce only the final summary as a paragraph.</p>
+</div>
+<div class="ltx_para" id="S3.SS2.p3">
+<p class="ltx_p" id="S3.SS2.p3.1"><span class="ltx_text ltx_font_bold" id="S3.SS2.p3.1.1">User role:</span> The user role uses the details of a system call’s properties as the key-value pairs in the JSON format.</p>
+</div>
+<figure class="ltx_float ltx_lstlisting" id="LST2">
+<div class="ltx_listing ltx_lst_language_python ltx_lstlisting ltx_framed ltx_framed_rectangle ltx_listing" id="LST2.1">
+<div class="ltx_listing_data"><a download="figures/eg02.tex" href="data:text/plain;base64,ewogICAgJ3Byb2NfbmFtZSc6ICdjcm9uZCcsIAogICAgJ3R5cGUnOiAnZXhlY3ZlJywgCiAgICAnZmRfZmlsZW5hbWUnOiAnPE5BPicsIAogICAgJ3VzZXJfbmFtZSc6ICdyb290JywgCiAgICAndXNlcl9zaGVsbCc6ICcvYmluL2Jhc2gnLCAKICAgICdldnRfYXJncyc6ICdzaCcKfQ==">⬇</a></div>
+<div class="ltx_listingline" id="lstnumberx5">
+<span class="ltx_text ltx_font_typewriter" id="lstnumberx5.1" style="font-size:80%;">{</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx6">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx6.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx6.2" style="font-size:80%;color:#3424BA;">’proc_name’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx6.3" style="font-size:80%;">:</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx6.4" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx6.5" style="font-size:80%;color:#3424BA;">’crond’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx6.6" style="font-size:80%;">,</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx7">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx7.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx7.2" style="font-size:80%;color:#3424BA;">’type’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx7.3" style="font-size:80%;">:</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx7.4" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx7.5" style="font-size:80%;color:#3424BA;">’execve’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx7.6" style="font-size:80%;">,</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx8">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx8.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx8.2" style="font-size:80%;color:#3424BA;">’fd_filename’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx8.3" style="font-size:80%;">:</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx8.4" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx8.5" style="font-size:80%;color:#3424BA;">’&lt;NA&gt;’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx8.6" style="font-size:80%;">,</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx9">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx9.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx9.2" style="font-size:80%;color:#3424BA;">’user_name’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx9.3" style="font-size:80%;">:</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx9.4" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx9.5" style="font-size:80%;color:#3424BA;">’root’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx9.6" style="font-size:80%;">,</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx10">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx10.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx10.2" style="font-size:80%;color:#3424BA;">’user_shell’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx10.3" style="font-size:80%;">:</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx10.4" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx10.5" style="font-size:80%;color:#3424BA;">’/bin/bash’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx10.6" style="font-size:80%;">,</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx11">
+<span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx11.1" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx11.2" style="font-size:80%;color:#3424BA;">’evt_args’</span><span class="ltx_text ltx_font_typewriter" id="lstnumberx11.3" style="font-size:80%;">:</span><span class="ltx_text ltx_lst_space ltx_font_typewriter" id="lstnumberx11.4" style="font-size:80%;"> </span><span class="ltx_text ltx_lst_string ltx_font_typewriter" id="lstnumberx11.5" style="font-size:80%;color:#3424BA;">’sh’</span>
+</div>
+<div class="ltx_listingline" id="lstnumberx12">
+<span class="ltx_text ltx_font_typewriter" id="lstnumberx12.1" style="font-size:80%;">}</span>
+</div>
+</div>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_float">Listing 2: </span>A JSON example for the user role.</figcaption>
+</figure>
+<div class="ltx_para" id="S3.SS2.p4">
+<p class="ltx_p" id="S3.SS2.p4.1">Listing <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#LST2" title="Listing 2 ‣ 3.2. Explanatory texts generation ‣ 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">2</span></a> shows an example of a system event which is made by the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.1">crond</span> process executing the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.2">sh</span> program listed in the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.3">evt_args</span> system call parameter list field using the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.4">execve</span> system call.
+Since this is a process event, the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.5">fd_filename</span> field is not used as shown by its value <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.6">&lt;NA&gt;</span>. This system call is executed by the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.7">root</span> user whose shell is <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p4.1.8">/bin/bash</span>.</p>
+</div>
+<div class="ltx_para" id="S3.SS2.p5">
+<p class="ltx_p" id="S3.SS2.p5.1">Given these input data, the OpenAI <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.1">gpt-4o</span> LLM service responded with the following answer:
+“<span class="ltx_text ltx_font_italic" id="S3.SS2.p5.1.2">This event is an <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.2.1">execve</span> type, indicating the execution of a new program. The process involved is <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.2.2">crond</span>, which is a daemon used to execute scheduled commands. The event was initiated by the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.2.3">root</span> user, utilizing the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.2.4">/bin/bash</span> shell. The specific command executed is <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.2.5">sh</span>, which suggests the initiation of a shell session or script execution. This activity is typical for system maintenance or scheduled tasks managed by the <span class="ltx_text ltx_font_typewriter" id="S3.SS2.p5.1.2.6">cron</span> service.</span>”</p>
+</div>
+<div class="ltx_para" id="S3.SS2.p6">
+<p class="ltx_p" id="S3.SS2.p6.1">This text explanation of a system event is used as an input for the text embedding explained next.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S3.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.3. </span>Notable Details in LLM Explanations</h3>
+<div class="ltx_para" id="S3.SS3.p1">
+<p class="ltx_p" id="S3.SS3.p1.1">During our exploration of LLM explanations of system call events, we identified that there are multiple notable details that are beneficial for understanding the events, especially for cybersecurity purposes. We list several concrete examples as demonstrations.</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p2">
+<ol class="ltx_enumerate" id="S3.I1">
+<li class="ltx_item" id="S3.I1.i1" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">(1)</span>
+<div class="ltx_para" id="S3.I1.i1.p1">
+<p class="ltx_p" id="S3.I1.i1.p1.1"><span class="ltx_text ltx_font_bold" id="S3.I1.i1.p1.1.1">Knowledge of System Calls:</span> First, in LLM’s explanation, a simple system call name is expanded to a full sentence of what it indicates by explaining what is the system call for.
+(<span class="ltx_text" id="S3.I1.i1.p1.1.2" style="background-color:#8ACFF0;">blue</span> annotation)</p>
+</div>
+</li>
+<li class="ltx_item" id="S3.I1.i2" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">(2)</span>
+<div class="ltx_para" id="S3.I1.i2.p1">
+<p class="ltx_p" id="S3.I1.i2.p1.1"><span class="ltx_text ltx_font_bold" id="S3.I1.i2.p1.1.1">Knowledge of Software Identity:</span> Second, For commonly used software, LLM is aware of what software it is. It helps the understanding of its existence or expected behavior if the user lacks knowledge.
+(<span class="ltx_text" id="S3.I1.i2.p1.1.2" style="background-color:#EACAFA;">violet</span> annotation)</p>
+</div>
+</li>
+<li class="ltx_item" id="S3.I1.i3" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">(3)</span>
+<div class="ltx_para" id="S3.I1.i3.p1">
+<p class="ltx_p" id="S3.I1.i3.p1.1"><span class="ltx_text ltx_font_bold" id="S3.I1.i3.p1.1.1">High-Level Knowledge of Application Execution Context:</span>
+Based on the prior two types of knowledge, LLM may suggest what is the current behavior doing in a higher-level description that is easier to understand to human.
+(<span class="ltx_text" id="S3.I1.i3.p1.1.2" style="background-color:#FAE8B5;">yellow</span> annotation)</p>
+</div>
+</li>
+<li class="ltx_item" id="S3.I1.i4" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">(4)</span>
+<div class="ltx_para" id="S3.I1.i4.p1">
+<p class="ltx_p" id="S3.I1.i4.p1.1"><span class="ltx_text ltx_font_bold" id="S3.I1.i4.p1.1.1">Comment on Possible Suspiciousness:</span>
+Lastly, LLM sometimes comments on possible usages of the current behavior and potential suspicious cases that is worth for the attention for possible security threats. This is a useful extra knowledge extracted from the LLM. (<span class="ltx_text" id="S3.I1.i4.p1.1.2" style="background-color:#FFBFBF;">pink</span> annotation)</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="ltx_para" id="S3.SS3.p3">
+<p class="ltx_p" id="S3.SS3.p3.1">In the following examples, we explain the LLM’s knowledge with the four types of details aforementioned.</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p4">
+<p class="ltx_p" id="S3.SS3.p4.1">Example 1 shows the explanatory text generated by the LLM for the system event “<span class="ltx_text ltx_font_typewriter" id="S3.SS3.p4.1.1">dhclient recvfrom root /bin/bash &lt;NA&gt; IP2 IP1 67</span>”. It is worth noting that although we adopt the JSON format to describe a system event when interacting with LLMs, herein, for the sake of convenience and brevity, we use a textual format to represent a system event. Unless otherwise specified, all subsequent examples in this paper will follow this approach.</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p5">
+<span class="ltx_ERROR undefined" id="S3.SS3.p5.1">\mdfsetup</span>
+<p class="ltx_p" id="S3.SS3.p5.2">shadow=true,
+shadowsize=5pt,
+backgroundcolor=gray!10,
+frametitlebackgroundcolor=yellow!20,
+frametitlerule=true,
+roundcorner=6pt,
+skipabove=6pt,
+skipbelow=6pt,
+rightmargin=15pt
+
+<span class="ltx_ERROR undefined" id="S3.SS3.p5.2.1">{mdframed}</span>[frametitle=Example 1]
+This event is a network activity event involving the process <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p5.2.2">dhclient</span>,
+
+<span class="ltx_text" id="S3.SS3.p5.2.3" style="color:#000000;background-color:#EACAFA;">which is a DHCP client typically used to obtain IP addresses and network configuration from a DHCP server.</span>
+ The event type is <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p5.2.4">recvfrom</span>,
+
+<span class="ltx_text" id="S3.SS3.p5.2.5" style="color:#000000;background-color:#8ACFF0;">indicating that the process received data from a network socket.</span>
+ The data was received over an IP v4 connection from the source IP address <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p5.2.6">IP1</span>, which is likely the DHCP server, using the source port 67,
+
+
+<span class="ltx_text" id="S3.SS3.p5.2.7" style="color:#000000;background-color:#FAE8B5;">the standard port for DHCP server communications.</span>
+
+The destination IP address is <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p5.2.8">IP2</span>, which appears to be a broadcast address. The process is running under the user <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p5.2.9">root</span> with the shell <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p5.2.10">/bin/bash.</span>
+<span class="ltx_text" id="S3.SS3.p5.2.11" style="color:#000000;background-color:#FAE8B5;">This event suggests that the DHCP client is receiving network configuration information from the DHCP server.</span></p>
+</div>
+<div class="ltx_para" id="S3.SS3.p6">
+<p class="ltx_p" id="S3.SS3.p6.1"><span class="ltx_text ltx_font_bold" id="S3.SS3.p6.1.1">Manual Evaluation:</span> The first example is about a <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p6.1.2">dhclient</span> process performing a <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p6.1.3">recvfrom</span> system call event. LLM first explains the identity of this software correctly as a DHCP client annotated with violet color. It adds the explanation of what this system call indicates (blue annotation). Then the LLM explains a high-level application context of this event as the DHCP client receiving network configuration information from the DHCP server (yellow annotation).</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p7">
+<p class="ltx_p" id="S3.SS3.p7.1">Given the system event “<span class="ltx_text ltx_font_typewriter" id="S3.SS3.p7.1.1">screen openat ubuntu /bin/bash LC_TIME</span>”, Example 2 shows the corresponding explanatory text generated by the LLM.</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p8">
+<span class="ltx_ERROR undefined" id="S3.SS3.p8.1">{mdframed}</span>
+<p class="ltx_p" id="S3.SS3.p8.2">[frametitle=Example 2]
+This event is an <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p8.2.1">openat</span> system call
+
+<span class="ltx_text" id="S3.SS3.p8.2.2" style="color:#000000;background-color:#8ACFF0;">where the process named <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p8.2.2.1">screen</span> is attempting to open a file or directory named <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p8.2.2.2">LC_TIME</span></span>
+. The action is performed by a user named <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p8.2.3">ubuntu</span> who is operating within a Bash shell environment.
+
+<span class="ltx_text" id="S3.SS3.p8.2.4" style="color:#000000;background-color:#FAE8B5;">This type of event typically indicates a process accessing or modifying locale settings related to time, possibly for configuring or retrieving time-related information.</span></p>
+</div>
+<div class="ltx_para" id="S3.SS3.p9">
+<p class="ltx_p" id="S3.SS3.p9.1"><span class="ltx_text ltx_font_bold" id="S3.SS3.p9.1.1">Manual Evaluation:</span>
+The second example is about the <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p9.1.2">openat</span> system call event made by the <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p9.1.3">screen</span> software. LLM explains that this system call is regarding opening a file or directory correctly (blue annotation). Then it adds a high-level description that it is typically about accessing or modifying locale settings related to time, which is inferred by the accessed file, <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p9.1.4">LC_TIME</span>. (yellow annotation)</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p10">
+<p class="ltx_p" id="S3.SS3.p10.1">The last system event used as a sample is “<span class="ltx_text ltx_font_typewriter" id="S3.SS3.p10.1.1">echo mprotect www-data /usr/sbin/nologin &lt;NA&gt;</span>”. The corresponding explanatory text generated by the LLM is shown in Example 3.</p>
+</div>
+<div class="ltx_para" id="S3.SS3.p11">
+<span class="ltx_ERROR undefined" id="S3.SS3.p11.1">{mdframed}</span>
+<p class="ltx_p" id="S3.SS3.p11.2">[frametitle=Example 3]
+This event is of type <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p11.2.1">mprotect</span> and involves the process <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p11.2.2">echo</span> being executed by the user <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p11.2.3">www-data,</span> who has a restricted shell set to <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p11.2.4">/usr/sbin/nologin.</span>
+<span class="ltx_text" id="S3.SS3.p11.2.5" style="color:#000000;background-color:#8ACFF0;">The <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p11.2.5.1">mprotect</span> system call is typically used to change the memory protection of a region of memory, which can be indicative of a process attempting to modify its memory permissions.</span>
+The absence of a specific file descriptor suggests that this operation is not directly associated with a file. This event could be part of a legitimate operation or
+
+<span class="ltx_text" id="S3.SS3.p11.2.6" style="color:#000000;background-color:#FFBFBF;">potentially suspicious activity, depending on the context, as <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p11.2.6.1">www-data</span> is a common user for web services, and the restricted shell indicates limited direct user interaction.</span></p>
+</div>
+<div class="ltx_para" id="S3.SS3.p12">
+<p class="ltx_p" id="S3.SS3.p12.1"><span class="ltx_text ltx_font_bold" id="S3.SS3.p12.1.1">Manual Evaluation:</span>
+The last example is about the <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p12.1.2">echo</span> process executing the <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p12.1.3">mprotect</span> system call. LLM first explains the meaning of this system call changing the memory protection of a region of memory.
+We found a more useful description is about LLM’s comment on this event’s usage. LLM mentions this event could be part of a legitimate operation or potentially suspicious given a web-service user with a restricted shell.
+Indeed, this <span class="ltx_text ltx_font_typewriter" id="S3.SS3.p12.1.4">echo</span> process was caused by a security exploit from a malicious behavior dataset and LLM correctly identified its potential risk.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S3.SS4">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.4. </span>Embeddings and Dimension Adjustment</h3>
+<div class="ltx_para" id="S3.SS4.p1">
+<p class="ltx_p" id="S3.SS4.p1.1">As we mentioned earlier, <span class="ltx_text ltx_font_typewriter" id="S3.SS4.p1.1.1">ProvDetector</span> <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite> uses <span class="ltx_text ltx_font_typewriter" id="S3.SS4.p1.1.2">Doc2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite> to embed the descriptive text of system events. <span class="ltx_text ltx_font_typewriter" id="S3.SS4.p1.1.3">Doc2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite> is a static embedding method that learns paragraph embeddings via the distributed memory and distributed bag of words models. In contrast, OpenAI has launched two powerful embedding models since January 2024, namely <span class="ltx_text ltx_font_typewriter" id="S3.SS4.p1.1.4">text-embedding-3-small</span> and <span class="ltx_text ltx_font_typewriter" id="S3.SS4.p1.1.5">text-embedding-3-large</span> <cite class="ltx_cite ltx_citemacro_citep">(OpenAI, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib23" title="">2024</a>)</cite>. In particular, they use the state-of-the-art contextualized embeddings method, which is considered as an augmentation to static embeddings.</p>
+</div>
+<div class="ltx_para" id="S3.SS4.p2">
+<p class="ltx_p" id="S3.SS4.p2.1">Static embeddings assign a single and fixed representation to each word, regardless of its context. However, contextualized embeddings generate more accurate and flexible representations by considering the context in which words appear, thus providing fine-grained semantics understanding and more nuanced representations. In the NLP domain, contextualized embeddings have led to substantial performance gains on a variety of tasks compared to static embeddings. The embedding models of OpenAI enable us to generate numerical sequences that accurately capture the semantics of natural language, laying a solid foundation for subsequent machine learning tasks.</p>
+</div>
+<div class="ltx_para" id="S3.SS4.p3">
+<p class="ltx_p" id="S3.SS4.p3.1">OpenAI’s embedding models can output feature vectors with dimensions as high as 1,536 or 3,072. Generally, higher-dimensional feature vectors can represent more detailed and complex information. However, high-dimensional feature vectors also pose challenges for subsequent machine learning model training. A common approach is to reduce the dimensionality of the feature vectors before the next stage of machine learning model training. Dimensionality reduction inevitably leads to some loss of information, so a trade-off must be made between time cost and information loss. In this work, we use the Kernel Principal Component Analysis (PCA) with an RBF (Radial Basis Function) kernel to compress the high-dimensional feature vectors generated by GPT to 256 dimensions, which is comparable to the setting in the previous study <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite>.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S3.SS5">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.5. </span>Threat detection</h3>
+<figure class="ltx_table" id="S3.T1">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_table">Table 1. </span>Attack scenarios involved in <span class="ltx_text ltx_font_typewriter" id="S3.T1.2.1">ProvSec</span> <cite class="ltx_cite ltx_citemacro_citep">(Shrestha et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib28" title="">2023</a>)</cite></figcaption>
+<table class="ltx_tabular ltx_align_middle" id="S3.T1.3">
+<tr class="ltx_tr" id="S3.T1.3.1">
+<td class="ltx_td ltx_align_center ltx_border_tt" id="S3.T1.3.1.1">ID</td>
+<td class="ltx_td ltx_align_left ltx_border_tt" id="S3.T1.3.1.2">Software</td>
+<td class="ltx_td ltx_align_left ltx_border_tt" id="S3.T1.3.1.3">Vulnerability</td>
+<td class="ltx_td ltx_align_left ltx_border_tt" id="S3.T1.3.1.4">Description</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.2">
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.3.2.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.2.1.1">#01</span></td>
+<td class="ltx_td ltx_align_left ltx_border_t" id="S3.T1.3.2.2">Consul</td>
+<td class="ltx_td ltx_align_left ltx_border_t" id="S3.T1.3.2.3">N/A</td>
+<td class="ltx_td ltx_align_left ltx_border_t" id="S3.T1.3.2.4">Consul service APIs misconfiguration, RCE and reverse shell</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.3">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.3.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.3.1.1">#02</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.3.2">Nginx</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.3.3">CVE-2017-7529</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.3.4">Web server remote integer overflow vulnerability</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.4">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.4.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.4.1.1">#03</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.4.2">Ghostscript</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.4.3">CVE-2018-16509</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.4.4">Python remote shell command execution via ghostscript</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.5">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.5.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.5.1.1">#04</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.5.2">PHP</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.5.3">CVE-2018-19518</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.5.4">PHP IMAP remote command execution (RCE) vulnerability</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.6">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.6.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.6.1.1">#05</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.6.2">Docker</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.6.3">CVE-2019-5736</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.6.4">Escape from a Docker container: vulnerability on Docker</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.7">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.7.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.7.1.1">#06</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.7.2">Tomcat</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.7.3">CVE-2020-1938</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.7.4">Apache Tomcat arbitrary file read / include vulnerability</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.8">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.8.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.8.1.1">#07</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.8.2">Redis</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.8.3">CVE-2022-0543</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.8.4">Redis Lua sandbox escape and remote code execution</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.9">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.9.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.9.1.1">#08</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.9.2">Django</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.9.3">CVE-2021-35042</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.9.4">Django allows QuerySet.order_by SQL injection vulnerability</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.10">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.10.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.10.1.1">#09</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.10.2">Apache</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.10.3">CVE-2021-42013</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.10.4">Path traversal and file disclosure vulnerability in HTTP server</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.11">
+<td class="ltx_td ltx_align_center" id="S3.T1.3.11.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.11.1.1">#10</span></td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.11.2">Apache</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.11.3">CVE-2021-41773</td>
+<td class="ltx_td ltx_align_left" id="S3.T1.3.11.4">Apache web server path traversal and file disclosure vulnerability</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.3.12">
+<td class="ltx_td ltx_align_center ltx_border_bb" id="S3.T1.3.12.1"><span class="ltx_text ltx_font_typewriter" id="S3.T1.3.12.1.1">#11</span></td>
+<td class="ltx_td ltx_align_left ltx_border_bb" id="S3.T1.3.12.2">Java Log4j</td>
+<td class="ltx_td ltx_align_left ltx_border_bb" id="S3.T1.3.12.3">CVE-2021-44228</td>
+<td class="ltx_td ltx_align_left ltx_border_bb" id="S3.T1.3.12.4">Log4j vulnerability allows an affected system to be controlled remotely</td>
+</tr>
+</table>
+</figure>
+<div class="ltx_para" id="S3.SS5.p1">
+<p class="ltx_p" id="S3.SS5.p1.1">It is necessary to emphasize that the primary focus of this work is to explore the potential of LLMs in improving provenance analysis. We are particularly interested in how the extensive knowledge of LLMs can be transferred to the field of APT detection and play an active role. Therefore, we do not intend to develop sophisticated and complex threat detection systems based on architectures like graph neural networks or Transformers. Moreover, we aim to fully leverage the assistance of LLMs to reduce human effort, such as feature engineering. Consequently, we consider two categories of classic models as our threat detectors: supervised learning methods and semi-supervised anomaly detection methods.
+For the supervised learning, two representative algorithms are included. The first one is multilayer perceptron (<span class="ltx_text ltx_font_typewriter" id="S3.SS5.p1.1.1">MLP</span>), which is a neural network model. The second detector is gradient-boosted decision trees (<span class="ltx_text ltx_font_typewriter" id="S3.SS5.p1.1.2">GBDT</span>), which is a representative ensemble learning model. For the semi-supervised learning, we train an anomaly detector using <span class="ltx_text ltx_font_typewriter" id="S3.SS5.p1.1.3">XGBOD</span> <cite class="ltx_cite ltx_citemacro_citep">(Zhao and Hryniewicki, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib36" title="">2018</a>)</cite> algorithm. This is more aligned with real-world application scenarios, where fully labeled data is hard to obtain, and artificial intelligence applications are built based on a combination of labeled and unlabeled data.</p>
+</div>
+</section>
+</section>
+<section class="ltx_section" id="S4">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">4. </span>Evaluation</h2>
+<div class="ltx_para" id="S4.p1">
+<p class="ltx_p" id="S4.p1.1">Based on the methodology introduced in Section <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3" title="3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">3</span></a>, we conduct a set of experimental studies to evaluate the performance of our proposed technique. We are particularly interested in exploring the interpretability of descriptive tests from GPT-4o regarding system events, as well as the ability of OpenAI’s embedding model to capture the semantics of system events.
+and their effectiveness in practical threat detection. We would also like to further investigate whether OpenAI’s extensive knowledge can be practically helpful for threat detection. Specifically, our evaluation is intended to seek a deeper understanding of the following research questions (<span class="ltx_text ltx_font_bold" id="S4.p1.1.1">RQs</span>).</p>
+<ul class="ltx_itemize" id="S4.I1">
+<li class="ltx_item" id="S4.I1.i1" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S4.I1.i1.p1">
+<p class="ltx_p" id="S4.I1.i1.p1.1"><span class="ltx_text ltx_font_bold" id="S4.I1.i1.p1.1.1">RQ1:</span> Do the embeddings generated by LLMs provide a significant advantage in anomaly detection compared to previous methods? (<span class="ltx_text ltx_font_bold" id="S4.I1.i1.p1.1.2">§4.3</span> and <span class="ltx_text ltx_font_bold" id="S4.I1.i1.p1.1.3">§4.4</span>)</p>
+</div>
+</li>
+<li class="ltx_item" id="S4.I1.i2" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S4.I1.i2.p1">
+<p class="ltx_p" id="S4.I1.i2.p1.1"><span class="ltx_text ltx_font_bold" id="S4.I1.i2.p1.1.1">RQ2:</span> Can the extensive knowledge of LLMs regarding system events be effectively transferred to the application of APT detection? (<span class="ltx_text ltx_font_bold" id="S4.I1.i2.p1.1.2">§4.5</span>)</p>
+</div>
+</li>
+<li class="ltx_item" id="S4.I1.i3" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S4.I1.i3.p1">
+<p class="ltx_p" id="S4.I1.i3.p1.1"><span class="ltx_text ltx_font_bold" id="S4.I1.i3.p1.1.1">RQ3:</span> How is the generalization capability of our proposed APT detection technique when confronted with a previously unseen attack? (<span class="ltx_text ltx_font_bold" id="S4.I1.i3.p1.1.2">§4.6</span>)</p>
+</div>
+</li>
+</ul>
+</div>
+<section class="ltx_subsection" id="S4.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.1. </span>Dataset</h3>
+<div class="ltx_para" id="S4.SS1.p1">
+<p class="ltx_p" id="S4.SS1.p1.2">We conduct empirical studies based on a publicly available dataset <span class="ltx_text ltx_font_typewriter" id="S4.SS1.p1.2.1">ProvSec</span> <cite class="ltx_cite ltx_citemacro_citep">(Shrestha et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib28" title="">2023</a>)</cite>. This dataset collects provenance analysis data from eleven attack scenarios in the real world. Information about these eleven attacks is summarized in Table <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S3.T1" title="Table 1 ‣ 3.5. Threat detection ‣ 3. Methodology ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">1</span></a>. When an attack is launched, the corresponding events are recorded and preliminarily regarded as adversarial. Otherwise, if the attack has not been launched, the events extracted from the corresponding provenance data are regarded as benign. A self-evident intuition is that adversary attacks are usually hidden among massive normal events. Therefore, it is unsurprising that there exist some events that may be on both sides. The intersection between the benign events and the preliminary adversary events is not sufficiently iconic to indicate an attack behavior. To this end, those overlapped patterns from the original adversary events should be removed. Please note that, as described in Section 3, we extracted slightly different fields to depict different types of events. As a result, a total of 4,507 unique adversary events remained. Moreover, in reality, the distribution of adversary events and normal events is imbalanced, with the majority of events being benign. To keep rough balance, we randomly extract 5,000 different benign events. In the dataset, 80% of instances are used for training and the remaining 20% for testing, denoted as <math alttext="\mathcal{D}_{Train}" class="ltx_Math" display="inline" id="S4.SS1.p1.1.m1.1"><semantics id="S4.SS1.p1.1.m1.1a"><msub id="S4.SS1.p1.1.m1.1.1" xref="S4.SS1.p1.1.m1.1.1.cmml"><mi class="ltx_font_mathcaligraphic" id="S4.SS1.p1.1.m1.1.1.2" xref="S4.SS1.p1.1.m1.1.1.2.cmml">𝒟</mi><mrow id="S4.SS1.p1.1.m1.1.1.3" xref="S4.SS1.p1.1.m1.1.1.3.cmml"><mi id="S4.SS1.p1.1.m1.1.1.3.2" xref="S4.SS1.p1.1.m1.1.1.3.2.cmml">T</mi><mo id="S4.SS1.p1.1.m1.1.1.3.1" xref="S4.SS1.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.1.m1.1.1.3.3" xref="S4.SS1.p1.1.m1.1.1.3.3.cmml">r</mi><mo id="S4.SS1.p1.1.m1.1.1.3.1a" xref="S4.SS1.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.1.m1.1.1.3.4" xref="S4.SS1.p1.1.m1.1.1.3.4.cmml">a</mi><mo id="S4.SS1.p1.1.m1.1.1.3.1b" xref="S4.SS1.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.1.m1.1.1.3.5" xref="S4.SS1.p1.1.m1.1.1.3.5.cmml">i</mi><mo id="S4.SS1.p1.1.m1.1.1.3.1c" xref="S4.SS1.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.1.m1.1.1.3.6" xref="S4.SS1.p1.1.m1.1.1.3.6.cmml">n</mi></mrow></msub><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.1.m1.1b"><apply id="S4.SS1.p1.1.m1.1.1.cmml" xref="S4.SS1.p1.1.m1.1.1"><csymbol cd="ambiguous" id="S4.SS1.p1.1.m1.1.1.1.cmml" xref="S4.SS1.p1.1.m1.1.1">subscript</csymbol><ci id="S4.SS1.p1.1.m1.1.1.2.cmml" xref="S4.SS1.p1.1.m1.1.1.2">𝒟</ci><apply id="S4.SS1.p1.1.m1.1.1.3.cmml" xref="S4.SS1.p1.1.m1.1.1.3"><times id="S4.SS1.p1.1.m1.1.1.3.1.cmml" xref="S4.SS1.p1.1.m1.1.1.3.1"></times><ci id="S4.SS1.p1.1.m1.1.1.3.2.cmml" xref="S4.SS1.p1.1.m1.1.1.3.2">𝑇</ci><ci id="S4.SS1.p1.1.m1.1.1.3.3.cmml" xref="S4.SS1.p1.1.m1.1.1.3.3">𝑟</ci><ci id="S4.SS1.p1.1.m1.1.1.3.4.cmml" xref="S4.SS1.p1.1.m1.1.1.3.4">𝑎</ci><ci id="S4.SS1.p1.1.m1.1.1.3.5.cmml" xref="S4.SS1.p1.1.m1.1.1.3.5">𝑖</ci><ci id="S4.SS1.p1.1.m1.1.1.3.6.cmml" xref="S4.SS1.p1.1.m1.1.1.3.6">𝑛</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.1.m1.1c">\mathcal{D}_{Train}</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.p1.1.m1.1d">caligraphic_D start_POSTSUBSCRIPT italic_T italic_r italic_a italic_i italic_n end_POSTSUBSCRIPT</annotation></semantics></math> and <math alttext="\mathcal{D}_{Test}" class="ltx_Math" display="inline" id="S4.SS1.p1.2.m2.1"><semantics id="S4.SS1.p1.2.m2.1a"><msub id="S4.SS1.p1.2.m2.1.1" xref="S4.SS1.p1.2.m2.1.1.cmml"><mi class="ltx_font_mathcaligraphic" id="S4.SS1.p1.2.m2.1.1.2" xref="S4.SS1.p1.2.m2.1.1.2.cmml">𝒟</mi><mrow id="S4.SS1.p1.2.m2.1.1.3" xref="S4.SS1.p1.2.m2.1.1.3.cmml"><mi id="S4.SS1.p1.2.m2.1.1.3.2" xref="S4.SS1.p1.2.m2.1.1.3.2.cmml">T</mi><mo id="S4.SS1.p1.2.m2.1.1.3.1" xref="S4.SS1.p1.2.m2.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.2.m2.1.1.3.3" xref="S4.SS1.p1.2.m2.1.1.3.3.cmml">e</mi><mo id="S4.SS1.p1.2.m2.1.1.3.1a" xref="S4.SS1.p1.2.m2.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.2.m2.1.1.3.4" xref="S4.SS1.p1.2.m2.1.1.3.4.cmml">s</mi><mo id="S4.SS1.p1.2.m2.1.1.3.1b" xref="S4.SS1.p1.2.m2.1.1.3.1.cmml">⁢</mo><mi id="S4.SS1.p1.2.m2.1.1.3.5" xref="S4.SS1.p1.2.m2.1.1.3.5.cmml">t</mi></mrow></msub><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.2.m2.1b"><apply id="S4.SS1.p1.2.m2.1.1.cmml" xref="S4.SS1.p1.2.m2.1.1"><csymbol cd="ambiguous" id="S4.SS1.p1.2.m2.1.1.1.cmml" xref="S4.SS1.p1.2.m2.1.1">subscript</csymbol><ci id="S4.SS1.p1.2.m2.1.1.2.cmml" xref="S4.SS1.p1.2.m2.1.1.2">𝒟</ci><apply id="S4.SS1.p1.2.m2.1.1.3.cmml" xref="S4.SS1.p1.2.m2.1.1.3"><times id="S4.SS1.p1.2.m2.1.1.3.1.cmml" xref="S4.SS1.p1.2.m2.1.1.3.1"></times><ci id="S4.SS1.p1.2.m2.1.1.3.2.cmml" xref="S4.SS1.p1.2.m2.1.1.3.2">𝑇</ci><ci id="S4.SS1.p1.2.m2.1.1.3.3.cmml" xref="S4.SS1.p1.2.m2.1.1.3.3">𝑒</ci><ci id="S4.SS1.p1.2.m2.1.1.3.4.cmml" xref="S4.SS1.p1.2.m2.1.1.3.4">𝑠</ci><ci id="S4.SS1.p1.2.m2.1.1.3.5.cmml" xref="S4.SS1.p1.2.m2.1.1.3.5">𝑡</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.2.m2.1c">\mathcal{D}_{Test}</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.p1.2.m2.1d">caligraphic_D start_POSTSUBSCRIPT italic_T italic_e italic_s italic_t end_POSTSUBSCRIPT</annotation></semantics></math>, respectively.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S4.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.2. </span>Environment Settings</h3>
+<div class="ltx_para" id="S4.SS2.p1">
+<p class="ltx_p" id="S4.SS2.p1.1">When interacting with GPT-4o via the API provided by OpenAI, we select
+“<span class="ltx_text ltx_font_typewriter" id="S4.SS2.p1.1.1">gpt-4o</span>”
+as the LLM. Furthermore, we choose the <span class="ltx_text ltx_font_typewriter" id="S4.SS2.p1.1.2">text-embedding-3-small</span> as our text embedding approach, which is the newest embedding model released by OpenAI in January 2024.
+Compared to its more powerful counterpart <span class="ltx_text ltx_font_typewriter" id="S4.SS2.p1.1.3">text-embedding-3-large</span>, <span class="ltx_text ltx_font_typewriter" id="S4.SS2.p1.1.4">text-embedding-3-small</span> is smaller but still highly efficient. More specifically, we chose 1,536 as the embedding dimension for the output of the <span class="ltx_text ltx_font_typewriter" id="S4.SS2.p1.1.5">text-embedding-3-small</span> model. According to the evaluation results released by OpenAI <cite class="ltx_cite ltx_citemacro_citep">(OpenAI, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib23" title="">2024</a>)</cite>, its performance is comparable to that of <span class="ltx_text ltx_font_typewriter" id="S4.SS2.p1.1.6">text-embedding-3-large</span>.</p>
+</div>
+<div class="ltx_para" id="S4.SS2.p2">
+<p class="ltx_p" id="S4.SS2.p2.1">We implement the prototype system in Python 3. Our system is carried out in the Ubuntu 22.04.1 LTS environment running on a computer equipped with an Intel<sup class="ltx_sup" id="S4.SS2.p2.1.1">®</sup>
+Core<sup class="ltx_sup" id="S4.SS2.p2.1.2">TM</sup> i9 CPU, 64GB RAM. This computer also has a CUDA-based parallel computing platform with a NVIDIA<sup class="ltx_sup" id="S4.SS2.p2.1.3">®</sup> GeForce RTX<sup class="ltx_sup" id="S4.SS2.p2.1.4">TM</sup> 3080 GPU.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S4.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.3. </span>Analysis of Embedding Quality</h3>
+<section class="ltx_subsubsection" id="S4.SS3.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">4.3.1. </span>Embedding Visualization</h4>
+<figure class="ltx_figure" id="S4.F3">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_2">
+<figure class="ltx_figure ltx_figure_panel ltx_align_center" id="S4.F3.sf1"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="200" id="S4.F3.sf1.g1" src="extracted/6309917/figures/doc2vec2.png" width="269"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">(a) </span>Embeddings are generated using Doc2Vec</figcaption>
+</figure>
+</div>
+<div class="ltx_flex_cell ltx_flex_size_2">
+<figure class="ltx_figure ltx_figure_panel ltx_align_center" id="S4.F3.sf2"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="200" id="S4.F3.sf2.g1" src="extracted/6309917/figures/gptemb2.png" width="269"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">(b) </span>Embeddings are generated using GPT of OpenAI</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 3. </span>Visualization based on t-SNE of event embeddings. The blue points and red points represent benign events and adversary events respectively.</figcaption>
+</figure>
+<div class="ltx_para" id="S4.SS3.SSS1.p1">
+<p class="ltx_p" id="S4.SS3.SSS1.p1.1">In this section, we first compare <span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS1.p1.1.1">Doc2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite> with GPT-4o in terms of the interpretability of event embeddings. The former method was used in a prior research <span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS1.p1.1.2">ProvDetector</span> <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite>.
+To keep balance, for benign and adversary events, we randomly selected 500 samples from each. After that, we project the event embeddings to a two-dimensional space using t-SNE <cite class="ltx_cite ltx_citemacro_citep">(Van der Maaten and Hinton, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib29" title="">2008</a>)</cite>. The result is shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.F3" title="Figure 3 ‣ 4.3.1. Embedding Visualization ‣ 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">3</span></a>, where blue points represent benign samples while red ones represent adversarial samples.</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS1.p2">
+<p class="ltx_p" id="S4.SS3.SSS1.p2.1">It can be seen from Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.F3" title="Figure 3 ‣ 4.3.1. Embedding Visualization ‣ 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">3</span></a>(a) that the majority of malicious events are mixed with benign ones. This is consistent with the result presented in the existing paper <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite>. To address this challenge, previous researchers design a rareness-based selection algorithm to first extract the potentially malicious part from the provenance graph of a process. However, this method is based on heuristics, which consequently relies on human expertise and typically leads to a risk of bias.</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS1.p3">
+<p class="ltx_p" id="S4.SS3.SSS1.p3.1">In contrast, our method leverages the extensive knowledge of GPT-4o to enrich the semantics of event descriptions. Therefore, we can observe from Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.F3" title="Figure 3 ‣ 4.3.1. Embedding Visualization ‣ 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">3</span></a>(b) that small cliques formed by similar events, although benign and adversarial samples are not trivially linear separable. This is because we compress the high-dimensional space into a 2-dimensional plane, which leads to information loss. The separating hyper-planes between groups
+that could originally be distinguished are no longer apparent. However, it also implies that the existing event
+embeddings can be used as a feasible starting point. Based on this, we can take advantage of the subsequent
+machine learning models to further amplify the distance between benign and adversary events in a feature
+space. At the same time, the distance between two benign events, and the distance between two adversarial
+events can both be reduced. The experiment results presented in Section 4.4 and Section 4.5 validate our hypothesis.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S4.SS3.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">4.3.2. </span>Explicability of Embedding Model</h4>
+<figure class="ltx_figure" id="S4.F4">
+<p class="ltx_p ltx_align_center" id="S4.F4.1"><span class="ltx_text" id="S4.F4.1.1"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="190" id="S4.F4.1.1.g1" src="extracted/6309917/figures/mds2024.png" width="275"/></span></p>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 4. </span>The relative positions of eight system events in the embedding space are visualized using the MDS technique.</figcaption>
+</figure>
+<div class="ltx_para" id="S4.SS3.SSS2.p1">
+<p class="ltx_p" id="S4.SS3.SSS2.p1.1">Intuitively, if the numerical representations for events provided by the embedding model are semantically meaningful, the degree of similarity between events can be roughly reflected in the embedding space by the proximity or distance.
+To delve deeper into the interpretability of GPT-generated embeddings, we showcase two pairs of system events as case studies. The first pair of system events are as following:</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p2">
+<p class="ltx_p" id="S4.SS3.SSS2.p2.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p2.1.1">touch execve root /bin/bash &lt;NA&gt;</span>”</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p3">
+<p class="ltx_p" id="S4.SS3.SSS2.p3.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p3.1.1">sh execve root /bin/bash &lt;NA&gt; touch</span>”</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.SS3.SSS2.p4">
+<p class="ltx_p" id="S4.SS3.SSS2.p4.1">Obviously, the processes involved in the two events are completely different. In the latter event, <span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p4.1.1">sh</span> is a shell command line interpreter that executes a command specified by the event argument, which in this case is <span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p4.1.2">touch</span>. According to our experience, these two events have the identical functionality. The cosine distance between their numerical embeddings is approximately 0.10884, indicating that the inference of the LLM is consistent with our prior knowledge. We also can observe the similar result when inspecting the following events pair:</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p5">
+<p class="ltx_p" id="S4.SS3.SSS2.p5.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p5.1.1">useradd execve root /bin/bash &lt;NA&gt;</span>”</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p6">
+<p class="ltx_p" id="S4.SS3.SSS2.p6.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p6.1.1">sh execve root /bin/bash &lt;NA&gt; useradd</span>”</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.SS3.SSS2.p7">
+<p class="ltx_p" id="S4.SS3.SSS2.p7.1">The cosine distance between their numerical embeddings is approximately 0.10778.</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p8">
+<p class="ltx_p" id="S4.SS3.SSS2.p8.1">Furthermore, we examine the quality
+of GPT-based system event embeddings in terms of their analogical reasoning performance. More concretely, we plot the relative positions of eight events according to their cosine distance in a lower-dimensional space using the Multidimensional Scaling (MDS) technique. The result is shown in Figure 4, from which it is easy to observe that the distance between the following two events</p>
+</div>
+<figure class="ltx_figure" id="S4.F5">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_2">
+<figure class="ltx_figure ltx_figure_panel ltx_align_center" id="S4.F5.sf1"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="190" id="S4.F5.sf1.g1" src="x3.png" width="323"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">(a) </span>MLP-based detector</figcaption>
+</figure>
+</div>
+<div class="ltx_flex_cell ltx_flex_size_2">
+<figure class="ltx_figure ltx_figure_panel ltx_align_center" id="S4.F5.sf2"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="190" id="S4.F5.sf2.g1" src="x4.png" width="323"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">(b) </span>GBDT-based detector</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 5. </span>Comparison of different embedding methods for the final threat detection performance.</figcaption>
+</figure>
+<div class="ltx_para" id="S4.SS3.SSS2.p9">
+<p class="ltx_p" id="S4.SS3.SSS2.p9.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p9.1.1">httpd openat daemon /usr/sbin/nologin passwd</span>”</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p10">
+<p class="ltx_p" id="S4.SS3.SSS2.p10.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p10.1.1">httpd close daemon /usr/sbin/nologin passwd</span>”</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.SS3.SSS2.p11">
+<p class="ltx_p" id="S4.SS3.SSS2.p11.1">is close to the distance between</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p12">
+<p class="ltx_p" id="S4.SS3.SSS2.p12.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p12.1.1">httpd openat daemon /usr/sbin/nologin localtime</span>”</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p13">
+<p class="ltx_p" id="S4.SS3.SSS2.p13.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p13.1.1">httpd close daemon /usr/sbin/nologin localtime</span>”</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.SS3.SSS2.p14">
+<p class="ltx_p" id="S4.SS3.SSS2.p14.1">Similarly, the distance between the following two events</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p15">
+<p class="ltx_p" id="S4.SS3.SSS2.p15.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p15.1.1">docker-containe openat root /bin/bash localtime</span>”</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p16">
+<p class="ltx_p" id="S4.SS3.SSS2.p16.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p16.1.1">docker-containe close root /bin/bash localtime</span>”</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.SS3.SSS2.p17">
+<p class="ltx_p" id="S4.SS3.SSS2.p17.1">is close to the distance between</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p18">
+<p class="ltx_p" id="S4.SS3.SSS2.p18.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p18.1.1">httpd openat daemon /usr/sbin/nologin localtime</span>”</p>
+</div>
+<div class="ltx_para" id="S4.SS3.SSS2.p19">
+<p class="ltx_p" id="S4.SS3.SSS2.p19.1">“<span class="ltx_text ltx_font_typewriter" id="S4.SS3.SSS2.p19.1.1">httpd close daemon /usr/sbin/nologin localtime</span>”</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.SS3.SSS2.p20">
+<p class="ltx_p" id="S4.SS3.SSS2.p20.1">This parallelogram relationship in geometry is consistent with our prior knowledge. We limit the presented examples to eight due to space limitation. In our manual investigation, however, we find many such semantic analogies that are automatically learned. Therefore, it can be seen that the embeddings demonstrated good explicability.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S4.SS4">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.4. </span>Comparison</h3>
+<div class="ltx_para" id="S4.SS4.p1">
+<p class="ltx_p" id="S4.SS4.p1.1">In this section, we compare the representation learning adopted in our approach with the embedding method used in the previous paper <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite>, and examine their impact on the final threat detection. More concretely, the <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p1.1.1">PV-DM</span> model of <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p1.1.2">Doc2Vec</span> was employed in <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite>. When using <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p1.1.3">PV-DM</span> to generate embeddings for system events, we consider two different scenarios. The first scenario assumes that we have exhaustively collected as many words as possible for the vocabulary, so there is no out-of-vocabulary (OOV) issue. Surely, this is difficult to achieve in practice. Therefore, the second, more realistic scenario is that we only learn an embedding model from <math alttext="\mathcal{D}_{Train}" class="ltx_Math" display="inline" id="S4.SS4.p1.1.m1.1"><semantics id="S4.SS4.p1.1.m1.1a"><msub id="S4.SS4.p1.1.m1.1.1" xref="S4.SS4.p1.1.m1.1.1.cmml"><mi class="ltx_font_mathcaligraphic" id="S4.SS4.p1.1.m1.1.1.2" xref="S4.SS4.p1.1.m1.1.1.2.cmml">𝒟</mi><mrow id="S4.SS4.p1.1.m1.1.1.3" xref="S4.SS4.p1.1.m1.1.1.3.cmml"><mi id="S4.SS4.p1.1.m1.1.1.3.2" xref="S4.SS4.p1.1.m1.1.1.3.2.cmml">T</mi><mo id="S4.SS4.p1.1.m1.1.1.3.1" xref="S4.SS4.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS4.p1.1.m1.1.1.3.3" xref="S4.SS4.p1.1.m1.1.1.3.3.cmml">r</mi><mo id="S4.SS4.p1.1.m1.1.1.3.1a" xref="S4.SS4.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS4.p1.1.m1.1.1.3.4" xref="S4.SS4.p1.1.m1.1.1.3.4.cmml">a</mi><mo id="S4.SS4.p1.1.m1.1.1.3.1b" xref="S4.SS4.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS4.p1.1.m1.1.1.3.5" xref="S4.SS4.p1.1.m1.1.1.3.5.cmml">i</mi><mo id="S4.SS4.p1.1.m1.1.1.3.1c" xref="S4.SS4.p1.1.m1.1.1.3.1.cmml">⁢</mo><mi id="S4.SS4.p1.1.m1.1.1.3.6" xref="S4.SS4.p1.1.m1.1.1.3.6.cmml">n</mi></mrow></msub><annotation-xml encoding="MathML-Content" id="S4.SS4.p1.1.m1.1b"><apply id="S4.SS4.p1.1.m1.1.1.cmml" xref="S4.SS4.p1.1.m1.1.1"><csymbol cd="ambiguous" id="S4.SS4.p1.1.m1.1.1.1.cmml" xref="S4.SS4.p1.1.m1.1.1">subscript</csymbol><ci id="S4.SS4.p1.1.m1.1.1.2.cmml" xref="S4.SS4.p1.1.m1.1.1.2">𝒟</ci><apply id="S4.SS4.p1.1.m1.1.1.3.cmml" xref="S4.SS4.p1.1.m1.1.1.3"><times id="S4.SS4.p1.1.m1.1.1.3.1.cmml" xref="S4.SS4.p1.1.m1.1.1.3.1"></times><ci id="S4.SS4.p1.1.m1.1.1.3.2.cmml" xref="S4.SS4.p1.1.m1.1.1.3.2">𝑇</ci><ci id="S4.SS4.p1.1.m1.1.1.3.3.cmml" xref="S4.SS4.p1.1.m1.1.1.3.3">𝑟</ci><ci id="S4.SS4.p1.1.m1.1.1.3.4.cmml" xref="S4.SS4.p1.1.m1.1.1.3.4">𝑎</ci><ci id="S4.SS4.p1.1.m1.1.1.3.5.cmml" xref="S4.SS4.p1.1.m1.1.1.3.5">𝑖</ci><ci id="S4.SS4.p1.1.m1.1.1.3.6.cmml" xref="S4.SS4.p1.1.m1.1.1.3.6">𝑛</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS4.p1.1.m1.1c">\mathcal{D}_{Train}</annotation><annotation encoding="application/x-llamapun" id="S4.SS4.p1.1.m1.1d">caligraphic_D start_POSTSUBSCRIPT italic_T italic_r italic_a italic_i italic_n end_POSTSUBSCRIPT</annotation></semantics></math>. As such, during the testing phase, there may be words that have never been encountered before.</p>
+</div>
+<div class="ltx_para" id="S4.SS4.p2">
+<p class="ltx_p" id="S4.SS4.p2.1">It should be noted that, to ensure fairness, we use Kernel PCA to reduce the dimensionality of the feature vectors generated by GPT, from 1,536 to 256. Similarly, the feature vectors generated by <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p2.1.1">Doc2Vec</span> are also kept at the same dimensionality, i.e., 256 dimensions. As mentioned earlier, for the threat detector, we consider two different supervised learning methods here: <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p2.1.2">MLP</span> and <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p2.1.3">GBDT</span>. For MLP, we conduct training for 50 rounds and choose the model that achieves the highest accuracy score. For GBDT, we use grid search to find the parameters that yield the best accuracy score. The experimental results are shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.F5" title="Figure 5 ‣ 4.3.2. Explicability of Embedding Model ‣ 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">5</span></a>.</p>
+</div>
+<div class="ltx_para" id="S4.SS4.p3">
+<p class="ltx_p" id="S4.SS4.p3.1">As shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.F5" title="Figure 5 ‣ 4.3.2. Explicability of Embedding Model ‣ 4.3. Analysis of Embedding Quality ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">5</span></a>, regardless of which machine learning model was used as the detector, our proposed method achieves significantly better performance compared to the baselines. When using <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p3.1.1">MLP</span> and <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p3.1.2">GBDT</span> as detectors, the accuracy reaches 99.1% and 98.3%, respectively. Moreover, when the OOV problem is present, the performance of detectors trained on feature vectors generated by <span class="ltx_text ltx_font_typewriter" id="S4.SS4.p3.1.3">Doc2Vec</span> further deteriorates. It is worth noting that the size of our testing set is relatively small, containing only 1,902 samples. In real-world scenarios, due to the diversity of unstructured data such as file names or executable paths, the OOV problem is likely to be even more severe. The advantages of large language models would become even more apparent.</p>
+</div>
+<figure class="ltx_table" id="S4.T2">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_table">Table 2. </span>Threat Detection Performance</figcaption>
+<table class="ltx_tabular ltx_align_middle" id="S4.T2.1">
+<tr class="ltx_tr" id="S4.T2.1.1">
+<td class="ltx_td ltx_align_center ltx_border_tt" id="S4.T2.1.1.2">Model</td>
+<td class="ltx_td ltx_align_center ltx_border_tt" id="S4.T2.1.1.3">Accuracy</td>
+<td class="ltx_td ltx_align_center ltx_border_tt" id="S4.T2.1.1.4">Precision</td>
+<td class="ltx_td ltx_align_center ltx_border_tt" id="S4.T2.1.1.5">Recall</td>
+<td class="ltx_td ltx_nopad_r ltx_align_center ltx_border_tt" id="S4.T2.1.1.1">F<sub class="ltx_sub" id="S4.T2.1.1.1.1">1</sub>-Score</td>
+</tr>
+<tr class="ltx_tr" id="S4.T2.1.2">
+<td class="ltx_td ltx_align_center ltx_border_t" id="S4.T2.1.2.1"><span class="ltx_text ltx_font_typewriter" id="S4.T2.1.2.1.1">MLP</span></td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S4.T2.1.2.2">99.1%</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S4.T2.1.2.3">99.0%</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S4.T2.1.2.4">99.0%</td>
+<td class="ltx_td ltx_nopad_r ltx_align_center ltx_border_t" id="S4.T2.1.2.5">99.0%</td>
+</tr>
+<tr class="ltx_tr" id="S4.T2.1.3">
+<td class="ltx_td ltx_align_center" id="S4.T2.1.3.1"><span class="ltx_text ltx_font_typewriter" id="S4.T2.1.3.1.1">GBDT</span></td>
+<td class="ltx_td ltx_align_center" id="S4.T2.1.3.2">98.3%</td>
+<td class="ltx_td ltx_align_center" id="S4.T2.1.3.3">97.2%</td>
+<td class="ltx_td ltx_align_center" id="S4.T2.1.3.4">99.1%</td>
+<td class="ltx_td ltx_nopad_r ltx_align_center" id="S4.T2.1.3.5">98.1%</td>
+</tr>
+<tr class="ltx_tr" id="S4.T2.1.4">
+<td class="ltx_td ltx_align_center ltx_border_bb" id="S4.T2.1.4.1"><span class="ltx_text ltx_font_typewriter" id="S4.T2.1.4.1.1">XGBOD</span></td>
+<td class="ltx_td ltx_align_center ltx_border_bb" id="S4.T2.1.4.2">96.1%</td>
+<td class="ltx_td ltx_align_center ltx_border_bb" id="S4.T2.1.4.3">96.9%</td>
+<td class="ltx_td ltx_align_center ltx_border_bb" id="S4.T2.1.4.4">94.7%</td>
+<td class="ltx_td ltx_nopad_r ltx_align_center ltx_border_bb" id="S4.T2.1.4.5">95.8%</td>
+</tr>
+</table>
+</figure>
+</section>
+<section class="ltx_subsection" id="S4.SS5">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.5. </span>Detection Performance</h3>
+<div class="ltx_para" id="S4.SS5.p1">
+<p class="ltx_p" id="S4.SS5.p1.1">In the previous section, we have witnessed the classification performance of two supervised models, i.e., <span class="ltx_text ltx_font_typewriter" id="S4.SS5.p1.1.1">MLP</span> and <span class="ltx_text ltx_font_typewriter" id="S4.SS5.p1.1.2">GBDT</span>. In the supervised learning setting, our method effectively distinguishes adversary events from normal events. Now, we consider a more challenging but also more practical scenario—verifying whether our proposed method can still be effective under a semi-supervised learning setting. In practice, obtaining a fully labeled dataset is inherently challenging and usually expensive. However, semi-supervised learning uses a combination of labeled and unlabeled data to train artificial intelligence (AI) models. Specifically, semi-supervised outlier detection can be performed even when the training data consists only of observations describing normal behavior. After all, in reality, collecting normal system events is often much easier than acquiring malicious system events. We can then predict whether unknown events are caused by an attack by evaluating their deviation from known events.</p>
+</div>
+<div class="ltx_para" id="S4.SS5.p2">
+<p class="ltx_p" id="S4.SS5.p2.1">In detail, we adopt <span class="ltx_text ltx_font_typewriter" id="S4.SS5.p2.1.1">XGBOD</span> <cite class="ltx_cite ltx_citemacro_citep">(Zhao and Hryniewicki, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib36" title="">2018</a>)</cite> to build a threat detection model, which is a semi-supervised outlier detection algorithm. Specifically, our anomaly detection was implemented based on <span class="ltx_text ltx_font_typewriter" id="S4.SS5.p2.1.2">PyOD</span> <cite class="ltx_cite ltx_citemacro_citep">(Zhao et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib37" title="">2019</a>)</cite>, an open-source Python toolbox for performing scalable outlier identification. We compared the performance of this model with the two previous supervised learning methods, as shown in Table <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S4.T2" title="Table 2 ‣ 4.4. Comparison ‣ 4. Evaluation ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">2</span></a>. Not surprisingly, the performance of semi-supervised learning is slightly worse than that of supervised learning. However, the <span class="ltx_text ltx_font_typewriter" id="S4.SS5.p2.1.3">XGBOD</span>-based threat detection model still achieved good detection results, with a precision of 96.9%. Thus, it can be concluded that the extensive knowledge of LLMs regarding system events can be effectively transferred to the application of APT detection.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S4.SS6">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.6. </span>Case Study: Detecting Unseen Attacks</h3>
+<div class="ltx_para" id="S4.SS6.p1">
+<p class="ltx_p" id="S4.SS6.p1.1">We perform a case study in wild to inspect whether the proposed technique can be generalized over previously unseen attacks and make accurate predictions. In detail, we consider the unseen attack through exploiting CVE-2021-44228. This <span class="ltx_text ltx_font_typewriter" id="S4.SS6.p1.1.1">Log4j</span> vulnerability was discovered in the Log4j logging library, which has severe and widespread impacts. Malicious actors can use the <span class="ltx_text ltx_font_typewriter" id="S4.SS6.p1.1.2">Log4j</span> flaw to run almost any code they want on vulnerable systems.</p>
+</div>
+<div class="ltx_para" id="S4.SS6.p2">
+<p class="ltx_p" id="S4.SS6.p2.1">Following the previous setup, our training set contains 5,000 benign events, and after excluding the <span class="ltx_text ltx_font_typewriter" id="S4.SS6.p2.1.1">Log4j</span> attack, the training set includes 3,681 adversary events. After that, we randomly extract 500 adversary events from <span class="ltx_text ltx_font_typewriter" id="S4.SS6.p2.1.2">Log4j</span> attack as the testing set. We plot a ROC (receiver operating characteristic) curve to graphically illustrate the performance of this APT detector. We also include 500 benign events in this new testing set because the ROC curve is the plot of the true positive rate (TPR) against the false positive rate (FPR) at varying threshold setting.</p>
+</div>
+<div class="ltx_para" id="S4.SS6.p3">
+<p class="ltx_p" id="S4.SS6.p3.1">Still, we adopt the semi-supervised algorithm <span class="ltx_text ltx_font_typewriter" id="S4.SS6.p3.1.1">XGBOD</span> <cite class="ltx_cite ltx_citemacro_citep">(Zhao and Hryniewicki, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib36" title="">2018</a>)</cite> to detect adversary events launched by the <span class="ltx_text ltx_font_typewriter" id="S4.SS6.p3.1.2">Log4j</span> attack. The ROC obtained on the testing set is shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#S5.F6" title="Figure 6 ‣ 5.1. Provenance Analysis ‣ 5. Related Work ‣ Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection"><span class="ltx_text ltx_ref_tag">6</span></a>, with an AUC value of 97.56%. This indicates that the proposed technique demonstrates strong adaptability especially when faced with attacks that were never encountered before.</p>
+</div>
+</section>
+</section>
+<section class="ltx_section" id="S5">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">5. </span>Related Work</h2>
+<div class="ltx_para" id="S5.p1">
+<p class="ltx_p" id="S5.p1.1">In this section, we briefly review the existing literature related to our work. Considering the large volume of research in this
+field, the following review is not intended to be exhaustive.</p>
+</div>
+<section class="ltx_subsection" id="S5.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.1. </span>Provenance Analysis</h3>
+<div class="ltx_para" id="S5.SS1.p1">
+<p class="ltx_p" id="S5.SS1.p1.1">Provenance data capture the relationships and interactions between system entities, providing a comprehensive view of information flow and causal relationships within a system. Therefore, provenance analysis plays a significant role in both real-time threat detection and post-incident forensic investigation. Dependence tracking analysis <cite class="ltx_cite ltx_citemacro_citep">(King and Chen, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib12" title="">2003</a>)</cite> has been used to analyze a large volume of data effectively. Provenance tracking has been done in different data granularity. <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.1">BEEP</span> <cite class="ltx_cite ltx_citemacro_citep">(Lee et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib14" title="">2013</a>)</cite> and <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.2">Protracer</span> <cite class="ltx_cite ltx_citemacro_citep">(Ma et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib19" title="">2016</a>)</cite> use units that are execution partitions of application code which is common in event-handling loops. <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.3">MPI</span> <cite class="ltx_cite ltx_citemacro_citep">(Ma et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib18" title="">2017</a>)</cite> uses user input on data structures to define execution partitions. <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.4">PrioTracker</span> <cite class="ltx_cite ltx_citemacro_citep">(Liu et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib17" title="">2018</a>)</cite> proposed priority-based causality tracking using rareness score and fanout score as indications of unusualness. Bates et al. <cite class="ltx_cite ltx_citemacro_citep">(Bates et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib2" title="">2015</a>)</cite> proposed Linux Provenance Modules (LPM), a kernel-based framework and data loss prevention system for sensitive data. <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.5">PalanTir</span> <cite class="ltx_cite ltx_citemacro_citep">(Zeng et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib34" title="">2022</a>)</cite> uses a processor tracing (PT) hardware technique to enable finer-grained instruction level tracking. <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.6">Kairos</span> <cite class="ltx_cite ltx_citemacro_citep">(Cheng et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib3" title="">2024</a>)</cite> proposed a graph neural network-based encoder and decoder to learn the temporal evolution of the provenance graph’s structural changes. <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.7">ProvDetector</span> <cite class="ltx_cite ltx_citemacro_citep">(Wang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib30" title="">2020</a>)</cite> is the closest related method to the one proposed in this paper. For a causal path consisting of multiple events, <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.8">ProvDetector</span> uses the <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.9">PV-DM</span> model of <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.10">Doc2Vec</span> <cite class="ltx_cite ltx_citemacro_citep">(Le and Mikolov, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib13" title="">2014</a>)</cite> to learn an embedding. The shortcomings of this approach are evident: first, the semantics it can capture are shallow. However, our method leverages the extensive knowledge of LLMs to enrich the semantics of event descriptions. Secondly, <span class="ltx_text ltx_font_typewriter" id="S5.SS1.p1.1.11">ProvDetector</span> cannot well address the OOV (out-of-vocabulary) challenge. Our approach, on the other hand, does not face this issue.</p>
+</div>
+<figure class="ltx_figure" id="S5.F6">
+<p class="ltx_p ltx_align_center" id="S5.F6.1"><span class="ltx_text" id="S5.F6.1.1"><img alt="Refer to caption" class="ltx_graphics ltx_img_square" height="243" id="S5.F6.1.1.g1" src="x5.png" width="266"/></span></p>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 6. </span>The ROC Curve.</figcaption>
+</figure>
+</section>
+<section class="ltx_subsection" id="S5.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.2. </span>Threat Detection</h3>
+<div class="ltx_para" id="S5.SS2.p1">
+<p class="ltx_p" id="S5.SS2.p1.1">Using provenance in threat detection and investigation has been explored by a large body of work <cite class="ltx_cite ltx_citemacro_citep">(Li et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib16" title="">2021</a>)</cite>. Multiple attack detection approaches have been proposed based on anomaly scores. For example, the threat detection system <span class="ltx_text ltx_font_typewriter" id="S5.SS2.p1.1.1">PIDAS</span> <cite class="ltx_cite ltx_citemacro_citep">(Xie et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib32" title="">2016</a>)</cite> computes the anomaly score of a certain length of a path in a provenance graph and compares it with a predefined threshold. A subsequent work, <span class="ltx_text ltx_font_typewriter" id="S5.SS2.p1.1.2">Pagoda</span> <cite class="ltx_cite ltx_citemacro_citep">(Xie et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib31" title="">2018</a>)</cite>, considers the anomaly score of both a single provenance path and the whole graph. Furthermore, <span class="ltx_text ltx_font_typewriter" id="S5.SS2.p1.1.3">NoDoze</span> <cite class="ltx_cite ltx_citemacro_citep">(Hassan et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib8" title="">2019</a>)</cite> uses a network diffusion algorithm that propagates anomaly scores
+across dependency graphs to calculate anomaly scores.</p>
+</div>
+<div class="ltx_para" id="S5.SS2.p2">
+<p class="ltx_p" id="S5.SS2.p2.1">Tag propagation is another widely used strategy. <span class="ltx_text ltx_font_typewriter" id="S5.SS2.p2.1.1">SLEUTH</span> <cite class="ltx_cite ltx_citemacro_citep">(Hossain et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib9" title="">2017</a>)</cite> introduced two types of tags, namely, trustworthiness tags and confidentiality tags, in the attack
+detection system. In a nutshell, an alarm is triggered when a node with low trustworthiness accesses a node with high confidentiality.
+The subsequent work <cite class="ltx_cite ltx_citemacro_citep">(Hossain et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib10" title="">2020</a>)</cite> improved the original tag-based system and thus reduced false alarms significantly in the detection of APT-style attacks. However, tag propagation-based approaches suffer from the “dependency explosion” problem. To address this issue, <span class="ltx_text ltx_font_typewriter" id="S5.SS2.p2.1.2">Holmes</span> <cite class="ltx_cite ltx_citemacro_citep">(Milajerdi et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib21" title="">2019</a>)</cite> prioritizes broad detection using relatively simple signatures to catch a wide range of malicious activity. It then uses alert filtering to reduce false alarms. But <span class="ltx_text ltx_font_typewriter" id="S5.SS2.p2.1.3">Holmes</span> involves many empirical parameters, which leads to unstable detection results.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S5.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.3. </span>LLMs for Cybersecurity</h3>
+<div class="ltx_para" id="S5.SS3.p1">
+<p class="ltx_p" id="S5.SS3.p1.1">Existing work largely employs the GPT family of LLMs to address different security challenges. For instance, previous works <cite class="ltx_cite ltx_citemacro_citep">(Qu et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib25" title="">2024</a>; Zhang et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib35" title="">2024</a>)</cite> investigated the capabilities of ChatGPT in detecting vulnerabilities and resolving bugs. In particular, Qu et al. <cite class="ltx_cite ltx_citemacro_citep">(Qu et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib25" title="">2024</a>)</cite> found the debug performance can be remarkably improved after taking advantage of contextual information. Furthermore, Yan et al. <cite class="ltx_cite ltx_citemacro_citep">(Yan et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib33" title="">2023</a>)</cite> took advantage of GPT-4 to generate descriptive texts for each API call. Based on this, they developed a BERT-based dynamic malware analysis technique. Lastly, the knowledge of LLMs was also applied to detect DDoS attacks <cite class="ltx_cite ltx_citemacro_citep">(Guastalla et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib7" title="">2023</a>; Li et al<span class="ltx_text">.</span>, <a class="ltx_ref" href="https://arxiv.org/html/2503.18316v2#bib.bib15" title="">2024</a>)</cite>. To the best of our knowledge, we are the first to propose a technique that leverages the extensive knowledge of LLMs to assist in provenance analysis for APT detection.</p>
+</div>
+</section>
+</section>
+<section class="ltx_section" id="S6">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">6. </span>Discussion and Future Work</h2>
+<div class="ltx_para" id="S6.p1">
+<p class="ltx_p" id="S6.p1.1"><span class="ltx_text ltx_font_bold" id="S6.p1.1.1">Generality of Sysdig:</span>
+As a widely used security event tracing system, Sysdig event format is well-known to multiple widely used
+LLMs. For instance, as well as OpenAI’s models, open-source LLMs, Meta’s LLAMA models, also recognize the sysdig format.
+The advantage of this event format to LLMs is mainly the clarity of the system event details broken down into clear key-value pairs. Alternatively, for LLMs without the knowledge of Sysdig, the same details of system call event information can be formulated as a prompt.</p>
+</div>
+<div class="ltx_para" id="S6.p2">
+<p class="ltx_p" id="S6.p2.1"><span class="ltx_text ltx_font_bold" id="S6.p2.1.1">Usage of OpenAI LLM Models:</span>
+At the time of our experiment, OpenAI GPT-4o has the best performance as an industry-leading product. Also, the text embedding models of OpenAI are competitive. Therefore, we chose OpenAI’s models for our evaluation.</p>
+</div>
+<div class="ltx_para" id="S6.p3">
+<p class="ltx_p" id="S6.p3.1">However, we note the proposed method is agnostic to LLM models and is also applicable to other LLM models as well. Other open-source or commercial LLM models such as Meta’s LLAMA, Microsoft Copilot, and Google Gemini can be utilized for the same purpose.</p>
+</div>
+<div class="ltx_para" id="S6.p4">
+<p class="ltx_p" id="S6.p4.1"><span class="ltx_text ltx_font_bold" id="S6.p4.1.1">Generality of JSON input:</span>
+We chose the JSON as the input format for LLMs because this is a common format widely utilized by LLMs as an input and output along with other formats such as Markdown.
+Since JSON is a structure that clearly delivers multiple key-value pairs, we used it for the brevity of the input prompt. Prior state-of-the-art approaches used the sentence format formulating the system call event as a subject, a verb, and an object format.
+This is just an alternative format that is equally effective for LLMs if we explain the positional role of each token such as the first term is a subject, the second term is a verb, etc.
+However, this sentence format is likely to make the prompt longer causing a higher cost for the paid LLM models.</p>
+</div>
+<div class="ltx_para" id="S6.p5">
+<p class="ltx_p" id="S6.p5.1"><span class="ltx_text ltx_font_bold" id="S6.p5.1.1">Future Work:</span> Our work mainly utilizes the state-of-the-art LLMs of OpenAI for our evaluation because our manual evaluation of the explanation quality is satisfactory.
+As our future work, we plan to evaluate other LLMs performance for security tasks. Depending on the number of parameters, the training data size, and the inclusion of security context for training, each LLM model’s capability could vary. We look forward to investigating the security expertness of different LLM models.</p>
+</div>
+</section>
+<section class="ltx_section" id="S7">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">7. </span>Conclusion</h2>
+<div class="ltx_para" id="S7.p1">
+<p class="ltx_p" id="S7.p1.1">In this paper, we explored a novel APT detection method that offers a significantly improved detection performance by utilizing LLMs to augment the semantics of provenance analysis events.</p>
+</div>
+<div class="ltx_para" id="S7.p2">
+<p class="ltx_p" id="S7.p2.1">We found the state-of-the-art LLM offers multiple enhancements over provenance event details. Specifically, our analysis summarizes LLM can offer knowledge on system calls, knowledge on software identity, high-level knowledge on application execution context, and comments on possible suspiciousness beyond a brief description of a system call. Such new details empower the semantic details thus improving the performance of NLP-based detection methods.</p>
+</div>
+<div class="ltx_para" id="S7.p3">
+<p class="ltx_p" id="S7.p3.1">Our experiment shows that text embedding on the augmented LLM description significantly improves the performance
+over
+the representative method adopted by a previous work in supervised learning-based detectors.
+Not only that, even in the semi-supervised learning scenario, our anomaly detection can still achieve a precision as high as 96.9%. This result demonstrates the usefulness of the LLMs for APT detection with regard to the richness of semantic information.
+</p>
+</div>
+</section>
+<section class="ltx_section" id="Sx1">
+<h2 class="ltx_title ltx_title_section">Acknowledgments</h2>
+<div class="ltx_para" id="Sx1.p1">
+<p class="ltx_p" id="Sx1.p1.1">Sandia National Laboratories is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA0003525. This article describes objective technical results and analysis. Any subjective views or opinions that might be expressed in the article do not necessarily represent the views of the U.S. Department of Energy or the United States Government. This work was supported through contract CR-100043-23-51577 with the U.S. Department of Energy.</p>
+</div>
+</section>
+<section class="ltx_bibliography" id="bib">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+<ul class="ltx_biblist">
+<li class="ltx_bibitem" id="bib.bib1">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">(1)</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib2">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Bates et al<span class="ltx_text" id="bib.bib2.2.2.1">.</span> (2015)</span>
+<span class="ltx_bibblock">
+Adam Bates, Dave Tian, Kevin R. B. Butler, and Thomas Moyer. 2015.
+
+</span>
+<span class="ltx_bibblock">Trustworthy whole-system provenance for the Linux kernel. In <em class="ltx_emph ltx_font_italic" id="bib.bib2.3.1">24th USENIX Security Symposium</em>. 319–334.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib3">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Cheng et al<span class="ltx_text" id="bib.bib3.2.2.1">.</span> (2024)</span>
+<span class="ltx_bibblock">
+Zijun Cheng, Qiujian Lv, Jinyuan Liang, Yan Wang, Degang Sun, Thomas Pasquier, and Xueyuan Han. 2024.
+
+</span>
+<span class="ltx_bibblock">KAIROS: Practical intrusion detection and investigation using whole-system provenance. In <em class="ltx_emph ltx_font_italic" id="bib.bib3.3.1">IEEE Symposium on Security and Privacy</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib4">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Commission (2024)</span>
+<span class="ltx_bibblock">
+Federal Trade Commission. 2024.
+
+</span>
+<span class="ltx_bibblock">Equifax data breach settlement.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement" title="">https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement</a>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+<span class="ltx_bibblock">Accessed: 2024-12.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib5">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">CrowdStrike (2024)</span>
+<span class="ltx_bibblock">
+CrowdStrike. 2024.
+
+</span>
+<span class="ltx_bibblock">Global threat report.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://go.crowdstrike.com/global-threat-report-2024.html" title="">https://go.crowdstrike.com/global-threat-report-2024.html</a>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+<span class="ltx_bibblock">Accessed: 2024-12.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib6">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Fox (2024)</span>
+<span class="ltx_bibblock">
+Jacob Fox. 2024.
+
+</span>
+<span class="ltx_bibblock">Top 40 AI cybersecurity statistics.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://www.cobalt.io/blog/top-40-ai-cybersecurity-statistics" title="">https://www.cobalt.io/blog/top-40-ai-cybersecurity-statistics</a>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+<span class="ltx_bibblock">Accessed: 2024-12.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib7">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Guastalla et al<span class="ltx_text" id="bib.bib7.2.2.1">.</span> (2023)</span>
+<span class="ltx_bibblock">
+Michael Guastalla, Yiyi Li, Arvin Hekmati, and Bhaskar Krishnamachari. 2023.
+
+</span>
+<span class="ltx_bibblock">Application of large language models to DDoS attack detection. In <em class="ltx_emph ltx_font_italic" id="bib.bib7.3.1">International Conference on Security and Privacy in Cyber-Physical Systems and Smart Vehicles</em>. Springer, 83–99.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib8">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Hassan et al<span class="ltx_text" id="bib.bib8.2.2.1">.</span> (2019)</span>
+<span class="ltx_bibblock">
+Wajih Ul Hassan, Shengjian Guo, Ding Li, Zhengzhang Chen, Kangkook Jee, Zhichun Li, and Adam Bates. 2019.
+
+</span>
+<span class="ltx_bibblock">NoDoze: Combatting threat alert fatigue with automated provenance triage. In <em class="ltx_emph ltx_font_italic" id="bib.bib8.3.1">Network and Distributed Systems Security Symposium</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib9">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Hossain et al<span class="ltx_text" id="bib.bib9.2.2.1">.</span> (2017)</span>
+<span class="ltx_bibblock">
+Md Nahid Hossain, Sadegh M Milajerdi, Junao Wang, Birhanu Eshete, Rigel Gjomemo, R Sekar, Scott Stoller, and VN Venkatakrishnan. 2017.
+
+</span>
+<span class="ltx_bibblock">SLEUTH: Real-time attack scenario reconstruction from COTS audit data. In <em class="ltx_emph ltx_font_italic" id="bib.bib9.3.1">26th USENIX Security Symposium</em>. 487–504.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib10">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Hossain et al<span class="ltx_text" id="bib.bib10.2.2.1">.</span> (2020)</span>
+<span class="ltx_bibblock">
+Md Nahid Hossain, Sanaz Sheikhi, and R Sekar. 2020.
+
+</span>
+<span class="ltx_bibblock">Combating dependence explosion in forensic analysis using alternative tag propagation semantics. In <em class="ltx_emph ltx_font_italic" id="bib.bib10.3.1">IEEE Symposium on Security and Privacy (SP)</em>. 1139–1155.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib11">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Inc. (2024)</span>
+<span class="ltx_bibblock">
+Sysdig Inc. 2024.
+
+</span>
+<span class="ltx_bibblock">Sysdig Monitor.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://docs.sysdig.com/en/docs/sysdig-monitor/" title="">https://docs.sysdig.com/en/docs/sysdig-monitor/</a>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+<span class="ltx_bibblock">Accessed: 2024-12.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib12">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">King and Chen (2003)</span>
+<span class="ltx_bibblock">
+Samuel T King and Peter M Chen. 2003.
+
+</span>
+<span class="ltx_bibblock">Backtracking intrusions. In <em class="ltx_emph ltx_font_italic" id="bib.bib12.1.1">Proceedings of the 19th ACM symposium on Operating systems principles</em>. 223–236.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib13">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Le and Mikolov (2014)</span>
+<span class="ltx_bibblock">
+Quoc Le and Tomas Mikolov. 2014.
+
+</span>
+<span class="ltx_bibblock">Distributed representations of sentences and documents. In <em class="ltx_emph ltx_font_italic" id="bib.bib13.1.1">International conference on machine learning</em>. 1188–1196.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib14">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Lee et al<span class="ltx_text" id="bib.bib14.2.2.1">.</span> (2013)</span>
+<span class="ltx_bibblock">
+Kyu Hyung Lee, X. Zhang, and Dongyan Xu. 2013.
+
+</span>
+<span class="ltx_bibblock">High accuracy attack provenance via binary-based execution partition. In <em class="ltx_emph ltx_font_italic" id="bib.bib14.3.1">Network and Distributed System Security Symposium (NDSS)</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib15">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Li et al<span class="ltx_text" id="bib.bib15.2.2.1">.</span> (2024)</span>
+<span class="ltx_bibblock">
+Qingyang Li, Yihang Zhang, Zhidong Jia, Yannan Hu, Lei Zhang, Jianrong Zhang, Yongming Xu, Yong Cui, Zongming Guo, and Xinggong Zhang. 2024.
+
+</span>
+<span class="ltx_bibblock">DoLLM: How large language models understanding network flow data to detect carpet bombing DDoS.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib15.3.1">arXiv preprint arXiv:2405.07638</em> (2024).
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib16">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Li et al<span class="ltx_text" id="bib.bib16.2.2.1">.</span> (2021)</span>
+<span class="ltx_bibblock">
+Zhenyuan Li, Qi Alfred Chen, Runqing Yang, Yan Chen, and Wei Ruan. 2021.
+
+</span>
+<span class="ltx_bibblock">Threat detection and investigation with system-level provenance graphs: A survey.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib16.3.1">Computers &amp; Security</em> 106 (2021), 102282.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib17">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Liu et al<span class="ltx_text" id="bib.bib17.2.2.1">.</span> (2018)</span>
+<span class="ltx_bibblock">
+Yushan Liu, Mu Zhang, Ding Li, Kangkook Jee, Zhichun Li, Zhenyu Wu, Junghwan John Rhee, and Prateek Mittal. 2018.
+
+</span>
+<span class="ltx_bibblock">Towards a timely causality analysis for enterprise security. In <em class="ltx_emph ltx_font_italic" id="bib.bib17.3.1">Network and Distributed System Security Symposium (NDSS)</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib18">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Ma et al<span class="ltx_text" id="bib.bib18.2.2.1">.</span> (2017)</span>
+<span class="ltx_bibblock">
+Shiqing Ma, Juan Zhai, Fei Wang, Kyu Hyung Lee, Xiangyu Zhang, and Dongyan Xu. 2017.
+
+</span>
+<span class="ltx_bibblock">MPI: Multiple perspective attack investigation with semantic aware execution partitioning. In <em class="ltx_emph ltx_font_italic" id="bib.bib18.3.1">26th USENIX Security Symposium</em>. 1111–1128.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib19">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Ma et al<span class="ltx_text" id="bib.bib19.2.2.1">.</span> (2016)</span>
+<span class="ltx_bibblock">
+Shiqing Ma, X. Zhang, and Dongyan Xu. 2016.
+
+</span>
+<span class="ltx_bibblock">ProTracer: Towards practical provenance tracing by alternating between logging and tainting. In <em class="ltx_emph ltx_font_italic" id="bib.bib19.3.1">Network and Distributed System Security Symposium (NDSS)</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib20">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Mikolov et al<span class="ltx_text" id="bib.bib20.2.2.1">.</span> (2013)</span>
+<span class="ltx_bibblock">
+Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. 2013.
+
+</span>
+<span class="ltx_bibblock">Distributed representations of words and phrases and their compositionality.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib20.3.1">Advances in neural information processing systems</em> 26 (2013).
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib21">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Milajerdi et al<span class="ltx_text" id="bib.bib21.2.2.1">.</span> (2019)</span>
+<span class="ltx_bibblock">
+Sadegh M Milajerdi, Rigel Gjomemo, Birhanu Eshete, Ramachandran Sekar, and VN Venkatakrishnan. 2019.
+
+</span>
+<span class="ltx_bibblock">Holmes: real-time apt detection through correlation of suspicious information flows. In <em class="ltx_emph ltx_font_italic" id="bib.bib21.3.1">IEEE Symposium on Security and Privacy (SP)</em>. 1137–1152.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib22">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Ming et al<span class="ltx_text" id="bib.bib22.2.2.1">.</span> (2017)</span>
+<span class="ltx_bibblock">
+Jiang Ming, Dongpeng Xu, Yufei Jiang, and Dinghao Wu. 2017.
+
+</span>
+<span class="ltx_bibblock">BinSim: Trace-based semantic binary diffing via system call sliced segment equivalence checking. In <em class="ltx_emph ltx_font_italic" id="bib.bib22.3.1">26th USENIX Security Symposium</em>. 253–270.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib23">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">OpenAI (2024)</span>
+<span class="ltx_bibblock">
+OpenAI. 2024.
+
+</span>
+<span class="ltx_bibblock">New embedding models and API updates.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://openai.com/index/new-embedding-models-and-api-updates/" title="">https://openai.com/index/new-embedding-models-and-api-updates/</a>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+<span class="ltx_bibblock">Accessed: 2024-2.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib24">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Pagliardini et al<span class="ltx_text" id="bib.bib24.2.2.1">.</span> (2018)</span>
+<span class="ltx_bibblock">
+Matteo Pagliardini, Prakhar Gupta, and Martin Jaggi. 2018.
+
+</span>
+<span class="ltx_bibblock">Unsupervised Learning of Sentence Embeddings Using Compositional n-Gram Features. In <em class="ltx_emph ltx_font_italic" id="bib.bib24.3.1">Conference of the North American Chapter of the Association for Computational Linguistics (NAACL)</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib25">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Qu et al<span class="ltx_text" id="bib.bib25.2.2.1">.</span> (2024)</span>
+<span class="ltx_bibblock">
+Xianshan Qu, Fei Zuo, Xiaopeng Li, and Junghwan Rhee. 2024.
+
+</span>
+<span class="ltx_bibblock">Context matters: Investigating its impact on ChatGPT’s bug fixing performance. In <em class="ltx_emph ltx_font_italic" id="bib.bib25.3.1">IEEE/ACIS 22nd International Conference on Software Engineering Research, Management and Applications (SERA)</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib26">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Radford et al<span class="ltx_text" id="bib.bib26.2.2.1">.</span> (2018)</span>
+<span class="ltx_bibblock">
+Alec Radford, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. 2018.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib26.3.1">Improving language understanding by generative pre-training</em>.
+
+</span>
+<span class="ltx_bibblock">Technical Report. OpenAI.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib27">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Security (2022)</span>
+<span class="ltx_bibblock">
+IBM Security. 2022.
+
+</span>
+<span class="ltx_bibblock">Cost of a data breach report.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://www.ibm.com/reports/data-breach" title="">https://www.ibm.com/reports/data-breach</a>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+<span class="ltx_bibblock">Accessed: 2023-05.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib28">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Shrestha et al<span class="ltx_text" id="bib.bib28.2.2.1">.</span> (2023)</span>
+<span class="ltx_bibblock">
+Madhukar Shrestha, Yonghyun Kim, Jeehyun Oh, Junghwan Rhee, Yung Ryn Choe, Fei Zuo, Myungah Park, and Gang Qian. 2023.
+
+</span>
+<span class="ltx_bibblock">ProvSec: Open cybersecurity system provenance analysis benchmark dataset with labels.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib28.3.1">International Journal of Networked and Distributed Computing</em> 11, 2 (2023), 112–123.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib29">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Van der Maaten and Hinton (2008)</span>
+<span class="ltx_bibblock">
+Laurens Van der Maaten and Geoffrey Hinton. 2008.
+
+</span>
+<span class="ltx_bibblock">Visualizing data using t-SNE.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib29.1.1">Journal of machine learning research</em> 9, 11 (2008).
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib30">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Wang et al<span class="ltx_text" id="bib.bib30.2.2.1">.</span> (2020)</span>
+<span class="ltx_bibblock">
+Qi Wang, Wajih Ul Hassan, Ding Li, Kangkook Jee, Xiao Yu, Kexuan Zou, Junghwan Rhee, Zhengzhang Chen, Wei Cheng, Carl A Gunter, et al<span class="ltx_text" id="bib.bib30.3.1">.</span> 2020.
+
+</span>
+<span class="ltx_bibblock">You are what you do: Hunting stealthy malware via data provenance analysis.. In <em class="ltx_emph ltx_font_italic" id="bib.bib30.4.1">Network and Distributed System Security Symposium (NDSS)</em>.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib31">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Xie et al<span class="ltx_text" id="bib.bib31.2.2.1">.</span> (2018)</span>
+<span class="ltx_bibblock">
+Yulai Xie, Dan Feng, Yuchong Hu, Yan Li, Staunton Sample, and Darrell Long. 2018.
+
+</span>
+<span class="ltx_bibblock">Pagoda: A hybrid approach to enable efficient real-time provenance based intrusion detection in big data environments.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib31.3.1">IEEE Transactions on Dependable and Secure Computing</em> 17, 6 (2018), 1283–1296.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib32">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Xie et al<span class="ltx_text" id="bib.bib32.2.2.1">.</span> (2016)</span>
+<span class="ltx_bibblock">
+Yulai Xie, Dan Feng, Zhipeng Tan, and Junzhe Zhou. 2016.
+
+</span>
+<span class="ltx_bibblock">Unifying intrusion detection and forensic analysis via provenance awareness.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib32.3.1">Future Generation Computer Systems</em> 61 (2016), 26–36.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib33">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Yan et al<span class="ltx_text" id="bib.bib33.2.2.1">.</span> (2023)</span>
+<span class="ltx_bibblock">
+Pei Yan, Shunquan Tan, Miaohui Wang, and Jiwu Huang. 2023.
+
+</span>
+<span class="ltx_bibblock">Prompt engineering-assisted malware dynamic analysis using GPT-4.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib33.3.1">arXiv preprint arXiv:2312.08317</em> (2023).
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib34">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Zeng et al<span class="ltx_text" id="bib.bib34.2.2.1">.</span> (2022)</span>
+<span class="ltx_bibblock">
+Jun Zeng, Chuqi Zhang, and Zhenkai Liang. 2022.
+
+</span>
+<span class="ltx_bibblock">PalanTír: Optimizing attack provenance with hardware-enhanced system observability. In <em class="ltx_emph ltx_font_italic" id="bib.bib34.3.1">Proceedings of the ACM SIGSAC Conference on Computer and Communications Security</em>. 3135–3149.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib35">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Zhang et al<span class="ltx_text" id="bib.bib35.2.2.1">.</span> (2024)</span>
+<span class="ltx_bibblock">
+Chenyuan Zhang, Hao Liu, Jiutian Zeng, Kejing Yang, Yuhong Li, and Hui Li. 2024.
+
+</span>
+<span class="ltx_bibblock">Prompt-enhanced software vulnerability detection using ChatGPT. In <em class="ltx_emph ltx_font_italic" id="bib.bib35.3.1">Proceedings of the 2024 IEEE/ACM 46th International Conference on Software Engineering: Companion Proceedings</em>. 276–277.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib36">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Zhao and Hryniewicki (2018)</span>
+<span class="ltx_bibblock">
+Yue Zhao and Maciej K Hryniewicki. 2018.
+
+</span>
+<span class="ltx_bibblock">XGBOD: Improving supervised outlier detection with unsupervised representation learning. In <em class="ltx_emph ltx_font_italic" id="bib.bib36.1.1">2018 International Joint Conference on Neural Networks (IJCNN)</em>. IEEE, 1–8.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib37">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Zhao et al<span class="ltx_text" id="bib.bib37.2.2.1">.</span> (2019)</span>
+<span class="ltx_bibblock">
+Yue Zhao, Zain Nasrullah, and Zheng Li. 2019.
+
+</span>
+<span class="ltx_bibblock">PyOD: A python toolbox for scalable outlier detection.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib37.3.1">Journal of machine learning research</em> 20, 96 (2019), 1–7.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib38">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Zuo and Rhee (2024)</span>
+<span class="ltx_bibblock">
+Fei Zuo and Junghwan Rhee. 2024.
+
+</span>
+<span class="ltx_bibblock">Vulnerability discovery based on source code patch commit mining: a systematic literature review.
+
+</span>
+<span class="ltx_bibblock"><em class="ltx_emph ltx_font_italic" id="bib.bib38.1.1">International Journal of Information Security</em> 23, 2 (2024), 1513–1526.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib39">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">Zuo et al<span class="ltx_text" id="bib.bib39.2.2.1">.</span> (2023)</span>
+<span class="ltx_bibblock">
+Fei Zuo, Xin Zhang, Yuqi Song, Junghwan Rhee, and Jicheng Fu. 2023.
+
+</span>
+<span class="ltx_bibblock">Commit message can help: security patch detection in open source software via transformer. In <em class="ltx_emph ltx_font_italic" id="bib.bib39.3.1">2023 IEEE/ACIS 21st International Conference on Software Engineering Research, Management and Applications (SERA)</em>. 345–351.
+
+</span>
+<span class="ltx_bibblock">
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<footer class="ltx_page_footer">
+<div class="ltx_page_logo">Generated  on Tue Mar 25 20:10:42 2025 by <a class="ltx_LaTeXML_logo" href="http://dlmf.nist.gov/LaTeXML/"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img alt="Mascot Sammy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg=="/></a>
+</div></footer>
+</div>
+</body>
+</html>

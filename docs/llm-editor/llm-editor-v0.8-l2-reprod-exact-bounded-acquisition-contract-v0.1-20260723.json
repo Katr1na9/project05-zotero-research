@@ -1,0 +1,239 @@
+{
+  "schema_version": "project05-llm-editor-l2-reprod-exact-bounded-acquisition-contract-v0.1",
+  "frozen_date": "2026-07-23",
+  "authority_base_commit": "315300e880d12eae5b9804eb103d19a0485db934",
+  "status": "frozen_contract_only_download_not_authorized",
+  "purpose": "Select and freeze the sole artifact identity, URL, byte ceiling, integrity checks, and post-acquisition stop rule for a future separately authorized first bounded acquisition of REPROD. This contract selects dots.zip only for an initial derived-provenance manifest and rights screen. It does not authorize download, archive inspection, source-role admission, catalog mutation, quota, sample construction, baseline, or fine-tuning.",
+  "input_review": {
+    "candidate_id": "reprod_ransomware_execution_provenance_2023",
+    "metadata_review_json": "docs/llm-editor/llm-editor-v0.8-l2-reprod-metadata-candidate-review-v0.1-20260723.json",
+    "metadata_review_verdict": "approve_as_metadata_candidate_not_source_role",
+    "candidate_slot": "train_executed_evidence_liwa_replacement_01",
+    "registered_in_effective_catalog": false,
+    "source_role": "none",
+    "family_credit": 0,
+    "lineage_credit": 0,
+    "sample_credit": 0,
+    "quota_credit": 0,
+    "replacement_slot_filled": false
+  },
+  "source_record": {
+    "title": "Ransomware Execution PROvenance Dataset (REPROD)",
+    "record_id": 8123115,
+    "record_revision": 2,
+    "record_updated_at": "2023-07-10T02:26:48.679692+00:00",
+    "doi": "10.5281/zenodo.8123115",
+    "concept_doi": "10.5281/zenodo.7933806",
+    "record_url": "https://zenodo.org/records/8123115",
+    "record_api_url": "https://zenodo.org/api/records/8123115",
+    "declared_version": "1.0",
+    "license": "CC-BY-4.0"
+  },
+  "surface_selection": {
+    "selection_verdict": "select_dots_zip_for_first_bounded_acquisition_defer_raw_pml",
+    "selected_surface": "spade_derived_dot_provenance_subgraphs",
+    "selected_target_id": "reprod_dots_derived_provenance_archive",
+    "selection_reasons": [
+      "dots.zip is one immutable Zenodo object with an exact byte size and MD5, so a first acquisition can be bounded to one object and 10928971753 bytes.",
+      "Its central directory can later test whether derived graph outputs expose stable label-independent execution grouping and notice surfaces before incurring the raw multipart cost.",
+      "The raw PML is a 13-object split ZIP totaling 133778960405 bytes. Reliable member access and content integrity require treating the multipart set as one acquisition unit.",
+      "Zenodo metadata does not publish an independently downloadable or independently checksummed PML member subset, so a metadata-only reviewer cannot define a scientifically reproducible bounded PML subset.",
+      "Selecting DOT minimizes acquisition cost while preserving fail-closed review; it does not claim that derived graphs are interchangeable with raw endpoint evidence."
+    ],
+    "scientific_scope_limit": "A successful DOT audit may support only a later review of REPROD as a derived provenance-evidence surface. It cannot approve raw ProcMon PML evidence, prove the 405 raw executions, or establish that the LLM compiled raw evidence into the DOT graphs.",
+    "automatic_fallback_to_pml_allowed": false,
+    "automatic_expansion_to_summary_csv_allowed": false
+  },
+  "alternatives_not_selected": [
+    {
+      "alternative_id": "reprod_raw_pml_complete_multipart",
+      "artifact_keys": [
+        "pmls_split.zip",
+        "pmls_split.z01",
+        "pmls_split.z02",
+        "pmls_split.z03",
+        "pmls_split.z04",
+        "pmls_split.z05",
+        "pmls_split.z06",
+        "pmls_split.z07",
+        "pmls_split.z08",
+        "pmls_split.z09",
+        "pmls_split.z10",
+        "pmls_split.z11",
+        "pmls_split.z12"
+      ],
+      "object_count": 13,
+      "total_bytes": 133778960405,
+      "total_gib_approx": 124.59,
+      "decision": "defer_not_authorized",
+      "reason": "Scientifically preferred for raw endpoint evidence but disproportionate for the first fail-closed manifest and rights screen. A future raw-PML contract must freeze all 13 volumes as one integrity unit and obtain separate capacity and execution authorization."
+    },
+    {
+      "alternative_id": "reprod_raw_pml_member_subset",
+      "object_count": 0,
+      "total_bytes": 0,
+      "decision": "not_contractible_from_current_official_metadata",
+      "reason": "No official object-level subset, member manifest with independent checksums, or server-side member retrieval identity is published. Selecting byte ranges or guessed members would not create an independently verifiable source artifact.",
+      "range_request_may_define_scientific_subset": false,
+      "locally_slicing_unopened_multipart_may_define_scientific_subset": false
+    },
+    {
+      "alternative_id": "reprod_summary_csv",
+      "artifact_keys": [
+        "summary.csv"
+      ],
+      "object_count": 1,
+      "total_bytes": 102865,
+      "decision": "excluded",
+      "reason": "Summary or label-bearing metadata is outside the model, pointer, grouping, and supervision surfaces pending a separate field-level review."
+    }
+  ],
+  "scope": {
+    "contract_drafting_authorized": true,
+    "official_file_metadata_reused_from_committed_primary_source_review": true,
+    "download_authorized": false,
+    "partial_or_resumed_download_authorized": false,
+    "http_request_authorized": false,
+    "archive_central_directory_read_authorized": false,
+    "archive_member_name_read_authorized": false,
+    "archive_member_content_read_authorized": false,
+    "nested_notice_audit_authorized": false,
+    "manifest_or_lineage_audit_authorized": false,
+    "reader_install_or_download_authorized": false,
+    "summary_csv_read_authorized": false,
+    "label_or_ground_truth_read_authorized": false,
+    "protected_exclusion_scan_authorized": false,
+    "training_sample_generation_authorized": false,
+    "effective_catalog_write_authorized": false,
+    "family_role_change_authorized": false,
+    "quota_change_authorized": false,
+    "train_admission_authorized": false,
+    "baseline_authorized": false,
+    "fine_tuning_authorized": false,
+    "kernel_gamma_or_m3_modified": false,
+    "l2_gate_passed": false,
+    "git_push_authorized": false
+  },
+  "acquisition": {
+    "future_local_root": "datasets/llm/local_audit_cache/reprod-bounded-v0.1/raw",
+    "maximum_archive_count": 1,
+    "maximum_persisted_payload_bytes": 10928971753,
+    "maximum_persisted_payload_gib_approx": 10.18,
+    "unlisted_archive_count_allowed": 0,
+    "unlisted_payload_bytes_allowed": 0,
+    "automatic_source_substitution_allowed": false,
+    "automatic_revision_substitution_allowed": false,
+    "automatic_mirror_substitution_allowed": false,
+    "files": [
+      {
+        "target_id": "reprod_dots_derived_provenance_archive",
+        "source_key": "dots.zip",
+        "source_record_id": 8123115,
+        "source_record_revision": 2,
+        "download_url": "https://zenodo.org/api/records/8123115/files/dots.zip/content",
+        "future_local_relative_path": "dots.zip",
+        "expected_bytes": 10928971753,
+        "maximum_persisted_bytes": 10928971753,
+        "expected_md5": "d9e3f24ba36a9b9503a55eb1cf677345",
+        "evidence_surface": "spade_derived_dot_provenance_subgraphs",
+        "download_authorized_now": false
+      }
+    ]
+  },
+  "future_execution_controls": {
+    "separate_user_authorization_required": true,
+    "future_authorization_must_name_target_id": "reprod_dots_derived_provenance_archive",
+    "unnamed_target_may_be_downloaded": false,
+    "maximum_initial_attempts": 1,
+    "automatic_retry_after_terminal_failure_allowed": false,
+    "resume_partial_download_allowed_without_separate_authorization": false,
+    "redirects_allowed_only_when_initiated_from_frozen_url": true,
+    "http_response_body_may_be_written_only_to_frozen_local_relative_path": true,
+    "preexisting_larger_or_unknown_file_must_fail_closed": true,
+    "write_must_stop_when_maximum_persisted_bytes_would_be_exceeded": true,
+    "content_length_mismatch_when_declared_must_fail_closed": true,
+    "archive_open_or_decompression_during_acquisition_allowed": false,
+    "post_download_size_check_required_before_md5": true,
+    "md5_check_required_before_verified_status": true,
+    "terminal_failure_may_trigger_automatic_restart": false,
+    "terminal_failure_action": "Record a sanitized target, observed bytes, process exit status, and stderr; stop without retry, resume, source substitution, archive opening, PML fallback, role change, or quota change."
+  },
+  "integrity_verification": {
+    "verification_order": [
+      "Confirm that the downloaded object is at the frozen local relative path.",
+      "Confirm that exact byte size equals expected_bytes and does not merely fall below the ceiling.",
+      "Compute MD5 only after exact size passes.",
+      "Compare lowercase hexadecimal MD5 byte-for-byte with expected_md5.",
+      "Record verified only if both exact size and MD5 pass."
+    ],
+    "size_match_required": true,
+    "md5_match_required": true,
+    "size_only_may_be_reported_as_verified": false,
+    "partial_file_may_be_reported_as_verified": false,
+    "mismatched_object_may_be_opened": false,
+    "mismatched_object_may_be_reused": false
+  },
+  "post_acquisition_audit_sequence": {
+    "stop_after_size_and_md5_verification": true,
+    "next_stage_name": "bounded_central_directory_and_nested_notice_contract",
+    "next_stage_requires_separate_contract": true,
+    "next_stage_requires_separate_execution_authorization": true,
+    "reader_name_version_identity_and_hash_must_be_pinned_before_open": true,
+    "reader_invocation_and_output_parser_must_be_committed_before_open": true,
+    "central_directory_must_precede_notice_member_read": true,
+    "ordinary_dot_member_content_may_be_read_during_notice_stage": false,
+    "member_extraction_to_disk_allowed": false,
+    "raw_member_paths_may_be_committed": false,
+    "nested_notice_member_and_byte_caps_must_be_frozen_before_open": true,
+    "manifest_or_lineage_audit_may_start_automatically": false,
+    "protected_exclusion_may_start_automatically": false,
+    "source_role_review_may_start_automatically": false
+  },
+  "derived_surface_boundaries": {
+    "dot_output_count_may_be_used_as_lineage_count": false,
+    "archive_member_count_may_be_used_as_lineage_count": false,
+    "successful_download_may_be_used_as_lineage_evidence": false,
+    "dot_views_must_remain_grouped_with_originating_execution": true,
+    "pml_to_dot_mapping_may_be_inferred_from_filename_without_audit": false,
+    "raw_pml_execution_count_may_be_claimed_verified_from_dot_acquisition": false,
+    "dot_source_role_may_be_silently_promoted_to_raw_endpoint_source_role": false,
+    "training_claim_may_assert_llm_generated_the_dot_graph": false
+  },
+  "post_acquisition_stop_gate": {
+    "verified_archive_is_train_data": false,
+    "verified_archive_counts_as_family": false,
+    "verified_archive_counts_as_lineage": false,
+    "verified_archive_counts_as_samples": false,
+    "verified_archive_awards_quota": false,
+    "verified_archive_fills_replacement_slot": false,
+    "effective_catalog_write_allowed": false,
+    "l2_gate_may_change": false,
+    "automatic_next_stage_allowed": false
+  },
+  "forbidden_actions": [
+    "Download dots.zip under this contract-drafting authorization.",
+    "Download any PML multipart object, summary.csv, another record revision, concept record, mirror, cache, byte-range subset, or renamed object.",
+    "Treat a byte range, local slice, or guessed archive member as an independently checksummed PML subset.",
+    "Open, list, extract, or read the selected archive before a reader-pinned audit contract and separate execution authority exist.",
+    "Treat archive verification, DOT member count, output count, filename count, or SHA count as source-role or lineage approval.",
+    "Read summary.csv, labels, detector outputs, malware-family fields, hidden answers, or ground truth.",
+    "Generate training samples, run a model, alter Kernel or Gamma, connect M3, write the effective catalog, change quota, or mark L2 passed."
+  ],
+  "authority": {
+    "contract_frozen": true,
+    "selected_target_count": 1,
+    "selected_total_bytes": 10928971753,
+    "download_authorized": false,
+    "payload_access_authorized": false,
+    "archive_opening_authorized": false,
+    "central_directory_or_notice_audit_authorized": false,
+    "raw_pml_acquisition_authorized": false,
+    "train_source_approved": false,
+    "effective_catalog_write_authorized": false,
+    "family_role_change_applied": false,
+    "quota_credit_awarded": false,
+    "replacement_slot_filled": false,
+    "l2_gate_passed": false,
+    "next_action": "If separately authorized, acquire only reprod_dots_derived_provenance_archive once and stop after exact-size plus MD5 verification. Only after verification may a separate reader-pinned central-directory and nested-notice contract be executed."
+  }
+}

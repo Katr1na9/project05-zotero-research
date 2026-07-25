@@ -1,0 +1,664 @@
+AttacKG+: Boosting Attack Knowledge Graph Construction with Large Language Models
+1 Introduction
+2 Task Defination
+3 Approach
+3.1 AttacKG + Threat Extraction
+3.2 CTI Reports Identifier for Technique
+3.3 CTI Reports State Summarizer
+4 Evaluation
+4.1 Experimental Setup
+4.2 Evaluation Results
+4.2.1 Effectiveness of threat behavior graph construction (RQ1)
+4.2.2 Effectiveness of technique identification (RQ2)
+4.2.3 AttacKG + statistics and analysis (RQ3)
+4.2.4 Quality and impact of the rewriter (RQ4)
+4.3 Case Study
+5 Related Work
+6 Conclusion and Future Work
+6.0.1 \discintname
+7 Appendix
+0.A Templates of AttacKG + Extraction
+0.B Cases of AttacKG + Visualization
+1 1 institutetext: College of Electronic Engineering, National University of Defense Technology 2 2 institutetext: University of Science and Technology of China 3 3 institutetext: National University of Singapore
+AttacKG + : Boosting Attack Knowledge Graph Construction with Large Language Models
+Yongheng Zhang
+11
+Tingwen Du
+22
+Yunshan Ma
+33
+Xiang Wang
+22
+Yi Xie
+11
+Guozheng Yang
+11
+Yuliang Lu
+11
+Ee-Chien Chang
+33
+yangguozheng17@nudt.edu.cn
+Abstract
+Attack knowledge graph construction seeks to convert textual cyber threat intelligence (CTI) reports into structured representations, portraying the evolutionary traces of cyber attacks.
+Even though previous research has proposed various methods to construct attack knowledge graphs, they generally suffer from limited generalization capability to diverse knowledge types as well as requirement of expertise in model design and tuning.
+Addressing these limitations, we seek to utilize Large Language Models (LLMs), which have achieved enormous success in a broad range of tasks given exceptional capabilities in both language understanding and zero-shot task fulfillment.
+Thus, we propose a fully automatic LLM-based framework to construct attack knowledge graphs named: AttacKG + . Our framework consists of four consecutive modules: rewriter, parser, identifier, and summarizer, each of which is implemented by instruction prompting and in-context learning empowered by LLMs.
+Furthermore, we upgrade the existing attack knowledge schema and propose a comprehensive version. We represent a cyber attack as a temporally unfolding event, each temporal step of which encapsulates three layers of representation, including behavior graph, MITRE TTP labels, and state summary.
+Extensive evaluation demonstrates that: 1) our formulation seamlessly satisfies the information needs in threat event analysis, 2) our construction framework is effective in faithfully and accurately extracting the information defined by AttacKG + . and 3) our attack graph directly benefits downstream security practices such as attack reconstruction.
+All the code and datasets will be released upon acceptance.
+Keywords: Cyber Threat Intelligence Analysis Attack Knowledge Graph Construction Large Language Models
+1 Introduction
+To better combat the intensifying threat of advanced cyber attacks, security analysts are exchanging cyber threat intelligence (CTI) to enhance their awareness and respond effectively to threat events.
+Since CTI reports are written in the free form format of natural language, the researchers propose the task of attack knowledge graph construction, aiming to structurally analyze the cyber attack process [ 1 ] .
+Due to the significant values in both academia and industry, attack knowledge graph construction has garnered growing attention in recent years [ 2 , 3 , 4 ] .
+Several attack knowledge graph construction methods have been proposed by researchers.
+EXTRACTOR [ 2 ] and THREATKG [ 3 ] extract threat entities and relations by constructing domain regular expressions or ontology models, thus transforming unstructured text written in natural language into structured knowledge graphs.
+Further, in order to normalize the technical connotations of the description of the attack process,
+TTPDrill [ 4 ] and AttacKG [ 1 ] propose to leverage the MITRE TTP (Tactics, Techniques, and Procedures) ontology 1 1 1 https://attack.mitre.org/ to tag the structured KG.
+Nevertheless, current methods for attacking knowledge graph construction have two main limitations:
+Limitation 1 : The current construction model has limited semantic understanding capability, leading to poor generalization to diverse and newly emerging attack scenarios and knowledge types. The capability of existing threat information extraction methods is extensively restricted by limited volume of training data as well as relatively small model size. As a result, the model is difficult to generalize to various open scenarios and cannot cover a wide range of security knowledge types [ 5 , 6 , 7 , 8 ] , resulting in major threat information loss when faced with unknown security knowledge that cannot be understood and identified.
+Limitation 2 : Existing methods substantially depend on the specialized design and meticulous curation of natural language processing or graph matching models, thereby posing a challenge for a majority of security practitioners lacking proficiency in these domains. To achieve better information extraction results for the target object, existing methods require a lot of manpower to fine-tune the model. This process requires technicians with deep experience in debugging model parameters.
+This problem becomes a hindrance for those cybersecurity technicians with weaker background knowledge in the AI domain to deeply participate in the design of cyber threat intelligence extraction methods.
+The breakthrough of Large Language Models (LLMs) [ 10 , 11 ] has shed light on these problems.
+First, LLMs use massive open knowledge data in the pre-training process, so it has a powerful contextual understanding and knowledge reasoning ability to understand various domains and various kinds of knowledge.
+Second, LLMs can perform a wide variety of zero-shot and few-shot tasks by means of instruction following and in-context learning, without requiring special model structure design or training on specific datasets.
+Therefore, extracting attack knowledge graphs with LLMs can be a good solution to the two limitations mentioned above.
+Currently, LLMs have been explored for initial applications in the field of cyber security [ 12 , 13 , 15 , 14 ] . But in terms of cyber KG construction, it’s still under exploration.
+Leveraging LLMs for the attack knowledge graph construction, we propose a fully automatic framework with four modules: rewriter, parser, identifier, and summarize, each of which is implemented with dedicated prompt engineering and in-context learning based on LLMs. The rewriter filters out redundant information and organizes report content into sections, each corresponding to a tactical stage defined in the MITRE TTP and maximally preserving the key knowledge. Thereafter, given the rewritten sections, the parser extracts the behavior graph, including the atomic event triplets, temporal relations between threat actions, as well as entity-entity relations. Next, given the behavior graph and the rewritten sections, the identifier then matches the behavior graph and the rewritten sections to the appropriate MITRE technique labels. Finally, the summarizer summarizes the situation and state at the end of each tactical stage.
+Moreover, given the superior capability of LLMs in understanding and extracting various cyber knowledge, we propose a more comprehensive schema by synthesizing existing works, encapsulating multiple levels of threat knowledge: threat behavior, TTP labels, and state summary. Hence, our schema is versatile to cover richer threat information.
+We name our approach as AttacKG + , on the one hand, to highlight our contributions in boosting the performance of attack knowledge graph construction, on the other hand, to give credit to the pioneering work AttacKG [ 1 ] and expect further contributions to this valuable problem.
+We implement AttacKG + and evaluate it against 234 techniques of 14 tactics crawled from MITRE and 500 CTI reports collected from multiple intelligence sources [ 16 , 17 ] . AttacKG + successfully identifies 7,305 technique instances, 20,350 entity instances, and 10,175 relation instances.
+Our experimental results show that AttacKG + significantly outperforms existing CTI parsing solutions such as EXTRACTOR [ 2 ] and AttacKG [ 1 ] in open scenarios: the F-1 score is significantly improved in the threat entity/relation extraction task and the technique identification task.
+The qualitative evaluation of the tactical rewrite report is very effective, and the drawn AttacKG + shows the attack process very well. Moreover, our method is easy to use, without requiring any prior knowledge of natural language processing and graph learning, and friendly to a broad range of security practitioners.
+The main contributions are as follows:
+•
+To the best of our knowledge, we are among the first to explore LLMs to facilitate the task of attack knowledge graph construction, forming a novel, general, and user-friendly paradigm.
+•
+We propose a fully automated LLM-based framework AttacKG+, while introducing an upgraded multi-layer knowledge schema for cyber threats.
+•
+Extensive evaluation demonstrates the advantage of AttacKG + and the effectiveness of the construction framework. As a by-product, we construct two datasets from 500 CTI reports, i.e., Re-CTI and CTI-TE.
+2 Task Defination
+Current research still cannot fully reflect the threat event landscape: First, current efforts lack the tactical slicing of CTI reports and therefore cannot delineate the stages of threat events. This results in an inability to monitor situational information at all stages of attacks. Second, current threat knowledge extraction work in the various elements are discrete existence, manifested in the extraction of threat entities, technology labels, and other information is not closely coupled, the lack of threat events on the overall extraction program [ 9 , 2 , 4 ] . Catering to the powerful capabilities of LLMs, we systematically upgrade the existing cyber security KG schema and propose a more comprehensive attack knowledge graph scheme for CTI reports.
+As shown in Figure 1 , we formulate a cyber attack as a temporally unfolding complex event, each temporal step of which is described by a three-layered representation, encapsulating behavior graph, TTP labels, and state summary.
+Specifically, as the backbone of the threat event, behavior graph details the attack process with a structured representation. It consists of a set of temporally connected atomic events, each represented as a triplet ( s , a , o ) 𝑠 𝑎 𝑜 (s,a,o) ( italic_s , italic_a , italic_o ) , where s 𝑠 s italic_s , a 𝑎 a italic_a , and o 𝑜 o italic_o stand for the subject, action, and object, respectively. The temporal relation between actions is implied by a directed edge, while there are also non-action entity-entity relations.
+On top of behavior graph, we identify the involved tactic and technique patterns based on the TTP matrix provided by MITRE and align TTP labels with its corresponding behavior sub-graphs. This process helps us to better understand the technical connotations of threat events.
+In addition, we incorporate a state summary layer to complement threat information by monitoring the changing state of permissions, tools, files, and information within different tactical stages. This information leads to a more complete characterization of the changing cybersecurity situation in each stage.
+Figure 1 : The overview of AttacKG + ’s knowledge scheme. We formulate it as a temporally unfolding complex event, each temporal step of which consists of three layers of representation: Beharivor Graph [mid-layer], TTP Labels [top-layer], and State Summary [bottom-layer].
+3 Approach
+In this section, we introduce a fully automatic LLM-based framework for AttacKG + construction from CTI reports. We first present the overall design of this framework and then describe the details of each key module.
+As shown in Figure 2 , the attack knowledge graph construction framework for cyber threat intelligence is composed of four modules: Rewriter , Parser , Identifier , and Summarizer .
+Figure 2 : The overall framework of our AttacKG + consists of four components: 1) Rewriter , which enables tactical rewriting of threat intelligence; 2) Parser , which extracts threat entities and relations from threat intelligence; 3) Identifier , which identifies patterns of attack techniques used in cyber threat intelligence; and 4) Summarizer , which performs a stage-by-stage situational summary of threat intelligence.
+3.1 AttacKG + Threat Extraction
+In this section, we introduce the information extraction process of the CTI report, which consists of two modules: Rewriter and Parser .
+The objective is to extract threat behaviors from CTI reports and form a threat behavior graph based on their temporal relations.
+After analyzing CTI reports, we can find that well-written reports can effectively portray the process of how various types of attacking entities in cyber threat behavior interact with each other to achieve confrontation goals, as well as provide detailed descriptions of the tactics and techniques involved.
+However, since different security vendors and authors, different CTI reports have different features in terms of language style, writing logic, etc. making it still challenging to extract threat behaviors from them accurately.
+Here, we summarize three key challenges:
+[C1]Threat Intelligence Noise Processing .
+Threat reports contain large amounts of irrelevant text.
+Often, only a small portion of the report describes the attack behavior.
+For example, a geographic source describing the malware, while interesting, does not contribute to the analysis of the malware’s application.
+[C2]Threat Entity and Relation Extraction .
+CTI reports provide an overview of the attack workflow. CTI reports often have complex syntax and semantics, and proper punctuation is sometimes lacking in these reports.
+These can easily affect the extraction of threat entities and relations in reports.
+[C3]Co-reference Resolution .
+There are two types of co-references in the CTI report. Explicit co-references use pronouns such as "it" and "they" or the definite article "the", while implicit coreferences use synonyms to refer to entities that appear in the preceding text.
+With prompt engineering, we design a CTI report extraction pipeline to overcome the above challenges (containing both Rewriter and Parser parts in Overview).
+Rewriter is oriented towards solving [C1], and Parser is oriented towards solving [C2][C3].
+It is worth mentioning that CTI reports published in the field are currently shared as PDFs, so we use relevant open-source tools (such as pdfpulmer 2 2 2 https://pypi.org/project/pdfplumber/ ) to convert them to a uniform text format.
+CTI Reports Rewrite based on Tactic .
+Raw CTI reports contain many other classes of information that are weakly correlated with the evolution of security events.
+We focus on the threat behaviors, technique patterns, and stage situations involved in the attack process, and the redundant, weakly relevant information becomes noise in the information extraction process and affects the extraction effect.
+So, we reconstruct the original threat intelligence report based on the TTP matrix’s 14 categories of tactical categorization.
+We rewrite the CTI report for two purposes.
+First, data pre-cleaning. Screening out the main content describing the attack process, filtering other redundant information unrelated to the attack process, and improving the information quality of threat intelligence.
+Second, the temporal sequence is pre-composed. The evolution of events in the report is sorted according to the chronological relationship between the tactical classification and the original content, and the sorted content conforms to the standard tactical classification framework.
+Report rewriting aims to reconstruct cyber threat intelligence using tactical labels based on the comprehension and summarization capabilities of LLMs.
+The prompt template can be found in Appendix A (Rewriting Prompt).
+•
+Input Tactical Definitions .
+First, we input the definitional information of the tactical labels (name, definition, examples) from MITRE to the LLMs and set the Other label to store the contextual information of non-tactical features.
+•
+Setting Rewrite Rules .
+Second, write the prompt template for the rewrite task and set the rewrite rules and output format.
+•
+Perform Rewriting Task .
+Finally, we input the text of the original CTI report, perform the rewriting task, and wait for the LLMs to output the rewriting result.
+CTI report texts are from different cybersecurity vendors and authors written with very different logic and text organization. Hence they contain a lot of redundant information that has little to do with the evolution of cybersecurity incidents.
+In contrast, the rewritten CTI report has the following characteristics.
+First, the logic of the report is standardized.
+The text is divided into phases based on the type of tactic to which the content belongs, is hierarchical, and does not contain redundant information.
+Second, the report time sequence is organized.
+The rewritten text message considers the relative temporal relation of threat behaviors in the content reconstruction and can portray the attacker’s invasion thought process according to the sequential flow of tactical implementation.
+CTI Reports Parser .
+To achieve malicious purposes, attackers often take a series of threatening behaviors in conjunction with the invasion environment, penetrate layer by layer, and gradually approach the final target.
+Therefore, extracting threat actions is fundamental in studying the evolution of cybersecurity events. Concerning complex event evolution, the formula for threat atomic events as a triplet ( s , a , o ) 𝑠 𝑎 𝑜 (s,a,o) ( italic_s , italic_a , italic_o ) in Section 2 .
+Threat actions ( a 𝑎 a italic_a ) are a type of verb-like relational set used to characterize the sequential relationship between actions in a CTI report. The green forward triangle symbol denotes a successful execution, while the red reverse triangle symbol indicates a failed execution. These actions are linked by directed edges, which convey the temporal relation between them. Typical actions include collecting, sending, and switching. The subject ( s 𝑠 s italic_s ) of the action is the initiator, while the object ( o 𝑜 o italic_o ) is the target. Entities represent specific objects in cyber threat intelligence, such as attackers, exploits, and tools, are represented in the cyber threat process. The entity-entity relations are distributed among non-verbal relationships, such as located-at and belong-to. A threat action tuple is formed by associating the action subject with the target object and its relations and attributes.
+The chain extraction of threat actions is thought of as follows, with the prompt template referenced in Appendix A (Triplet Extractor Prompt).
+•
+Modeling the Threat Ontology .
+Design the ontology model in conjunction with the STIX specification [ 19 ] and the DAO specification [ 20 ] to set up entity candidate collections and relation candidate collections.
+•
+Set the Extraction Rules .
+Using the threat action as the core of the atomic event, the subjects involved in the action and the implementation objects are extracted separately.
+Add referential disambiguation qualification to rules to automatically capture pronoun features.
+At the same time, associating non-verbal relations builds the basic tuple of threatening actions.
+•
+Determine the Temporal Relation .
+Finally, a chained representation of the entire threat action is strung together based on the relative temporal relation of the threat action as it appears in the report rewrite text.
+3.2 CTI Reports Identifier for Technique
+Threat actions are instantiated representations of attackers’ efforts to achieve malicious ends but do not enable cybersecurity personnel to understand the technical connotations that follow the actions.
+To assist security analysts in taking targeted mitigation measures at crucial technical nodes to avoid further threat behavior.
+We need to match technique patterns of threat actions to understand better the technical thinking and implementation logic of intrusion behavior.
+The template for the technical model used in this paper is derived from the Tactic and Technique modules of the TTP matrix.
+MITRE summarizes the current network technologies and constructs the TTP matrix to standardize the numbering and naming of the technologies and to give program examples.
+Techniques are subcategories under tactics.
+Under a tactical category, several types of technological means serve the purpose of that tactic.
+For example, under the tactic Defensive Evasion there exists the technique T1612 -Build Image on Host .
+The tactical connotation of Defensive Evasion is that "Defensive Evasion consists of techniques adversaries use to avoid detection throughout their compromise".
+The technical connotation of T1612 is that "Adversaries may build a container image directly on a host to bypass defenses that monitor for the retrieval of malicious images from a public registry".
+Our technique matching method is to annotate the tactical rewritten text with technical types by writing prompt templates and utilizing the analysis and matching capabilities of the LLMs, see Appendix A (Technique Identifier Prompt) for the prompt templates and the idea of technical matching as follows:
+•
+Understanding Tacticalized Texts .
+Since the rewritten text has been divided according to tactical phases, separate technique matching can be performed for different tactical phases, thus reducing the total length of the tokens of prompt over multiple reports.
+•
+Importing TTP Technique Templates .
+We input the technique numbers, names, and examples from the corresponding tactics into the LLMs to provide them with domain background knowledge.
+•
+Preparation of Identification Rules .
+The output is formatted using the LLMs, with the text serial numbers and their corresponding technique templates labeled according to the technique model.
+•
+Technique Template Alignment .
+Since threat actions and technique templates are extracted or matched based on rewritten text, the alignment mapping of threat action chains to technique templates can be accomplished based on the correspondence of text positions.
+3.3 CTI Reports State Summarizer
+The combined use of several technologies is often for a tactical purpose in cyberspace (such as Reconnaissance, and Defense Evasion).
+Extracting the state summary information of the intrusion scenarios according to the tactical phases can effectively determine the tactical value of the current phase and the security state of the environment.
+The process of state summary can be divided into three parts, with the help of the prompt template provided in Appendix A (State Summarizer Prompt).
+•
+Defining the Framework of Summary .
+Sorting through the contents of the summary, we select four areas of information:
+1) permission state, describing the current stage of the attacker’s acquisition of privileges from the victim;
+2) file collection, describing the files that the attacker has obtained from the victim at this stage;
+3) information, describing the current stage in which the attacker has obtained sensitive information from the victim;
+and 4) tool set, scripts or tools used by the attacker in the current phase.
+•
+Dividing the Summary Stage . We use the tactical phases of the tacticalized rewrite of the text as the basis for dividing each phase, and for each phase of tactical action extracted the relevant elements of the summary paper framework.
+•
+Implementation Summary Extraction . Finally, we constructed the above extracts and delineation criteria as prompt templates. The alignment with the threat behavior and technique templates is also completed based on the summary position of the tactical phase text.
+4 Evaluation
+In this section, we focus on evaluating the accuracy of AttacKG + as a CTI report parser for threat behavior graph extraction and technique identification, and its effectiveness as the CTI knowledge collector for technique-level intelligence aggregation. Meanwhile, the quality of the rewritten reports is assessed through manual analysis. Specifically, our evaluation is designed to answer the following research questions (RQs).
+•
+RQ1: How does our system perform in terms of threat behavior graph extraction?
+•
+RQ2: What is the performance of the technique identification?
+•
+RQ3: How does the extracted AttacKG + look like? Does it reveal insightful information?
+•
+RQ4: What is the quality of the rewriter module and does it significantly affect the downstream extraction?
+4.1 Experimental Setup
+To evaluate AttacKG + , we collect 500 real event CTI reports from Cisco Talos Intelligence Group [ 16 ] , Microsoft Security Intelligence Center [ 17 ] , and others.
+Meanwhile, we crawl the TTP Matrix template in MITRE for relevant definitions and examples and stored them in the Tactics-Techniques-Sub_Techniques format hierarchy.
+We implement our prompt templates using the APIs of several commercial LLMs (such as GLM-4 [ 22 ] ).
+To answer RQ1 and RQ2, we manually annotate entities, relations, and techniques as ground truth for the 15 reports that we collect. All the 15 reports describe real-world APT activities and contain relevant event elements.
+To answer RQ4, we recruit three graduate students who major in cyber security to manually assess the rewritten results of CTI reports, and we combine their assessment results to achieve a final evaluation.
+4.2 Evaluation Results
+4.2.1 Effectiveness of threat behavior graph construction (RQ1)
+Cyber threat events are composed of multiple threat atomic events in a temporal sequence. These atomic events are represented in the threat behavior graph as interconnected triplets ( s , a , o ) 𝑠 𝑎 𝑜 (s,a,o) ( italic_s , italic_a , italic_o ) , where s 𝑠 s italic_s and o 𝑜 o italic_o are harmonized as entity extraction, and a 𝑎 a italic_a and entity-entity relation are harmonized as relation extraction. Accurate construction of threat behavior graphs is crucial for identifying technique types and portraying threat events. To evaluate the accuracy of AttacKG + construction, we use 15 CTI reports with good labeling mentioned earlier. We manually identify cyber threat entities based on the ontology model in the report and extract the relations between these entities based on domain knowledge and reporting logic.
+Given the real entities and relations in the report, we can compare AttacKG + with a state-of-the-art open-source CTI report parser in terms of precision, recall, and F-1 score of the Extractor 3 3 3 https://github.com/ksatvat/EXTRACTOR .
+In particular, to ensure the fairness of the comparison, we take the following settings for EXTRACTOR and AttacKG + .
+For EXTRACTOR, we turn on the relevant optimization setting to ensure the extraction quality of entities and relations.
+Table 1 summarizes the statistical results of entity and relation extraction by AttacKG + and EXTRACTOR in 15 CTI reports.
+The experimental results are in the statistics: Manual identifies manually labeled real data. Extractor identifies the result data of EXTRACTOR. AttacKG+ identifies the result data of AttacKG + run on the LLMs.
+Columns 2 through 7 show the counts of manually labeled ground truth and false_negative(false_positive) in the extraction of threat-related entities, and relations. Rows 18-20 represent the global Precision , Recall , and F-1 Score .
+It can be seen that in the results of entity extraction, although AttacKG + exhibits a slightly higher false_positive rate in a small number of samples, the overall false_positive rate performance is still lower than Extractor’s extraction results.
+At the same time, AttacKG + shows a substantial lead in false_negative rates, resulting in much higher overall accuracy and precision than Extractor.
+AttacKG + has both a low false_negative and false_positive rate in the relation extraction results.
+This shows that our method has made great strides in relation extraction and classification and that the overall F-1 score has improved significantly compared to current relation extraction schemes.
+The main reasons for the high rate of false negatives in EXTRACTOR are the aggregation of all non-Indicator of Compromise (IoC) entities of the same category during entity extraction, which leads to a loss of sequential information about the attack process, and the use of regular expressions for filtering during entity extraction, which is less sensitive to emerging threatening entities and cannot effectively recognize entity variants. In contrast, AttacKG + can efficiently interpret emerging threat entities and their relationships, leveraging the broad-domain understanding capabilities of LLMs.
+4.2.2 Effectiveness of technique identification (RQ2)
+To answer RQ2, we use AttacKG + to identify the techniques in 15 CTI reports and compared them with AttacKG.
+In the experiments of [ 1 ] , AttacKG 4 4 4 https://github.com/li-zhenyuan/Knowledge-enhanced-Attack-Graph demonstrated excellent technique recognition compared to TTPDill. Therefore, we choose it as the comparison method.
+The main idea of AttacKG is to calculate the alignment score between the attack graph and the technique template using a graph alignment algorithm, which determines the type of technique included in the report based on a decision threshold. AttacKG uses default thresholds for the technique identification process in this paper.
+Table 1 : Accuracy of AttacKG + construction and technique identification.
+CTI Reports
+Entities
+Relations
+Techniques
+Manual
+Extractor
+AttacKG +
+Manual
+Extractor
+AttacKG +
+Manual
+AttacKG
+AttacKG +
+BRONZE
+13
+-13 ( +10 )
+-2 ( +9 )
+8
+-5 ( +18 )
+-2 ( +9 )
+4
+-1 ( +18 )
+-3 ( +4 )
+Chat_Mimi
+15
+-15 ( +9 )
+-5 ( +8 )
+10
+-7 ( +15 )
+-5 ( +4 )
+4
+-1 ( +7 )
+-2 ( +1 )
+North_Korea
+22
+-19 ( +15 )
+-4 ( +5 )
+9
+-4 ( +22 )
+-2 ( +4 )
+7
+-3 ( +23 )
+-2 ( +2 )
+Nitro_Attacks
+28
+-28 ( +8 )
+-8 ( +5 )
+19
+-6 ( +22 )
+-7 ( +5 )
+8
+-5 ( +14 )
+-3 ( +6 )
+Moon_Bounce
+12
+-12 ( +5 )
+-1 ( +10 )
+10
+-6 ( +22 )
+-5 ( +10 )
+5
+-2 ( +12 )
+-3 ( +4 )
+Stuxnet_Under
+24
+-22 ( +21 )
+-8 ( +3 )
+18
+-6 ( +31 )
+7 ( +5 )
+11
+-8 ( +19 )
+-5 ( +6 )
+Stellar_Particle
+33
+-32 ( +12 )
+-6 ( +5 )
+13
+-5 ( +18 )
+-5 ( +7 )
+10
+-10 ( +10 )
+-1 ( +3 )
+Prime_Minister
+19
+-19 ( +10 )
+-5 ( +9 )
+12
+-4 ( +12 )
+-4 ( +3 )
+12
+-8 ( +11 )
+-1 ( +1 )
+Mustang_Panda
+37
+-37 ( +10 )
+-9 ( +3 )
+19
+-13 ( +28 )
+-10 ( +7 )
+12
+-7 ( +22 )
+-3 ( +9 )
+Shuckworm_APT
+17
+-16 ( +24 )
+-2 ( +11 )
+9
+-5 ( +18 )
+-1 ( +8 )
+7
+-3 ( +9 )
+-2 ( +4 )
+C5_APT_SKHack
+13
+-11 ( +4 )
+-4 ( +4 )
+9
+-5 ( +18 )
+-3 ( +1 )
+5
+-3 ( +17 )
+-3 ( +4 )
+Cisco_Talos_Bitter
+17
+-17 ( +10 )
+-9 ( +3 )
+8
+-5 ( +18 )
+-3 ( +1 )
+3
+-2 ( +21 )
+-1 ( +1 )
+Log4Shell_Rootkits
+38
+-36 ( +8 )
+-14 ( +7 )
+22
+-13 ( +17 )
+-10 ( +7 )
+16
+-12 ( +8 )
+-9 ( +5 )
+Cisco_Talos_Iranian
+14
+-14 ( +8 )
+-3 ( +7 )
+6
+-3 ( +19 )
+-3 ( +2 )
+4
+-2 ( +9 )
+-3 ( +1 )
+Asylum_Ambuscade
+21
+-21 ( +10 )
+-9 ( +3 )
+11
+-6 ( +24 )
+-4 ( +3 )
+4
+-1 ( +16 )
+-1 ( +3 )
+Overall Precision
+1.000
+0.046
+0.668
+1.000
+0.221
+0.601
+1.000
+0.179
+0.545
+Overall Recall
+1.000
+0.034
+0.732
+1.000
+0.472
+0.647
+1.000
+0.458
+0.588
+Overall F-1 Score
+1.000
+0.039
+0.698
+1.000
+0.301
+0.623
+1.000
+0.258
+0.566
+1
+Accuracy of threat behavior graph construction and technique identification in 15 CTI reports.
+2
+Columns 2–10 present the ground-truth and false negative/positive in extracting entities, relations, and techniques.
+3
+Rows 18–20 present the overall Precision, Recall, and F-1 Score.
+We evaluate the effectiveness of AttacKG + ’s and AttacKG’s technique identification across 15 reports, which have been manually labeled with the ground-truth technique.
+The results of the technique identification are summarized in Table 1 .
+Columns 8 to 10 display the counts of manually labeled ground truth and false_negative(false_positive) in the extraction of technique identification.
+It is evident that both AttacKG + and AttacKG maintain low false-negative rates, with AttacKG + exhibiting greater stability. However, AttacKG tends to incur a significant number of false positives, averaging 14.4 per report.
+AttacKG + surpasses AttacKG with a precision rate that is 0.366 higher and a recall rate that is 0.130 higher. Consequently, AttacKG + ’s F-1 score is roughly double that of AttacKG.
+The experimental data demonstrates that AttacKG + outperforms previous methods in technique identification tasks.
+Specifically, since AttacKG does not have a text filtering
+rewriter, we find that AttacKG is less effective in extracting raw report text when dealing with complex structures.
+This is because the report text contains a significant amount of background information unrelated to the attack process. Consequently, AttacKG generates numerous discrete subgraphs that fail to represent the full sequence of the event.
+4.2.3 AttacKG + statistics and analysis (RQ3)
+To answer RQ3, we use AttacKG + to extract 500 pieces of cyber threat intelligence originating from different sources on tactics, technologies, and threat-related entities and relations.
+Table 2 shows a list of the top five distributions of the above extracts in the report.
+It can be found that the Initial Access tactic is the most common among all tactics, consistent with the notion that malicious access is prioritized in threat events. The Top 5 tactics distribution also indicates that CTI reports tend to focus more on the Command and Control stage. The top 5 techniques are similar to the top TTP matrices manually generated by PICUS [ 21 ] . All 14 tactics are covered in all CTI reports, with an average of 14.61 TTP techniques and 40.7 threat entities per report. By analyzing the tactical distribution of the rewritten CTI reports and conducting manual validation, we identified a new classified pattern for the CTI reports.
+Table 2 : Effectiveness of threat intelligence extraction from 500 CTI reports.
+Tactics
+Occur
+Techniques
+Occur
+Entities
+Occur
+Relations
+Occur
+Initial Access
+1467
+T1566
+663
+Attacker
+768
+Use
+2062
+Command and Control
+1221
+T1071
+388
+Malware
+399
+Target
+462
+Execution
+1217
+T1059
+305
+C & C Server
+369
+Communicate With
+240
+Defense Evasion
+1017
+T1547
+261
+Campaign
+107
+Execute
+217
+Persistence
+731
+T1190
+200
+Attack
+94
+Host
+191
+All
+8411
+All
+7305
+All
+20350
+All
+10175
+1
+This table shows the top 5 tactics, techniques, entities, and relationships from 500 CTI reports.
+•
+High-Tactic . Suppose the report has numerous tactical phases, it is likely to be a historical record of APT operations or a profile of the APT organization. This is because APT operations or organizations often require a combination of tactics/techniques to achieve the purpose of the intrusion.
+•
+Low-Tactic . Suppose the report contains fewer types of tactics, it is likely a malware introduction or vulnerability analysis report. This is because malware or exploits commonly serve as a single component of a larger intrusion, appearing as a part of a specific technique, which is why the report would focus on just one tactic.
+•
+Non-Tactic . Suppose the main body of the report doesn’t cover the tactical phase, it usually turns into a social news piece about a threat event or a step-by-step threat overview. This is because these reports usually don’t focus on the tactical and technical aspects of the incident, but instead provide a general summary of the threat situation.
+Realizing that this is a new perspective for categorizing the types of threat reports, we categorize similar types by reported keywords in constructing the datasets Re-CTI and CTI-TE, which is more helpful in filtering out the tactical cyber threat intelligence with temporal characteristics describing the process of the intrusion and serves as a new categorization criterion for all types of CTI.
+4.2.4 Quality and impact of the rewriter (RQ4)
+The implementation of tactical report rewriting is dependent on the ability to understand a combination of multiple texts, including tactical definitions and threat reports, through the capabilities of LLMs.
+Since there is no related work on the quality of threat intelligence rewriting for LLMs.
+We design a manual evaluation mechanism to assess the quality of rewritten tactical reports from 15 rewritten reports in RQ1 and RQ2 in terms of two levels: delineation accuracy, and information consistency.
+We use "sentence" as the unit of assessment, and each category is categorized into four levels (Level 1-4) with the following assessment criteria.
+Figure 3 : Manual assessment results of the report (tactical rewrite version).
+•
+Delineation Accuracy . Evaluate whether the content of the rewritten text is in the correct tactical phase.
+Level-1 .The results of the tactical stage division differ significantly from the original text, with low accuracy. ( ⩽ 30 % ) absent percent 30 (\leqslant 30\%) ( ⩽ 30 % )
+Level-2 .The results of the tactical stage division are partially in line with the original text, with moderate accuracy. ( 30 % < x ⩽ 60 % ) percent 30 𝑥 percent 60 (30\%<x\leqslant 60\%) ( 30 % < italic_x ⩽ 60 % )
+Level-3 .The results of the tactical stage division are largely consistent with the original text, with good accuracy. ( 60 % < x ⩽ 90 % ) percent 60 𝑥 percent 90 (60\%<x\leqslant 90\%) ( 60 % < italic_x ⩽ 90 % )
+Level-4 .The results of the tactical stage division are fully consistent with the original text, with very good accuracy. ( > 90 % ) absent percent 90 (>90\%) ( > 90 % )
+•
+Information Consistency . Evaluate whether the content of the rewritten text matches the semantics of the original report.
+Level-1 .The threat intelligence report’s rewritten meaning is very different from the original text, with low consistency. ( ⩽ 30 % ) absent percent 30 (\leqslant 30\%) ( ⩽ 30 % )
+Level-2 .The threat intelligence report’s rewritten meaning partially matches the original text, with medium consistency. ( 30 % < x ⩽ 60 % ) percent 30 𝑥 percent 60 (30\%<x\leqslant 60\%) ( 30 % < italic_x ⩽ 60 % )
+Level-3 .The threat intelligence report’s rewritten meaning is largely consistent with the original text, with high consistency. ( 60 % < x ⩽ 90 % ) percent 60 𝑥 percent 90 (60\%<x\leqslant 90\%) ( 60 % < italic_x ⩽ 90 % )
+Level-4 .The threat intelligence report’s rewritten meaning is fully consistent with the original text, with very good consistency. ( > 90 % ) absent percent 90 (>90\%) ( > 90 % )
+Figure 3 summarizes the results of the quality assessment. It is evident that the rewritten reports by the LLMs exhibit an impressive level of categorization accuracy, with 14 out of 15 reports demonstrating a delineation accuracy of Level-4. This indicates that the LLMs possess a strong understanding of content categorization. However, there is a slight inconsistency in the information presented in the report compared to the original text, due to the limitations of the model’s quality and the corpus. Overall, the LLMs have shown improvement in rewriting threat reports, but further enhancements may be necessary to overcome the technical restrictions of the model.
+The reasons for choosing manual evaluation over ablation in this paper are as follows: 1) Generative modeling mechanism. The rewritten report, generated by a generative language model, contains categorized and rewritten entities and relations that cannot be compared with the original text in the same benchmark. 2) Threat event extraction requirements. Full-text-based content summary rewriting is necessary, as it involves both a full-text security background and a focus on the full-text attack implementation process, with a large amount of context information loss when only selecting part of the original report.
+4.3 Case Study
+This subsection discusses how AttacKG + can be employed in real-world security tasks through a case study. Security practitioners and researchers often perform in-depth analysis for occurred threat events, the process of which usually includes two perspectives:
+First, they need to extract the subject that is closely related to the attack process from the complex event information and sift out redundant information.
+Second, they demand to bridge the knowledge gap between CTI reports and real attacks to identify the techniques that are potentially used.
+Specifically, AttacKG + employs structured knowledge to parse events, thus helping to understand and reconstruct the threat events involved to achieve the above two objectives. As shown in Figure. 4 , Based on the idea of AttacKG + , for a structured description of an attack process or incident, three levels of threat event information are required to be extracted from rewritten CTI reports.
+We develop a visualization interface for AttacKG + using pyvis 5 5 5 https://github.com/WestHealth/pyvis . The visualization for example AttacKG + is presented in Appendix B.
+Such as Figure. 5(a) , taking the attack against SK Communications (C5 APT SHack) as an example, according to the extracted AttacKG + provides structured knowledge about threat event scenarios.
+From Figure. 5(a) , we can easily identify six techniques and five tactics involved in the attack, including T1195-Supply Chain Compromise for tactic Initial Access, T1059-Command and Scripting Interpreter for tactic Execution, T1070-Exploitation for Execution for tactic Defense Evasion, and so on.
+We can then infer the system environment in which the intrusion activity occurred based on the technologies and entities involved in the threat event.
+Specifically, the installation of malware named nation.exe implies that the victim’s system environment is Windows. Execution using the malware ’Backdoor.Agent.Hza’ indicates the presence of a version of the Trojan in effect or a setup flaw in the system.
+After confirming the environment in which the threatening event occurred, by combining the state summary, it can be found that the attacker’s main objective is to steal a massive amount of user information from SK Communications.
+All in all, the AttacKG + provided the necessary information that can be used as a basis for restoring the threat event.
+Figure 4 : Example of complex threat event extraction.
+1) the distribution of threat entities and relations. 2) the use of cyber attack techniques. 3) the stage state summary situation, containing permissions, files, tools, and information.
+5 Related Work
+In this section, we briefly review the related works from two branches: 1) CTI Report Extraction, 2) LLMs for Cyber Security.
+CTI Report Extraction
+Current CTI extraction work consists of three aspects in terms of information granularity: CTI report extraction, unstructured information extraction, and TTP Identification. Existing OSCTI collection and management systems [ 23 , 24 , 25 , 26 , 27 , 28 , 29 ] mainly focus on IoCs sharing [ 9 ] , such as the name and type of a malicious file, the number and name of a malicious process, and the hash value of a malware sample.
+When knowledge is embedded in a large amount of text, it is difficult to be used effectively. To solve this problem, relevant methods for extracting threat information from unstructured text have emerged [ 30 , 31 , 32 , 33 ] .
+Further, in addition to extracting cyber threat entities and relationships from unstructured data, identifying the technology patterns that are used in the threat scenarios enables a more comprehensive perception of the intrusion process, and the TTP matrix proposed by MITRE has become the mainstream reference standard for technology pattern labeling [ 4 , 34 , 35 ] .
+LLMs for Cyber Security
+Currently, scholars have been extensively exploring the use of large language models in the field of cybersecurity.
+Maxime et al. [ 12 ] use the LLMs to extract relevant knowledge entities from cybersecurity-related texts.
+Mohamed et al. [ 13 ] found that FalconLLM shows great potential in performing the identification of complex patterns and complex vulnerabilities.
+Maria et al. [ 36 ] use pre-trained LLMs as agents in a cybersecurity network environment, focusing on their utility in the sequential decision-making process.
+Andrei et al. [ 37 ] provide a systematic overview of the history, current status, and impact of generative language modeling, including its principles, capabilities, limitations, and prospects.
+Benjamin [ 38 ] qualitatively analyzes SME case studies and quantitatively assesses LLM metrics in cybersecurity applications.
+6 Conclusion and Future Work
+In this work, we proposed a fully automatic LLM-based framework (AttacKG + ) to construct attack knowledge graphs,
+based on the LLMs’ exceptional capabilities in both language understanding and zero-shot task fulfillment.
+Meanwhile, given the superior capabilities of LLMs, we have upgraded the knowledge scheme used by current research, by introducing three levels of threat knowledge: threat behavior, TTP labels, and state summary.
+As a by-product, we constructed two threat intelligence datasets, Re-CTI and CTI-TE.
+Finally, we conducted extensive experiments to evaluate the effectiveness of our proposed method, and the results demonstrate the great potential of LLMs for attack knowledge graph construction.
+Although the motivation and design of AttacKG + are valuable, the construction of the CTI extraction pipeline still has some limitations.
+1) First, the current construction only consider textual input while ignoring multimodal information, such as figures and charts.
+The visual elements in CTI reports, such as intrusion processes and software architecture, contain valuable information. However, exist research primarily focused on natural language, limiting the exploration of these other modalities. Therefore the use of multimodal threat information in future work will be able to enhance LLM’s ability to analyse CTI reports.
+2) Second, the currentl LLMs still do not clearly understand user requirements in some scenarios, which affects the quality of the output of the task results. Therefore, it is important to better align the LLMs with the values of the expert’s approach to the problem. When the LLMs’ understanding of requirements improves, we can be able to perform more complex tasks with better results.
+{credits}
+6.0.1 \discintname
+The authors have no competing interests to declare that are relevant to the content of this article.
+References
+[1]
+Z. Li, J. Zeng, Y. Chen, and Z. Liang, “Attackg: Constructing technique knowledge graph from cyber threat intelligence reports,” 11 2021.
+[2]
+K. Satvat, R. Gjomemo, and V. Venkatakrishnan, “Extractor: Extracting attack behavior from threat reports,” 04 2021.
+[3]
+P. Gao, X. Liu, E. Choi, S. Ma, X. Yang, Z. Ji, Z. Zhang, and D. Song, “Threatkg: A threat knowledge graph for automated open-source cyber threat intelligence gathering and management,” 12 2022.
+[4]
+G. Husari, E. Al-Shaer, M. Ahmed, B. Chu, and X. Niu, “Ttpdrill: Automatic and accurate extraction of threat actions from unstructured text of cti sources,” Proceedings of the 33rd Annual Computer Security Applications Conference , 2017. [Online]. Available: https://api.semanticscholar.org/CorpusID:20396776
+[5]
+T. Nguyen and R. Grishman, “Event detection and domain adaptation with convolutional neural networks,” vol. 2, pp. 365–371, 01 2015.
+[6]
+Y. Zhao, X. Jin, Y. Wang, and X. Cheng, “Document embedding enhanced event detection with hierarchical and supervised attention,” in Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers) , I. Gurevych and Y. Miyao, Eds. Melbourne, Australia: Association for Computational Linguistics, Jul. 2018, pp. 414–419. [Online]. Available: https://aclanthology.org/P18-2066
+[7]
+L. Li, Y. Liu, and M. Qin, “Extracting biomedical events with parallel multi-pooling convolutional neural networks,” IEEE/ACM Transactions on Computational Biology and Bioinformatics , vol. PP, pp. 1–1, 08 2018.
+[8]
+D. Kodelja, R. Besançon, and O. Ferret, Exploiting a More Global Context for Event Detection Through Bootstrapping , 04 2019, pp. 763–770.
+[9]
+X. Liao, K. Yuan, X. Wang, Z. Li, L. Xing, and R. Beyah, “Acing the ioc game: Toward automatic discovery and analysis of open-source cyber threat intelligence,” 10 2016, pp. 755–766.
+[10]
+H. Touvron, T. Lavril, G. Izacard, X. Martinet, M.-A. Lachaux, T. Lacroix, B. Rozière, N. Goyal, E. Hambro, F. Azhar, A. Rodriguez, A. Joulin, E. Grave, and G. Lample, “Llama: Open and efficient foundation language models,” 2023.
+[11]
+T. B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, S. Agarwal, A. Herbert-Voss, G. Krueger, T. Henighan, R. Child, A. Ramesh, D. M. Ziegler, J. Wu, C. Winter, C. Hesse, M. Chen, E. Sigler, M. Litwin, S. Gray, B. Chess, J. Clark, C. Berner, S. McCandlish, A. Radford, I. Sutskever, and D. Amodei, “Language models are few-shot learners,” 2020.
+[12]
+M. Wrsch, A. Kucharavy, D. P. David, and A. Mermoud, “Llms perform poorly at concept extraction in cyber-security research literature,” 2023.
+[13]
+M. A. Ferrag, M. Ndhlovu, N. Tihanyi, L. C. Cordeiro, M. Debbah, and T. Lestable, “Revolutionizing cyber threat detection with large language models,” 2023.
+[14]
+https://www.microsoft.com/zh-cn/security/business/ai-machine-learning/microsoft-copilot-security
+[15]
+https://www.qianxin.com/product/detail/pid/496
+[16]
+Comprehensive Threat Intelligence. https://blog. talosintelligence.com/
+[17]
+https://www.microsoft.com/ security/blog/security-intelligence/
+[18]
+P. E. Kaloroumakis and M. J. Smith, “Toward a knowledge graph of cybersecurity countermeasures,” 2021. [Online]. Available: https://api.semanticscholar.org/CorpusID:244508039
+[19]
+“STIX”, https://oasis-open.github.io/cti documentation/stix/intro.html
+[20]
+"D3fend", https://d3fend.mitre.org/dao/
+[21]
+https://www.picussecurity.com/resource/the-top-ten-mitre-attck-techniques
+[22]
+https://www.zhipuai.cn/
+[23]
+“Threatcrowd”, 2019, https://www.threatcrowd.org/.
+[24]
+“Abuse.ch”, 2022, https://abuse.ch/.
+[25]
+“PhishTank”, 2022, https://www.phishtank.com/.
+[26]
+“OpenPhish”, 2022, https://openphish.com/.
+[27]
+“OpenCTI”, 2022, https://www.opencti.io/en/.
+[28]
+“AlienVault OTX”, 2022, https://otx.alienvault.com/.
+[29]
+“IBM X-Force Exchange”, 2022, https://exchange.xforce.ibmcloud.0com/.
+[30]
+R. Ramnani, K. Shivaram, S. Sengupta, and A. M., “Semi-automated information extraction from unstructured threat advisories,” 02 2017, pp. 181–187.
+[31]
+Y. Ghazi, Z. Anwar, R. Mumtaz, S. Saleem, and M. Tahir, “A supervised machine learning based approach for automatically extracting high-level threat intelligence from unstructured sources,” 12 2018, pp. 129–134.
+[32]
+G. Ghazi, X. Niu, B. Chu, and E. Al-Shaer, “Using entropy and mutual information to extract threat actions from cyber threat intelligence,” 11 2018, pp. 1–6.
+[33]
+K. Ahmed, S. K. Khurshid, and S. Hina, “Cyberentrel: Joint extraction of cyber entities and relations using deep learning,” p. 103579, 11 2023.
+[34]
+G. Ayoade, S. Chandra, L. Khan, K. Hamlen, and B. Thuraisingham, “Automated threat report classification over multi-source data,” 11 2018.
+[35]
+W. Ge and J. Wang, “Seqmask: Behavior extraction over cyber threat intelligence via multi-instance learning,” 11 2022.
+[36]
+M. Rigaki, O. L., C. A. Catania, and S. Garcia, “Out of the cage: How stochastic parrots win in cyber security environments,” 2023.
+[37]
+A. Kucharavy, Z. Schillaci, L. M. chal, M. Wrsch, L. Dolamic, R. Sabonnadiere, D. P. David, A. Mermoud, and V. Lenders, “Fundamentals of generative large language models and perspectives in cyber-defense,” 2023.
+[38]
+B. Kereopa-Yorke, “Building resilient smes: Harnessing large language models for cyber security in australia,” 2023.
+7 Appendix
+Appendix 0.A Templates of AttacKG + Extraction
+In the AttacKG + extraction process, four specific prompts are used: the rewriting prompt, triplet extractor prompt, technique identifier prompt, and stage summarizer prompt. Detailed descriptions of each prompt’s design are available at the provided link 6 6 6 https://anonymous.4open.science/r/CTKEG_Appendix-19DC/ .
+Rewriting Prompt. The rewriting prompt aims to standardize threat intelligence reporting by restructuring the original content according to the 14 tactical categories of the TTP matrix, ensuring the preservation of temporal sequences, entity classifications, and relational categories.
+All tactics, techniques, entities, and relations are included in the prompt to instruct the LLMs to preserve the critical information as much as possible.
+Triplet Extractor Prompt. The triplet extractor prompt is used to extract "subject-action-object" triplets and entity-entity relations in the rewritten tactic paragraph. To reduce the expenses associated with the commercial LLMs, multiple tactic paragraphs with the same tactic are integrated into a single prompt.
+Overly lengthy prompts can compromise the accuracy of information extraction and may overlook critical details. Therefore, it is recommended to limit the number of paragraphs processed concurrently to a maximum of 10 to ensure optimal results.
+Technique Identifier Prompt. Technique identifier is used to add technique labels for extracted triplets.
+triplets that are assigned an identical tactic label are also associated with a uniform candidate technique label according to MITRE.
+This association is delineated in two rules: Rule 1 enumerates the possible techniques associated with a given tactic, while Rule 2 explains each technique’s specific meaning.
+The format presents the extracted triplet followed by the corresponding context paragraph. It is structured as "serial number: subject; relation; object; context paragraph".
+State Summarizer Prompt. State summarizer prompt is used to summarize the resources the attacker gets when the actions in one tactic stage are finished.
+The resources include permission state, file collection, information collection, and tool set.
+The permission state refers to the level of system access that attackers have managed to acquire.
+File collection encompasses the variety of file types, such as .txt, .doc, and .jpg, that attackers exfiltrate from the compromised systems.Information collection goes a step further by detailing the extraction of highly confidential data by attackers, including but not limited to passwords, personal identities, and account details.
+The tool set contains the tools in the paragraph used by the attacker to achieve their purpose.
+Appendix 0.B Cases of AttacKG + Visualization
+Appendix B presents a series of examples that demonstrate the visualization of the extracted attack knowledge graphs, which are derived from cyber attack incidents described in CTI reports.
+The visualization is divided into two main sections: the threat behavior graph (nodes are shown in green and blue) and the tactic and technique labels of the event nodes (highlighted in red and yellow), And the state summary we store in the form of an index in the data file available for querying.
+In the AttacKG + , triangular green nodes represent event nodes which are actions carried out by entities. Blue nodes appear in two shades: lighter blue nodes indicate the subjects that perform actions, while darker blue nodes denote the objects to which the actions are directed.
+The cyber events illustrated include C5 APT SKHack, Chat Mimi, MoonBounce, and Asylum Ambuscade. An in-depth discussion of the C5 APT SKHack event is provided in Section 4.3 .
+(a) C5 APT SKHack
+(b) Chat Mimi
+(c) Moon Bounce
+(d) Asylum Ambuscade
+Figure 5 : Examples of the visualization of AttacKG +
+Generated on Tue May 14 19:23:06 2024 by L a T e XML

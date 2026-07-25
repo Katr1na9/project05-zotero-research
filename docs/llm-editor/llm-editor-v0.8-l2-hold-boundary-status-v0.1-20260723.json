@@ -1,0 +1,205 @@
+{
+  "schema_version": "project05-llm-editor-l2-hold-boundary-status-v0.1",
+  "created_date": "2026-07-23",
+  "authority_base_commit": "456b129bd98a317c3de85e78274b11e28ff61a41",
+  "review_type": "serial_metadata_only_consolidation_of_committed_hold_boundaries",
+  "status": "complete_no_hold_released_no_role_or_quota_change",
+  "purpose": "Consolidate already committed decisions for HDFS-v1, ProvSec, LID-DS, and N-BaIoT without acquiring artifacts, changing catalog state, or reopening payload-level questions.",
+  "scope": {
+    "local_read_allowlist": [
+      "docs/llm-editor/**"
+    ],
+    "committed_conclusions_only": true,
+    "new_public_metadata_research_performed": false,
+    "hard_excluded_path_hit": false,
+    "datasets_path_read": false,
+    "local_audit_cache_read": false,
+    "launcher_file_read": false,
+    "archive_or_member_read": false,
+    "pid_process_or_runtime_log_read": false,
+    "ongoing_acquisition_touched": false,
+    "payload_or_archive_downloaded": false,
+    "reader_installed_or_executed": false,
+    "effective_catalog_written": false,
+    "family_role_or_quota_changed": false,
+    "baseline_fine_tuning_or_sample_generation_run": false,
+    "l2_gate_changed": false,
+    "git_commit_performed": false,
+    "git_push_performed": false
+  },
+  "authoritative_committed_sources": [
+    "docs/llm-editor/llm-editor-v0.8-l2-hdfs-v1-pending-replacement-candidate-review-v0.1-20260722.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-portfolio-a-replacement-candidates-metadata-only-v0.1-20260722.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-train-executed-evidence-candidates-metadata-only-v0.1-20260722.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-endpoint-provenance-independent-run-search-v0.1-20260723.json"
+  ],
+  "families": [
+    {
+      "candidate_id": "loghub_hdfs_v1",
+      "display_name": "HDFS-v1",
+      "intended_boundary": "pending replacement candidate for logpai_loghub_linux",
+      "current_status": "approve_as_metadata_candidate_replacement_and_lineage_unapproved",
+      "still_hold": true,
+      "may_enter_next_review": true,
+      "next_review_ceiling": "separately_authorized_replacement_review_followed_by_bounded_lineage_audit",
+      "closed_metadata": {
+        "doi": "10.5281/zenodo.8196385",
+        "license": "CC-BY-4.0",
+        "artifact_key": "HDFS_v1.zip",
+        "bytes": 186645559,
+        "checksum": "md5:76a24b4d9a6164d543fb275f89773260",
+        "metadata_candidate_approved": true
+      },
+      "open_gates": [
+        "Formal replacement approval remains absent.",
+        "A separately authorized bounded lineage audit must establish source-native collection or run boundaries.",
+        "HDFS block IDs may be visible grouping keys but are not verified independent runs or replicates.",
+        "Same-curator and same-Zenodo-record dependence with Loghub Linux remains material.",
+        "Normal or abnormal labels and label-derived paths must remain physically excluded."
+      ],
+      "forbidden_inference": "Distinct artifact files or block IDs do not create a second independent LogPAI family.",
+      "credits": {
+        "family": 0,
+        "lineage": 0,
+        "sample": 0,
+        "quota": 0
+      }
+    },
+    {
+      "candidate_id": "provsec_2023",
+      "display_name": "ProvSec",
+      "intended_boundary": "scientifically preferred replacement direction for BETH or Atomic, assigned at most once",
+      "current_status": "hold_artifact_gate_unclosed",
+      "still_hold": true,
+      "may_enter_next_review": false,
+      "next_review_ceiling": "artifact_metadata_closure_only",
+      "closed_metadata": {
+        "article_doi": "10.1007/s44227-023-00014-9",
+        "article_license": "CC-BY-4.0",
+        "official_publication_records_verified": true,
+        "dataset_artifact_license_verified": false,
+        "immutable_dataset_revision_verified": false,
+        "artifact_bytes_verified": false,
+        "artifact_checksum_verified": false
+      },
+      "open_gates": [
+        "The publication license cannot be inherited by the separately delivered dataset artifact.",
+        "No immutable dataset artifact revision has been verified.",
+        "No official artifact byte size or checksum has been verified.",
+        "The UCO contact-form delivery is not an immutable artifact record.",
+        "Recorder-supplemented fields require explicit provenance treatment if a future artifact ever closes."
+      ],
+      "forbidden_inference": "DOE or OSTI publication and full-text records are not a dataset release and do not close the artifact Gate.",
+      "credits": {
+        "family": 0,
+        "lineage": 0,
+        "sample": 0,
+        "quota": 0
+      }
+    },
+    {
+      "candidate_id": "lid_ds_2021",
+      "display_name": "LID-DS",
+      "intended_boundary": "scientific replacement direction for BETH or Atomic, assigned at most once",
+      "current_status": "hold_partial_license_closed_revision_size_checksum_open",
+      "still_hold": true,
+      "may_enter_next_review": false,
+      "next_review_ceiling": "artifact_metadata_closure_only",
+      "closed_metadata": {
+        "official_repository": "https://github.com/LID-DS/LID-DS",
+        "repository_commit": "587d15870843961acb78fbb4b8fcd0ede28eabcc",
+        "dataset_license_statement": "GPL-3.0-or-later",
+        "dataset_license_statement_verified": true,
+        "immutable_dataset_revision_verified": false,
+        "artifact_bytes_verified": false,
+        "artifact_checksum_verified": false
+      },
+      "open_gates": [
+        "The separately hosted Proton artifact has no metadata-visible immutable revision.",
+        "Official artifact byte size remains unverified.",
+        "Official artifact checksum remains unverified.",
+        "The repository has no release or tag that binds the delivered dataset artifact.",
+        "Scenario and attack labels must be physically isolated before any future payload review."
+      ],
+      "forbidden_inference": "The repository Archiv.zip fixture may not substitute for the separately delivered 2021 dataset artifact.",
+      "credits": {
+        "family": 0,
+        "lineage": 0,
+        "sample": 0,
+        "quota": 0
+      }
+    },
+    {
+      "candidate_id": "n_baiot_uci_442",
+      "display_name": "N-BaIoT",
+      "intended_boundary": "held endpoint or network evidence direction only",
+      "current_status": "hold_license_checksum_run_lineage_and_cross_split_overlap_open",
+      "still_hold": true,
+      "may_enter_next_review": false,
+      "next_review_ceiling": "artifact_and_overlap_metadata_closure_only",
+      "closed_metadata": {
+        "official_record": "https://archive.ics.uci.edu/dataset/442/detection+of+iot+botnet+attacks+n+baiot",
+        "dataset_doi": "10.24432/C5RC8J",
+        "declared_device_count": 9,
+        "artifact_license_verified": false,
+        "official_artifact_checksum_verified": false,
+        "source_native_run_lineage_verified": false,
+        "iot23_cross_split_overlap_closed": false
+      },
+      "open_gates": [
+        "Artifact-level license remains unverified.",
+        "An immutable official artifact checksum remains unverified.",
+        "Device identity does not establish source-native independent execution or capture groups.",
+        "Overlap and curator or collection dependence with the approved IoT-23 test candidate remain unresolved."
+      ],
+      "forbidden_inference": "Nine devices cannot be promoted to nine independent runs or lineages.",
+      "credits": {
+        "family": 0,
+        "lineage": 0,
+        "sample": 0,
+        "quota": 0
+      }
+    }
+  ],
+  "summary": {
+    "families_reviewed": 4,
+    "families_still_hold": 4,
+    "families_ready_for_immediate_source_role_review": 0,
+    "metadata_candidates_allowed_to_seek_a_separate_next_review": [
+      "loghub_hdfs_v1"
+    ],
+    "artifact_gate_blocked": [
+      "provsec_2023",
+      "lid_ds_2021",
+      "n_baiot_uci_442"
+    ],
+    "source_roles_approved": 0,
+    "train_admissions_approved": 0,
+    "new_family_credit": 0,
+    "new_lineage_credit": 0,
+    "new_sample_credit": 0,
+    "new_quota_credit": 0,
+    "l2_gate_passed": false
+  },
+  "gate": {
+    "step_b_complete": true,
+    "effective_catalog_change_authorized": false,
+    "download_authorized": false,
+    "payload_or_manifest_audit_authorized": false,
+    "family_role_change_authorized": false,
+    "family_lineage_sample_or_quota_credit_authorized": false,
+    "training_sample_generation_authorized": false,
+    "baseline_or_fine_tuning_authorized": false,
+    "l2_gate_passed": false,
+    "git_commit_authorized": false,
+    "git_push_authorized": false,
+    "step_c_may_start_after_step_b_self_check": true
+  },
+  "step_self_check": {
+    "hard_excluded_path_hit": false,
+    "download_process_cache_archive_zip_or_launcher_touched": false,
+    "reader_installed_or_executed": false,
+    "outputs_only_under_docs_llm_editor": true,
+    "result": "pass"
+  }
+}

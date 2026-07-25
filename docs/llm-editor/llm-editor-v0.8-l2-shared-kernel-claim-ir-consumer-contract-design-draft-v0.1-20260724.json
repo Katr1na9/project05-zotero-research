@@ -1,0 +1,305 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-shared-kernel-claim-ir-consumer-contract-design-draft-v0.1-20260724",
+  "artifact_type": "shared_kernel_claim_ir_consumer_contract_design_draft",
+  "version": "0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "cbc397603fb8a13050df50bd115a3e3ef84a12e3",
+  "status": "design_only_shared_kernel_consumer_contract_draft_not_owned_by_this_track",
+  "ownership": {
+    "owner": "Kernel/M3*",
+    "drafting_track_role": "LLM-editor track assists with a review draft only",
+    "owned_by_this_track": false,
+    "owner_approval_present": false,
+    "effective_contract_pinned": false,
+    "effective_contract_sha256": null,
+    "effective_contract_status": null,
+    "owner_must_issue_or_approve_versioned_immutable_contract": true
+  },
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "certificate_surface": "vacant"
+  },
+  "pinned_inputs_and_predecessors": {
+    "exact_admitted_package": {
+      "path": ".tmp/claim-ir-admission-single-execute-v0.1/package.json",
+      "sha256": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "surface_id": "project05_depth2_public",
+      "claim_count": 41,
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "pending_kernel_schema",
+      "local_audit_only_until_separately_ingested": true
+    },
+    "kernel_ingestion_contract_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-ir-kernel-ingestion-contract-design-v0.1-20260724.json",
+      "sha256": "b3c0e4f10722e9a27472968ed8d0fe77a29a363219baf70fba5f188d85143e60",
+      "status_observed": "design_only_kernel_ingestion_not_authorized"
+    },
+    "frontend_path_completion_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-frontend-path-completion-disposition-v0.1-20260724.json",
+      "sha256": "a61de173005ea5d6ca178de9af31f9699529472481f85622ef657190c487ae83",
+      "status_observed": "draft_frontend_path_complete_disposition_not_effective"
+    }
+  },
+  "proposed_accepted_external_claim_ir_schema": {
+    "path": "schemas/claim-ir-kernel.schema.json",
+    "schema_id": "https://project05.invalid/schemas/claim-ir-kernel.schema.json",
+    "schema_version": "claim-ir-external-v0.1",
+    "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "draft_acceptance_scope": "exact project05_depth2_public package only",
+    "accepted_by_kernel_owner_now": false,
+    "schema_validation_alone_implies_consumer_acceptance": false,
+    "schema_validation_alone_authorizes_ingestion": false
+  },
+  "owner_approval_and_effectivity_gate": {
+    "consumer_semantics_are_draft": true,
+    "kernel_owner_review_required": true,
+    "kernel_owner_approval_required": true,
+    "kernel_owner_must_pin": [
+      "effective consumer contract artifact id, version, path, and SHA-256",
+      "accepted Claim IR schema id, version, and SHA-256",
+      "exact admitted package identity or an owner-approved eligibility rule",
+      "Kernel intake transaction and storage semantics",
+      "idempotency and duplicate-submission behavior",
+      "kernel_state transition and receipt schema",
+      "Kernel intake versus E_case boundary",
+      "authority-leak and cross-surface rejection semantics",
+      "certificate separation"
+    ],
+    "this_draft_may_be_treated_as_effective_before_owner_approval": false,
+    "this_draft_may_be_used_as_ingestion_authority": false,
+    "owner_approval_automatically_closes_si_llm_001": false,
+    "separate_si_llm_001_closure_disposition_required": true
+  },
+  "proposed_identity_preservation_semantics": {
+    "package_id": "unchanged",
+    "package_sha_identity_before_transition": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32",
+    "claim_count": "41_unchanged",
+    "claim_order": "unchanged",
+    "per_claim_claim_id": "unchanged",
+    "package_claim_id_state": "minted_opaque_unchanged",
+    "per_claim_claim_id_state": "minted_opaque_unchanged",
+    "package_admission_state": "admitted_under_separate_authority_unchanged",
+    "per_claim_admission_state": "admitted_under_separate_authority_unchanged",
+    "claim_kind_source_field_value_type_and_value": "unchanged",
+    "projection_ref": "unchanged",
+    "manifest_claim_identity": "unchanged",
+    "only_state_transition_candidate": "package.kernel_state",
+    "normalization_rewrite_or_field_aliasing_during_ingestion": false
+  },
+  "proposed_ingestion_transaction_semantics": {
+    "transaction_scope": "one exact admitted package",
+    "preconditions": [
+      "owner-approved effective shared Kernel consumer contract is pinned",
+      "separate fail-closed ingestion executor is implemented and pinned",
+      "separate activated single-use ingestion authority is present",
+      "the exact admitted package SHA-256 matches",
+      "the package validates against the accepted schema identity",
+      "surface, claim_id_state, admission_state, and kernel_state match this contract",
+      "a unique result or receipt identity is absent before first execution"
+    ],
+    "validation_before_any_kernel_mutation": true,
+    "atomic_all_or_nothing": true,
+    "partial_claim_ingestion": false,
+    "implicit_retry_resume_or_fallback": false,
+    "proposed_idempotency_key_recipe": {
+      "algorithm": "sha256",
+      "canonical_tuple": [
+        "literal:project05-shared-kernel-intake-v0.1",
+        "effective_consumer_contract_sha256",
+        "accepted_schema_sha256",
+        "admitted_package_sha256"
+      ],
+      "semantic_or_secret_material_used": false,
+      "owner_approval_required": true
+    },
+    "duplicate_submission_semantics": {
+      "same_idempotency_key_and_same_input": "return or verify the original immutable receipt without a second Kernel mutation",
+      "same_package_id_with_different_input_or_contract_pin": "reject_identity_conflict",
+      "duplicate_submission_is_new_authorization": false,
+      "duplicate_submission_may_reopen_consumed_authority": false
+    },
+    "failure_semantics": {
+      "kernel_mutation_on_validation_failure": false,
+      "partial_commit_on_failure": false,
+      "sanitized_rejection_code_allowed_in_separate_audit_report": true,
+      "raw_claim_payload_in_rejection_report": false
+    }
+  },
+  "proposed_kernel_intake_and_e_case_boundary": {
+    "kernel_intake_purpose": "Record structural receipt of an exact, admitted Claim IR package under a pinned consumer contract and authority.",
+    "kernel_intake_is_e_case": false,
+    "kernel_intake_is_certified_fact_store": false,
+    "kernel_intake_implies_claim_truth": false,
+    "kernel_intake_implies_promotion": false,
+    "kernel_intake_implies_checker_acceptance": false,
+    "e_case_write_during_ingestion": false,
+    "promote_revoke_sat_unsat_or_stop_during_ingestion": false,
+    "e_case_requires_separate_contract_executor_and_authority": true,
+    "silent_copy_or_alias_into_e_case": "reject"
+  },
+  "proposed_kernel_state_transition": {
+    "state_before": "pending_kernel_schema",
+    "state_after": "ingested_under_separate_authority",
+    "target_token_defined_by_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "target_token_consumption_semantics_defined_by_this_draft": false,
+    "target_token_consumption_semantics_must_be_approved_by": "Kernel/M3*",
+    "transition_authorized_now": false,
+    "transition_may_be_performed_only_by": "future pinned ingestion executor under future activated single-use authority",
+    "claim_or_admission_state_transition_during_ingestion": false
+  },
+  "proposed_ingestion_receipt": {
+    "receipt_required": true,
+    "receipt_is_aggregate_and_governance_only": true,
+    "required_fields": [
+      "opaque receipt id",
+      "effective consumer contract artifact id and SHA-256",
+      "accepted schema id, version, and SHA-256",
+      "exact admitted package SHA-256 and package_id",
+      "surface_id and claim_count",
+      "idempotency key",
+      "kernel_state before and after",
+      "single-use authority SHA-256 and consumed ledger",
+      "decision and sanitized rejection code if any",
+      "identity-preservation assertions",
+      "E_case write false",
+      "certificate generation false"
+    ],
+    "forbidden_receipt_content": [
+      "raw claim payload bytes",
+      "labels or realized outcomes",
+      "oracle, mask, hidden, recoverable, or required claim identities",
+      "filesystem or archive paths beyond frozen artifact references",
+      "key, secret, or HMAC material",
+      "certificate or truth-status assertion"
+    ],
+    "receipt_is_certificate": false,
+    "receipt_is_e_case_record": false
+  },
+  "proposed_fail_closed_rejections": {
+    "missing_or_unapproved_owner_contract": "reject",
+    "missing_or_inactive_single_use_authority": "reject",
+    "consumed_or_invalid_authority_ledger": "reject",
+    "schema_id_version_or_sha_mismatch": "reject",
+    "admitted_package_path_or_sha_mismatch": "reject",
+    "wrong_package_id_or_surface": "reject",
+    "cross_surface_join": "reject",
+    "claim_id_or_identity_mutation": "reject",
+    "claim_id_state_not_minted_opaque": "reject",
+    "admission_state_not_admitted_under_separate_authority": "reject",
+    "kernel_state_not_pending_kernel_schema": "reject",
+    "unknown_or_additional_fields": "reject",
+    "labels_outcomes_oracle_mask_hidden_ids_or_raw_payload": "reject",
+    "identity_conflict_or_idempotency_collision": "reject",
+    "partial_ingestion_requested": "reject",
+    "e_case_checker_promotion_or_certificate_requested": "reject",
+    "result_or_receipt_identity_already_conflicts": "reject",
+    "retry_resume_or_fallback_requested": "reject"
+  },
+  "certificate_separation": {
+    "certificate_surface": "vacant",
+    "ingestion_receipt_is_certificate": false,
+    "ingested_under_separate_authority_is_certified": false,
+    "certificate_generation_authorized": false,
+    "certificate_requires_separate_schema_contract_executor_and_authority": true,
+    "kernel_ingestion_may_not_assert_certified_stop_or_unresolvable": true
+  },
+  "rule_path_as_future_llm_control_and_prior_gate": {
+    "deterministic_rule_path_role": [
+      "frozen non-LLM comparison arm",
+      "prior structural and authority-leak gate before any future LLM output can be considered"
+    ],
+    "future_llm_comparison_must_use_same_schema_and_consumer_contract": true,
+    "future_llm_output_must_separately_pass_mint_admission_and_ingestion_authorities": true,
+    "rule_path_is_ground_truth": false,
+    "rule_path_is_certificate": false,
+    "model_results_may_retroactively_relax_this_contract": false,
+    "llm_training_or_inference_authorized_by_this_draft": false,
+    "llm_adapter_or_model_authorized_by_this_draft": false,
+    "m2_fit_authorized_by_this_draft": false,
+    "four_family_finetune_authorized_by_this_draft": false
+  },
+  "relationship_to_si_llm_001": {
+    "issue_path": "docs/spec-issues/SI-LLM-001-shared-claim-ir-artifact-absent.md",
+    "issue_sha256": "b99c6183da25224e842daa29029cad125671d3c8549197339706946bc6d3c2ba",
+    "issue_owner": "Kernel/M3*",
+    "closed_by_this_draft": false,
+    "closure_authorized_by_this_draft": false,
+    "owner_approval_of_consumer_semantics_required_before_effective_pin": true,
+    "separate_issue_closure_record_required": true
+  },
+  "still_blocked": {
+    "kernel_owner_approval_and_effective_contract_pin": true,
+    "kernel_ingestion_executor_implementation": true,
+    "kernel_ingestion_activation": true,
+    "kernel_ingestion_execute": true,
+    "kernel_write": true,
+    "e_case_write": true,
+    "certificate_generation": true,
+    "catalog_write": true,
+    "source_role_assignment": true,
+    "lineage_credit": true,
+    "quota_credit": true,
+    "l2_gate_change": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "current_authorization_state": {
+    "effective": false,
+    "owner_approved": false,
+    "ingestion_implementation_authorized": false,
+    "ingestion_activation_present": false,
+    "ingestion_execute_authorized_now": 0,
+    "kernel_or_e_case_write_performed": false,
+    "certificate_generated": false
+  },
+  "explicit_non_authorizations": {
+    "this_is_effective_consumer_contract": false,
+    "this_is_owner_approval": false,
+    "this_closes_si_llm_001": false,
+    "this_is_ingestion_activation": false,
+    "this_is_ingestion_executor": false,
+    "kernel_ingestion_implementation": false,
+    "kernel_ingestion_execute": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "m2_fit": false,
+    "llm_training_or_inference": false,
+    "four_family_llm_finetune": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "review_boundary": {
+    "draft_claim": "This track has supplied a reviewable proposed consumer contract for the exact admitted package, but Kernel/M3* retains ownership of semantic approval, effective pinning, and any SI-LLM-001 closure.",
+    "not_owned_by_this_track": true,
+    "not_effective": true,
+    "not_an_activation": true,
+    "not_an_ingestion": true,
+    "not_a_kernel_or_e_case_write": true,
+    "not_a_certificate": true,
+    "not_an_l2_gate_pass": true
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "admitted_package_changed_in_this_turn": false,
+    "kernel_ingestion_implemented_in_this_turn": false,
+    "kernel_ingestion_activated_in_this_turn": false,
+    "kernel_ingestion_executed_in_this_turn": false,
+    "kernel_or_e_case_write_in_this_turn": false,
+    "certificate_generated_in_this_turn": false,
+    "llm_authorized_or_run_in_this_turn": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

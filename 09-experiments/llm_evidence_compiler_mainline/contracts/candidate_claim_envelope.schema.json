@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Katr1na9/project05-zotero-research/schemas/candidate_claim_envelope.schema.json",
+  "title": "CandidateClaimEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "compiler_run_id",
+    "request_id",
+    "candidate_id",
+    "source_pointer",
+    "source_quote_or_fields",
+    "entity_scope",
+    "proposed_claim",
+    "proposed_target_node_ids"
+  ],
+  "properties": {
+    "compiler_run_id": {"type": "string", "pattern": "^RUN-[A-F0-9]{24}$"},
+    "request_id": {"type": "string", "pattern": "^REQ-[A-F0-9]{24}$"},
+    "candidate_id": {"type": "string", "pattern": "^CAND-[A-F0-9]{24}$"},
+    "source_pointer": {"$ref": "#/$defs/source_pointer"},
+    "source_quote_or_fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "entity_scope": {"$ref": "#/$defs/entity_scope"},
+    "proposed_claim": {"$ref": "#/$defs/proposed_claim"},
+    "proposed_target_node_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^NODE-[A-F0-9]{16}$"},
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "source_pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "record_id"],
+      "properties": {
+        "artifact_id": {"type": "string", "pattern": "^ART-[A-F0-9]{16}$"},
+        "record_id": {"type": "string", "pattern": "^REC-[A-F0-9]{16}$"},
+        "location": {"type": "string"},
+        "line_start": {"type": "integer", "minimum": 1},
+        "line_end": {"type": "integer", "minimum": 1}
+      }
+    },
+    "entity_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_status"],
+      "properties": {
+        "scope_status": {"enum": ["known", "unknown"]},
+        "host_id": {"type": "string", "minLength": 1},
+        "tenant_id": {"type": "string", "minLength": 1},
+        "process_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_type", "value"],
+      "properties": {
+        "entity_type": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1},
+        "normalized_value": {"type": "string"}
+      }
+    },
+    "time_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {"type": "string", "format": "date-time"},
+        "end": {"type": "string", "format": "date-time"},
+        "relative_order": {"type": "integer", "minimum": 0}
+      }
+    },
+    "proposed_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "source_type",
+        "claim_type",
+        "subject",
+        "predicate",
+        "object",
+        "observable_status",
+        "source_pointer"
+      ],
+      "properties": {
+        "case_id": {"type": "string", "pattern": "^C[0-9]{2}.*$"},
+        "source_type": {"type": "string", "minLength": 1},
+        "claim_type": {"type": "string", "minLength": 1},
+        "subject": {"$ref": "#/$defs/entity"},
+        "predicate": {"type": "string", "minLength": 1},
+        "object": {"$ref": "#/$defs/entity"},
+        "time_window": {"$ref": "#/$defs/time_window"},
+        "observable_status": {"const": "visible"},
+        "source_pointer": {"$ref": "#/$defs/source_pointer"}
+      }
+    }
+  }
+}
+

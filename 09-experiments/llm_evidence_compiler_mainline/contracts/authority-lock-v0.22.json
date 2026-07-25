@@ -1,0 +1,124 @@
+{
+  "authority_id": "project05-qwen25-primary-training-tasks-1-2-v0.22",
+  "version": "0.22.0",
+  "status": "tasks_1_2_implementation_authorized_execution_closed",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "continue_with_the_minimal_next_authorization_described_in_the_reviewed_plan",
+    "interpreted_scope": "tasks_1_2_only_through_hard_stop_t1_b",
+    "formal_training_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.21.json",
+    "sha256": "26FB7FDF300496FB56FC4F33D7A1DF1FD508508959BBC22BBF63BD77CE1188CE",
+    "disposition": "preserves_the_passed_local_smoke_and_all_closed_execution_gates"
+  },
+  "authoritative_plan": {
+    "08-writing/llm-evidence-compiler-primary-training-and-paired-evaluation-plan-v0.1-20260719.md": "E2B86CE6077CDAD9771B728F25993E1A7EF5615D5022CE57FB7FE8223E4C1D0B"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/train_qwen_qlora_primary.py": "ED55B62D4C99842E7234EFE1D97EDF7F4FED39C355B690686EF061046A159CB8"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_primary.py": "05BA5D722B6BDD78CD159B735AD779725C2F50B5420C7CF718C5548FB738FD53"
+  },
+  "implementation_gate": {
+    "authorized": true,
+    "authorized_deliverables": [
+      "primary_training_contract_and_config",
+      "primary_trainer_skeleton",
+      "model_free_negative_tests"
+    ],
+    "model_runtime_import_allowed_in_tests": false,
+    "model_or_optimizer_execution_allowed": false,
+    "paired_runner_implementation_allowed": false,
+    "hard_stop": "T1-B"
+  },
+  "frozen_training_intent": {
+    "train_examples": 1200,
+    "training_validation_examples": 300,
+    "source_families": "4+2_disjoint",
+    "epochs": 3,
+    "optimizer_steps": 225,
+    "sequence_length": 1024,
+    "truncation_allowed": false,
+    "seed": 2026071601,
+    "checkpoint_selection_data": "training-validation_only",
+    "execution_completed": false
+  },
+  "verification": {
+    "primary_and_existing_smoke_tests": {
+      "tests_run": 30,
+      "passed": 30,
+      "failures": 0,
+      "errors": 0,
+      "status": "passed"
+    },
+    "adjacent_llm_compiler_regression": {
+      "tests_run": 149,
+      "passed": 145,
+      "skipped": 1,
+      "failures": 2,
+      "errors": 1,
+      "status": "existing_repository_conditions_outside_tasks_1_2_diff",
+      "conditions": [
+        "citation_report_frozen_sha_mismatch",
+        "positive_remap_historical_records_root_missing",
+        "wp2_rule_snapshot_sidecar_sha_mismatch"
+      ],
+      "affected_paths_modified_by_tasks_1_2": false
+    },
+    "model_runtime_imported": false,
+    "pair_payload_read_by_tasks_1_2_tests": false,
+    "optimizer_steps_created": 0
+  },
+  "scope_audit": {
+    "formal_preflight_run": false,
+    "primary_training_run": false,
+    "checkpoint_written": false,
+    "training_validation_generation_run": false,
+    "paired_runner_implemented": false,
+    "development_or_test_accessed": false,
+    "c07_c12_accessed": false,
+    "m3_integrated": false,
+    "server_connected": false,
+    "paper_a_modified": false
+  },
+  "next_gate": {
+    "status": "hard_stop_t1_b_for_implementation_review",
+    "formal_preflight_authorized": false,
+    "primary_training_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "formal_preflight",
+    "model_or_tokenizer_download",
+    "runtime_install_or_change",
+    "model_loading",
+    "adapter_or_optimizer_creation",
+    "primary_or_multi_epoch_training",
+    "checkpoint_generation",
+    "training_validation_generation",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

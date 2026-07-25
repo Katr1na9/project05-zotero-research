@@ -1,0 +1,111 @@
+{
+  "authority_id": "project05-qwen25-memory-stabilization-stress-preflight-v0.27",
+  "version": "0.27.0",
+  "status": "memory_stabilization_implemented_one_stress_preflight_authorized",
+  "created_date": "2026-07-19",
+  "user_decision": {
+    "decision": "approve_v0_27_memory_stabilization_amendment_and_stress_preflight",
+    "interpreted_scope": "implement_the_frozen_allocator_stabilization_and_execute_exactly_one_longest_sequence_memory_stress_preflight",
+    "memory_stress_preflight_authorized": true,
+    "primary_training_retry_authorized": false
+  },
+  "parent_authority": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.26.json",
+    "sha256": "55090D303C5707BAA90F1D4EC137A3425DC06AC5616C7014A8CB99954683391F",
+    "disposition": "the_failed_primary_training_remains_consumed_and_closed"
+  },
+  "authoritative_contracts": {
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-memory-stress-preflight-contract-v0.1.json": "87F810B8E4AB49756B2DE53B17AD327216B2E47CFFFC4ACBA5060A20F7EAE5F7",
+    "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-primary-training-contract-v0.1.json": "A76C0731F00AF6B1B10236BD19C4CE9CFC7EE59E9AE1A5942B89AC59DAFED7AE",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/training-config-v0.1-local.json": "D25BDA9AAA7BCEF5CA90A1ABB54632CDB3E85A40AB29DA82C9DB07CDF3E54ECD",
+    "09-experiments/llm_evidence_compiler_mainline/results/qwen25-primary-training-failure-result-v0.1.json": "A2D5A6BB7CB92FDFEBC1AC4A9D4E2AE0C199C565194AA17B807CC45B8191824D"
+  },
+  "authoritative_implementation": {
+    "09-experiments/scripts/preflight_qwen_qlora_memory_stress.py": "195D94CA77F2F870463CEB434C8A5DBD18EC9642566C54F758B4081489CB6EB7",
+    "09-experiments/llm_evidence_compiler_mainline/qlora_primary_v0.1/run-memory-stress-preflight-v0.1.ps1": "7F6A0BD4C40702AA8178F104B5EAAFD6F43A25BEBDAD2E331A6D89976BF4B970"
+  },
+  "authoritative_tests": {
+    "09-experiments/tests/test_qwen_qlora_memory_stress_preflight.py": "D3D0490D9B78EA3112E9D8101329AA28B73BC96ECE27602471AC7E4E3568645D"
+  },
+  "authoritative_documentation": {
+    "08-writing/llm-evidence-compiler-qwen25-memory-stabilization-amendment-v0.27-20260719.md": "04065DE149DB3BEEECAE52F3E400B98F5493EC3FEFE17AFE8FB05FA9E6039EFD"
+  },
+  "memory_stress_gate": {
+    "authorized": true,
+    "contract_sha256": "87F810B8E4AB49756B2DE53B17AD327216B2E47CFFFC4ACBA5060A20F7EAE5F7",
+    "maximum_executions": 1,
+    "run_root": ".local-qwen25-smoke",
+    "output_path": ".local-qwen25-smoke/local-output/memory-stress-preflight-v0.1.json",
+    "fresh_output_required": true,
+    "reuse_existing_runtime_and_snapshot_only": true,
+    "network_or_download_allowed": false,
+    "runtime_install_or_change_allowed": false
+  },
+  "frozen_stabilization": {
+    "pytorch_cuda_alloc_conf": "max_split_size_mb:128,garbage_collection_threshold:0.8",
+    "delete_batch_and_loss_after_each_microbatch": true,
+    "python_gc_after_each_microbatch": true,
+    "cuda_empty_cache_after_each_microbatch": true,
+    "reset_global_peak_inside_microbatch_loop": false,
+    "peak_reserved_limit_bytes": 11274289152
+  },
+  "frozen_stress_execution": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "method": "4bit_nf4_double_quant_fp16_qlora",
+    "selection": "global_longest_16_train_examples_by_token_length_then_sha256_example_id",
+    "expected_token_lengths_descending": [1021, 1020, 1016, 1011, 1010, 1008, 1000, 998, 997, 994, 989, 989, 989, 988, 987, 982],
+    "expected_total_tokens": 15999,
+    "microbatches": 16,
+    "gradient_accumulation_steps": 16,
+    "optimizer_steps": 1,
+    "adapter_or_checkpoint_save_allowed": false,
+    "generation_calls": 0
+  },
+  "failure_policy": {
+    "write_sanitized_result": true,
+    "automatic_restart_allowed": false,
+    "second_allocator_trial_allowed": false,
+    "automatic_resource_or_scientific_configuration_change_allowed": false,
+    "primary_retry_requires_new_user_authority": true
+  },
+  "next_gate": {
+    "status": "one_memory_stress_preflight_open_all_training_and_downstream_gates_closed",
+    "primary_training_authorized": false,
+    "automatic_retry_authorized": false,
+    "resume_authorized": false,
+    "checkpoint_selection_authorized": false,
+    "paired_runner_authorized": false,
+    "formal_inference_authorized": false,
+    "development_execution_authorized": false,
+    "c07_c12_execution_authorized": false,
+    "m3_integration_authorized": false,
+    "paper_positive_claim_authorized": false
+  },
+  "not_authorized": [
+    "second_primary_training_execution",
+    "primary_training_retry_or_resume",
+    "second_memory_stress_execution",
+    "alternative_allocator_trial",
+    "resource_limit_change",
+    "sequence_rank_batch_data_seed_optimizer_scheduler_or_hardware_change",
+    "network_or_download",
+    "runtime_install_or_change",
+    "adapter_or_checkpoint_save",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "paired_runner_or_scorer_implementation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "server_connection_or_training",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "frozen_case_or_result_overwrite",
+    "docx_ppt_pdf_generation"
+  ],
+  "controller_eligible": false
+}

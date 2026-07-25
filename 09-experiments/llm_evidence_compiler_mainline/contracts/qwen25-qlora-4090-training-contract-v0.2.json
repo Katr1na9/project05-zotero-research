@@ -1,0 +1,111 @@
+{
+  "contract_id": "project05-qwen25-qlora-4090-training-v0.2",
+  "version": "0.2.0",
+  "created_date": "2026-07-19",
+  "status": "user_authorized_single_fresh_cache_normalized_primary_v0_2",
+  "contract_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.2.json",
+  "authority_repository_path": "09-experiments/llm_evidence_compiler_mainline/contracts/authority-lock-v0.32.json",
+  "extends_contract": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/contracts/qwen25-qlora-4090-training-contract-v0.1.json",
+    "sha256": "CD027724554185150D7A636F3EC905B4CA58DDFB559DB70D0D5087B73B3802E1"
+  },
+  "approved_capacity_amendment": {
+    "path": "08-writing/llm-evidence-compiler-qwen25-4090-cache-normalization-amendment-v0.32-20260719.md",
+    "sha256": "11594CCAF78946BCFCE4C602C05ECDB497AC2503E9C1C7EAC0280A942F31321E"
+  },
+  "training_config": {
+    "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.2/training-config-v0.2.json",
+    "sha256": "161733CE73E02E4FD1D91033DEBE2907F6C1D1C005B54E86CE8333E7DD6F501A"
+  },
+  "implementation": {
+    "rtx4090_executor": {
+      "path": "09-experiments/scripts/execute_qwen_qlora_4090.py",
+      "sha256": "5DD66D25FB633B99FB9EC7650F61D1E3E762443E54A753E87CB2717EB69D13F9"
+    },
+    "clean_environment_launcher": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/qlora_4090_v0.2/run-server-4090-v0.2.sh",
+      "sha256": "F305E8E9239076F448EE189F5CBDBC525FA1445C100EFED5C792B3BED9FF97BF"
+    }
+  },
+  "preparation_audit_compatible_contract_sha256": [
+    "05EFA61DE6D88691EA62269632B1B335B3CCA0488C7B2451F40FCB331A49F1D9",
+    "CD027724554185150D7A636F3EC905B4CA58DDFB559DB70D0D5087B73B3802E1"
+  ],
+  "compatible_prior_smoke": {
+    "contract_sha256": "CD027724554185150D7A636F3EC905B4CA58DDFB559DB70D0D5087B73B3802E1",
+    "training_config_sha256": "4BA3FACAD0D73B0A1AA3FD0629699B01974F5820DC3F1B0D8DEF93F4B8BB9103",
+    "authority_sha256": "BF2F9892E4D67765F0354A9B5B626A15A90C57573340B148575F6C871926F9BA",
+    "smoke_audit_sha256": "8E1D7346D464F99F45D036AF8E92AF58A238F240718A6D88AA264684DD721511"
+  },
+  "attempt_history": {
+    "preparation_audit": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-preparation-audit-v0.1.json",
+      "sha256": "12F73CE159E72F08C08533B8CA8A79BBF79ECAF7FEF118CB24F702FA1BDDC38A"
+    },
+    "passed_smoke": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-longest-sequence-smoke-result-v0.1.json",
+      "sha256": "8E1D7346D464F99F45D036AF8E92AF58A238F240718A6D88AA264684DD721511"
+    },
+    "failed_primary": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-primary-training-failure-result-v0.1.json",
+      "sha256": "E709BEBF402AE886766226B7364CB8CB192D34A8F1D2777FD8A3A5325F29E701"
+    },
+    "failed_primary_progress": {
+      "path": "09-experiments/llm_evidence_compiler_mainline/results/qwen25-4090-primary-training-progress-v0.1.jsonl",
+      "sha256": "C7DAB1E4E2D0C6561FB7B4849FDE894AD9685A3AF8EA4C38902A4567B97D93CE"
+    }
+  },
+  "memory_protocol": {
+    "maximum_peak_allocated_bytes": 23622320128,
+    "minimum_synchronized_free_bytes": 1073741824,
+    "thresholds_changed_from_v0_1": false,
+    "cache_normalized_free_memory_gate": true,
+    "release_only_unused_allocator_cache": true,
+    "release_condition": "pre_release_driver_free_below_1073741824_at_post_optimizer_safe_point",
+    "pre_release_values_are_diagnostic": true,
+    "post_release_values_are_blocking": true
+  },
+  "phase_gate": {
+    "prepare": {
+      "authorized": false,
+      "reuse_existing_exact_audit_only": true,
+      "forward_calls": 0,
+      "optimizer_steps": 0
+    },
+    "smoke": {
+      "authorized": false,
+      "maximum_executions": 0,
+      "reuse_exact_prior_passed_smoke_only": true,
+      "optimizer_steps": 0,
+      "adapter_or_checkpoint_save": false
+    },
+    "primary": {
+      "authorized_after_passed_smoke": false,
+      "authorized_after_explicit_user_reauthorization": true,
+      "maximum_executions": 1,
+      "epochs": 3,
+      "optimizer_steps": 225,
+      "resume_authorized": false,
+      "output_subdirectory": "server-output/primary-v0.2"
+    }
+  },
+  "not_authorized": [
+    "additional_optimizer_bearing_smoke",
+    "multi_gpu_training",
+    "hyperparameter_search",
+    "automatic_retry_or_resume",
+    "sequence_rank_batch_data_seed_optimizer_scheduler_change",
+    "memory_threshold_reduction",
+    "checkpoint_selection",
+    "training_validation_generation",
+    "development_or_test_packet_access",
+    "c07_c12_model_execution",
+    "formal_inference",
+    "m3_runtime_integration",
+    "merged_model_save",
+    "hub_upload",
+    "run_mvp_modification",
+    "paper_a_result_change",
+    "docx_ppt_pdf_generation"
+  ]
+}

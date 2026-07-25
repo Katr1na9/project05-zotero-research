@@ -1,0 +1,128 @@
+{
+  "contract_id": "project05-cost-pipeline-contract-v0.3",
+  "version": "0.3.0",
+  "status": "draft_blocked_no_real_action_executor",
+  "authority": {
+    "new_cost_measurement_design": "v0.3_normative",
+    "legacy_replay": "v0.2_and_case_embedded_costs_compatibility_only",
+    "paper_or_patent_writing": "closed_until_full_experimental_validation"
+  },
+  "evidence_basis": {
+    "path": "04-progress/cost-action-construct-review-v0.1-20260718/construct-synthesis.md",
+    "sha256": "091b6c59b83c6a7281406c23b5793ba51e23ee0701e6cd40072212a2e278eeb7"
+  },
+  "canonical_pipeline": {
+    "action_ontology_schema": {
+      "path": "09-experiments/data_schema/action_ontology_profile.schema.json",
+      "sha256": "b67de1f9ebdbb716066ad922239564727155a9bed8e3ff15a63284bcf70a577c"
+    },
+    "action_ontology_profile": {
+      "path": "09-experiments/governance/profiles/action-ontology-v0.3-real-only-draft.json",
+      "sha256": "f5434498234838ac0d049c2694fcf9a23d5960a080dcf27f8529b49eb61a58eb"
+    },
+    "action_executor_registry_schema": {
+      "path": "09-experiments/data_schema/action_executor_registry.schema.json",
+      "sha256": "05550e6833a05b2303912f46432f20a2d5a55fa7a7235ddfe9c14bf22de80994"
+    },
+    "action_executor_registry": {
+      "path": "09-experiments/governance/measurement_v0.3/action-executor-registry-v0.1-draft.json",
+      "sha256": "ef5a09708536946769a4ffc0a6bab6c2cb0db751b747abf10fae70bec470e145"
+    },
+    "measurement_schema": {
+      "path": "09-experiments/data_schema/operational_cost_measurement_batch_v0.3.schema.json",
+      "sha256": "901f626ed4a3728a2acc2b0c4f076ea5d238727ff8b0babc2371afa9c0ea7c4c"
+    },
+    "measurement_protocol": {
+      "path": "09-experiments/governance/measurement_v0.3/operational-cost-measurement-protocol-v0.3.json",
+      "sha256": "29544f083c78bc4124393d94fcfada8329927ee904f5bfbe807b1eb5d5216ecc"
+    },
+    "minimum_coverage_schedule": {
+      "path": "09-experiments/governance/measurement_v0.3/minimum-coverage-schedule-v0.3.csv",
+      "sha256": "157d53502052f50fd79673c95be9c36712d8cc04d18f82abb581e2d7b4c92158"
+    },
+    "measurement_importer": {
+      "path": "09-experiments/scripts/import_operational_cost_measurements_v03.py",
+      "sha256": "acc775512f10e96906d28083f3939203109fb1e0161b5b6da21996a53443c2ef"
+    },
+    "measurement_validator": {
+      "path": "09-experiments/scripts/validate_operational_cost_measurements_v03.py",
+      "sha256": "b19afe267754eac04f5e7cfa35aecb96f0a99302baa46ff7996c6232d99d4ea1"
+    }
+  },
+  "construct_semantics": {
+    "acquisition_burden": "unit_bearing_raw_resource_vector",
+    "utility_or_evidence_value": "separate_outcome_construct",
+    "volatility_or_delay_loss": "separate_time_dependent_loss_construct",
+    "operational_risk_or_impact": "separate_event_and_downtime_construct",
+    "hard_constraints": "separate_feasibility_gate",
+    "scalar_cost": "undefined_until_transformation_model_is_calibrated_validated_and_frozen"
+  },
+  "counting_semantics": {
+    "status": "frozen_v0.1",
+    "planner_decision_count": "distinct_from_execution_and_primitive_counts",
+    "execution_attempt_count": "includes_failures_cancellations_and_each_retry",
+    "primitive_operation_count": "instrumented_only_never_implicit_one",
+    "split_merge_invariance": "required_before_formal_cost_claims"
+  },
+  "experimental_design": {
+    "case_boundary": {
+      "canonical_C01_C03": "calibration",
+      "canonical_C04_C09": "development_repeat_validation",
+      "canonical_C10_plus": "unassigned_and_sealed",
+      "source_C13_plus": "sealed"
+    },
+    "experimental_unit": "independent_execution_attempt_from_declared_initial_state",
+    "randomization": {
+      "method": "seeded_blocked_permutation",
+      "seed": 20260718,
+      "within_block_order": "randomized"
+    },
+    "blocking": {
+      "design_blocks": [
+        "phase",
+        "attempt_round"
+      ],
+      "recorded_nuisance_factors": [
+        "case_id",
+        "machine_id",
+        "cache_state",
+        "executor_id",
+        "execution_date",
+        "environment_id"
+      ]
+    },
+    "scheduled_primary_attempt_count": 150,
+    "coverage_gate": {
+      "purpose": "coverage_and_smoke_only",
+      "minimum_completed_primary_attempts_per_action": 3,
+      "formal_statistical_claim_authorized": false
+    },
+    "statistical_sufficiency": {
+      "status": "not_established_by_coverage_gate",
+      "required_separate_analysis": true
+    }
+  },
+  "legacy_compatibility": {
+    "case_embedded_scalar_cost": "legacy_exploratory_replay_only",
+    "EDAR_or_EVDA_R_rubric": "suspended_not_construct_validity_evidence",
+    "two_rater_360_component_packet": "suspended_not_required_by_v0.3",
+    "minimum_three_completed_attempts": "coverage_and_smoke_only_not_statistical_sufficiency",
+    "v0.2_files_deleted_or_rewritten": false
+  },
+  "readiness": {
+    "construct_review_complete": true,
+    "action_count": 50,
+    "counting_semantics_frozen": true,
+    "operational_action_mappings_resolved": false,
+    "adapter_count": 7,
+    "implemented_adapter_count": 0,
+    "eligible_adapter_count": 0,
+    "execution_authorized": false,
+    "real_measurement_records_available": false,
+    "coverage_gate_passed": false,
+    "statistical_sufficiency_established": false,
+    "scalar_transformation_model_frozen": false,
+    "formal_measured_cost_profile_ready": false,
+    "paper_or_patent_gate_open": false
+  }
+}

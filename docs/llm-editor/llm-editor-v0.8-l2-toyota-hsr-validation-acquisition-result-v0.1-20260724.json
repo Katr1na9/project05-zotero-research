@@ -1,0 +1,80 @@
+{
+  "schema_version": "project05-llm-editor-l2-toyota-hsr-validation-acquisition-result-v0.1",
+  "created_date": "2026-07-24",
+  "authority_base_commit": "e7fda4a7d745e49a3d6ea692f68d7c54a6c8f3bb",
+  "status": "failed_before_launcher_load_execution_policy_block_no_curl_attempt_not_consumed_hard_stop",
+  "target_id": "toyota_hsr_place_action_validation_archive",
+  "authority_chain": {
+    "activation_path": "docs/llm-editor/llm-editor-v0.8-l2-toyota-hsr-validation-acquisition-activation-v0.1-20260724.json",
+    "activation_sha256": "af42860cf8ff7c3f9a4bb5c6673f985db02e9b49e435be4539d4ffdc499ad894",
+    "launcher_path": "datasets/llm/download_toyota_hsr_validation_v0_1.ps1",
+    "launcher_sha256": "a7196e3f93340253bf653bb32ca072116899f26dc4dafcd64091987eed277a91",
+    "contract_sha256": "90e746c609bd60aeff2a85a48c925c6fc46b54dd55de506e4e806bfd1f58547b",
+    "execution_authority_sha256": "5552f0c7d2abda7d91a1b196a37a5bfdde99ad90098e128794e840032b7dca95",
+    "launcher_preflight_sha256": "81a1fbf222ec838bcff557cca35e501ba7d73643cc984bf0ca5caf5bcaa210a0",
+    "curl_sha256": "73d24149ff289afc49ec41f08918ef9faa727d39ad993e929757dc2ddafab805",
+    "powershell_sha256": "7600ffe12da441fe89d035b13801e8e91d064bc544a27b19a5cf49f6ab8b18f5"
+  },
+  "execution": {
+    "authorized_invocation_performed": true,
+    "launcher_invocation_count_in_this_authority": 1,
+    "maximum_launcher_invocation_count_in_activation": 1,
+    "powershell_process_started": true,
+    "powershell_exit_code": 1,
+    "launcher_source_loaded": false,
+    "launcher_logic_started": false,
+    "curl_process_started": false,
+    "curl_exit_code": null,
+    "acquisition_or_payload_network_request_performed": false,
+    "response_body_received": false,
+    "raw_target_written": false,
+    "raw_target_exists_after_failure": false,
+    "raw_target_observed_bytes": 0,
+    "raw_root_created": false,
+    "gzip_or_tar_opened": false,
+    "archive_member_listed_read_decompressed_or_extracted": false,
+    "audit_started": false
+  },
+  "sanitized_failure": {
+    "stage": "powershell_script_load_before_launcher_logic",
+    "category": "SecurityError",
+    "fully_qualified_error_id": "UnauthorizedAccess",
+    "summary": "The authorized Windows PowerShell invocation was rejected by the host execution policy before the launcher source loaded. No launcher precheck, curl process, acquisition request, target write, identity verification, or archive access occurred.",
+    "contains_payload_member_or_raw_archive_content": false
+  },
+  "attempt_ledger": {
+    "initial_attempts_authorized": 1,
+    "initial_attempts_started": 0,
+    "initial_attempts_consumed": 0,
+    "initial_attempts_remaining": 1,
+    "consumption_rule": "The acquisition attempt is consumed only when the frozen curl process starts.",
+    "consumption_trigger_observed": false,
+    "launcher_invocation_budget_consumed": true,
+    "current_execution_authority_may_be_invoked_again": false,
+    "automatic_retry_or_resume_authorized": false
+  },
+  "identity_verification": {
+    "expected_bytes": 365983836,
+    "exact_size_check_performed": false,
+    "actual_bytes": 0,
+    "expected_md5": "76cb0cab741c3a55eaf662df979f4637",
+    "md5_computed": false,
+    "actual_md5": null,
+    "verified": false,
+    "verification_not_run_reason": "No raw target was written because the PowerShell host blocked the script before launcher and curl start."
+  },
+  "terminal_controls": {
+    "hard_stop_applied": true,
+    "retry_performed": false,
+    "resume_performed": false,
+    "source_url_revision_object_mirror_range_or_slice_changed": false,
+    "launcher_or_activation_modified": false,
+    "archive_opened": false,
+    "notice_privacy_manifest_lineage_pointer_or_other_audit_performed": false,
+    "catalog_role_credit_or_l2_changed": false,
+    "baseline_or_fine_tuning_started": false,
+    "git_commit_performed": false,
+    "git_push_performed": false,
+    "next_action": "Hard stop. The one launcher invocation permitted by the committed activation has been used, although the curl-start acquisition attempt remains unconsumed. Any future execution requires a new explicit authorization and a separately reviewed invocation or entry-policy amendment; do not silently rerun with changed PowerShell flags."
+  }
+}

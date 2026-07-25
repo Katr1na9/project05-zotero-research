@@ -1,0 +1,82 @@
+{
+  "gate_id": "project05-train-null-source-literature-gate-v0.1",
+  "version": "0.1.0",
+  "decision_date": "2026-07-18",
+  "status": "kev_rejected_for_formal_train_null_diagnostic_only",
+  "scope": "cisagov_kev_static_reference_as_project05_observation_compiler_null_or_hard_negative",
+  "evidence_authority": {
+    "review_path": "08-writing/cisa-kev-hard-negative-literature-audit-v0.1-20260718/cisa-kev-hard-negative-literature-audit-v0.1.md",
+    "review_sha256": "DC0BAEECC76996DC3DAB7222A95A7D43DF36A8499AC57F6EC3B4E4492A40FA89",
+    "evidence_matrix_path": "08-writing/cisa-kev-hard-negative-literature-audit-v0.1-20260718/paper-evidence-matrix.csv",
+    "evidence_matrix_sha256": "49829054D22365C9F01B8145D11A127170D997DBEB812B1F3B77289BEA77CB25",
+    "citation_report_path": "08-writing/cisa-kev-hard-negative-literature-audit-v0.1-20260718/cisa-kev-hard-negative-literature-audit-v0.1_citation_report.json",
+    "citation_report_sha256": "F9E17C7368B3F4260EC5B93EBE68550933F4D2EFFE5783AC7DA7270ABCAE0B62",
+    "verified_doi_occurrences": 14,
+    "failed_doi_occurrences": 0,
+    "direct_same_task_peer_reviewed_precedent_found": false,
+    "absence_claim_scope": "No same-task precedent was found under the frozen 2026-07-18 rapid-review protocol; this is not an absolute non-existence claim."
+  },
+  "license_assessment": {
+    "dataset": "cisagov/kev-data pinned root artifacts",
+    "license": "CC0-1.0",
+    "training_processing_permitted": true,
+    "third_party_link_content_covered": false,
+    "cisa_or_dhs_endorsement_may_be_implied": false,
+    "interpretation": "License permission does not establish scientific label validity.",
+    "legal_advice": false
+  },
+  "scientific_assessment": {
+    "kev_statistical_unit": "CVE_or_vulnerability_type",
+    "project05_null_statistical_unit": "case_scoped_evidence_packet_by_concrete_event_or_relation",
+    "unit_match": false,
+    "kev_supports": "High-confidence positive evidence that a vulnerability has attempted or successful in-the-wild exploitation, subject to catalog admission criteria.",
+    "kev_does_not_support": [
+      "A concrete host, process, file, network, or system event did not occur in a Project05 case.",
+      "A missing KEV entry means a vulnerability was not exploited.",
+      "A missing case pointer or relation is world-negative ground truth.",
+      "A KEV shortDescription is benign or normal telemetry."
+    ],
+    "methodological_basis": [
+      "positive_unlabeled_learning",
+      "knowledge_base_incompleteness_false_negatives",
+      "document_relation_extraction_false_negatives",
+      "security_negative_label_noise"
+    ]
+  },
+  "formal_training_decision": {
+    "eligible_as_train_null": false,
+    "eligible_as_train_hard_negative": false,
+    "formal_train_null_gate_credit": 0,
+    "benign_or_normal_label_allowed": false,
+    "world_event_absence_claim_allowed": false,
+    "single_author_feasibility_review_required": false,
+    "single_author_review_reason": "A row-level author judgment cannot repair the cross-unit truth mismatch or supply scholarly external validity.",
+    "v3_bn_01_disposition": "rejected_for_formal_train_null_after_literature_audit",
+    "existing_blank_queue_disposition": "retain_unchanged_as_superseded_historical_artifact"
+  },
+  "diagnostic_only_decision": {
+    "eligible": true,
+    "required_label": "non_entailing_contract_negative",
+    "purpose": "Isolated abstention and semantic-ceiling challenge: vulnerability capability text must not be upgraded into a case-specific observed event without a valid source pointer.",
+    "may_enter_qlora_training": false,
+    "may_count_toward_data_gate": false,
+    "may_select_checkpoint": false,
+    "must_be_reported_separately": true,
+    "source_modality_shortcut_warning_required": true,
+    "direct_same_task_literature_validation_claim_allowed": false
+  },
+  "current_training_arithmetic": {
+    "minimum_formal_train_null": 480,
+    "eligible_existing_train_null": 2,
+    "kev_formal_contribution": 0,
+    "current_minimum_deficit": 478
+  },
+  "hard_stops": [
+    "do_not_request_the_50_row_single_author_kev_review",
+    "do_not_count_kev_as_formal_train_null",
+    "do_not_call_kev_benign_or_normal",
+    "do_not_infer_world_event_absence_from_non_entailment",
+    "do_not_download_tokenizer_or_model",
+    "do_not_train"
+  ]
+}

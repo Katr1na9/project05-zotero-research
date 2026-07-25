@@ -1,0 +1,138 @@
+{
+  "contract_id": "project05-label-blind-token-length-gate-v0.1",
+  "contract_sha256": "7B9334A43A91863765C167ED7C80F48E9BB2A26B6FF6206B8D153587E8E32117",
+  "created_date": "2026-07-19",
+  "dataset": {
+    "examples": 1500,
+    "families": {
+      "ait_cam_lds_manifestations_filtered": {
+        "count": 300,
+        "max": 1155,
+        "min": 657,
+        "over_limit": 17,
+        "p50": 807,
+        "p95": 1030
+      },
+      "beth_process_events": {
+        "count": 300,
+        "max": 965,
+        "min": 718,
+        "over_limit": 0,
+        "p50": 836,
+        "p95": 938
+      },
+      "fkie_socbed_acsac2021_winlogbeat": {
+        "count": 300,
+        "max": 1751,
+        "min": 864,
+        "over_limit": 131,
+        "p50": 1011,
+        "p95": 1243
+      },
+      "logpai_loghub_linux": {
+        "count": 150,
+        "max": 750,
+        "min": 640,
+        "over_limit": 0,
+        "p50": 665,
+        "p95": 747
+      },
+      "redcanary_atomic_red_team": {
+        "count": 300,
+        "max": 2094,
+        "min": 624,
+        "over_limit": 25,
+        "p50": 742,
+        "p95": 1110
+      },
+      "zeek_non_pcap_test_logs": {
+        "count": 150,
+        "max": 873,
+        "min": 677,
+        "over_limit": 0,
+        "p50": 741,
+        "p95": 804
+      }
+    },
+    "overall": {
+      "count": 1500,
+      "max": 2094,
+      "min": 624,
+      "over_limit": 173,
+      "p50": 808,
+      "p95": 1131
+    },
+    "splits": {
+      "train": {
+        "count": 1200,
+        "max": 2094,
+        "min": 624,
+        "over_limit": 173,
+        "p50": 835,
+        "p95": 1144
+      },
+      "training-validation": {
+        "count": 300,
+        "max": 873,
+        "min": 640,
+        "over_limit": 0,
+        "p50": 715,
+        "p95": 800
+      }
+    },
+    "support_decisions": {
+      "supported": 750,
+      "unsupported_by_bound_pointer": 750
+    }
+  },
+  "execution_claims": {
+    "formal_inference_run": false,
+    "m3_runtime_integrated": false,
+    "model_config_downloaded": false,
+    "model_used": false,
+    "model_weight_downloaded": false,
+    "tokenizer_only_engine_used": true,
+    "tokenizer_used": true,
+    "training_run": false,
+    "training_runtime_installed": false
+  },
+  "gate": {
+    "examples_excluded": 0,
+    "examples_rewritten": 0,
+    "examples_truncated": 0,
+    "formal_data_gate_passed": false,
+    "max_pass": false,
+    "maximum_example_tokens": 1024,
+    "maximum_p95_tokens": 1024,
+    "over_limit_pass": false,
+    "p95_pass": false,
+    "percentile_definition": "nearest_rank_sorted_values_ceil_qn_minus_1",
+    "token_gate_passed": false
+  },
+  "schema_version": "project05-label-blind-token-length-audit-v0.1",
+  "serialization": {
+    "contract_sha256": "24EEAB444B1776B7B66D87A930FA113002AA6CC47633D6B654B703720B25CF40",
+    "generator_identity_exposed": false,
+    "messages_per_example": 3,
+    "negative_proof_exposed": false,
+    "rendered_dataset_sha256": "DE1429EC6C74DFC3C0BEFE3A4BAED9A5DDA2A23EA4841232998FBE9BF4808246",
+    "role_counts": {
+      "assistant": 1500,
+      "system": 1500,
+      "user": 1500
+    },
+    "serialization_id": "project05-qwen25-pointer-support-chat-v0.1"
+  },
+  "status": "failed_closed_tokenizer_length_gate",
+  "tokenizer_identity": {
+    "chat_template_sha256": "CD8E9439F0570856FD70470BF8889EBD8B5D1107207F67A5EFB46E342330527F",
+    "engine_package": "tokenizers",
+    "engine_version": "0.21.4",
+    "engine_wheel_sha256": "475D807A5C3EB72C59AD9B5FCDB254F6E17F53DFCBB9903233B0DFA9C943B597",
+    "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "snapshot_manifest_sha256": "8015C1C25640349F518F286A4A0426329A2BFE5B81BCC73D74CE63AFB52B8232"
+  },
+  "tokenizer_lock_path": "09-experiments/llm_evidence_compiler_mainline/tokenizer_gate_v0.1/generated/tokenizer-lock-v0.1.json",
+  "tokenizer_lock_sha256": "FD848D6ABCF5CF79537C41DFC81F371D2C98ED1B1E42707B4934A82654CCFBA8"
+}
