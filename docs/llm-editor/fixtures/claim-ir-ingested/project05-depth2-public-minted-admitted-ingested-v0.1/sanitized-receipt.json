@@ -1,0 +1,88 @@
+{
+  "receipt_version": "kernel-claim-ir-ingestion-receipt-v0.1",
+  "receipt_id": "kir_d52c7a4ec4adf6ed438e953e0e0c9edd",
+  "receipt_scope": "sanitized_in_memory_test_only",
+  "decision": "in_memory_ingestion_contract_test_passed",
+  "effective_consumer_contract": {
+    "artifact_id": "kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725",
+    "version": "0.1",
+    "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+    "sha256": "21766e5d4885170baabfd76eda4e053e2f03778dc32ece778fd3374123009af6"
+  },
+  "schema": {
+    "id": "https://project05.invalid/schemas/claim-ir-kernel.schema.json",
+    "version": "claim-ir-external-v0.1",
+    "path": "schemas/claim-ir-kernel.schema.json",
+    "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+  },
+  "input": {
+    "path": "docs/llm-editor/fixtures/claim-ir-admitted/project05-depth2-public-minted-admitted-v0.1/package.json",
+    "sha256": "f553b0d5f5f29b4e7045cc745cd380414dcdeca2569d9e5a65bbf92208d8eb32",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "surface_id": "project05_depth2_public",
+    "claim_count": 41,
+    "claim_id_list_sha256": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4",
+    "claims_content_hash": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1"
+  },
+  "authority": {
+    "artifact_id": "kernel_claim_ir_ingestion_single_execute_activation_v0_1_20260725",
+    "canonical_sha256": "04729f08c103d9060bfd5f72c263383df37351aecd51a4cc4ed78feb64560ad0",
+    "execution_scope": "in_memory_test_only",
+    "execute_ledger_before": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "execute_ledger_after_required": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 1,
+      "consumed": 1,
+      "remaining": 0,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    }
+  },
+  "transaction": {
+    "idempotency_key": "kii_e0eb05bdd46cf497deedd4e71f4553797e518ad3198fc859e3890d59b98b5ba1",
+    "atomic_all_or_nothing": true,
+    "partial_claim_ingestion": false,
+    "retry": false,
+    "resume": false,
+    "fallback": false,
+    "kernel_intake_committed_in_memory_test_double": true,
+    "production_kernel_store_write": false
+  },
+  "state_transition": {
+    "field": "package.kernel_state",
+    "before": "pending_kernel_schema",
+    "after": "ingested_under_separate_authority"
+  },
+  "identity_preservation": {
+    "package_id_unchanged": true,
+    "claim_order_unchanged": true,
+    "claim_ids_unchanged": true,
+    "claim_id_state_unchanged": true,
+    "admission_state_unchanged": true,
+    "claim_records_unchanged": true,
+    "projection_ref_unchanged": true
+  },
+  "side_effects": {
+    "file_write": false,
+    "production_kernel_store_write": false,
+    "e_case_write": false,
+    "checker_or_promotion": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "si_llm_001_closure": false,
+    "catalog_role_credit_l2_change": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false
+  }
+}
