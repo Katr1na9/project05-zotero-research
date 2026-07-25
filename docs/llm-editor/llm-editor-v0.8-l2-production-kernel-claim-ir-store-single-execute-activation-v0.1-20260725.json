@@ -1,0 +1,135 @@
+{
+  "artifact_id": "llm_editor_v0_8_l2_production_kernel_claim_ir_store_single_execute_activation_v0_1_20260725",
+  "artifact_type": "production_kernel_claim_ir_store_single_execute_activation",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "8aff022870032b1a19bebae3311a4099a6d79ae7",
+  "status": "activated_single_production_kernel_claim_ir_store_execute_authorized",
+  "authority_design": {
+    "artifact_id": "llm-editor-v0.8-l2-production-kernel-claim-ir-store-single-execute-authority-design-v0.1-20260725",
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-production-kernel-claim-ir-store-single-execute-authority-design-v0.1-20260725.json",
+    "sha256": "e12145cc7e996d6435be7570764ea7971393c07745a4f1627bd04069f6fe3e00",
+    "status": "design_only_production_kernel_claim_ir_store_authority_not_activated"
+  },
+  "target": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "target_store_class": "kernel_claim_ir_intake_store",
+    "operation": "persist_exact_ingested_claim_ir_identity_once"
+  },
+  "pinned_hashes": {
+    "authority_design_sha256": "e12145cc7e996d6435be7570764ea7971393c07745a4f1627bd04069f6fe3e00",
+    "effective_consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+    "external_envelope_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "ingested_fixture_sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+    "sanitized_ingestion_receipt_sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de",
+    "in_memory_ingestion_executor_sha256": "da448a03505ac95e9f28bc33573ae453d7f7affc12b1e615a1214704cd8f4ea7",
+    "production_store_executor_sha256": "a52fbba21b1a0d84a7ffa2c22cec5d5239a0f44d92708811d779a0581107412e"
+  },
+  "selected_input": {
+    "ingested_package": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+      "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "surface_id": "project05_depth2_public",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "ingested_under_separate_authority"
+    },
+    "sanitized_ingestion_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json",
+      "sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de"
+    }
+  },
+  "store_transaction": {
+    "store_target_id": "kernel_claim_ir_intake_store:project05_depth2_public:pkg_73d77b55ef6a517a0dc528f7f3a89bd9:v0.1",
+    "transaction_id": "kcist_3c5ad36c704f0ba37bb3ff787fa3f369",
+    "idempotency_key": "kcis_3c5ad36c704f0ba37bb3ff787fa3f369c16299695b7078c02d3e56d78b0c8500",
+    "atomic_all_or_nothing": true,
+    "store_target_empty_or_idempotently_equivalent_required": true,
+    "partial_claim_store": false
+  },
+  "execute_ledger": {
+    "authorized": 1,
+    "maximum": 1,
+    "started": 1,
+    "consumed": 1,
+    "remaining": 0,
+    "retry": false,
+    "resume": false,
+    "fallback": false
+  },
+  "output_policy": {
+    "mode": "versioned_kernel_claim_ir_intake_store_record",
+    "store_record_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+    "sanitized_store_receipt_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+    "file_write": true,
+    "kernel_claim_ir_intake_store_write": true,
+    "is_kernel_store_record": true,
+    "is_e_case": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "claim_lifecycle_mutation": false,
+    "production_registration": false
+  },
+  "still_blocked": {
+    "second_store_execute": true,
+    "e_case": true,
+    "certificate": true,
+    "certified_stop": true,
+    "production_registration_execution": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "checker_or_promotion": true,
+    "catalog_role_credit": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "execution_audit": {
+    "decision": "stored_once_under_single_execute_authority",
+    "executor_call_count": 1,
+    "process_start_consumed_attempt": true,
+    "success_or_failure_exhausts_attempt": true,
+    "activation_sha256_before": "7978f3064826e39cb39c585970085d5b93bd601300b2af8bb3e1d1654180bec5",
+    "production_store_executor_sha256": "a52fbba21b1a0d84a7ffa2c22cec5d5239a0f44d92708811d779a0581107412e",
+    "store_target_id": "kernel_claim_ir_intake_store:project05_depth2_public:pkg_73d77b55ef6a517a0dc528f7f3a89bd9:v0.1",
+    "transaction_id": "kcist_3c5ad36c704f0ba37bb3ff787fa3f369",
+    "idempotency_key": "kcis_3c5ad36c704f0ba37bb3ff787fa3f369c16299695b7078c02d3e56d78b0c8500",
+    "output": {
+      "store_record_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+      "store_record_file_sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "sanitized_store_receipt_path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sanitized_store_receipt_file_sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565"
+    },
+    "identity_preservation": {
+      "package_id_unchanged": true,
+      "claim_ids_unchanged": true,
+      "claim_id_state_unchanged": true,
+      "admission_state_unchanged": true,
+      "kernel_state_unchanged": true,
+      "claim_content_unchanged": true,
+      "silent_schema_conversion": false
+    },
+    "side_effect_assertions": {
+      "kernel_claim_ir_intake_store_write": true,
+      "is_kernel_store_record": true,
+      "is_e_case": false,
+      "e_case_write": false,
+      "certificate_generation": false,
+      "certified_stop": false,
+      "production_registration": false,
+      "production_registration_enabled": false,
+      "claim_lifecycle_mutation": false,
+      "si_llm_001_closure": false,
+      "catalog_role_credit_l2_change": false,
+      "m2_fit": false,
+      "four_family_llm_finetune": false,
+      "key_or_secret_material": false
+    }
+  }
+}
