@@ -1,0 +1,132 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-readonly-experiment-matrix-review-packet-v0.1-20260725",
+  "artifact_type": "kernel_owner_readonly_experiment_matrix_review_packet_assisted_draft",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "status": "RED_REVIEW_PACKET_PENDING_KERNEL_OWNER_DECISION_NOT_EFFECTIVE",
+  "submitted_to": "Kernel/M3*",
+  "submitted_by": "Codex / LLM-editor Claim-ID track",
+  "this_packet_is_not_owner_approval": true,
+  "effective": false,
+  "packet_identity": {
+    "self_hash_method": "SHA-256 of RFC-8259-compatible canonical JSON using UTF-8, sorted keys and compact separators, with packet_identity.self_reported_canonical_sha256 set to null",
+    "self_reported_canonical_sha256": "eade44fb9319998da34ff65cb76fbe58e9f97f43b044a07e77dc64b511107203"
+  },
+  "review_scope": {
+    "surface_id": "project05_depth2_public",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "matrix": "A/B/C read-only local pinned fixture harness",
+    "red_only": true,
+    "green_execution_performed": false,
+    "result_fixture_is_not_a_success_claim": true
+  },
+  "submitted_artifacts": {
+    "design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-design-v0.1-20260725.json",
+      "sha256": "78b31c84c812316840f8cafe9286f35eb99894104e9f7793ed3815bf0fd879ca",
+      "status": "RED_DRAFT_PENDING_KERNEL_OWNER_REVIEW_NOT_EFFECTIVE"
+    },
+    "runner": {
+      "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+      "sha256": "9758a35338e52066cc634f168941920d37f230a6ce2c24fb7469240546b668b8",
+      "status": "RED_SKELETON_RAISES_OWNER_ACCEPTANCE_REQUIRED"
+    },
+    "tests": {
+      "path": "tests/compiler_contract/test_kernel_readonly_experiment_matrix.py",
+      "sha256": "9849ea6e3c1d4b4a0c9db8b55031f565f10b7ee699b6ce1cc2155b5613e7f3d6",
+      "status": "GREEN_EXPECTATIONS_FROZEN_CURRENTLY_RED"
+    },
+    "matrix_result": {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/matrix-result.json",
+      "sha256": "a4b72b48995c7f2186895a2fdaf197375beac616f6eeb0b7cc2ddc0aa3545cc3",
+      "status": "RED_NOT_RUN_PENDING_KERNEL_OWNER_REVIEW"
+    },
+    "sanitized_receipt": {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "f70fa6b0a744eb2c15620c682202e031e3c7e584ef92de82e118a5a6ac96be90",
+      "status": "RED_NOT_RUN_PENDING_KERNEL_OWNER_REVIEW"
+    }
+  },
+  "preflight_evidence": {
+    "fetched_origin_main_tip": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+    "original_work_order_tip": "eedb1228d6ba9c063db254c2c0782b5e9810c658",
+    "original_tip_is_ancestor_of_fetched_tip": true,
+    "handoff_intake": {
+      "path": "docs/kernel/kernel-v0.8-claim-id-certificate-track-handoff-intake-and-experiment-plan-v0.1-20260725.json",
+      "sha256": "5da2ceedb63ccdb3ca8d409d3dfd23aec0a274da4c01ee3747276d42f8c232cf",
+      "match": true
+    },
+    "verified_pins_checked": 27,
+    "verified_pins_mismatched": 0,
+    "pin_reverify": "OK"
+  },
+  "red_evidence": {
+    "first_test_command": "python -m unittest tests.compiler_contract.test_kernel_readonly_experiment_matrix -v",
+    "first_failure": "ImportError: kernel_readonly_experiment_matrix_runner missing",
+    "first_failure_is_expected_product_absence": true,
+    "runner_skeleton_terminal": "KernelReadonlyExperimentMatrixOwnerAcceptanceRequired",
+    "green_arm_results_claimed": false,
+    "test_assertions_relaxed": false
+  },
+  "matrix_contract_for_review": {
+    "arm_a": "baseline without Claim-ID provenance; no clm_* in E1 or scoring",
+    "arm_b": "same frozen case with durable-replay read-only provenance; algorithm and action must remain identical to Arm A",
+    "arm_c": "store-as-E_case, certificate-as-CERTIFIED_STOP, and CERTIFIED_STOP-as-run_mvp-STOP must all fail closed",
+    "global": [
+      "PRODUCTION_REGISTRATION_ENABLED remains false",
+      "no store, E_case, certificate, or CERTIFIED_STOP bytes are written",
+      "no exhausted activation ledger is revived",
+      "Checker and evidence sufficiency remain null",
+      "no L2, Part B, M2, or four-family authority is inferred"
+    ]
+  },
+  "requested_owner_decision": {
+    "required": true,
+    "current_value": null,
+    "allowed_values": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "accept_effect": "authorizes only the GREEN implementation and local read-only A/B/C run described by the pinned design; does not authorize commit, push, PR, or any write activation",
+    "request_revision_requires": "specific design, test, pin, or boundary changes",
+    "reject_effect": "stop without executing any matrix arm"
+  },
+  "questions_for_owner": [
+    "Is the Arm A/B comparison sufficient to demonstrate additive Claim-ID provenance without algorithm or scoring changes?",
+    "Is load_claim_id_durable_replay_attachment plus validate_durable_replay_attachment the accepted Arm B read-only entry path?",
+    "Are the three Arm C type-confusion cases complete for this v0.1 matrix?",
+    "Is the protected-byte snapshot set sufficient to establish no write-side effects and no activation-ledger revival?",
+    "May Codex proceed from this RED skeleton to GREEN without any new activation?"
+  ],
+  "explicit_non_authorizations": {
+    "owner_approval": false,
+    "green_execution": false,
+    "new_write_activation": false,
+    "reactivate_exhausted_ledger": false,
+    "rewrite_historical_effective_sha": false,
+    "checker_non_null": false,
+    "sufficiency_claim": false,
+    "l2": false,
+    "part_b": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_ingestion": false,
+    "production_registration_enablement": false,
+    "certificate_or_certified_stop_as_ordinary_run_mvp_stop": false,
+    "si_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "this_packet_is_effective": false,
+    "this_packet_closes_any_si": false,
+    "this_packet_unlocks_l2": false,
+    "this_packet_elevates_part_b": false,
+    "this_packet_is_a_certificate": false,
+    "this_packet_is_certified_stop": false,
+    "this_packet_is_an_activation": false,
+    "hard_stop_pending_owner_response": true
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-readonly-experiment-matrix-green-review-packet-v0.1-20260726",
+  "artifact_type": "kernel_owner_readonly_experiment_matrix_green_review_packet_assisted",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+  "status": "GREEN_REVIEW_PACKET_PENDING_KERNEL_OWNER_REREVIEW_NOT_EFFECTIVE",
+  "submitted_to": "Kernel/M3*",
+  "submitted_by": "Codex / LLM-editor Claim-ID track",
+  "this_packet_is_not_owner_approval": true,
+  "effective": false,
+  "packet_identity": {
+    "self_hash_method": "SHA-256 of RFC-8259-compatible canonical JSON using UTF-8, sorted keys and compact separators, with packet_identity.self_reported_canonical_sha256 set to null",
+    "self_reported_canonical_sha256": "96838580ffac73801e4ab2f8f3840fca8f9fbcc590d9504baf1b2402574c4078"
+  },
+  "review_scope": {
+    "surface_id": "project05_depth2_public",
+    "fixture_id": "project05-depth2-public-v0.1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "matrix": "A/B/C read-only local pinned fixture harness",
+    "green_local_run_completed": true,
+    "result_is_assisted_non_effective": true
+  },
+  "owner_acceptance": {
+    "path": "docs/kernel/kernel-v0.8-readonly-experiment-matrix-red-owner-acceptance-v0.1-20260725.json",
+    "sha256": "a95a07cb302c8231cbe66336422af0998e15d869c687a42ba6cbac9a06d3263a",
+    "decision": "accept",
+    "status": "red_accepted_green_readonly_implementation_and_local_run_authorized_only"
+  },
+  "submitted_artifacts": {
+    "design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-readonly-experiment-matrix-design-v0.1-20260725.json",
+      "sha256": "78b31c84c812316840f8cafe9286f35eb99894104e9f7793ed3815bf0fd879ca",
+      "status": "OWNER_ACCEPTED_RED_DESIGN_RETAINED_BYTE_EXACT"
+    },
+    "owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-readonly-experiment-matrix-red-owner-acceptance-v0.1-20260725.json",
+      "sha256": "a95a07cb302c8231cbe66336422af0998e15d869c687a42ba6cbac9a06d3263a",
+      "status": "OWNER_ACCEPTED_GREEN_READONLY_ONLY"
+    },
+    "runner": {
+      "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+      "sha256": "1df1cf43c88289c6877b73ce934ccd6e429641c2a91774b1d59d820292522e0e",
+      "status": "GREEN_READ_ONLY_OWNER_ACCEPTANCE_PINNED"
+    },
+    "tests": {
+      "path": "tests/compiler_contract/test_kernel_readonly_experiment_matrix.py",
+      "sha256": "f90f07953d0e0847ab34eedc91b5ceefa2a048914fcb95bfffb9457099901208",
+      "status": "GREEN_EXPECTATIONS"
+    },
+    "matrix_result": {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/matrix-result.json",
+      "sha256": "9cdfdb7fc87e9ac41ad58c8975ad6428202fd974ef8c9cf453d9a8e67611ff42",
+      "status": "GREEN_PASS_READ_ONLY"
+    },
+    "sanitized_receipt": {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "2bfc31677de08e7ba408ec706dc621774d45a28551d5c279e490db9e23467c6d",
+      "status": "GREEN_PASS_READ_ONLY"
+    }
+  },
+  "preflight_evidence": {
+    "tip": "14999363ce1ff1cadadf1a54d995503ae582c5ae",
+    "owner_acceptance_sha256_match": true,
+    "handoff_intake_sha256_match": true,
+    "verified_pins_checked_including_intake": 28,
+    "pin_reverify": "OK",
+    "production_registration_enabled": false
+  },
+  "green_execution_evidence": {
+    "runtime_test_command": "python -m unittest tests.compiler_contract.test_kernel_readonly_experiment_matrix.KernelReadonlyExperimentMatrixRuntimeTests -v",
+    "runtime_test_result": "5/5 PASS",
+    "full_test_command": "python -m unittest tests.compiler_contract.test_kernel_readonly_experiment_matrix -v",
+    "full_test_result": "10/10 PASS",
+    "arm_a": {
+      "status": "PASS",
+      "action_id": "A-high",
+      "claim_id_provenance_attached": false,
+      "core_runtime_view_sha256": "dcbbb1e9541457164fc935c1541dceef888734f8046ebc0be559621622b8c58c"
+    },
+    "arm_b": {
+      "status": "PASS",
+      "action_id": "A-high",
+      "claim_id_provenance_attached": true,
+      "algorithm_changed": false,
+      "core_runtime_view_sha256": "dcbbb1e9541457164fc935c1541dceef888734f8046ebc0be559621622b8c58c",
+      "provenance_sha256": "5123ef610b54bc999b9274766e847d4f461aab429cc2d4154314eaa1cbdf0904",
+      "load_and_validate_only": true,
+      "per_attach_ledger_consumed": false
+    },
+    "arm_c": {
+      "status": "PASS",
+      "store_as_e_case": "FAIL_CLOSED_DENY",
+      "certificate_as_certified_stop": "FAIL_CLOSED_DENY",
+      "certified_stop_as_run_mvp_stop": "FAIL_CLOSED_DENY",
+      "write_path_invoked": false
+    },
+    "claim_id_isolation": {
+      "case_local_visible_evidence": [
+        "E1"
+      ],
+      "clm_in_case_local_e1": false,
+      "clm_in_scoring": false
+    },
+    "protected_state": {
+      "path_count": 31,
+      "before_sha256": "b725d27d4d95ebb7f3d1ec2e39f7b0fec905548d396946ab55371bdb1abfac75",
+      "after_sha256": "b725d27d4d95ebb7f3d1ec2e39f7b0fec905548d396946ab55371bdb1abfac75",
+      "bytes_identical": true
+    }
+  },
+  "write_side_effects": "none",
+  "boundary_confirmations": {
+    "write_executor_imported_or_called": false,
+    "durable_replay_capability_enable_called": false,
+    "exhausted_activation_replayed": false,
+    "kernel_store_written": false,
+    "e_case_written": false,
+    "certificate_issued": false,
+    "certified_stop_executed": false,
+    "ordinary_run_mvp_stop_from_certified_stop": false,
+    "checker_decision": null,
+    "evidence_sufficiency": null,
+    "production_registration_enabled": false,
+    "l2_authorized": false,
+    "part_b_elevated": false,
+    "m2_fit_authorized": false,
+    "four_family_ingestion_authorized": false
+  },
+  "requested_owner_decision": {
+    "required": true,
+    "current_value": null,
+    "allowed_values": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "accept_effect": "accept this assisted read-only matrix result for Kernel experiment-mainline bookkeeping only; no write activation, L2, Part B, M2, or certificate authority follows",
+    "request_revision_requires": "specific runner, test, result, receipt, pin, or boundary findings",
+    "reject_effect": "do not enter this matrix result into Kernel experiment-mainline bookkeeping"
+  },
+  "explicit_non_authorizations": {
+    "owner_green_approval": false,
+    "effective_result": false,
+    "new_write_activation": false,
+    "reactivate_exhausted_ledger": false,
+    "rewrite_historical_effective_sha": false,
+    "checker_non_null": false,
+    "sufficiency_claim": false,
+    "l2": false,
+    "part_b": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_ingestion": false,
+    "production_registration_enablement": false,
+    "certificate_or_certified_stop_as_ordinary_run_mvp_stop": false,
+    "si_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "this_packet_is_effective": false,
+    "this_packet_closes_any_si": false,
+    "this_packet_unlocks_l2": false,
+    "this_packet_elevates_part_b": false,
+    "this_packet_is_a_certificate": false,
+    "this_packet_is_certified_stop": false,
+    "this_packet_is_an_activation": false,
+    "hard_stop_pending_owner_green_rereview": true
+  }
+}
