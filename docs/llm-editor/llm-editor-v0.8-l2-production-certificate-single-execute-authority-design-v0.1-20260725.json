@@ -1,0 +1,418 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-production-certificate-single-execute-authority-design-v0.1-20260725",
+  "artifact_type": "production_certificate_single_execute_authority_design",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "da8cf0eae633826b2075cf18b33a6ff2d9abb6bd",
+  "status": "design_only_production_certificate_authority_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "source_record_class": "e_case",
+    "target_record_class": "certificate",
+    "operation": "single_bounded_production_certificate_generation_attempt",
+    "design_only": true,
+    "activation_included": false,
+    "execution_included": false,
+    "executor_implementation_included": false,
+    "certificate_generation_included_now": false,
+    "checker_acceptance_or_promotion_included": false,
+    "certified_stop_included": false,
+    "evidence_sufficiency_claim_included": false
+  },
+  "pinned_authority_chain": {
+    "e_case_record": {
+      "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/e-case-record.json",
+      "sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+      "is_e_case_observed": true,
+      "is_kernel_store_record_observed": false,
+      "claim_identity_ref_count_observed": 41,
+      "certificate": false,
+      "evidence_sufficiency_or_checker_acceptance_implied": false,
+      "role": "exact_source_identity_for_a_future_separately_authorized_certificate_attempt_only"
+    },
+    "sanitized_e_case_receipt": {
+      "path": "docs/llm-editor/fixtures/e-case/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e",
+      "decision_observed": "e_case_written_once_under_single_execute_authority",
+      "certificate_receipt": false,
+      "checker_or_promotion_performed": false,
+      "certified_stop": false,
+      "contains_key_or_secret_material": false
+    },
+    "effective_e_case_target_schema": {
+      "path": "schemas/e-case-record-effective-v0.1.schema.json",
+      "sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1",
+      "role": "effective_e_case_source_type_identity_only",
+      "certificate_schema": false,
+      "certificate_authority_granted": false
+    },
+    "effective_e_case_write_contract": {
+      "path": "docs/kernel/kernel-v0.8-e-case-write-contract-effective-v0.1-20260725.json",
+      "sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63",
+      "status_observed": "effective_e_case_write_contract_semantics_only_write_not_authorized",
+      "e_case_write_is_certificate": false,
+      "certificate_requires_separate_contract_executor_and_authority": true
+    },
+    "kernel_intake_store_record_separation_reference": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/store-record.json",
+      "sha256": "06757c1b027866ff1e0aa423aba72bcb035aaba2bc56f4b41fcd7b4ddecc9248",
+      "is_kernel_store_record_observed": true,
+      "is_e_case_observed": false,
+      "certificate": false,
+      "may_be_renamed_relabelled_or_reinterpreted_as_certificate": false
+    },
+    "sanitized_kernel_intake_store_receipt_separation_reference": {
+      "path": "docs/llm-editor/fixtures/kernel-claim-ir-intake-store/project05-depth2-public-v0.1/sanitized-receipt.json",
+      "sha256": "4e3c50ae1f6fb480905f0018a0a1ea4145e85e380bf8aef8724166c47596c565",
+      "decision_observed": "stored_once_under_single_execute_authority",
+      "e_case_write_observed": false,
+      "certificate_generation_observed": false
+    },
+    "production_e_case_authority_design_separation_reference": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-e-case-single-execute-authority-design-v0.1-20260725.json",
+      "sha256": "154eaa54f4387c0a0bfdbf01dba8130f0542ddb140444358da99d4c67d2ab1ee",
+      "status_observed": "design_only_production_e_case_authority_not_activated",
+      "relationship": "shape_precedent_and_e_case_authority_only_not_certificate_authority"
+    },
+    "exhausted_production_e_case_activation_separation_reference": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-e-case-single-execute-activation-v0.1-20260725.json",
+      "sha256": "4125cc20e4aa9cd7958c216a6a2ac5e5ce0e7f2d3c57d7e9980fe0aca21a35f4",
+      "status_observed": "activated_single_production_e_case_execute_authorized",
+      "execute_ledger_observed": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      },
+      "exhausted": true,
+      "reusable_for_certificate_generation": false,
+      "relationship": "separation_reference_only_not_substitutable"
+    },
+    "effective_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "status_observed": "effective_consumer_contract_semantics_only_ingestion_not_authorized",
+      "certificate_surface_observed": "vacant",
+      "certificate_generation_authorized": false
+    },
+    "external_claim_ir_envelope_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "role": "external_claim_ir_identity_reference_only",
+      "certificate_schema": false
+    },
+    "kernel_claim_ir_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "role": "kernel_claim_ir_schema_reference_only",
+      "certificate_schema": false,
+      "silent_conversion_to_certificate_authorized": false
+    }
+  },
+  "certificate_schema_and_contract_inventory": {
+    "inventory_scope": [
+      "schemas/",
+      "docs/kernel/",
+      "docs/llm-editor/",
+      "src/checker/"
+    ],
+    "existing_generic_certificate_schema_candidate": {
+      "path": "schemas/certificate.schema.json",
+      "sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba",
+      "schema_id": "https://project05.local/schemas/certificate.schema.json",
+      "owner_metadata_present": false,
+      "effective_status_metadata_present": false,
+      "owner_approval_record_found": false,
+      "may_occupy_effective_certificate_schema_pin": false,
+      "role": "inventory_candidate_only_pending_kernel_checker_owner_review"
+    },
+    "existing_checker_implementation_inventory": {
+      "paths": [
+        "src/checker/finite_domain.py",
+        "src/checker/level_certificate.py"
+      ],
+      "relationship": "implementation_inventory_only_not_an_effective_certificate_issue_write_contract_or_authority",
+      "invoked_by_this_design": false
+    },
+    "inventory_result": "no_kernel_checker_owner_approved_effective_certificate_schema_or_certificate_issue_write_contract_found_at_authority_base_commit",
+    "generic_schema_alone_authorizes_certificate_generation": false,
+    "checker_code_alone_authorizes_certificate_generation": false,
+    "absence_may_be_defaulted_inferred_or_synthesized": false
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "authorized": 0,
+    "maximum": 0,
+    "started": 0,
+    "consumed": 0,
+    "remaining": 0,
+    "certificate_generation_authorized": false,
+    "certificate_generated": false,
+    "checker_invocation_authorized": false,
+    "checker_acceptance_or_promotion_authorized": false,
+    "certified_stop_authorized": false,
+    "certified_stop_declared": false,
+    "interpretation": "This design-only file grants no certificate, Checker, promotion, evidence-sufficiency, or CERTIFIED_STOP authority and cannot be used as an activation artifact."
+  },
+  "future_activation_shape": {
+    "status": "activated_single_production_certificate_execute_authorized",
+    "activation_must_be_distinct_artifact": true,
+    "activation_must_pin_this_design_after_review_and_commit": true,
+    "activation_must_repeat_all_non_null_authority_chain_pins": true,
+    "activation_must_add_non_null_owner_approved_certificate_schema_and_contract_pins": true,
+    "activation_must_select_exactly_one_e_case_source_and_one_certificate_target": true,
+    "activation_must_not_authorize_checker_promotion_or_certified_stop": true,
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "pinned_hashes": {
+      "production_certificate_authority_design_sha256_after_commit": null,
+      "e_case_record_sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+      "sanitized_e_case_receipt_sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e",
+      "effective_e_case_schema_sha256": "dbdc0854487fc0d255c4001332ea5fd183c71a248cb04223630ce8af59cd42a1",
+      "effective_e_case_write_contract_sha256": "eef9a3a2ea805f49b94475c053ebb39b57de84369b34b1fcd0d7b9d198ac0d63",
+      "exhausted_e_case_activation_sha256": "4125cc20e4aa9cd7958c216a6a2ac5e5ce0e7f2d3c57d7e9980fe0aca21a35f4",
+      "effective_consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "external_envelope_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "owner_approved_effective_certificate_schema_sha256": null,
+      "owner_approved_effective_certificate_issue_write_contract_sha256": null,
+      "fail_closed_certificate_executor_sha256": null
+    },
+    "null_placeholder_is_an_effective_pin": false,
+    "activation_while_any_required_future_pin_is_null": false,
+    "execute_ledger": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "activation_created_now": false,
+    "certificate_authorized_now_by_this_design": false
+  },
+  "required_future_preconditions": {
+    "owner": "Kernel/Checker",
+    "owner_approved_effective_certificate_schema": {
+      "required": true,
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "status": null,
+      "owner_approval_record": null,
+      "current_generic_schema_candidate_may_substitute": false,
+      "non_null_exact_pin_required_before_activation": true
+    },
+    "owner_approved_effective_certificate_issue_write_contract": {
+      "required": true,
+      "artifact_id": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "status": null,
+      "owner_approval_record": null,
+      "non_null_exact_pin_required_before_activation": true
+    },
+    "independently_reviewed_fail_closed_certificate_executor": {
+      "required": true,
+      "path": null,
+      "sha256": null,
+      "must_reject_non_effective_schema_or_contract": true,
+      "must_reject_e_case_or_store_relabel_as_certificate": true
+    },
+    "separate_pi_single_execute_activation": {
+      "required": true,
+      "artifact_id": null,
+      "path": null,
+      "sha256": null,
+      "ledger_shape": "1/1/0/0/1 with retry resume fallback false"
+    },
+    "exact_source_and_mapping_contract": {
+      "exact_e_case_record_and_receipt_identity": true,
+      "source_e_case_bytes_unchanged": true,
+      "new_separately_typed_certificate_target": true,
+      "certificate_identity_scope_and_proof_inputs_defined_by_owner": true,
+      "transaction_and_idempotency_contract_defined_by_owner": true,
+      "certificate_target_empty_or_idempotently_equivalent_before_start": true
+    },
+    "checker_boundary": {
+      "checker_decision_input_if_required_must_be_separately_pinned_by_owner_contract": true,
+      "this_design_authorizes_checker_invocation": false,
+      "this_design_authorizes_checker_acceptance_or_promotion": false,
+      "e_case_presence_defaults_to_checker_acceptance": false
+    },
+    "certified_stop_boundary": {
+      "separate_authority_required": true,
+      "this_design_authorizes_certified_stop": false,
+      "certificate_presence_defaults_to_certified_stop": false
+    },
+    "preconditions_may_be_bypassed": false
+  },
+  "future_execution_contract": {
+    "input_kind": "exact_versioned_e_case_record_with_exact_sanitized_e_case_receipt",
+    "allowed_future_effect": "generate_exactly_one_new_separately_typed_certificate_under_owner_effective_schema_contract_executor_and_distinct_single_use_activation",
+    "source_identity": {
+      "surface_id": "project05_depth2_public",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "e_case_record_sha256": "4cfb1599b773ccc7e08ab837b67513937388c8f4329f82adcc252c4375dee8d6",
+      "e_case_receipt_sha256": "e1ef407f2b81e22efc09d7c0ae9c0198aac4276c3fa10141880bf7a2f3d5668e",
+      "source_is_e_case": true,
+      "source_is_kernel_store_record": false,
+      "e_case_write_implies_evidence_sufficiency": false,
+      "e_case_write_implies_certificate_eligibility": false
+    },
+    "source_preservation": {
+      "e_case_record_unchanged": true,
+      "e_case_receipt_unchanged": true,
+      "intake_store_record_unchanged": true,
+      "package_id_unchanged": true,
+      "claim_identity_refs_unchanged": true,
+      "direct_rename_relabel_alias_or_in_place_conversion": false,
+      "silent_evidence_sufficiency_escalation": false
+    },
+    "target_semantics_must_be_defined_by_future_owner_contract": {
+      "certificate_schema_identity": true,
+      "certificate_id_and_scope": true,
+      "proof_and_checker_input_requirements": true,
+      "source_to_target_mapping": true,
+      "validation_and_rejection_rules": true,
+      "transaction_and_idempotency_rules": true,
+      "revocation_and_invalidation_boundary": true,
+      "checker_promotion_boundary": true,
+      "certified_stop_boundary": true
+    },
+    "process_start_consumes_attempt": true,
+    "success_or_failure_exhausts_attempt": true,
+    "second_execute": false,
+    "automatic_retry": false,
+    "resume": false,
+    "fallback": false,
+    "fail_closed_on_unknown_field": true,
+    "fail_closed_on_missing_or_mismatched_pin": true,
+    "fail_closed_on_null_certificate_schema_or_contract_pin": true,
+    "fail_closed_on_e_case_or_store_relabel_as_certificate": true,
+    "fail_closed_on_checker_promotion_or_certified_stop_request": true
+  },
+  "production_registration_boundary": {
+    "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+    "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+    "symbol": "PRODUCTION_REGISTRATION_ENABLED",
+    "line_observed": 82,
+    "observed_value": false,
+    "this_design_requires_value_true": false,
+    "this_design_implies_value_true": false,
+    "this_design_changes_value_to_true": false
+  },
+  "separation_of_authority": {
+    "required_interpretation": "certificate != E_case != Kernel intake store != production registration != CERTIFIED_STOP != Checker acceptance or promotion",
+    "certificate_is_e_case": false,
+    "certificate_is_kernel_intake_store": false,
+    "certificate_is_production_registration": false,
+    "certificate_is_certified_stop": false,
+    "certificate_is_checker_acceptance_or_promotion": false,
+    "e_case_write_is_evidence_sufficiency": false,
+    "e_case_write_is_certificate": false,
+    "e_case_write_is_certified_stop": false,
+    "kernel_store_presence_is_certificate": false,
+    "one_authority_substitutes_for_another": false
+  },
+  "still_blocked": {
+    "effective_certificate_schema": true,
+    "effective_certificate_issue_write_contract": true,
+    "certificate_executor_implementation": true,
+    "certificate_activation": true,
+    "certificate_execution": true,
+    "certified_stop": true,
+    "checker_promotion": true,
+    "checker_acceptance_or_evidence_sufficiency": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "activation_integrity_rules": {
+    "in_place_activation_of_this_design": false,
+    "editing_this_design_status_to_simulate_activation": false,
+    "activation_without_distinct_artifact": false,
+    "activation_without_exact_chain_pins": false,
+    "activation_with_null_certificate_schema_contract_or_executor_pin": false,
+    "activation_without_single_use_ledger": false,
+    "activation_with_retry_resume_or_fallback": false,
+    "reusing_the_exhausted_e_case_activation": false,
+    "reinterpreting_e_case_or_store_authority_as_certificate_authority": false,
+    "using_generic_unowned_certificate_schema_as_effective_owner_pin": false,
+    "certificate_activation_that_also_authorizes_checker_promotion_or_certified_stop": false
+  },
+  "explicit_non_authorizations": {
+    "activation": false,
+    "certificate_executor_implementation": false,
+    "certificate_generation": false,
+    "checker_invocation": false,
+    "checker_acceptance_or_promotion": false,
+    "evidence_sufficiency_assertion": false,
+    "certified_stop": false,
+    "e_case_write_or_mutation": false,
+    "kernel_store_write_or_mutation": false,
+    "production_registration": false,
+    "production_registration_switch_change": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "git_push": false,
+    "pull_request_creation": false
+  },
+  "review_boundary": {
+    "design_claim": "The exact current E_case source chain, absent Kernel/Checker owner-effective certificate schema and issue/write contract gate, single-use future activation shape, and strict certificate/Checker/CERTIFIED_STOP separation are defined for review only.",
+    "not_an_activation": true,
+    "not_a_certificate_executor": true,
+    "not_a_certificate": true,
+    "not_a_checker_decision_or_promotion": true,
+    "not_an_evidence_sufficiency_claim": true,
+    "not_a_certified_stop": true,
+    "not_an_e_case_or_store_mutation": true,
+    "not_an_si_llm_001_closure": true,
+    "not_an_l2_or_part_b_gate_pass": true,
+    "effective": false,
+    "future_order": [
+      "Kernel/Checker owner issues and approves an effective certificate target schema with exact artifact identity path and SHA-256",
+      "Kernel/Checker owner issues and approves an effective certificate issue/write contract with exact artifact identity path and SHA-256",
+      "separately implement and review a fail-closed certificate executor",
+      "create and review a distinct PI single-use activation pinning this committed design and all effective owner artifacts",
+      "separately authorize at most one certificate generation attempt",
+      "if ever desired, authorize CERTIFIED_STOP under a different contract and authority"
+    ]
+  },
+  "audit_trail": {
+    "authority_chain_rehashed_from_disk": true,
+    "certificate_schema_and_contract_inventory_performed": true,
+    "generic_certificate_schema_candidate_found": true,
+    "owner_approved_effective_certificate_schema_found": false,
+    "owner_approved_effective_certificate_issue_write_contract_found": false,
+    "code_changed_in_this_design_turn": false,
+    "schema_changed_in_this_design_turn": false,
+    "fixture_changed_in_this_design_turn": false,
+    "activation_created_in_this_design_turn": false,
+    "certificate_generated_in_this_design_turn": false,
+    "checker_or_promotion_effect_in_this_design_turn": false,
+    "certified_stop_effect_in_this_design_turn": false,
+    "e_case_or_kernel_store_write_in_this_design_turn": false,
+    "production_registration_enabled_in_this_design_turn": false,
+    "si_llm_001_or_l2_effect_in_this_design_turn": false,
+    "git_push_performed_in_this_design_turn": false
+  }
+}
