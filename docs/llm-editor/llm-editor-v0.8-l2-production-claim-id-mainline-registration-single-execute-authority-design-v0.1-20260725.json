@@ -1,0 +1,241 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-production-claim-id-mainline-registration-single-execute-authority-design-v0.1-20260725",
+  "artifact_type": "production_claim_id_mainline_registration_single_execute_authority_design",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "957b87141eb2000c9db748b41cfa4b285abe3f95",
+  "status": "design_only_production_registration_authority_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "operation": "single_bounded_production_mainline_registration_attempt",
+    "registration_target": "claim_id_mainline_read_only_reference",
+    "production_registration_only": true,
+    "production_registration_enabled_now": false,
+    "activation_included": false,
+    "execution_included": false,
+    "persistent_write_included_now": false
+  },
+  "pinned_registration_boundary": {
+    "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+    "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+    "symbol": "PRODUCTION_REGISTRATION_ENABLED",
+    "line_at_authority_base_commit": 82,
+    "observed_value": false,
+    "required_value_while_this_design_is_only_a_draft": false,
+    "this_design_requires_value_true": false,
+    "this_design_implies_value_true": false,
+    "this_design_changes_value_to_true": false,
+    "activation_artifact_may_edit_source_code": false,
+    "registration_attempt_while_gate_is_false": "fail_closed",
+    "interpretation": "This design pins the existing disabled boundary. It neither selects nor authorizes any future mechanism for changing that boundary."
+  },
+  "pinned_authority_chain": {
+    "mainline_handoff_implementation": {
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+      "registration_behavior_observed": "payload_builder_only_no_registration"
+    },
+    "mainline_handoff_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mainline-handoff-design-v0.1-20260724.json",
+      "sha256": "cc6829709b359e2cac72ad30c00ac78ce7e2989a66f2b2e20d7eac4b98452e80",
+      "status_observed": "design_only_mainline_handoff_not_authorized"
+    },
+    "merge_readiness_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mainline-handoff-merge-readiness-disposition-v0.1-20260725.json",
+      "sha256": "b1d9f2cf54132685f072d9cb84619f1e73b9da331bd37d683342ec7444b8ad94",
+      "status_observed": "draft_merge_readiness_not_effective"
+    },
+    "effective_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "status_observed": "effective_consumer_contract_semantics_only_ingestion_not_authorized",
+      "registration_authority_granted_by_contract": false
+    },
+    "external_claim_ir_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "ingested_claim_ir_fixture": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+      "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "ingested_under_separate_authority"
+    },
+    "sanitized_ingestion_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json",
+      "sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de",
+      "contains_key_or_secret_material": false
+    }
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "authorized": 0,
+    "maximum": 0,
+    "started": 0,
+    "consumed": 0,
+    "remaining": 0,
+    "production_registration_enabled": false,
+    "production_registration_performed": false,
+    "production_registration_receipt_created": false,
+    "interpretation": "This file grants no production registration authority and cannot be used as an activation artifact."
+  },
+  "future_activation_shape": {
+    "status": "activated_single_production_registration_execute_authorized",
+    "activation_must_be_distinct_artifact": true,
+    "activation_must_pin_this_design_after_review_and_commit": true,
+    "activation_must_repeat_all_authority_chain_pins": true,
+    "activation_must_select_exactly_one_registration_target": true,
+    "activation_must_not_edit_code_or_the_registration_switch": true,
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "execute_ledger": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "required_future_preconditions": {
+      "separately_reviewed_registration_executor_or_mechanism": true,
+      "fail_closed_authority_validation": true,
+      "exact_pinned_handoff_payload_identity": true,
+      "exact_effective_consumer_contract_identity": true,
+      "exact_ingested_fixture_and_receipt_identity": true,
+      "separate_pi_activation_review": true,
+      "unresolved_registration_gate_representation_must_be_reviewed_separately": true
+    },
+    "activation_created_now": false,
+    "registration_authorized_now_by_this_design": false
+  },
+  "future_execution_contract": {
+    "input_kind": "exact_read_only_claim_id_mainline_handoff_reference",
+    "allowed_future_effect": "register_the_exact_pinned_read_only_handoff_reference_once_under_a_separate_activation",
+    "required_identity": {
+      "surface_id": "project05_depth2_public",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "ingested_under_separate_authority",
+      "effective_consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+    },
+    "process_start_consumes_attempt": true,
+    "success_or_failure_exhausts_attempt": true,
+    "second_execute": false,
+    "automatic_retry": false,
+    "resume": false,
+    "fallback": false,
+    "fail_closed_on_unknown_field": true,
+    "fail_closed_on_missing_or_mismatched_pin": true,
+    "fail_closed_on_non_ingested_kernel_state": true,
+    "fail_closed_on_cross_surface_or_wrong_package": true,
+    "fail_closed_on_draft_contract_used_as_effective": true,
+    "fail_closed_on_registration_gate_false": true,
+    "forbidden_input_content": [
+      "raw payload bytes beyond the exact pinned handoff identity",
+      "labels, outcomes, oracle state, mask state, or hidden identities",
+      "key, secret, credential, or HMAC material",
+      "certificate, E_case, Checker, promotion, CERTIFIED_STOP, or L2 fields",
+      "catalog, source-role, lineage-credit, or quota-credit mutations"
+    ]
+  },
+  "separation_of_authority": {
+    "required_interpretation": "registration != Kernel store != E_case != certificate != admission != mint",
+    "registration_is_kernel_store_write": false,
+    "registration_is_e_case_write": false,
+    "registration_is_certificate_generation": false,
+    "registration_is_admission": false,
+    "registration_is_claim_id_mint": false,
+    "registration_is_checker_or_promotion": false,
+    "registration_is_certified_stop": false,
+    "registration_is_l2_gate_pass": false,
+    "registration_changes_claim_id_or_lifecycle_states": false,
+    "one_authority_substitutes_for_another": false
+  },
+  "still_blocked": {
+    "production_registration_activation": true,
+    "production_registration_execution": true,
+    "kernel_store": true,
+    "e_case": true,
+    "certificate": true,
+    "certified_stop": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "four_family_llm_finetune": true,
+    "m2_fit": true
+  },
+  "activation_integrity_rules": {
+    "in_place_activation_of_this_design": false,
+    "editing_this_design_status_to_simulate_activation": false,
+    "editing_handoff_design_status_to_simulate_activation": false,
+    "editing_production_registration_enabled_by_this_design": false,
+    "activation_without_distinct_artifact": false,
+    "activation_without_exact_chain_pins": false,
+    "activation_without_single_use_ledger": false,
+    "activation_with_retry_resume_or_fallback": false
+  },
+  "explicit_non_authorizations": {
+    "activation": false,
+    "production_registration": false,
+    "production_registration_switch_change": false,
+    "registration_executor_implementation": false,
+    "handoff_executor_behavior_change": false,
+    "persistent_write": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "admission": false,
+    "claim_id_mint": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "code_change": false,
+    "schema_change": false,
+    "fixture_change": false,
+    "git_push": false,
+    "pull_request_creation": false
+  },
+  "review_boundary": {
+    "design_claim": "The pins, separation rules, fail-closed preconditions, and single-use ledger shape for a possible future production Claim-ID mainline registration authority are defined for review.",
+    "not_an_activation": true,
+    "not_a_registration_execution": true,
+    "not_a_registration_switch_change": true,
+    "not_a_persistent_write": true,
+    "not_a_kernel_store_or_e_case_authority": true,
+    "not_a_certificate_or_certified_stop": true,
+    "not_an_si_llm_001_closure": true,
+    "not_an_l2_or_part_b_gate_pass": true,
+    "effective": false,
+    "future_order": [
+      "review and commit this design-only authority shape",
+      "separately review a fail-closed registration executor or mechanism without changing this design in place",
+      "create and review a distinct activation artifact with an exact single-use ledger",
+      "separately authorize at most one production registration attempt"
+    ]
+  },
+  "audit_trail": {
+    "authority_chain_rehashed_from_disk": true,
+    "code_changed_in_this_design_turn": false,
+    "schema_changed_in_this_design_turn": false,
+    "fixtures_changed_in_this_design_turn": false,
+    "activation_created_in_this_design_turn": false,
+    "production_registration_enabled_in_this_design_turn": false,
+    "production_registration_performed_in_this_design_turn": false,
+    "persistent_kernel_or_e_case_write_in_this_design_turn": false,
+    "certificate_or_l2_effect_in_this_design_turn": false,
+    "git_push_performed_in_this_design_turn": false
+  }
+}
