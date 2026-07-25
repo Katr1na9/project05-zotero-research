@@ -1,0 +1,274 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-production-kernel-claim-ir-store-single-execute-authority-design-v0.1-20260725",
+  "artifact_type": "production_kernel_claim_ir_store_single_execute_authority_design",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "3371974b04ac645e0cf9ede6439e253b88b2fe2b",
+  "status": "design_only_production_kernel_claim_ir_store_authority_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "operation": "single_bounded_production_kernel_claim_ir_store_attempt",
+    "target_store_class": "kernel_claim_ir_intake_store",
+    "production_store_only": true,
+    "activation_included": false,
+    "execution_included": false,
+    "kernel_store_write_included_now": false,
+    "e_case_write_included": false,
+    "certificate_generation_included": false
+  },
+  "pinned_authority_chain": {
+    "effective_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "status_observed": "effective_consumer_contract_semantics_only_ingestion_not_authorized",
+      "production_store_authority_granted_by_contract": false
+    },
+    "external_claim_ir_envelope_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "role": "exact_external_input_envelope_identity"
+    },
+    "kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "role": "kernel_owned_target_schema_reference_only",
+      "silent_external_to_kernel_schema_conversion_authorized": false
+    },
+    "ingested_claim_ir_fixture": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/package.json",
+      "sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "ingested_under_separate_authority"
+    },
+    "sanitized_ingestion_receipt": {
+      "path": "docs/llm-editor/fixtures/claim-ir-ingested/project05-depth2-public-minted-admitted-ingested-v0.1/sanitized-receipt.json",
+      "sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de",
+      "receipt_scope_observed": "sanitized_in_memory_test_only",
+      "production_store_receipt": false,
+      "contains_key_or_secret_material": false
+    },
+    "kernel_claim_ir_ingestion_executor": {
+      "path": "src/compiler/llm/kernel_claim_ir_ingestion_executor.py",
+      "sha256": "da448a03505ac95e9f28bc33573ae453d7f7affc12b1e615a1214704cd8f4ea7",
+      "observed_capability": "fail_closed_in_memory_ingestion_transition_only",
+      "production_kernel_store_write_supported": false,
+      "may_be_reinterpreted_as_store_executor": false
+    },
+    "production_registration_authority_design_separation_reference": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-production-claim-id-mainline-registration-single-execute-authority-design-v0.1-20260725.json",
+      "sha256": "ad6b95adc6b515649e9dd7886ea9530d33f931559bfff70f97f07576f3d7acda",
+      "status_observed": "design_only_production_registration_authority_not_activated",
+      "relationship": "separation_reference_only_not_substitutable"
+    }
+  },
+  "production_registration_boundary": {
+    "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+    "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+    "symbol": "PRODUCTION_REGISTRATION_ENABLED",
+    "line_at_authority_base_commit": 82,
+    "observed_value": false,
+    "this_design_requires_value_true": false,
+    "this_design_implies_value_true": false,
+    "this_design_changes_value_to_true": false,
+    "production_registration_authorized_by_this_design": false
+  },
+  "current_authorization_state": {
+    "activated": false,
+    "authorized": 0,
+    "maximum": 0,
+    "started": 0,
+    "consumed": 0,
+    "remaining": 0,
+    "production_kernel_store_write_authorized": false,
+    "production_kernel_store_write_performed": false,
+    "production_store_receipt_created": false,
+    "interpretation": "This file grants no production Kernel Claim IR store authority and cannot be used as an activation artifact."
+  },
+  "future_activation_shape": {
+    "status": "activated_single_production_kernel_claim_ir_store_execute_authorized",
+    "activation_must_be_distinct_artifact": true,
+    "activation_must_pin_this_design_after_review_and_commit": true,
+    "activation_must_repeat_all_authority_chain_pins": true,
+    "activation_must_select_exactly_one_store_target_and_one_input": true,
+    "surface_id": "project05_depth2_public",
+    "source_class": "planner_experiment_inputs",
+    "adapter_id": "m1a_planner_inputs_v0_1",
+    "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+    "pinned_hashes": {
+      "effective_consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "external_envelope_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "ingested_fixture_sha256": "908becf0c14f0bec756bf0382b85c5eeb100d61e0e19cde8a9375977071bd179",
+      "sanitized_ingestion_receipt_sha256": "1a4156704384becf7fc5b70c581c995eefe8d517dca2a6ffd423cb9d292ce2de",
+      "in_memory_ingestion_executor_sha256": "da448a03505ac95e9f28bc33573ae453d7f7affc12b1e615a1214704cd8f4ea7"
+    },
+    "execute_ledger": {
+      "authorized": 1,
+      "maximum": 1,
+      "started": 0,
+      "consumed": 0,
+      "remaining": 1,
+      "retry": false,
+      "resume": false,
+      "fallback": false
+    },
+    "required_future_preconditions": {
+      "separately_reviewed_fail_closed_production_store_executor": true,
+      "kernel_owner_approved_exact_store_target": true,
+      "exact_transaction_and_idempotency_contract": true,
+      "exact_ingested_fixture_and_receipt_identity": true,
+      "separate_pi_activation_review": true,
+      "store_target_empty_or_idempotently_equivalent_before_start": true
+    },
+    "activation_created_now": false,
+    "kernel_store_authorized_now_by_this_design": false
+  },
+  "future_execution_contract": {
+    "input_kind": "exact_versioned_ingested_claim_ir_package_with_exact_sanitized_ingestion_receipt",
+    "allowed_future_effect": "persist_the_exact_pinned_claim_ir_identity_once_to_one_pinned_kernel_claim_ir_intake_store_under_a_separate_activation",
+    "required_input_state": {
+      "surface_id": "project05_depth2_public",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "claim_id_state": "minted_opaque",
+      "admission_state": "admitted_under_separate_authority",
+      "kernel_state": "ingested_under_separate_authority"
+    },
+    "identity_preservation": {
+      "claim_id_unchanged": true,
+      "claim_id_state_unchanged": true,
+      "admission_state_unchanged": true,
+      "kernel_state_unchanged": true,
+      "package_id_unchanged": true,
+      "claim_content_unchanged": true,
+      "silent_schema_conversion": false
+    },
+    "future_receipt_minimum": [
+      "store_receipt_version",
+      "store_receipt_id",
+      "authority_artifact_id_and_sha256",
+      "effective_consumer_contract_sha256",
+      "external_and_kernel_schema_sha256",
+      "package_id_and_input_sha256",
+      "store_target_id",
+      "transaction_id_and_idempotency_key",
+      "ledger_before_and_after",
+      "side_effect_assertions"
+    ],
+    "process_start_consumes_attempt": true,
+    "success_or_failure_exhausts_attempt": true,
+    "second_execute": false,
+    "automatic_retry": false,
+    "resume": false,
+    "fallback": false,
+    "fail_closed_on_unknown_field": true,
+    "fail_closed_on_missing_or_mismatched_pin": true,
+    "fail_closed_on_wrong_surface_package_or_state": true,
+    "fail_closed_on_draft_contract_used_as_effective": true,
+    "fail_closed_on_unpinned_store_target": true,
+    "fail_closed_on_existing_non_idempotent_target_record": true,
+    "forbidden_effects": [
+      "E_case creation or mutation",
+      "certificate generation or CERTIFIED_STOP",
+      "Claim-ID mint or admission",
+      "production mainline registration or registration-switch mutation",
+      "Checker, promotion, SI-LLM-001 closure, L2, or Part B state change",
+      "catalog, source-role, lineage-credit, or quota-credit mutation",
+      "M2 fit or four-family LLM fine-tuning"
+    ]
+  },
+  "separation_of_authority": {
+    "required_interpretation": "Kernel Claim IR store != E_case != certificate != production registration != admission != mint",
+    "kernel_store_is_e_case": false,
+    "kernel_store_is_certificate": false,
+    "kernel_store_is_production_registration": false,
+    "kernel_store_is_admission": false,
+    "kernel_store_is_claim_id_mint": false,
+    "kernel_store_is_checker_or_promotion": false,
+    "kernel_store_is_certified_stop": false,
+    "kernel_store_is_si_llm_001_closure": false,
+    "kernel_store_is_l2_or_part_b_gate_pass": false,
+    "one_authority_substitutes_for_another": false
+  },
+  "still_blocked": {
+    "production_kernel_store_activation": true,
+    "production_kernel_store_execution": true,
+    "e_case": true,
+    "certificate": true,
+    "certified_stop": true,
+    "production_registration_execution": true,
+    "si_llm_001_closure": true,
+    "l2": true,
+    "part_b_elevation": true,
+    "checker_or_promotion": true,
+    "catalog_role_credit": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  },
+  "activation_integrity_rules": {
+    "in_place_activation_of_this_design": false,
+    "editing_this_design_status_to_simulate_activation": false,
+    "reusing_the_exhausted_in_memory_ingestion_activation": false,
+    "reinterpreting_the_in_memory_ingestion_executor_as_store_executor": false,
+    "using_the_registration_authority_as_store_authority": false,
+    "activation_without_distinct_artifact": false,
+    "activation_without_exact_chain_pins": false,
+    "activation_without_single_use_ledger": false,
+    "activation_with_retry_resume_or_fallback": false
+  },
+  "explicit_non_authorizations": {
+    "activation": false,
+    "production_kernel_store_write": false,
+    "production_store_executor_implementation": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "production_registration": false,
+    "production_registration_switch_change": false,
+    "admission": false,
+    "claim_id_mint": false,
+    "si_llm_001_closure": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false,
+    "code_change": false,
+    "schema_change": false,
+    "fixture_change": false,
+    "git_push": false,
+    "pull_request_creation": false
+  },
+  "review_boundary": {
+    "design_claim": "The pins, separation rules, fail-closed preconditions, and single-use ledger shape for a possible future production Kernel Claim IR store authority are defined for review.",
+    "not_an_activation": true,
+    "not_a_kernel_store_write": true,
+    "not_an_e_case_write": true,
+    "not_a_certificate_or_certified_stop": true,
+    "not_a_production_registration": true,
+    "not_an_si_llm_001_closure": true,
+    "not_an_l2_or_part_b_gate_pass": true,
+    "effective": false,
+    "future_order": [
+      "review and commit this design-only authority shape",
+      "separately implement and review a fail-closed production Kernel store executor",
+      "create and review a distinct activation artifact with one exact store target and a single-use ledger",
+      "separately authorize at most one production Kernel Claim IR store attempt"
+    ]
+  },
+  "audit_trail": {
+    "authority_chain_rehashed_from_disk": true,
+    "code_changed_in_this_design_turn": false,
+    "schema_changed_in_this_design_turn": false,
+    "fixtures_changed_in_this_design_turn": false,
+    "activation_created_in_this_design_turn": false,
+    "kernel_store_write_in_this_design_turn": false,
+    "e_case_or_certificate_effect_in_this_design_turn": false,
+    "production_registration_enabled_in_this_design_turn": false,
+    "si_llm_001_or_l2_effect_in_this_design_turn": false,
+    "git_push_performed_in_this_design_turn": false
+  }
+}
