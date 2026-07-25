@@ -16,6 +16,7 @@ import hashlib
 import json
 import math
 import random
+import sys
 from copy import deepcopy
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
@@ -125,6 +126,59 @@ def canonical_json_sha256(data: Any) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
+
+
+def load_claim_id_mainline_reference(
+    reference_path: Path,
+    activation_path: Path,
+) -> dict[str, Any]:
+    """Load one authorized read-only Claim-ID provenance reference.
+
+    The imported opaque ``clm_*`` identifiers remain separate from the
+    simulator's case-local claim vocabulary and are returned only for additive
+    result-summary provenance.
+    """
+
+    repo_root = Path(__file__).resolve().parents[2]
+    repo_root_text = str(repo_root)
+    inserted_repo_root = repo_root_text not in sys.path
+    if inserted_repo_root:
+        sys.path.insert(0, repo_root_text)
+    try:
+        from src.compiler.llm.claim_id_control_loop_reference_loader import (
+            load_claim_id_control_loop_reference,
+        )
+
+        loaded = load_claim_id_control_loop_reference(
+            reference_path,
+            repo_root=repo_root,
+            activation_path=activation_path,
+        )
+    finally:
+        if inserted_repo_root:
+            sys.path.remove(repo_root_text)
+    return {
+        "provenance": loaded.view.to_provenance(),
+        "activation_sha256_before": loaded.activation_sha256_before,
+        "execute_ledger_after_required": dict(
+            loaded.execute_ledger_after_required
+        ),
+    }
+
+
+def attach_claim_id_mainline_reference(
+    summary: dict[str, Any],
+    provenance: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Add controller provenance without exposing it to planning state."""
+
+    if provenance is None:
+        return summary
+    if "claim_id_mainline_reference" in summary:
+        raise ValueError("claim_id_mainline_reference is already attached")
+    attached = deepcopy(summary)
+    attached["claim_id_mainline_reference"] = deepcopy(provenance)
+    return attached
 
 
 def load_cost_profile(path: Path) -> dict[str, Any]:
@@ -1846,6 +1900,7 @@ def run_all(
     output_dir: Path,
     cost_regime: str = "legacy",
     cost_profile: dict[str, Any] | None = None,
+    claim_id_mainline_reference: dict[str, Any] | None = None,
 ) -> None:
     rows, traces = execute_case(case_dir, cost_regime, cost_profile)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1854,7 +1909,10 @@ def run_all(
     write_csv(output_paths["results"], rows)
 
     write_json(output_paths["traces"], traces)
-    summary = summarize(rows)
+    summary = attach_claim_id_mainline_reference(
+        summarize(rows),
+        claim_id_mainline_reference,
+    )
     write_json(output_paths["summary"], summary)
 
     print(f"Wrote {output_paths['results']}")
@@ -1869,6 +1927,7 @@ def run_cases(
     write_traces: bool = True,
     cost_regime: str = "legacy",
     cost_profile: dict[str, Any] | None = None,
+    claim_id_mainline_reference: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     if not case_dirs:
         raise ValueError("No complete case directories were found")
@@ -1888,7 +1947,13 @@ def run_cases(
     output_dir.mkdir(parents=True, exist_ok=True)
     csv_path = output_dir / "all_cases_results.csv"
     write_csv(csv_path, rows)
-    write_json(output_dir / "all_cases_summary.json", summarize_stratified(rows))
+    write_json(
+        output_dir / "all_cases_summary.json",
+        attach_claim_id_mainline_reference(
+            summarize_stratified(rows),
+            claim_id_mainline_reference,
+        ),
+    )
     if write_traces:
         write_json(output_dir / "all_cases_traces.json", traces)
 
@@ -2188,11 +2253,34 @@ def main() -> None:
         type=Path,
         help="Frozen cost-profile JSON; required for rubric/measured regimes.",
     )
+    parser.add_argument(
+        "--claim-id-reference-path",
+        type=Path,
+        help=(
+            "Exact versioned opaque Claim-ID reference to attach as read-only "
+            "result-summary provenance."
+        ),
+    )
+    parser.add_argument(
+        "--claim-id-reference-activation-path",
+        type=Path,
+        help=(
+            "Separate activated single-use authority for the controller "
+            "provenance import."
+        ),
+    )
     args = parser.parse_args()
     if args.cost_regime in {"rubric", "measured"} and args.cost_profile is None:
         parser.error(f"--cost-profile is required for --cost-regime {args.cost_regime}")
     if args.cost_regime in {"legacy", "uniform"} and args.cost_profile is not None:
         parser.error(f"--cost-profile is not valid for --cost-regime {args.cost_regime}")
+    if (args.claim_id_reference_path is None) != (
+        args.claim_id_reference_activation_path is None
+    ):
+        parser.error(
+            "--claim-id-reference-path and "
+            "--claim-id-reference-activation-path must be provided together"
+        )
     if args.cost_regime != "legacy" and args.output_dir.exists():
         if not args.output_dir.is_dir() or any(args.output_dir.iterdir()):
             parser.error(
@@ -2204,12 +2292,26 @@ def main() -> None:
         if args.cost_profile is not None
         else None
     )
+    claim_id_reference_import = (
+        load_claim_id_mainline_reference(
+            args.claim_id_reference_path,
+            args.claim_id_reference_activation_path,
+        )
+        if args.claim_id_reference_path is not None
+        else None
+    )
+    claim_id_mainline_reference = (
+        claim_id_reference_import["provenance"]
+        if claim_id_reference_import is not None
+        else None
+    )
     if args.examples_dir is not None:
         run_cases(
             discover_case_dirs(args.examples_dir),
             args.output_dir,
             cost_regime=args.cost_regime,
             cost_profile=cost_profile,
+            claim_id_mainline_reference=claim_id_mainline_reference,
         )
         return
     case_dir = args.case_dir or (
@@ -2220,6 +2322,7 @@ def main() -> None:
         args.output_dir,
         cost_regime=args.cost_regime,
         cost_profile=cost_profile,
+        claim_id_mainline_reference=claim_id_mainline_reference,
     )
 
 

@@ -1,0 +1,159 @@
+{
+  "artifact_id": "claim_id_planner_import_wiring_sanitized_receipt_project05_depth2_public_v0_1_20260725",
+  "artifact_type": "claim_id_planner_import_wiring_sanitized_receipt",
+  "version": "0.1",
+  "created_date": "2026-07-25",
+  "authority_base_commit": "2dc26e4647d2c9ef786e12178e84924a8d659732",
+  "status": "production_planner_import_wired_read_only_reference",
+  "decision": "imported_exact_pinned_claim_id_reference_as_planner_runtime_view_sidecar_once",
+  "authority": {
+    "design": {
+      "artifact_id": "llm-editor-v0.8-l2-claim-id-planner-import-wiring-single-execute-authority-design-v0.1-20260725",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-planner-import-wiring-single-execute-authority-design-v0.1-20260725.json",
+      "sha256": "98d1fc3cc3f7c4a72498675433ea36864e32edcba690fe84d6e0af484825be98",
+      "status": "design_only_claim_id_planner_import_wiring_authority_not_activated"
+    },
+    "activation": {
+      "artifact_id": "claim_id_planner_import_wiring_single_execute_activation_v0_1_20260725",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-planner-import-wiring-single-execute-activation-v0.1-20260725.json",
+      "sha256_before_execution": "66155338cb7f61881baf7b77768e3f7035fdc2897f98b64a6c174892e681b6f2",
+      "status": "activated_single_claim_id_planner_import_wiring_execute_authorized",
+      "execute_ledger_before": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 0,
+        "consumed": 0,
+        "remaining": 1,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      },
+      "execute_ledger_after": {
+        "authorized": 1,
+        "maximum": 1,
+        "started": 1,
+        "consumed": 1,
+        "remaining": 0,
+        "retry": false,
+        "resume": false,
+        "fallback": false
+      }
+    }
+  },
+  "planner_import": {
+    "entrypoint": {
+      "path": "09-experiments/scripts/planner_runtime_adapter.py",
+      "sha256_during_single_execution": "54faa699bc0fd6eb412f297cd349b4856eeee80119c335e2fd93aeb1bc1877d5",
+      "current_hardened_sha256": "0ab555575f0bd52f9a332dbd6c59b2f80f189f0afda67d5d1f0ad4b738e6de6f",
+      "attachment_field": "claim_id_mainline_reference",
+      "attachment_layer": "runtime_view_top_level_sibling_outside_config_state_actions"
+    },
+    "importer": {
+      "path": "src/compiler/llm/claim_id_planner_reference_importer.py",
+      "sha256_during_single_execution": "cebd3b2bbac2f3ffbf5e062509d81511ac1a6211e675148b8efaaacdee9c6fec",
+      "current_hardened_sha256": "00454a59223a9c5ba678dbe101b645649c67456b95159661dcf249ba6d0a8db9"
+    },
+    "controller_reference_loader": {
+      "path": "src/compiler/llm/claim_id_control_loop_reference_loader.py",
+      "sha256": "3bf033296a4aceb497f8563ef1321998bbe8deb47ad80b41698b9a02017514b9",
+      "modified_by_planner_wiring": false
+    },
+    "planner_runtime_contract": {
+      "path": "09-experiments/governance/contracts/planner-runtime-contract-v0.1.json",
+      "sha256": "6e8c297e8cdac18b6f5349e6878c567aa524411e37b66187da30409da704c053",
+      "status": "frozen_for_new_runs",
+      "semantics_changed": false,
+      "recursive_forbidden_keys_changed": false
+    },
+    "reference": {
+      "path": "docs/llm-editor/fixtures/claim-id-control-loop-reference/project05-depth2-public-v0.1/reference.json",
+      "sha256": "db4343dbc598e3da3bd4a8bfd9e9ddb1a22a71d9bde889f953c0ceb244e8206d",
+      "reference_id": "clr_9354e41484c6d592c625629d1f76930e",
+      "reference_mode": "opaque_claim_identity_read_only",
+      "surface_id": "project05_depth2_public",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9",
+      "claim_count": 41,
+      "claims_content_hash": "594c0ec4c4533b1fae76ce57579cf52c783e61fc6b191d9807ce9751e5d473f1",
+      "full_claim_id_list_sha256": "11ef0f4672d9f43357639e46c19b27474ddcdf40daffb9acb93af9c810d008a4"
+    }
+  },
+  "single_execution_assertions": {
+    "baseline_core_runtime_view_sha256": "de45a4c390b186b4828e6be0a681daf2d3392bf435bc492e41d7eafd9dcae6fd",
+    "wired_core_runtime_view_sha256": "de45a4c390b186b4828e6be0a681daf2d3392bf435bc492e41d7eafd9dcae6fd",
+    "core_runtime_view_identical": true,
+    "baseline_action_id": "A-high",
+    "wired_action_id": "A-high",
+    "action_identical": true,
+    "recursive_forbidden_key_hits": [],
+    "opaque_claim_ids_present_in_core_runtime_view": false,
+    "case_local_visible_claim_ids_after_import": [
+      "E1"
+    ],
+    "opaque_claim_ids_added_to_required_claim_ids": false,
+    "opaque_claim_ids_added_to_visible_claim_ids": false,
+    "opaque_claim_ids_used_by_select_action_or_scoring": false,
+    "ml_feature_columns_changed": false
+  },
+  "runtime_wiring_state": {
+    "runtime_control_loop_reference_authorized": true,
+    "runtime_planner_reference_authorized": true,
+    "production_controller_import_wired": true,
+    "production_planner_import_wired": true,
+    "read_only_reference_only": true,
+    "algorithm_changed": false,
+    "evidence_sufficiency_asserted": false,
+    "certified_stop_asserted": false
+  },
+  "registration_switch_boundary": {
+    "module": "src/compiler/llm/claim_id_mainline_handoff.py",
+    "symbol": "PRODUCTION_REGISTRATION_ENABLED",
+    "value_after_execution": false,
+    "single_use_import_did_not_require_persisting_true": true
+  },
+  "test_evidence": {
+    "command": "python -m pytest -p no:cacheprovider tests/compiler_contract/test_claim_id_planner_reference_importer.py tests/compiler_contract/test_claim_id_control_loop_reference_loader.py 09-experiments/tests/test_planner_runtime_contract.py -q",
+    "result": "17 passed in 5.40s"
+  },
+  "post_execution_fail_closed_hardening": {
+    "second_activation_execution_performed": false,
+    "ledger_remained_exhausted": true,
+    "executed_output_or_wiring_state_changed": false,
+    "changes": [
+      "revalidate the complete nested sidecar against the exact db4343 reference projection before every attachment",
+      "require a module-private sealed import result plus terminal single-use ledger before attachment"
+    ],
+    "current_importer_sha256": "00454a59223a9c5ba678dbe101b645649c67456b95159661dcf249ba6d0a8db9",
+    "current_planner_runtime_adapter_sha256": "0ab555575f0bd52f9a332dbd6c59b2f80f189f0afda67d5d1f0ad4b738e6de6f",
+    "controller_reference_loader_sha256_unchanged": "3bf033296a4aceb497f8563ef1321998bbe8deb47ad80b41698b9a02017514b9"
+  },
+  "side_effects": {
+    "claim_lifecycle_mutation": false,
+    "planner_runtime_contract_change": false,
+    "planner_or_action_selection_algorithm_change": false,
+    "production_registration_switch_enabled": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "checker_or_promotion": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "si_llm_001_closure": false,
+    "catalog_role_credit_l2_change": false,
+    "part_b_elevation": false,
+    "m2_fit": false,
+    "four_family_llm_finetune": false
+  },
+  "still_blocked": {
+    "second_planner_import_under_same_activation": true,
+    "planner_or_action_selection_algorithm_change": true,
+    "kernel_store_write": true,
+    "e_case_write": true,
+    "checker_or_promotion": true,
+    "certificate_generation": true,
+    "certified_stop": true,
+    "si_llm_001_closure": true,
+    "catalog_role_credit_l2": true,
+    "part_b_elevation": true,
+    "m2_fit": true,
+    "four_family_llm_finetune": true
+  }
+}
