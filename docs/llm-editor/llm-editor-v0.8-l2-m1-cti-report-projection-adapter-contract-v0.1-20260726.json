@@ -1,0 +1,225 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-cti-report-projection-adapter-contract-v0.1-20260726",
+  "artifact_type": "m1_adapter_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "4d3cc32882c2024fafe90d16d07585e22a48c537",
+  "status": "design_only_adapter_not_registered",
+  "registry_state": {
+    "adapter_registered": false,
+    "adapter_implementation_authorized": false,
+    "adapter_execution_authorized": false,
+    "registry_activation_authorized": false,
+    "production_registration_enabled": false
+  },
+  "adapter_identity": {
+    "adapter_id": "m1a_cti_report_projection_v0_1",
+    "adapter_version": "0.1.0",
+    "source_class": "cti_report_public_projection",
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "certificate_surface": "vacant",
+    "assisted_design_sha_is_not_effective_adapter_identity": true
+  },
+  "inherited_pins": {
+    "evidence_modality_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapter-framework-design-v0.1-20260726.json",
+      "sha256": "a9a8938908912978d3637ca573cdb2f2b9c3da669eb20351bd1be1daba5c2bee"
+    },
+    "source_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726.json",
+      "sha256": "7ec2fc8a04bdb2bd8119edee6b97151ffa9a2faff68cf997b38dd059919b7afb"
+    },
+    "m1_multi_adapter_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+    },
+    "planner_adapter_contract_comparison_only": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+      "sha256": "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98"
+    },
+    "claim_ir_valid_fixture_adapter_contract_comparison_only": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-contract-v0.1-20260726.json",
+      "sha256": "a889a99b7a2bec340221d8cdc25b2b0cbe5f61525539a58e4db4d8214d0e1ebd"
+    },
+    "claim_ir_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "claim_ir_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "kernel_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "modified_by_this_design": false,
+      "kernel_consumption_authorized": false
+    },
+    "si_llm_005": {
+      "path": "docs/spec-issues/SI-LLM-005-source-modality-mapping.md",
+      "sha256": "6cdf468ea141b2bba6684bc0581e733fa8ee6e76ad201f480338706a27473dca"
+    }
+  },
+  "input_contract": {
+    "input_kind": "declared_pinned_cti_report_public_projection",
+    "accepted_descriptor_fields": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version",
+      "opaque_projected_record_reference",
+      "projection_pin_declaration",
+      "declared_projected_fields"
+    ],
+    "exact_identity": {
+      "surface_id": "project05_depth2_public",
+      "source_class": "cti_report_public_projection",
+      "adapter_id": "m1a_cti_report_projection_v0_1",
+      "adapter_version": "0.1.0"
+    },
+    "opaque_projected_record_reference": {
+      "required": true,
+      "semantic_content": false,
+      "filesystem_path_allowed": false,
+      "archive_member_path_allowed": false,
+      "uri_or_endpoint_allowed": false,
+      "raw_bytes_allowed": false
+    },
+    "projection_pin_declaration": {
+      "required": true,
+      "projection_path_const": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726.json",
+      "projection_sha256_const": "7ec2fc8a04bdb2bd8119edee6b97151ffa9a2faff68cf997b38dd059919b7afb",
+      "exact_match_required": true
+    },
+    "declared_projected_fields": {
+      "allowlist_source": "pinned_cti_report_public_field_projection",
+      "unknown_field": "reject",
+      "duplicate_field": "reject",
+      "raw_source_lookup": false,
+      "trusted_modality_basis_required": true
+    },
+    "accepted_material": [
+      "An opaque report projection reference that is not a path, URI, endpoint, report text, excerpt, or payload.",
+      "An exact projection pin declaration.",
+      "Only allowlisted report identity, publication-window, object, technique, relation, and trusted modality-basis declarations.",
+      "A reported or unknown modality declaration; reported is the strict default."
+    ],
+    "rejected_material": [
+      "Raw CTI documents, body text, excerpts, quotations, attachments, STIX payloads, paths, URIs, endpoints, or source bytes.",
+      "Any request to treat a CTI statement, object, technique, or relation as observed endpoint evidence.",
+      "Labels, verdicts, ground truth, realized outcomes, oracle state, masks, hidden IDs, or minted Claim-IDs.",
+      "Credentials, secrets, private keys, PII, certificate, STOP, or authority state."
+    ]
+  },
+  "normalization_contract": {
+    "normalization_status": "design_only_not_executable",
+    "target": "existing_m0_claim_ir_structural_envelope",
+    "steps": [
+      "Verify exact surface_id, source_class, adapter_id, and adapter_version.",
+      "Verify every inherited pin and the exact CTI-report projection pin.",
+      "Validate only declared fields against the concrete projection allowlist; reject unknown, duplicate, missing-required, malformed, dangling, or forbidden fields.",
+      "Apply the deterministic trusted-metadata modality rule without an LLM: CTI declarations remain reported; unresolved basis means unknown plus abstain; observed or derived requests reject.",
+      "Canonicalize objects, techniques, and relations in the order frozen by the source projection.",
+      "Propose only the existing M0 structural envelope with null Claim-ID and non-authoritative states."
+    ],
+    "determinism": {
+      "same_pins_and_declared_fields_same_structural_projection": true,
+      "external_model_call": false,
+      "llm_modality_inference": false,
+      "semantic_relabeling": false,
+      "nondeterministic_sampling": false,
+      "cross_adapter_merge": false
+    },
+    "modality_invariants": {
+      "allowed": [
+        "reported",
+        "unknown"
+      ],
+      "default": "reported",
+      "reported_upgraded_to_observed": false,
+      "reported_upgraded_to_derived": false,
+      "citation_or_promotion_changes_modality": false,
+      "unknown_behavior": "abstain",
+      "observed_endpoint_evidence_requires_different_source_class": true
+    }
+  },
+  "privacy_and_authority_exclusions": {
+    "raw_source_bytes": false,
+    "raw_paths_uris_or_endpoints": false,
+    "raw_report_body_excerpt_or_attachment": false,
+    "labels_or_verdicts": false,
+    "ground_truth_or_realized_outcomes": false,
+    "oracle_or_mask_state": false,
+    "hidden_recoverable_required_or_minted_claim_ids": false,
+    "credentials_secrets_or_private_keys": false,
+    "pii_or_reversible_private_identifiers": false,
+    "certificate_or_stop_state": false,
+    "authority_elevation_fields": false,
+    "policy": "Any excluded field or value causes fail-closed rejection without redaction, partial output, or fallback."
+  },
+  "fail_closed_contract": {
+    "policy": "reject_without_projection",
+    "reject_if": [
+      "exact selection identity does not match",
+      "adapter is not separately registered and activated",
+      "any inherited or projection pin differs",
+      "any field is unknown, duplicated, missing, malformed, dangling, or forbidden",
+      "the opaque reference is a path, URI, endpoint, raw bytes, report text, excerpt, attachment, or semantic label",
+      "the modality basis is missing, untrusted, contradictory, or requests observed or derived",
+      "a second surface, wildcard, implicit default, fallback adapter, or cross-adapter merge is requested",
+      "any mint, admission, Kernel, E_case, certificate, STOP, Checker, sufficiency, role, lineage, quota, credit, L2, or Part B authority is requested"
+    ],
+    "silent_fallback": false,
+    "silent_field_drop": false,
+    "silent_normalization_to_observed": false,
+    "partial_output": false,
+    "retry_or_resume": false
+  },
+  "output_contract": {
+    "output_kind": "future_m0_claim_ir_structural_envelope_only",
+    "output_authorized_by_this_document": false,
+    "fixed_state_values": {
+      "surface_id": "project05_depth2_public",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "raw_input_persistence": false,
+    "projection_persistence_authorized": false,
+    "package_file_write_authorized": false,
+    "kernel_or_e_case_write_authorized": false
+  },
+  "explicit_non_authorizations": {
+    "effective_registry_activation": false,
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "production_single_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "durable_attach": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "source_role_lineage_quota_or_credit": false,
+    "download_or_archive_open": false,
+    "training": false,
+    "production_registration_enablement": false,
+    "l2_or_part_b_elevation": false,
+    "m2_or_four_family_work": false,
+    "git_commit_push_or_pr": false
+  },
+  "review_boundary": {
+    "not_registered": true,
+    "not_implemented": true,
+    "not_executed": true,
+    "effective": false,
+    "acceptance_requires_separate_owner_decision": true,
+    "later_implementation_execution_and_registry_activation_require_separate_authority": true
+  }
+}

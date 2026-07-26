@@ -1,0 +1,311 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-system-log-public-field-projection-v0.1-20260726",
+  "artifact_type": "m1_evidence_modality_public_field_projection_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "4d3cc32882c2024fafe90d16d07585e22a48c537",
+  "status": "design_only_public_projection_not_authorized",
+  "projection_identity": {
+    "source_class": "system_log_public_projection",
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "future_adapter_id": "m1a_system_log_projection_v0_1",
+    "future_adapter_version": "0.1.0",
+    "projection_is_decision": false,
+    "projection_is_admission": false,
+    "projection_is_certificate": false
+  },
+  "inherited_pins": {
+    "evidence_modality_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapter-framework-design-v0.1-20260726.json",
+      "sha256": "a9a8938908912978d3637ca573cdb2f2b9c3da669eb20351bd1be1daba5c2bee"
+    },
+    "m1_multi_adapter_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+    },
+    "claim_ir_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "claim_ir_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "si_llm_005": {
+      "path": "docs/spec-issues/SI-LLM-005-source-modality-mapping.md",
+      "sha256": "6cdf468ea141b2bba6684bc0581e733fa8ee6e76ad201f480338706a27473dca"
+    }
+  },
+  "input_descriptor_contract": {
+    "accepted_top_level_fields": [
+      "descriptor",
+      "event",
+      "principal",
+      "source_metadata"
+    ],
+    "required_field_paths": [
+      "descriptor.surface_id",
+      "descriptor.source_class",
+      "descriptor.opaque_record_reference",
+      "descriptor.projection_pin_declaration.artifact_id",
+      "descriptor.projection_pin_declaration.version",
+      "descriptor.projection_pin_declaration.sha256",
+      "event.event_id",
+      "event.event_time",
+      "event.provider",
+      "source_metadata.transport_source_modality",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "opaque_record_reference": {
+      "semantic_content": false,
+      "filesystem_path_allowed": false,
+      "archive_member_path_allowed": false,
+      "uri_or_endpoint_allowed": false,
+      "request_supplied_resolution_allowed": false
+    }
+  },
+  "allowlisted_field_paths": [
+    {
+      "field_path": "descriptor.surface_id",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "project05_depth2_public"
+      ]
+    },
+    {
+      "field_path": "descriptor.source_class",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "system_log_public_projection"
+      ]
+    },
+    {
+      "field_path": "descriptor.opaque_record_reference",
+      "presence": "required",
+      "type": "opaque_string",
+      "constraint": "Not a path, URI, endpoint, network address, payload, or semantic label."
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.artifact_id",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "llm-editor-v0.8-l2-m1-system-log-public-field-projection-v0.1-20260726"
+      ]
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.version",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "0.1"
+      ]
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.sha256",
+      "presence": "required",
+      "type": "sha256",
+      "constraint": "A future authority must pin the accepted reviewed projection bytes; this RED design does not self-activate."
+    },
+    {
+      "field_path": "event.event_id",
+      "presence": "required",
+      "type": "opaque_string",
+      "constraint": "Public or irreversibly hashed event reference only."
+    },
+    {
+      "field_path": "event.event_time",
+      "presence": "required",
+      "type": "rfc3339_timestamp_or_declared_window",
+      "constraint": "Public event time declaration; no hidden ordering or label join."
+    },
+    {
+      "field_path": "event.provider",
+      "presence": "required",
+      "type": "public_enum_or_opaque_string",
+      "constraint": "Provider class or opaque provider reference, never credentials or endpoint details."
+    },
+    {
+      "field_path": "event.severity",
+      "presence": "optional",
+      "type": "enum",
+      "allowed": [
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical",
+        "unknown"
+      ],
+      "constraint": "Source-declared severity only; not a truth label or performance verdict."
+    },
+    {
+      "field_path": "event.result_code",
+      "presence": "optional",
+      "type": "public_enum_or_opaque_string",
+      "constraint": "Source-declared operation result code only; not an analyst verdict, label, or ground truth."
+    },
+    {
+      "field_path": "principal.public_host_ref",
+      "presence": "optional",
+      "type": "opaque_or_irreversibly_hashed_string",
+      "constraint": "No raw hostname, IP address, tenant identifier, or reversible private value."
+    },
+    {
+      "field_path": "principal.public_process_ref",
+      "presence": "optional",
+      "type": "opaque_or_irreversibly_hashed_string",
+      "constraint": "No command line, executable path, environment, or payload."
+    },
+    {
+      "field_path": "principal.public_user_ref",
+      "presence": "optional",
+      "type": "opaque_or_irreversibly_hashed_string",
+      "constraint": "No username, email, account number, credential, secret, or reversible PII."
+    },
+    {
+      "field_path": "source_metadata.transport_source_modality",
+      "presence": "required",
+      "type": "enum",
+      "allowed": [
+        "endpoint_event",
+        "network_event",
+        "security_text",
+        "other_public_transport"
+      ],
+      "constraint": "Legacy carrier metadata only; it is not epistemic modality."
+    },
+    {
+      "field_path": "source_metadata.source_family",
+      "presence": "required",
+      "type": "enum",
+      "allowed": [
+        "execution",
+        "identity",
+        "communication",
+        "data_access",
+        "control_plane",
+        "system_provenance",
+        "software_supply_chain"
+      ]
+    },
+    {
+      "field_path": "source_metadata.epistemic_modality",
+      "presence": "required",
+      "type": "enum",
+      "allowed": [
+        "observed",
+        "derived",
+        "unknown"
+      ]
+    },
+    {
+      "field_path": "source_metadata.modality_basis_code",
+      "presence": "required",
+      "type": "enum",
+      "allowed": [
+        "DIRECT_SOURCE_ATTESTED_EVENT",
+        "TRANSFORMED_AGGREGATED_OR_ALERT",
+        "UNRESOLVED_BASIS"
+      ]
+    },
+    {
+      "field_path": "source_metadata.trusted_ingestion_metadata_sha256",
+      "presence": "required",
+      "type": "sha256",
+      "constraint": "Pins the trusted declaration used by a future deterministic modality rule; it is not a payload digest supplied as raw input."
+    }
+  ],
+  "explicit_denylist": [
+    "raw_source.path",
+    "raw_source.archive_member_path",
+    "raw_source.uri",
+    "raw_source.endpoint",
+    "raw_source.payload",
+    "raw_source.bytes",
+    "event.message",
+    "event.full_text",
+    "event.stack_trace",
+    "event.raw_record",
+    "principal.hostname",
+    "principal.ip_address",
+    "principal.username",
+    "principal.email",
+    "principal.process_path",
+    "principal.command_line",
+    "labels",
+    "verdict",
+    "ground_truth",
+    "oracle",
+    "mask_membership",
+    "hidden_claim_ids",
+    "required_claim_ids",
+    "recoverable_claim_ids",
+    "minted_claim_id",
+    "credentials",
+    "secrets",
+    "private_keys",
+    "certificate",
+    "CERTIFIED_STOP",
+    "ordinary_run_mvp_STOP"
+  ],
+  "epistemic_modality_contract": {
+    "llm_inference_allowed": false,
+    "default_rule": "DIRECT_SOURCE_ATTESTED_EVENT maps to observed; TRANSFORMED_AGGREGATED_OR_ALERT maps to derived; UNRESOLVED_BASIS maps to unknown plus abstain.",
+    "typical_modality": "observed",
+    "derived_alert_rule": "An alert, correlation, aggregation, enrichment, or transformed event must remain derived even if its inputs were observed.",
+    "uncertain_rule": {
+      "modality": "unknown",
+      "admission_behavior": "abstain"
+    },
+    "promotion_changes_modality": false,
+    "transport_source_modality_is_epistemic_modality": false
+  },
+  "determinism_and_failure": {
+    "canonical_field_order": "the order of allowlisted_field_paths in this contract",
+    "same_pinned_declaration_same_projection": true,
+    "unknown_field": "reject",
+    "duplicate_field": "reject",
+    "missing_required_field": "reject",
+    "invalid_type_or_enum": "reject",
+    "pin_mismatch": "reject",
+    "modality_basis_mismatch": "reject",
+    "silent_field_drop": false,
+    "silent_default": false,
+    "redact_and_continue": false,
+    "partial_projection": false
+  },
+  "raw_material_boundary": {
+    "raw_source_bytes_read_by_projection": false,
+    "raw_source_bytes_persisted": false,
+    "full_log_dump_accepted": false,
+    "filesystem_or_archive_resolution": false,
+    "network_resolution": false,
+    "future_input_form": "opaque reference plus pin declaration plus declared allowlisted fields only"
+  },
+  "explicit_non_authorizations": {
+    "projection_implementation": false,
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "registry_activation": false,
+    "download": false,
+    "archive_open": false,
+    "training": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "stop": false,
+    "checker_non_null": false,
+    "sufficiency_non_null": false,
+    "l2_or_part_b_elevation": false,
+    "git_delivery": false
+  }
+}

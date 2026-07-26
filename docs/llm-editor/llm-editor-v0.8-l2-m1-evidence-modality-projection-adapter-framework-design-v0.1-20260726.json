@@ -1,0 +1,322 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-evidence-modality-projection-adapter-framework-design-v0.1-20260726",
+  "artifact_type": "m1_evidence_modality_projection_adapter_framework_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "4d3cc32882c2024fafe90d16d07585e22a48c537",
+  "status": "design_only_not_authorized",
+  "authority_basis": {
+    "pin_reverify": "OK",
+    "disk_content_sha256_reverified": true,
+    "mandatory_pins": {
+      "second_adapter_green_owner_acceptance": {
+        "path": "docs/kernel/kernel-v0.8-m1-second-adapter-claim-ir-valid-fixture-green-owner-acceptance-v0.1-20260726.json",
+        "sha256": "d6668b78bc75a5844b20027426df4cd7821af16ef0c9bbaa6875f523b7f4ac32"
+      },
+      "m1_multi_adapter_framework": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+        "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+      },
+      "planner_adapter_contract_comparison_only": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+        "sha256": "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98",
+        "modified_by_this_design": false
+      },
+      "claim_ir_valid_fixture_adapter_contract_comparison_only": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-contract-v0.1-20260726.json",
+        "sha256": "a889a99b7a2bec340221d8cdc25b2b0cbe5f61525539a58e4db4d8214d0e1ebd",
+        "modified_by_this_design": false
+      },
+      "m0_depth2_public_field_projection_template": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+        "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8",
+        "modified_by_this_design": false
+      },
+      "claim_ir_external_envelope_schema": {
+        "path": "schemas/claim-ir-external-envelope.schema.json",
+        "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+        "modified_by_this_design": false
+      },
+      "claim_ir_kernel_schema": {
+        "path": "schemas/claim-ir-kernel.schema.json",
+        "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+        "modified_by_this_design": false
+      },
+      "kernel_claim_ir_consumer_contract": {
+        "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+        "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+        "modified_by_this_design": false,
+        "kernel_consumption_authorized_by_this_design": false
+      },
+      "si_llm_005_source_modality_mapping": {
+        "path": "docs/spec-issues/SI-LLM-005-source-modality-mapping.md",
+        "sha256": "6cdf468ea141b2bba6684bc0581e733fa8ee6e76ad201f480338706a27473dca",
+        "read_in_full": true
+      }
+    }
+  },
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "purpose": "Define public evidence-modality projections and future M1 adapter contract skeletons that can normalize declared public fields toward the existing M0 Claim-IR structural boundary.",
+    "assisted_design_only": true,
+    "effective": false,
+    "implementation_authorized": false,
+    "execution_authorized": false,
+    "registry_activation_authorized": false
+  },
+  "backlog_response": {
+    "item_id": "BACKLOG-M1-EVIDENCE-MODALITY-PROJECTION-ADAPTERS",
+    "source_acceptance_status": "green_accepted_for_test_only_second_adapter_and_exact_selection_bookkeeping_only",
+    "this_slice_status": "red_design_package_pending_kernel_owner_review",
+    "minimum_positive_source_classes_designed": [
+      "system_log_public_projection",
+      "provenance_graph_public_projection",
+      "cti_report_public_projection"
+    ],
+    "audit_log_public_projection": "OUT_OF_V0_1",
+    "backlog_closed_by_this_design": false
+  },
+  "purpose_and_pipeline": {
+    "pipeline": [
+      "opaque source reference plus pin declaration",
+      "deterministic public field projection",
+      "optional observation or event intermediate representation under future separate design authority",
+      "one exact M1 source_class adapter",
+      "existing M0 Claim-IR structural envelope"
+    ],
+    "optional_intermediate_status": "not_defined_not_required_for_v0_1_red",
+    "optional_intermediate_must_not": [
+      "read or persist raw source bytes",
+      "infer epistemic modality with an LLM",
+      "mint a Claim-ID",
+      "admit evidence",
+      "write Kernel or E_case",
+      "generate a certificate or STOP state"
+    ],
+    "projection_is_decision": false,
+    "projection_is_admission": false,
+    "projection_is_certificate": false,
+    "projection_is_kernel_write": false
+  },
+  "hard_separation_from_existing_ingress": {
+    "existing_ingress_adapters": [
+      {
+        "source_class": "planner_experiment_inputs",
+        "role": "public planner config/state/action declaration ingress",
+        "reused_as_evidence_modality_adapter": false,
+        "modified_by_this_design": false
+      },
+      {
+        "source_class": "claim_ir_valid_fixture",
+        "role": "prebound synthetic unminted Claim-IR fixture ingress",
+        "reused_as_evidence_modality_adapter": false,
+        "modified_by_this_design": false
+      }
+    ],
+    "excluded_positive_adapters": [
+      "certificate_experiment_inputs",
+      "claim_ir_authority_leak_or_invalid_fixture",
+      "raw_path_or_payload_as_claim_ir"
+    ],
+    "evidence_modality_entry_role": "Public, declared evidence-element metadata ingress with an explicit epistemic modality basis.",
+    "no_cross_adapter_merge": true,
+    "no_silent_fallback": true
+  },
+  "source_class_plan": {
+    "system_log_public_projection": {
+      "adapter_id": "m1a_system_log_projection_v0_1",
+      "adapter_version": "0.1.0",
+      "role": "Public structural metadata for one system-generated event without a full log dump.",
+      "typical_epistemic_modality": "observed",
+      "allowed_epistemic_modalities": [
+        "observed",
+        "derived",
+        "unknown"
+      ],
+      "design_status": "projection_and_adapter_contract_skeleton_only"
+    },
+    "provenance_graph_public_projection": {
+      "adapter_id": "m1a_provenance_graph_projection_v0_1",
+      "adapter_version": "0.1.0",
+      "role": "Public node, edge, time-window, and summary declarations for one provenance graph projection without a raw graph dump.",
+      "typical_epistemic_modality": "explicitly_observed_or_derived",
+      "allowed_epistemic_modalities": [
+        "observed",
+        "derived",
+        "unknown"
+      ],
+      "design_status": "projection_and_adapter_contract_skeleton_only"
+    },
+    "cti_report_public_projection": {
+      "adapter_id": "m1a_cti_report_projection_v0_1",
+      "adapter_version": "0.1.0",
+      "role": "Public report, technique, object, publication-window, and reporting-relation declarations without CTI body text.",
+      "default_epistemic_modality": "reported",
+      "allowed_epistemic_modalities": [
+        "reported",
+        "unknown"
+      ],
+      "design_status": "projection_and_adapter_contract_skeleton_only"
+    },
+    "audit_log_public_projection": {
+      "adapter_id": "m1a_audit_log_projection_v0_1",
+      "status": "OUT_OF_V0_1",
+      "reason": "The minimum final-delivery set is limited to the three Owner-required positive source classes; audit-log differentiation requires a later complete projection and adapter contract."
+    }
+  },
+  "si_llm_005_response": {
+    "issue_pin": {
+      "path": "docs/spec-issues/SI-LLM-005-source-modality-mapping.md",
+      "sha256": "6cdf468ea141b2bba6684bc0581e733fa8ee6e76ad201f480338706a27473dca"
+    },
+    "legacy_source_modality_semantics": "Legacy source_modality remains transport or carrier metadata and is never renamed, copied, or treated as epistemic modality.",
+    "epistemic_modality_source": "A deterministic declaration from pinned, trusted ingestion metadata under a modality-specific mapping rule.",
+    "llm_modality_inference": false,
+    "semantic_guessing_from_source_text": false,
+    "uncertain_or_untrusted_modality": {
+      "modality": "unknown",
+      "admission_behavior": "abstain",
+      "silent_default": false
+    },
+    "promotion_invariance": {
+      "promotion_changes_modality": false,
+      "reported_can_become_observed_by_promotion": false,
+      "derived_can_become_observed_by_promotion": false
+    },
+    "system_log_rule": "Direct source-attested event records may declare observed; aggregations, correlations, detections, or transformed alerts must declare derived; inability to prove either is unknown plus abstain.",
+    "provenance_graph_rule": "A projection may declare observed only when every represented node and edge is directly source-attested under the same pinned basis; inferred, correlated, aggregated, or transformed graph elements require derived; mixed or unclear basis must be split or become unknown plus abstain.",
+    "cti_report_rule": "CTI report material defaults to reported and cannot be silently normalized, promoted, cited, or transformed into observed endpoint evidence; uncertainty becomes unknown plus abstain.",
+    "non_amplification_target": "Prevent evidence laundering and preserve Modality Leakage Rate equals zero as a future testable requirement; this RED design does not claim the target is achieved."
+  },
+  "public_projection_contract_requirements": {
+    "input_shape": [
+      "exact surface_id",
+      "exact source_class",
+      "opaque record reference that is not a path or URI",
+      "exact projection pin declaration",
+      "only concrete allowlisted projected field paths",
+      "trusted modality basis declaration"
+    ],
+    "required_properties": {
+      "concrete_field_path_allowlist": true,
+      "explicit_denylist": true,
+      "unknown_field_policy": "reject",
+      "duplicate_field_policy": "reject",
+      "missing_required_field_policy": "reject",
+      "deterministic_canonical_order": true,
+      "same_declared_input_same_projection": true,
+      "raw_source_bytes_read": false,
+      "raw_source_bytes_persisted": false,
+      "raw_path_resolution": false,
+      "network_resolution": false
+    },
+    "common_denied_material": [
+      "raw filesystem or archive paths",
+      "raw payload or source bytes",
+      "secrets and credentials",
+      "PII and reversible private identifiers",
+      "labels, verdicts, ground truth, masks, and oracle state",
+      "hidden, required, recoverable, or minted Claim-IDs",
+      "unallowlisted network identifiers",
+      "full-text log, graph, or report dumps",
+      "certificate, STOP, role, quota, lineage, or sufficiency assertions"
+    ]
+  },
+  "future_adapter_contract_requirements": {
+    "selection_key": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version"
+    ],
+    "exact_one_adapter_required": true,
+    "adapter_status": "design_only_adapter_not_registered",
+    "accepted_input": "opaque reference plus exact pin declaration plus allowlisted projected fields only",
+    "normalization_status": "design_only_not_executable",
+    "normalization_target": "existing_m0_claim_ir_structural_envelope",
+    "fixed_output_states": {
+      "surface_id": "project05_depth2_public",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "adapter_must_not": [
+      "execute from this design",
+      "infer or alter epistemic modality",
+      "mint Claim-IDs",
+      "grant admission",
+      "write Kernel or E_case",
+      "generate certificate or STOP state",
+      "assign source role, lineage, quota, credit, or sufficiency",
+      "activate an effective registry"
+    ]
+  },
+  "fail_closed_controls": {
+    "unknown_source_class": "reject",
+    "unknown_field": "reject",
+    "ambiguous_modality": "unknown_and_abstain",
+    "missing_trusted_modality_basis": "unknown_and_abstain_without_projection_admission",
+    "pin_mismatch": "reject",
+    "surface_mismatch": "reject",
+    "cross_surface": "reject",
+    "ambiguous_adapter": "reject",
+    "implicit_default_adapter": "reject",
+    "wildcard_adapter": "reject",
+    "silent_field_drop": false,
+    "partial_projection": false,
+    "redact_and_continue": false
+  },
+  "explicit_non_authorizations": {
+    "adapter_or_resolver_implementation": false,
+    "effective_registry_creation_or_activation": false,
+    "production_adapter_execution": false,
+    "production_single_execute": false,
+    "activation_ledger_write": false,
+    "claim_id_mint": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "durable_attach": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "download": false,
+    "external_archive_open": false,
+    "training": false,
+    "production_registration_enablement": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "requested_owner_decision": "accept|request_revision|reject",
+    "owner_decision": null,
+    "acceptance_would_authorize_implementation": false,
+    "acceptance_would_authorize_execution": false,
+    "acceptance_would_authorize_download": false,
+    "acceptance_would_authorize_registry_activation": false,
+    "acceptance_would_authorize_git_delivery": false,
+    "assisted_sha_is_effective_identity": false
+  },
+  "audit_trail": {
+    "json_design_files_only": true,
+    "python_created_or_modified": false,
+    "schemas_created_or_modified": false,
+    "existing_adapters_modified": false,
+    "raw_source_bytes_read": false,
+    "download_performed": false,
+    "archive_opened": false,
+    "training_started": false,
+    "kernel_e_case_certificate_stop_write": false,
+    "registry_activated": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

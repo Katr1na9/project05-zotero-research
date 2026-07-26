@@ -1,0 +1,309 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726",
+  "artifact_type": "m1_evidence_modality_public_field_projection_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "4d3cc32882c2024fafe90d16d07585e22a48c537",
+  "status": "design_only_public_projection_not_authorized",
+  "projection_identity": {
+    "source_class": "cti_report_public_projection",
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "future_adapter_id": "m1a_cti_report_projection_v0_1",
+    "future_adapter_version": "0.1.0",
+    "projection_is_decision": false,
+    "projection_is_admission": false,
+    "projection_is_certificate": false
+  },
+  "inherited_pins": {
+    "evidence_modality_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapter-framework-design-v0.1-20260726.json",
+      "sha256": "a9a8938908912978d3637ca573cdb2f2b9c3da669eb20351bd1be1daba5c2bee"
+    },
+    "m1_multi_adapter_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+    },
+    "claim_ir_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "claim_ir_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "si_llm_005": {
+      "path": "docs/spec-issues/SI-LLM-005-source-modality-mapping.md",
+      "sha256": "6cdf468ea141b2bba6684bc0581e733fa8ee6e76ad201f480338706a27473dca"
+    }
+  },
+  "input_descriptor_contract": {
+    "accepted_top_level_fields": [
+      "descriptor",
+      "report",
+      "source_metadata"
+    ],
+    "required_field_paths": [
+      "descriptor.surface_id",
+      "descriptor.source_class",
+      "descriptor.opaque_record_reference",
+      "descriptor.projection_pin_declaration.artifact_id",
+      "descriptor.projection_pin_declaration.version",
+      "descriptor.projection_pin_declaration.sha256",
+      "report.report_id",
+      "report.publication_window.start",
+      "report.publication_window.end",
+      "report.reported_marker",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "opaque_record_reference": {
+      "semantic_content": false,
+      "filesystem_path_allowed": false,
+      "archive_member_path_allowed": false,
+      "uri_or_endpoint_allowed": false,
+      "request_supplied_resolution_allowed": false
+    }
+  },
+  "allowlisted_field_paths": [
+    {
+      "field_path": "descriptor.surface_id",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "project05_depth2_public"
+      ]
+    },
+    {
+      "field_path": "descriptor.source_class",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "cti_report_public_projection"
+      ]
+    },
+    {
+      "field_path": "descriptor.opaque_record_reference",
+      "presence": "required",
+      "type": "opaque_string",
+      "constraint": "Not a path, URI, endpoint, report body, excerpt, or semantic label."
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.artifact_id",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726"
+      ]
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.version",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "0.1"
+      ]
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.sha256",
+      "presence": "required",
+      "type": "sha256",
+      "constraint": "A future authority must pin the accepted reviewed projection bytes; this RED design does not self-activate."
+    },
+    {
+      "field_path": "report.report_id",
+      "presence": "required",
+      "type": "opaque_string",
+      "constraint": "Public or irreversibly hashed report reference only."
+    },
+    {
+      "field_path": "report.publisher_ref",
+      "presence": "optional",
+      "type": "opaque_or_public_string",
+      "constraint": "Public organization class or opaque publisher reference; no author PII, credentials, or endpoint."
+    },
+    {
+      "field_path": "report.publication_window.start",
+      "presence": "required",
+      "type": "rfc3339_timestamp_or_date",
+      "constraint": "Public publication window only; not event occurrence time unless independently represented by another source class."
+    },
+    {
+      "field_path": "report.publication_window.end",
+      "presence": "required",
+      "type": "rfc3339_timestamp_or_date",
+      "constraint": "Public publication window only; not event occurrence time unless independently represented by another source class."
+    },
+    {
+      "field_path": "report.reported_marker",
+      "presence": "required",
+      "type": "boolean_const",
+      "allowed": [
+        true
+      ],
+      "constraint": "Makes the reported epistemic boundary explicit."
+    },
+    {
+      "field_path": "report.public_objects[].object_ref",
+      "presence": "optional_repeated",
+      "type": "opaque_or_public_taxonomy_reference",
+      "constraint": "Declared public object citation only; no source prose or endpoint observation."
+    },
+    {
+      "field_path": "report.public_objects[].object_type",
+      "presence": "optional_repeated",
+      "type": "public_enum",
+      "constraint": "Public taxonomy type only; not a truth label, verdict, or ground truth."
+    },
+    {
+      "field_path": "report.public_techniques[].technique_ref",
+      "presence": "optional_repeated",
+      "type": "opaque_or_public_taxonomy_reference",
+      "constraint": "A cited public technique declaration remains reported and is not observed endpoint evidence."
+    },
+    {
+      "field_path": "report.public_relations[].subject_ref",
+      "presence": "optional_repeated",
+      "type": "opaque_or_public_taxonomy_reference",
+      "constraint": "Must reference a declared public object or technique in this projection."
+    },
+    {
+      "field_path": "report.public_relations[].relation_type",
+      "presence": "optional_repeated",
+      "type": "public_enum",
+      "constraint": "Report-declared relation only; it carries reported modality."
+    },
+    {
+      "field_path": "report.public_relations[].object_ref",
+      "presence": "optional_repeated",
+      "type": "opaque_or_public_taxonomy_reference",
+      "constraint": "Must reference a declared public object or technique in this projection."
+    },
+    {
+      "field_path": "source_metadata.source_family",
+      "presence": "required",
+      "type": "string_const",
+      "allowed": [
+        "external_intel"
+      ]
+    },
+    {
+      "field_path": "source_metadata.epistemic_modality",
+      "presence": "required",
+      "type": "enum",
+      "allowed": [
+        "reported",
+        "unknown"
+      ]
+    },
+    {
+      "field_path": "source_metadata.modality_basis_code",
+      "presence": "required",
+      "type": "enum",
+      "allowed": [
+        "PUBLIC_CTI_REPORT_DECLARATION",
+        "UNRESOLVED_REPORTING_BASIS"
+      ]
+    },
+    {
+      "field_path": "source_metadata.trusted_ingestion_metadata_sha256",
+      "presence": "required",
+      "type": "sha256",
+      "constraint": "Pins the trusted report-class declaration; it does not authorize reading report bytes."
+    }
+  ],
+  "explicit_denylist": [
+    "raw_source.path",
+    "raw_source.archive_member_path",
+    "raw_source.uri",
+    "raw_source.endpoint",
+    "raw_source.payload",
+    "raw_source.bytes",
+    "report.body",
+    "report.full_text",
+    "report.excerpt",
+    "report.quoted_text",
+    "report.attachments",
+    "report.raw_stix",
+    "report.raw_json",
+    "report.endpoint_observation",
+    "report.observed_event",
+    "report.author_pii",
+    "labels",
+    "verdict",
+    "ground_truth",
+    "oracle",
+    "mask_membership",
+    "hidden_claim_ids",
+    "required_claim_ids",
+    "recoverable_claim_ids",
+    "minted_claim_id",
+    "credentials",
+    "secrets",
+    "private_keys",
+    "certificate",
+    "CERTIFIED_STOP",
+    "ordinary_run_mvp_STOP"
+  ],
+  "epistemic_modality_contract": {
+    "llm_inference_allowed": false,
+    "default_modality": "reported",
+    "reported_rule": "Every public object, technique, and relation declaration in this source class remains reported regardless of citation count, later use, promotion, or normalization.",
+    "observed_allowed": false,
+    "derived_allowed": false,
+    "reported_to_observed_normalization": "forbidden",
+    "endpoint_observation_requires_different_source_class": true,
+    "uncertain_rule": {
+      "modality": "unknown",
+      "admission_behavior": "abstain"
+    },
+    "promotion_changes_modality": false,
+    "citation_changes_modality": false
+  },
+  "determinism_and_failure": {
+    "canonical_object_order": "ascending UTF-8 byte order of object_ref then object_type",
+    "canonical_technique_order": "ascending UTF-8 byte order of technique_ref",
+    "canonical_relation_order": "ascending UTF-8 byte order of subject_ref then relation_type then object_ref",
+    "same_pinned_declaration_same_projection": true,
+    "unknown_field": "reject",
+    "duplicate_reference": "reject",
+    "dangling_relation_reference": "reject",
+    "missing_required_field": "reject",
+    "invalid_type_or_enum": "reject",
+    "pin_mismatch": "reject",
+    "observed_or_derived_request": "reject_as_modality_laundering",
+    "silent_field_drop": false,
+    "silent_default_to_observed": false,
+    "redact_and_continue": false,
+    "partial_projection": false
+  },
+  "raw_material_boundary": {
+    "raw_source_bytes_read_by_projection": false,
+    "raw_source_bytes_persisted": false,
+    "full_report_text_accepted": false,
+    "filesystem_or_archive_resolution": false,
+    "network_resolution": false,
+    "future_input_form": "opaque reference plus pin declaration plus declared allowlisted fields only"
+  },
+  "explicit_non_authorizations": {
+    "projection_implementation": false,
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "registry_activation": false,
+    "download": false,
+    "archive_open": false,
+    "training": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "stop": false,
+    "checker_non_null": false,
+    "sufficiency_non_null": false,
+    "l2_or_part_b_elevation": false,
+    "git_delivery": false
+  }
+}
