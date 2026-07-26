@@ -1,0 +1,131 @@
+{
+  "artifact_id": "kernel-v0.8-m1-second-adapter-claim-ir-valid-fixture-green-owner-acceptance-v0.1-20260726",
+  "artifact_type": "kernel_m3_m1_second_adapter_claim_ir_valid_fixture_green_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "green_accepted_for_test_only_second_adapter_and_exact_selection_bookkeeping_only",
+  "authority_base_commit": "79fc9367027fc35b5da4aa6fc84da4d8db790fe8",
+  "reviewed_tip": "79fc9367027fc35b5da4aa6fc84da4d8db790fe8",
+  "reviewed_branch": "codex/m1-second-adapter-claim-ir-valid-fixture-green-v0.1",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-second-adapter-claim-ir-valid-fixture-green-review-packet-v0.1-20260726.json",
+    "content_sha256": "69453232f4dbc77c3c8d267d017a3e06e2afa700b32ac94af4c3b676925c54a3"
+  },
+  "pinned_green_artifacts": {
+    "claim_ir_valid_fixture_adapter": {
+      "path": "src/compiler/llm/m1_claim_ir_valid_fixture_adapter.py",
+      "content_sha256": "4d69c1a17417c4aad5460608fd217bbdc5d67e1f78b4badfa2427ce33f78670d"
+    },
+    "dual_adapter_exact_selection_harness": {
+      "path": "src/compiler/llm/m1_dual_adapter_exact_selection.py",
+      "content_sha256": "f6cc23e6ec382bf0519a48acb63d1a87c95d8e87749d217287862519dd782a22"
+    },
+    "synthetic_unminted_fixture": {
+      "path": "tests/compiler_contract/fixtures/m1_claim_ir_valid_fixture/synthetic_unminted_claim_ir_v0.1.json",
+      "content_sha256": "1b27a02115e9deefccfca87c8b4703cd3478a6c7e9c0ae4a9f99b2c8738118d6",
+      "canonical_json_sha256": "3deb5aa7712082ec576c7a4f03729c7f4a9d9934761559661b1735762259e15e"
+    },
+    "adapter_tests": {
+      "path": "tests/compiler_contract/test_m1_claim_ir_valid_fixture_adapter.py",
+      "content_sha256": "dd17cac180a34cfa1a7004352c48db20945530dae8f885ac5fb3879dad578d0b"
+    },
+    "selection_tests": {
+      "path": "tests/compiler_contract/test_m1_dual_adapter_exact_selection.py",
+      "content_sha256": "d428ff843aab496e79b772add4bc6b8e3933c9f758b10866adeb2a3ae5e6f093"
+    },
+    "implementation_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-implementation-disposition-v0.1-20260726.json",
+      "content_sha256": "74d57dc04e97833e738015530df0054e409725edfeaa77f491e5cc7cc9e120a8"
+    }
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "artifact_sha_match": true,
+    "mandatory_pins_checked": 10,
+    "mandatory_pins_match": true,
+    "declared_path_sha_pairs_checked": 25,
+    "declared_path_sha_pairs_match": true,
+    "tests": "16/16 PASS",
+    "compileall": "PASS",
+    "planner_adapter_sha_unchanged": true,
+    "planner_adapter_sha256": "ae5c6db06a523ef6a4e384a118e1dcff7f0694d2b3f0e6f87a7dc7b2252d67f0",
+    "write_side_effects_observed": "none"
+  },
+  "answers_to_owner_questions": {
+    "M1A2-GREEN-ORQ-01_test_only_authority_gate": "accept",
+    "M1A2-GREEN-ORQ-02_fixture_resolution_fail_closed": "accept",
+    "M1A2-GREEN-ORQ-03_selection_harness_ten_cases_no_execute": "accept",
+    "M1A2-GREEN-ORQ-04_output_states_and_no_write": "accept",
+    "M1A2-GREEN-ORQ-05_remaining_gates_unauthorized": "accept"
+  },
+  "accepted_for": [
+    "test_only_in_memory_claim_ir_valid_fixture_adapter_skeleton",
+    "non_executing_dual_adapter_exact_selection_harness",
+    "synthetic_unminted_fixture_and_contract_tests",
+    "fail_closed_rejection_of_minted_package_paths_bytes_and_authority_leaks"
+  ],
+  "scope_note": "Accepted GREEN demonstrates a second positive M1 ingress adapter and exact dual-adapter selection under test-only in-memory authority. It is Claim-IR multi-ingress bookkeeping, not multi-evidence modality coverage. Provenance graphs, CTI reports, audit logs, and system logs remain a mandatory separate backlog and are not satisfied by this acceptance.",
+  "mandatory_follow_on_backlog": {
+    "item_id": "BACKLOG-M1-EVIDENCE-MODALITY-PROJECTION-ADAPTERS",
+    "priority": "must_do_for_final_experiment_delivery",
+    "status": "open_not_started_on_this_track",
+    "required_work": [
+      "Public field-projection contracts for evidence modalities",
+      "Optional intermediate observation/event representation",
+      "Separate M1 source_class adapters per modality",
+      "Epistemic modality rules so reported CTI is never laundered as observed"
+    ],
+    "minimum_positive_source_classes": [
+      "system_log_public_projection",
+      "provenance_graph_public_projection",
+      "cti_report_public_projection"
+    ],
+    "optional_additional_source_class": "audit_log_public_projection",
+    "not_satisfied_by_current_adapters": [
+      "planner_experiment_inputs",
+      "claim_ir_valid_fixture"
+    ]
+  },
+  "authorized_now": {
+    "green_owner_acceptance_record": true,
+    "effective_registry_activation": false,
+    "production_adapter_execution": false,
+    "production_single_execute": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "not_authorized": {
+    "effective_registry_activation": false,
+    "effective_adapter_registration": false,
+    "production_adapter_execution": false,
+    "production_single_execute": false,
+    "activation_ledger_write": false,
+    "planner_single_execute_replay": false,
+    "claim_id_mint": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "durable_attach": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "production_registration_enablement": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "evidence_modality_projection_or_adapter_implementation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "hard_stop": true,
+  "separate_authority_required_for_git_delivery": true,
+  "separate_authority_required_for_evidence_modality_backlog": true
+}
