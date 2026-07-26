@@ -1,0 +1,174 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-overall-experiment-mainline-readonly-consumption-review-packet-v0.1-20260726",
+  "artifact_type": "kernel_owner_overall_experiment_mainline_readonly_consumption_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "41ebcee2a003832c73d4044d9e06963a58d691bd",
+  "status": "assisted_red_review_packet_not_effective_pending_kernel_owner_review",
+  "submitted_to": "Kernel/M3*",
+  "submitted_by": "Codex / LLM-editor assisted drafting",
+  "this_packet_is_not_owner_approval": true,
+  "effective": false,
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "submitted_design": {
+    "path": "docs/kernel/kernel-v0.8-overall-experiment-mainline-readonly-consumption-design-v0.1-20260726.json",
+    "sha256": "d1503e30c0972dfd2396bfedcb668b6f5538356f04d6e314e2c46fc14ed4cfce",
+    "status": "assisted_draft_not_effective_pending_kernel_owner_review"
+  },
+  "pin_reverify": {
+    "result": "OK",
+    "verified_at_tip": "41ebcee2a003832c73d4044d9e06963a58d691bd",
+    "mandatory_pins": {
+      "green_owner_acceptance": {
+        "path": "docs/kernel/kernel-v0.8-readonly-experiment-matrix-green-owner-acceptance-v0.1-20260726.json",
+        "sha256": "03972ae3aa64b539f8b3683056b687c027197100e18c585705ce2c9a7015eea9",
+        "result": "OK"
+      },
+      "green_matrix_result": {
+        "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/matrix-result.json",
+        "sha256": "9cdfdb7fc87e9ac41ad58c8975ad6428202fd974ef8c9cf453d9a8e67611ff42",
+        "result": "OK"
+      },
+      "green_sanitized_receipt": {
+        "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/sanitized-receipt.json",
+        "sha256": "2bfc31677de08e7ba408ec706dc621774d45a28551d5c279e490db9e23467c6d",
+        "result": "OK"
+      },
+      "handoff_intake": {
+        "path": "docs/kernel/kernel-v0.8-claim-id-certificate-track-handoff-intake-and-experiment-plan-v0.1-20260725.json",
+        "sha256": "5da2ceedb63ccdb3ca8d409d3dfd23aec0a274da4c01ee3747276d42f8c232cf",
+        "result": "OK"
+      },
+      "si_llm_001_closure": {
+        "path": "docs/kernel/kernel-v0.8-si-llm-001-owner-closure-record-v0.1-20260725.json",
+        "sha256": "5abac87ff8d6325c5c49e7054bf0cecf7630665f064f9023419698205b1fd223",
+        "result": "OK"
+      }
+    },
+    "design_declared_path_sha_pairs_checked": 38,
+    "design_declared_path_sha_pairs_match": true,
+    "green_matrix_test_command": "python -m unittest tests.compiler_contract.test_kernel_readonly_experiment_matrix -v",
+    "green_matrix_test_result": "10/10 PASS"
+  },
+  "review_scope": {
+    "request": "Review the assisted, non-effective read-only consumption design for the overall experiment mainline.",
+    "design_only": true,
+    "new_runtime_implementation": false,
+    "overall_matrix_execution": "NOT_RUN",
+    "write_side_effects": "none",
+    "historical_pins_modified": false,
+    "git_delivery_authorized": false
+  },
+  "design_summary": {
+    "case": {
+      "surface_id": "project05_depth2_public",
+      "package_id": "pkg_73d77b55ef6a517a0dc528f7f3a89bd9"
+    },
+    "consumption_entry_point_count": 6,
+    "matrix_arm_count": 3,
+    "activation_gap_count": 8,
+    "arm_a": "MAINLINE_BASELINE_NO_CLAIM_ID_PROVENANCE",
+    "arm_b": "MAINLINE_CLAIM_ID_PROVENANCE_READ_ONLY",
+    "arm_c": "MAINLINE_MIXLAYER_NEGATIVE_FAIL_CLOSED",
+    "production_registration_enabled": false,
+    "checker_decision_ref": null,
+    "evidence_sufficiency_ref": null,
+    "write_transition_default": "DENY"
+  },
+  "relationship_to_accepted_green_matrix": {
+    "green_owner_acceptance_sha256": "03972ae3aa64b539f8b3683056b687c027197100e18c585705ce2c9a7015eea9",
+    "green_matrix_is_additive_provenance_evidence": true,
+    "green_matrix_is_not_l2_pass": true,
+    "green_matrix_is_not_part_b_pass": true,
+    "green_matrix_is_not_generalization_beyond_pinned_fixture": true,
+    "certificate_is_not_certified_stop": true,
+    "certified_stop_is_not_run_mvp_ordinary_stop": true
+  },
+  "red_gate": {
+    "owner_acceptance_required_before_green": true,
+    "owner_acceptance_does_not_itself_authorize_execution_or_git": true,
+    "no_new_write_activation": true,
+    "no_exhausted_ledger_replay": true,
+    "no_write_executor": true,
+    "hard_stop_after_submission": true
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "ORQ-01",
+      "question": "Are the explicitly pinned closed assets sufficient for overall-mainline read-only consumption?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "ORQ-02",
+      "question": "Are the six module/path-level read-only consumption entry points correctly bounded?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "ORQ-03",
+      "question": "Is the A/B/C one-page matrix adequate while preserving action identity, Claim-ID isolation, and mix-layer denial?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "ORQ-04",
+      "question": "Are the eight default-DENY activation gaps complete for any future operation that would write bytes?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "ORQ-05",
+      "question": "Does the design correctly limit the accepted GREEN matrix to additive provenance evidence rather than L2, Part B, M2, Checker, sufficiency, or STOP authority?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    }
+  ],
+  "explicit_non_authorizations": {
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false,
+    "green_implementation_or_execution": false,
+    "new_write_activation": false,
+    "reactivation_of_exhausted_write_ledgers": false,
+    "historical_effective_or_green_sha_rewrite": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop_execution": false,
+    "certificate_or_certified_stop_as_run_mvp_ordinary_stop": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_assertion": false,
+    "l2": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "production_registration_enablement": false
+  },
+  "review_boundary": {
+    "owner_must_choose": "accept|request_revision|reject",
+    "accept_would_only_accept_this_red_design_scope": true,
+    "separate_authority_required_for_green": true,
+    "separate_authority_required_for_commit_push_pr": true,
+    "this_packet_closes_no_si": true,
+    "this_packet_unlocks_no_scientific_or_execution_gate": true,
+    "hard_stop": true
+  }
+}
