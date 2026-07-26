@@ -1,0 +1,392 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-contract-v0.1-20260726",
+  "artifact_type": "m1_adapter_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "21ffa544d6a90e4280916398b5c718ecd75d9cd6",
+  "status": "design_only_adapter_not_registered",
+  "registry_state": {
+    "adapter_registered": false,
+    "adapter_implementation_authorized": false,
+    "adapter_execution_authorized": false,
+    "registry_activation_authorized": false,
+    "fixture_registry_active": false
+  },
+  "adapter_identity": {
+    "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+    "adapter_id_pattern": "^m1a_[a-z0-9_-]{1,48}$",
+    "adapter_id_pattern_valid": true,
+    "adapter_version": "0.1.0",
+    "source_class": "claim_ir_valid_fixture",
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "certificate_surface": "vacant",
+    "assisted_design_sha_is_not_effective_adapter_identity": true
+  },
+  "inherited_framework_pins": {
+    "m1_framework_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+    },
+    "planner_adapter_contract_comparison_only": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+      "sha256": "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98"
+    },
+    "planner_adapter_implementation_disposition_comparison_only": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json",
+      "sha256": "a891fd1f7b015a4ad50f198864543ae5d0eea2fcd2ade56728e19e33c1c6f700"
+    },
+    "planner_adapter_code_comparison_only": {
+      "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+      "sha256": "ae5c6db06a523ef6a4e384a118e1dcff7f0694d2b3f0e6f87a7dc7b2252d67f0",
+      "modified_by_this_design": false,
+      "execution_replayed_by_this_design": false
+    },
+    "claim_ir_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "claim_ir_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "kernel_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "modified_by_this_design": false,
+      "kernel_consumption_authorized_by_this_design": false
+    },
+    "overall_mainline_red_acceptance_boundary": {
+      "path": "docs/kernel/kernel-v0.8-overall-experiment-mainline-readonly-consumption-red-owner-acceptance-v0.1-20260726.json",
+      "sha256": "2009521967e4a848114ed7f193f0ab126ae0d61fe4356466a288dffdc0aef550"
+    },
+    "m0_rule_compiler": {
+      "path": "src/compiler/llm/m0_rule_compiler.py",
+      "sha256": "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57",
+      "invoked_by_this_design": false
+    },
+    "m0_depth2_public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-m0-depth2-public-field-projection-v0.1-20260724.json",
+      "sha256": "4784ff3a29f2c3cb8d04bc187b1f2cd1d95b9ead51c3ad0d7c4da30f4cd557e8"
+    },
+    "source_field_slot_mapping": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070"
+    },
+    "mint_capability_boundary": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-mint-capability-completion-disposition-v0.1-20260724.json",
+      "sha256": "dec22233f33fac12a20fb215ed8058ab5f6e4c05292939a15dc48f3209385301",
+      "mint_authorized_by_this_contract": false
+    }
+  },
+  "input_contract": {
+    "input_kind": "declared_pinned_valid_claim_ir_fixture_reference",
+    "accepted_surface_id": "project05_depth2_public",
+    "accepted_source_class": "claim_ir_valid_fixture",
+    "accepted_descriptor_fields": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version",
+      "opaque_fixture_reference",
+      "fixture_pin_declaration",
+      "declared_claim_ir_fields"
+    ],
+    "opaque_fixture_reference": {
+      "required": true,
+      "semantic_content": false,
+      "registry_resolved_only": true,
+      "filesystem_path_allowed": false,
+      "archive_member_path_allowed": false,
+      "uri_or_endpoint_allowed": false,
+      "raw_claim_ir_bytes_allowed": false,
+      "raw_payload_allowed": false,
+      "credentials_or_secrets_allowed": false
+    },
+    "fixture_pin_declaration": {
+      "required": true,
+      "accepted_fields": [
+        "fixture_id",
+        "fixture_content_sha256",
+        "claim_ir_schema_id",
+        "claim_ir_schema_sha256",
+        "projection_sha256",
+        "content_hash"
+      ],
+      "fixture_id_is_opaque": true,
+      "fixture_content_sha256_required": true,
+      "claim_ir_schema_sha256_const": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "must_match_one_future_exact_registry_record": true,
+      "registry_record_created_by_this_contract": false,
+      "inline_fixture_bytes": false,
+      "path_or_uri_resolution_from_request": false,
+      "unknown_or_unpinned_fixture": "reject"
+    },
+    "declared_claim_ir_fields": {
+      "allowlist_source": "pinned_external_claim_ir_schema_and_m0_depth2_public_projection",
+      "allowlisted_declaration_fields": [
+        "schema_version",
+        "package_id",
+        "surface_id",
+        "kernel_state",
+        "claim_id_state",
+        "admission_state",
+        "projection_sha256",
+        "claim_count",
+        "field_path_set",
+        "content_hash"
+      ],
+      "required_structural_states": {
+        "surface_id": "project05_depth2_public",
+        "kernel_state": "pending_kernel_schema",
+        "claim_id_state": "not_minted",
+        "admission_state": "not_admitted",
+        "all_claim_ids": null
+      },
+      "unknown_declaration_field": "reject",
+      "duplicate_declaration_field": "reject",
+      "claim_records_inline_allowed": false,
+      "hidden_or_recoverable_claim_id_fields": "reject"
+    },
+    "input_material_boundary": {
+      "accepted": [
+        "An opaque fixture reference that a future separately activated exact registry binds to one immutable SHA-256.",
+        "A fixture pin declaration containing only the allowlisted identity and digest fields.",
+        "Structural state declarations that exactly retain pending_kernel_schema, not_minted, not_admitted, and null Claim-ID values.",
+        "Public manifest counts, field names, and content digests defined by the pinned M0 Claim-IR schema."
+      ],
+      "rejected": [
+        "Filesystem paths, archive member paths, URIs, endpoints, raw Claim-IR bytes, raw payload bytes, or extracted content.",
+        "Labels, verdicts, classes, attacks, techniques, ground truth, or hidden target values.",
+        "Realized outcomes, recovery results, post-hoc success values, oracle state, oracle paths, or mask membership.",
+        "Minted or recoverable Claim-IDs, admitted state, Kernel-accepted state, certificate state, or STOP state.",
+        "Credentials, secrets, private keys, PII, or unallowlisted network identifiers.",
+        "Any fixture or surface not bound by an exact future registry record for project05_depth2_public."
+      ]
+    },
+    "fixture_resolution_boundary": {
+      "design_only": true,
+      "runtime_resolver_implemented": false,
+      "fixture_bytes_read_in_this_slice": false,
+      "future_resolution_must_be_from_exact_prebound_registry": true,
+      "request_supplied_path_or_payload_never_resolved": true,
+      "one_reference_one_sha_one_fixture": true
+    }
+  },
+  "normalization_contract": {
+    "normalization_status": "design_only_not_executable",
+    "normalization_target": {
+      "target_kind": "existing_m0_claim_ir_structural_envelope",
+      "external_schema_path": "schemas/claim-ir-external-envelope.schema.json",
+      "external_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "kernel_schema_path": "schemas/claim-ir-kernel.schema.json",
+      "kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "kernel_write_or_conversion": false
+    },
+    "steps": [
+      "Verify exact surface_id, source_class, adapter_id, and adapter_version.",
+      "Resolve exactly one future registry record for the opaque fixture reference; zero or multiple matches reject.",
+      "Verify the declared fixture SHA, external Claim-IR schema SHA, projection SHA, and content hash against that exact record.",
+      "Validate the registry-held fixture against the pinned external Claim-IR schema without accepting request-supplied paths or bytes.",
+      "Require pending_kernel_schema, not_minted, not_admitted, and null Claim-ID values in every claim record.",
+      "Verify field_path_set and manifest counts under the pinned M0 projection and source-field mapping.",
+      "Emit only the same canonical M0 structural Claim-IR envelope; do not infer, mint, admit, write, or semantically relabel."
+    ],
+    "determinism": {
+      "same_registry_pin_same_declaration_same_projection": true,
+      "nondeterministic_sampling": false,
+      "external_model_call": false,
+      "semantic_relabeling": false,
+      "cross_adapter_merge": false,
+      "silent_field_drop": false
+    },
+    "missing_value_policy": {
+      "required_schema_value_missing": "reject",
+      "required_pin_value_missing": "reject",
+      "optional_schema_value_missing": "retain_only_if_schema_allows",
+      "hidden_value_substitution": "reject",
+      "realized_outcome_substitution": "reject",
+      "silent_defaulting": false
+    },
+    "normalization_errors": [
+      "unknown_declaration_field",
+      "duplicate_declaration_field",
+      "unknown_or_unpinned_fixture",
+      "ambiguous_fixture_reference",
+      "fixture_content_sha_mismatch",
+      "schema_pin_mismatch",
+      "schema_validation_failure",
+      "projection_or_content_hash_mismatch",
+      "non_null_claim_id",
+      "authority_state_elevation",
+      "forbidden_path_payload_or_secret",
+      "surface_or_source_class_mismatch"
+    ]
+  },
+  "privacy_and_authority_exclusions": {
+    "labels": false,
+    "verdicts": false,
+    "ground_truth": false,
+    "realized_outcomes": false,
+    "oracle_state": false,
+    "mask_membership": false,
+    "hidden_or_recoverable_claim_ids": false,
+    "minted_claim_ids": false,
+    "admitted_or_kernel_accepted_state": false,
+    "certificate_or_stop_state": false,
+    "raw_filesystem_paths": false,
+    "raw_archive_member_paths": false,
+    "raw_uris_or_endpoints": false,
+    "raw_claim_ir_or_payload_bytes": false,
+    "credentials": false,
+    "secrets": false,
+    "unallowlisted_pii": false,
+    "unallowlisted_network_identifiers": false,
+    "privacy_policy": "Any excluded field, value, transport, or authority state causes a fail-closed rejection; the adapter may not redact-and-continue or emit a partial projection."
+  },
+  "fail_closed_contract": {
+    "policy": "reject_without_projection",
+    "reject_if": [
+      "surface_id is not exactly project05_depth2_public",
+      "source_class is not exactly claim_ir_valid_fixture",
+      "adapter_id or adapter_version does not exactly match this design",
+      "the adapter and fixture pin are not present in a separately activated exact registry",
+      "any inherited framework, schema, consumer contract, M0, or boundary SHA differs",
+      "the opaque fixture reference has zero matches, multiple matches, or a digest mismatch",
+      "the request includes a path, URI, endpoint, raw fixture bytes, payload bytes, label, outcome, oracle, secret, or hidden ID",
+      "schema validation fails or any Claim-ID is non-null",
+      "kernel_state, claim_id_state, or admission_state requests an authority elevation",
+      "input is malformed, ambiguous, nondeterministic, or missing a required declaration field",
+      "a second surface, wildcard, fallback adapter, cross-adapter merge, or certificate adapter is requested"
+    ],
+    "silent_fallback": false,
+    "silent_field_drop": false,
+    "partial_output": false,
+    "retry_or_resume": false,
+    "unknown_adapter_behavior": "reject_unknown_adapter",
+    "unknown_fixture_behavior": "reject_unknown_or_unpinned_fixture",
+    "pin_mismatch_behavior": "reject_contract_or_fixture_pin_mismatch",
+    "authority_leak_or_invalid_fixture_class_behavior": "deny_without_adapter_execution"
+  },
+  "output_contract": {
+    "output_kind": "m0_claim_ir_structural_envelope_only",
+    "output_authorized_by_this_document": false,
+    "proposed_envelope_fields": [
+      "schema_version",
+      "package_id",
+      "surface_id",
+      "kernel_state",
+      "claim_id_state",
+      "admission_state",
+      "projection_ref",
+      "claims",
+      "manifest"
+    ],
+    "fixed_state_values": {
+      "surface_id": "project05_depth2_public",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "output_exclusions": [
+      "Minted Claim-ID values",
+      "labels, verdicts, ground truth, or realized outcomes",
+      "oracle or mask evidence",
+      "hidden or recoverable Claim-IDs",
+      "request-supplied paths, URIs, endpoints, or payload bytes",
+      "credentials, secrets, PII, or unallowlisted network identifiers",
+      "certificate, CERTIFIED_STOP, ordinary STOP, source-role, lineage, quota, credit, or sufficiency assertions"
+    ],
+    "persistence": {
+      "raw_input_persistence": false,
+      "raw_path_persistence": false,
+      "raw_fixture_bytes_persistence": false,
+      "projection_persistence_authorized_by_this_contract": false,
+      "package_file_write_authorized": false,
+      "kernel_or_e_case_write_authorized": false
+    }
+  },
+  "m0_handoff_boundary": {
+    "downstream_reference": {
+      "compiler_path": "src/compiler/llm/m0_rule_compiler.py",
+      "compiler_sha256": "2a0fd4371b8066ddb453a6ae6edb94c72d6ff2c90a9cf6413404b071fc393e57",
+      "external_schema_path": "schemas/claim-ir-external-envelope.schema.json",
+      "external_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "kernel_schema_path": "schemas/claim-ir-kernel.schema.json",
+      "kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "handoff_semantics": [
+      "This contract specifies a future normalized valid-fixture input boundary; it does not implement or invoke an adapter or the M0 compiler.",
+      "The structural output remains the existing M0 Claim-IR envelope for project05_depth2_public.",
+      "Claim-ID remains null and not_minted, admission remains not_admitted, and Kernel remains pending_kernel_schema.",
+      "Adapter selection or normalization never grants mint, admission, Kernel, E_case, certificate, STOP, Checker, source-role, lineage, quota, credit, L2, Part B, or M2 state."
+    ],
+    "kernel_ingestion_authorized": false,
+    "mint_authorized": false,
+    "admission_authorized": false,
+    "consumer_contract_modified": false
+  },
+  "explicit_non_authorizations": {
+    "registry_activation": false,
+    "effective_adapter_registration": false,
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "fixture_runtime_resolution": false,
+    "claim_id_mint": false,
+    "production_mint_authority_creation": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "durable_attach": false,
+    "admission": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "catalog_write": false,
+    "source_role_assignment": false,
+    "lineage_credit": false,
+    "quota_credit": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2_residual_fit": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "production_registration_enablement": false,
+    "training": false,
+    "download": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "design_claim": "The claim_ir_valid_fixture second-adapter contract is specified for one public surface using exact opaque fixture pins, allowlisted structural declarations, M0 Claim-IR states, privacy exclusions, and fail-closed behavior.",
+    "not_registered": true,
+    "not_implemented": true,
+    "not_executed": true,
+    "effective": false,
+    "not_certificate_experiment_inputs": true,
+    "negative_fixture_class_is_deny_contract_only": true,
+    "future_requirements": [
+      "Separate Owner acceptance of this RED contract.",
+      "Separate implementation authorization for any adapter code or fixture resolver.",
+      "Separate registry activation and execution authority pinning this contract, code, exact fixture identities, and all inherited hashes.",
+      "Independent review of fixture provenance and privacy behavior before any structural output is emitted."
+    ]
+  },
+  "audit_trail": {
+    "code_changed_in_this_turn": false,
+    "schema_changed_in_this_turn": false,
+    "consumer_contract_changed_in_this_turn": false,
+    "fixtures_changed_in_this_turn": false,
+    "adapter_registered_in_this_turn": false,
+    "adapter_executed_in_this_turn": false,
+    "planner_single_execute_replayed": false,
+    "kernel_e_case_certificate_stop_write": false,
+    "training_started": false,
+    "download_performed": false,
+    "production_registration_enabled": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-m1-second-adapter-claim-ir-valid-fixture-red-review-packet-v0.1-20260726",
+  "artifact_type": "kernel_owner_m1_second_adapter_claim_ir_valid_fixture_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "21ffa544d6a90e4280916398b5c718ecd75d9cd6",
+  "status": "assisted_red_review_packet_not_effective_pending_kernel_owner_review",
+  "submitted_to": "Kernel/M3*",
+  "submitted_by": "Codex / LLM-editor assisted drafting",
+  "this_packet_is_not_owner_approval": true,
+  "effective": false,
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "submitted_designs": {
+    "claim_ir_valid_fixture_adapter_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-contract-v0.1-20260726.json",
+      "sha256": "a889a99b7a2bec340221d8cdc25b2b0cbe5f61525539a58e4db4d8214d0e1ebd",
+      "status": "design_only_adapter_not_registered",
+      "assisted_sha_is_not_effective_identity": true
+    },
+    "dual_adapter_exact_selection_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-dual-adapter-exact-selection-design-v0.1-20260726.json",
+      "sha256": "ae164d538a0c95a89fafcbd579372332226622d4bbfbe1bf2913529d3cf7694a",
+      "status": "design_only_dual_adapter_registry_not_activated",
+      "assisted_sha_is_not_effective_identity": true
+    }
+  },
+  "mandatory_pin_reverify": {
+    "result": "OK",
+    "verified_at_tip": "21ffa544d6a90e4280916398b5c718ecd75d9cd6",
+    "pins": {
+      "m1_framework": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+        "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2",
+        "result": "OK"
+      },
+      "planner_contract": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+        "sha256": "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98",
+        "result": "OK"
+      },
+      "planner_implementation_disposition": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json",
+        "sha256": "a891fd1f7b015a4ad50f198864543ae5d0eea2fcd2ade56728e19e33c1c6f700",
+        "result": "OK"
+      },
+      "planner_adapter_code": {
+        "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+        "sha256": "ae5c6db06a523ef6a4e384a118e1dcff7f0694d2b3f0e6f87a7dc7b2252d67f0",
+        "result": "OK"
+      },
+      "external_claim_ir": {
+        "path": "schemas/claim-ir-external-envelope.schema.json",
+        "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+        "result": "OK"
+      },
+      "kernel_claim_ir": {
+        "path": "schemas/claim-ir-kernel.schema.json",
+        "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+        "result": "OK"
+      },
+      "consumer_contract": {
+        "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+        "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+        "result": "OK"
+      },
+      "overall_mainline_red_acceptance": {
+        "path": "docs/kernel/kernel-v0.8-overall-experiment-mainline-readonly-consumption-red-owner-acceptance-v0.1-20260726.json",
+        "sha256": "2009521967e4a848114ed7f193f0ab126ae0d61fe4356466a288dffdc0aef550",
+        "result": "OK"
+      }
+    },
+    "additional_inherited_m0_pins_checked": 4,
+    "additional_inherited_m0_pins_result": "OK",
+    "all_design_declared_path_sha_pairs_match": true
+  },
+  "review_scope": {
+    "goal": "Review a second positive M1 adapter contract for claim_ir_valid_fixture and a design-only exact dual-adapter selection table.",
+    "surface_id": "project05_depth2_public",
+    "second_positive_source_class": "claim_ir_valid_fixture",
+    "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+    "adapter_version": "0.1.0",
+    "certificate_experiment_inputs_adapter_created": false,
+    "authority_leak_or_invalid_fixture_runtime_created": false,
+    "new_adapter_runtime_created": false,
+    "runtime_registry_created": false,
+    "registry_activated": false,
+    "adapter_executed": false,
+    "planner_single_execute_replayed": false,
+    "write_side_effects": "none"
+  },
+  "contract_summary": {
+    "input": "Exact opaque reference to a future registry-pinned valid Claim-IR fixture plus allowlisted identity, digest, manifest, and structural-state declarations.",
+    "input_rejects": [
+      "filesystem or archive paths",
+      "URIs or endpoints",
+      "raw Claim-IR or payload bytes",
+      "labels, ground truth, outcomes, oracle, or mask data",
+      "secrets, credentials, PII, or unallowlisted network identifiers",
+      "minted or recoverable Claim-IDs",
+      "admitted, Kernel, certificate, or STOP authority states"
+    ],
+    "normalization_target": "existing M0 Claim-IR structural envelope",
+    "fixed_output_states": {
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "kernel_state": "pending_kernel_schema"
+    },
+    "kernel_write": false,
+    "effective_registration": false
+  },
+  "selection_summary": {
+    "exact_key": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version"
+    ],
+    "planner_exact_selection": "OK_DESIGN_LEVEL_SELECTED_ONLY",
+    "claim_ir_valid_fixture_exact_selection": "OK_DESIGN_LEVEL_SELECTED_ONLY",
+    "wrong_class": "FAIL_CLOSED_DENY",
+    "wrong_version": "FAIL_CLOSED_DENY",
+    "ambiguous_multiple_matches": "FAIL_CLOSED_DENY",
+    "implicit_default": "FAIL_CLOSED_DENY",
+    "wildcard": "FAIL_CLOSED_DENY",
+    "cross_surface": "FAIL_CLOSED_DENY",
+    "certificate_experiment_inputs": "FAIL_CLOSED_DENY_NOT_IN_DUAL_DESIGN",
+    "claim_ir_authority_leak_or_invalid_fixture": "FAIL_CLOSED_DENY_DESIGN_CONTRACT_ONLY",
+    "silent_fallback": false,
+    "registry_activation_authorized": false
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "M1A2-ORQ-01",
+      "question": "Is the opaque-reference plus exact future fixture-pin input boundary sufficient for claim_ir_valid_fixture without accepting request-supplied paths or bytes?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "M1A2-ORQ-02",
+      "question": "Does the contract correctly retain the existing M0 structural states claim_id=null, not_minted, not_admitted, and pending_kernel_schema?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "M1A2-ORQ-03",
+      "question": "Does the explicit four-field selection key adequately prevent wrong-class, wrong-version, ambiguous, default, wildcard, fallback, and cross-surface selection?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "M1A2-ORQ-04",
+      "question": "Is it correct to keep certificate_experiment_inputs out of this dual design and keep claim_ir_authority_leak_or_invalid_fixture as DENY-only?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    },
+    {
+      "question_id": "M1A2-ORQ-05",
+      "question": "Are the implementation, execution, registry, Kernel, certificate, STOP, Checker, L2, Part B, M2, and git boundaries sufficiently explicit?",
+      "allowed_decisions": [
+        "accept",
+        "request_revision",
+        "reject"
+      ]
+    }
+  ],
+  "acceptance_boundary": {
+    "accept_would_only_accept_the_two_assisted_red_designs": true,
+    "accept_does_not_authorize_adapter_implementation": true,
+    "accept_does_not_authorize_adapter_execution": true,
+    "accept_does_not_authorize_registry_activation": true,
+    "accept_does_not_authorize_fixture_runtime_reads": true,
+    "accept_does_not_authorize_planner_single_execute_replay": true,
+    "accept_does_not_authorize_git_commit_push_pr": true,
+    "separate_green_authorization_required": true,
+    "separate_git_authorization_required": true,
+    "this_packet_closes_no_si": true,
+    "hard_stop": true
+  },
+  "explicit_non_authorizations": {
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "registry_activation": false,
+    "effective_adapter_registration": false,
+    "planner_single_execute_replay": false,
+    "fixture_runtime_read": false,
+    "claim_id_mint": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "durable_attach": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "production_registration_enablement": false,
+    "effective_schema_or_consumer_contract_change": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "audit_trail": {
+    "mandatory_pin_reverify": "OK",
+    "new_json_design_files": 3,
+    "code_changed": false,
+    "planner_adapter_bytes_changed": false,
+    "schema_changed": false,
+    "consumer_contract_changed": false,
+    "runtime_executed": false,
+    "write_side_effects": "none",
+    "git_commit_created": false,
+    "git_push_performed": false,
+    "pull_request_created": false
+  }
+}
