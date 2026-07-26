@@ -1,0 +1,376 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-dual-adapter-exact-selection-design-v0.1-20260726",
+  "artifact_type": "m1_dual_adapter_exact_selection_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "21ffa544d6a90e4280916398b5c718ecd75d9cd6",
+  "status": "design_only_dual_adapter_registry_not_activated",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "design_level_registry_only": true,
+    "runtime_registry_implemented": false,
+    "registry_activation_authorized": false,
+    "adapter_execution_authorized": false,
+    "planner_single_execute_replay_authorized": false,
+    "cross_surface_selection_authorized": false,
+    "certificate_experiment_inputs_adapter_in_scope": false
+  },
+  "pinned_inputs": {
+    "m1_framework_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-multi-adapter-framework-design-v0.1-20260724.json",
+      "sha256": "791520b4779f8c0cce12e35cc282bb4c1e7092a9e5d8062c6be67d3a8118cfa2"
+    },
+    "planner_adapter_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+      "sha256": "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98"
+    },
+    "planner_adapter_implementation_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-inputs-adapter-implementation-disposition-v0.1-20260724.json",
+      "sha256": "a891fd1f7b015a4ad50f198864543ae5d0eea2fcd2ade56728e19e33c1c6f700"
+    },
+    "planner_adapter_code": {
+      "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+      "sha256": "ae5c6db06a523ef6a4e384a118e1dcff7f0694d2b3f0e6f87a7dc7b2252d67f0",
+      "modified_by_this_design": false,
+      "executed_by_this_design": false
+    },
+    "claim_ir_valid_fixture_adapter_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-contract-v0.1-20260726.json",
+      "sha256": "a889a99b7a2bec340221d8cdc25b2b0cbe5f61525539a58e4db4d8214d0e1ebd",
+      "assisted_sha_is_not_effective_identity": true
+    },
+    "claim_ir_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    "claim_ir_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    "kernel_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+    },
+    "overall_mainline_red_acceptance_boundary": {
+      "path": "docs/kernel/kernel-v0.8-overall-experiment-mainline-readonly-consumption-red-owner-acceptance-v0.1-20260726.json",
+      "sha256": "2009521967e4a848114ed7f193f0ab126ae0d61fe4356466a288dffdc0aef550"
+    }
+  },
+  "design_level_registry": {
+    "registry_status": "DESIGN_ONLY_NOT_ACTIVE",
+    "registry_activation_authorized": false,
+    "active_adapter_count": 0,
+    "design_record_count": 2,
+    "exact_selection_key": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version"
+    ],
+    "records": [
+      {
+        "record_id": "DAR-PLANNER-EXPERIMENT-INPUTS-0.1.0",
+        "record_state": "DESIGN_LEVEL_REFERENCE_ONLY_NOT_REGISTERED_BY_THIS_ARTIFACT",
+        "surface_id": "project05_depth2_public",
+        "source_class": "planner_experiment_inputs",
+        "adapter_id": "m1a_planner_inputs_v0_1",
+        "adapter_version": "0.1.0",
+        "contract_path": "docs/llm-editor/llm-editor-v0.8-l2-m1-planner-experiment-inputs-adapter-contract-v0.1-20260724.json",
+        "contract_sha256": "a0627ff3bb4b339336ba0aa1347c90a58a46526cdb84359d03a8e515546c7d98",
+        "implementation_observed": true,
+        "implementation_sha256": "ae5c6db06a523ef6a4e384a118e1dcff7f0694d2b3f0e6f87a7dc7b2252d67f0",
+        "execution_authorized_by_this_design": false
+      },
+      {
+        "record_id": "DAR-CLAIM-IR-VALID-FIXTURE-0.1.0",
+        "record_state": "DESIGN_LEVEL_REFERENCE_ONLY_NOT_REGISTERED",
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+        "adapter_version": "0.1.0",
+        "contract_path": "docs/llm-editor/llm-editor-v0.8-l2-m1-claim-ir-valid-fixture-adapter-contract-v0.1-20260726.json",
+        "contract_sha256": "a889a99b7a2bec340221d8cdc25b2b0cbe5f61525539a58e4db4d8214d0e1ebd",
+        "implementation_observed": false,
+        "implementation_sha256": null,
+        "execution_authorized_by_this_design": false
+      }
+    ],
+    "excluded_candidate_classes": {
+      "certificate_experiment_inputs": {
+        "disposition": "NOT_IN_THIS_DUAL_DESIGN",
+        "reason": "A certificate-input adapter is intentionally excluded to avoid conflating structural Claim-IR adaptation with certificate-layer authority."
+      },
+      "claim_ir_authority_leak_or_invalid_fixture": {
+        "disposition": "DENY_DESIGN_CONTRACT_ONLY_NO_EXECUTION",
+        "reason": "The negative class is a fail-closed selection case, never a positive adapter record."
+      }
+    }
+  },
+  "selection_request_contract": {
+    "required_fields": [
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version"
+    ],
+    "unknown_fields": "reject",
+    "missing_field": "reject",
+    "null_field": "reject",
+    "empty_field": "reject",
+    "wildcard_value": "reject",
+    "implicit_default": "reject",
+    "automatic_version_resolution": false,
+    "automatic_source_class_resolution": false,
+    "automatic_adapter_substitution": false,
+    "request_is_not_adapter_input_payload": true
+  },
+  "exact_selection_algorithm": {
+    "status": "design_only_not_executable",
+    "steps": [
+      "Require surface_id == project05_depth2_public.",
+      "Require explicit source_class, adapter_id, and adapter_version; reject missing, null, empty, default, alias, range, latest, or wildcard values.",
+      "Match the complete four-field key against the two design-level records without normalization or fallback.",
+      "Reject zero matches, more than one match, duplicate records, class/id disagreement, or version disagreement.",
+      "Reject claim_ir_authority_leak_or_invalid_fixture before any adapter lookup or execution.",
+      "Return a design-level selection record only; never invoke the planner adapter or a valid-fixture adapter."
+    ],
+    "success_outcome": "OK_DESIGN_LEVEL_SELECTED_ONLY",
+    "failure_outcome": "FAIL_CLOSED_DENY",
+    "selection_grants_registry_activation": false,
+    "selection_grants_adapter_execution": false,
+    "selection_grants_claim_id_mint": false,
+    "selection_grants_kernel_or_certificate_authority": false
+  },
+  "selection_cases": [
+    {
+      "case_id": "SEL-PLANNER-EXACT",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "planner_experiment_inputs",
+        "adapter_id": "m1a_planner_inputs_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "expected_outcome": "OK_DESIGN_LEVEL_SELECTED_ONLY",
+      "selected_record_id": "DAR-PLANNER-EXPERIMENT-INPUTS-0.1.0",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-CLAIM-IR-VALID-FIXTURE-EXACT",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "expected_outcome": "OK_DESIGN_LEVEL_SELECTED_ONLY",
+      "selected_record_id": "DAR-CLAIM-IR-VALID-FIXTURE-0.1.0",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-WRONG-CLASS-FOR-PLANNER-ID",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": "m1a_planner_inputs_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "source_class_adapter_id_mismatch",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-WRONG-VERSION",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+        "adapter_version": "0.1.1"
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "exact_version_not_found",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-AMBIGUOUS-DUPLICATE-RECORDS",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "simulated_match_count": 2,
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "ambiguous_multiple_exact_matches",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-IMPLICIT-DEFAULT",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": null,
+        "adapter_version": null
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "implicit_default_forbidden",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-WILDCARD",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "*",
+        "adapter_id": "m1a_*",
+        "adapter_version": "latest"
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "wildcard_or_latest_forbidden",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-CROSS-SURFACE",
+      "request": {
+        "surface_id": "another_surface",
+        "source_class": "claim_ir_valid_fixture",
+        "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "cross_surface_forbidden",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-CERTIFICATE-CLASS-OUT-OF-SCOPE",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "certificate_experiment_inputs",
+        "adapter_id": "m1a_certificate_inputs_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "certificate_adapter_not_in_dual_design",
+      "adapter_executed": false
+    },
+    {
+      "case_id": "SEL-AUTHORITY-LEAK-OR-INVALID-FIXTURE",
+      "request": {
+        "surface_id": "project05_depth2_public",
+        "source_class": "claim_ir_authority_leak_or_invalid_fixture",
+        "adapter_id": "m1a_claim_ir_valid_fixture_v0_1",
+        "adapter_version": "0.1.0"
+      },
+      "expected_outcome": "FAIL_CLOSED_DENY",
+      "reason": "negative_source_class_never_selects_positive_adapter",
+      "adapter_executed": false
+    }
+  ],
+  "selection_guards": {
+    "explicit_source_class_required": true,
+    "explicit_adapter_id_required": true,
+    "explicit_adapter_version_required": true,
+    "exact_version_required": true,
+    "implicit_default_adapter": false,
+    "wildcard_adapter": false,
+    "automatic_version_fallback": false,
+    "automatic_source_class_fallback": false,
+    "silent_adapter_substitution": false,
+    "silent_fallback": false,
+    "cross_surface_join": false,
+    "cross_adapter_merge": false,
+    "half_adapter_composition": false,
+    "selection_grants_mint_authority": false,
+    "selection_grants_admission": false
+  },
+  "output_contract": {
+    "output_kind": "design_level_selection_record_only",
+    "output_authorized_by_this_document": false,
+    "fields": [
+      "selection_case_id",
+      "decision",
+      "matched_record_id",
+      "surface_id",
+      "source_class",
+      "adapter_id",
+      "adapter_version",
+      "contract_sha256",
+      "adapter_executed",
+      "registry_activated"
+    ],
+    "fixed_non_authority_values": {
+      "adapter_executed": false,
+      "registry_activated": false,
+      "claim_id": null,
+      "admission_state": "not_admitted",
+      "kernel_write": false,
+      "certificate_state": "vacant"
+    },
+    "persistence_authorized": false
+  },
+  "failure_contract": {
+    "policy": "fail_closed_without_adapter_execution",
+    "zero_matches": "FAIL_CLOSED_DENY",
+    "multiple_matches": "FAIL_CLOSED_DENY",
+    "wrong_source_class": "FAIL_CLOSED_DENY",
+    "wrong_adapter_id": "FAIL_CLOSED_DENY",
+    "wrong_adapter_version": "FAIL_CLOSED_DENY",
+    "implicit_default": "FAIL_CLOSED_DENY",
+    "wildcard_or_latest": "FAIL_CLOSED_DENY",
+    "cross_surface": "FAIL_CLOSED_DENY",
+    "certificate_class_in_this_dual_design": "FAIL_CLOSED_DENY",
+    "authority_leak_or_invalid_fixture_class": "FAIL_CLOSED_DENY",
+    "silent_fallback": false,
+    "silent_substitution": false,
+    "partial_selection": false
+  },
+  "explicit_non_authorizations": {
+    "registry_activation": false,
+    "effective_adapter_registration": false,
+    "adapter_implementation": false,
+    "adapter_execution": false,
+    "planner_single_execute_replay": false,
+    "claim_ir_fixture_runtime_read": false,
+    "claim_id_mint": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "durable_attach": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "production_registration_enablement": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "design_claim": "Two source-class adapter contracts can be selected only by an exact surface_id, source_class, adapter_id, and adapter_version tuple at design level.",
+    "planner_record_is_reference_only_in_this_design": true,
+    "claim_ir_valid_fixture_record_is_not_implemented": true,
+    "negative_fixture_class_is_deny_only": true,
+    "certificate_experiment_inputs_is_not_implemented_or_selected": true,
+    "not_registered": true,
+    "not_executable": true,
+    "effective": false,
+    "owner_acceptance_required_before_any_green_work": true,
+    "separate_authority_required_for_implementation_execution_registration_and_git": true
+  },
+  "audit_trail": {
+    "planner_adapter_bytes_changed": false,
+    "planner_single_execute_replayed": false,
+    "new_adapter_code_created": false,
+    "runtime_registry_created": false,
+    "registry_activated": false,
+    "adapter_executed": false,
+    "schema_or_consumer_contract_changed": false,
+    "kernel_e_case_certificate_stop_write": false,
+    "production_registration_enabled": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
