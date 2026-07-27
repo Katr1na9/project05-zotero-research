@@ -1,0 +1,134 @@
+{
+  "artifact_id": "kernel-v0.8-m1-evidence-modality-projection-adapters-green-owner-acceptance-v0.1-20260726",
+  "artifact_type": "kernel_m3_m1_evidence_modality_projection_adapters_green_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "green_accepted_for_test_only_evidence_modality_adapter_skeletons_only",
+  "authority_base_commit": "58a40e6b2aa87b911b8d01c39e7ca2ca7f9dddb9",
+  "reviewed_tip": "58a40e6b2aa87b911b8d01c39e7ca2ca7f9dddb9",
+  "reviewed_branch": "codex/m1-evidence-modality-projection-adapters-green-v0.1",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-evidence-modality-projection-adapters-green-review-packet-v0.1-20260726.json",
+    "content_sha256": "ff9af776b4238f3d5c780610f83c384a582fbcff7209f7d8a6eeb8812b3e61ff"
+  },
+  "pinned_green_artifacts": {
+    "system_log_adapter": {
+      "path": "src/compiler/llm/m1_system_log_projection_adapter.py",
+      "content_sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116"
+    },
+    "provenance_graph_adapter": {
+      "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py",
+      "content_sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5"
+    },
+    "cti_report_adapter": {
+      "path": "src/compiler/llm/m1_cti_report_projection_adapter.py",
+      "content_sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e"
+    },
+    "system_log_fixture": {
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_system_log_projection_v0.1.json",
+      "content_sha256": "adaca38945a2068fc3a3b4649dcf450ca3385562907fc752427e9e4e921405b7",
+      "canonical_json_sha256": "b0dd8f826e4bad2cf3bf557968d3352f542e1af3bd8822d9352130aed768bf95"
+    },
+    "provenance_graph_fixture": {
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_provenance_graph_projection_v0.1.json",
+      "content_sha256": "d02f5eec94d461730b878f43cb251b7a9fb959501f6ff734ab4d013812f9914b",
+      "canonical_json_sha256": "f8fa99c0cdbfe9719fcee904fda5af1d8e7f28c810ea17de3a48e11445bad89f"
+    },
+    "cti_report_fixture": {
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_cti_report_projection_v0.1.json",
+      "content_sha256": "ba1a8e91819604336394b5431f6620c64b70dde09bf1d1831e5db675e3763307",
+      "canonical_json_sha256": "76fc32d97bc3fe0e53c956fc2efafb2309e254520b6b3894ef7a60659739f15d"
+    },
+    "system_log_tests": {
+      "path": "tests/compiler_contract/test_m1_system_log_projection_adapter.py",
+      "content_sha256": "c039109d2f8f678b70ce0157a06a6f245f5ff31893dd62ce7ed3389b2d5fc1a0"
+    },
+    "provenance_graph_tests": {
+      "path": "tests/compiler_contract/test_m1_provenance_graph_projection_adapter.py",
+      "content_sha256": "8d6ed10fc7d5d4a14917ceacb63a90c2934092b1cb1d32624328ebd444a39342"
+    },
+    "cti_report_tests": {
+      "path": "tests/compiler_contract/test_m1_cti_report_projection_adapter.py",
+      "content_sha256": "7d17f9fc02eddfe161af96b101a50830329c1ed5c54c6f1e3151d1a0185e2800"
+    },
+    "implementation_disposition": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapters-implementation-disposition-v0.1-20260726.json",
+      "content_sha256": "7b03b1deae81c3f4215e447d36c87142d2cd4fd028da0db7bcf8e4d87a49dbc3"
+    }
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "artifact_sha_match": true,
+    "mandatory_and_protected_pins_checked": 15,
+    "mandatory_and_protected_pins_match": true,
+    "green_packet_path_sha_pairs_match": true,
+    "directed_tests": "25/25 PASS",
+    "fixture_canonical_sha_match": true,
+    "planner_and_fixture_adapter_bytes_unchanged": true,
+    "write_side_effects_observed": "none",
+    "preexisting_compiler_contract_baseline_gap_noted": ".tmp/m0-rule-compiler-run-v0.1/m0_valid_public_projection.output.json missing under full suite; not blocking this GREEN slice"
+  },
+  "answers_to_owner_questions": {
+    "M1-EVIDENCE-GREEN-ORQ-01_three_test_only_skeletons": "accept",
+    "M1-EVIDENCE-GREEN-ORQ-02_zero_claim_envelope": "accept",
+    "M1-EVIDENCE-GREEN-ORQ-03_cti_reported_and_laundering_deny": "accept",
+    "M1-EVIDENCE-GREEN-ORQ-04_system_log_shared_support": "accept",
+    "M1-EVIDENCE-GREEN-ORQ-05_backlog_not_scientifically_closed": "accept"
+  },
+  "accepted_for": [
+    "test_only_authority_gated_system_log_provenance_and_cti_adapters",
+    "synthetic_declaration_only_fixtures_and_directed_fail_closed_tests",
+    "zero_claim_schema_valid_unminted_m0_structural_envelope",
+    "cti_reported_marker_and_observed_derived_laundering_rejection"
+  ],
+  "scope_note": "Accepted GREEN is a test-only evidence-modality adapter skeleton. Happy-path output is intentionally a zero-claim, schema-valid, unminted M0 structural envelope so evidence fields are not silently relabeled into the planner-only source_field enum. This does not establish nonempty evidence-to-Claim-IR mapping, real-data coverage, admission, mint, Kernel/E_case/certificate/STOP authority, or scientific backlog closure for BACKLOG-M1-EVIDENCE-MODALITY-PROJECTION-ADAPTERS.",
+  "follow_on_required_for_nonempty_mapping": [
+    "Separate design and Owner authority for evidence-field to Claim-IR mapping that does not reuse planner source_field enum incorrectly",
+    "Separate authority for any production execute, effective registry, or real-source resolution"
+  ],
+  "authorized_now": {
+    "green_owner_acceptance_record": true,
+    "effective_registry_activation": false,
+    "production_adapter_execution": false,
+    "nonempty_evidence_claim_mapping": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "not_authorized": {
+    "effective_registry_activation": false,
+    "production_adapter_execution": false,
+    "production_single_execute": false,
+    "activation_ledger_write": false,
+    "intermediate_observation_ir": false,
+    "audit_log_adapter": false,
+    "download": false,
+    "archive_open": false,
+    "training": false,
+    "raw_source_read_or_persist": false,
+    "claim_id_mint": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "production_registration_enablement": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "hard_stop": true,
+  "separate_authority_required_for_git_delivery": true,
+  "backlog_item_status_after_accept": "green_test_skeleton_accepted_scientifically_open"
+}

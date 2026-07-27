@@ -1,0 +1,250 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-ir-evidence-claim-record-schema-red-design-v0.1-20260727",
+  "artifact_type": "claim_ir_additive_evidence_claim_record_schema_red_design_and_compatibility_matrix",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "ea993cb98bc32cb5b67e6118a3ae74255743f28b",
+  "status": "design_only_not_effective",
+  "goal": "Define a fail-closed additive evidence_claim_record_v0_1 schema profile that can honestly represent nonempty evidence claims without changing or aliasing the effective planner Claim-IR branch.",
+  "authority_basis": {
+    "mapping_red_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-red-owner-acceptance-v0.1-20260726.json",
+      "sha256": "d1761b4475e95627730f36c75221adceb041301a29795255c520641f1f654e28",
+      "decision": "accept"
+    },
+    "schema_or_runtime_elevation_authorized": false
+  },
+  "pinned_draft_artifacts": {
+    "external_evidence_draft": {
+      "path": "schemas/drafts/claim-ir-external-envelope-evidence-claim-record-v0.1.draft.schema.json",
+      "sha256": "0a788c00735078899c87b09d6f64c7ab6a95a6f3eae0c1fa39b7753919f4a20d",
+      "status": "draft_not_effective"
+    },
+    "kernel_additive_draft": {
+      "path": "schemas/drafts/claim-ir-kernel-evidence-claim-record-v0.1.draft.schema.json",
+      "sha256": "89f9b30cce86d3cf1a0792a793c3d5a31575986e0b9636299be9d83e3c831c64",
+      "status": "draft_not_effective"
+    },
+    "consumer_extension_draft": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-extension-draft-v0.1-20260727.json",
+      "sha256": "e8fb4d3d5ce19539235b4d9709979c4150825ae018c61e785fb9d2b8be30f811",
+      "status": "draft_not_effective"
+    }
+  },
+  "schema_strategy": {
+    "external_strategy": "Separate additive draft profile selected only by exact schema_version claim-ir-external-evidence-draft-v0.1.",
+    "kernel_strategy": "Draft oneOf union referencing the pinned effective Kernel schema unchanged and the exact evidence_claim_record_v0_1 definition from the external draft.",
+    "consumer_strategy": "Exact schema-version dispatch; no wildcard, fallback, alias, or automatic elevation from draft to effective.",
+    "branch_name": "evidence_claim_record_v0_1",
+    "discriminator": {
+      "field": "record_class",
+      "value": "public_evidence_declaration"
+    },
+    "planner_branch_embedded_or_rewritten": false,
+    "planner_branch_continues_under_effective_schema": true,
+    "evidence_branch_effective": false
+  },
+  "mapping_red_alignment": [
+    {
+      "source_class": "system_log_public_projection",
+      "mapping_contract": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-system-log-to-claim-ir-mapping-contract-v0.1-20260726.json",
+        "sha256": "15bda95021ce21a6016d4f0e2ae96950dd70fdbf433f5cc6e5f47f8ebd1926cb"
+      },
+      "mapping_entries": 9,
+      "claim_kind_families": [
+        "evidence.system_log.event_identity",
+        "evidence.system_log.event_attribute",
+        "evidence.system_log.principal_reference"
+      ],
+      "evidence_field_prefix": "evidence.system_log.",
+      "modalities": [
+        "observed",
+        "derived",
+        "unknown"
+      ],
+      "basis_correlation_fail_closed": true
+    },
+    {
+      "source_class": "provenance_graph_public_projection",
+      "mapping_contract": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-provenance-graph-to-claim-ir-mapping-contract-v0.1-20260726.json",
+        "sha256": "924d44bbdfe7795e3ada260526abfb71cfdc5d26683c6c075b81585c50f82031"
+      },
+      "mapping_entries": 14,
+      "claim_kind_families": [
+        "evidence.provenance_graph.graph_identity",
+        "evidence.provenance_graph.node_declaration",
+        "evidence.provenance_graph.edge_declaration",
+        "evidence.provenance_graph.time_boundary",
+        "evidence.provenance_graph.summary"
+      ],
+      "evidence_field_prefix": "evidence.provenance_graph.",
+      "modalities": [
+        "observed",
+        "derived",
+        "unknown"
+      ],
+      "basis_correlation_fail_closed": true
+    },
+    {
+      "source_class": "cti_report_public_projection",
+      "mapping_contract": {
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-to-claim-ir-mapping-contract-v0.1-20260726.json",
+        "sha256": "f13ef69e1fd96ffbf8ea673c840b0291b003aa4a13a752788ae44853ee1b683d"
+      },
+      "mapping_entries": 11,
+      "claim_kind_families": [
+        "evidence.cti_report.report_identity",
+        "evidence.cti_report.publisher_declaration",
+        "evidence.cti_report.publication_boundary",
+        "evidence.cti_report.reported_marker",
+        "evidence.cti_report.object_declaration",
+        "evidence.cti_report.technique_declaration",
+        "evidence.cti_report.relation_declaration"
+      ],
+      "evidence_field_prefix": "evidence.cti_report.",
+      "modalities": [
+        "reported",
+        "unknown"
+      ],
+      "observed_or_derived": "DENY_MODALITY_LAUNDERING"
+    }
+  ],
+  "record_contract_alignment": {
+    "record_class": "public_evidence_declaration",
+    "required_fields": [
+      "record_class",
+      "claim_id",
+      "claim_id_state",
+      "claim_kind",
+      "evidence_field",
+      "occurrence_key",
+      "value_type",
+      "value",
+      "source_class",
+      "source_record_ref",
+      "epistemic_modality",
+      "modality_basis_code",
+      "trusted_ingestion_metadata_sha256",
+      "admission_state"
+    ],
+    "fixed_fields": {
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted"
+    },
+    "evidence_field_pattern": "^evidence\\.(system_log|provenance_graph|cti_report)\\.[a-z0-9_.]+$",
+    "claim_kind_namespace": "closed evidence.* enum aligned to the accepted mapping framework",
+    "value_type_namespace": "the five closed structural primitives from the effective external schema",
+    "additional_properties": false,
+    "planner_source_field_representable": false,
+    "planner_claim_kind_representable": false
+  },
+  "package_and_manifest_extension": {
+    "schema_version": "claim-ir-external-evidence-draft-v0.1",
+    "claims_min_items": 1,
+    "kernel_state": "pending_kernel_schema",
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "manifest_field_path_set": [],
+    "manifest_evidence_field_path_set": "required_nonempty_unique_evidence_field_values",
+    "runtime_equality_checks_not_expressible_in_json_schema": [
+      "manifest.claim_count equals claims length",
+      "manifest.evidence_field_path_set equals the unique claim evidence_field set",
+      "manifest.projection_sha256 equals projection_ref.sha256",
+      "every claim source_class equals projection_ref.source_class",
+      "claim ordering follows mapping ordinal then occurrence_key UTF-8 byte order"
+    ],
+    "those_checks_are_declared_in_consumer_extension": true
+  },
+  "legacy_compatibility_proof_strategy": {
+    "effective_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "bytes_modified": false
+    },
+    "effective_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "bytes_modified": false
+    },
+    "effective_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "bytes_modified": false
+    },
+    "legacy_source_field_enum_count": 38,
+    "legacy_source_field_slot_mapping_negative_boundary": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070",
+      "reused_by_evidence_branch": false
+    },
+    "legacy_validation_fixture": {
+      "path": "tests/compiler_contract/fixtures/m1_claim_ir_valid_fixture/synthetic_unminted_claim_ir_v0.1.json",
+      "sha256": "1b27a02115e9deefccfca87c8b4703cd3478a6c7e9c0ae4a9f99b2c8738118d6",
+      "effective_schema_validation": "PASS"
+    },
+    "proof": [
+      "Reverify all three effective artifact content hashes before and after the RED work.",
+      "Validate the existing unminted planner fixture against the unchanged effective external schema.",
+      "Validate each evidence design package against the draft external schema and require PASS.",
+      "Validate the identical evidence packages against the effective external schema and require FAIL.",
+      "Reject any evidence record containing source_field or a planner claim_kind."
+    ]
+  },
+  "old_consumer_non_confusion_boundary": {
+    "evidence_schema_version_equals_legacy_schema_version": false,
+    "evidence_record_has_required_record_class": true,
+    "evidence_record_has_source_field": false,
+    "evidence_record_claim_kind_is_legacy_planner_kind": false,
+    "effective_external_schema_accepts_evidence_package": false,
+    "effective_consumer_accepts_draft_schema_identity": false,
+    "silent_schema_fallback": false,
+    "conclusion": "An evidence package cannot be mistaken for planner claims without violating exact schema identity, record shape, and claim-kind gates."
+  },
+  "validation_evidence": {
+    "draft_schemas_check": "2/2 PASS",
+    "evidence_packages_under_external_draft": "3/3 PASS",
+    "mapping_example_records_under_kernel_draft": "9/9 PASS",
+    "same_evidence_packages_under_effective_external_schema": "3/3 EXPECTED_FAIL",
+    "legacy_planner_fixture_under_effective_external_schema": "1/1 PASS",
+    "cti_observed_laundering_negative": "EXPECTED_FAIL",
+    "planner_source_field_leak_negative": "EXPECTED_FAIL",
+    "validation_is_local_and_non_effective": true
+  },
+  "effective_elevation_boundary": {
+    "draft_sha_may_be_used_as_effective_identity": false,
+    "owner_acceptance_of_this_red_makes_schema_effective": false,
+    "minimum_separate_steps": [
+      "Owner acceptance of this RED design.",
+      "Separate GREEN schema and contract authority with deterministic compatibility and negative tests.",
+      "Separate candidate-to-effective review assigning new exact external, Kernel, and consumer-contract identities.",
+      "Separate GREEN-2 nonempty mapper implementation and registry authority.",
+      "Separate authority for any mint, admission, ingestion, Kernel write, E_case, certificate, or STOP action."
+    ]
+  },
+  "explicit_non_authorizations": {
+    "effective_schema_change": false,
+    "effective_consumer_contract_change": false,
+    "green_2_runtime": false,
+    "adapter_python_change": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "owner_decision": null,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "this_design_is_not_owner_approval": true,
+    "assisted_sha_is_effective_identity": false
+  }
+}

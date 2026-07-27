@@ -1,0 +1,315 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-provenance-graph-to-claim-ir-mapping-contract-v0.1-20260726",
+  "artifact_type": "m1_provenance_graph_to_claim_ir_nonempty_mapping_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "3f0416d4dda57aa788970a046b88db2d555fae37",
+  "status": "design_only_not_executable",
+  "identity": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "provenance_graph_public_projection",
+    "adapter_id": "m1a_provenance_graph_projection_v0_1",
+    "adapter_version": "0.1.0",
+    "future_mapper_id": "m1m_provenance_graph_to_claim_ir_v0_1",
+    "effective_registry_entry": false
+  },
+  "pins": {
+    "mapping_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-framework-design-v0.1-20260726.json",
+      "sha256": "796a8ce3b8f3ac154de2aa787635c0b531ce6a179bc22e8906e7623002947fb1"
+    },
+    "public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-provenance-graph-public-field-projection-v0.1-20260726.json",
+      "sha256": "8a210a4eb2d9f48ac35c65f78fb29e2801c6a991b5b28798beaf5980f0c90ad5"
+    },
+    "accepted_zero_claim_adapter": {
+      "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py",
+      "sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5"
+    },
+    "synthetic_declaration_example": {
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_provenance_graph_projection_v0.1.json",
+      "sha256": "d02f5eec94d461730b878f43cb251b7a9fb959501f6ff734ab4d013812f9914b",
+      "canonical_json_sha256": "f8fa99c0cdbfe9719fcee904fda5af1d8e7f28c810ea17de3a48e11445bad89f"
+    }
+  },
+  "input_contract": {
+    "input_kind": "validated_provenance_graph_public_projection_declaration",
+    "raw_graph_resolution": false,
+    "one_homogeneous_projection_only": true,
+    "required_core_fields": [
+      "descriptor.opaque_record_reference",
+      "graph.graph_id",
+      "graph.time_window.start",
+      "graph.time_window.end",
+      "graph.time_window.precision",
+      "graph.summary.node_count",
+      "graph.summary.edge_count",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.materialization_class",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "optional_repeated_mapped_fields": [
+      "graph.nodes[].node_id",
+      "graph.nodes[].node_type",
+      "graph.edges[].edge_id",
+      "graph.edges[].from_node_id",
+      "graph.edges[].to_node_id",
+      "graph.edges[].relationship_type",
+      "graph.summary.relationship_counts[].relationship_type",
+      "graph.summary.relationship_counts[].count"
+    ],
+    "unknown_field_behavior": "DENY_ENTIRE_REQUEST"
+  },
+  "field_to_claim_mapping": [
+    {
+      "ordinal": 1,
+      "field_path": "graph.graph_id",
+      "evidence_field": "evidence.provenance_graph.graph.graph_id",
+      "claim_kind": "evidence.provenance_graph.graph_identity",
+      "value_type": "opaque_reference",
+      "presence": "required",
+      "occurrence_key_rule": "graph.graph_id"
+    },
+    {
+      "ordinal": 2,
+      "field_path": "graph.nodes[].node_id",
+      "evidence_field": "evidence.provenance_graph.node.node_id",
+      "claim_kind": "evidence.provenance_graph.node_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "node.node_id"
+    },
+    {
+      "ordinal": 3,
+      "field_path": "graph.nodes[].node_type",
+      "evidence_field": "evidence.provenance_graph.node.node_type",
+      "claim_kind": "evidence.provenance_graph.node_declaration",
+      "value_type": "bounded_enum",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "the paired node.node_id"
+    },
+    {
+      "ordinal": 4,
+      "field_path": "graph.edges[].edge_id",
+      "evidence_field": "evidence.provenance_graph.edge.edge_id",
+      "claim_kind": "evidence.provenance_graph.edge_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "edge.edge_id"
+    },
+    {
+      "ordinal": 5,
+      "field_path": "graph.edges[].from_node_id",
+      "evidence_field": "evidence.provenance_graph.edge.from_node_id",
+      "claim_kind": "evidence.provenance_graph.edge_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "the paired edge.edge_id"
+    },
+    {
+      "ordinal": 6,
+      "field_path": "graph.edges[].to_node_id",
+      "evidence_field": "evidence.provenance_graph.edge.to_node_id",
+      "claim_kind": "evidence.provenance_graph.edge_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "the paired edge.edge_id"
+    },
+    {
+      "ordinal": 7,
+      "field_path": "graph.edges[].relationship_type",
+      "evidence_field": "evidence.provenance_graph.edge.relationship_type",
+      "claim_kind": "evidence.provenance_graph.edge_declaration",
+      "value_type": "bounded_enum",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "the paired edge.edge_id"
+    },
+    {
+      "ordinal": 8,
+      "field_path": "graph.time_window.start",
+      "evidence_field": "evidence.provenance_graph.time_window.start",
+      "claim_kind": "evidence.provenance_graph.time_boundary",
+      "value_type": "bounded_public_text",
+      "presence": "required_non_null_for_nonempty_mapping",
+      "occurrence_key_rule": "graph.graph_id"
+    },
+    {
+      "ordinal": 9,
+      "field_path": "graph.time_window.end",
+      "evidence_field": "evidence.provenance_graph.time_window.end",
+      "claim_kind": "evidence.provenance_graph.time_boundary",
+      "value_type": "bounded_public_text",
+      "presence": "required_non_null_for_nonempty_mapping",
+      "occurrence_key_rule": "graph.graph_id"
+    },
+    {
+      "ordinal": 10,
+      "field_path": "graph.time_window.precision",
+      "evidence_field": "evidence.provenance_graph.time_window.precision",
+      "claim_kind": "evidence.provenance_graph.time_boundary",
+      "value_type": "bounded_enum",
+      "presence": "required",
+      "occurrence_key_rule": "graph.graph_id"
+    },
+    {
+      "ordinal": 11,
+      "field_path": "graph.summary.node_count",
+      "evidence_field": "evidence.provenance_graph.summary.node_count",
+      "claim_kind": "evidence.provenance_graph.summary",
+      "value_type": "bounded_number",
+      "presence": "required",
+      "occurrence_key_rule": "graph.graph_id"
+    },
+    {
+      "ordinal": 12,
+      "field_path": "graph.summary.edge_count",
+      "evidence_field": "evidence.provenance_graph.summary.edge_count",
+      "claim_kind": "evidence.provenance_graph.summary",
+      "value_type": "bounded_number",
+      "presence": "required",
+      "occurrence_key_rule": "graph.graph_id"
+    },
+    {
+      "ordinal": 13,
+      "field_path": "graph.summary.relationship_counts[].relationship_type",
+      "evidence_field": "evidence.provenance_graph.summary.relationship_type",
+      "claim_kind": "evidence.provenance_graph.summary",
+      "value_type": "bounded_enum",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "relationship_counts.relationship_type"
+    },
+    {
+      "ordinal": 14,
+      "field_path": "graph.summary.relationship_counts[].count",
+      "evidence_field": "evidence.provenance_graph.summary.relationship_count",
+      "claim_kind": "evidence.provenance_graph.summary",
+      "value_type": "bounded_number",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "the paired relationship_counts.relationship_type"
+    }
+  ],
+  "projection_fields_used_as_claim_metadata_not_claim_values": [
+    {
+      "field_path": "descriptor.opaque_record_reference",
+      "target": "source_record_ref"
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.sha256",
+      "target": "identity_tuple.projection_sha256"
+    },
+    {
+      "field_path": "source_metadata.source_family",
+      "target": "validated source-class constraint"
+    },
+    {
+      "field_path": "source_metadata.epistemic_modality",
+      "target": "every claim.epistemic_modality"
+    },
+    {
+      "field_path": "source_metadata.materialization_class",
+      "target": "homogeneous graph validation"
+    },
+    {
+      "field_path": "source_metadata.modality_basis_code",
+      "target": "every claim.modality_basis_code"
+    },
+    {
+      "field_path": "source_metadata.trusted_ingestion_metadata_sha256",
+      "target": "every claim.trusted_ingestion_metadata_sha256"
+    }
+  ],
+  "design_level_example_claims": [
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.provenance_graph.graph_identity",
+      "evidence_field": "evidence.provenance_graph.graph.graph_id",
+      "occurrence_key": "graph_fixture_001",
+      "value_type": "opaque_reference",
+      "value": "graph_fixture_001",
+      "source_class": "provenance_graph_public_projection",
+      "source_record_ref": "provenance_fixture_record_001",
+      "epistemic_modality": "observed",
+      "modality_basis_code": "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED",
+      "trusted_ingestion_metadata_sha256": "87a8edca06f5d7374e2d8ee288ad55a1be22e80335e1b5064a5d52065812384a",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.provenance_graph.node_declaration",
+      "evidence_field": "evidence.provenance_graph.node.node_type",
+      "occurrence_key": "node_fixture_001",
+      "value_type": "bounded_enum",
+      "value": "process",
+      "source_class": "provenance_graph_public_projection",
+      "source_record_ref": "provenance_fixture_record_001",
+      "epistemic_modality": "observed",
+      "modality_basis_code": "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED",
+      "trusted_ingestion_metadata_sha256": "87a8edca06f5d7374e2d8ee288ad55a1be22e80335e1b5064a5d52065812384a",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.provenance_graph.edge_declaration",
+      "evidence_field": "evidence.provenance_graph.edge.relationship_type",
+      "occurrence_key": "edge_fixture_001",
+      "value_type": "bounded_enum",
+      "value": "writes",
+      "source_class": "provenance_graph_public_projection",
+      "source_record_ref": "provenance_fixture_record_001",
+      "epistemic_modality": "observed",
+      "modality_basis_code": "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED",
+      "trusted_ingestion_metadata_sha256": "87a8edca06f5d7374e2d8ee288ad55a1be22e80335e1b5064a5d52065812384a",
+      "admission_state": "not_admitted"
+    }
+  ],
+  "determinism": {
+    "node_order": "node_id ascending UTF-8 byte order",
+    "edge_order": "edge_id ascending UTF-8 byte order",
+    "relationship_count_order": "relationship_type ascending UTF-8 byte order",
+    "claim_order": "field_to_claim_mapping.ordinal ascending, then occurrence_key UTF-8 byte order",
+    "same_validated_projection_same_claims": true,
+    "partial_result": false
+  },
+  "modality_contract": {
+    "DIRECT_SOURCE_ATTESTED_GRAPH_and_ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED": "observed",
+    "TRANSFORMED_OR_INFERRED_GRAPH_and_ONE_OR_MORE_ELEMENTS_TRANSFORMED_OR_INFERRED": "derived",
+    "MIXED_OR_UNRESOLVED_GRAPH_or_MIXED_UNSPLIT_OR_UNRESOLVED_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+    "summary_counts_upgrade_modality": false,
+    "promotion_changes_modality": false
+  },
+  "graph_integrity_fail_closed": {
+    "duplicate_node_or_edge_id": "DENY",
+    "dangling_edge_reference": "DENY",
+    "node_or_edge_count_mismatch": "DENY",
+    "relationship_count_mismatch": "DENY",
+    "null_time_bound_or_unknown_precision": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+    "mixed_observed_and_derived_elements": "DENY_UNLESS_SPLIT_INTO_SEPARATELY_AUTHORIZED_PROJECTIONS"
+  },
+  "forbidden": {
+    "planner_source_field_enum_reuse": true,
+    "planner_afs_slot_reuse": true,
+    "raw_graph_path_uri_or_bytes": true,
+    "hidden_adjacency_or_node_payload": true,
+    "causal_verdict_attack_label_ground_truth_or_oracle": true,
+    "cross_adapter_merge": true,
+    "graph_completion_or_inference": true,
+    "mint_or_admission": true
+  },
+  "output_boundary": {
+    "claims_nonempty_on_valid_required_core": true,
+    "every_claim_claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "current_external_schema_accepts_this_example": false,
+    "separate_schema_consumer_and_green_2_authority_required": true
+  }
+}

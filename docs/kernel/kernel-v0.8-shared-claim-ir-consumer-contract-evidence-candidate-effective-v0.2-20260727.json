@@ -1,0 +1,196 @@
+{
+  "artifact_id": "kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727",
+  "artifact_type": "kernel_m3_shared_claim_ir_consumer_contract_additive_evidence_candidate_effective",
+  "version": "0.2",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3* pending review",
+  "authority_base_commit": "d57e2f9ae8b28fd99ebda624d6fd7847c91a4318",
+  "status": "candidate_effective_pending_kernel_owner_acceptance",
+  "effective_now": false,
+  "effective_if_and_only_if_exact_bytes_are_accepted_by_kernel_owner": true,
+  "authority_basis": {
+    "green_authority": "Kernel Owner authorization for evidence_claim_record schema/consumer GREEN",
+    "red_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-red-owner-acceptance-v0.1-20260727.json",
+      "sha256": "043a8f54772ab2c2bf97b47a88bcb026e8e1a7e5b18df94cd95e94c93da1f283",
+      "decision": "accept"
+    },
+    "green_2_nonempty_mapper_authorized": false,
+    "ingestion_authorized": false
+  },
+  "forbidden_draft_identities": {
+    "external_draft_sha256": "0a788c00735078899c87b09d6f64c7ab6a95a6f3eae0c1fa39b7753919f4a20d",
+    "kernel_draft_sha256": "89f9b30cce86d3cf1a0792a793c3d5a31575986e0b9636299be9d83e3c831c64",
+    "consumer_draft_sha256": "e8fb4d3d5ce19539235b4d9709979c4150825ae018c61e785fb9d2b8be30f811",
+    "draft_sha_may_be_reused_as_effective_identity": false
+  },
+  "pinned_schema_identities": {
+    "legacy_external_schema_unchanged": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "schema_version": "claim-ir-external-v0.1",
+      "effective": true,
+      "modified": false
+    },
+    "legacy_kernel_schema_unchanged": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "effective": true,
+      "modified": false
+    },
+    "legacy_consumer_contract_unchanged": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "effective": true,
+      "modified": false
+    },
+    "external_evidence_schema_candidate": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "schema_id": "https://project05.invalid/schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "schema_version": "claim-ir-external-evidence-v0.1",
+      "status": "candidate_effective_pending_kernel_owner_acceptance"
+    },
+    "kernel_additive_schema_candidate": {
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "schema_id": "https://project05.invalid/schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "branch_name": "evidence_claim_record_v0_1",
+      "status": "candidate_effective_pending_kernel_owner_acceptance"
+    }
+  },
+  "exact_schema_dispatch": {
+    "dispatch_field": "schema_version",
+    "exact_match_required": true,
+    "wildcard_or_fallback": false,
+    "implicit_default": false,
+    "unknown_schema_version": "DENY_UNKNOWN_SCHEMA_VERSION",
+    "routes": [
+      {
+        "schema_version": "claim-ir-external-v0.1",
+        "schema_path": "schemas/claim-ir-external-envelope.schema.json",
+        "schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+        "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+        "consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+        "record_shape": "legacy_planner_claim_record_without_record_class",
+        "decision": "USE_EXISTING_EFFECTIVE_CONSUMER_UNCHANGED"
+      },
+      {
+        "schema_version": "claim-ir-external-evidence-v0.1",
+        "schema_path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+        "schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+        "kernel_schema_path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+        "kernel_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+        "record_class": "public_evidence_declaration",
+        "decision": "CONSUMABLE_STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED_NO_INGESTION_AUTHORITY"
+      }
+    ],
+    "draft_schema_versions_accepted": false,
+    "schema_validation_alone_authorizes_ingestion": false
+  },
+  "evidence_package_structural_contract": {
+    "surface_id": "project05_depth2_public",
+    "schema_version": "claim-ir-external-evidence-v0.1",
+    "kernel_state": "pending_kernel_schema",
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "claims_min_items": 1,
+    "record_class": "public_evidence_declaration",
+    "claim_id": null,
+    "per_claim_claim_id_state": "not_minted",
+    "per_claim_admission_state": "not_admitted",
+    "claim_kind_namespace": "closed_evidence_dot_namespace",
+    "evidence_field_namespace": "^evidence\\.(system_log|provenance_graph|cti_report)\\.[a-z0-9_.]+$",
+    "legacy_source_field_allowed": false,
+    "legacy_afs_slot_allowed": false,
+    "legacy_planner_claim_kind_allowed": false,
+    "manifest_field_path_set": [],
+    "manifest_evidence_field_path_set_required": true
+  },
+  "deterministic_consumer_checks_beyond_json_schema": [
+    "Reject claim_count unequal to claims length.",
+    "Reject evidence_field_path_set unequal to the sorted unique claim evidence_field set.",
+    "Reject projection_sha256 unequal to projection_ref.sha256.",
+    "Reject any claim source_class unequal to projection_ref.source_class.",
+    "Reject mixed source classes, cross-adapter merge, duplicate record identities, or noncanonical ordering.",
+    "Reject source_field, AFS slot, legacy planner claim_kind, raw path, URI, raw source bytes, labels, verdicts, secrets, oracle material, or hidden IDs.",
+    "Reject CTI observed or derived modality and every modality-basis mismatch.",
+    "Reject unknown, missing, draft, wildcard, aliased, or fallback schema_version."
+  ],
+  "modality_contract": {
+    "system_log_public_projection": {
+      "allowed": [
+        "observed",
+        "derived",
+        "unknown"
+      ]
+    },
+    "provenance_graph_public_projection": {
+      "allowed": [
+        "observed",
+        "derived",
+        "unknown"
+      ]
+    },
+    "cti_report_public_projection": {
+      "allowed": [
+        "reported",
+        "unknown"
+      ],
+      "observed": "DENY_MODALITY_LAUNDERING",
+      "derived": "DENY_MODALITY_LAUNDERING"
+    }
+  },
+  "legacy_exact_dispatch_protection": {
+    "legacy_planner_schema_bytes_changed": false,
+    "legacy_kernel_schema_bytes_changed": false,
+    "legacy_consumer_contract_bytes_changed": false,
+    "legacy_source_field_count": 38,
+    "legacy_claim_kind_count": 4,
+    "legacy_manifest_changed": false,
+    "evidence_record_may_be_aliased_to_legacy_planner_record": false,
+    "legacy_record_may_be_aliased_to_evidence_record": false
+  },
+  "consumption_boundary": {
+    "structural_validation_and_exact_dispatch_only": true,
+    "schema_validity_is_truth": false,
+    "schema_validity_is_admission": false,
+    "schema_validity_is_ingestion_authority": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_state_transition": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false
+  },
+  "explicit_non_authorizations": {
+    "green_2_nonempty_mapper_runtime": false,
+    "adapter_python_change": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "download_or_raw_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "owner_decision": null,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "this_candidate_is_not_owner_approval": true,
+    "this_candidate_is_not_effective_before_owner_acceptance": true,
+    "owner_acceptance_does_not_authorize_green_2_or_ingestion": true
+  }
+}

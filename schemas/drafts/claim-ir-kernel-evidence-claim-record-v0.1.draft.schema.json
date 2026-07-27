@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/drafts/claim-ir-kernel-evidence-claim-record-v0.1.draft.schema.json",
+  "title": "Project05 Kernel Claim IR additive evidence claim-record draft",
+  "description": "Draft-only additive union. The first branch delegates unchanged to the pinned effective Kernel Claim IR. The second branch admits only an unminted, not-admitted public evidence declaration from the pinned external evidence draft. No ingestion, admission, mint, or effective identity is granted.",
+  "x-status": "draft_not_effective",
+  "x-authority-base-commit": "ea993cb98bc32cb5b67e6118a3ae74255743f28b",
+  "x-branch-name": "evidence_claim_record_v0_1",
+  "x-effective-legacy-kernel-schema": {
+    "path": "schemas/claim-ir-kernel.schema.json",
+    "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "modified": false
+  },
+  "x-external-evidence-draft": {
+    "path": "schemas/drafts/claim-ir-external-envelope-evidence-claim-record-v0.1.draft.schema.json",
+    "sha256": "0a788c00735078899c87b09d6f64c7ab6a95a6f3eae0c1fa39b7753919f4a20d",
+    "effective": false
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/legacy_kernel_claim_unchanged"
+    },
+    {
+      "$ref": "#/$defs/evidence_claim_record_v0_1"
+    }
+  ],
+  "$defs": {
+    "legacy_kernel_claim_unchanged": {
+      "$ref": "../claim-ir-kernel.schema.json"
+    },
+    "evidence_claim_record_v0_1": {
+      "$ref": "claim-ir-external-envelope-evidence-claim-record-v0.1.draft.schema.json#/$defs/evidence_claim_record_v0_1"
+    }
+  }
+}

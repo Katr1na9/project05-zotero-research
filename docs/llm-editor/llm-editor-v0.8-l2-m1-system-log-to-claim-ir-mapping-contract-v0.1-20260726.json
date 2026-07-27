@@ -1,0 +1,253 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-system-log-to-claim-ir-mapping-contract-v0.1-20260726",
+  "artifact_type": "m1_system_log_to_claim_ir_nonempty_mapping_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "3f0416d4dda57aa788970a046b88db2d555fae37",
+  "status": "design_only_not_executable",
+  "identity": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "system_log_public_projection",
+    "adapter_id": "m1a_system_log_projection_v0_1",
+    "adapter_version": "0.1.0",
+    "future_mapper_id": "m1m_system_log_to_claim_ir_v0_1",
+    "effective_registry_entry": false
+  },
+  "pins": {
+    "mapping_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-framework-design-v0.1-20260726.json",
+      "sha256": "796a8ce3b8f3ac154de2aa787635c0b531ce6a179bc22e8906e7623002947fb1"
+    },
+    "public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-system-log-public-field-projection-v0.1-20260726.json",
+      "sha256": "5c707f5cfa6534d11d04c4f10899ea133396c00961041112353321f47d78f8bb"
+    },
+    "accepted_zero_claim_adapter": {
+      "path": "src/compiler/llm/m1_system_log_projection_adapter.py",
+      "sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116"
+    },
+    "synthetic_declaration_example": {
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_system_log_projection_v0.1.json",
+      "sha256": "adaca38945a2068fc3a3b4649dcf450ca3385562907fc752427e9e4e921405b7",
+      "canonical_json_sha256": "b0dd8f826e4bad2cf3bf557968d3352f542e1af3bd8822d9352130aed768bf95"
+    }
+  },
+  "input_contract": {
+    "input_kind": "validated_system_log_public_projection_declaration",
+    "raw_source_resolution": false,
+    "one_projection_record_only": true,
+    "required_core_fields": [
+      "descriptor.opaque_record_reference",
+      "event.event_id",
+      "event.event_time",
+      "event.provider",
+      "source_metadata.transport_source_modality",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "optional_mapped_fields": [
+      "event.severity",
+      "event.result_code",
+      "principal.public_host_ref",
+      "principal.public_process_ref",
+      "principal.public_user_ref"
+    ],
+    "unknown_field_behavior": "DENY_ENTIRE_REQUEST"
+  },
+  "field_to_claim_mapping": [
+    {
+      "ordinal": 1,
+      "field_path": "event.event_id",
+      "evidence_field": "evidence.system_log.event.event_id",
+      "claim_kind": "evidence.system_log.event_identity",
+      "value_type": "opaque_reference",
+      "presence": "required",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 2,
+      "field_path": "event.event_time",
+      "evidence_field": "evidence.system_log.event.event_time",
+      "claim_kind": "evidence.system_log.event_attribute",
+      "value_type": "bounded_public_text",
+      "presence": "required",
+      "normalization": "canonical RFC3339 UTC text or the already validated declared-window text",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 3,
+      "field_path": "event.provider",
+      "evidence_field": "evidence.system_log.event.provider",
+      "claim_kind": "evidence.system_log.event_attribute",
+      "value_type": "opaque_reference",
+      "presence": "required",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 4,
+      "field_path": "event.severity",
+      "evidence_field": "evidence.system_log.event.severity",
+      "claim_kind": "evidence.system_log.event_attribute",
+      "value_type": "bounded_enum",
+      "presence": "optional",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 5,
+      "field_path": "event.result_code",
+      "evidence_field": "evidence.system_log.event.result_code",
+      "claim_kind": "evidence.system_log.event_attribute",
+      "value_type": "bounded_enum",
+      "presence": "optional",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 6,
+      "field_path": "principal.public_host_ref",
+      "evidence_field": "evidence.system_log.principal.public_host_ref",
+      "claim_kind": "evidence.system_log.principal_reference",
+      "value_type": "opaque_reference",
+      "presence": "optional",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 7,
+      "field_path": "principal.public_process_ref",
+      "evidence_field": "evidence.system_log.principal.public_process_ref",
+      "claim_kind": "evidence.system_log.principal_reference",
+      "value_type": "opaque_reference",
+      "presence": "optional",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 8,
+      "field_path": "principal.public_user_ref",
+      "evidence_field": "evidence.system_log.principal.public_user_ref",
+      "claim_kind": "evidence.system_log.principal_reference",
+      "value_type": "opaque_reference",
+      "presence": "optional",
+      "occurrence_key_rule": "event.event_id"
+    },
+    {
+      "ordinal": 9,
+      "field_path": "source_metadata.transport_source_modality",
+      "evidence_field": "evidence.system_log.transport_source_modality",
+      "claim_kind": "evidence.system_log.event_attribute",
+      "value_type": "bounded_enum",
+      "presence": "required",
+      "occurrence_key_rule": "event.event_id",
+      "note": "Transport modality remains distinct from epistemic_modality."
+    }
+  ],
+  "projection_fields_used_as_claim_metadata_not_claim_values": [
+    {
+      "field_path": "descriptor.opaque_record_reference",
+      "target": "source_record_ref"
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.sha256",
+      "target": "identity_tuple.projection_sha256"
+    },
+    {
+      "field_path": "source_metadata.source_family",
+      "target": "validated source-class constraint"
+    },
+    {
+      "field_path": "source_metadata.epistemic_modality",
+      "target": "every claim.epistemic_modality"
+    },
+    {
+      "field_path": "source_metadata.modality_basis_code",
+      "target": "every claim.modality_basis_code"
+    },
+    {
+      "field_path": "source_metadata.trusted_ingestion_metadata_sha256",
+      "target": "every claim.trusted_ingestion_metadata_sha256"
+    }
+  ],
+  "design_level_example_claims": [
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.system_log.event_identity",
+      "evidence_field": "evidence.system_log.event.event_id",
+      "occurrence_key": "event_fixture_001",
+      "value_type": "opaque_reference",
+      "value": "event_fixture_001",
+      "source_class": "system_log_public_projection",
+      "source_record_ref": "syslog_fixture_record_001",
+      "epistemic_modality": "observed",
+      "modality_basis_code": "DIRECT_SOURCE_ATTESTED_EVENT",
+      "trusted_ingestion_metadata_sha256": "113f166da1bd6675788cec3fe639a69c9c653e9e1147f9d65c33732e5a738732",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.system_log.event_attribute",
+      "evidence_field": "evidence.system_log.event.severity",
+      "occurrence_key": "event_fixture_001",
+      "value_type": "bounded_enum",
+      "value": "medium",
+      "source_class": "system_log_public_projection",
+      "source_record_ref": "syslog_fixture_record_001",
+      "epistemic_modality": "observed",
+      "modality_basis_code": "DIRECT_SOURCE_ATTESTED_EVENT",
+      "trusted_ingestion_metadata_sha256": "113f166da1bd6675788cec3fe639a69c9c653e9e1147f9d65c33732e5a738732",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.system_log.principal_reference",
+      "evidence_field": "evidence.system_log.principal.public_host_ref",
+      "occurrence_key": "event_fixture_001",
+      "value_type": "opaque_reference",
+      "value": "host_ref_7f18a1",
+      "source_class": "system_log_public_projection",
+      "source_record_ref": "syslog_fixture_record_001",
+      "epistemic_modality": "observed",
+      "modality_basis_code": "DIRECT_SOURCE_ATTESTED_EVENT",
+      "trusted_ingestion_metadata_sha256": "113f166da1bd6675788cec3fe639a69c9c653e9e1147f9d65c33732e5a738732",
+      "admission_state": "not_admitted"
+    }
+  ],
+  "determinism": {
+    "claim_order": "field_to_claim_mapping.ordinal ascending; system-log fields are scalar and share event.event_id as occurrence_key",
+    "optional_absent_field": "emit_no_claim_for_that_mapping_entry",
+    "optional_present_but_invalid_field": "DENY_ENTIRE_REQUEST",
+    "same_validated_projection_same_claims": true,
+    "partial_result": false
+  },
+  "modality_contract": {
+    "DIRECT_SOURCE_ATTESTED_EVENT": "observed",
+    "TRANSFORMED_AGGREGATED_OR_ALERT": "derived",
+    "UNRESOLVED_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+    "transport_source_modality_changes_epistemic_modality": false,
+    "promotion_changes_modality": false
+  },
+  "forbidden": {
+    "planner_source_field_enum_reuse": true,
+    "planner_afs_slot_reuse": true,
+    "raw_path_or_uri": true,
+    "raw_event_bytes_or_text": true,
+    "host_ip_username_command_line_or_secret": true,
+    "label_verdict_ground_truth_or_oracle": true,
+    "cross_adapter_merge": true,
+    "mint_or_admission": true
+  },
+  "output_boundary": {
+    "claims_nonempty_on_valid_required_core": true,
+    "every_claim_claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "current_external_schema_accepts_this_example": false,
+    "separate_schema_consumer_and_green_2_authority_required": true
+  }
+}
