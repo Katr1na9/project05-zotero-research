@@ -1,0 +1,283 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-cti-report-to-claim-ir-mapping-contract-v0.1-20260726",
+  "artifact_type": "m1_cti_report_to_claim_ir_nonempty_mapping_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "3f0416d4dda57aa788970a046b88db2d555fae37",
+  "status": "design_only_not_executable",
+  "identity": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "cti_report_public_projection",
+    "adapter_id": "m1a_cti_report_projection_v0_1",
+    "adapter_version": "0.1.0",
+    "future_mapper_id": "m1m_cti_report_to_claim_ir_v0_1",
+    "effective_registry_entry": false
+  },
+  "pins": {
+    "mapping_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-framework-design-v0.1-20260726.json",
+      "sha256": "796a8ce3b8f3ac154de2aa787635c0b531ce6a179bc22e8906e7623002947fb1"
+    },
+    "public_projection": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726.json",
+      "sha256": "7ec2fc8a04bdb2bd8119edee6b97151ffa9a2faff68cf997b38dd059919b7afb"
+    },
+    "accepted_zero_claim_adapter": {
+      "path": "src/compiler/llm/m1_cti_report_projection_adapter.py",
+      "sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e"
+    },
+    "synthetic_declaration_example": {
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_cti_report_projection_v0.1.json",
+      "sha256": "ba1a8e91819604336394b5431f6620c64b70dde09bf1d1831e5db675e3763307",
+      "canonical_json_sha256": "76fc32d97bc3fe0e53c956fc2efafb2309e254520b6b3894ef7a60659739f15d"
+    }
+  },
+  "input_contract": {
+    "input_kind": "validated_cti_report_public_projection_declaration",
+    "raw_report_resolution": false,
+    "one_report_projection_only": true,
+    "required_core_fields": [
+      "descriptor.opaque_record_reference",
+      "report.report_id",
+      "report.publication_window.start",
+      "report.publication_window.end",
+      "report.reported_marker",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "optional_mapped_fields": [
+      "report.publisher_ref",
+      "report.public_objects[].object_ref",
+      "report.public_objects[].object_type",
+      "report.public_techniques[].technique_ref",
+      "report.public_relations[].subject_ref",
+      "report.public_relations[].relation_type",
+      "report.public_relations[].object_ref"
+    ],
+    "unknown_field_behavior": "DENY_ENTIRE_REQUEST"
+  },
+  "field_to_claim_mapping": [
+    {
+      "ordinal": 1,
+      "field_path": "report.report_id",
+      "evidence_field": "evidence.cti_report.report.report_id",
+      "claim_kind": "evidence.cti_report.report_identity",
+      "value_type": "opaque_reference",
+      "presence": "required",
+      "occurrence_key_rule": "report.report_id"
+    },
+    {
+      "ordinal": 2,
+      "field_path": "report.publisher_ref",
+      "evidence_field": "evidence.cti_report.report.publisher_ref",
+      "claim_kind": "evidence.cti_report.publisher_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional",
+      "occurrence_key_rule": "report.report_id"
+    },
+    {
+      "ordinal": 3,
+      "field_path": "report.publication_window.start",
+      "evidence_field": "evidence.cti_report.publication_window.start",
+      "claim_kind": "evidence.cti_report.publication_boundary",
+      "value_type": "bounded_public_text",
+      "presence": "required",
+      "normalization": "canonical RFC3339 timestamp or YYYY-MM-DD text as already validated",
+      "occurrence_key_rule": "report.report_id"
+    },
+    {
+      "ordinal": 4,
+      "field_path": "report.publication_window.end",
+      "evidence_field": "evidence.cti_report.publication_window.end",
+      "claim_kind": "evidence.cti_report.publication_boundary",
+      "value_type": "bounded_public_text",
+      "presence": "required",
+      "normalization": "canonical RFC3339 timestamp or YYYY-MM-DD text as already validated",
+      "occurrence_key_rule": "report.report_id"
+    },
+    {
+      "ordinal": 5,
+      "field_path": "report.reported_marker",
+      "evidence_field": "evidence.cti_report.report.reported_marker",
+      "claim_kind": "evidence.cti_report.reported_marker",
+      "value_type": "bounded_boolean",
+      "presence": "required_const_true",
+      "occurrence_key_rule": "report.report_id"
+    },
+    {
+      "ordinal": 6,
+      "field_path": "report.public_objects[].object_ref",
+      "evidence_field": "evidence.cti_report.object.object_ref",
+      "claim_kind": "evidence.cti_report.object_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "object.object_ref"
+    },
+    {
+      "ordinal": 7,
+      "field_path": "report.public_objects[].object_type",
+      "evidence_field": "evidence.cti_report.object.object_type",
+      "claim_kind": "evidence.cti_report.object_declaration",
+      "value_type": "bounded_enum",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "the paired object.object_ref"
+    },
+    {
+      "ordinal": 8,
+      "field_path": "report.public_techniques[].technique_ref",
+      "evidence_field": "evidence.cti_report.technique.technique_ref",
+      "claim_kind": "evidence.cti_report.technique_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "technique.technique_ref"
+    },
+    {
+      "ordinal": 9,
+      "field_path": "report.public_relations[].subject_ref",
+      "evidence_field": "evidence.cti_report.relation.subject_ref",
+      "claim_kind": "evidence.cti_report.relation_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "canonical tuple subject_ref, relation_type, object_ref"
+    },
+    {
+      "ordinal": 10,
+      "field_path": "report.public_relations[].relation_type",
+      "evidence_field": "evidence.cti_report.relation.relation_type",
+      "claim_kind": "evidence.cti_report.relation_declaration",
+      "value_type": "bounded_enum",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "canonical tuple subject_ref, relation_type, object_ref"
+    },
+    {
+      "ordinal": 11,
+      "field_path": "report.public_relations[].object_ref",
+      "evidence_field": "evidence.cti_report.relation.object_ref",
+      "claim_kind": "evidence.cti_report.relation_declaration",
+      "value_type": "opaque_reference",
+      "presence": "optional_repeated",
+      "occurrence_key_rule": "canonical tuple subject_ref, relation_type, object_ref"
+    }
+  ],
+  "projection_fields_used_as_claim_metadata_not_claim_values": [
+    {
+      "field_path": "descriptor.opaque_record_reference",
+      "target": "source_record_ref"
+    },
+    {
+      "field_path": "descriptor.projection_pin_declaration.sha256",
+      "target": "identity_tuple.projection_sha256"
+    },
+    {
+      "field_path": "source_metadata.source_family",
+      "target": "validated source-class constraint"
+    },
+    {
+      "field_path": "source_metadata.epistemic_modality",
+      "target": "every claim.epistemic_modality"
+    },
+    {
+      "field_path": "source_metadata.modality_basis_code",
+      "target": "every claim.modality_basis_code"
+    },
+    {
+      "field_path": "source_metadata.trusted_ingestion_metadata_sha256",
+      "target": "every claim.trusted_ingestion_metadata_sha256"
+    }
+  ],
+  "design_level_example_claims": [
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.cti_report.report_identity",
+      "evidence_field": "evidence.cti_report.report.report_id",
+      "occurrence_key": "report_fixture_001",
+      "value_type": "opaque_reference",
+      "value": "report_fixture_001",
+      "source_class": "cti_report_public_projection",
+      "source_record_ref": "cti_fixture_record_001",
+      "epistemic_modality": "reported",
+      "modality_basis_code": "PUBLIC_CTI_REPORT_DECLARATION",
+      "trusted_ingestion_metadata_sha256": "f8e78a651cc7736bdec0b42b6955d8c1df1248e3edbd760f8865a52733bd3dcc",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.cti_report.technique_declaration",
+      "evidence_field": "evidence.cti_report.technique.technique_ref",
+      "occurrence_key": "technique_fixture_T0001",
+      "value_type": "opaque_reference",
+      "value": "technique_fixture_T0001",
+      "source_class": "cti_report_public_projection",
+      "source_record_ref": "cti_fixture_record_001",
+      "epistemic_modality": "reported",
+      "modality_basis_code": "PUBLIC_CTI_REPORT_DECLARATION",
+      "trusted_ingestion_metadata_sha256": "f8e78a651cc7736bdec0b42b6955d8c1df1248e3edbd760f8865a52733bd3dcc",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.cti_report.relation_declaration",
+      "evidence_field": "evidence.cti_report.relation.relation_type",
+      "occurrence_key": "object_fixture_001|reported_uses|technique_fixture_T0001",
+      "value_type": "bounded_enum",
+      "value": "reported_uses",
+      "source_class": "cti_report_public_projection",
+      "source_record_ref": "cti_fixture_record_001",
+      "epistemic_modality": "reported",
+      "modality_basis_code": "PUBLIC_CTI_REPORT_DECLARATION",
+      "trusted_ingestion_metadata_sha256": "f8e78a651cc7736bdec0b42b6955d8c1df1248e3edbd760f8865a52733bd3dcc",
+      "admission_state": "not_admitted"
+    }
+  ],
+  "determinism": {
+    "object_order": "object_ref then object_type ascending UTF-8 byte order",
+    "technique_order": "technique_ref ascending UTF-8 byte order",
+    "relation_order": "subject_ref then relation_type then object_ref ascending UTF-8 byte order",
+    "claim_order": "field_to_claim_mapping.ordinal ascending, then occurrence_key UTF-8 byte order",
+    "same_validated_projection_same_claims": true,
+    "partial_result": false
+  },
+  "modality_contract": {
+    "reported_marker_required": true,
+    "PUBLIC_CTI_REPORT_DECLARATION": "reported",
+    "UNRESOLVED_REPORTING_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+    "observed_request": "DENY_MODALITY_LAUNDERING",
+    "derived_request": "DENY_MODALITY_LAUNDERING",
+    "citation_count_changes_modality": false,
+    "promotion_changes_modality": false
+  },
+  "report_integrity_fail_closed": {
+    "false_or_missing_reported_marker": "DENY",
+    "duplicate_object_technique_or_relation": "DENY",
+    "dangling_relation_reference": "DENY",
+    "publication_window_malformed": "DENY",
+    "report_text_excerpt_or_attachment_present": "DENY"
+  },
+  "forbidden": {
+    "planner_source_field_enum_reuse": true,
+    "planner_afs_slot_reuse": true,
+    "raw_report_path_uri_body_excerpt_or_bytes": true,
+    "author_pii_credentials_or_endpoint": true,
+    "truth_label_verdict_ground_truth_or_oracle": true,
+    "reported_to_observed_or_derived_laundering": true,
+    "cross_adapter_merge": true,
+    "mint_or_admission": true
+  },
+  "output_boundary": {
+    "claims_nonempty_on_valid_required_core": true,
+    "every_claim_claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "current_external_schema_accepts_this_example": false,
+    "separate_schema_consumer_and_green_2_authority_required": true
+  }
+}

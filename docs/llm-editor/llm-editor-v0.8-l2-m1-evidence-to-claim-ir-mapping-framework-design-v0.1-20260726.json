@@ -1,0 +1,341 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-framework-design-v0.1-20260726",
+  "artifact_type": "m1_evidence_to_claim_ir_nonempty_mapping_framework_design",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "3f0416d4dda57aa788970a046b88db2d555fae37",
+  "status": "design_only_not_executable",
+  "scope": {
+    "surface_id": "project05_depth2_public",
+    "source_classes": [
+      "system_log_public_projection",
+      "provenance_graph_public_projection",
+      "cti_report_public_projection"
+    ],
+    "goal": "Specify a deterministic future mapping from accepted public evidence projections to nonempty unminted Claim-IR claims without reusing planner-only source_field identities.",
+    "runtime_changed": false,
+    "current_zero_claim_skeleton_changed": false,
+    "schema_changed": false,
+    "consumer_contract_changed": false
+  },
+  "authority_and_pin_table": [
+    {
+      "role": "green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-modality-projection-adapters-green-owner-acceptance-v0.1-20260726.json",
+      "sha256": "27f5c91f283d0079e61e7e7d70248c8ab8d107887db64f0ba7be7c5c46dd23c6"
+    },
+    {
+      "role": "green_review_packet",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-evidence-modality-projection-adapters-green-review-packet-v0.1-20260726.json",
+      "sha256": "ff9af776b4238f3d5c780610f83c384a582fbcff7209f7d8a6eeb8812b3e61ff"
+    },
+    {
+      "role": "green_implementation_disposition",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapters-implementation-disposition-v0.1-20260726.json",
+      "sha256": "7b03b1deae81c3f4215e447d36c87142d2cd4fd028da0db7bcf8e4d87a49dbc3"
+    },
+    {
+      "role": "red_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-modality-projection-adapters-red-owner-acceptance-v0.1-20260726.json",
+      "sha256": "76d2f9d94d8b165137c9e77a10eab3252feecc5907d80bf3129e7652a34dcf21"
+    },
+    {
+      "role": "system_log_public_projection",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-system-log-public-field-projection-v0.1-20260726.json",
+      "sha256": "5c707f5cfa6534d11d04c4f10899ea133396c00961041112353321f47d78f8bb"
+    },
+    {
+      "role": "provenance_graph_public_projection",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-provenance-graph-public-field-projection-v0.1-20260726.json",
+      "sha256": "8a210a4eb2d9f48ac35c65f78fb29e2801c6a991b5b28798beaf5980f0c90ad5"
+    },
+    {
+      "role": "cti_report_public_projection",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726.json",
+      "sha256": "7ec2fc8a04bdb2bd8119edee6b97151ffa9a2faff68cf997b38dd059919b7afb"
+    },
+    {
+      "role": "external_claim_ir_schema",
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    {
+      "role": "kernel_claim_ir_schema",
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    {
+      "role": "effective_consumer_contract",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+    },
+    {
+      "role": "source_modality_spec_issue",
+      "path": "docs/spec-issues/SI-LLM-005-source-modality-mapping.md",
+      "sha256": "6cdf468ea141b2bba6684bc0581e733fa8ee6e76ad201f480338706a27473dca"
+    },
+    {
+      "role": "planner_source_field_slot_mapping_negative_boundary",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070"
+    },
+    {
+      "role": "protected_system_log_adapter",
+      "path": "src/compiler/llm/m1_system_log_projection_adapter.py",
+      "sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116"
+    },
+    {
+      "role": "protected_provenance_graph_adapter",
+      "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py",
+      "sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5"
+    },
+    {
+      "role": "protected_cti_report_adapter",
+      "path": "src/compiler/llm/m1_cti_report_projection_adapter.py",
+      "sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e"
+    },
+    {
+      "role": "protected_planner_adapter",
+      "path": "src/compiler/llm/m1_planner_inputs_adapter.py",
+      "sha256": "ae5c6db06a523ef6a4e384a118e1dcff7f0694d2b3f0e6f87a7dc7b2252d67f0"
+    }
+  ],
+  "current_schema_compatibility_finding": {
+    "nonempty_evidence_claims_valid_under_current_external_schema": false,
+    "nonempty_evidence_claims_valid_under_current_kernel_schema": false,
+    "blocking_reasons": [
+      "The current claim_kind enum contains only planner public_config, public_alignment_state, public_action_declaration, and public_prospective_effect values.",
+      "The current claim_record requires source_field and restricts it to the 38 planner config, state, and action paths.",
+      "The current closed claim_record cannot carry evidence_field, source_class, source_record_ref, or epistemic_modality.",
+      "The current manifest.field_path_set is restricted to the same planner source_field enum."
+    ],
+    "fail_closed_conclusion": "No nonempty evidence claim may be emitted under the current effective schemas. Reusing a planner source_field or claim_kind would be identity laundering.",
+    "required_future_work": "A separately reviewed additive schema and consumer-contract revision must introduce a discriminated evidence claim-record branch before GREEN-2 runtime mapping can be implemented.",
+    "this_design_changes_schema_now": false
+  },
+  "proposed_evidence_claim_namespace": {
+    "record_branch_name": "evidence_claim_record_v0_1",
+    "discriminator": {
+      "field": "record_class",
+      "value": "public_evidence_declaration"
+    },
+    "evidence_field_pattern": "^evidence\\.(system_log|provenance_graph|cti_report)\\.[a-z0-9_.]+$",
+    "planner_source_field_allowed_in_evidence_record": false,
+    "planner_allowlisted_source_slot_allowed_in_evidence_record": false,
+    "claim_kind_prefix": "evidence.",
+    "claim_kind_families": [
+      "evidence.system_log.event_identity",
+      "evidence.system_log.event_attribute",
+      "evidence.system_log.principal_reference",
+      "evidence.provenance_graph.graph_identity",
+      "evidence.provenance_graph.node_declaration",
+      "evidence.provenance_graph.edge_declaration",
+      "evidence.provenance_graph.time_boundary",
+      "evidence.provenance_graph.summary",
+      "evidence.cti_report.report_identity",
+      "evidence.cti_report.publisher_declaration",
+      "evidence.cti_report.publication_boundary",
+      "evidence.cti_report.reported_marker",
+      "evidence.cti_report.object_declaration",
+      "evidence.cti_report.technique_declaration",
+      "evidence.cti_report.relation_declaration"
+    ],
+    "value_types_reused_as_closed_primitives": [
+      "opaque_reference",
+      "bounded_number",
+      "bounded_boolean",
+      "bounded_enum",
+      "bounded_public_text"
+    ],
+    "new_value_type_added_by_this_design": false
+  },
+  "proposed_evidence_claim_record_shape": {
+    "required_fields": [
+      "record_class",
+      "claim_id",
+      "claim_id_state",
+      "claim_kind",
+      "evidence_field",
+      "occurrence_key",
+      "value_type",
+      "value",
+      "source_class",
+      "source_record_ref",
+      "epistemic_modality",
+      "modality_basis_code",
+      "trusted_ingestion_metadata_sha256",
+      "admission_state"
+    ],
+    "fixed_fields": {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted"
+    },
+    "identity_contract": {
+      "claim_id_is_identity": false,
+      "claim_id_minting_occurs": false,
+      "design_identity_tuple": [
+        "surface_id",
+        "source_class",
+        "source_record_ref",
+        "projection_sha256",
+        "claim_kind",
+        "evidence_field",
+        "occurrence_key",
+        "canonical_value_sha256",
+        "epistemic_modality",
+        "modality_basis_code",
+        "trusted_ingestion_metadata_sha256"
+      ],
+      "tuple_purpose": "Deterministic equality and ordering input for a future reviewed mapper only; it is not a Claim ID, certificate identity, admission identity, or effective mint input.",
+      "draft_identity_emission_authorized": false,
+      "hmac_or_secret_created": false
+    },
+    "closed_record_rule": "Unknown fields and missing required fields reject the entire mapping request. No partial claim set is returned."
+  },
+  "package_state_contract": {
+    "schema_version": "future_separately_reviewed_evidence_claim_extension",
+    "surface_id": "project05_depth2_public",
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "every_claim_claim_id": null,
+    "claims_nonempty_required": true,
+    "manifest_claim_count_equals_claims_length": true,
+    "legacy_planner_field_path_set": [],
+    "future_evidence_field_path_set_required": true,
+    "package_id_is_not_minted_claim_id": true,
+    "certificate_surface": "vacant"
+  },
+  "direct_mapping_pipeline": [
+    {
+      "ordinal": 1,
+      "step": "verify_all_authority_projection_schema_and_adapter_pins",
+      "read_only": true
+    },
+    {
+      "ordinal": 2,
+      "step": "validate_one_exact_source_class_projection_against_its_closed_allowlist",
+      "read_only": true
+    },
+    {
+      "ordinal": 3,
+      "step": "derive_epistemic_modality_only_from_the_pinned_modality_basis_rule",
+      "llm_inference": false
+    },
+    {
+      "ordinal": 4,
+      "step": "map_only_contract_listed_scalar_projection_fields_to_the_independent_evidence_namespace",
+      "silent_field_drop": false
+    },
+    {
+      "ordinal": 5,
+      "step": "sort_claim_drafts_by_contract_ordinal_then_occurrence_key_utf8_bytes",
+      "deterministic": true
+    },
+    {
+      "ordinal": 6,
+      "step": "validate_nonempty_closed_evidence_claim_record_set_and_fixed_package_states",
+      "mint": false,
+      "admission": false
+    }
+  ],
+  "modality_carry_contract": {
+    "modality_is_per_claim_required_metadata": true,
+    "modality_source": "source_metadata.epistemic_modality after exact basis validation",
+    "system_log": {
+      "DIRECT_SOURCE_ATTESTED_EVENT": "observed",
+      "TRANSFORMED_AGGREGATED_OR_ALERT": "derived",
+      "UNRESOLVED_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE"
+    },
+    "provenance_graph": {
+      "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED": "observed",
+      "ONE_OR_MORE_ELEMENTS_TRANSFORMED_OR_INFERRED": "derived",
+      "MIXED_UNSPLIT_OR_UNRESOLVED_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE"
+    },
+    "cti_report": {
+      "PUBLIC_CTI_REPORT_DECLARATION": "reported",
+      "UNRESOLVED_REPORTING_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+      "observed": "DENY_MODALITY_LAUNDERING",
+      "derived": "DENY_MODALITY_LAUNDERING"
+    },
+    "promotion_changes_modality": false
+  },
+  "determinism_and_separation": {
+    "same_pins_and_projection_same_claim_drafts": true,
+    "canonical_json": "UTF-8, keys sorted lexicographically, no insignificant whitespace, finite JSON values only",
+    "claim_order": "mapping ordinal ascending, then occurrence_key UTF-8 byte order",
+    "duplicate_identity_tuple": "reject_entire_request",
+    "cross_adapter_merge": "DENY",
+    "one_envelope_one_source_class": true,
+    "silent_fallback": false,
+    "wildcard_mapping": false,
+    "implicit_default_adapter": false
+  },
+  "fail_closed_rules": {
+    "unknown_projection_field": "DENY",
+    "missing_required_projection_field": "DENY",
+    "projection_or_fixture_pin_mismatch": "DENY",
+    "planner_source_field_enum_reuse": "DENY_IDENTITY_LAUNDERING",
+    "planner_afs_slot_reuse": "DENY_IDENTITY_LAUNDERING",
+    "claim_kind_without_evidence_prefix": "DENY",
+    "raw_path_uri_bytes_text_secret_label_or_oracle": "DENY",
+    "cti_reported_to_observed_or_derived": "DENY_MODALITY_LAUNDERING",
+    "unknown_or_unresolved_modality": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+    "cross_source_class_claim_merge": "DENY",
+    "empty_claim_set_under_future_nonempty_mapper": "DENY",
+    "partial_mapping_or_redact_and_continue": false
+  },
+  "relationship_to_accepted_zero_claim_green": {
+    "accepted_green_status": "green_accepted_for_test_only_evidence_modality_adapter_skeletons_only",
+    "accepted_green_claim_count": 0,
+    "accepted_green_runtime_remains_authoritative": true,
+    "this_design_is_follow_on_green_2_contract_candidate": true,
+    "this_design_rewrites_or_supersedes_green_runtime": false,
+    "nonempty_mapping_runtime_authorized": false,
+    "effective_schema_or_consumer_revision_authorized": false
+  },
+  "intermediate_observation_ir_disposition": {
+    "required_by_this_design": false,
+    "reason": "The accepted public projections already provide closed scalar declarations, stable occurrence keys, and pinned modality bases sufficient for a direct mapping contract. This RED does not create another data model.",
+    "owner_confirmation_requested": true
+  },
+  "explicit_non_authorizations": {
+    "adapter_python_change": false,
+    "schema_change": false,
+    "consumer_contract_change": false,
+    "green_2_runtime_implementation": false,
+    "effective_registry_activation": false,
+    "production_execute": false,
+    "production_single_execute": false,
+    "activation_ledger_write": false,
+    "download": false,
+    "archive_open": false,
+    "raw_source_read_or_persist": false,
+    "audit_log_adapter": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "production_registration_enablement": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "owner_decision": null,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "this_design_is_not_owner_approval": true,
+    "assisted_sha_is_effective_identity": false
+  }
+}

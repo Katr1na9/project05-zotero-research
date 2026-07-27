@@ -1,0 +1,181 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-m1-evidence-to-claim-ir-mapping-red-review-packet-v0.1-20260726",
+  "artifact_type": "kernel_owner_m1_evidence_to_claim_ir_nonempty_mapping_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-26",
+  "authority_base_commit": "3f0416d4dda57aa788970a046b88db2d555fae37",
+  "reviewed_branch": "codex/m1-evidence-to-claim-ir-mapping-red-v0.1",
+  "status": "assisted_red_design_not_effective_pending_kernel_owner_review",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "pin_reverify": "OK",
+  "authority_basis": {
+    "green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-modality-projection-adapters-green-owner-acceptance-v0.1-20260726.json",
+      "sha256": "27f5c91f283d0079e61e7e7d70248c8ab8d107887db64f0ba7be7c5c46dd23c6",
+      "decision": "accept",
+      "accepted_scope": "test_only_zero_claim_evidence_modality_adapter_skeletons_only"
+    },
+    "authority_limit": "Assisted design and Owner review packet only. No runtime, schema, consumer contract, registry, execution, mint, admission, Kernel write, or git delivery is authorized."
+  },
+  "pinned_red_designs": {
+    "mapping_framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-framework-design-v0.1-20260726.json",
+      "sha256": "796a8ce3b8f3ac154de2aa787635c0b531ce6a179bc22e8906e7623002947fb1"
+    },
+    "system_log_mapping_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-system-log-to-claim-ir-mapping-contract-v0.1-20260726.json",
+      "sha256": "15bda95021ce21a6016d4f0e2ae96950dd70fdbf433f5cc6e5f47f8ebd1926cb",
+      "mapping_entries": 9,
+      "design_level_example_claims": 3
+    },
+    "provenance_graph_mapping_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-provenance-graph-to-claim-ir-mapping-contract-v0.1-20260726.json",
+      "sha256": "924d44bbdfe7795e3ada260526abfb71cfdc5d26683c6c075b81585c50f82031",
+      "mapping_entries": 14,
+      "design_level_example_claims": 3
+    },
+    "cti_report_mapping_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-to-claim-ir-mapping-contract-v0.1-20260726.json",
+      "sha256": "f13ef69e1fd96ffbf8ea673c840b0291b003aa4a13a752788ae44853ee1b683d",
+      "mapping_entries": 11,
+      "design_level_example_claims": 3
+    }
+  },
+  "mandatory_pin_reverification": {
+    "disk_content_sha256_reverified": true,
+    "given_and_protected_pins_checked": 15,
+    "given_and_protected_pins_match": true,
+    "planner_source_field_slot_mapping": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-id-source-field-slot-mapping-design-v0.1-20260724.json",
+      "sha256": "83d6a685a92dadc8ce0c05ecdd97931a56a207eebaf3c8193201a1daee38c070",
+      "use_in_this_design": "negative_boundary_only",
+      "planner_source_field_or_afs_slot_reuse": false
+    },
+    "protected_adapter_bytes_modified": false,
+    "historical_red_or_green_bytes_modified": false,
+    "schemas_or_effective_consumer_contract_modified": false
+  },
+  "red_design_result": {
+    "independent_evidence_claim_kind_namespace": "DESIGNED_NOT_EFFECTIVE",
+    "independent_evidence_field_namespace": "DESIGNED_NOT_EFFECTIVE",
+    "system_log_allowlisted_field_mapping": "9_ENTRIES",
+    "provenance_graph_allowlisted_field_mapping": "14_ENTRIES",
+    "cti_report_allowlisted_field_mapping": "11_ENTRIES",
+    "design_examples_nonempty": true,
+    "every_design_example_claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "cti_epistemic_modality": "reported",
+    "cti_observed_or_derived_request": "DENY_MODALITY_LAUNDERING",
+    "cross_adapter_merge": "DENY",
+    "raw_source_read_or_persist": false,
+    "runtime_implemented": false
+  },
+  "schema_compatibility_finding": {
+    "current_external_and_kernel_schemas_accept_nonempty_evidence_claims": false,
+    "finding_is_expected_fail_closed_boundary": true,
+    "reason": "The effective closed schemas require planner-only claim_kind and source_field values. Emitting evidence claims under those identities would be laundering.",
+    "recommended_future_shape": "Add a separately reviewed discriminated evidence_claim_record_v0_1 branch and evidence manifest field set while preserving the legacy planner claim_record unchanged.",
+    "schema_revision_authorized_by_this_packet": false,
+    "consumer_contract_revision_authorized_by_this_packet": false,
+    "green_2_runtime_authorized_by_this_packet": false
+  },
+  "relationship_to_zero_claim_green": {
+    "accepted_zero_claim_green_remains_current_runtime": true,
+    "accepted_zero_claim_green_bytes_unchanged": true,
+    "this_red_is_contract_candidate_for_future_green_2": true,
+    "this_red_retroactively_changes_green": false,
+    "nonempty_mapping_is_effective_now": false,
+    "scientific_backlog_closed": false
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "M1-EVIDENCE-MAPPING-RED-ORQ-01",
+      "question": "Accept a disjoint evidence.* claim_kind and evidence_field namespace, with no planner source_field or afs slot reuse?"
+    },
+    {
+      "question_id": "M1-EVIDENCE-MAPPING-RED-ORQ-02",
+      "question": "Accept that CTI claim drafts remain reported, while observed or derived requests fail closed as modality laundering?"
+    },
+    {
+      "question_id": "M1-EVIDENCE-MAPPING-RED-ORQ-03",
+      "question": "Accept this mapping as a future GREEN-2 contract candidate only, leaving the accepted zero-claim skeleton as the current unchanged runtime?"
+    },
+    {
+      "question_id": "M1-EVIDENCE-MAPPING-RED-ORQ-04",
+      "question": "Accept direct mapping from the already closed public projections without an intermediate observation IR?"
+    },
+    {
+      "question_id": "M1-EVIDENCE-MAPPING-RED-ORQ-05",
+      "question": "Accept fail-closed abstention with no nonempty package for unresolved or unknown modality, rather than emitting partially qualified claims?"
+    },
+    {
+      "question_id": "M1-EVIDENCE-MAPPING-RED-ORQ-06",
+      "question": "Confirm that any additive external and Kernel schema branch, consumer-contract revision, tests, or runtime implementation requires a separate GREEN-2 authority?"
+    }
+  ],
+  "acceptance_boundary": {
+    "acceptance_would_confirm_design_only": true,
+    "acceptance_would_activate_nonempty_mapping": false,
+    "acceptance_would_modify_schema_or_consumer_contract": false,
+    "acceptance_would_modify_adapter_runtime": false,
+    "acceptance_would_activate_effective_registry": false,
+    "acceptance_would_authorize_production_execute": false,
+    "acceptance_would_authorize_mint_or_admission": false,
+    "acceptance_would_authorize_kernel_e_case_certificate_or_stop": false,
+    "acceptance_would_close_scientific_backlog": false,
+    "acceptance_would_authorize_git_delivery": false,
+    "separate_green_2_authority_required": true,
+    "separate_git_authority_required": true,
+    "assisted_sha_is_effective_identity": false
+  },
+  "explicit_non_authorizations": {
+    "adapter_python_change": false,
+    "schema_change": false,
+    "consumer_contract_change": false,
+    "green_2_runtime_implementation": false,
+    "effective_registry_activation": false,
+    "production_adapter_execution": false,
+    "production_single_execute": false,
+    "activation_ledger_write": false,
+    "download": false,
+    "archive_open": false,
+    "raw_source_read_or_persist": false,
+    "audit_log_adapter": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_store_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_run_mvp_stop": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "production_registration_enablement": false,
+    "l2_gate_change": false,
+    "part_b_elevation": false,
+    "m2": false,
+    "four_family_finetune_or_kernel_admission": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "audit_trail": {
+    "new_design_json_files": 5,
+    "existing_tracked_files_modified": false,
+    "python_runtime_files_modified": false,
+    "raw_source_bytes_read": false,
+    "download_performed": false,
+    "registry_or_ledger_activated": false,
+    "claim_id_minted": false,
+    "kernel_e_case_certificate_stop_write": false,
+    "write_side_effects": "none",
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
