@@ -1,0 +1,397 @@
+{
+  "artifact_id": "kernel-v0.8-path-a-to-part-b-dual-track-readonly-alignment-v0.1-20260727",
+  "artifact_type": "kernel_m3_path_a_to_part_b_dual_track_readonly_alignment",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "4396dccbc9542a8ee464afac72d11b8141960e77",
+  "branch": "codex/part-b-readonly-alignment-then-path-a-sufficiency-v0.1",
+  "slice": "SLICE_1_READONLY_ALIGNMENT",
+  "slice_id": "PB-ALIGN-READONLY-V0_1",
+  "addresses_blocker": "PB-BLOCK-09",
+  "status": "assisted_readonly_alignment_pending_kernel_owner_review",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "this_alignment_is_not_owner_approval": true,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or Part B elevation.",
+  "owner_no_go_confirmation": {
+    "decision": "confirm_recommended_no_go_elevation",
+    "part_b_elevation": "NO_GO",
+    "path_b_write": "NO_GO",
+    "production_registration": "NO_GO",
+    "pb_si_008": "NOT_OPENED",
+    "source": {
+      "path": "docs/kernel/kernel-v0.8-part-b-elevation-no-go-and-next-slices-authorization-v0.1-20260727.json",
+      "sha256": "08f491fd3a0806eca4078455fb2f7558637710d6e3bcd71ce85599d2e2479220"
+    },
+    "reopen_scope_packet": {
+      "path": "docs/kernel/kernel-v0.8-part-b-reopen-scope-blockers-go-nogo-readonly-v0.1-20260727.json",
+      "sha256": "09a1a4d68570f9898eafa5d88d06fdbae2c75c751bd5dcf6f32665a97fd34cf1",
+      "this_packet_is_not_path_b_or_part_b_elevation_authority": true
+    }
+  },
+  "path_a_owner_acceptance_pins": [
+    {
+      "role": "zero_claim_projection_adapters_green_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-modality-projection-adapters-green-owner-acceptance-v0.1-20260726.json",
+      "sha256": "27f5c91f283d0079e61e7e7d70248c8ab8d107887db64f0ba7be7c5c46dd23c6"
+    },
+    {
+      "role": "evidence_schema_v0_1_green_acceptance",
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148"
+    },
+    {
+      "role": "green_2_nonempty_mapper_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4"
+    },
+    {
+      "role": "a2_test_only_sufficiency_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-sufficiency-checker-non-null-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "2857a225749b792dd9cb1604b35e7c2ce9e16b75eea6a952d8e84dbb02b0e1a3"
+    },
+    {
+      "role": "a3_audit_log_green_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-audit-log-evidence-modality-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "d420bcae4ca59fdc066b0c787c31a734e2647407f72394b10697906fa8a82f74"
+    }
+  ],
+  "path_a_identity_inventory": [
+    {
+      "artifact_id": "external_evidence_schema_v0_1",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "identity": "claim-ir-external-evidence-v0.1",
+      "role": "structural evidence package identity for system_log, provenance_graph, and cti_report",
+      "authority_ceiling": "STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED"
+    },
+    {
+      "artifact_id": "kernel_additive_schema_v0_1",
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "identity": "claim-ir-kernel-evidence-additive-v0.1",
+      "role": "additive structural oneOf for legacy Kernel records and evidence-v0.1 records",
+      "authority_ceiling": "SCHEMA_VALIDATION_ONLY_NO_KERNEL_WRITE"
+    },
+    {
+      "artifact_id": "consumer_contract_v0_2",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "identity": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2",
+      "role": "exact dispatch for legacy and evidence-v0.1 structural identities",
+      "authority_ceiling": "CONSUMABLE_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+    },
+    {
+      "artifact_id": "external_evidence_schema_v0_2",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+      "identity": "claim-ir-external-evidence-v0.2",
+      "role": "A3 accepted structural identity adding audit_log_public_projection while preserving prior modalities",
+      "authority_ceiling": "PUBLIC_AUDIT_DECLARATION_ONLY_NOT_MINTED_NOT_ADMITTED"
+    },
+    {
+      "artifact_id": "kernel_additive_schema_v0_2",
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.2.schema.json",
+      "sha256": "ef4aa92e5130286c5da142a4f6780d372fbec2e9bd4f2830222e035e99c3f35f",
+      "identity": "claim-ir-kernel-evidence-additive-v0.2",
+      "role": "additive structural oneOf including the audit-log evidence record branch",
+      "authority_ceiling": "SCHEMA_VALIDATION_ONLY_NO_KERNEL_WRITE"
+    },
+    {
+      "artifact_id": "consumer_contract_v0_3",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+      "identity": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+      "role": "exact dispatch including claim-ir-external-evidence-v0.2 with no wildcard or fallback",
+      "authority_ceiling": "CONSUMABLE_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+    },
+    {
+      "artifact_id": "system_log_zero_claim_adapter",
+      "path": "src/compiler/llm/m1_system_log_projection_adapter.py",
+      "sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116",
+      "identity": "m1a_system_log_projection_v0_1",
+      "role": "test-only in-memory projection skeleton",
+      "authority_ceiling": "ZERO_CLAIM_STRUCTURAL_ONLY"
+    },
+    {
+      "artifact_id": "provenance_graph_zero_claim_adapter",
+      "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py",
+      "sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5",
+      "identity": "m1a_provenance_graph_projection_v0_1",
+      "role": "test-only in-memory projection skeleton",
+      "authority_ceiling": "ZERO_CLAIM_STRUCTURAL_ONLY"
+    },
+    {
+      "artifact_id": "cti_report_zero_claim_adapter",
+      "path": "src/compiler/llm/m1_cti_report_projection_adapter.py",
+      "sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e",
+      "identity": "m1a_cti_report_projection_v0_1",
+      "role": "test-only reported projection skeleton",
+      "authority_ceiling": "ZERO_CLAIM_STRUCTURAL_ONLY"
+    },
+    {
+      "artifact_id": "green_2_evidence_mapper",
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+      "identity": "m1m_evidence_to_claim_ir_green_2_v0_1",
+      "role": "test-only nonempty mapping for the original three modalities",
+      "authority_ceiling": "UNMINTED_NOT_ADMITTED_NO_KERNEL_WRITE"
+    },
+    {
+      "artifact_id": "a2_sufficiency_evaluator",
+      "path": "src/compiler/llm/m1_evidence_sufficiency_evaluator.py",
+      "sha256": "ad4e5af8dd9af0012f5174b14822ce9146a6d0f491c07881b5b401d85d62e78f",
+      "identity": "m1_evidence_sufficiency_evaluator_test_only",
+      "role": "test-only six-package declared-scope sufficiency and non-null Checker record evaluator",
+      "authority_ceiling": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY_NO_AUTHORITY_ELEVATION"
+    },
+    {
+      "artifact_id": "a3_audit_log_adapter",
+      "path": "src/compiler/llm/m1_audit_log_projection_adapter.py",
+      "sha256": "93934bc6a28eaa1d7b23932bf5d1ca6c44221df2dc7a3c255b8e969cca311704",
+      "identity": "m1a_audit_log_projection_v0_1",
+      "role": "test-only in-memory public audit declaration validator",
+      "authority_ceiling": "PUBLIC_AUDIT_DECLARATION_ONLY"
+    },
+    {
+      "artifact_id": "a3_audit_log_mapper",
+      "path": "src/compiler/llm/m1_audit_log_to_claim_ir_mapper.py",
+      "sha256": "4d0fccbdff2b8d902079f7bfa9a949a7fc6ec4660e946f6ad75deed4a4e8e0e9",
+      "identity": "m1m_audit_log_to_claim_ir_v0_1",
+      "role": "test-only nonempty mapping into evidence.audit_log.* under evidence-v0.2",
+      "authority_ceiling": "PUBLIC_AUDIT_DECLARATION_ONLY_NOT_MINTED_NOT_ADMITTED"
+    }
+  ],
+  "part_b_dual_track_gate_snapshot": {
+    "runtime_gate": {
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb",
+      "part_b_status": "OUTSIDE_AUTHORIZED_TRACK_DENY",
+      "experiment_track_status": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY",
+      "pb_si_008_status": "NOT_OPENED",
+      "promotion_to_part_b_evidence_claim_authority_or_pass": "DENY",
+      "experiment_artifact_accessed": false,
+      "llm_invoked": false
+    },
+    "manifest": {
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9",
+      "status": "SI008_DUAL_TRACK_SEPARATION_DENY",
+      "claim_ceiling": "DUAL_TRACK_GATE_CONSISTENCY_ONLY",
+      "part_b_evidence_authority": false,
+      "part_b_claim_authority": false,
+      "part_b_authority_grant": false,
+      "part_b_pass_condition_authority": false
+    },
+    "adjacent_gates": {
+      "holdout_release": "DENY",
+      "pb_si_006_download": "DENY",
+      "pb_b5_execution": "NOT_ESTABLISHED",
+      "pb_b8_si_004": "OPEN",
+      "stop_authority": "NONE",
+      "certified_stop": "NOT_AUTHORIZED",
+      "flipped_by_this_slice": false
+    },
+    "production_registration": {
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+      "PRODUCTION_REGISTRATION_ENABLED": false
+    }
+  },
+  "mapping_table": [
+    {
+      "artifact_id": "external_evidence_schema_v0_1",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "only_under_separate_experiment_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "A structural schema identity may support separately authorized experiment validation; schema validity grants no Part B evidence, claim, authority, or pass status."
+    },
+    {
+      "artifact_id": "kernel_additive_schema_v0_1",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "readonly_validation_only_under_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "The additive oneOf is a readonly structural check and does not authorize Kernel ingestion or Part B elevation."
+    },
+    {
+      "artifact_id": "consumer_contract_v0_2",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "exact_dispatch_readonly_only",
+      "may_enter_part_b_authority_track": false,
+      "reason": "CONSUMABLE_STRUCTURAL_ONLY explicitly excludes ingestion and Part B authority."
+    },
+    {
+      "artifact_id": "external_evidence_schema_v0_2",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "only_under_separate_experiment_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "A3 acceptance adds an audit declaration structure, not an elevation bridge or proof of operation truth."
+    },
+    {
+      "artifact_id": "kernel_additive_schema_v0_2",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "readonly_validation_only_under_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "The audit-log branch remains unminted, not admitted, and without Kernel write authority."
+    },
+    {
+      "artifact_id": "consumer_contract_v0_3",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "exact_dispatch_readonly_only",
+      "may_enter_part_b_authority_track": false,
+      "reason": "The v0.3 route is structural-only; exact dispatch cannot be reinterpreted as a Part B pass condition."
+    },
+    {
+      "artifact_id": "system_log_zero_claim_adapter",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_in_memory_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "The zero-claim adapter skeleton has no mint, admission, registry, production, or Part B promotion authority."
+    },
+    {
+      "artifact_id": "provenance_graph_zero_claim_adapter",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_in_memory_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "The zero-claim adapter skeleton is test-only and cannot promote provenance into Part B."
+    },
+    {
+      "artifact_id": "cti_report_zero_claim_adapter",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_in_memory_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "The reported declaration skeleton neither proves truth nor grants Part B evidence authority."
+    },
+    {
+      "artifact_id": "green_2_evidence_mapper",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_nonempty_mapping_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "Mapped claims remain claim_id=null, not_minted, not_admitted, and outside the authorized Part B track."
+    },
+    {
+      "artifact_id": "a2_sufficiency_evaluator",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_declared_scope_review",
+      "may_enter_part_b_authority_track": false,
+      "reason": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY is not truth, admission, L2 PASS, Part B PASS, or Part B elevation."
+    },
+    {
+      "artifact_id": "a3_audit_log_adapter",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_public_declaration_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "A public audit declaration does not prove occurrence, actor authorization, sufficiency, or Part B eligibility."
+    },
+    {
+      "artifact_id": "a3_audit_log_mapper",
+      "may_enter_experiment_track": true,
+      "experiment_track_condition": "test_only_nonempty_mapping_separate_authority",
+      "may_enter_part_b_authority_track": false,
+      "reason": "evidence.audit_log.* output remains unminted/not-admitted and is denied as a Part B promotion while PB-SI-008 is NOT_OPENED."
+    }
+  ],
+  "explicit_non_equivalence": [
+    "Path A evidence Claim-IR structural readiness is not Part B elevation authority.",
+    "A3 audit_log completion does not unlock PB-SI-008, Path B, or Part B.",
+    "Readonly Path A GREEN does not equal L2 PASS or Part B PASS.",
+    "Schema-valid and consumer-structural PASS do not equal scientific sufficiency, truth, admission, ingestion, or Part B authority.",
+    "A2 CONDITIONAL sufficiency does not equal Part B evidence authority or a Part B pass condition.",
+    "Experiment-track eligibility under separate authority does not equal entry into the Part B authority track.",
+    "Coexistence of Path A and Part B artifacts on main is not amalgamation.",
+    "Owner acceptance of this alignment would accept only a readonly mapping, not flip any gate."
+  ],
+  "non_amalgamation_contract": {
+    "path_a_artifact_bytes_combined_with_part_b_records": false,
+    "path_a_outputs_dereferenced_or_ingested": false,
+    "part_b_evidence_or_claim_created": false,
+    "part_b_authority_or_pass_condition_created": false,
+    "runtime_bridge_implemented": false,
+    "write_executor_implemented": false,
+    "alignment_is_inventory_only": true
+  },
+  "pb_block_09_disposition": {
+    "before": "cross_track_alignment_debt",
+    "this_slice_output": "readonly_non_amalgamating_alignment_candidate",
+    "closed_now": false,
+    "owner_acceptance_required": true,
+    "acceptance_would_not_open_elevation": true
+  },
+  "slice_order_and_stop": {
+    "slice_1": "implemented_for_owner_review",
+    "slice_2": "NOT_STARTED",
+    "slice_2_start_gate": "only_after_kernel_owner_accepts_slice_1",
+    "parallelism": "FORBIDDEN",
+    "git_commit_push_pr": "NOT_AUTHORIZED"
+  },
+  "protected_gate_pins": [
+    {
+      "role": "pb_si_008_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "pb_si_008_manifest",
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    {
+      "role": "pb_si_006_manifest",
+      "path": "configs/part-b-si006-manifest-v0.8.yaml",
+      "sha256": "c5eb2c9f89dc49477e465bde548c75b855b345361a06c423a54f6e117642b908"
+    },
+    {
+      "role": "holdout_deny_audit_manifest",
+      "path": "configs/part-b-b8-holdout-deny-audit-manifest-v0.8.yaml",
+      "sha256": "88f5bc261d99bc3d4a8c010627fbbfa8578e71048c68a47c50222270ad513a66"
+    },
+    {
+      "role": "claims_stop_deny_manifest",
+      "path": "configs/part-b-claims-stop-deny-manifest-v0.8.yaml",
+      "sha256": "1680bd2f4528e436f193b27da92880ca048ae805bab2c93bfe087c33766176df"
+    },
+    {
+      "role": "production_registration_gate",
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a"
+    }
+  ],
+  "verification": {
+    "json_parse_required": true,
+    "owner_auth_and_reopen_pin_match": "2/2 OK",
+    "path_a_identity_pins_checked": 13,
+    "path_a_acceptance_pins_checked": 5,
+    "part_b_gate_pins_checked": 6,
+    "protected_bytes_modified": false,
+    "production_registration_enabled": false,
+    "pb_si_008_status": "NOT_OPENED",
+    "part_b_elevation": "NO_GO",
+    "slice_2_started": false
+  },
+  "explicit_non_authorizations": {
+    "pb_si_008_open_or_narrow": false,
+    "path_b_write": false,
+    "production_registration_enablement": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "holdout_release": false,
+    "si_006_download": false,
+    "b5_execution": false,
+    "certificate_or_certified_stop": false,
+    "part_b_elevation": false,
+    "l2_or_part_b_pass_claim": false,
+    "slice_2_start_before_owner_accept": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "write_side_effects": {
+    "authorized_slice_1_files_only": true,
+    "owner_auth_pin_landed_unchanged": true,
+    "reopen_packet_landed_unchanged": true,
+    "runtime_or_gate_files_modified": false,
+    "expected_porcelain": "exactly_4_untracked_slice_1_files_after_review_packet_is_added"
+  }
+}

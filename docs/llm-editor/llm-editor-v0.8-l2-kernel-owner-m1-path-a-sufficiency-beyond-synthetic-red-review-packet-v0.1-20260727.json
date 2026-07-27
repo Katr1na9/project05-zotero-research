@@ -1,0 +1,205 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-m1-path-a-sufficiency-beyond-synthetic-red-review-packet-v0.1-20260727",
+  "artifact_type": "kernel_owner_review_packet_assisted_not_approval",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "4396dccbc9542a8ee464afac72d11b8141960e77",
+  "reviewed_branch": "codex/part-b-readonly-alignment-then-path-a-sufficiency-v0.1",
+  "program_path": "Path A",
+  "slice": "Slice-2 Path A sufficiency beyond synthetic",
+  "phase": "RED_ONLY",
+  "status": "PENDING_KERNEL_OWNER_REVIEW",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "green_started": false,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or Part B elevation.",
+  "owner_authority_pins": [
+    {
+      "role": "dual_authorization_and_part_b_elevation_no_go",
+      "path": "docs/kernel/kernel-v0.8-part-b-elevation-no-go-and-next-slices-authorization-v0.1-20260727.json",
+      "sha256": "08f491fd3a0806eca4078455fb2f7558637710d6e3bcd71ce85599d2e2479220"
+    },
+    {
+      "role": "slice_1_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-path-a-part-b-readonly-alignment-owner-acceptance-v0.1-20260727.json",
+      "sha256": "59a39938682968376b1b64089b4b1b8e43b949df19919585cb3e90eba7ae6d96"
+    }
+  ],
+  "pinned_red_design": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-path-a-sufficiency-beyond-synthetic-red-design-v0.1-20260727.json",
+    "sha256": "9ddfe28620f6dd7b5e83f3e40f228ab5d53aed6219622312131bb599413c7472"
+  },
+  "preserved_slice_1_files": [
+    {
+      "path": "docs/kernel/kernel-v0.8-part-b-elevation-no-go-and-next-slices-authorization-v0.1-20260727.json",
+      "sha256": "08f491fd3a0806eca4078455fb2f7558637710d6e3bcd71ce85599d2e2479220",
+      "drift": false
+    },
+    {
+      "path": "docs/kernel/kernel-v0.8-part-b-reopen-scope-blockers-go-nogo-readonly-v0.1-20260727.json",
+      "sha256": "09a1a4d68570f9898eafa5d88d06fdbae2c75c751bd5dcf6f32665a97fd34cf1",
+      "drift": false
+    },
+    {
+      "path": "docs/kernel/kernel-v0.8-path-a-to-part-b-dual-track-readonly-alignment-v0.1-20260727.json",
+      "sha256": "beded9f5d903110a25661a5250412590c36631985e59e5ceea888131e0a8a84f",
+      "drift": false
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-part-b-readonly-alignment-review-packet-v0.1-20260727.json",
+      "sha256": "561d53923d6ca4ed222e46d5fdfadd6abc82c565b1f7d743c1239d35ac909580",
+      "drift": false
+    },
+    {
+      "path": "docs/kernel/kernel-v0.8-path-a-part-b-readonly-alignment-owner-acceptance-v0.1-20260727.json",
+      "sha256": "59a39938682968376b1b64089b4b1b8e43b949df19919585cb3e90eba7ae6d96",
+      "drift": false
+    }
+  ],
+  "protected_runtime_pins": [
+    {
+      "role": "a2_sufficiency_evaluator",
+      "path": "src/compiler/llm/m1_evidence_sufficiency_evaluator.py",
+      "sha256": "ad4e5af8dd9af0012f5174b14822ce9146a6d0f491c07881b5b401d85d62e78f",
+      "drift": false
+    },
+    {
+      "role": "pb_si_008_dual_track_deny",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb",
+      "drift": false
+    },
+    {
+      "role": "production_registration_gate",
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a",
+      "drift": false,
+      "production_registration_enabled": false
+    }
+  ],
+  "red_scope_summary": {
+    "selected_scope_id": "CHECKER_FACING_DECISION_ROBUSTNESS_OVER_FIXED_A2_SIX_PACKAGE_CATALOG",
+    "selected_scope_is_checker_facing_test_only_contract": true,
+    "selected_scope_is_new_non_synthetic_ingestion": false,
+    "selected_scope_is_real_production_checker": false,
+    "meaning_of_beyond_synthetic": "Decision-boundary deepening beyond one synthetic happy-path conclusion; evidence remains synthetic declared-scope and no external validity claim is made.",
+    "a2_catalog_count": 6,
+    "a2_catalog_extended": false,
+    "audit_log_binding_authorized": false,
+    "audit_log_binding_default": "DENY_UNKNOWN_BINDING",
+    "named_sub_authority_requested": null,
+    "part_b_elevation": "NO_GO",
+    "pb_si_008": "NOT_OPENED"
+  },
+  "proposed_green_allowlist_if_and_only_if_owner_accepts_red": [
+    "src/compiler/llm/m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+    "tests/compiler_contract/test_m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+    "docs/llm-editor/llm-editor-v0.8-l2-m1-path-a-sufficiency-beyond-synthetic-green-design-v0.1-20260727.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-path-a-sufficiency-beyond-synthetic-green-review-packet-v0.1-20260727.json"
+  ],
+  "validation": {
+    "red_design_json_parse": "PASS",
+    "red_review_packet_json_parse": "PASS",
+    "mandatory_pin_reverify": "32/32 OK",
+    "slice_1_five_file_zero_drift": "5/5 OK",
+    "protected_runtime_zero_drift": "3/3 OK",
+    "a2_catalog_exact_count": 6,
+    "a2_catalog_audit_log_entry_count": 0,
+    "hard_ban_exact_in_design": true,
+    "hard_ban_exact_in_review_packet": true,
+    "production_registration_enabled": false,
+    "pb_si_008": "NOT_OPENED",
+    "tracked_runtime_or_schema_diff": "NONE",
+    "green_started": false
+  },
+  "scientific_ceiling": {
+    "maximum_claim_if_green_later_passes": "The fixed six-package synthetic declared-scope catalog has a deterministic, test-only, Checker-facing fail-closed decision surface.",
+    "conditional_scopes_may_remain": true,
+    "real_checker_connected": false,
+    "operation_truth": false,
+    "actor_authorization": false,
+    "non_synthetic_external_validity": false,
+    "l2_pass": false,
+    "part_b_pass": false,
+    "part_b_elevation": false,
+    "sufficiency_as_admission": false
+  },
+  "review_questions": [
+    {
+      "id": "ORQ-S2-RED-01",
+      "question": "Accept the minimal checker-facing decision-robustness scope over the fixed A2 six-package catalog, with no new non-synthetic ingestion?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-S2-RED-02",
+      "question": "Accept a new additive versioned test-only helper rather than mutating the protected A2 evaluator?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-S2-RED-03",
+      "question": "Confirm audit_log remains DENY_UNKNOWN_BINDING and no catalog extension or named sub-authority is granted?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-S2-RED-04",
+      "question": "Confirm the exact four-file GREEN allowlist may begin only after explicit RED acceptance?",
+      "proposed_answer": "accept"
+    }
+  ],
+  "acceptance_boundary": {
+    "accept_means": "Owner accepts only the RED design and may separately authorize the exact four-file test-only GREEN allowlist.",
+    "accept_does_not_mean": [
+      "L2 PASS",
+      "Part B PASS",
+      "Part B elevation",
+      "PB-SI-008 opened",
+      "Path B write authority",
+      "production registration",
+      "mint or admission",
+      "Kernel or E_case write",
+      "certificate or CERTIFIED_STOP",
+      "real Checker connection",
+      "A2 catalog extension",
+      "audit_log binding"
+    ]
+  },
+  "explicit_non_authorizations": {
+    "green_implementation_started": false,
+    "modify_a2_evaluator": false,
+    "modify_effective_schema_or_consumer": false,
+    "modify_adapter_or_mapper": false,
+    "open_pb_si_008": false,
+    "path_b_write": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "a2_catalog_extension": false,
+    "audit_log_binding": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": {
+    "new_red_files_only": [
+      "docs/llm-editor/llm-editor-v0.8-l2-m1-path-a-sufficiency-beyond-synthetic-red-design-v0.1-20260727.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-path-a-sufficiency-beyond-synthetic-red-review-packet-v0.1-20260727.json"
+    ],
+    "preserved_slice_1_untracked_files": 5,
+    "tracked_file_changes": 0,
+    "runtime_changes": 0,
+    "schema_or_consumer_changes": 0,
+    "green_files_created": 0,
+    "commit_push_pr": "NONE"
+  },
+  "stop": {
+    "state": "STOP_FOR_KERNEL_OWNER_REVIEW",
+    "next_action_requires_owner_decision": true
+  }
+}
