@@ -1,0 +1,170 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-m1-evidence-claim-ir-readonly-e2e-review-packet-v0.1-20260727",
+  "artifact_type": "kernel_owner_m1_evidence_claim_ir_main_readonly_e2e_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "2f951ec6da8da46ecc591de4fe154458c382491e",
+  "origin_main_tip_verified": "2f951ec6da8da46ecc591de4fe154458c382491e",
+  "merged_chain_tip": "7b12558d8888a84e685489540d02c7a31c5688be",
+  "reviewed_branch": "codex/m1-evidence-claim-ir-readonly-e2e-v0.1",
+  "status": "assisted_readonly_e2e_pass_pending_kernel_owner_review",
+  "conclusion": "PASS",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "pinned_verification_report": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-claim-ir-readonly-e2e-verification-report-v0.1-20260727.json",
+    "sha256": "98bcea7300630e52c4e204bcb96c2c3a248cecd6df7235a73803d013a9f637c5",
+    "conclusion": "PASS"
+  },
+  "authority_acceptance_pins": {
+    "schema_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "result": "OK"
+    },
+    "green_2_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4",
+      "result": "OK"
+    }
+  },
+  "protected_pin_summary": {
+    "pins_checked": 12,
+    "pins_match": true,
+    "effective_external_evidence_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+    "effective_kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+    "effective_consumer_v0_2_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+    "legacy_external_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "legacy_kernel_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "legacy_consumer_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+    "system_log_adapter_sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116",
+    "provenance_graph_adapter_sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5",
+    "cti_report_adapter_sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e",
+    "green_2_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+    "protected_bytes_before_equal_after": true,
+    "result": "OK"
+  },
+  "commands_and_results": [
+    {
+      "command": "git fetch origin main",
+      "result": "PASS; origin/main=2f951ec6da8da46ecc591de4fe154458c382491e"
+    },
+    {
+      "command": "git merge-base --is-ancestor 7b12558d8888a84e685489540d02c7a31c5688be origin/main",
+      "result": "PASS"
+    },
+    {
+      "command": "PowerShell readonly here-string | python -",
+      "purpose": "Independent three-arm happy/negative matrix with external schema, Kernel oneOf, consumer exact-dispatch, and protected-byte snapshots",
+      "result": "PASS"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_system_log_projection_adapter tests.compiler_contract.test_m1_provenance_graph_projection_adapter tests.compiler_contract.test_m1_cti_report_projection_adapter tests.compiler_contract.test_claim_ir_evidence_claim_record_schema_green tests.compiler_contract.test_m1_evidence_to_claim_ir_mapper -v",
+      "result": "49/49 PASS"
+    }
+  ],
+  "happy_path_result": {
+    "system_log": {
+      "claim_count": 9,
+      "external_schema": "PASS",
+      "kernel_oneof": "9/9 PASS",
+      "consumer_structural_checks": "PASS"
+    },
+    "provenance_graph": {
+      "claim_count": 16,
+      "external_schema": "PASS",
+      "kernel_oneof": "16/16 PASS",
+      "consumer_structural_checks": "PASS"
+    },
+    "cti_report": {
+      "claim_count": 11,
+      "external_schema": "PASS",
+      "kernel_oneof": "11/11 PASS",
+      "consumer_structural_checks": "PASS"
+    },
+    "all_fixed_states_and_evidence_namespaces": "PASS",
+    "result": "3/3 PASS"
+  },
+  "compatibility_result": {
+    "existing_zero_claim_adapters": "25/25 PASS",
+    "schema_green": "12/12 PASS",
+    "mapper_directed": "12/12 PASS",
+    "joint_regression": "49/49 PASS",
+    "runtime_schema_or_consumer_bytes_modified": false,
+    "result": "PASS"
+  },
+  "fail_closed_result": {
+    "cti_observed_and_derived": "2/2 DENY_MODALITY_LAUNDERING",
+    "unknown_modality_three_sources": "3/3 ABSTAIN_NO_PARTIAL_EMISSION",
+    "planner_namespace_smuggling": "DENY",
+    "cross_modality_merge": "DENY",
+    "evidence_packages_under_legacy_external": "3/3 EXPECTED_FAIL",
+    "draft_schema_version": "DENY_UNKNOWN_SCHEMA_VERSION",
+    "result": "PASS"
+  },
+  "write_side_effects": {
+    "observed": "none_beyond_verification_report_and_owner_review_packet",
+    "runtime_or_schema_modified": false,
+    "mint": false,
+    "admission": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "kernel_or_e_case_write": false,
+    "download_or_raw_source_access": false,
+    "certificate_or_stop": false
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "EVIDENCE-READONLY-E2E-ORQ-01",
+      "question": "Accept that origin/main at 2f951ec6 reproducibly maps all three existing synthetic public projections to schema-valid structural evidence packages?"
+    },
+    {
+      "question_id": "EVIDENCE-READONLY-E2E-ORQ-02",
+      "question": "Accept that the existing zero-claim adapters, schema GREEN tests, and mapper tests remain jointly green at 49/49?"
+    },
+    {
+      "question_id": "EVIDENCE-READONLY-E2E-ORQ-03",
+      "question": "Accept the recorded fail-closed CTI, unknown-modality, planner-namespace, cross-modality, legacy-schema, and draft-version results?"
+    },
+    {
+      "question_id": "EVIDENCE-READONLY-E2E-ORQ-04",
+      "question": "Confirm that acceptance records readonly reproducibility only and grants no mint, admission, registry, production, ingestion, Kernel/E_case, certificate, or STOP authority?"
+    }
+  ],
+  "acceptance_boundary": {
+    "acceptance_would_confirm_main_readonly_reproducibility_only": true,
+    "acceptance_would_modify_effective_or_legacy_identity": false,
+    "acceptance_would_authorize_mint_or_admission": false,
+    "acceptance_would_activate_registry_or_production_execute": false,
+    "acceptance_would_authorize_kernel_or_e_case_write": false,
+    "acceptance_would_authorize_certificate_or_certified_stop": false,
+    "acceptance_would_authorize_git_delivery": false
+  },
+  "explicit_non_authorizations": {
+    "mint": false,
+    "admission": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "download_or_raw_source_access": false,
+    "checker_non_null": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "audit_trail": {
+    "new_files": 2,
+    "existing_tracked_files_modified": false,
+    "runtime_schema_consumer_or_adapter_files_modified": false,
+    "optional_test_file_created": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
