@@ -1,0 +1,294 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-audit-log-public-field-projection-v0.1-20260727",
+  "artifact_type": "m1_audit_log_public_field_projection_red_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "dab7c32e76dadf6be9676ee3a7c2360803e98465",
+  "status": "design_only_draft_not_effective_pending_kernel_owner_review",
+  "entry_conclusion": "ENTER_V0_1_CANDIDATE",
+  "effective_state_now": "OUT_OF_V0_1",
+  "projection_identity": {
+    "surface_id": "project05_depth2_public",
+    "only_surface": true,
+    "source_class": "audit_log_public_projection",
+    "future_adapter_id": "m1a_audit_log_projection_v0_1",
+    "future_adapter_version": "0.1.0",
+    "future_mapper_id": "m1m_audit_log_to_claim_ir_v0_1",
+    "effective_registry_entry": false,
+    "projection_is_operation_truth": false,
+    "projection_is_authorization_proof": false,
+    "projection_is_admission": false,
+    "projection_is_certificate_or_stop": false
+  },
+  "inherited_pins": {
+    "a2_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-sufficiency-checker-non-null-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "2857a225749b792dd9cb1604b35e7c2ce9e16b75eea6a952d8e84dbb02b0e1a3"
+    },
+    "evidence_modality_framework_with_prior_out_state": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapter-framework-design-v0.1-20260726.json",
+      "sha256": "a9a8938908912978d3637ca573cdb2f2b9c3da669eb20351bd1be1daba5c2bee"
+    },
+    "evidence_modality_implementation_disposition_with_prior_out_state": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-modality-projection-adapters-implementation-disposition-v0.1-20260726.json",
+      "sha256": "7b03b1deae81c3f4215e447d36c87142d2cd4fd028da0db7bcf8e4d87a49dbc3"
+    },
+    "effective_external_evidence_schema": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    "effective_consumer_v0_2": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    }
+  },
+  "scientific_scope": {
+    "question_type": "Whether a controlled operation or change has a citable public audit declaration, not whether the raw operation is proven true.",
+    "non_redundant_with_system_log": "system_log declares system-generated event metadata and principals; it does not represent an audit mechanism's explicit operation, target, actor-reference, change-reference, and reported outcome declaration.",
+    "non_redundant_with_provenance_graph": "provenance_graph declares nodes, edges, time bounds, and summaries; it does not carry the governance-specific statement that an audit mechanism recorded a controlled operation or change.",
+    "non_redundant_with_cti_report": "cti_report is an external intelligence publication declaration; audit_log is a local or controlled-domain audit-record declaration about an operation or change.",
+    "claim_ceiling": "PUBLIC_AUDIT_DECLARATION_ONLY",
+    "operation_occurred_truth_asserted": false,
+    "actor_identity_truth_asserted": false,
+    "authorization_validity_asserted": false,
+    "reported_outcome_truth_asserted": false
+  },
+  "input_descriptor_contract": {
+    "accepted_top_level_fields": [
+      "descriptor",
+      "audit_entry",
+      "source_metadata"
+    ],
+    "required_field_paths": [
+      "descriptor.surface_id",
+      "descriptor.source_class",
+      "descriptor.opaque_record_reference",
+      "descriptor.projection_pin_declaration.artifact_id",
+      "descriptor.projection_pin_declaration.version",
+      "descriptor.projection_pin_declaration.sha256",
+      "audit_entry.entry_id",
+      "audit_entry.recorded_at",
+      "audit_entry.operation_class",
+      "audit_entry.target_class",
+      "audit_entry.public_target_ref",
+      "audit_entry.reported_outcome",
+      "audit_entry.recorded_marker",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "optional_field_paths": [
+      "audit_entry.public_actor_ref",
+      "audit_entry.public_change_ref",
+      "audit_entry.public_request_ref"
+    ],
+    "opaque_reference_semantics": {
+      "semantic_content": false,
+      "filesystem_path_allowed": false,
+      "archive_member_path_allowed": false,
+      "uri_or_endpoint_allowed": false,
+      "raw_account_identifier_allowed": false,
+      "request_supplied_resolution_allowed": false
+    }
+  },
+  "allowlisted_field_paths": [
+    {"field_path": "descriptor.surface_id", "presence": "required", "type": "string_const", "allowed": ["project05_depth2_public"]},
+    {"field_path": "descriptor.source_class", "presence": "required", "type": "string_const", "allowed": ["audit_log_public_projection"]},
+    {"field_path": "descriptor.opaque_record_reference", "presence": "required", "type": "opaque_string", "constraint": "Not a path, URI, endpoint, raw audit record, label, actor identity, or authority token."},
+    {"field_path": "descriptor.projection_pin_declaration.artifact_id", "presence": "required", "type": "string_const", "allowed": ["llm-editor-v0.8-l2-m1-audit-log-public-field-projection-v0.1-20260727"]},
+    {"field_path": "descriptor.projection_pin_declaration.version", "presence": "required", "type": "string_const", "allowed": ["0.1"]},
+    {"field_path": "descriptor.projection_pin_declaration.sha256", "presence": "required", "type": "sha256", "constraint": "Pins accepted reviewed projection-contract bytes under future separate authority; this RED design does not self-activate."},
+    {"field_path": "audit_entry.entry_id", "presence": "required", "type": "opaque_string", "constraint": "Public or irreversibly hashed audit-entry reference only."},
+    {"field_path": "audit_entry.recorded_at", "presence": "required", "type": "rfc3339_timestamp", "constraint": "Time the audit mechanism declares the entry was recorded; not proof of operation time or truth."},
+    {"field_path": "audit_entry.operation_class", "presence": "required", "type": "enum", "allowed": ["create", "update", "delete", "read_access", "policy_change", "configuration_change", "credential_change", "role_binding_change", "administrative_other"]},
+    {"field_path": "audit_entry.target_class", "presence": "required", "type": "enum", "allowed": ["configuration", "policy", "account", "role_binding", "resource", "software", "data_object", "other_public"]},
+    {"field_path": "audit_entry.public_target_ref", "presence": "required", "type": "opaque_or_irreversibly_hashed_string", "constraint": "No raw hostname, account, tenant, URI, filesystem path, object content, or reversible private identifier."},
+    {"field_path": "audit_entry.reported_outcome", "presence": "required", "type": "enum", "allowed": ["succeeded", "failed", "denied", "unknown"], "constraint": "Outcome as declared by the audit record, never an admission gate, performance verdict, or truth label."},
+    {"field_path": "audit_entry.recorded_marker", "presence": "required", "type": "boolean_const", "allowed": [true], "constraint": "Makes the public audit-record declaration boundary explicit."},
+    {"field_path": "audit_entry.public_actor_ref", "presence": "optional", "type": "opaque_or_irreversibly_hashed_string", "constraint": "No username, email, account number, credential, role authority, or reversible PII; presence does not prove identity."},
+    {"field_path": "audit_entry.public_change_ref", "presence": "optional", "type": "opaque_or_irreversibly_hashed_string", "constraint": "Opaque public change declaration only; not a ticket URI, approval proof, or authorization token."},
+    {"field_path": "audit_entry.public_request_ref", "presence": "optional", "type": "opaque_or_irreversibly_hashed_string", "constraint": "Opaque public request correlation reference only; not request bytes or endpoint."},
+    {"field_path": "source_metadata.source_family", "presence": "required", "type": "string_const", "allowed": ["control_plane_audit"]},
+    {"field_path": "source_metadata.epistemic_modality", "presence": "required", "type": "enum", "allowed": ["reported", "unknown"]},
+    {"field_path": "source_metadata.modality_basis_code", "presence": "required", "type": "enum", "allowed": ["PUBLIC_AUDIT_RECORD_DECLARATION", "UNRESOLVED_AUDIT_BASIS"]},
+    {"field_path": "source_metadata.trusted_ingestion_metadata_sha256", "presence": "required", "type": "sha256", "constraint": "Pins a trusted declaration of audit-record class; it does not authorize reading audit bytes or prove operation truth."}
+  ],
+  "explicit_denylist": [
+    "raw_source.path",
+    "raw_source.archive_member_path",
+    "raw_source.uri",
+    "raw_source.endpoint",
+    "raw_source.payload",
+    "raw_source.bytes",
+    "audit_entry.raw_record",
+    "audit_entry.full_text",
+    "audit_entry.message",
+    "audit_entry.diff",
+    "audit_entry.before_value",
+    "audit_entry.after_value",
+    "audit_entry.stack_trace",
+    "audit_entry.request_body",
+    "audit_entry.response_body",
+    "audit_entry.account_id",
+    "audit_entry.username",
+    "audit_entry.email",
+    "audit_entry.ip_address",
+    "audit_entry.hostname",
+    "audit_entry.tenant_id",
+    "audit_entry.authorization_token",
+    "audit_entry.credential",
+    "audit_entry.approval_proof",
+    "audit_entry.signature_secret",
+    "labels",
+    "verdict",
+    "ground_truth",
+    "oracle",
+    "mask_membership",
+    "hidden_claim_ids",
+    "required_claim_ids",
+    "recoverable_claim_ids",
+    "minted_claim_id",
+    "source_field",
+    "afs_slot",
+    "certificate",
+    "CERTIFIED_STOP",
+    "ordinary_run_mvp_STOP"
+  ],
+  "namespace_separation": {
+    "projection_field_root": "audit_entry",
+    "claim_namespace": "evidence.audit_log.*",
+    "system_log_field_root_reused": false,
+    "evidence_system_log_namespace_reused": false,
+    "planner_source_field_reused": false,
+    "planner_afs_slot_reused": false,
+    "cross_modality_aliasing": false
+  },
+  "epistemic_modality_contract": {
+    "default_modality": "reported",
+    "allowed_modalities": ["reported", "unknown"],
+    "reported_rule": "A validated public projection may state only that an audit mechanism declared an operation/change record and its declared fields; it does not directly observe or prove the operation.",
+    "unknown_rule": "Unresolved record class, unclear reporting basis, or missing trusted basis becomes unknown and ABSTAIN_NO_PACKAGE.",
+    "observed_allowed": false,
+    "derived_allowed": false,
+    "observed_request": "DENY_MODALITY_LAUNDERING",
+    "derived_request": "DENY_MODALITY_LAUNDERING",
+    "reported_to_observed_promotion": false,
+    "reported_outcome_upgrades_modality": false,
+    "llm_modality_inference": false
+  },
+  "determinism_and_failure": {
+    "canonical_field_order": "the order of allowlisted_field_paths in this contract",
+    "same_pinned_declaration_same_projection": true,
+    "unknown_field": "DENY_ENTIRE_REQUEST",
+    "duplicate_field": "DENY_ENTIRE_REQUEST",
+    "missing_required_field": "DENY_ENTIRE_REQUEST",
+    "invalid_type_or_enum": "DENY_ENTIRE_REQUEST",
+    "pin_mismatch": "DENY_ENTIRE_REQUEST",
+    "modality_basis_mismatch": "DENY_MODALITY_LAUNDERING",
+    "observed_or_derived": "DENY_MODALITY_LAUNDERING",
+    "unknown_modality": "ABSTAIN_NO_PACKAGE",
+    "system_log_namespace_smuggling": "DENY_ENTIRE_REQUEST",
+    "planner_namespace_smuggling": "DENY_ENTIRE_REQUEST",
+    "silent_field_drop": false,
+    "silent_default": false,
+    "redact_and_continue": false,
+    "partial_projection": false
+  },
+  "draft_projection_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://project05.invalid/schemas/drafts/m1-audit-log-public-projection-v0.1.draft.schema.json",
+    "title": "Draft-not-effective audit log public projection v0.1",
+    "$comment": "A3 RED design fragment only. Not effective, not registered, and not execution authority.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["descriptor", "audit_entry", "source_metadata"],
+    "properties": {
+      "descriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["surface_id", "source_class", "opaque_record_reference", "projection_pin_declaration"],
+        "properties": {
+          "surface_id": {"const": "project05_depth2_public"},
+          "source_class": {"const": "audit_log_public_projection"},
+          "opaque_record_reference": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"},
+          "projection_pin_declaration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["artifact_id", "version", "sha256"],
+            "properties": {
+              "artifact_id": {"const": "llm-editor-v0.8-l2-m1-audit-log-public-field-projection-v0.1-20260727"},
+              "version": {"const": "0.1"},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      },
+      "audit_entry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entry_id", "recorded_at", "operation_class", "target_class", "public_target_ref", "reported_outcome", "recorded_marker"],
+        "properties": {
+          "entry_id": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"},
+          "recorded_at": {"type": "string", "format": "date-time", "maxLength": 64},
+          "operation_class": {"enum": ["create", "update", "delete", "read_access", "policy_change", "configuration_change", "credential_change", "role_binding_change", "administrative_other"]},
+          "target_class": {"enum": ["configuration", "policy", "account", "role_binding", "resource", "software", "data_object", "other_public"]},
+          "public_target_ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"},
+          "reported_outcome": {"enum": ["succeeded", "failed", "denied", "unknown"]},
+          "recorded_marker": {"const": true},
+          "public_actor_ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"},
+          "public_change_ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"},
+          "public_request_ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"}
+        }
+      },
+      "source_metadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_family", "epistemic_modality", "modality_basis_code", "trusted_ingestion_metadata_sha256"],
+        "properties": {
+          "source_family": {"const": "control_plane_audit"},
+          "epistemic_modality": {"enum": ["reported", "unknown"]},
+          "modality_basis_code": {"enum": ["PUBLIC_AUDIT_RECORD_DECLARATION", "UNRESOLVED_AUDIT_BASIS"]},
+          "trusted_ingestion_metadata_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "allOf": [
+      {
+        "if": {"properties": {"source_metadata": {"properties": {"epistemic_modality": {"const": "reported"}}, "required": ["epistemic_modality"]}}, "required": ["source_metadata"]},
+        "then": {"properties": {"source_metadata": {"properties": {"modality_basis_code": {"const": "PUBLIC_AUDIT_RECORD_DECLARATION"}}}}}
+      },
+      {
+        "if": {"properties": {"source_metadata": {"properties": {"epistemic_modality": {"const": "unknown"}}, "required": ["epistemic_modality"]}}, "required": ["source_metadata"]},
+        "then": {"properties": {"source_metadata": {"properties": {"modality_basis_code": {"const": "UNRESOLVED_AUDIT_BASIS"}}}}}
+      }
+    ]
+  },
+  "raw_material_boundary": {
+    "raw_source_bytes_read": false,
+    "raw_source_bytes_persisted": false,
+    "full_audit_record_accepted": false,
+    "filesystem_or_archive_resolution": false,
+    "network_resolution": false,
+    "real_audit_source_connection": false,
+    "future_input_form": "opaque reference plus exact contract pin plus allowlisted public declarations only"
+  },
+  "explicit_non_authorizations": {
+    "projection_runtime": false,
+    "adapter_or_mapper_runtime": false,
+    "effective_schema_or_consumer_change": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "a2_sufficiency_catalog_extension": false,
+    "path_b": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  }
+}
