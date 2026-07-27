@@ -1,0 +1,236 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-green-2-design-v0.1-20260727",
+  "artifact_type": "m1_evidence_to_claim_ir_nonempty_mapping_green_2_test_only_runtime_design",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "c0a23a9da882da594d459cecfa4870560e158da2",
+  "status": "green_2_test_only_runtime_candidate_pending_kernel_owner_review",
+  "goal": "Implement deterministic nonempty mapping from one validated in-memory public evidence projection to the effective claim-ir-external-evidence-v0.1 structural package without changing the protected zero-claim adapters or granting mint, admission, registry, ingestion, or write authority.",
+  "authority_basis": {
+    "kernel_owner_green_2_authorization": true,
+    "schema_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "decision": "accept",
+      "status": "green_accepted_exact_candidate_bytes_now_effective_for_structural_dispatch_only"
+    },
+    "owner_acceptance_of_this_green_2_required": true,
+    "git_delivery_authorized": false
+  },
+  "implementation": {
+    "mapper": {
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+      "mapper_id": "m1m_evidence_to_claim_ir_green_2_v0_1",
+      "mapper_version": "0.1.0",
+      "authority_mode": "explicit_test_only_in_memory",
+      "production_registry_entry": false
+    },
+    "directed_tests": {
+      "path": "tests/compiler_contract/test_m1_evidence_to_claim_ir_mapper.py",
+      "sha256": "0a5c7dfc017b150faa38d4ac35eca1769c4f85b6606a88fc1cd0684e2850d10f",
+      "mapper_tests": "12/12 PASS",
+      "joint_regression": "49/49 PASS"
+    }
+  },
+  "effective_identity_pins": {
+    "external_evidence_schema": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "schema_version": "claim-ir-external-evidence-v0.1",
+      "modified": false
+    },
+    "kernel_additive_schema": {
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "modified": false
+    },
+    "consumer_contract_v0_2": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "evidence_route": "CONSUMABLE_STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED_NO_INGESTION_AUTHORITY",
+      "modified": false
+    }
+  },
+  "mapping_contract_pins": {
+    "framework": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-framework-design-v0.1-20260726.json",
+      "sha256": "796a8ce3b8f3ac154de2aa787635c0b531ce6a179bc22e8906e7623002947fb1"
+    },
+    "system_log": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-system-log-to-claim-ir-mapping-contract-v0.1-20260726.json",
+      "sha256": "15bda95021ce21a6016d4f0e2ae96950dd70fdbf433f5cc6e5f47f8ebd1926cb"
+    },
+    "provenance_graph": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-provenance-graph-to-claim-ir-mapping-contract-v0.1-20260726.json",
+      "sha256": "924d44bbdfe7795e3ada260526abfb71cfdc5d26683c6c075b81585c50f82031"
+    },
+    "cti_report": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-to-claim-ir-mapping-contract-v0.1-20260726.json",
+      "sha256": "f13ef69e1fd96ffbf8ea673c840b0291b003aa4a13a752788ae44853ee1b683d"
+    }
+  },
+  "protected_compatibility_paths": {
+    "system_log_zero_claim_adapter": {
+      "path": "src/compiler/llm/m1_system_log_projection_adapter.py",
+      "sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116",
+      "modified": false
+    },
+    "provenance_graph_zero_claim_adapter": {
+      "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py",
+      "sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5",
+      "modified": false
+    },
+    "cti_report_zero_claim_adapter": {
+      "path": "src/compiler/llm/m1_cti_report_projection_adapter.py",
+      "sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e",
+      "modified": false
+    },
+    "legacy_external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "modified": false
+    },
+    "legacy_kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "modified": false
+    },
+    "legacy_consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "modified": false
+    }
+  },
+  "runtime_contract": {
+    "input": "exactly_one_validated_in_memory_public_projection",
+    "allowed_source_classes": [
+      "system_log_public_projection",
+      "provenance_graph_public_projection",
+      "cti_report_public_projection"
+    ],
+    "authority_required": "activated_test_only_in_memory_evidence_to_claim_ir_green_2_authority",
+    "output_schema_version": "claim-ir-external-evidence-v0.1",
+    "output_record_class": "public_evidence_declaration",
+    "output_claim_kind_namespace": "evidence.*",
+    "output_evidence_field_namespace": "evidence.*",
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "manifest_field_path_set": [],
+    "same_projection_same_package": true,
+    "claim_order": "mapping ordinal ascending then already validated occurrence-key order",
+    "partial_result": false
+  },
+  "modality_results": {
+    "system_log": {
+      "fixture_claim_count": 9,
+      "observed": "PASS_NONEMPTY",
+      "derived": "PASS_WHEN_TRUSTED_BASIS_MATCHES",
+      "unknown": "ABSTAIN_NO_PACKAGE"
+    },
+    "provenance_graph": {
+      "fixture_claim_count": 16,
+      "observed": "PASS_NONEMPTY",
+      "derived": "PASS_WHEN_TRUSTED_BASIS_MATCHES",
+      "unknown": "ABSTAIN_NO_PACKAGE"
+    },
+    "cti_report": {
+      "fixture_claim_count": 11,
+      "reported": "PASS_NONEMPTY",
+      "unknown": "ABSTAIN_NO_PACKAGE",
+      "observed": "DENY_MODALITY_LAUNDERING",
+      "derived": "DENY_MODALITY_LAUNDERING"
+    }
+  },
+  "fail_closed_results": {
+    "missing_or_elevated_authority": "DENY",
+    "source_field_smuggling": "DENY",
+    "afs_smuggling": "DENY",
+    "planner_claim_kind_smuggling": "DENY",
+    "cross_modality_merge": "DENY",
+    "unknown_source_class": "DENY",
+    "unknown_modality_partial_emission": "ABSTAIN_BEFORE_EMISSION",
+    "missing_required_field": "DENY",
+    "modality_basis_mismatch": "DENY",
+    "raw_source_or_path_field": "DENY"
+  },
+  "validation_matrix": [
+    {
+      "validation_id": "GREEN2-VAL-01",
+      "subject": "Owner acceptance, effective identities, mapping contracts, legacy identities, and protected adapters",
+      "result": "14/14 PIN CHECKS PASS"
+    },
+    {
+      "validation_id": "GREEN2-VAL-02",
+      "subject": "Three synthetic modality projections mapped to effective evidence packages",
+      "result": "3/3 PASS"
+    },
+    {
+      "validation_id": "GREEN2-VAL-03",
+      "subject": "External evidence schema and additive Kernel oneOf validation",
+      "result": "ALL EMITTED PACKAGES AND CLAIMS PASS"
+    },
+    {
+      "validation_id": "GREEN2-VAL-04",
+      "subject": "CTI observed and derived laundering",
+      "result": "2/2 DENY"
+    },
+    {
+      "validation_id": "GREEN2-VAL-05",
+      "subject": "Unknown modality for system log, provenance graph, and CTI",
+      "result": "3/3 ABSTAIN_NO_PACKAGE"
+    },
+    {
+      "validation_id": "GREEN2-VAL-06",
+      "subject": "source_field, AFS, planner kind, and cross-modality merge",
+      "result": "ALL DENY"
+    },
+    {
+      "validation_id": "GREEN2-VAL-07",
+      "subject": "Existing zero-claim adapters plus schema GREEN plus mapper regression",
+      "result": "49/49 PASS"
+    }
+  ],
+  "write_boundary": {
+    "in_memory_only": true,
+    "file_write": false,
+    "raw_source_read_or_persist": false,
+    "download": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "write_side_effects": "none_beyond_authorized_green_2_code_test_and_review_files"
+  },
+  "explicit_non_authorizations": {
+    "effective_registry_activation": false,
+    "production_single_execute": false,
+    "download_or_raw_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion": false,
+    "kernel_or_e_case_write": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "certificate_or_certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_boundary": {
+    "owner_decision": null,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "this_design_is_not_owner_approval": true,
+    "acceptance_does_not_authorize_mint_admission_or_kernel_write": true,
+    "separate_git_authority_required": true
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "artifact_id": "kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727",
+  "artifact_type": "kernel_m3_m1_evidence_to_claim_ir_nonempty_mapping_green_2_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "green_2_accepted_test_only_nonempty_mapper_runtime_no_ingestion_authority",
+  "authority_base_commit": "c0a23a9da882da594d459cecfa4870560e158da2",
+  "reviewed_tip": "c0a23a9da882da594d459cecfa4870560e158da2",
+  "reviewed_branch": "codex/claim-ir-evidence-to-claim-ir-mapping-green-2-v0.1",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-evidence-to-claim-ir-mapping-green-2-review-packet-v0.1-20260727.json",
+    "content_sha256": "48bc93b7b0e8e1f7560c3cba78df0b15ff819d5fd849efbd6b699605fcfd69f5"
+  },
+  "pinned_green_2_artifacts": {
+    "mapper_implementation": {
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "content_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    },
+    "directed_tests": {
+      "path": "tests/compiler_contract/test_m1_evidence_to_claim_ir_mapper.py",
+      "content_sha256": "0a5c7dfc017b150faa38d4ac35eca1769c4f85b6606a88fc1cd0684e2850d10f"
+    },
+    "green_2_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-to-claim-ir-mapping-green-2-design-v0.1-20260727.json",
+      "content_sha256": "33e257e7d8856e06edac1d58f0cee9d27581c472d3d456929792c37a9bc8fdf6"
+    }
+  },
+  "runtime_contract_accepted": {
+    "api": "map_validated_projection_to_claim_ir",
+    "authority": "explicit_test_only_in_memory",
+    "schema_version": "claim-ir-external-evidence-v0.1",
+    "record_class": "public_evidence_declaration",
+    "claim_counts": {
+      "system_log_public_projection": 9,
+      "provenance_graph_public_projection": 16,
+      "cti_report_public_projection": 11
+    },
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema"
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "branch_match": true,
+    "deliverable_sha_match": "4/4 OK",
+    "pin_reverify": "14/14 OK",
+    "protected_effective_legacy_zero_diff": true,
+    "mapper_tests": "12/12 PASS",
+    "joint_regression": "49/49 PASS (includes zero-claim adapters 25/25 and schema GREEN tests)",
+    "source_field_afs_planner_kind_absent": true,
+    "cti_observed_derived": "DENY_MODALITY_LAUNDERING",
+    "unknown_modality": "ABSTAIN_NO_PACKAGE",
+    "cross_modality_merge": "DENY",
+    "porcelain_before_owner_acceptance": "exactly_4_untracked_green_2_files",
+    "write_side_effects_in_reviewed_delivery": "none_beyond_4_authorized_green_2_files"
+  },
+  "answers_to_owner_questions": {
+    "EVIDENCE-MAPPER-GREEN2-ORQ-01_separate_mapper_zero_claim_adapters_unchanged": "accept",
+    "EVIDENCE-MAPPER-GREEN2-ORQ-02_deterministic_contract_ordinal_emission": "accept",
+    "EVIDENCE-MAPPER-GREEN2-ORQ-03_fail_closed_cti_unknown_cross_modality": "accept",
+    "EVIDENCE-MAPPER-GREEN2-ORQ-04_no_registry_mint_admission_ingestion": "accept"
+  },
+  "accepted_for": [
+    "test_only_explicit_nonempty_evidence_to_claim_ir_mapper_runtime",
+    "deterministic_emission_under_effective_claim_ir_external_evidence_v0_1",
+    "retention_of_byte_identical_zero_claim_projection_adapters",
+    "fail_closed_cti_modality_unknown_abstain_and_namespace_isolation"
+  ],
+  "scope_note": "Accepted GREEN-2 is a test-only, in-memory nonempty mapper that emits unminted, not-admitted public_evidence_declaration packages under the already-effective evidence Claim-IR identities. Existing zero-claim projection adapters remain unchanged compatibility paths. This does not activate a production registry or authorize mint, admission, ingestion, Kernel/E_case write, certificate, or STOP.",
+  "authorized_now": {
+    "green_2_owner_acceptance_record": true,
+    "test_only_nonempty_mapper_runtime": true,
+    "effective_registry_activation": false,
+    "production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "not_authorized": {
+    "effective_registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "download_or_raw_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion": false,
+    "kernel_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "l2_or_part_b_elevation": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "hard_stop": true,
+  "separate_authority_required_for_registry_or_production_execute": true,
+  "separate_authority_required_for_mint_admission_or_kernel_write": true,
+  "separate_authority_required_for_git_delivery": true,
+  "recommended_next_slice": "Optional: git-deliver RED+schema-GREEN+GREEN-2 chain via push/PR. Functional next elevation only under separate Owner authority for registry/production execute or mint/admission/Kernel write; default remains DENY."
+}
