@@ -172,7 +172,7 @@ def canonical_json_sha256(value: object) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def test_only_authority() -> dict:
+def _make_test_only_authority() -> dict:
     return {
         "authority_id": "PB-SI008-PATH-A-CALLER-WIRING-TEST-ONLY-V0_1",
         "authorization_sha256": (
@@ -313,7 +313,7 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
                 caller_input = deepcopy(fixture["caller_input"])
                 result = caller.evaluate_path_a_structural_binding_for_named_open(
                     caller_input,
-                    test_only_authority=test_only_authority(),
+                    test_only_authority=_make_test_only_authority(),
                 )
                 expected = named_gate.evaluate_si008_named_open_request(
                     direct_gate_request(caller_input)
@@ -334,7 +334,7 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
         ) as gate_mock:
             result = caller.evaluate_path_a_structural_binding_for_named_open(
                 caller_input,
-                test_only_authority=test_only_authority(),
+                test_only_authority=_make_test_only_authority(),
             )
         self.assertIs(sentinel, result)
         gate_mock.assert_called_once()
@@ -349,11 +349,11 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
             None,
             {},
             {
-                **test_only_authority(),
+                **_make_test_only_authority(),
                 "allow_write": True,
             },
             {
-                **test_only_authority(),
+                **_make_test_only_authority(),
                 "unknown": "DENY",
             },
         )
@@ -395,7 +395,7 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
                     ) as context:
                         caller.evaluate_path_a_structural_binding_for_named_open(
                             caller_input,
-                            test_only_authority=test_only_authority(),
+                            test_only_authority=_make_test_only_authority(),
                         )
                 self.assertEqual(
                     "CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
@@ -434,7 +434,7 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
             with self.subTest(caller_input=caller_input):
                 result = caller.evaluate_path_a_structural_binding_for_named_open(
                     caller_input,
-                    test_only_authority=test_only_authority(),
+                    test_only_authority=_make_test_only_authority(),
                 )
                 self.assertEqual("DENY", result["decision"])
                 self.assertEqual(
@@ -452,7 +452,7 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
                         **base,
                         "promotion_target": target,
                     },
-                    test_only_authority=test_only_authority(),
+                    test_only_authority=_make_test_only_authority(),
                 )
                 self.assertEqual("DENY", result["decision"])
                 self.assertEqual(
@@ -466,11 +466,11 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
         before = deepcopy(caller_input)
         first = caller.evaluate_path_a_structural_binding_for_named_open(
             caller_input,
-            test_only_authority=test_only_authority(),
+            test_only_authority=_make_test_only_authority(),
         )
         second = caller.evaluate_path_a_structural_binding_for_named_open(
             deepcopy(caller_input),
-            test_only_authority=deepcopy(test_only_authority()),
+            test_only_authority=deepcopy(_make_test_only_authority()),
         )
         self.assertEqual(first, second)
         self.assertEqual(first["record_hash"], second["record_hash"])
@@ -536,7 +536,7 @@ class PartBSI008PathANamedOpenCallerWiringTests(unittest.TestCase):
         for fixture in self.fixtures.values():
             result = caller.evaluate_path_a_structural_binding_for_named_open(
                 deepcopy(fixture["caller_input"]),
-                test_only_authority=test_only_authority(),
+                test_only_authority=_make_test_only_authority(),
             )
             self._assert_no_elevation(result)
             self.assertFalse(result["package_dereferenced"])
