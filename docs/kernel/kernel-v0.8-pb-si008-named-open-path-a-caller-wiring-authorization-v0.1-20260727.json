@@ -1,0 +1,46 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-named-open-path-a-caller-wiring-authorization-v0.1-20260727",
+  "artifact_type": "kernel_m3_pb_si008_named_open_path_a_test_only_caller_wiring_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "AUTHORIZE_TEST_ONLY_CALLER_WIRING_FIXTURE",
+  "authority_base_commit": "3328fd3db44aa3212cc54d55115780049b926dd4",
+  "authority_base_note": "origin/main after Merge PR #46 (PB-SI-008 named open Path A evidence candidacy).",
+  "prerequisite_named_open": {
+    "green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "daa5b2b52816cec0d24876fd452c4499150067912de9be3b7c4fdc81ef4a369d"
+    },
+    "named_open_runtime": {
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29",
+      "entry": "evaluate_si008_named_open_request"
+    },
+    "named_open_manifest": {
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    }
+  },
+  "authorized_slice": {
+    "slice_id": "PB-SI008-PATH-A-CALLER-WIRING-TEST-ONLY-V0_1",
+    "goal": "Provide a test-only caller/wiring/fixture that constructs the exact 18-field named-open request from Path A evidence Claim-IR structural package metadata and invokes evaluate_si008_named_open_request.",
+    "order": ["RED", "Owner_review", "GREEN", "Owner_review"],
+    "parallelism": "FORBIDDEN"
+  },
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "still_denied": {
+    "path_b_write": true,
+    "production_registration": true,
+    "mint": true,
+    "admission": true,
+    "kernel_or_e_case_write": true,
+    "certificate_or_certified_stop": true,
+    "claim_authority_pass_condition_promotion": true,
+    "modify_named_open_or_deny_runtime_bytes": true
+  },
+  "clarification": {
+    "what_this_authorizes": "A test-only Path A → SI-008 named-open caller/wiring/fixture layer.",
+    "what_this_does_not_authorize": "Any write-path elevation, production registration, broader promotion targets, or treating caller GREEN as Part B PASS."
+  }
+}
