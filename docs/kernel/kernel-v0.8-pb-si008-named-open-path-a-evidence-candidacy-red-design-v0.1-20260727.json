@@ -1,0 +1,381 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-red-design-v0.1-20260727",
+  "artifact_type": "kernel_m3_pb_si008_named_open_red_design_not_effective",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "da2ae1299a5d3185a38f690c2e0de0328bbb3aa0",
+  "reviewed_branch": "codex/pb-si008-named-open-path-a-evidence-candidacy-v0.1",
+  "phase": "RED_ONLY",
+  "status": "ASSISTED_RED_PENDING_KERNEL_OWNER_REVIEW",
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "this_design_is_not_owner_approval": true,
+  "green_started": false,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "owner_go_authority": {
+    "decision": "GO_NAMED_OPEN_PB_SI_008",
+    "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-owner-go-authorization-v0.1-20260727.json",
+    "sha256": "521735a220c3af9be92be5b4e036b1584bddaf1b85249be6410d8ea0dae3bc2f",
+    "supersession_scope": "Only the blanket prohibition on any PB-SI-008 open is superseded, and only for the exact named target and EVIDENCE structural candidacy contract in this design.",
+    "prior_no_go_history_remains_valid_elsewhere": true
+  },
+  "named_open_identity": {
+    "issue": "PB-SI-008",
+    "from_pb_si_008_status": "NOT_OPENED",
+    "to_pb_si_008_status_after_green": "OPENED_FOR_NAMED_TARGET_ONLY",
+    "from_part_b_status": "OUTSIDE_AUTHORIZED_TRACK_DENY",
+    "qualified_part_b_status_after_green": "NAMED_TARGET_EVIDENCE_CANDIDACY_ONLY_NO_ADMISSION",
+    "named_target_id": "PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "allowed_promotion_targets_after_green": [
+      "EVIDENCE"
+    ],
+    "denied_promotion_targets_unless_later_owner_go": [
+      "CLAIM",
+      "AUTHORITY",
+      "PASS_CONDITION"
+    ],
+    "allow_decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+    "allow_is_admission": false,
+    "allow_is_part_b_pass": false,
+    "part_b_evidence_authority": false,
+    "named_evidence_candidacy_classification_authority": true
+  },
+  "current_gate_behavior_pins": {
+    "runtime": {
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb",
+      "part_b_status": "OUTSIDE_AUTHORIZED_TRACK_DENY",
+      "experiment_track_status": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY",
+      "pb_si_008_status": "NOT_OPENED",
+      "promotion_targets": [
+        "EVIDENCE",
+        "CLAIM",
+        "AUTHORITY",
+        "PASS_CONDITION"
+      ],
+      "promotion_decision": "DENY"
+    },
+    "manifest": {
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9",
+      "status": "SI008_DUAL_TRACK_SEPARATION_DENY",
+      "pb_si_008_status": "NOT_OPENED",
+      "part_b_evidence_authority": false,
+      "part_b_claim_authority": false,
+      "part_b_authority_grant": false,
+      "part_b_pass_condition_authority": false
+    },
+    "contract_tests": {
+      "path": "tests/unit/test_part_b_si008_dual_track_deny_contracts.py",
+      "sha256": "5abebbae6a8d4241b4e9237865588fe7f9357c9e727e3a0ef0f34f5c43340edf"
+    },
+    "runtime_tests": {
+      "path": "tests/unit/test_part_b_si008_dual_track_deny_runtime.py",
+      "sha256": "7bd9ba32674606210813f4ca20e3ece562f1ab57314f8c2c713e7f4738c2ba05"
+    }
+  },
+  "state_transition_table": [
+    {
+      "case": "legacy_experiment_track_only_notice",
+      "request_shape": "CURRENT_EXACT_4_FIELDS",
+      "pre_green_behavior": "NO_PART_B_ADMISSION_REQUEST",
+      "proposed_green_behavior": "DELEGATE_TO_CURRENT_RUNTIME_BYTE_SEMANTICS",
+      "pb_si_008_status_in_legacy_record": "NOT_OPENED",
+      "experiment_track_status": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY",
+      "experiment_track_stopped": false
+    },
+    {
+      "case": "legacy_or_nonmatching_part_b_promotion",
+      "request_shape": "CURRENT_EXACT_4_FIELDS_OR_NONMATCHING_NAMED_REQUEST",
+      "pre_green_behavior": "DENY",
+      "proposed_green_behavior": "DENY_OR_DELEGATE_CURRENT_RUNTIME",
+      "pb_si_008_status_for_delegated_legacy_record": "NOT_OPENED",
+      "silent_upgrade": false
+    },
+    {
+      "case": "exact_named_target_evidence_v0_1_structural_reference",
+      "request_shape": "NAMED_EXACT_18_FIELDS",
+      "promotion_target": "EVIDENCE",
+      "reference_kind": "PATH_A_EVIDENCE_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "post_green_pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY",
+      "post_green_part_b_status": "NAMED_TARGET_EVIDENCE_CANDIDACY_ONLY_NO_ADMISSION",
+      "post_green_decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY"
+    },
+    {
+      "case": "exact_named_target_evidence_v0_2_structural_reference",
+      "request_shape": "NAMED_EXACT_18_FIELDS",
+      "promotion_target": "EVIDENCE",
+      "reference_kind": "PATH_A_EVIDENCE_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+      "post_green_pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY",
+      "post_green_part_b_status": "NAMED_TARGET_EVIDENCE_CANDIDACY_ONLY_NO_ADMISSION",
+      "post_green_decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY"
+    },
+    {
+      "case": "named_request_claim_authority_or_pass_condition",
+      "request_shape": "NAMED_EXACT_18_FIELDS",
+      "promotion_targets": [
+        "CLAIM",
+        "AUTHORITY",
+        "PASS_CONDITION"
+      ],
+      "post_green_pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY",
+      "post_green_decision": "DENY",
+      "reason_code": "SI008-NAMED-002_PROMOTION_TARGET_NOT_AUTHORIZED"
+    },
+    {
+      "case": "wrong_target_reference_identity_status_hash_or_unknown_field",
+      "request_shape": "MALFORMED_OR_NONQUALIFYING_NAMED_REQUEST",
+      "post_green_decision": "DENY",
+      "reason_code": "SI008-NAMED-003_REQUEST_NOT_QUALIFIED",
+      "wildcard_or_fallback": false
+    }
+  ],
+  "named_request_closed_world_contract": {
+    "field_count": 18,
+    "required_exact_fields": [
+      "request_id",
+      "request_kind",
+      "promotion_target",
+      "reference_kind",
+      "named_target_id",
+      "source_schema_version",
+      "source_schema_sha256",
+      "consumer_contract_id",
+      "consumer_contract_sha256",
+      "package_sha256",
+      "structural_validation_receipt_sha256",
+      "record_class",
+      "claim_id",
+      "claim_id_state",
+      "admission_state",
+      "structural_validation_status",
+      "requested_authority_scope",
+      "reference_access_mode"
+    ],
+    "exact_required_values": {
+      "request_kind": "PROMOTE_TO_PART_B_NAMED_TARGET",
+      "promotion_target": "EVIDENCE",
+      "named_target_id": "PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "structural_validation_status": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY",
+      "requested_authority_scope": "EVIDENCE_STRUCTURAL_CANDIDACY_ONLY",
+      "reference_access_mode": "CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE"
+    },
+    "digest_fields": [
+      "source_schema_sha256",
+      "consumer_contract_sha256",
+      "package_sha256",
+      "structural_validation_receipt_sha256"
+    ],
+    "digest_format": "lowercase_sha256_64_hex",
+    "unknown_fields": "DENY",
+    "missing_fields": "DENY",
+    "unknown_values": "DENY",
+    "wildcard": false,
+    "fallback": false,
+    "reference_dereference": false,
+    "path_or_uri_field_authorized": false
+  },
+  "qualifying_reference_kind_pairs": [
+    {
+      "reference_kind": "PATH_A_EVIDENCE_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "source_schema_version": "claim-ir-external-evidence-v0.1",
+      "source_schema_path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "source_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2",
+      "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "consumer_contract_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "authority_ceiling": "STRUCTURAL_CANDIDACY_ONLY_NOT_MINTED_NOT_ADMITTED"
+    },
+    {
+      "reference_kind": "PATH_A_EVIDENCE_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+      "source_schema_version": "claim-ir-external-evidence-v0.2",
+      "source_schema_path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "source_schema_sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+      "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+      "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "consumer_contract_sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+      "authority_ceiling": "STRUCTURAL_CANDIDACY_ONLY_NOT_MINTED_NOT_ADMITTED"
+    }
+  ],
+  "non_amalgamation_contract": {
+    "path_a_green_alone_yields_named_request": false,
+    "path_a_green_alone_yields_part_b_evidence": false,
+    "path_a_green_alone_yields_part_b_pass": false,
+    "structural_schema_pass_yields_truth": false,
+    "sufficiency_conditional_yields_admission": false,
+    "qualified_named_request_yields_only_candidacy_classification": true,
+    "qualified_named_request_yields_mint_or_admission": false,
+    "qualified_named_request_yields_kernel_write": false,
+    "qualified_named_request_yields_claim_authority_or_pass": false,
+    "package_or_receipt_dereferenced": false,
+    "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+  },
+  "adjacent_gates_preserved": {
+    "path_b_write": "DENY",
+    "production_registration_enabled": false,
+    "mint": "DENY",
+    "admission": "DENY",
+    "kernel_or_e_case_write": "DENY",
+    "certificate": "DENY",
+    "certified_stop": "NOT_AUTHORIZED",
+    "stop_authority": "NONE",
+    "holdout_release": "DENY",
+    "pb_si_006_download": "DENY",
+    "pb_b5_execution": "NOT_ESTABLISHED",
+    "claim_promotion": "DENY",
+    "authority_promotion": "DENY",
+    "pass_condition_promotion": "DENY"
+  },
+  "migration_and_compatibility": {
+    "strategy": "ADDITIVE_SUCCESSOR_GATE",
+    "current_runtime_modified_in_red": false,
+    "current_manifest_modified_in_red": false,
+    "current_runtime_modified_in_proposed_green": false,
+    "current_manifest_modified_in_proposed_green": false,
+    "legacy_exact_4_field_requests": "DELEGATE_TO_CURRENT_RUNTIME",
+    "legacy_not_opened_record_behavior_preserved": true,
+    "named_exact_18_field_requests": "EVALUATE_ONLY_IN_ADDITIVE_SUCCESSOR",
+    "nonmatching_or_ambiguous_requests": "DENY",
+    "silent_fallback_to_named_open": false,
+    "experiment_only_requests_stopped_or_failed": false,
+    "production_registration": false
+  },
+  "proposed_green_allowlist_exact": [
+    "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+    "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+    "contracts/part-b-si008-named-open-path-a-evidence-candidacy-v0.8.md",
+    "tests/unit/test_part_b_si008_named_open_path_a_evidence_candidacy_contracts.py",
+    "tests/unit/test_part_b_si008_named_open_path_a_evidence_candidacy_runtime.py",
+    "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-green-design-v0.1-20260727.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-named-open-green-review-packet-v0.1-20260727.json"
+  ],
+  "mandatory_pin_table": [
+    {
+      "role": "owner_go_authorization",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-owner-go-authorization-v0.1-20260727.json",
+      "sha256": "521735a220c3af9be92be5b4e036b1584bddaf1b85249be6410d8ea0dae3bc2f"
+    },
+    {
+      "role": "prior_no_go_dual_slice_authorization",
+      "path": "docs/kernel/kernel-v0.8-part-b-elevation-no-go-and-next-slices-authorization-v0.1-20260727.json",
+      "sha256": "08f491fd3a0806eca4078455fb2f7558637710d6e3bcd71ce85599d2e2479220"
+    },
+    {
+      "role": "slice_1_alignment_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-path-a-part-b-readonly-alignment-owner-acceptance-v0.1-20260727.json",
+      "sha256": "59a39938682968376b1b64089b4b1b8e43b949df19919585cb3e90eba7ae6d96"
+    },
+    {
+      "role": "slice_2_sufficiency_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-path-a-sufficiency-beyond-synthetic-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "c07fb95c4c3bd1bd71c99d7329be919b7a85d19244935d46a7c52168c6220e79"
+    },
+    {
+      "role": "current_si_008_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "current_si_008_manifest",
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    {
+      "role": "current_si_008_contract_tests",
+      "path": "tests/unit/test_part_b_si008_dual_track_deny_contracts.py",
+      "sha256": "5abebbae6a8d4241b4e9237865588fe7f9357c9e727e3a0ef0f34f5c43340edf"
+    },
+    {
+      "role": "current_si_008_runtime_tests",
+      "path": "tests/unit/test_part_b_si008_dual_track_deny_runtime.py",
+      "sha256": "7bd9ba32674606210813f4ca20e3ece562f1ab57314f8c2c713e7f4738c2ba05"
+    },
+    {
+      "role": "si_006_download_gate",
+      "path": "configs/part-b-si006-manifest-v0.8.yaml",
+      "sha256": "c5eb2c9f89dc49477e465bde548c75b855b345361a06c423a54f6e117642b908"
+    },
+    {
+      "role": "holdout_deny_gate",
+      "path": "configs/part-b-b8-holdout-deny-audit-manifest-v0.8.yaml",
+      "sha256": "88f5bc261d99bc3d4a8c010627fbbfa8578e71048c68a47c50222270ad513a66"
+    },
+    {
+      "role": "claims_stop_deny_gate",
+      "path": "configs/part-b-claims-stop-deny-manifest-v0.8.yaml",
+      "sha256": "1680bd2f4528e436f193b27da92880ca048ae805bab2c93bfe087c33766176df"
+    },
+    {
+      "role": "production_registration_gate",
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a"
+    },
+    {
+      "role": "external_evidence_schema_v0_1",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    {
+      "role": "consumer_contract_v0_2",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    },
+    {
+      "role": "external_evidence_schema_v0_2",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6"
+    },
+    {
+      "role": "consumer_contract_v0_3",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c"
+    }
+  ],
+  "pin_reverify_plan": {
+    "algorithm": "SHA-256 over exact disk bytes",
+    "mandatory_pin_count": 16,
+    "fail_closed_on_missing_or_mismatch": true,
+    "current_runtime_and_manifest_zero_drift": true,
+    "current_test_zero_drift": true,
+    "production_registration_enabled_required": false
+  },
+  "red_validation_plan": [
+    "Parse the RED design and Owner review packet as JSON.",
+    "Recompute the 16 mandatory pin SHA-256 values and require 16/16 OK.",
+    "Run the untouched SI-008 contract and runtime tests and require 16/16 PASS.",
+    "Require the current SI-008 runtime and manifest bytes to remain unchanged.",
+    "Require PRODUCTION_REGISTRATION_ENABLED to remain False.",
+    "Require porcelain to contain only the Owner GO authorization plus the two RED JSON files.",
+    "Do not create any proposed GREEN allowlist file."
+  ],
+  "explicit_non_authorizations": {
+    "green_runtime_or_manifest": false,
+    "modify_current_si_008_runtime": false,
+    "modify_current_si_008_manifest": false,
+    "claim_promotion": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "path_b_write": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "holdout_release": false,
+    "si_006_download": false,
+    "b5_execution": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "docs_only_red",
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW_BEFORE_GREEN"
+}
