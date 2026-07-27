@@ -1,0 +1,95 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-named-open-claim-target-owner-go-authorization-v0.1-20260727",
+  "artifact_type": "kernel_m3_pb_si008_named_open_claim_target_owner_go_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "GO_NAMED_OPEN_PB_SI_008_CLAIM_TARGET_ONLY_NOW",
+  "authority_base_commit": "1da9698a6b2627fd5e5620ce7538efa4867fb69e",
+  "authority_base_note": "origin/main after Merge PR #49 (Path A science and named-open composition). Composition prerequisite SATISFIED; Owner starts CLAIM named-open RED now.",
+  "program_path": "PB_SI_008",
+  "corresponds_to_menu_option": 3,
+  "start_authorized": true,
+  "prerequisite_composition": {
+    "merge_pr": 49,
+    "green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-path-a-named-open-composition-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "296716ce75bc8c26012091c46ba59603ac888507319c0e99534dbd3cf7144dae"
+    },
+    "status": "SATISFIED_ON_ORIGIN_MAIN"
+  },
+  "named_open": {
+    "issue": "PB-SI-008",
+    "from_status": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE",
+    "to_status_required_shape": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM",
+    "strategy": "ADDITIVE_SUCCESSOR_GATE_WITHOUT_MUTATING_PROTECTED_DENY_RUNTIME_OR_EXISTING_EVIDENCE_GATE_BYTES_IF_AVOIDABLE",
+    "preferred_approach": "ADDITIVE_SUCCESSOR_MODULE_PARALLEL_TO_EVIDENCE_NAMED_OPEN",
+    "fallback_approach_if_necessary": "MINIMAL_ADDITIVE_EXTENSION_WITH_OWNER_LOCKED_ALLOWLIST",
+    "new_named_target_id_proposal_ceiling": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1_OR_NARROWER",
+    "allowed_promotion_targets_after_green_ceiling": [
+      "EVIDENCE",
+      "CLAIM"
+    ],
+    "still_denied_promotion_targets_unless_later_owner_go": [
+      "AUTHORITY",
+      "PASS_CONDITION"
+    ],
+    "qualified_claim_decision_ceiling": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "qualified_claim_decision_is_not_mint": true,
+    "qualified_claim_decision_is_not_admission": true,
+    "qualified_claim_decision_is_not_part_b_pass": true
+  },
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "part_b_elevation": "NO_GO",
+  "zero_drift_unless_green_allowlist_locks_otherwise": {
+    "evidence_named_open_runtime": {
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    "protected_dual_track_deny_runtime": {
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    "protected_dual_track_deny_manifest": {
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    "named_open_caller": {
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf",
+      "note": "Caller extension for CLAIM is NOT authorized in this GO; keep zero drift unless a later Owner slice explicitly opens caller wiring for CLAIM."
+    },
+    "composition_runtime": {
+      "path": "src/compiler/llm/m1_path_a_named_open_composition_readonly.py",
+      "sha256": "3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3",
+      "note": "Composition remains EVIDENCE-only; do not widen it in this CLAIM slice."
+    }
+  },
+  "still_no_go": {
+    "path_b_write_elevation": "NO_GO",
+    "production_registration_enablement": "NO_GO",
+    "claim_id_mint": "NO_GO",
+    "admission": "NO_GO",
+    "kernel_or_e_case_write": "NO_GO",
+    "certificate_or_certified_stop": "NO_GO",
+    "authority_promotion": "NO_GO",
+    "pass_condition_promotion": "NO_GO",
+    "infer_part_b_pass_from_path_a_readonly_green": "HARD_BAN_REMAINS",
+    "treat_claim_candidacy_allow_as_mint_or_admission": "HARD_BAN",
+    "widen_caller_or_composition_to_claim_without_separate_go": "NO_GO"
+  },
+  "implementation_program": {
+    "order": [
+      "RED_design_and_tests_plan",
+      "Owner_review",
+      "GREEN_runtime_manifest_and_tests",
+      "Owner_review"
+    ],
+    "parallelism": "FORBIDDEN",
+    "git_commit_push_pr": "not_authorized_until_each_phase_owner_accept"
+  },
+  "clarification": {
+    "what_this_authorizes": "RED then later GREEN for a named-narrow SI-008 additive open that can classify exact Path A Claim-IR structural references as CLAIM candidacy only, while preserving EVIDENCE named-open behavior and keeping mint/admission/write closed.",
+    "what_this_does_not_authorize": "Mint, admission, Kernel write, AUTHORITY/PASS_CONDITION, Path B write, Part B PASS, caller/composition CLAIM widening, or mutating the protected dual-track deny runtime/manifest."
+  }
+}

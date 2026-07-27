@@ -1,0 +1,106 @@
+schema_version: "0.8.0"
+manifest_id: part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8
+manifest_version: "0.8.0"
+status: SI008_OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM
+authorized_slice: PB-SI-008_NAMED_PATH_A_CLAIM_CANDIDACY
+strategy: NEW_ADDITIVE_SUCCESSOR_WITH_PROTECTED_DELEGATES
+hard_ban: "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+named_target_id: PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1
+pb_si_008_status: OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM
+part_b_status: NAMED_TARGET_CLAIM_CANDIDACY_ONLY_NO_MINT_NO_ADMISSION
+experiment_track_status: MAY_PROCEED_UNDER_SEPARATE_AUTHORITY
+allowed_promotion_targets:
+  - EVIDENCE
+  - CLAIM
+denied_promotion_targets:
+  - AUTHORITY
+  - PASS_CONDITION
+qualified_claim_decision: ALLOW_NAMED_CLAIM_CANDIDACY_ONLY
+allow_is_mint: false
+allow_is_admission: false
+allow_is_part_b_pass: false
+allow_is_write_authority: false
+part_b_evidence_authority: false
+part_b_claim_authority: false
+part_b_authority_grant: false
+part_b_pass_condition_authority: false
+named_claim_candidacy_classification_authority: true
+path_b_write_authority: false
+production_registration_enabled: false
+mint_authority: false
+admission_authority: false
+kernel_or_e_case_write_authority: false
+certificate_authority: false
+stop_authority: NONE
+holdout_release: DENY
+pb_si_006_download: DENY
+pb_b5_execution: NOT_ESTABLISHED
+certified_stop: NOT_AUTHORIZED
+legacy_compatibility:
+  exact_four_field_requests: RETURN_PROTECTED_NOT_OPENED_RECORD_UNMODIFIED
+  delegation_route: CLAIM_SUCCESSOR_TO_EVIDENCE_GATE_TO_DUAL_TRACK_DENY
+  legacy_pb_si_008_status: NOT_OPENED
+  experiment_only_requests_interfered: false
+  silent_named_open_fallback: false
+evidence_compatibility:
+  exact_evidence_requests: RETURN_EXISTING_EVIDENCE_GATE_RECORD_UNMODIFIED
+  evidence_named_target_id: PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1
+  evidence_gate_mutated: false
+  evidence_manifest_mutated: false
+caller_and_composition:
+  caller_widened_to_claim: false
+  composition_widened_to_claim: false
+  separate_owner_go_required_for_future_claim_wiring: true
+named_request:
+  field_count: 18
+  closed_world: true
+  wildcard: false
+  fallback: false
+  path_or_uri_fields: false
+  package_dereference: false
+  validation_receipt_dereference: false
+  request_kind: PROMOTE_TO_PART_B_NAMED_TARGET
+  promotion_target: CLAIM
+  record_class: public_evidence_declaration
+  claim_id: null
+  claim_id_state: not_minted
+  admission_state: not_admitted
+  structural_validation_status: PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY
+  requested_authority_scope: CLAIM_STRUCTURAL_CANDIDACY_ONLY
+  reference_access_mode: CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE
+qualifying_claim_reference_pairs:
+  - reference_kind: PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE
+    source_schema_version: claim-ir-external-evidence-v0.1
+    source_schema_sha256: 9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c
+    consumer_contract_id: shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2
+    consumer_contract_sha256: fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504
+  - reference_kind: PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE
+    source_schema_version: claim-ir-external-evidence-v0.2
+    source_schema_sha256: e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6
+    consumer_contract_id: shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3
+    consumer_contract_sha256: 7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c
+fail_closed:
+  wrong_pair: DENY
+  cross_version_pair: DENY
+  evidence_reference_kind_relabelled_as_claim: DENY
+  legacy_planner_claim_ir_pair: DENY
+  non_null_claim_id: DENY
+  minted_claim_id_state: DENY
+  admitted_state: DENY
+  wildcard_or_prefix: DENY
+  unknown_missing_or_extra_field: DENY
+  authority_or_pass_condition: DENY
+  partial_allow: false
+pins:
+  claim_successor_runtime_sha256: cc85829c8f9eb9cd49d0c856a6b4c7b590a8e922f28b5085f942f424554386ea
+  protected:
+    "docs/kernel/kernel-v0.8-pb-si008-named-open-claim-target-owner-go-authorization-v0.1-20260727.json": 327eed5f0e39e7256f27c9dcf068159e289692153d70a5936c57b1c07ea83a8b
+    "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-red-design-v0.1-20260727.json": f8107272800ecbc9bf9a05f718091fbdbe8c5b6a79ae32b94f56b7b4844a2bab
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-named-open-path-a-claim-candidacy-red-review-packet-v0.1-20260727.json": c9a7e274b28425c406f2d3a88598912aa118791cf7f9f495d527296951e939b4
+    "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py": a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29
+    "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml": aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8
+    "src/scope/part_b_si008_dual_track_deny.py": b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb
+    "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml": a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9
+    "src/scope/part_b_si008_path_a_named_open_caller_wiring.py": 64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf
+    "src/compiler/llm/m1_path_a_named_open_composition_readonly.py": 3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3
+write_side_effects: only_exact_7_green_allowlist_files
