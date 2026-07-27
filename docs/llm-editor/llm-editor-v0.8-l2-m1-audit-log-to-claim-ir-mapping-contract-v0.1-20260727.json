@@ -1,0 +1,273 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-audit-log-to-claim-ir-mapping-contract-v0.1-20260727",
+  "artifact_type": "m1_audit_log_to_claim_ir_nonempty_mapping_red_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "dab7c32e76dadf6be9676ee3a7c2360803e98465",
+  "status": "design_only_draft_not_executable_pending_kernel_owner_review",
+  "entry_conclusion": "ENTER_V0_1_CANDIDATE",
+  "effective_state_now": "OUT_OF_V0_1",
+  "identity": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "audit_log_public_projection",
+    "future_adapter_id": "m1a_audit_log_projection_v0_1",
+    "future_adapter_version": "0.1.0",
+    "future_mapper_id": "m1m_audit_log_to_claim_ir_v0_1",
+    "effective_registry_entry": false,
+    "runtime_implementation_present": false
+  },
+  "pins": {
+    "public_projection_contract": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-audit-log-public-field-projection-v0.1-20260727.json",
+      "sha256": "93e0d63010eff7e05559d0ca28a00a6b8ab5ce37ed7c469ede09b5c1bf893625"
+    },
+    "synthetic_declaration_example": {
+      "path": "docs/llm-editor/fixtures/audit-log-public-projection-red-v0.1/synthetic-audit-log-public-projection-minimal-v0.1.json",
+      "sha256": "3a2e1857e994dddd2fcf9137a106ab05294d5e952924eb2bcf84971f4c32f38a",
+      "canonical_json_sha256": "fa923a843df40c31060cbb59a70a5b1dfad6acf7e2d1a80f86b6891f22431805"
+    },
+    "effective_external_evidence_schema_readonly": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    "effective_kernel_additive_schema_readonly": {
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5"
+    },
+    "effective_consumer_v0_2_readonly": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    },
+    "green_2_mapper_protected_readonly": {
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    }
+  },
+  "input_contract": {
+    "input_kind": "validated_audit_log_public_projection_declaration",
+    "raw_audit_source_resolution": false,
+    "one_audit_entry_projection_only": true,
+    "required_core_fields": [
+      "descriptor.opaque_record_reference",
+      "audit_entry.entry_id",
+      "audit_entry.recorded_at",
+      "audit_entry.operation_class",
+      "audit_entry.target_class",
+      "audit_entry.public_target_ref",
+      "audit_entry.reported_outcome",
+      "audit_entry.recorded_marker",
+      "source_metadata.source_family",
+      "source_metadata.epistemic_modality",
+      "source_metadata.modality_basis_code",
+      "source_metadata.trusted_ingestion_metadata_sha256"
+    ],
+    "optional_mapped_fields": [
+      "audit_entry.public_actor_ref",
+      "audit_entry.public_change_ref",
+      "audit_entry.public_request_ref"
+    ],
+    "unknown_field_behavior": "DENY_ENTIRE_REQUEST",
+    "cross_modality_merge": "DENY_ENTIRE_REQUEST"
+  },
+  "field_to_claim_mapping": [
+    {"ordinal": 1, "field_path": "audit_entry.entry_id", "evidence_field": "evidence.audit_log.entry.entry_id", "claim_kind": "evidence.audit_log.entry_identity", "value_type": "opaque_reference", "presence": "required", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 2, "field_path": "audit_entry.recorded_at", "evidence_field": "evidence.audit_log.entry.recorded_at", "claim_kind": "evidence.audit_log.time_boundary", "value_type": "bounded_public_text", "presence": "required", "normalization": "canonical RFC3339 UTC text already validated by the projection contract", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 3, "field_path": "audit_entry.operation_class", "evidence_field": "evidence.audit_log.operation.operation_class", "claim_kind": "evidence.audit_log.operation_declaration", "value_type": "bounded_enum", "presence": "required", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 4, "field_path": "audit_entry.target_class", "evidence_field": "evidence.audit_log.target.target_class", "claim_kind": "evidence.audit_log.target_declaration", "value_type": "bounded_enum", "presence": "required", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 5, "field_path": "audit_entry.public_target_ref", "evidence_field": "evidence.audit_log.target.public_target_ref", "claim_kind": "evidence.audit_log.target_declaration", "value_type": "opaque_reference", "presence": "required", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 6, "field_path": "audit_entry.reported_outcome", "evidence_field": "evidence.audit_log.outcome.reported_outcome", "claim_kind": "evidence.audit_log.outcome_declaration", "value_type": "bounded_enum", "presence": "required", "occurrence_key_rule": "audit_entry.entry_id", "note": "A reported outcome is not a truth label, performance verdict, admission decision, or authority grant."},
+    {"ordinal": 7, "field_path": "audit_entry.recorded_marker", "evidence_field": "evidence.audit_log.entry.recorded_marker", "claim_kind": "evidence.audit_log.recorded_marker", "value_type": "bounded_boolean", "presence": "required_const_true", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 8, "field_path": "audit_entry.public_actor_ref", "evidence_field": "evidence.audit_log.actor.public_actor_ref", "claim_kind": "evidence.audit_log.actor_reference", "value_type": "opaque_reference", "presence": "optional", "occurrence_key_rule": "audit_entry.entry_id", "note": "Does not prove actor identity, authorization, or role authority."},
+    {"ordinal": 9, "field_path": "audit_entry.public_change_ref", "evidence_field": "evidence.audit_log.change.public_change_ref", "claim_kind": "evidence.audit_log.change_reference", "value_type": "opaque_reference", "presence": "optional", "occurrence_key_rule": "audit_entry.entry_id"},
+    {"ordinal": 10, "field_path": "audit_entry.public_request_ref", "evidence_field": "evidence.audit_log.request.public_request_ref", "claim_kind": "evidence.audit_log.request_reference", "value_type": "opaque_reference", "presence": "optional", "occurrence_key_rule": "audit_entry.entry_id"}
+  ],
+  "projection_fields_used_as_claim_metadata_not_claim_values": [
+    {"field_path": "descriptor.opaque_record_reference", "target": "source_record_ref"},
+    {"field_path": "descriptor.projection_pin_declaration.sha256", "target": "identity_tuple.projection_sha256"},
+    {"field_path": "source_metadata.source_family", "target": "validated source-class constraint"},
+    {"field_path": "source_metadata.epistemic_modality", "target": "every claim.epistemic_modality"},
+    {"field_path": "source_metadata.modality_basis_code", "target": "every claim.modality_basis_code"},
+    {"field_path": "source_metadata.trusted_ingestion_metadata_sha256", "target": "every claim.trusted_ingestion_metadata_sha256"}
+  ],
+  "namespace_contract": {
+    "allowed_claim_kind_prefix": "evidence.audit_log.",
+    "allowed_evidence_field_prefix": "evidence.audit_log.",
+    "claim_kinds": [
+      "evidence.audit_log.entry_identity",
+      "evidence.audit_log.time_boundary",
+      "evidence.audit_log.operation_declaration",
+      "evidence.audit_log.target_declaration",
+      "evidence.audit_log.outcome_declaration",
+      "evidence.audit_log.recorded_marker",
+      "evidence.audit_log.actor_reference",
+      "evidence.audit_log.change_reference",
+      "evidence.audit_log.request_reference"
+    ],
+    "planner_source_field_reuse": false,
+    "planner_afs_slot_reuse": false,
+    "system_log_claim_kind_reuse": false,
+    "system_log_evidence_field_reuse": false,
+    "cti_or_provenance_namespace_reuse": false
+  },
+  "design_level_example_claims": [
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.audit_log.entry_identity",
+      "evidence_field": "evidence.audit_log.entry.entry_id",
+      "occurrence_key": "audit_entry_fixture_001",
+      "value_type": "opaque_reference",
+      "value": "audit_entry_fixture_001",
+      "source_class": "audit_log_public_projection",
+      "source_record_ref": "audit_fixture_record_001",
+      "epistemic_modality": "reported",
+      "modality_basis_code": "PUBLIC_AUDIT_RECORD_DECLARATION",
+      "trusted_ingestion_metadata_sha256": "871180bdf5a8537c118c78373035bb72b357442202344d883e57dd332b5ef951",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.audit_log.operation_declaration",
+      "evidence_field": "evidence.audit_log.operation.operation_class",
+      "occurrence_key": "audit_entry_fixture_001",
+      "value_type": "bounded_enum",
+      "value": "configuration_change",
+      "source_class": "audit_log_public_projection",
+      "source_record_ref": "audit_fixture_record_001",
+      "epistemic_modality": "reported",
+      "modality_basis_code": "PUBLIC_AUDIT_RECORD_DECLARATION",
+      "trusted_ingestion_metadata_sha256": "871180bdf5a8537c118c78373035bb72b357442202344d883e57dd332b5ef951",
+      "admission_state": "not_admitted"
+    },
+    {
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "claim_kind": "evidence.audit_log.outcome_declaration",
+      "evidence_field": "evidence.audit_log.outcome.reported_outcome",
+      "occurrence_key": "audit_entry_fixture_001",
+      "value_type": "bounded_enum",
+      "value": "succeeded",
+      "source_class": "audit_log_public_projection",
+      "source_record_ref": "audit_fixture_record_001",
+      "epistemic_modality": "reported",
+      "modality_basis_code": "PUBLIC_AUDIT_RECORD_DECLARATION",
+      "trusted_ingestion_metadata_sha256": "871180bdf5a8537c118c78373035bb72b357442202344d883e57dd332b5ef951",
+      "admission_state": "not_admitted"
+    }
+  ],
+  "draft_claim_record_schema_fragment": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://project05.invalid/schemas/drafts/claim-ir-audit-log-evidence-record-v0.1.draft.schema.json",
+    "title": "Draft-not-effective audit log evidence claim record v0.1",
+    "$comment": "A3 RED design fragment only; not an external package identity, Kernel schema, consumer route, registry entry, or ingestion authority.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["record_class", "claim_id", "claim_id_state", "claim_kind", "evidence_field", "occurrence_key", "value_type", "value", "source_class", "source_record_ref", "epistemic_modality", "modality_basis_code", "trusted_ingestion_metadata_sha256", "admission_state"],
+    "properties": {
+      "record_class": {"const": "public_evidence_declaration"},
+      "claim_id": {"type": "null"},
+      "claim_id_state": {"const": "not_minted"},
+      "claim_kind": {"enum": ["evidence.audit_log.entry_identity", "evidence.audit_log.time_boundary", "evidence.audit_log.operation_declaration", "evidence.audit_log.target_declaration", "evidence.audit_log.outcome_declaration", "evidence.audit_log.recorded_marker", "evidence.audit_log.actor_reference", "evidence.audit_log.change_reference", "evidence.audit_log.request_reference"]},
+      "evidence_field": {"type": "string", "pattern": "^evidence\\.audit_log\\.[a-z0-9_.]+$"},
+      "occurrence_key": {"type": "string", "pattern": "^[A-Za-z0-9._:|-]{1,512}$"},
+      "value_type": {"enum": ["opaque_reference", "bounded_enum", "bounded_public_text", "bounded_boolean"]},
+      "value": {"oneOf": [{"type": "string", "minLength": 1, "maxLength": 4096}, {"type": "boolean"}]},
+      "source_class": {"const": "audit_log_public_projection"},
+      "source_record_ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,256}$"},
+      "epistemic_modality": {"enum": ["reported", "unknown"]},
+      "modality_basis_code": {"enum": ["PUBLIC_AUDIT_RECORD_DECLARATION", "UNRESOLVED_AUDIT_BASIS"]},
+      "trusted_ingestion_metadata_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "admission_state": {"const": "not_admitted"}
+    },
+    "allOf": [
+      {"if": {"properties": {"value_type": {"const": "bounded_boolean"}}, "required": ["value_type"]}, "then": {"properties": {"value": {"type": "boolean"}}}},
+      {"if": {"properties": {"value_type": {"enum": ["opaque_reference", "bounded_enum", "bounded_public_text"]}}, "required": ["value_type"]}, "then": {"properties": {"value": {"type": "string"}}}},
+      {"if": {"properties": {"epistemic_modality": {"const": "reported"}}, "required": ["epistemic_modality"]}, "then": {"properties": {"modality_basis_code": {"const": "PUBLIC_AUDIT_RECORD_DECLARATION"}}}},
+      {"if": {"properties": {"epistemic_modality": {"const": "unknown"}}, "required": ["epistemic_modality"]}, "then": {"properties": {"modality_basis_code": {"const": "UNRESOLVED_AUDIT_BASIS"}}}}
+    ]
+  },
+  "determinism": {
+    "claim_order": "field_to_claim_mapping.ordinal ascending; all scalar fields use audit_entry.entry_id as occurrence_key",
+    "optional_absent_field": "emit_no_claim_for_that_mapping_entry",
+    "optional_present_but_invalid_field": "DENY_ENTIRE_REQUEST",
+    "same_validated_projection_same_claims": true,
+    "partial_result": false
+  },
+  "modality_contract": {
+    "PUBLIC_AUDIT_RECORD_DECLARATION": "reported",
+    "UNRESOLVED_AUDIT_BASIS": "FAIL_CLOSED_ABSTAIN_NO_NONEMPTY_PACKAGE",
+    "observed_request": "DENY_MODALITY_LAUNDERING",
+    "derived_request": "DENY_MODALITY_LAUNDERING",
+    "recorded_marker_changes_modality": false,
+    "reported_outcome_changes_modality": false,
+    "promotion_changes_modality": false
+  },
+  "schema_and_consumer_impact_proposal": {
+    "extension_required": true,
+    "current_effective_external_v0_1_accepts_audit_log": false,
+    "current_effective_kernel_additive_v0_1_accepts_audit_log": false,
+    "current_effective_consumer_v0_2_dispatches_audit_log": false,
+    "silent_change_to_effective_v0_1_bytes_allowed": false,
+    "preferred_future_external_identity": "claim-ir-external-evidence-v0.2",
+    "preferred_future_kernel_identity": "claim-ir-kernel-evidence-additive-v0.2",
+    "preferred_future_consumer_identity": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+    "required_external_deltas": [
+      "add exact source_class audit_log_public_projection",
+      "add evidence.audit_log.* evidence_field namespace",
+      "add nine exact evidence.audit_log.* claim_kind values",
+      "add PUBLIC_AUDIT_RECORD_DECLARATION and UNRESOLVED_AUDIT_BASIS modality basis codes",
+      "add exact audit-log projection_ref path and accepted content SHA",
+      "add source-class conditional restricting modality to reported|unknown"
+    ],
+    "required_kernel_delta": "new additive identity must preserve the unchanged legacy Kernel branch and add the new evidence-v0.2 claim record branch",
+    "required_consumer_delta": "new exact-dispatch identity must preserve legacy and evidence-v0.1 routes and add only the exact evidence-v0.2 route; unknown/draft/wildcard/fallback remain DENY",
+    "draft_fragments_location": "embedded in this mapping contract and the public projection contract",
+    "draft_fragments_effective": false,
+    "green_schema_or_consumer_authority_required": true
+  },
+  "fail_closed": {
+    "unknown_or_extra_field": "DENY",
+    "missing_required_field": "DENY",
+    "pin_mismatch": "DENY",
+    "observed_or_derived_modality": "DENY_MODALITY_LAUNDERING",
+    "unknown_modality": "ABSTAIN_NO_PACKAGE",
+    "raw_log_or_private_identifier": "DENY",
+    "planner_source_field_or_afs": "DENY",
+    "system_log_namespace_alias": "DENY",
+    "cross_modality_merge": "DENY",
+    "current_effective_schema_or_consumer_route": "DENY_UNTIL_SEPARATE_GREEN_EFFECTIVE_IDENTITY"
+  },
+  "output_boundary": {
+    "minimum_claim_count_on_future_valid_reported_core": 7,
+    "maximum_claim_count_for_this_scalar_contract": 10,
+    "every_claim_claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "truth_asserted": false,
+    "authorization_proof_asserted": false,
+    "current_effective_schema_accepts_this_example": false,
+    "separate_a3_green_adapter_mapper_schema_consumer_authority_required": true
+  },
+  "explicit_non_authorizations": {
+    "adapter_or_mapper_runtime": false,
+    "effective_schema_or_consumer_change": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "a2_sufficiency_catalog_extension": false,
+    "path_b": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  }
+}
