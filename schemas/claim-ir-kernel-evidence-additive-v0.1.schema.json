@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+  "title": "Project05 Kernel Claim IR additive evidence union v0.1",
+  "description": "Candidate effective additive union. The legacy Kernel Claim IR remains byte-identical and the evidence branch accepts only a structural, unminted, not-admitted public evidence declaration. No ingestion, mint, admission, Kernel write, E_case write, certificate, or STOP authority is granted.",
+  "x-status": "candidate_effective_pending_kernel_owner_acceptance",
+  "x-authority-base-commit": "d57e2f9ae8b28fd99ebda624d6fd7847c91a4318",
+  "x-red-owner-acceptance": {
+    "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-red-owner-acceptance-v0.1-20260727.json",
+    "sha256": "043a8f54772ab2c2bf97b47a88bcb026e8e1a7e5b18df94cd95e94c93da1f283"
+  },
+  "x-red-draft-baseline": {
+    "path": "schemas/drafts/claim-ir-kernel-evidence-claim-record-v0.1.draft.schema.json",
+    "sha256": "89f9b30cce86d3cf1a0792a793c3d5a31575986e0b9636299be9d83e3c831c64",
+    "is_effective_identity": false
+  },
+  "x-effective-legacy-kernel-schema": {
+    "path": "schemas/claim-ir-kernel.schema.json",
+    "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "modified": false
+  },
+  "x-external-evidence-candidate": {
+    "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+    "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+    "schema_version": "claim-ir-external-evidence-v0.1",
+    "status": "candidate_effective_pending_kernel_owner_acceptance"
+  },
+  "x-branch-name": "evidence_claim_record_v0_1",
+  "oneOf": [
+    {
+      "$ref": "https://project05.local/schemas/claim-ir-kernel.schema.json"
+    },
+    {
+      "$ref": "https://project05.invalid/schemas/claim-ir-external-envelope-evidence-v0.1.schema.json#/$defs/evidence_claim_record_v0_1"
+    }
+  ]
+}

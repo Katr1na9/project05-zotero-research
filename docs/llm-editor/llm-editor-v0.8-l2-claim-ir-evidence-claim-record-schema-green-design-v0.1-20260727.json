@@ -1,0 +1,245 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-claim-ir-evidence-claim-record-schema-green-design-v0.1-20260727",
+  "artifact_type": "claim_ir_additive_evidence_claim_record_schema_and_consumer_green_candidate_design",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "d57e2f9ae8b28fd99ebda624d6fd7847c91a4318",
+  "status": "green_candidate_complete_pending_kernel_owner_review_not_effective",
+  "goal": "Present new non-draft external, additive Kernel, and exact-dispatch consumer identities for evidence_claim_record_v0_1 while preserving the legacy planner path byte-for-byte and granting structural consumption only.",
+  "authority_basis": {
+    "owner_green_authorization": "Kernel Owner authorization for GREEN evidence_claim_record schema/consumer identity elevation",
+    "red_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-red-owner-acceptance-v0.1-20260727.json",
+      "sha256": "043a8f54772ab2c2bf97b47a88bcb026e8e1a7e5b18df94cd95e94c93da1f283",
+      "decision": "accept"
+    },
+    "owner_acceptance_of_this_green_required_before_effective_claim": true,
+    "owner_acceptance_of_this_green_authorizes_green_2": false
+  },
+  "forbidden_red_draft_identities": {
+    "external_draft": {
+      "path": "schemas/drafts/claim-ir-external-envelope-evidence-claim-record-v0.1.draft.schema.json",
+      "sha256": "0a788c00735078899c87b09d6f64c7ab6a95a6f3eae0c1fa39b7753919f4a20d",
+      "may_be_effective_identity": false
+    },
+    "kernel_draft": {
+      "path": "schemas/drafts/claim-ir-kernel-evidence-claim-record-v0.1.draft.schema.json",
+      "sha256": "89f9b30cce86d3cf1a0792a793c3d5a31575986e0b9636299be9d83e3c831c64",
+      "may_be_effective_identity": false
+    },
+    "consumer_draft": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-extension-draft-v0.1-20260727.json",
+      "sha256": "e8fb4d3d5ce19539235b4d9709979c4150825ae018c61e785fb9d2b8be30f811",
+      "may_be_effective_identity": false
+    }
+  },
+  "green_candidate_identities": {
+    "external_evidence_schema": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "schema_id": "https://project05.invalid/schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "schema_version": "claim-ir-external-evidence-v0.1",
+      "draft_2020_12": true,
+      "status": "candidate_effective_pending_kernel_owner_acceptance"
+    },
+    "kernel_additive_schema": {
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "schema_id": "https://project05.invalid/schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "one_of": [
+        "pinned_unchanged_legacy_kernel_claim",
+        "public_evidence_declaration"
+      ],
+      "status": "candidate_effective_pending_kernel_owner_acceptance"
+    },
+    "consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "version": "0.2",
+      "status": "candidate_effective_pending_kernel_owner_acceptance"
+    },
+    "deterministic_tests": {
+      "path": "tests/compiler_contract/test_claim_ir_evidence_claim_record_schema_green.py",
+      "sha256": "73084c955ca0e30f65a01de6622ce2f38720da196e42061567579f38995558b2",
+      "result": "12/12 PASS"
+    }
+  },
+  "identity_separation_proof": {
+    "external_candidate_sha_differs_from_external_draft": true,
+    "kernel_candidate_sha_differs_from_kernel_draft": true,
+    "consumer_candidate_sha_differs_from_consumer_draft": true,
+    "candidate_schema_versions_contain_draft": false,
+    "draft_sha_reused_as_candidate_identity": false
+  },
+  "legacy_exact_dispatch_protection": {
+    "external_schema": {
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "schema_version": "claim-ir-external-v0.1",
+      "modified": false
+    },
+    "kernel_schema": {
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "modified": false
+    },
+    "consumer_contract": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "modified": false
+    },
+    "legacy_source_field_count": 38,
+    "legacy_claim_kind_count": 4,
+    "legacy_manifest_changed": false,
+    "existing_planner_fixture": {
+      "path": "tests/compiler_contract/fixtures/m1_claim_ir_valid_fixture/synthetic_unminted_claim_ir_v0.1.json",
+      "sha256": "1b27a02115e9deefccfca87c8b4703cd3478a6c7e9c0ae4a9f99b2c8738118d6",
+      "legacy_effective_validation": "PASS",
+      "dispatch_decision": "USE_EXISTING_EFFECTIVE_CONSUMER_UNCHANGED"
+    }
+  },
+  "exact_dispatch_design": {
+    "dispatch_field": "schema_version",
+    "wildcard": false,
+    "fallback": false,
+    "implicit_default": false,
+    "unknown": "DENY_UNKNOWN_SCHEMA_VERSION",
+    "routes": [
+      {
+        "schema_version": "claim-ir-external-v0.1",
+        "decision": "USE_EXISTING_EFFECTIVE_CONSUMER_UNCHANGED"
+      },
+      {
+        "schema_version": "claim-ir-external-evidence-v0.1",
+        "decision": "CONSUMABLE_STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED_NO_INGESTION_AUTHORITY"
+      }
+    ],
+    "draft_schema_version": "DENY_UNKNOWN_SCHEMA_VERSION",
+    "evidence_payload_masquerading_as_legacy": "DENY_SCHEMA_VALIDATION"
+  },
+  "evidence_record_boundary": {
+    "record_class": "public_evidence_declaration",
+    "claim_kind_namespace": "closed evidence.* enum",
+    "evidence_field_pattern": "^evidence\\.(system_log|provenance_graph|cti_report)\\.[a-z0-9_.]+$",
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "source_field_allowed": false,
+    "afs_slot_allowed": false,
+    "planner_claim_kind_allowed": false,
+    "cti_allowed_modalities": [
+      "reported",
+      "unknown"
+    ],
+    "cti_observed": "DENY_MODALITY_LAUNDERING",
+    "cti_derived": "DENY_MODALITY_LAUNDERING"
+  },
+  "deterministic_validation_matrix": [
+    {
+      "validation_id": "GREEN-VAL-01",
+      "subject": "Candidate schemas are valid Draft 2020-12 and candidate SHA values differ from all RED draft identities",
+      "result": "PASS"
+    },
+    {
+      "validation_id": "GREEN-VAL-02",
+      "subject": "Existing planner fixture validates under unchanged legacy external schema and exact legacy dispatch",
+      "result": "PASS"
+    },
+    {
+      "validation_id": "GREEN-VAL-03",
+      "subject": "System-log, provenance-graph, and CTI evidence design packages validate under the new external schema",
+      "result": "3/3 PASS"
+    },
+    {
+      "validation_id": "GREEN-VAL-04",
+      "subject": "Identical evidence packages validate under unchanged legacy external schema",
+      "result": "3/3 EXPECTED_FAIL"
+    },
+    {
+      "validation_id": "GREEN-VAL-05",
+      "subject": "Every evidence example record validates through the additive Kernel oneOf evidence branch",
+      "result": "9/9 PASS"
+    },
+    {
+      "validation_id": "GREEN-VAL-06",
+      "subject": "CTI observed and derived modalities",
+      "result": "2/2 EXPECTED_FAIL"
+    },
+    {
+      "validation_id": "GREEN-VAL-07",
+      "subject": "source_field, AFS, and planner claim-kind leakage",
+      "result": "3/3 EXPECTED_FAIL"
+    },
+    {
+      "validation_id": "GREEN-VAL-08",
+      "subject": "unknown, missing, draft, and legacy-masquerading schema identities",
+      "result": "4/4 DENY"
+    },
+    {
+      "validation_id": "GREEN-VAL-09",
+      "subject": "Consumer manifest, projection, source binding, and duplicate identity checks",
+      "result": "5/5 DENY"
+    },
+    {
+      "validation_id": "GREEN-VAL-10",
+      "subject": "Legacy schema/consumer and three evidence adapter byte pins",
+      "result": "6/6 PASS"
+    }
+  ],
+  "runtime_and_write_boundary": {
+    "green_2_mapper_runtime_implemented": false,
+    "adapter_python_changed": false,
+    "effective_registry_activated": false,
+    "production_execute": false,
+    "activation_ledger_written": false,
+    "claim_id_minted": false,
+    "admission_performed": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "write_side_effects": "none_beyond_authorized_green_candidate_files"
+  },
+  "explicit_non_authorizations": {
+    "effective_before_owner_acceptance": false,
+    "green_2_mapper": false,
+    "adapter_behavior_change": false,
+    "registry_activation": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "EVIDENCE-SCHEMA-GREEN-ORQ-01",
+      "question": "Accept the three exact candidate identities as effective only by this Owner decision, with no reuse of RED draft SHAs?"
+    },
+    {
+      "question_id": "EVIDENCE-SCHEMA-GREEN-ORQ-02",
+      "question": "Accept exact two-route schema_version dispatch with the legacy route unchanged and the evidence route structural-only?"
+    },
+    {
+      "question_id": "EVIDENCE-SCHEMA-GREEN-ORQ-03",
+      "question": "Accept the additive Kernel oneOf and the independent public_evidence_declaration/evidence_field/evidence.* namespace boundary?"
+    },
+    {
+      "question_id": "EVIDENCE-SCHEMA-GREEN-ORQ-04",
+      "question": "Confirm acceptance does not authorize GREEN-2 mapper runtime, adapter changes, registry activation, mint, admission, ingestion, or any Kernel/E_case/certificate/STOP write?"
+    }
+  ],
+  "review_boundary": {
+    "owner_decision": null,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "this_design_is_not_owner_approval": true,
+    "this_design_does_not_self_declare_effective": true,
+    "separate_git_authority_required": true
+  }
+}
