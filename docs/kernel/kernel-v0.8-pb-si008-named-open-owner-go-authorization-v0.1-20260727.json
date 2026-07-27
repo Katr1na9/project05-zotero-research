@@ -1,0 +1,55 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-named-open-owner-go-authorization-v0.1-20260727",
+  "artifact_type": "kernel_m3_pb_si008_named_open_owner_go_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "GO_NAMED_OPEN_PB_SI_008",
+  "authority_base_commit": "da2ae1299a5d3185a38f690c2e0de0328bbb3aa0",
+  "authority_base_note": "origin/main after Merge PR #45 (Part B elevation NO_GO dual-slice alignment + Path A sufficiency).",
+  "supersedes_in_part": {
+    "prior_no_go_authorization": {
+      "path": "docs/kernel/kernel-v0.8-part-b-elevation-no-go-and-next-slices-authorization-v0.1-20260727.json",
+      "sha256": "08f491fd3a0806eca4078455fb2f7558637710d6e3bcd71ce85599d2e2479220",
+      "supersession_scope": "Only the blanket prohibition on any SI-008 open is superseded. Dual-slice alignment/sufficiency acceptances remain valid. Path B write, production registration, mint/admission/Kernel write, and Part B PASS inference bans remain in force unless separately authorized below."
+    }
+  },
+  "named_open": {
+    "issue": "PB-SI-008",
+    "from_status": "NOT_OPENED",
+    "to_status_required_shape": "OPENED_FOR_NAMED_TARGET_ONLY",
+    "named_target_id": "PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "named_target_meaning": "Allow a narrowly defined promotion path in which Path A evidence Claim-IR structural packages may be classified as Part B EVIDENCE-track candidacy under explicit request fields; this is not automatic elevation from Path A GREEN and is not Part B PASS.",
+    "allowed_promotion_targets_after_green": [
+      "EVIDENCE"
+    ],
+    "denied_promotion_targets_unless_later_owner_go": [
+      "CLAIM",
+      "AUTHORITY",
+      "PASS_CONDITION"
+    ]
+  },
+  "still_no_go": {
+    "path_b_write_elevation": "NO_GO",
+    "production_registration_enablement": "NO_GO",
+    "claim_id_mint": "NO_GO",
+    "admission": "NO_GO",
+    "kernel_or_e_case_write": "NO_GO",
+    "certificate_or_certified_stop": "NO_GO",
+    "holdout_release": "NO_GO",
+    "pb_si_006_download": "NO_GO",
+    "pb_b5_execution": "NO_GO",
+    "infer_part_b_pass_from_path_a_readonly_green": "HARD_BAN_REMAINS",
+    "infer_l2_pass_from_path_a_readonly_green": "HARD_BAN_REMAINS"
+  },
+  "hard_ban_unchanged": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "implementation_program": {
+    "order": ["RED_design_and_tests_plan", "Owner_review", "GREEN_runtime_manifest_and_tests", "Owner_review"],
+    "parallelism": "FORBIDDEN",
+    "git_commit_push_pr": "not_authorized_until_each_phase_owner_accept"
+  },
+  "clarification": {
+    "what_go_means": "Owner authorizes a named, narrow opening of PB-SI-008 so the dual-track gate may recognize PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1 for EVIDENCE promotion candidacy only.",
+    "what_go_does_not_mean": "Does not enable write path, production registration, mint/admission, Kernel write, certificate/STOP, CLAIM/AUTHORITY/PASS_CONDITION promotion, or treat Path A GREEN as Part B PASS."
+  }
+}
