@@ -1,0 +1,111 @@
+{
+  "artifact_id": "kernel-v0.8-m1-evidence-sufficiency-checker-non-null-red-owner-acceptance-v0.1-20260727",
+  "artifact_type": "kernel_m3_m1_evidence_sufficiency_checker_non_null_path_a2_red_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "path_a2_red_contract_accepted_no_green_evaluator_or_path_b",
+  "program_path": "Path_A",
+  "slice": "A2_evidence_sufficiency_checker_non_null_readonly_red",
+  "authority_base_commit": "5f8fddf0b43c7f74bcaa1316570d8bfd261247c7",
+  "reviewed_tip": "5f8fddf0b43c7f74bcaa1316570d8bfd261247c7",
+  "origin_main_observed_at_review": "567ccdb0d0c5fac50e67f736c7b29cb42697892f",
+  "authority_base_note": "Accepted on explicit A1-containing tip because origin/main had not yet absorbed Path A1 at review time.",
+  "reviewed_branch": "codex/m1-evidence-sufficiency-checker-non-null-red-v0.1",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-evidence-sufficiency-checker-non-null-red-review-packet-v0.1-20260727.json",
+    "content_sha256": "d1b8e90495fd99b9d265e97f9ce9cde1e3c8ac65f318388409f2ecd71b0a1441"
+  },
+  "pinned_red_design": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-sufficiency-checker-non-null-red-design-v0.1-20260727.json",
+    "content_sha256": "82afa37e8e027b2c4e0a4d4de7668b0232d905787dd83278a6e41919a756250b",
+    "effective": false
+  },
+  "pinned_example_records": {
+    "conditional_sufficient": {
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/conditional-sufficient-record.json",
+      "content_sha256": "0c31ea39735f3ccc3ad86c4830a5994680a3da10a49f43e5a5ca695da5f75ef1",
+      "sufficiency_decision": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY"
+    },
+    "missing_modalities_fail": {
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/missing-modalities-fail-record.json",
+      "content_sha256": "3591ef160d9a6a51c719f02ae34abef6f72806b4c0bf63d2b64cbe326ab24ef9",
+      "sufficiency_decision": "FAIL_INSUFFICIENT_EVIDENCE"
+    },
+    "cti_laundering_deny": {
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/cti-laundering-deny-record.json",
+      "content_sha256": "42fdba3766a9c6e91bab0f6a3a641949a12e06385170a0154b0360db9265a9bc",
+      "sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT"
+    }
+  },
+  "pinned_contract_test": {
+    "path": "tests/compiler_contract/test_m1_evidence_sufficiency_contract.py",
+    "content_sha256": "acc9878c8fc0d1fc8ad2cfb9e91983712e220311e732842b17066c09e275d435",
+    "result": "12/12 PASS"
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "branch_match": true,
+    "a1_tip_ancestor": true,
+    "deliverable_sha_match": "6/6 OK",
+    "protected_pin_reverify": "14/14 OK",
+    "contract_tests": "12/12 PASS",
+    "joint_regression": "72/72 PASS",
+    "layering_structural_does_not_imply_sufficiency": true,
+    "sufficiency_does_not_imply_truth_admission_ingestion_or_stop": true,
+    "checker_non_null_in_assisted_red_record_only": true,
+    "evaluator_or_real_checker_runtime_implemented": false,
+    "porcelain_before_owner_acceptance": "exactly_6_new_a2_red_files",
+    "write_side_effects_in_reviewed_delivery": "design_examples_contract_test_and_review_packet_only"
+  },
+  "answers_to_owner_questions": {
+    "PATH-A2-RED-ORQ-01_standalone_non_null_sufficiency_and_checker_shape": "accept",
+    "PATH-A2-RED-ORQ-02_six_package_e2e_a1_binding_catalog": "accept",
+    "PATH-A2-RED-ORQ-03_conditional_fail_abstain_deny_semantics": "accept",
+    "PATH-A2-RED-ORQ-04_no_green_checker_a3_path_b_or_git": "accept"
+  },
+  "accepted_for": [
+    "path_a2_readonly_red_sufficiency_and_checker_non_null_contract",
+    "exact_six_package_synthetic_scope_binding_e2e_9_16_11_and_a1_4_48_34",
+    "layered_separation_of_schema_consumer_sufficiency_checker_and_authority",
+    "fail_closed_missing_evidence_unknown_abstain_and_cti_laundering_deny_examples"
+  ],
+  "scope_note": "Accepted A2 RED establishes an assisted, non-effective record shape in which evidence_sufficiency_decision and checker_decision may be non-null for readonly review over exact synthetic package pins. It does not authorize a GREEN evaluator, real Checker runtime connection, effective schema elevation, A3 audit_log, or Path B write elevation.",
+  "authorized_now": {
+    "path_a2_red_owner_acceptance_record": true,
+    "green_sufficiency_evaluator_runtime": false,
+    "checker_runtime_connection": false,
+    "a3_audit_log": false,
+    "path_b_write_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "not_authorized": {
+    "green_sufficiency_evaluator_runtime": false,
+    "checker_runtime_connection": false,
+    "effective_identity_change": false,
+    "mapper_or_adapter_change": false,
+    "a3_audit_log": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "hard_stop": true,
+  "separate_authority_required_for_a2_green": true,
+  "separate_authority_required_for_a3": true,
+  "separate_authority_required_for_path_b": true,
+  "separate_authority_required_for_git_delivery": true,
+  "recommended_next_slice": "Optional: commit/push/PR A1+A2 docs onto main. Functional next candidates: A2 GREEN readonly evaluator under this RED contract, or A3 audit_log RED only if separately justified; Path B remains DENY."
+}

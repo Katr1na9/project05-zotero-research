@@ -1,0 +1,73 @@
+{
+  "schema_version": "m1-evidence-sufficiency-checker-red-v0.1",
+  "record_class": "evidence_sufficiency_checker_decision",
+  "record_id": "sufficiency_checker_cti_laundering_001",
+  "status": "assisted_red_example_not_effective",
+  "surface_id": "project05_depth2_public",
+  "input_binding": {
+    "accepted_packages": [],
+    "rejected_candidates": [
+      {
+        "candidate_kind": "projection_declaration_without_package",
+        "source_class": "cti_report_public_projection",
+        "candidate_projection_sha256": "2869145b445195c780164fa9bce8721fa909ca68a9f4e41c4c85a1933c43d860",
+        "epistemic_modality": "observed",
+        "reason_code": "CTI_MODALITY_LAUNDERING_NO_PACKAGE",
+        "package_emitted": false
+      }
+    ],
+    "schema_validity_layer": "PASS_FOR_ACCEPTED_PACKAGES_ONLY",
+    "consumer_structural_layer": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+  },
+  "evidence_sufficiency_decision": {
+    "decision_id": "sufficiency_cti_laundering_001",
+    "decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+    "basis_codes": [
+      "CTI_MODALITY_LAUNDERING",
+      "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+      "DECLARED_SYNTHETIC_SCOPE_ONLY",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "fail_closed_reasons": [
+      "CTI_OBSERVED_LAUNDERING"
+    ],
+    "pinned_package_sha256s": [],
+    "pinned_identities": {
+      "external_evidence_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "consumer_v0_2_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "green_2_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    },
+    "scope": "DECLARED_SYNTHETIC_READONLY_REVIEW_ONLY",
+    "truth_asserted": false,
+    "admission_authority": false,
+    "ingestion_authority": false,
+    "stop_authority": "NONE"
+  },
+  "checker_decision": {
+    "decision_id": "checker_cti_laundering_001",
+    "decision": "DENY_INVALID_INPUT",
+    "sufficiency_decision_ref": "sufficiency_cti_laundering_001",
+    "checker_decision_non_null": true,
+    "basis_codes": [
+      "CHECKER_OBJECT_SCHEMA_VALID",
+      "CTI_MODALITY_LAUNDERING",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "truth_asserted": false,
+    "admission_authority": false,
+    "kernel_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE"
+  },
+  "explicit_non_authorizations": {
+    "a3_audit_log": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate": false,
+    "certified_stop": false
+  }
+}

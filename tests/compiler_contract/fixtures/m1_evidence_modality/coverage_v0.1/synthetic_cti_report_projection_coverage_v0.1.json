@@ -1,0 +1,88 @@
+{
+  "descriptor": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "cti_report_public_projection",
+    "opaque_record_reference": "cti_coverage_record_001",
+    "projection_pin_declaration": {
+      "artifact_id": "llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726",
+      "version": "0.1",
+      "sha256": "7ec2fc8a04bdb2bd8119edee6b97151ffa9a2faff68cf997b38dd059919b7afb"
+    }
+  },
+  "report": {
+    "report_id": "report_coverage_001",
+    "publisher_ref": "publisher_coverage_public_001",
+    "publication_window": {
+      "start": "2026-07-26",
+      "end": "2026-07-27"
+    },
+    "reported_marker": true,
+    "public_objects": [
+      {
+        "object_ref": "object_coverage_001",
+        "object_type": "malware"
+      },
+      {
+        "object_ref": "object_coverage_002",
+        "object_type": "infrastructure"
+      },
+      {
+        "object_ref": "object_coverage_003",
+        "object_type": "tool"
+      },
+      {
+        "object_ref": "object_coverage_004",
+        "object_type": "vulnerability"
+      }
+    ],
+    "public_techniques": [
+      {
+        "technique_ref": "technique_coverage_T0001"
+      },
+      {
+        "technique_ref": "technique_coverage_T0002"
+      },
+      {
+        "technique_ref": "technique_coverage_T0003"
+      }
+    ],
+    "public_relations": [
+      {
+        "subject_ref": "object_coverage_001",
+        "relation_type": "reported_communicates_with",
+        "object_ref": "object_coverage_002"
+      },
+      {
+        "subject_ref": "object_coverage_001",
+        "relation_type": "reported_uses",
+        "object_ref": "technique_coverage_T0001"
+      },
+      {
+        "subject_ref": "object_coverage_001",
+        "relation_type": "reported_uses",
+        "object_ref": "technique_coverage_T0002"
+      },
+      {
+        "subject_ref": "object_coverage_003",
+        "relation_type": "reported_targets",
+        "object_ref": "object_coverage_004"
+      },
+      {
+        "subject_ref": "object_coverage_003",
+        "relation_type": "reported_uses",
+        "object_ref": "technique_coverage_T0003"
+      },
+      {
+        "subject_ref": "technique_coverage_T0002",
+        "relation_type": "reported_related_to",
+        "object_ref": "technique_coverage_T0003"
+      }
+    ]
+  },
+  "source_metadata": {
+    "source_family": "external_intel",
+    "epistemic_modality": "reported",
+    "modality_basis_code": "PUBLIC_CTI_REPORT_DECLARATION",
+    "trusted_ingestion_metadata_sha256": "621c9e38a6414dd6a69e9f04bed73f96b4d85f3df6d5d2279219655f917b5d6a"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "m1-evidence-sufficiency-checker-red-v0.1",
+  "record_class": "evidence_sufficiency_checker_decision",
+  "record_id": "sufficiency_checker_missing_modalities_001",
+  "status": "assisted_red_example_not_effective",
+  "surface_id": "project05_depth2_public",
+  "input_binding": {
+    "accepted_packages": [
+      {
+        "binding_id": "e2e_anchor_system_log_9",
+        "package_role": "E2E_ANCHOR",
+        "source_class": "system_log_public_projection",
+        "epistemic_modality": "observed",
+        "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+        "claim_count": 9,
+        "evidence_field_path_set_sha256": "482fdbe4f733365763bc4c267d3b79ba860db4db426acded32f27ffc467bbcfb"
+      },
+      {
+        "binding_id": "a1_coverage_system_log_4",
+        "package_role": "A1_COVERAGE",
+        "source_class": "system_log_public_projection",
+        "epistemic_modality": "derived",
+        "package_sha256": "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb",
+        "claim_count": 4,
+        "evidence_field_path_set_sha256": "dcc31b3d421c60b4242ab10c9e8e347b404e30429ce98a54461264f88f08cbda"
+      }
+    ],
+    "rejected_candidates": [],
+    "schema_validity_layer": "PASS_FOR_ACCEPTED_PACKAGES_ONLY",
+    "consumer_structural_layer": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+  },
+  "evidence_sufficiency_decision": {
+    "decision_id": "sufficiency_missing_modalities_001",
+    "decision": "FAIL_INSUFFICIENT_EVIDENCE",
+    "basis_codes": [
+      "EXACT_PACKAGE_PINS_VERIFIED",
+      "EXACT_EVIDENCE_FIELD_SETS_VERIFIED",
+      "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+      "REQUIRED_MODALITY_MISSING",
+      "DECLARED_SYNTHETIC_SCOPE_ONLY",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "fail_closed_reasons": [
+      "MISSING_PROVENANCE_GRAPH_EVIDENCE",
+      "MISSING_CTI_REPORT_EVIDENCE"
+    ],
+    "pinned_package_sha256s": [
+      "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+      "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb"
+    ],
+    "pinned_identities": {
+      "external_evidence_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "consumer_v0_2_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "green_2_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    },
+    "scope": "DECLARED_SYNTHETIC_READONLY_REVIEW_ONLY",
+    "truth_asserted": false,
+    "admission_authority": false,
+    "ingestion_authority": false,
+    "stop_authority": "NONE"
+  },
+  "checker_decision": {
+    "decision_id": "checker_missing_modalities_001",
+    "decision": "REJECT_FAIL_CLOSED",
+    "sufficiency_decision_ref": "sufficiency_missing_modalities_001",
+    "checker_decision_non_null": true,
+    "basis_codes": [
+      "CHECKER_OBJECT_SCHEMA_VALID",
+      "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+      "REQUIRED_MODALITY_MISSING",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "truth_asserted": false,
+    "admission_authority": false,
+    "kernel_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE"
+  },
+  "explicit_non_authorizations": {
+    "a3_audit_log": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate": false,
+    "certified_stop": false
+  }
+}

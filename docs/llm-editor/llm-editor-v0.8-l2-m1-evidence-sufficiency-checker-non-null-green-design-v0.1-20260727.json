@@ -1,0 +1,227 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-evidence-sufficiency-checker-non-null-green-design-v0.1-20260727",
+  "artifact_type": "m1_evidence_sufficiency_checker_non_null_readonly_green_test_only_evaluator_design",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "program_path": "Path_A",
+  "slice": "A2_evidence_sufficiency_checker_non_null_readonly_green_test_only",
+  "authority_base_commit": "fa7149bf047740bf108090a2724488eddea6703c",
+  "reviewed_branch": "codex/m1-evidence-sufficiency-checker-non-null-green-v0.1",
+  "status": "green_test_only_evaluator_candidate_pending_kernel_owner_review",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "this_design_is_not_owner_approval": true,
+  "this_design_is_not_an_effective_schema_or_production_checker_runtime": true,
+  "goal": "Implement a deterministic, readonly, test-only evaluator that reproduces the accepted A2 RED evidence-sufficiency and non-null Checker record semantics over six exact synthetic package bindings without granting truth, mint, admission, ingestion, Kernel/E_case write, certificate, or STOP authority.",
+  "authority_basis": {
+    "a2_red_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-sufficiency-checker-non-null-red-owner-acceptance-v0.1-20260727.json",
+      "sha256": "97ff8bceb7c6ff3bd395c8013816d3b5ef1daa9a53d1f623735376ffae1d9481",
+      "decision": "accept"
+    },
+    "a2_red_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-sufficiency-checker-non-null-red-design-v0.1-20260727.json",
+      "sha256": "82afa37e8e027b2c4e0a4d4de7668b0232d905787dd83278a6e41919a756250b"
+    },
+    "owner_acceptance_of_this_green_required": true,
+    "git_delivery_authorized": false
+  },
+  "implementation": {
+    "evaluator": {
+      "path": "src/compiler/llm/m1_evidence_sufficiency_evaluator.py",
+      "sha256": "ad4e5af8dd9af0012f5174b14822ce9146a6d0f491c07881b5b401d85d62e78f",
+      "api": "evaluate_evidence_sufficiency_for_readonly_review",
+      "evaluator_id": "m1_evidence_sufficiency_readonly_green_v0_1",
+      "evaluator_version": "0.1.0",
+      "authority_mode": "explicit_test_only_in_memory",
+      "production_checker_connection": false,
+      "registry_entry": false,
+      "file_write": false
+    },
+    "directed_tests": {
+      "path": "tests/compiler_contract/test_m1_evidence_sufficiency_evaluator.py",
+      "sha256": "507606cb0701108b027e889b3c203c8d8d2d065d9f6e95b151d4dad3af24b096",
+      "result": "11/11 PASS"
+    },
+    "joint_regression": {
+      "modules": [
+        "tests.compiler_contract.test_m1_evidence_sufficiency_contract",
+        "tests.compiler_contract.test_m1_evidence_sufficiency_evaluator",
+        "tests.compiler_contract.test_m1_evidence_claim_ir_coverage_expansion",
+        "tests.compiler_contract.test_m1_evidence_to_claim_ir_mapper",
+        "tests.compiler_contract.test_m1_system_log_projection_adapter",
+        "tests.compiler_contract.test_m1_provenance_graph_projection_adapter",
+        "tests.compiler_contract.test_m1_cti_report_projection_adapter",
+        "tests.compiler_contract.test_claim_ir_evidence_claim_record_schema_green"
+      ],
+      "result": "83/83 PASS"
+    }
+  },
+  "exact_package_binding_catalog": [
+    {
+      "binding_id": "e2e_anchor_system_log_9",
+      "source_class": "system_log_public_projection",
+      "epistemic_modality": "observed",
+      "claim_count": 9,
+      "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+      "evidence_field_path_set_sha256": "482fdbe4f733365763bc4c267d3b79ba860db4db426acded32f27ffc467bbcfb"
+    },
+    {
+      "binding_id": "e2e_anchor_provenance_graph_16",
+      "source_class": "provenance_graph_public_projection",
+      "epistemic_modality": "observed",
+      "claim_count": 16,
+      "package_sha256": "7a9f36dc0188a0a9b199e51a77da4e194f1af6149651ec5149d46bd4b0fc8e3e",
+      "evidence_field_path_set_sha256": "780e435292348e9d6faeaf0f2bed92c00735df288a83d1414cbd563c37001cb5"
+    },
+    {
+      "binding_id": "e2e_anchor_cti_report_11",
+      "source_class": "cti_report_public_projection",
+      "epistemic_modality": "reported",
+      "claim_count": 11,
+      "package_sha256": "e7046afc7fb6cb2703f5e7bb3124a9753c2a5b4ba265ac11633e5ebeaa0ea3e5",
+      "evidence_field_path_set_sha256": "bdd232ab1b8ed03c71baf83e767341aeb4c267abd7ba75a7f89045b83d613509"
+    },
+    {
+      "binding_id": "a1_coverage_system_log_4",
+      "source_class": "system_log_public_projection",
+      "epistemic_modality": "derived",
+      "claim_count": 4,
+      "package_sha256": "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb",
+      "evidence_field_path_set_sha256": "dcc31b3d421c60b4242ab10c9e8e347b404e30429ce98a54461264f88f08cbda"
+    },
+    {
+      "binding_id": "a1_coverage_provenance_graph_48",
+      "source_class": "provenance_graph_public_projection",
+      "epistemic_modality": "observed",
+      "claim_count": 48,
+      "package_sha256": "46dc6d2de3302484e906d66e7e4fb69e6bb6eccc3765aea8de9517148a794c8d",
+      "evidence_field_path_set_sha256": "780e435292348e9d6faeaf0f2bed92c00735df288a83d1414cbd563c37001cb5"
+    },
+    {
+      "binding_id": "a1_coverage_cti_report_34",
+      "source_class": "cti_report_public_projection",
+      "epistemic_modality": "reported",
+      "claim_count": 34,
+      "package_sha256": "4ed50b46473deb187acb112ba4a6394fa2b599637c6c135d60bf82ec3a9bcedf",
+      "evidence_field_path_set_sha256": "bdd232ab1b8ed03c71baf83e767341aeb4c267abd7ba75a7f89045b83d613509"
+    }
+  ],
+  "decision_results": {
+    "complete_exact_six_package_scope": {
+      "evidence_sufficiency_decision": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+      "checker_decision": "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY",
+      "red_example_reproduced_byte_for_byte_as_json_value": true,
+      "truth_asserted": false
+    },
+    "missing_required_modalities_or_field_sets": {
+      "evidence_sufficiency_decision": "FAIL_INSUFFICIENT_EVIDENCE",
+      "checker_decision": "REJECT_FAIL_CLOSED",
+      "structural_pass_does_not_promote_to_sufficiency": true
+    },
+    "cti_observed_or_derived_laundering": {
+      "evidence_sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+      "checker_decision": "DENY_INVALID_INPUT",
+      "package_emitted": false
+    },
+    "unknown_modality": {
+      "evidence_sufficiency_decision": "ABSTAIN_UNRESOLVED_EVIDENCE",
+      "checker_decision": "ABSTAIN_FAIL_CLOSED",
+      "package_emitted": false,
+      "partial_result": false
+    }
+  },
+  "output_contract": {
+    "record_shape": "accepted_A2_RED_embedded_draft_schema_only",
+    "draft_schema_effective": false,
+    "evidence_sufficiency_decision_non_null": true,
+    "checker_decision_non_null": true,
+    "pinned_package_sha256s_present": true,
+    "evidence_field_path_set_sha256s_present_in_exact_input_bindings": true,
+    "basis_codes_present": true,
+    "no_authority_elevation_basis_required": "NO_AUTHORITY_ELEVATION",
+    "same_exact_input_same_record": true,
+    "input_mutation": false,
+    "output_file_write": false
+  },
+  "mandatory_pin_table": [
+    {"role": "a2_red_owner_acceptance", "path": "docs/kernel/kernel-v0.8-m1-evidence-sufficiency-checker-non-null-red-owner-acceptance-v0.1-20260727.json", "sha256": "97ff8bceb7c6ff3bd395c8013816d3b5ef1daa9a53d1f623735376ffae1d9481"},
+    {"role": "a2_red_design", "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-sufficiency-checker-non-null-red-design-v0.1-20260727.json", "sha256": "82afa37e8e027b2c4e0a4d4de7668b0232d905787dd83278a6e41919a756250b"},
+    {"role": "a2_red_review_packet", "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-evidence-sufficiency-checker-non-null-red-review-packet-v0.1-20260727.json", "sha256": "d1b8e90495fd99b9d265e97f9ce9cde1e3c8ac65f318388409f2ecd71b0a1441"},
+    {"role": "a2_red_contract_test", "path": "tests/compiler_contract/test_m1_evidence_sufficiency_contract.py", "sha256": "acc9878c8fc0d1fc8ad2cfb9e91983712e220311e732842b17066c09e275d435"},
+    {"role": "red_conditional_example", "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/conditional-sufficient-record.json", "sha256": "0c31ea39735f3ccc3ad86c4830a5994680a3da10a49f43e5a5ca695da5f75ef1"},
+    {"role": "red_missing_example", "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/missing-modalities-fail-record.json", "sha256": "3591ef160d9a6a51c719f02ae34abef6f72806b4c0bf63d2b64cbe326ab24ef9"},
+    {"role": "red_cti_laundering_example", "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/cti-laundering-deny-record.json", "sha256": "42fdba3766a9c6e91bab0f6a3a641949a12e06385170a0154b0360db9265a9bc"},
+    {"role": "path_a1_owner_acceptance", "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-coverage-expansion-owner-acceptance-v0.1-20260727.json", "sha256": "f4b00bf3fd10cd8d70afa9cdf3ee71b7ed16bd2da694b6caf31b210a7c3443a4"},
+    {"role": "readonly_e2e_owner_acceptance", "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-readonly-e2e-owner-acceptance-v0.1-20260727.json", "sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c"},
+    {"role": "schema_green_owner_acceptance", "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json", "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148"},
+    {"role": "green_2_owner_acceptance", "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json", "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4"},
+    {"role": "effective_external_evidence_schema", "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json", "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"},
+    {"role": "effective_kernel_additive_schema", "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json", "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5"},
+    {"role": "effective_consumer_v0_2", "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json", "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"},
+    {"role": "legacy_external_schema", "path": "schemas/claim-ir-external-envelope.schema.json", "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"},
+    {"role": "legacy_kernel_schema", "path": "schemas/claim-ir-kernel.schema.json", "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"},
+    {"role": "legacy_consumer_v0_1", "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json", "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"},
+    {"role": "green_2_mapper", "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py", "sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"},
+    {"role": "system_log_zero_claim_adapter", "path": "src/compiler/llm/m1_system_log_projection_adapter.py", "sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116"},
+    {"role": "provenance_zero_claim_adapter", "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py", "sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5"},
+    {"role": "cti_zero_claim_adapter", "path": "src/compiler/llm/m1_cti_report_projection_adapter.py", "sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e"}
+  ],
+  "pin_reverification": {
+    "disk_content_sha256_reverified": true,
+    "pins_checked": 21,
+    "pins_match": true,
+    "protected_bytes_modified": false
+  },
+  "validation_matrix": [
+    {"validation_id": "A2-GREEN-VAL-01", "subject": "A2 RED acceptance/design/examples plus protected effective, legacy, mapper, and adapter pins", "result": "21/21 PASS"},
+    {"validation_id": "A2-GREEN-VAL-02", "subject": "Evaluator directed contract", "result": "11/11 PASS"},
+    {"validation_id": "A2-GREEN-VAL-03", "subject": "Complete six-package conditional decision and non-null assisted Checker record", "result": "PASS_EXACT_RED_RECORD"},
+    {"validation_id": "A2-GREEN-VAL-04", "subject": "Missing modality despite structural pass", "result": "FAIL_INSUFFICIENT_EVIDENCE"},
+    {"validation_id": "A2-GREEN-VAL-05", "subject": "CTI observed and derived", "result": "DENY_INVALID_OR_LAUNDERED_INPUT"},
+    {"validation_id": "A2-GREEN-VAL-06", "subject": "Unknown modality", "result": "ABSTAIN_UNRESOLVED_EVIDENCE_NO_PACKAGE"},
+    {"validation_id": "A2-GREEN-VAL-07", "subject": "A2 contract + A1 coverage + mapper + adapters + schema GREEN joint regression", "result": "83/83 PASS"},
+    {"validation_id": "A2-GREEN-VAL-08", "subject": "Protected bytes before and after readonly evaluation", "result": "UNCHANGED"}
+  ],
+  "write_boundary": {
+    "in_memory_only": true,
+    "file_write_by_evaluator": false,
+    "network_or_raw_source_access": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "write_side_effects": "none_beyond_authorized_evaluator_test_green_design_and_review_packet_files"
+  },
+  "explicit_non_authorizations": {
+    "effective_schema_elevation": false,
+    "real_checker_runtime_connection": false,
+    "existing_e_case_checker_field_change": false,
+    "existing_certificate_or_stop_field_change": false,
+    "a3_audit_log": false,
+    "path_b_registry_or_production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "review_boundary": {
+    "owner_decision": null,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "acceptance_would_accept_test_only_evaluator_only": true,
+    "acceptance_would_connect_real_checker_runtime": false,
+    "acceptance_would_authorize_e_case_checker_write": false,
+    "acceptance_would_start_a3_or_path_b": false,
+    "acceptance_would_authorize_git_delivery": false
+  }
+}

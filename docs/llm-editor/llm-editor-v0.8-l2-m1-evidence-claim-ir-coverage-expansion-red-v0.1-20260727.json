@@ -1,0 +1,379 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-evidence-claim-ir-coverage-expansion-red-v0.1-20260727",
+  "artifact_type": "m1_evidence_claim_ir_assisted_readonly_coverage_expansion_red_verification",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "program_path": "Path_A_readonly_scientific_coverage",
+  "slice": "A1_larger_readonly_fixture_coverage_matrix",
+  "authority_base_commit": "567ccdb0d0c5fac50e67f736c7b29cb42697892f",
+  "origin_main_tip_verified": "567ccdb0d0c5fac50e67f736c7b29cb42697892f",
+  "branch": "codex/m1-evidence-claim-ir-coverage-expansion-v0.1",
+  "status": "assisted_coverage_red_verification_pass_pending_kernel_owner_review",
+  "conclusion": "PASS",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "this_artifact_is_not_owner_approval": true,
+  "this_artifact_is_not_an_effective_identity": true,
+  "scope": {
+    "goal": "Expand deterministic readonly synthetic fixture coverage for the existing evidence-to-Claim-IR chain without changing any effective schema, consumer, mapper, or adapter semantics.",
+    "coverage_only": true,
+    "schema_rewrite": false,
+    "mapper_function_elevation": false,
+    "scientific_sufficiency_evaluation": false,
+    "checker_non_null": false,
+    "audit_log_modality": false,
+    "path_b_authority": false
+  },
+  "authority_chain": {
+    "schema_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "result": "OK"
+    },
+    "green_2_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4",
+      "result": "OK"
+    },
+    "readonly_e2e_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-readonly-e2e-owner-acceptance-v0.1-20260727.json",
+      "sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c",
+      "result": "OK"
+    }
+  },
+  "pin_reverify_table": [
+    {
+      "role": "schema_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "expected_sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "disk_sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "result": "OK"
+    },
+    {
+      "role": "green_2_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "expected_sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4",
+      "disk_sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4",
+      "result": "OK"
+    },
+    {
+      "role": "readonly_e2e_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-readonly-e2e-owner-acceptance-v0.1-20260727.json",
+      "expected_sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c",
+      "disk_sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c",
+      "result": "OK"
+    },
+    {
+      "role": "effective_external_evidence_schema",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "expected_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "disk_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "result": "OK"
+    },
+    {
+      "role": "effective_kernel_additive_schema",
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "expected_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "disk_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "result": "OK"
+    },
+    {
+      "role": "effective_consumer_v0_2",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "expected_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "disk_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "result": "OK"
+    },
+    {
+      "role": "legacy_external_schema",
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "expected_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "disk_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "result": "OK"
+    },
+    {
+      "role": "legacy_kernel_schema",
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "expected_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "disk_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "result": "OK"
+    },
+    {
+      "role": "legacy_consumer_contract",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "expected_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "disk_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+      "result": "OK"
+    },
+    {
+      "role": "system_log_zero_claim_adapter",
+      "path": "src/compiler/llm/m1_system_log_projection_adapter.py",
+      "expected_sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116",
+      "disk_sha256": "b7cc4710a2db30eedb353b44671d0f4993a50442c3f5bd2afe06ed5ee33f0116",
+      "result": "OK"
+    },
+    {
+      "role": "provenance_graph_zero_claim_adapter",
+      "path": "src/compiler/llm/m1_provenance_graph_projection_adapter.py",
+      "expected_sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5",
+      "disk_sha256": "9068315019a2980bb43b81d9641537c5a7c69ca63f14c4b9e876a653f8ffeae5",
+      "result": "OK"
+    },
+    {
+      "role": "cti_report_zero_claim_adapter",
+      "path": "src/compiler/llm/m1_cti_report_projection_adapter.py",
+      "expected_sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e",
+      "disk_sha256": "cc0e04dd15372ecc1e0b5b68777458f07a361cb77ec7ce2c318b1ef42a07be3e",
+      "result": "OK"
+    },
+    {
+      "role": "green_2_mapper",
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "expected_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+      "disk_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+      "result": "OK"
+    }
+  ],
+  "pin_reverify_summary": {
+    "checked": 13,
+    "matched": 13,
+    "all_ok": true
+  },
+  "directed_test": {
+    "path": "tests/compiler_contract/test_m1_evidence_claim_ir_coverage_expansion.py",
+    "sha256": "05f1090c0d36835343e2733a809220b9ab48f677d943548192f317a0d1788b40",
+    "test_methods": 11,
+    "result": "11/11 PASS"
+  },
+  "coverage_intent": [
+    {
+      "source_class": "system_log_public_projection",
+      "stress_points": [
+        "all optional event and principal fields absent",
+        "legal derived boundary using TRANSFORMED_AGGREGATED_OR_ALERT",
+        "high precision bounded public event-time declaration"
+      ],
+      "expected_claim_count": 4
+    },
+    {
+      "source_class": "provenance_graph_public_projection",
+      "stress_points": [
+        "five canonically sorted nodes",
+        "six canonically sorted edges",
+        "four relationship classes with repeated reads and writes occurrences",
+        "exact node, edge, and relationship summary counts"
+      ],
+      "expected_claim_count": 48
+    },
+    {
+      "source_class": "cti_report_public_projection",
+      "stress_points": [
+        "four public objects",
+        "three public techniques",
+        "six canonically sorted public relations",
+        "repeated reported_uses relation type without duplicate occurrence identity",
+        "reported modality remains unchanged"
+      ],
+      "expected_claim_count": 34
+    }
+  ],
+  "expanded_fixture_matrix": [
+    {
+      "source_class": "system_log_public_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/coverage_v0.1/synthetic_system_log_projection_coverage_v0.1.json",
+      "file_sha256": "5637794a3744df2133fb3443b6598212cbd94d6a1b27b9f115a3ae47576cbe23",
+      "canonical_json_sha256": "8eee4a3ff5f970f09797fba8ea4f043ecd79302b2dc719d559e927d77dd3e718",
+      "claim_count": 4,
+      "package_sha256": "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb",
+      "mapper": "PASS",
+      "external_evidence_schema": "PASS",
+      "kernel_additive_oneof": "4/4 PASS",
+      "consumer_exact_dispatch_structural_checks": "PASS",
+      "decision": "CONSUMABLE_STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED_NO_INGESTION_AUTHORITY"
+    },
+    {
+      "source_class": "provenance_graph_public_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/coverage_v0.1/synthetic_provenance_graph_projection_coverage_v0.1.json",
+      "file_sha256": "3b58860774a29db706e80db7c149b1a86e579196ac815a6fadcf6619acad6e98",
+      "canonical_json_sha256": "20d5e49235d6058e60b36fcc22b905d9279c27664dd78461367840f683b02bae",
+      "claim_count": 48,
+      "package_sha256": "46dc6d2de3302484e906d66e7e4fb69e6bb6eccc3765aea8de9517148a794c8d",
+      "mapper": "PASS",
+      "external_evidence_schema": "PASS",
+      "kernel_additive_oneof": "48/48 PASS",
+      "consumer_exact_dispatch_structural_checks": "PASS",
+      "decision": "CONSUMABLE_STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED_NO_INGESTION_AUTHORITY"
+    },
+    {
+      "source_class": "cti_report_public_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/coverage_v0.1/synthetic_cti_report_projection_coverage_v0.1.json",
+      "file_sha256": "19df36773651ad96d17e577ff67bbc5e7ecfd39567786870577bf67d69987af0",
+      "canonical_json_sha256": "d8924d9933a5c5e9ee26e930666044cc92b01b0ffa6150b79f6600cd98ea4bae",
+      "claim_count": 34,
+      "package_sha256": "4ed50b46473deb187acb112ba4a6394fa2b599637c6c135d60bf82ec3a9bcedf",
+      "mapper": "PASS",
+      "external_evidence_schema": "PASS",
+      "kernel_additive_oneof": "34/34 PASS",
+      "consumer_exact_dispatch_structural_checks": "PASS",
+      "decision": "CONSUMABLE_STRUCTURAL_ONLY_NOT_MINTED_NOT_ADMITTED_NO_INGESTION_AUTHORITY"
+    }
+  ],
+  "original_e2e_anchor_matrix": [
+    {
+      "source_class": "system_log_public_projection",
+      "claim_count": 9,
+      "result": "PASS"
+    },
+    {
+      "source_class": "provenance_graph_public_projection",
+      "claim_count": 16,
+      "result": "PASS"
+    },
+    {
+      "source_class": "cti_report_public_projection",
+      "claim_count": 11,
+      "result": "PASS"
+    }
+  ],
+  "fixed_state_assertions": {
+    "schema_version": "claim-ir-external-evidence-v0.1",
+    "record_class": "public_evidence_declaration",
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "kernel_state": "pending_kernel_schema",
+    "planner_source_field_present": false,
+    "afs_present": false,
+    "planner_claim_kind_present": false
+  },
+  "fail_closed_matrix": [
+    {
+      "modality_under_test": "system_log_public_projection",
+      "case": "unknown modality with UNRESOLVED_BASIS",
+      "result": "ABSTAIN_UNKNOWN_MODALITY_NO_PARTIAL_EMISSION"
+    },
+    {
+      "modality_under_test": "provenance_graph_public_projection",
+      "case": "missing required graph.summary.edge_count",
+      "result": "DENY_PROJECTION_SHAPE"
+    },
+    {
+      "modality_under_test": "cti_report_public_projection",
+      "case": "observed or derived epistemic modality",
+      "result": "2/2 DENY_MODALITY_LAUNDERING"
+    },
+    {
+      "modality_under_test": "all_existing_mapper_modalities",
+      "case": "unknown modality",
+      "result": "3/3 ABSTAIN_NO_PARTIAL_EMISSION_IN_LEGACY_49_REGRESSION"
+    },
+    {
+      "modality_under_test": "cross_modality",
+      "case": "system_log descriptor with CTI report body",
+      "result": "DENY_CROSS_MODALITY_MERGE"
+    },
+    {
+      "modality_under_test": "planner_namespace",
+      "case": "public_config claim_kind in system-log declaration",
+      "result": "DENY_FORBIDDEN_PLANNER_NAMESPACE"
+    },
+    {
+      "modality_under_test": "consumer_dispatch",
+      "case": "draft schema_version",
+      "result": "DENY_UNKNOWN_SCHEMA_VERSION"
+    }
+  ],
+  "commands_and_results": [
+    {
+      "command": "git fetch origin main",
+      "result": "PASS; origin/main=567ccdb0d0c5fac50e67f736c7b29cb42697892f"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_evidence_claim_ir_coverage_expansion -v",
+      "result": "11/11 PASS"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_system_log_projection_adapter tests.compiler_contract.test_m1_provenance_graph_projection_adapter tests.compiler_contract.test_m1_cti_report_projection_adapter tests.compiler_contract.test_claim_ir_evidence_claim_record_schema_green tests.compiler_contract.test_m1_evidence_to_claim_ir_mapper tests.compiler_contract.test_m1_evidence_claim_ir_coverage_expansion -v",
+      "result": "60/60 PASS"
+    }
+  ],
+  "compatibility_result": {
+    "zero_claim_adapters": "25/25 PASS",
+    "schema_green": "12/12 PASS",
+    "green_2_mapper": "12/12 PASS",
+    "preexisting_joint_regression": "49/49 PASS",
+    "new_directed_coverage": "11/11 PASS",
+    "combined_regression": "60/60 PASS",
+    "result": "PASS"
+  },
+  "blocking_findings": [],
+  "identity_change_required": false,
+  "protected_byte_snapshot": {
+    "pins_checked": 13,
+    "before_equal_after": true,
+    "effective_schema_consumer_mapper_or_adapter_modified": false,
+    "legacy_schema_or_consumer_modified": false,
+    "result": "PASS"
+  },
+  "write_side_effects": {
+    "observed": "only_three_synthetic_fixture_json_files_one_directed_test_and_two_assisted_review_json_files",
+    "runtime_modified": false,
+    "schema_modified": false,
+    "consumer_modified": false,
+    "mapper_modified": false,
+    "adapter_modified": false,
+    "mint": false,
+    "admission": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_real_source_access": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_stop": false
+  },
+  "future_slice_order_recorded_not_authorized": [
+    {
+      "slice": "A2",
+      "description": "evidence sufficiency and Checker non-null readonly determination",
+      "authorized_now": false
+    },
+    {
+      "slice": "A3",
+      "description": "audit_log modality RED only if separately justified and authorized",
+      "authorized_now": false,
+      "default_state": "OUT_OF_V0_1"
+    },
+    {
+      "slice": "Path_B",
+      "description": "registry, production execute, mint, admission, Kernel or E_case write",
+      "authorized_now": false
+    }
+  ],
+  "explicit_non_authorizations": {
+    "a2_sufficiency_or_checker_non_null": false,
+    "a3_audit_log_modality": false,
+    "effective_schema_or_consumer_identity_change": false,
+    "mapper_or_adapter_behavior_change": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "download_or_raw_real_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "review_boundary": {
+    "acceptance_would_confirm_coverage_design_and_readonly_results_only": true,
+    "acceptance_would_start_a2": false,
+    "acceptance_would_start_a3": false,
+    "acceptance_would_authorize_path_b": false,
+    "acceptance_would_authorize_git_delivery": false
+  }
+}

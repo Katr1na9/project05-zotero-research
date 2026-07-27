@@ -1,0 +1,196 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-m1-evidence-claim-ir-coverage-expansion-review-packet-v0.1-20260727",
+  "artifact_type": "kernel_owner_m1_evidence_claim_ir_coverage_expansion_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "program_path": "Path_A",
+  "slice": "A1_larger_readonly_fixture_coverage_matrix",
+  "authority_base_commit": "567ccdb0d0c5fac50e67f736c7b29cb42697892f",
+  "origin_main_tip_verified": "567ccdb0d0c5fac50e67f736c7b29cb42697892f",
+  "reviewed_branch": "codex/m1-evidence-claim-ir-coverage-expansion-v0.1",
+  "status": "assisted_coverage_expansion_pass_pending_kernel_owner_review",
+  "conclusion": "PASS",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "pinned_coverage_report": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-claim-ir-coverage-expansion-red-v0.1-20260727.json",
+    "sha256": "befad467a18e00f488179b2bd2b25ed4403932fbcb58a1dd6b107b9a7bed07c3",
+    "conclusion": "PASS"
+  },
+  "pinned_directed_test": {
+    "path": "tests/compiler_contract/test_m1_evidence_claim_ir_coverage_expansion.py",
+    "sha256": "05f1090c0d36835343e2733a809220b9ab48f677d943548192f317a0d1788b40",
+    "result": "11/11 PASS"
+  },
+  "pinned_coverage_fixtures": [
+    {
+      "source_class": "system_log_public_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/coverage_v0.1/synthetic_system_log_projection_coverage_v0.1.json",
+      "sha256": "5637794a3744df2133fb3443b6598212cbd94d6a1b27b9f115a3ae47576cbe23",
+      "canonical_json_sha256": "8eee4a3ff5f970f09797fba8ea4f043ecd79302b2dc719d559e927d77dd3e718",
+      "claim_count": 4,
+      "package_sha256": "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb"
+    },
+    {
+      "source_class": "provenance_graph_public_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/coverage_v0.1/synthetic_provenance_graph_projection_coverage_v0.1.json",
+      "sha256": "3b58860774a29db706e80db7c149b1a86e579196ac815a6fadcf6619acad6e98",
+      "canonical_json_sha256": "20d5e49235d6058e60b36fcc22b905d9279c27664dd78461367840f683b02bae",
+      "claim_count": 48,
+      "package_sha256": "46dc6d2de3302484e906d66e7e4fb69e6bb6eccc3765aea8de9517148a794c8d"
+    },
+    {
+      "source_class": "cti_report_public_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/coverage_v0.1/synthetic_cti_report_projection_coverage_v0.1.json",
+      "sha256": "19df36773651ad96d17e577ff67bbc5e7ecfd39567786870577bf67d69987af0",
+      "canonical_json_sha256": "d8924d9933a5c5e9ee26e930666044cc92b01b0ffa6150b79f6600cd98ea4bae",
+      "claim_count": 34,
+      "package_sha256": "4ed50b46473deb187acb112ba4a6394fa2b599637c6c135d60bf82ec3a9bcedf"
+    }
+  ],
+  "authority_acceptance_pins": {
+    "schema_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "result": "OK"
+    },
+    "green_2_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4",
+      "result": "OK"
+    },
+    "readonly_e2e_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-readonly-e2e-owner-acceptance-v0.1-20260727.json",
+      "sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c",
+      "result": "OK"
+    }
+  },
+  "protected_pin_summary": {
+    "pins_checked": 13,
+    "pins_match": true,
+    "protected_bytes_before_equal_after": true,
+    "effective_external_evidence_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+    "effective_kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+    "effective_consumer_v0_2_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+    "green_2_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+    "result": "OK"
+  },
+  "commands_and_results": [
+    {
+      "command": "git fetch origin main",
+      "result": "PASS; origin/main=567ccdb0d0c5fac50e67f736c7b29cb42697892f"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_evidence_claim_ir_coverage_expansion -v",
+      "result": "11/11 PASS"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_system_log_projection_adapter tests.compiler_contract.test_m1_provenance_graph_projection_adapter tests.compiler_contract.test_m1_cti_report_projection_adapter tests.compiler_contract.test_claim_ir_evidence_claim_record_schema_green tests.compiler_contract.test_m1_evidence_to_claim_ir_mapper tests.compiler_contract.test_m1_evidence_claim_ir_coverage_expansion -v",
+      "result": "60/60 PASS"
+    }
+  ],
+  "matrix_summary": {
+    "original_e2e_anchor_claim_counts": {
+      "system_log": 9,
+      "provenance_graph": 16,
+      "cti_report": 11,
+      "result": "3/3 PASS"
+    },
+    "expanded_claim_counts": {
+      "system_log_missing_optional_and_derived_boundary": 4,
+      "provenance_graph_larger_repeated_occurrences": 48,
+      "cti_report_larger_reported_relations": 34,
+      "result": "3/3 PASS"
+    },
+    "expanded_chain_stages": [
+      "map_validated_projection_to_claim_ir",
+      "claim-ir-external-evidence-v0.1 schema",
+      "additive Kernel oneOf per claim",
+      "consumer v0.2 exact-dispatch structural checks"
+    ],
+    "zero_claim_adapters": "25/25 PASS",
+    "preexisting_joint_regression": "49/49 PASS",
+    "new_directed_coverage": "11/11 PASS",
+    "combined_regression": "60/60 PASS"
+  },
+  "fail_closed_summary": {
+    "system_log_unknown": "ABSTAIN_NO_PARTIAL_EMISSION",
+    "provenance_missing_required": "DENY_PROJECTION_SHAPE",
+    "cti_observed_or_derived": "2/2 DENY_MODALITY_LAUNDERING",
+    "all_existing_unknown_modalities": "3/3 ABSTAIN_NO_PARTIAL_EMISSION",
+    "cross_modality_merge": "DENY",
+    "planner_namespace_smuggling": "DENY",
+    "draft_schema_version": "DENY_UNKNOWN_SCHEMA_VERSION",
+    "result": "PASS"
+  },
+  "blocking_findings": [],
+  "identity_change_required": false,
+  "write_side_effects": {
+    "observed": "none_beyond_three_synthetic_fixture_json_files_one_directed_test_and_two_assisted_review_json_files",
+    "runtime_or_protected_identity_modified": false,
+    "mint": false,
+    "admission": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_real_source_access": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_stop": false
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "PATH-A1-COVERAGE-ORQ-01",
+      "question": "Accept the three expanded synthetic fixtures and their declared 4/48/34 claim-count coverage?"
+    },
+    {
+      "question_id": "PATH-A1-COVERAGE-ORQ-02",
+      "question": "Accept that all expanded fixtures pass the unchanged mapper, external evidence schema, additive Kernel oneOf, and exact consumer structural checks?"
+    },
+    {
+      "question_id": "PATH-A1-COVERAGE-ORQ-03",
+      "question": "Accept the recorded per-modality and cross-boundary fail-closed results?"
+    },
+    {
+      "question_id": "PATH-A1-COVERAGE-ORQ-04",
+      "question": "Confirm that acceptance is coverage-only and grants no A2, A3, Path B, mint, admission, registry, production, Kernel/E_case, certificate, STOP, or git authority?"
+    }
+  ],
+  "acceptance_boundary": {
+    "acceptance_would_confirm_coverage_design_and_results_only": true,
+    "acceptance_would_modify_schema_consumer_mapper_or_adapter_identity": false,
+    "acceptance_would_start_a2_sufficiency_or_checker": false,
+    "acceptance_would_start_a3_audit_log": false,
+    "acceptance_would_authorize_path_b": false,
+    "acceptance_would_authorize_git_delivery": false
+  },
+  "explicit_non_authorizations": {
+    "a2_sufficiency_or_checker_non_null": false,
+    "a3_audit_log_modality": false,
+    "effective_identity_change": false,
+    "mapper_or_adapter_behavior_change": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "download_or_raw_real_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "audit_trail": {
+    "new_fixture_files": 3,
+    "new_directed_test_files": 1,
+    "new_assisted_json_files": 2,
+    "existing_tracked_files_modified": false,
+    "runtime_schema_consumer_mapper_or_adapter_files_modified": false,
+    "git_commit_created": false,
+    "git_push_performed": false
+  }
+}
