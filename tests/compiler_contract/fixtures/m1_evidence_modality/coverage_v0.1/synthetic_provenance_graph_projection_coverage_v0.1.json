@@ -1,0 +1,109 @@
+{
+  "descriptor": {
+    "surface_id": "project05_depth2_public",
+    "source_class": "provenance_graph_public_projection",
+    "opaque_record_reference": "provenance_coverage_record_001",
+    "projection_pin_declaration": {
+      "artifact_id": "llm-editor-v0.8-l2-m1-provenance-graph-public-field-projection-v0.1-20260726",
+      "version": "0.1",
+      "sha256": "8a210a4eb2d9f48ac35c65f78fb29e2801c6a991b5b28798beaf5980f0c90ad5"
+    }
+  },
+  "graph": {
+    "graph_id": "graph_coverage_001",
+    "nodes": [
+      {
+        "node_id": "node_coverage_001",
+        "node_type": "process"
+      },
+      {
+        "node_id": "node_coverage_002",
+        "node_type": "file"
+      },
+      {
+        "node_id": "node_coverage_003",
+        "node_type": "socket"
+      },
+      {
+        "node_id": "node_coverage_004",
+        "node_type": "process"
+      },
+      {
+        "node_id": "node_coverage_005",
+        "node_type": "file"
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge_coverage_001",
+        "from_node_id": "node_coverage_001",
+        "to_node_id": "node_coverage_002",
+        "relationship_type": "reads"
+      },
+      {
+        "edge_id": "edge_coverage_002",
+        "from_node_id": "node_coverage_001",
+        "to_node_id": "node_coverage_002",
+        "relationship_type": "writes"
+      },
+      {
+        "edge_id": "edge_coverage_003",
+        "from_node_id": "node_coverage_001",
+        "to_node_id": "node_coverage_003",
+        "relationship_type": "connects"
+      },
+      {
+        "edge_id": "edge_coverage_004",
+        "from_node_id": "node_coverage_001",
+        "to_node_id": "node_coverage_004",
+        "relationship_type": "spawns"
+      },
+      {
+        "edge_id": "edge_coverage_005",
+        "from_node_id": "node_coverage_004",
+        "to_node_id": "node_coverage_005",
+        "relationship_type": "reads"
+      },
+      {
+        "edge_id": "edge_coverage_006",
+        "from_node_id": "node_coverage_004",
+        "to_node_id": "node_coverage_005",
+        "relationship_type": "writes"
+      }
+    ],
+    "time_window": {
+      "start": "2026-07-27T00:00:00Z",
+      "end": "2026-07-27T23:59:59Z",
+      "precision": "bounded"
+    },
+    "summary": {
+      "node_count": 5,
+      "edge_count": 6,
+      "relationship_counts": [
+        {
+          "relationship_type": "connects",
+          "count": 1
+        },
+        {
+          "relationship_type": "reads",
+          "count": 2
+        },
+        {
+          "relationship_type": "spawns",
+          "count": 1
+        },
+        {
+          "relationship_type": "writes",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "source_metadata": {
+    "source_family": "system_provenance",
+    "epistemic_modality": "observed",
+    "materialization_class": "DIRECT_SOURCE_ATTESTED_GRAPH",
+    "modality_basis_code": "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED",
+    "trusted_ingestion_metadata_sha256": "9f49a628bf87ef0a45a1f28743b1f737e9235f83540a2669281263f0d2ab6bd8"
+  }
+}
