@@ -1,0 +1,661 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/drafts/claim-ir-external-envelope-evidence-claim-record-v0.1.draft.schema.json",
+  "title": "Project05 external Claim IR additive evidence claim-record draft",
+  "description": "Draft-only, non-effective profile for nonempty unminted public evidence declarations. It is additive to, and does not replace or rewrite, the pinned effective planner Claim-IR schema.",
+  "x-status": "draft_not_effective",
+  "x-authority-base-commit": "ea993cb98bc32cb5b67e6118a3ae74255743f28b",
+  "x-effective-legacy-schema": {
+    "path": "schemas/claim-ir-external-envelope.schema.json",
+    "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "modified": false
+  },
+  "x-branch-name": "evidence_claim_record_v0_1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "package_id",
+    "surface_id",
+    "kernel_state",
+    "claim_id_state",
+    "admission_state",
+    "projection_ref",
+    "claims",
+    "manifest"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "claim-ir-external-evidence-draft-v0.1"
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^pkg_[A-Za-z0-9_-]{16,128}$"
+    },
+    "surface_id": {
+      "type": "string",
+      "const": "project05_depth2_public"
+    },
+    "kernel_state": {
+      "type": "string",
+      "const": "pending_kernel_schema"
+    },
+    "claim_id_state": {
+      "type": "string",
+      "const": "not_minted"
+    },
+    "admission_state": {
+      "type": "string",
+      "const": "not_admitted"
+    },
+    "projection_ref": {
+      "$ref": "#/$defs/evidence_projection_ref"
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 65536,
+      "items": {
+        "$ref": "#/$defs/evidence_claim_record_v0_1"
+      }
+    },
+    "manifest": {
+      "$ref": "#/$defs/evidence_manifest_v0_1"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_class": {
+      "type": "string",
+      "enum": [
+        "system_log_public_projection",
+        "provenance_graph_public_projection",
+        "cti_report_public_projection"
+      ]
+    },
+    "evidence_field": {
+      "type": "string",
+      "pattern": "^evidence\\.(system_log|provenance_graph|cti_report)\\.[a-z0-9_.]+$"
+    },
+    "evidence_claim_kind": {
+      "type": "string",
+      "enum": [
+        "evidence.system_log.event_identity",
+        "evidence.system_log.event_attribute",
+        "evidence.system_log.principal_reference",
+        "evidence.provenance_graph.graph_identity",
+        "evidence.provenance_graph.node_declaration",
+        "evidence.provenance_graph.edge_declaration",
+        "evidence.provenance_graph.time_boundary",
+        "evidence.provenance_graph.summary",
+        "evidence.cti_report.report_identity",
+        "evidence.cti_report.publisher_declaration",
+        "evidence.cti_report.publication_boundary",
+        "evidence.cti_report.reported_marker",
+        "evidence.cti_report.object_declaration",
+        "evidence.cti_report.technique_declaration",
+        "evidence.cti_report.relation_declaration"
+      ]
+    },
+    "value_type": {
+      "type": "string",
+      "enum": [
+        "opaque_reference",
+        "bounded_number",
+        "bounded_boolean",
+        "bounded_enum",
+        "bounded_public_text"
+      ]
+    },
+    "claim_value": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "array"
+      ]
+    },
+    "opaque_reference_value": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+    },
+    "bounded_enum_value": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+    },
+    "bounded_public_text_value": {
+      "type": "string",
+      "maxLength": 1024
+    },
+    "occurrence_key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^[A-Za-z0-9._:|+-]+$"
+    },
+    "modality_basis_code": {
+      "type": "string",
+      "enum": [
+        "DIRECT_SOURCE_ATTESTED_EVENT",
+        "TRANSFORMED_AGGREGATED_OR_ALERT",
+        "UNRESOLVED_BASIS",
+        "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED",
+        "ONE_OR_MORE_ELEMENTS_TRANSFORMED_OR_INFERRED",
+        "MIXED_UNSPLIT_OR_UNRESOLVED_BASIS",
+        "PUBLIC_CTI_REPORT_DECLARATION",
+        "UNRESOLVED_REPORTING_BASIS"
+      ]
+    },
+    "evidence_projection_ref": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "surface_id",
+            "source_class"
+          ],
+          "properties": {
+            "path": {
+              "const": "docs/llm-editor/llm-editor-v0.8-l2-m1-system-log-public-field-projection-v0.1-20260726.json"
+            },
+            "sha256": {
+              "const": "5c707f5cfa6534d11d04c4f10899ea133396c00961041112353321f47d78f8bb"
+            },
+            "surface_id": {
+              "const": "project05_depth2_public"
+            },
+            "source_class": {
+              "const": "system_log_public_projection"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "surface_id",
+            "source_class"
+          ],
+          "properties": {
+            "path": {
+              "const": "docs/llm-editor/llm-editor-v0.8-l2-m1-provenance-graph-public-field-projection-v0.1-20260726.json"
+            },
+            "sha256": {
+              "const": "8a210a4eb2d9f48ac35c65f78fb29e2801c6a991b5b28798beaf5980f0c90ad5"
+            },
+            "surface_id": {
+              "const": "project05_depth2_public"
+            },
+            "source_class": {
+              "const": "provenance_graph_public_projection"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "surface_id",
+            "source_class"
+          ],
+          "properties": {
+            "path": {
+              "const": "docs/llm-editor/llm-editor-v0.8-l2-m1-cti-report-public-field-projection-v0.1-20260726.json"
+            },
+            "sha256": {
+              "const": "7ec2fc8a04bdb2bd8119edee6b97151ffa9a2faff68cf997b38dd059919b7afb"
+            },
+            "surface_id": {
+              "const": "project05_depth2_public"
+            },
+            "source_class": {
+              "const": "cti_report_public_projection"
+            }
+          }
+        }
+      ]
+    },
+    "evidence_manifest_v0_1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_count",
+        "field_path_set",
+        "evidence_field_path_set",
+        "projection_sha256",
+        "content_hash"
+      ],
+      "properties": {
+        "claim_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "field_path_set": {
+          "type": "array",
+          "maxItems": 0,
+          "description": "Legacy planner source_field set is intentionally empty for an evidence-only package."
+        },
+        "evidence_field_path_set": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidence_field"
+          }
+        },
+        "projection_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "content_hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "evidence_claim_record_v0_1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_class",
+        "claim_id",
+        "claim_id_state",
+        "claim_kind",
+        "evidence_field",
+        "occurrence_key",
+        "value_type",
+        "value",
+        "source_class",
+        "source_record_ref",
+        "epistemic_modality",
+        "modality_basis_code",
+        "trusted_ingestion_metadata_sha256",
+        "admission_state"
+      ],
+      "properties": {
+        "record_class": {
+          "type": "string",
+          "const": "public_evidence_declaration"
+        },
+        "claim_id": {
+          "type": "null"
+        },
+        "claim_id_state": {
+          "type": "string",
+          "const": "not_minted"
+        },
+        "claim_kind": {
+          "$ref": "#/$defs/evidence_claim_kind"
+        },
+        "evidence_field": {
+          "$ref": "#/$defs/evidence_field"
+        },
+        "occurrence_key": {
+          "$ref": "#/$defs/occurrence_key"
+        },
+        "value_type": {
+          "$ref": "#/$defs/value_type"
+        },
+        "value": {
+          "$ref": "#/$defs/claim_value"
+        },
+        "source_class": {
+          "$ref": "#/$defs/source_class"
+        },
+        "source_record_ref": {
+          "$ref": "#/$defs/opaque_reference_value"
+        },
+        "epistemic_modality": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "derived",
+            "reported",
+            "unknown"
+          ]
+        },
+        "modality_basis_code": {
+          "$ref": "#/$defs/modality_basis_code"
+        },
+        "trusted_ingestion_metadata_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "admission_state": {
+          "type": "string",
+          "const": "not_admitted"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "opaque_reference"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/opaque_reference_value"
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 4096,
+                    "items": {
+                      "$ref": "#/$defs/opaque_reference_value"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_number"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_boolean"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_enum"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_enum_value"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "value_type": {
+                "const": "bounded_public_text"
+              }
+            },
+            "required": [
+              "value_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_public_text_value"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "system_log_public_projection"
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "claim_kind": {
+                "enum": [
+                  "evidence.system_log.event_identity",
+                  "evidence.system_log.event_attribute",
+                  "evidence.system_log.principal_reference"
+                ]
+              },
+              "evidence_field": {
+                "pattern": "^evidence\\.system_log\\.[a-z0-9_.]+$"
+              },
+              "epistemic_modality": {
+                "enum": [
+                  "observed",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "modality_basis_code": {
+                "enum": [
+                  "DIRECT_SOURCE_ATTESTED_EVENT",
+                  "TRANSFORMED_AGGREGATED_OR_ALERT",
+                  "UNRESOLVED_BASIS"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "provenance_graph_public_projection"
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "claim_kind": {
+                "enum": [
+                  "evidence.provenance_graph.graph_identity",
+                  "evidence.provenance_graph.node_declaration",
+                  "evidence.provenance_graph.edge_declaration",
+                  "evidence.provenance_graph.time_boundary",
+                  "evidence.provenance_graph.summary"
+                ]
+              },
+              "evidence_field": {
+                "pattern": "^evidence\\.provenance_graph\\.[a-z0-9_.]+$"
+              },
+              "epistemic_modality": {
+                "enum": [
+                  "observed",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "modality_basis_code": {
+                "enum": [
+                  "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED",
+                  "ONE_OR_MORE_ELEMENTS_TRANSFORMED_OR_INFERRED",
+                  "MIXED_UNSPLIT_OR_UNRESOLVED_BASIS"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "cti_report_public_projection"
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "claim_kind": {
+                "enum": [
+                  "evidence.cti_report.report_identity",
+                  "evidence.cti_report.publisher_declaration",
+                  "evidence.cti_report.publication_boundary",
+                  "evidence.cti_report.reported_marker",
+                  "evidence.cti_report.object_declaration",
+                  "evidence.cti_report.technique_declaration",
+                  "evidence.cti_report.relation_declaration"
+                ]
+              },
+              "evidence_field": {
+                "pattern": "^evidence\\.cti_report\\.[a-z0-9_.]+$"
+              },
+              "epistemic_modality": {
+                "enum": [
+                  "reported",
+                  "unknown"
+                ]
+              },
+              "modality_basis_code": {
+                "enum": [
+                  "PUBLIC_CTI_REPORT_DECLARATION",
+                  "UNRESOLVED_REPORTING_BASIS"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "epistemic_modality": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "epistemic_modality"
+            ]
+          },
+          "then": {
+            "properties": {
+              "modality_basis_code": {
+                "enum": [
+                  "DIRECT_SOURCE_ATTESTED_EVENT",
+                  "ALL_NODES_AND_EDGES_DIRECTLY_ATTESTED"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "epistemic_modality": {
+                "const": "derived"
+              }
+            },
+            "required": [
+              "epistemic_modality"
+            ]
+          },
+          "then": {
+            "properties": {
+              "modality_basis_code": {
+                "enum": [
+                  "TRANSFORMED_AGGREGATED_OR_ALERT",
+                  "ONE_OR_MORE_ELEMENTS_TRANSFORMED_OR_INFERRED"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "epistemic_modality": {
+                "const": "reported"
+              }
+            },
+            "required": [
+              "epistemic_modality"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_class": {
+                "const": "cti_report_public_projection"
+              },
+              "modality_basis_code": {
+                "const": "PUBLIC_CTI_REPORT_DECLARATION"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "epistemic_modality": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "epistemic_modality"
+            ]
+          },
+          "then": {
+            "properties": {
+              "modality_basis_code": {
+                "enum": [
+                  "UNRESOLVED_BASIS",
+                  "MIXED_UNSPLIT_OR_UNRESOLVED_BASIS",
+                  "UNRESOLVED_REPORTING_BASIS"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "artifact_id": "kernel-v0.8-claim-ir-evidence-claim-record-schema-red-owner-acceptance-v0.1-20260727",
+  "artifact_type": "kernel_m3_claim_ir_additive_evidence_claim_record_schema_red_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "red_design_accepted_draft_schemas_not_effective",
+  "authority_base_commit": "ea993cb98bc32cb5b67e6118a3ae74255743f28b",
+  "reviewed_tip": "ea993cb98bc32cb5b67e6118a3ae74255743f28b",
+  "reviewed_branch": "codex/claim-ir-evidence-claim-record-schema-red-v0.1",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-claim-ir-evidence-claim-record-schema-red-review-packet-v0.1-20260727.json",
+    "content_sha256": "41485ec02059325a1f7b4ae0c1cd22793b9d06686f339da9b4aab4e1dad16958"
+  },
+  "pinned_red_artifacts": {
+    "external_evidence_schema_draft": {
+      "path": "schemas/drafts/claim-ir-external-envelope-evidence-claim-record-v0.1.draft.schema.json",
+      "content_sha256": "0a788c00735078899c87b09d6f64c7ab6a95a6f3eae0c1fa39b7753919f4a20d",
+      "effective": false
+    },
+    "kernel_evidence_schema_draft": {
+      "path": "schemas/drafts/claim-ir-kernel-evidence-claim-record-v0.1.draft.schema.json",
+      "content_sha256": "89f9b30cce86d3cf1a0792a793c3d5a31575986e0b9636299be9d83e3c831c64",
+      "effective": false
+    },
+    "consumer_contract_extension_draft": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-extension-draft-v0.1-20260727.json",
+      "content_sha256": "e8fb4d3d5ce19539235b4d9709979c4150825ae018c61e785fb9d2b8be30f811",
+      "effective": false
+    },
+    "schema_red_design": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-claim-ir-evidence-claim-record-schema-red-design-v0.1-20260727.json",
+      "content_sha256": "2d2646c937d2058ccc17f2a0a8b92afeb126ef46c5bd68c52245c76c1d7db109",
+      "effective": false
+    }
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "branch_match": true,
+    "deliverable_sha_match": "5/5 OK",
+    "pin_reverify": "10/10 OK",
+    "effective_external_schema_sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+    "effective_kernel_schema_sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "effective_consumer_contract_sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63",
+    "effective_identities_unchanged": true,
+    "validation_matrix": {
+      "VAL-01_draft_2020_12_schemas": "2/2 PASS",
+      "VAL-02_evidence_packages_under_external_draft": "3/3 PASS",
+      "VAL-03_mapping_examples_under_kernel_draft": "9/9 PASS",
+      "VAL-04_same_packages_under_effective_external": "3/3 EXPECTED_FAIL",
+      "VAL-05_planner_fixture_under_effective_external": "1/1 PASS",
+      "VAL-06_cti_observed_laundering": "EXPECTED_FAIL",
+      "VAL-07_source_field_leak": "EXPECTED_FAIL"
+    },
+    "boundary_checks": {
+      "record_class": "public_evidence_declaration",
+      "evidence_field_pattern": "^evidence\\.(system_log|provenance_graph|cti_report)\\.[a-z0-9_.]+$",
+      "planner_source_field_in_evidence_record_properties": false,
+      "manifest_field_path_set_max_items": 0,
+      "cti_modalities": ["reported", "unknown"],
+      "cti_observed_or_derived": "DENY",
+      "kernel_draft_oneOf_legacy_ref": "../claim-ir-kernel.schema.json",
+      "external_schema_version_const": "claim-ir-external-evidence-draft-v0.1",
+      "exact_schema_version_dispatch": true
+    },
+    "porcelain_before_owner_acceptance": "exactly_5_untracked_json_deliverables",
+    "write_side_effects_in_reviewed_delivery": "none_beyond_5_assisted_draft_design_json"
+  },
+  "answers_to_owner_questions": {
+    "EVIDENCE-SCHEMA-RED-ORQ-01_additive_profile_exact_dispatch": "accept",
+    "EVIDENCE-SCHEMA-RED-ORQ-02_legacy_planner_record_unchanged": "accept",
+    "EVIDENCE-SCHEMA-RED-ORQ-03_cti_reported_unknown_only": "accept",
+    "EVIDENCE-SCHEMA-RED-ORQ-04_red_not_effective_identity": "accept",
+    "EVIDENCE-SCHEMA-RED-ORQ-05_green2_mint_admission_separately_authorized": "accept",
+    "EVIDENCE-SCHEMA-RED-ORQ-06_consumer_equality_ordering_beyond_json_schema": "accept"
+  },
+  "accepted_for": [
+    "additive_evidence_claim_record_v0_1_external_and_kernel_draft_schemas",
+    "independent_record_class_and_evidence_field_claim_kind_namespaces",
+    "exact_schema_version_dispatch_with_legacy_planner_path_unchanged",
+    "cti_reported_or_unknown_only_with_observed_derived_deny",
+    "consumer_contract_extension_draft_structural_draft_only_not_consumable",
+    "future_green_schema_and_green_2_contract_candidate_without_effective_elevation"
+  ],
+  "scope_note": "Accepted RED establishes draft-only additive evidence Claim-IR schemas and a non-effective consumer-contract extension. Effective external schema, Kernel schema, and consumer contract identities remain unchanged. RED acceptance does not mint effective identities, authorize GREEN schema elevation, GREEN-2 nonempty mapper runtime, registry activation, mint, admission, or Kernel write.",
+  "authorized_now": {
+    "red_design_acceptance_record": true,
+    "effective_schema_change": false,
+    "effective_consumer_contract_change": false,
+    "green_schema_elevation": false,
+    "green_2_runtime_implementation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "not_authorized": {
+    "effective_schema_replacement": false,
+    "effective_consumer_contract_replacement": false,
+    "reuse_of_draft_sha_as_effective_identity": false,
+    "green_schema_tests_or_elevation": false,
+    "green_2_mapper_implementation": false,
+    "adapter_python_change": false,
+    "effective_registry_activation": false,
+    "production_execute": false,
+    "activation_ledger_write": false,
+    "download": false,
+    "raw_source_read_or_persist": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "checker_non_null": false,
+    "evidence_sufficiency_non_null": false,
+    "scientific_backlog_closure": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "hard_stop": true,
+  "separate_authority_required_for_green_schema_and_effective_identity": true,
+  "separate_authority_required_for_green_2": true,
+  "separate_authority_required_for_git_delivery": true,
+  "recommended_next_slice": "Owner-authorized GREEN for additive evidence_claim_record_v0_1 schemas and consumer-contract identity elevation under deterministic legacy+evidence tests; draft SHAs must not become effective identities. Only after that GREEN may Owner authorize GREEN-2 nonempty mapping runtime."
+}
