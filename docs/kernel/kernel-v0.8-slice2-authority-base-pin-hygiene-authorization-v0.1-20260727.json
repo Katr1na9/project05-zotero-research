@@ -1,0 +1,49 @@
+{
+  "artifact_id": "kernel-v0.8-slice2-authority-base-pin-hygiene-authorization-v0.1-20260727",
+  "artifact_type": "kernel_m3_slice2_authority_base_pin_hygiene_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "AUTHORIZE_SLICE2_AUTHORITY_BASE_PIN_HYGIENE_DIRECT_GREEN",
+  "authority_base_commit": "2c9960900b905bd550466c751214d55cd71e32ee",
+  "authority_base_note": "origin/main after Merge PR #47. Diagnosis: two Slice-2 expected digests never matched the historical bytes landed in 36fc98c; not CRLF drift; historical docs must NOT be rewritten.",
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "diagnosis": {
+    "drifted_expected_pins": [
+      {
+        "role": "alignment_review_packet_in_slice2_tests",
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-part-b-readonly-alignment-review-packet-v0.1-20260727.json",
+        "stale_expected_sha256": "561d53923d6ca4ed222e46d5fdfadd6abc82c565b1f7d743c1239d35ac909580",
+        "authority_base_actual_sha256": "4994f6b1c14ae34a0f66be00eb306b522b340b1a942dcb935788d73b42c55c29",
+        "fix_location": "tests/compiler_contract/test_m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py PROTECTED_PINS"
+      },
+      {
+        "role": "slice2_red_design_constant_in_helper",
+        "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-path-a-sufficiency-beyond-synthetic-red-design-v0.1-20260727.json",
+        "stale_expected_sha256": "9ddfe28620f6dd7b5e83f3e40f228ab5d53aed6219622312131bb599413c7472",
+        "authority_base_actual_sha256": "34d88a39cd56bf3f0334d085533dbdeba452ef8f00ccf80cab6070c51f7da893",
+        "fix_location": "src/compiler/llm/m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py RED_DESIGN_SHA256"
+      }
+    ],
+    "do_not_rewrite_historical_docs": true,
+    "cause": "expected digests were pinned to pre-final draft bytes; authority-base historical file bytes have been stable since land commit 36fc98c"
+  },
+  "authorized_exact_allowlist": [
+    "src/compiler/llm/m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+    "tests/compiler_contract/test_m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+    "docs/kernel/kernel-v0.8-slice2-authority-base-pin-hygiene-green-note-v0.1-20260727.json"
+  ],
+  "required_changes_only": {
+    "checker_module": "Replace RED_DESIGN_SHA256 only: 9ddfe286… → 34d88a39cd56bf3f0334d085533dbdeba452ef8f00ccf80cab6070c51f7da893. Do not change behavior.",
+    "slice2_tests": "Replace alignment review-packet expected pin only: 561d5392… → 4994f6b1c14ae34a0f66be00eb306b522b340b1a942dcb935788d73b42c55c29.",
+    "green_note": "Record old→new digests, new checker-module content SHA-256, hard ban, and that historical docs were not rewritten."
+  },
+  "still_denied": {
+    "rewrite_historical_alignment_or_slice2_red_docs": true,
+    "path_b_write": true,
+    "production_registration": true,
+    "mint_admission_kernel_write": true,
+    "science_realism_green_without_resubmitted_red": true,
+    "git_commit_push_pr_unless_owner_asks": true
+  }
+}

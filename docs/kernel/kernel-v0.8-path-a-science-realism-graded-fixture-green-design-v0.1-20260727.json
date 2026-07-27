@@ -1,0 +1,309 @@
+{
+  "artifact_id": "kernel-v0.8-path-a-science-realism-graded-fixture-green-design-v0.1-20260727",
+  "artifact_type": "kernel_m3_path_a_science_realism_graded_fixture_green_design_pending_owner_review",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "2c9960900b905bd550466c751214d55cd71e32ee",
+  "reviewed_branch": "codex/path-a-science-realism-graded-fixture-v0.1",
+  "program_path": "Path_A",
+  "phase": "GREEN_TEST_ONLY_READONLY",
+  "status": "GREEN_IMPLEMENTED_PENDING_KERNEL_OWNER_REVIEW",
+  "this_design_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "green_started": true,
+  "selected_option_id": "B_REALISM_GRADED_SYNTHETIC_PLUS_DISTORTION_SUITE",
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "authority_basis": {
+    "science_authorization": {
+      "path": "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-authorization-v0.1-20260727.json",
+      "sha256": "dc680b50512eb3c7f35c4a41b0aea258b3cb665afe4febd26b497deee5e6b001",
+      "decision": "AUTHORIZE_PATH_A_SCIENCE_REALISM_GRADED_FIXTURE_RED_FIRST"
+    },
+    "accepted_revised_red_design": {
+      "path": "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-red-design-v0.1-20260727.json",
+      "sha256": "1a2a98b701a3a3cd2c3a4e8448ea0be8f026bae4c257cdd0ae3a3c92551321d4",
+      "owner_decision": "accept"
+    },
+    "accepted_revised_red_review_packet": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-science-realism-graded-fixture-red-review-packet-v0.1-20260727.json",
+      "sha256": "9a067c148715acdf0d85f8fc6a01518cd11b629a913141cfe140a1750272b744"
+    },
+    "accepted_pin_hygiene_integrated": true
+  },
+  "green_artifacts": {
+    "fixture_suite": {
+      "path": "tests/compiler_contract/fixtures/m1_path_a_science_realism_graded_fixture_v0.1.json",
+      "sha256": "4f9eebb25fb9d520223b8d6d4a9579e96263af7392310570270e2b7c80aedd62",
+      "origin": "SYNTHETIC_DECLARED_SCOPE",
+      "case_count": 7,
+      "valid_decision_case_count": 6,
+      "unknown_fail_closed_case_count": 1
+    },
+    "readonly_checker": {
+      "path": "src/compiler/llm/m1_path_a_science_realism_graded_readonly_checker.py",
+      "sha256": "1e38f90cbe093d616933a8115b441ea01546db134223e82eb470bc7efa52fd6c",
+      "api": "evaluate_realism_graded_synthetic_case(case_spec, *, test_only_authority)",
+      "mode": "TEST_ONLY_READONLY",
+      "production_registration_enabled": false,
+      "write_download_or_registry_capability": false
+    },
+    "directed_tests": {
+      "path": "tests/compiler_contract/test_m1_path_a_science_realism_graded_readonly_checker.py",
+      "sha256": "f5c04fc32d5424bf454c7295a4128585fdd7112e63c64ef02e53038c26fc614f",
+      "test_count": 13
+    }
+  },
+  "closed_world_contract": {
+    "case_field_count": 11,
+    "case_fields": [
+      "case_id",
+      "suite_version",
+      "declared_origin",
+      "surface_id",
+      "catalog_version",
+      "realism_grade",
+      "distortion_id",
+      "ordered_binding_ids",
+      "requested_review_scope",
+      "authority_request",
+      "audit_log_binding_request"
+    ],
+    "test_only_authority": {
+      "mode": "TEST_ONLY_READONLY",
+      "allow_write": false,
+      "allow_download": false,
+      "allow_registry": false,
+      "allow_authority_elevation": false
+    },
+    "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+    "surface_id": "project05_depth2_public",
+    "catalog_version": "A2_EXACT_SIX_V0_1",
+    "catalog_count": 6,
+    "catalog_extended": false,
+    "audit_log_as_seventh_package": false,
+    "wildcard_or_implicit_default": false
+  },
+  "decision_matrix_results": [
+    {
+      "case_id": "RG0-EXACT-SIX-CONTROL",
+      "realism_grade": "RG0_INTACT_SYNTHETIC_CONTROL",
+      "delegated_decision_case": "exact_six_catalog_readonly_review",
+      "sufficiency_decision": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+      "checker_decision": "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY",
+      "result": "PASS"
+    },
+    {
+      "case_id": "RG1-MISSING-CRITICAL-MODALITY",
+      "realism_grade": "RG1_INCOMPLETE_SYNTHETIC",
+      "delegated_decision_case": "missing_required_binding_or_field_set",
+      "sufficiency_decision": "FAIL_INSUFFICIENT_EVIDENCE",
+      "checker_decision": "REJECT_FAIL_CLOSED",
+      "result": "PASS"
+    },
+    {
+      "case_id": "RG2-AMBIGUOUS-BINDINGS",
+      "realism_grade": "RG2_AMBIGUOUS_SYNTHETIC",
+      "delegated_decision_case": "unknown_binding_or_unknown_modality",
+      "sufficiency_decision": "ABSTAIN_UNRESOLVED_EVIDENCE",
+      "checker_decision": "ABSTAIN_FAIL_CLOSED",
+      "partial_result": false,
+      "result": "PASS"
+    },
+    {
+      "case_id": "RG3-CTI-MODALITY-LAUNDERING",
+      "realism_grade": "RG3_INVALID_OR_LAUNDERED_SYNTHETIC",
+      "delegated_decision_case": "cti_modality_laundering",
+      "sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+      "checker_decision": "DENY_INVALID_INPUT",
+      "result": "PASS"
+    },
+    {
+      "case_id": "RG4-ORIGIN-MISREPRESENTATION",
+      "realism_grade": "RG4_ORIGIN_OR_AUTHORITY_MISREPRESENTATION",
+      "delegated_decision_case": "NOT_DELEGATED_ORIGIN_MISREPRESENTATION",
+      "sufficiency_decision": "DENY_ORIGIN_MISREPRESENTATION",
+      "checker_decision": "DENY_INVALID_INPUT",
+      "non_synthetic_origin_claim_accepted_as_true": false,
+      "result": "PASS"
+    },
+    {
+      "case_id": "RG4-AUTHORITY-ELEVATION",
+      "realism_grade": "RG4_ORIGIN_OR_AUTHORITY_MISREPRESENTATION",
+      "delegated_decision_case": "authority_elevation_request",
+      "sufficiency_decision": "DENY_AUTHORITY_ELEVATION_REQUEST",
+      "checker_decision": "DENY_INVALID_AUTHORITY_REQUEST",
+      "result": "PASS"
+    },
+    {
+      "case_id": "UNKNOWN-CASE-OR-GRADE",
+      "result": "FAIL_CLOSED_BEFORE_DELEGATION",
+      "partial_result": false
+    }
+  ],
+  "output_contract": {
+    "record_class": "path_a_realism_graded_synthetic_readonly_decision_record",
+    "scope_id": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_SUITE_V0_1",
+    "record_hash": "SHA-256_OVER_CANONICAL_JSON_EXCLUDING_RECORD_HASH",
+    "same_case_same_record_and_hash": true,
+    "partial_result": false,
+    "required_basis_code": "NO_AUTHORITY_ELEVATION",
+    "part_b_pass": false,
+    "non_synthetic_external_validity": false
+  },
+  "delegation_and_non_mutation": {
+    "slice_2_helper": "DELEGATE_ONLY_FOR_RECOGNIZED_DECISION_CASES",
+    "slice_2_helper_modified_by_science_green": false,
+    "slice_2_directed_tests_modified_by_science_green": false,
+    "a2_evaluator_modified": false,
+    "named_open_modified_or_invoked": false,
+    "named_open_caller_modified_or_invoked": false,
+    "dual_track_deny_modified": false,
+    "origin_misrepresentation_delegated": false,
+    "origin_misrepresentation_local_result": "FAIL_CLOSED_DENY"
+  },
+  "residual_after_green": {
+    "maximum_supported_claim": "The fixed declared-synthetic six-package Path A catalog has a deterministic test-only read-only decision surface over the accepted realism grades and distortions.",
+    "synthetic_declared_scope_only": true,
+    "non_synthetic_external_validity_established": false,
+    "recorded_corpus_ingestion_established": false,
+    "real_world_content_representativeness_established": false,
+    "operation_truth_established": false,
+    "actor_authorization_established": false,
+    "production_checker_connected": false,
+    "l2_pass": false,
+    "part_b_pass": false,
+    "unrestricted_part_b_elevation": false
+  },
+  "exact_green_allowlist": [
+    "tests/compiler_contract/fixtures/m1_path_a_science_realism_graded_fixture_v0.1.json",
+    "src/compiler/llm/m1_path_a_science_realism_graded_readonly_checker.py",
+    "tests/compiler_contract/test_m1_path_a_science_realism_graded_readonly_checker.py",
+    "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-green-design-v0.1-20260727.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-science-realism-graded-fixture-green-review-packet-v0.1-20260727.json"
+  ],
+  "pin_table": [
+    {
+      "role": "science_authorization",
+      "path": "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-authorization-v0.1-20260727.json",
+      "sha256": "dc680b50512eb3c7f35c4a41b0aea258b3cb665afe4febd26b497deee5e6b001"
+    },
+    {
+      "role": "accepted_revised_red_design",
+      "path": "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-red-design-v0.1-20260727.json",
+      "sha256": "1a2a98b701a3a3cd2c3a4e8448ea0be8f026bae4c257cdd0ae3a3c92551321d4"
+    },
+    {
+      "role": "accepted_revised_red_review",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-science-realism-graded-fixture-red-review-packet-v0.1-20260727.json",
+      "sha256": "9a067c148715acdf0d85f8fc6a01518cd11b629a913141cfe140a1750272b744"
+    },
+    {
+      "role": "pin_hygiene_authorization",
+      "path": "docs/kernel/kernel-v0.8-slice2-authority-base-pin-hygiene-authorization-v0.1-20260727.json",
+      "sha256": "e9cfee2b2f99d2782b0a0eb61d3e3c7f1d27852dbe6bb42aa7d9708594592f1c"
+    },
+    {
+      "role": "accepted_slice_2_helper",
+      "path": "src/compiler/llm/m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+      "sha256": "508b875026ae80f13728bd899b0da7bc23ba3c9b147bc11aa69c0ba81311a0c0"
+    },
+    {
+      "role": "accepted_slice_2_tests",
+      "path": "tests/compiler_contract/test_m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+      "sha256": "d4685e641a572f50c3b5f699001e1b2044084cf783e021d629043b4b6ac916f2"
+    },
+    {
+      "role": "protected_a2_evaluator",
+      "path": "src/compiler/llm/m1_evidence_sufficiency_evaluator.py",
+      "sha256": "ad4e5af8dd9af0012f5174b14822ce9146a6d0f491c07881b5b401d85d62e78f"
+    },
+    {
+      "role": "named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    {
+      "role": "named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    },
+    {
+      "role": "named_open_caller",
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    {
+      "role": "dual_track_deny_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "dual_track_deny_manifest",
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    {
+      "role": "production_registration_gate",
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a"
+    },
+    {
+      "role": "green_fixture_suite",
+      "path": "tests/compiler_contract/fixtures/m1_path_a_science_realism_graded_fixture_v0.1.json",
+      "sha256": "4f9eebb25fb9d520223b8d6d4a9579e96263af7392310570270e2b7c80aedd62"
+    },
+    {
+      "role": "green_readonly_checker",
+      "path": "src/compiler/llm/m1_path_a_science_realism_graded_readonly_checker.py",
+      "sha256": "1e38f90cbe093d616933a8115b441ea01546db134223e82eb470bc7efa52fd6c"
+    },
+    {
+      "role": "green_directed_tests",
+      "path": "tests/compiler_contract/test_m1_path_a_science_realism_graded_readonly_checker.py",
+      "sha256": "f5c04fc32d5424bf454c7295a4128585fdd7112e63c64ef02e53038c26fc614f"
+    }
+  ],
+  "validation": {
+    "tdd_red": "1 FAIL + 12 skipped because runtime and fixture were absent",
+    "science_directed_tests": "13/13 PASS",
+    "slice_2_tests": "9/9 PASS",
+    "named_open_tests": "15/15 PASS",
+    "caller_tests": "11/11 PASS",
+    "combined_tests": "48/48 PASS",
+    "decision_matrix": "7/7 PASS",
+    "pin_reverify": "16/16 OK",
+    "protected_zero_drift": true,
+    "production_registration_enabled": false,
+    "science_green_file_count": 5,
+    "git_performed": false
+  },
+  "explicit_non_authorizations": {
+    "non_synthetic_external_validity": false,
+    "production_checker_truth_authority": false,
+    "l2_pass": false,
+    "part_b_pass": false,
+    "unrestricted_part_b_elevation": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "si_006_download": false,
+    "raw_audit_download": false,
+    "production_registry": false,
+    "a2_catalog_extension": false,
+    "audit_log_as_seventh_package": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "preexisting_accepted_pin_hygiene_tracked_files": 2,
+  "write_side_effects": "only_exact_5_science_green_allowlist_files",
+  "git_performed": false,
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW"
+}

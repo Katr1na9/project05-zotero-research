@@ -1,0 +1,100 @@
+{
+  "artifact_id": "kernel-v0.8-slice2-authority-base-pin-hygiene-green-note-v0.1-20260727",
+  "artifact_type": "kernel_m3_slice2_authority_base_pin_hygiene_mechanical_green_note_pending_owner_review",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "2c9960900b905bd550466c751214d55cd71e32ee",
+  "reviewed_branch": "codex/slice2-authority-base-pin-hygiene-v0.1",
+  "decision_basis": "AUTHORIZE_SLICE2_AUTHORITY_BASE_PIN_HYGIENE_DIRECT_GREEN",
+  "status": "GREEN_MECHANICAL_PENDING_KERNEL_OWNER_REVIEW",
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "green_started": true,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "owner_authorization": {
+    "path": "docs/kernel/kernel-v0.8-slice2-authority-base-pin-hygiene-authorization-v0.1-20260727.json",
+    "sha256": "e9cfee2b2f99d2782b0a0eb61d3e3c7f1d27852dbe6bb42aa7d9708594592f1c"
+  },
+  "diagnosis": {
+    "finding": "The Slice-2 protected-pin test contained two pre-merge expected content digests that did not match the exact bytes present at the authority base.",
+    "behavioral_defect": false,
+    "historical_document_defect_asserted": false,
+    "authority_base_pin_hygiene_only": true,
+    "red_reproduction": "8/9 PASS; only test_protected_pins_remain_exact_before_and_after_evaluation failed",
+    "mismatch_count": 2
+  },
+  "mechanical_changes": [
+    {
+      "path": "src/compiler/llm/m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+      "symbol": "RED_DESIGN_SHA256",
+      "old_sha256_literal": "9ddfe28620f6dd7b5e83f3e40f228ab5d53aed6219622312131bb599413c7472",
+      "new_sha256_literal": "34d88a39cd56bf3f0334d085533dbdeba452ef8f00ccf80cab6070c51f7da893",
+      "file_sha256_before": "c9acb85e539352453ec8c7acc92b9183a112912306125d32cf4fa8a46003c673",
+      "file_sha256_after": "508b875026ae80f13728bd899b0da7bc23ba3c9b147bc11aa69c0ba81311a0c0",
+      "behavior_changed": false
+    },
+    {
+      "path": "tests/compiler_contract/test_m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+      "pin_role": "alignment_review_packet_expected_content_sha256",
+      "old_sha256_literal": "561d53923d6ca4ed222e46d5fdfadd6abc82c565b1f7d743c1239d35ac909580",
+      "new_sha256_literal": "4994f6b1c14ae34a0f66be00eb306b522b340b1a942dcb935788d73b42c55c29",
+      "file_sha256_before": "5d62553986f0b70becb5f503cebd1ecdc5daa1e27ff502f6391e4ac4ca9c49b6",
+      "file_sha256_after": "d4685e641a572f50c3b5f699001e1b2044084cf783e021d629043b4b6ac916f2",
+      "test_behavior_changed": false
+    }
+  ],
+  "historical_docs_not_rewritten": [
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-part-b-readonly-alignment-review-packet-v0.1-20260727.json",
+      "sha256_before": "4994f6b1c14ae34a0f66be00eb306b522b340b1a942dcb935788d73b42c55c29",
+      "sha256_after": "4994f6b1c14ae34a0f66be00eb306b522b340b1a942dcb935788d73b42c55c29",
+      "zero_drift": true
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-path-a-sufficiency-beyond-synthetic-red-design-v0.1-20260727.json",
+      "sha256_before": "34d88a39cd56bf3f0334d085533dbdeba452ef8f00ccf80cab6070c51f7da893",
+      "sha256_after": "34d88a39cd56bf3f0334d085533dbdeba452ef8f00ccf80cab6070c51f7da893",
+      "zero_drift": true
+    }
+  ],
+  "verification": {
+    "slice_2_directed_tests": "9/9 PASS",
+    "named_open_tests": "15/15 PASS",
+    "caller_tests": "11/11 PASS",
+    "combined_tests": "35/35 PASS",
+    "historical_doc_zero_drift": "2/2 OK",
+    "exact_digest_substitutions": "2/2",
+    "production_registration_enabled": false,
+    "science_realism_green_started": false
+  },
+  "exact_allowlist": [
+    "src/compiler/llm/m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+    "tests/compiler_contract/test_m1_path_a_sufficiency_beyond_synthetic_readonly_checker.py",
+    "docs/kernel/kernel-v0.8-slice2-authority-base-pin-hygiene-green-note-v0.1-20260727.json"
+  ],
+  "explicit_non_authorizations": {
+    "historical_doc_rewrite": false,
+    "science_realism_green": false,
+    "named_open_or_caller_change": false,
+    "dual_track_deny_change": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "production_registration": false,
+    "certificate_or_certified_stop": false,
+    "l2_pass": false,
+    "part_b_pass": false,
+    "unrestricted_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "only_owner_auth_plus_exact_3_allowlist_files",
+  "git_performed": false,
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW"
+}

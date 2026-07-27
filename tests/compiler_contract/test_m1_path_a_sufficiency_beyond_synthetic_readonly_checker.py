@@ -29,7 +29,7 @@ PROTECTED_PINS = {
         "beded9f5d903110a25661a5250412590c36631985e59e5ceea888131e0a8a84f"
     ),
     "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-path-a-part-b-readonly-alignment-review-packet-v0.1-20260727.json": (
-        "561d53923d6ca4ed222e46d5fdfadd6abc82c565b1f7d743c1239d35ac909580"
+        "4994f6b1c14ae34a0f66be00eb306b522b340b1a942dcb935788d73b42c55c29"
     ),
     "docs/kernel/kernel-v0.8-path-a-part-b-readonly-alignment-owner-acceptance-v0.1-20260727.json": (
         "59a39938682968376b1b64089b4b1b8e43b949df19919585cb3e90eba7ae6d96"

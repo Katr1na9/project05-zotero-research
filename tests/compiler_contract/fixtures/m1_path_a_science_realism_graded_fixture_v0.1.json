@@ -1,0 +1,183 @@
+{
+  "fixture_suite_id": "m1_path_a_science_realism_graded_fixture_v0_1",
+  "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+  "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+  "surface_id": "project05_depth2_public",
+  "catalog_version": "A2_EXACT_SIX_V0_1",
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "test_only": true,
+  "cases": [
+    {
+      "case_spec": {
+        "case_id": "RG0-EXACT-SIX-CONTROL",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG0_INTACT_SYNTHETIC_CONTROL",
+        "distortion_id": "NONE_EXACT_SIX_CONTROL",
+        "ordered_binding_ids": [
+          "e2e_anchor_system_log_9",
+          "e2e_anchor_provenance_graph_16",
+          "e2e_anchor_cti_report_11",
+          "a1_coverage_system_log_4",
+          "a1_coverage_provenance_graph_48",
+          "a1_coverage_cti_report_34"
+        ],
+        "requested_review_scope": "READONLY_DECLARED_SCOPE_REVIEW",
+        "authority_request": "TEST_ONLY_READONLY_NO_ELEVATION",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "delegated_decision_case": "exact_six_catalog_readonly_review",
+        "sufficiency_decision": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+        "checker_decision": "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY"
+      }
+    },
+    {
+      "case_spec": {
+        "case_id": "RG1-MISSING-CRITICAL-MODALITY",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG1_INCOMPLETE_SYNTHETIC",
+        "distortion_id": "MISSING_REQUIRED_MODALITY_BINDING",
+        "ordered_binding_ids": [
+          "e2e_anchor_system_log_9",
+          "e2e_anchor_provenance_graph_16",
+          "e2e_anchor_cti_report_11",
+          "a1_coverage_system_log_4",
+          "a1_coverage_provenance_graph_48"
+        ],
+        "requested_review_scope": "READONLY_DECLARED_SCOPE_REVIEW",
+        "authority_request": "TEST_ONLY_READONLY_NO_ELEVATION",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "delegated_decision_case": "missing_required_binding_or_field_set",
+        "sufficiency_decision": "FAIL_INSUFFICIENT_EVIDENCE",
+        "checker_decision": "REJECT_FAIL_CLOSED"
+      }
+    },
+    {
+      "case_spec": {
+        "case_id": "RG2-AMBIGUOUS-BINDINGS",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG2_AMBIGUOUS_SYNTHETIC",
+        "distortion_id": "UNKNOWN_DUPLICATE_OR_REORDERED_BINDING",
+        "ordered_binding_ids": [
+          "a1_coverage_cti_report_34",
+          "a1_coverage_provenance_graph_48",
+          "a1_coverage_system_log_4",
+          "e2e_anchor_cti_report_11",
+          "e2e_anchor_provenance_graph_16",
+          "e2e_anchor_system_log_9"
+        ],
+        "requested_review_scope": "READONLY_DECLARED_SCOPE_REVIEW",
+        "authority_request": "TEST_ONLY_READONLY_NO_ELEVATION",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "delegated_decision_case": "unknown_binding_or_unknown_modality",
+        "sufficiency_decision": "ABSTAIN_UNRESOLVED_EVIDENCE",
+        "checker_decision": "ABSTAIN_FAIL_CLOSED"
+      }
+    },
+    {
+      "case_spec": {
+        "case_id": "RG3-CTI-MODALITY-LAUNDERING",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG3_INVALID_OR_LAUNDERED_SYNTHETIC",
+        "distortion_id": "CTI_OBSERVED_OR_DERIVED_LAUNDERING",
+        "ordered_binding_ids": [],
+        "requested_review_scope": "CTI_OBSERVED_LAUNDERING_REVIEW",
+        "authority_request": "TEST_ONLY_READONLY_NO_ELEVATION",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "delegated_decision_case": "cti_modality_laundering",
+        "sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+        "checker_decision": "DENY_INVALID_INPUT"
+      }
+    },
+    {
+      "case_spec": {
+        "case_id": "RG4-ORIGIN-MISREPRESENTATION",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "NON_SYNTHETIC_ORIGIN_CLAIM",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG4_ORIGIN_OR_AUTHORITY_MISREPRESENTATION",
+        "distortion_id": "NON_SYNTHETIC_ORIGIN_MISREPRESENTATION",
+        "ordered_binding_ids": [
+          "e2e_anchor_system_log_9",
+          "e2e_anchor_provenance_graph_16",
+          "e2e_anchor_cti_report_11",
+          "a1_coverage_system_log_4",
+          "a1_coverage_provenance_graph_48",
+          "a1_coverage_cti_report_34"
+        ],
+        "requested_review_scope": "READONLY_DECLARED_SCOPE_REVIEW",
+        "authority_request": "TEST_ONLY_READONLY_NO_ELEVATION",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "delegated_decision_case": "NOT_DELEGATED_ORIGIN_MISREPRESENTATION",
+        "sufficiency_decision": "DENY_ORIGIN_MISREPRESENTATION",
+        "checker_decision": "DENY_INVALID_INPUT"
+      }
+    },
+    {
+      "case_spec": {
+        "case_id": "RG4-AUTHORITY-ELEVATION",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG4_ORIGIN_OR_AUTHORITY_MISREPRESENTATION",
+        "distortion_id": "L2_PART_B_WRITE_CERTIFICATE_OR_STOP_ELEVATION_REQUEST",
+        "ordered_binding_ids": [
+          "e2e_anchor_system_log_9",
+          "e2e_anchor_provenance_graph_16",
+          "e2e_anchor_cti_report_11",
+          "a1_coverage_system_log_4",
+          "a1_coverage_provenance_graph_48",
+          "a1_coverage_cti_report_34"
+        ],
+        "requested_review_scope": "READONLY_DECLARED_SCOPE_REVIEW",
+        "authority_request": "PART_B_PASS",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "delegated_decision_case": "authority_elevation_request",
+        "sufficiency_decision": "DENY_AUTHORITY_ELEVATION_REQUEST",
+        "checker_decision": "DENY_INVALID_AUTHORITY_REQUEST"
+      }
+    },
+    {
+      "case_spec": {
+        "case_id": "UNKNOWN-CASE-OR-GRADE",
+        "suite_version": "PATH_A_REALISM_GRADED_SYNTHETIC_DISTORTION_V0_1",
+        "declared_origin": "SYNTHETIC_DECLARED_SCOPE",
+        "surface_id": "project05_depth2_public",
+        "catalog_version": "A2_EXACT_SIX_V0_1",
+        "realism_grade": "RG_UNKNOWN",
+        "distortion_id": "UNKNOWN_DISTORTION",
+        "ordered_binding_ids": [],
+        "requested_review_scope": "READONLY_DECLARED_SCOPE_REVIEW",
+        "authority_request": "TEST_ONLY_READONLY_NO_ELEVATION",
+        "audit_log_binding_request": false
+      },
+      "expected": {
+        "result": "FAIL_CLOSED_BEFORE_DELEGATION"
+      }
+    }
+  ]
+}
