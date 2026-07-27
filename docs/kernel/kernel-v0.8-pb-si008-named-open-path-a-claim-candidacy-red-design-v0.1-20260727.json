@@ -1,0 +1,576 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-red-design-v0.1-20260727",
+  "artifact_type": "kernel_m3_pb_si008_named_open_path_a_claim_candidacy_red_design_not_effective",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "1da9698a6b2627fd5e5620ce7538efa4867fb69e",
+  "reviewed_branch": "codex/pb-si008-named-open-path-a-claim-candidacy-v0.1",
+  "phase": "RED_ONLY",
+  "status": "ASSISTED_RED_PENDING_KERNEL_OWNER_REVIEW",
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "this_design_is_not_owner_approval": true,
+  "green_started": false,
+  "effective_runtime_changed": false,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "owner_go_authority": {
+    "decision": "GO_NAMED_OPEN_PB_SI_008_CLAIM_TARGET_ONLY_NOW",
+    "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-claim-target-owner-go-authorization-v0.1-20260727.json",
+    "sha256": "327eed5f0e39e7256f27c9dcf068159e289692153d70a5936c57b1c07ea83a8b",
+    "scope": "RED design for one additive, named, Path A Claim-IR structural CLAIM-candidacy target only",
+    "composition_prerequisite_satisfied": true,
+    "part_b_elevation": "NO_GO"
+  },
+  "design_conclusion": {
+    "conclusion": "PROPOSE_ADDITIVE_CLAIM_NAMED_OPEN_SUCCESSOR",
+    "new_named_target_id": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "new_named_target_is_narrower_than_owner_ceiling": true,
+    "qualified_claim_decision_ceiling": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "qualifying_reference_pair_count": 2,
+    "request_shape_reused_without_delta": "EXACT_18_FIELDS",
+    "existing_evidence_gate_mutated": false,
+    "protected_dual_track_deny_mutated": false,
+    "caller_or_composition_widened": false
+  },
+  "named_open_identity": {
+    "issue": "PB-SI-008",
+    "from_pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE",
+    "to_pb_si_008_status_after_green": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM",
+    "qualified_claim_part_b_status": "NAMED_TARGET_CLAIM_CANDIDACY_ONLY_NO_MINT_NO_ADMISSION",
+    "claim_named_target_id": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "program_allowed_promotion_targets_after_green": [
+      "EVIDENCE",
+      "CLAIM"
+    ],
+    "successor_claim_allow_decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "still_denied_promotion_targets": [
+      "AUTHORITY",
+      "PASS_CONDITION"
+    ],
+    "allow_is_claim_id_mint": false,
+    "allow_is_admission": false,
+    "allow_is_ingestion": false,
+    "allow_is_part_b_claim_authority": false,
+    "allow_is_part_b_pass": false,
+    "allow_is_write_authority": false,
+    "named_claim_candidacy_classification_authority_only": true
+  },
+  "proposed_additive_successor": {
+    "strategy": "NEW_ADDITIVE_SUCCESSOR_WITH_PROTECTED_DELEGATES",
+    "module_path": "src/scope/part_b_si008_named_open_path_a_claim_candidacy.py",
+    "api": "evaluate_si008_named_open_claim_request(request)",
+    "manifest_path": "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+    "contract_path": "contracts/part-b-si008-named-open-path-a-claim-candidacy-v0.8.md",
+    "evidence_delegate": {
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "api": "evaluate_si008_named_open_request",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29",
+      "return_evidence_gate_record_unmodified": true
+    },
+    "legacy_delegate": {
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "api": "evaluate_dual_track_request",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb",
+      "delegation_route": "SUCCESSOR_TO_EVIDENCE_GATE_TO_PROTECTED_DUAL_TRACK_DENY",
+      "return_legacy_gate_record_unmodified": true
+    },
+    "routing_order": [
+      "If the request is the legacy exact four-field shape, delegate through the existing evidence gate to the protected dual-track deny runtime and return its NOT_OPENED record unmodified.",
+      "If the request is an exact eighteen-field EVIDENCE request for the existing evidence named target, delegate to the existing evidence gate and return its record unmodified.",
+      "Otherwise evaluate only the exact eighteen-field CLAIM contract in this design; only one of the two exact CLAIM reference pairs may qualify.",
+      "Malformed, ambiguous, cross-target, wildcard, fallback, AUTHORITY, or PASS_CONDITION requests fail closed without dereferencing any package or receipt."
+    ],
+    "production_registration_enabled": false,
+    "package_or_receipt_dereference": false,
+    "network_or_filesystem_access": false
+  },
+  "state_transition_table": [
+    {
+      "case": "legacy_exact_four_field_experiment_only_request",
+      "input_shape": "LEGACY_EXACT_4_FIELDS",
+      "route": "DELEGATE_EXISTING_EVIDENCE_GATE_THEN_DUAL_TRACK_DENY",
+      "decision": "NO_PART_B_ADMISSION_REQUEST",
+      "pb_si_008_status": "NOT_OPENED",
+      "experiment_track_status": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY",
+      "experiment_track_stopped": false
+    },
+    {
+      "case": "legacy_exact_four_field_part_b_promotion_request",
+      "input_shape": "LEGACY_EXACT_4_FIELDS",
+      "route": "DELEGATE_EXISTING_EVIDENCE_GATE_THEN_DUAL_TRACK_DENY",
+      "decision": "DENY",
+      "pb_si_008_status": "NOT_OPENED",
+      "silent_upgrade": false
+    },
+    {
+      "case": "existing_exact_evidence_v0_1_or_v0_2_request",
+      "input_shape": "EXISTING_EVIDENCE_EXACT_18_FIELDS",
+      "promotion_target": "EVIDENCE",
+      "route": "DELEGATE_EXISTING_EVIDENCE_GATE",
+      "returned_record": "UNMODIFIED",
+      "qualified_decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+      "evidence_behavior_preserved": true
+    },
+    {
+      "case": "exact_claim_v0_1_structural_reference",
+      "input_shape": "CLAIM_EXACT_18_FIELDS",
+      "promotion_target": "CLAIM",
+      "reference_kind": "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM",
+      "part_b_status": "NAMED_TARGET_CLAIM_CANDIDACY_ONLY_NO_MINT_NO_ADMISSION",
+      "decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY"
+    },
+    {
+      "case": "exact_claim_v0_2_structural_reference",
+      "input_shape": "CLAIM_EXACT_18_FIELDS",
+      "promotion_target": "CLAIM",
+      "reference_kind": "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+      "pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM",
+      "part_b_status": "NAMED_TARGET_CLAIM_CANDIDACY_ONLY_NO_MINT_NO_ADMISSION",
+      "decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY"
+    },
+    {
+      "case": "authority_or_pass_condition_target",
+      "input_shape": "ANY_NAMED_18_FIELD_VARIANT",
+      "promotion_targets": [
+        "AUTHORITY",
+        "PASS_CONDITION"
+      ],
+      "decision": "DENY",
+      "claim_or_evidence_authority_granted": false
+    },
+    {
+      "case": "minted_admitted_wrong_pair_wrong_target_or_malformed",
+      "input_shape": "NONQUALIFYING_OR_NONEXACT",
+      "decision": "DENY",
+      "partial_allow": false,
+      "fallback": false
+    }
+  ],
+  "claim_named_request_closed_world_contract": {
+    "field_count": 18,
+    "reuse_existing_evidence_field_names_without_delta": true,
+    "delta_justification": "No new field is needed. The exact named target, CLAIM promotion target, CLAIM authority-scope constant, reference kind, schema identity, consumer identity, structural states, package digest, and receipt digest fully separate this claim-candidacy route from the existing evidence route while preserving the proven closed-world parser.",
+    "required_exact_fields": [
+      "request_id",
+      "request_kind",
+      "promotion_target",
+      "reference_kind",
+      "named_target_id",
+      "source_schema_version",
+      "source_schema_sha256",
+      "consumer_contract_id",
+      "consumer_contract_sha256",
+      "package_sha256",
+      "structural_validation_receipt_sha256",
+      "record_class",
+      "claim_id",
+      "claim_id_state",
+      "admission_state",
+      "structural_validation_status",
+      "requested_authority_scope",
+      "reference_access_mode"
+    ],
+    "exact_required_values": {
+      "request_kind": "PROMOTE_TO_PART_B_NAMED_TARGET",
+      "promotion_target": "CLAIM",
+      "named_target_id": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "structural_validation_status": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY",
+      "requested_authority_scope": "CLAIM_STRUCTURAL_CANDIDACY_ONLY",
+      "reference_access_mode": "CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE"
+    },
+    "digest_fields": [
+      "source_schema_sha256",
+      "consumer_contract_sha256",
+      "package_sha256",
+      "structural_validation_receipt_sha256"
+    ],
+    "digest_format": "lowercase_sha256_64_hex",
+    "request_id_type": "nonempty_string",
+    "unknown_fields": "DENY",
+    "missing_fields": "DENY",
+    "unknown_values": "DENY",
+    "wildcard": false,
+    "fallback": false,
+    "package_dereference": false,
+    "receipt_dereference": false,
+    "path_or_uri_fields_allowed": false
+  },
+  "qualifying_claim_reference_pairs": [
+    {
+      "reference_kind": "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "source_schema_version": "claim-ir-external-evidence-v0.1",
+      "source_schema_path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "source_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "kernel_additive_schema_path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2",
+      "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "consumer_contract_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "record_class": "public_evidence_declaration",
+      "authority_ceiling": "CLAIM_STRUCTURAL_CANDIDACY_ONLY_NOT_MINTED_NOT_ADMITTED"
+    },
+    {
+      "reference_kind": "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+      "source_schema_version": "claim-ir-external-evidence-v0.2",
+      "source_schema_path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "source_schema_sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+      "kernel_additive_schema_path": "schemas/claim-ir-kernel-evidence-additive-v0.2.schema.json",
+      "kernel_additive_schema_sha256": "ef4aa92e5130286c5da142a4f6780d372fbec2e9bd4f2830222e035e99c3f35f",
+      "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+      "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "consumer_contract_sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+      "record_class": "public_evidence_declaration",
+      "authority_ceiling": "CLAIM_STRUCTURAL_CANDIDACY_ONLY_NOT_MINTED_NOT_ADMITTED"
+    }
+  ],
+  "pair_scope_exclusions": {
+    "legacy_planner_schema_version_claim_ir_external_v0_1_qualifies": false,
+    "legacy_consumer_v0_1_qualifies": false,
+    "claim_ir_valid_fixture_adapter_output_qualifies_automatically": false,
+    "already_minted_package_qualifies": false,
+    "admitted_or_kernel_written_package_qualifies": false,
+    "evidence_reference_kind_relabelled_as_claim_qualifies": false,
+    "unknown_future_schema_or_consumer_qualifies": false,
+    "cross_version_schema_consumer_pair_qualifies": false,
+    "wildcard_or_prefix_match": false,
+    "reason": "This target classifies only exact unminted Path A evidence Claim-IR structural references as CLAIM candidacy. It does not open planner claims, arbitrary Claim-IR, future versions, or any authority-bearing package."
+  },
+  "structural_receipt_binding": {
+    "receipt_digest_required": true,
+    "receipt_digest_is_declaration_only": true,
+    "receipt_must_bind_external_schema_consumer_and_kernel_additive_validation": true,
+    "successor_dereferences_receipt": false,
+    "successor_revalidates_package": false,
+    "successor_treats_structural_pass_as_truth": false,
+    "successor_treats_structural_pass_as_sufficiency": false,
+    "successor_treats_structural_pass_as_admission": false,
+    "test_green_plan": "Use deterministic in-memory request fixtures and recomputed canonical digests only; no production registry, package download, raw audit download, or write path."
+  },
+  "proposed_claim_gate_record": {
+    "pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM",
+    "part_b_status": "NAMED_TARGET_CLAIM_CANDIDACY_ONLY_NO_MINT_NO_ADMISSION",
+    "qualified_decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "qualified_reason_code": "SI008-NAMED-CLAIM-001_EXACT_TARGET_CLAIM_CANDIDACY",
+    "denied_target_reason_code": "SI008-NAMED-CLAIM-002_PROMOTION_TARGET_NOT_AUTHORIZED",
+    "not_qualified_reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED",
+    "allowed_promotion_target": "CLAIM",
+    "reference_qualified": "boolean",
+    "package_dereferenced": false,
+    "validation_receipt_dereferenced": false,
+    "experiment_artifact_accessed": false,
+    "llm_invoked": false,
+    "part_b_evidence_authority": false,
+    "part_b_claim_authority": false,
+    "part_b_authority_grant": false,
+    "part_b_pass_condition_authority": false,
+    "mint_authority": false,
+    "admission_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "named_claim_candidacy_classification_authority": "true_only_for_exact_qualified_claim_request",
+    "deterministic_record_id_and_hash": true
+  },
+  "fail_closed_matrix": [
+    {
+      "case": "claim_v0_1_exact_pair_unminted",
+      "expected": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY"
+    },
+    {
+      "case": "claim_v0_2_exact_pair_unminted",
+      "expected": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY"
+    },
+    {
+      "case": "existing_evidence_v0_1_or_v0_2_exact_pair",
+      "expected": "DELEGATE_AND_RETURN_EXISTING_EVIDENCE_GATE_RECORD_UNMODIFIED"
+    },
+    {
+      "case": "claim_target_with_existing_evidence_reference_kind",
+      "expected": "DENY_NO_SILENT_RELABEL"
+    },
+    {
+      "case": "evidence_target_with_new_claim_reference_kind",
+      "expected": "DENY_NO_CROSS_TARGET_FALLBACK"
+    },
+    {
+      "case": "legacy_external_v0_1_and_consumer_v0_1",
+      "expected": "DENY_NOT_A_PATH_A_CLAIM_CANDIDACY_PAIR"
+    },
+    {
+      "case": "cross_version_schema_consumer_pair",
+      "expected": "DENY"
+    },
+    {
+      "case": "wrong_schema_digest_or_consumer_digest",
+      "expected": "DENY"
+    },
+    {
+      "case": "missing_invalid_package_or_receipt_digest",
+      "expected": "DENY"
+    },
+    {
+      "case": "claim_id_non_null_or_claim_id_state_minted",
+      "expected": "DENY"
+    },
+    {
+      "case": "admission_state_not_admitted_is_false",
+      "expected": "DENY"
+    },
+    {
+      "case": "authority_or_pass_condition_promotion",
+      "expected": "DENY"
+    },
+    {
+      "case": "unknown_missing_extra_or_non_string_field",
+      "expected": "DENY"
+    },
+    {
+      "case": "wildcard_prefix_or_implicit_default",
+      "expected": "DENY"
+    },
+    {
+      "case": "legacy_exact_four_field_request",
+      "expected": "DELEGATE_AND_PRESERVE_NOT_OPENED_BEHAVIOR"
+    },
+    {
+      "case": "separately_authorized_experiment_only_request",
+      "expected": "NO_INTERFERENCE"
+    }
+  ],
+  "relationship_to_existing_evidence_named_open": {
+    "existing_evidence_runtime_modified": false,
+    "existing_evidence_manifest_modified": false,
+    "existing_evidence_target_id": "PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "existing_evidence_decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+    "existing_evidence_requests_delegated": true,
+    "existing_evidence_records_returned_unmodified": true,
+    "existing_evidence_regression_required": "15/15 PASS",
+    "claim_successor_does_not_convert_evidence_allow_to_claim_allow": true,
+    "claim_successor_does_not_widen_existing_evidence_gate": true
+  },
+  "relationship_to_caller_and_composition": {
+    "named_open_caller_path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+    "named_open_caller_sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf",
+    "caller_remains_evidence_only": true,
+    "caller_modified_or_widened": false,
+    "composition_path": "src/compiler/llm/m1_path_a_named_open_composition_readonly.py",
+    "composition_sha256": "3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3",
+    "composition_remains_evidence_only": true,
+    "composition_modified_or_widened": false,
+    "composition_acceptance_path": "docs/kernel/kernel-v0.8-path-a-named-open-composition-green-owner-acceptance-v0.1-20260727.json",
+    "composition_acceptance_sha256": "296716ce75bc8c26012091c46ba59603ac888507319c0e99534dbd3cf7144dae",
+    "future_claim_caller_or_composition_wiring_requires_separate_owner_go": true
+  },
+  "migration_and_compatibility": {
+    "additive_successor_only": true,
+    "protected_runtime_or_manifest_rewrite": false,
+    "legacy_exact_four_field_behavior": "PRESERVED_VIA_DELEGATION",
+    "existing_evidence_named_open_behavior": "PRESERVED_VIA_UNMODIFIED_DELEGATE_RETURN",
+    "claim_request_requires_new_exact_target_and_reference_kind": true,
+    "nonmatching_request_silently_falls_back": false,
+    "experiment_track_remains_separately_authorized": true,
+    "old_evidence_runtime_remains_directly_available": true,
+    "production_registration_enabled": false
+  },
+  "non_amalgamation_contract": {
+    "path_a_readonly_green_yields_part_b_pass": false,
+    "evidence_named_open_allow_yields_claim_allow": false,
+    "claim_named_open_allow_yields_mint": false,
+    "claim_named_open_allow_yields_admission": false,
+    "claim_named_open_allow_yields_part_b_claim_authority": false,
+    "claim_named_open_allow_yields_part_b_pass": false,
+    "claim_named_open_allow_yields_write_authority": false,
+    "schema_validity_yields_truth_or_sufficiency": false,
+    "sufficiency_yields_claim_admission_or_pass": false,
+    "evidence_and_claim_candidacy_records_are_amalgamated": false,
+    "qualified_output_is_classification_only": true,
+    "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+  },
+  "adjacent_gates_preserved": {
+    "path_b_write": "DENY",
+    "production_registration_enabled": false,
+    "claim_id_mint": "DENY",
+    "admission": "DENY",
+    "kernel_or_e_case_write": "DENY",
+    "certificate": "DENY",
+    "certified_stop": "NOT_AUTHORIZED",
+    "stop_authority": "NONE",
+    "holdout_release": "DENY",
+    "pb_si_006_download": "DENY",
+    "pb_b5_execution": "NOT_ESTABLISHED",
+    "authority_promotion": "DENY",
+    "pass_condition_promotion": "DENY"
+  },
+  "proposed_green_allowlist_exact": [
+    "src/scope/part_b_si008_named_open_path_a_claim_candidacy.py",
+    "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+    "contracts/part-b-si008-named-open-path-a-claim-candidacy-v0.8.md",
+    "tests/unit/test_part_b_si008_named_open_path_a_claim_candidacy_contracts.py",
+    "tests/unit/test_part_b_si008_named_open_path_a_claim_candidacy_runtime.py",
+    "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-design-v0.1-20260727.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-named-open-path-a-claim-candidacy-green-review-packet-v0.1-20260727.json"
+  ],
+  "proposed_green_verification": {
+    "claim_successor_contract_and_runtime_tests": "NEW_DIRECTED_TESTS_ALL_PASS",
+    "existing_evidence_named_open": "15/15 PASS",
+    "legacy_dual_track_deny": "16/16 PASS",
+    "existing_named_open_caller": "11/11 PASS",
+    "existing_path_a_composition": "14/14 PASS",
+    "protected_pins": "ZERO_DRIFT",
+    "production_registration_enabled": false,
+    "package_or_receipt_dereference": false
+  },
+  "mandatory_pin_table": [
+    {
+      "role": "claim_named_open_owner_go_authorization",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-claim-target-owner-go-authorization-v0.1-20260727.json",
+      "sha256": "327eed5f0e39e7256f27c9dcf068159e289692153d70a5936c57b1c07ea83a8b"
+    },
+    {
+      "role": "composition_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-path-a-named-open-composition-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "296716ce75bc8c26012091c46ba59603ac888507319c0e99534dbd3cf7144dae"
+    },
+    {
+      "role": "evidence_named_open_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "daa5b2b52816cec0d24876fd452c4499150067912de9be3b7c4fdc81ef4a369d"
+    },
+    {
+      "role": "protected_evidence_named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    {
+      "role": "protected_evidence_named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    },
+    {
+      "role": "protected_dual_track_deny_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "protected_dual_track_deny_manifest",
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    {
+      "role": "protected_named_open_caller",
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    {
+      "role": "protected_path_a_named_open_composition",
+      "path": "src/compiler/llm/m1_path_a_named_open_composition_readonly.py",
+      "sha256": "3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3"
+    },
+    {
+      "role": "external_evidence_schema_v0_1",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    {
+      "role": "kernel_additive_schema_v0_1",
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5"
+    },
+    {
+      "role": "consumer_contract_v0_2",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    },
+    {
+      "role": "external_evidence_schema_v0_2",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6"
+    },
+    {
+      "role": "kernel_additive_schema_v0_2",
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.2.schema.json",
+      "sha256": "ef4aa92e5130286c5da142a4f6780d372fbec2e9bd4f2830222e035e99c3f35f"
+    },
+    {
+      "role": "consumer_contract_v0_3",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c"
+    },
+    {
+      "role": "legacy_external_schema_nonqualifying_boundary",
+      "path": "schemas/claim-ir-external-envelope.schema.json",
+      "sha256": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e"
+    },
+    {
+      "role": "legacy_kernel_schema_nonqualifying_boundary",
+      "path": "schemas/claim-ir-kernel.schema.json",
+      "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"
+    },
+    {
+      "role": "legacy_consumer_v0_1_nonqualifying_boundary",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-effective-v0.1-20260725.json",
+      "sha256": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+    }
+  ],
+  "explicit_non_authorizations": {
+    "green_runtime_started": false,
+    "existing_evidence_runtime_or_manifest_change": false,
+    "dual_track_deny_runtime_or_manifest_change": false,
+    "caller_claim_widening": false,
+    "composition_claim_widening": false,
+    "path_b_write": false,
+    "production_registration_enablement": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "ordinary_stop": false,
+    "holdout_release": false,
+    "pb_si_006_download": false,
+    "raw_audit_download": false,
+    "production_registry": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "part_b_pass": false,
+    "l2_pass": false,
+    "unrestricted_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "red_verification": {
+    "owner_auth_sha_match": true,
+    "authority_base_head_match": true,
+    "json_parse": "TO_BE_REVERIFIED_WITH_FINAL_REVIEW_PACKET",
+    "existing_evidence_named_open_tests": "15/15 PASS",
+    "legacy_dual_track_deny_tests": "16/16 PASS",
+    "existing_named_open_caller_tests": "11/11 PASS",
+    "existing_path_a_composition_tests": "14/14 PASS",
+    "combined_existing_regression": "56/56 PASS",
+    "protected_runtime_manifest_caller_composition_drift": "0",
+    "green_files_created": false,
+    "write_side_effects": "docs_only_red"
+  },
+  "audit_trail": {
+    "runtime_changed": false,
+    "manifest_changed": false,
+    "schema_changed": false,
+    "consumer_contract_changed": false,
+    "caller_changed": false,
+    "composition_changed": false,
+    "mint_or_admission_performed": false,
+    "kernel_or_e_case_write_performed": false,
+    "network_or_download_performed": false,
+    "git_commit_created": false,
+    "git_push_performed": false,
+    "pull_request_created": false
+  }
+}
