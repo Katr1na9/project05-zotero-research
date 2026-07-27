@@ -49,7 +49,7 @@ RED_DESIGN_PATH = (
     "red-design-v0.1-20260727.json"
 )
 RED_DESIGN_SHA256 = (
-    "9ddfe28620f6dd7b5e83f3e40f228ab5d53aed6219622312131bb599413c7472"
+    "34d88a39cd56bf3f0334d085533dbdeba452ef8f00ccf80cab6070c51f7da893"
 )
 RED_REVIEW_PACKET_PATH = (
     "docs/llm-editor/"
