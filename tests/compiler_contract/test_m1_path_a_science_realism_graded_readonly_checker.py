@@ -76,7 +76,7 @@ OUTPUT_FIELDS = {
 }
 PROTECTED_PINS = {
     "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-authorization-v0.1-20260727.json": (
-        "dc680b50512eb3c7f35c4a41b0aea258b3cb665afe4febd26b497deee5e6b001"
+        "6a46802277e26a99fe82a176dd567db6b802bd84c97ae1762ad4168826d89e71"
     ),
     "docs/kernel/kernel-v0.8-path-a-science-realism-graded-fixture-red-design-v0.1-20260727.json": (
         "1a2a98b701a3a3cd2c3a4e8448ea0be8f026bae4c257cdd0ae3a3c92551321d4"
@@ -125,7 +125,7 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def test_only_authority() -> dict:
+def _make_test_only_authority() -> dict:
     return {
         "mode": "TEST_ONLY_READONLY",
         "allow_write": False,
@@ -161,7 +161,7 @@ class M1PathAScienceRealismGradedReadonlyCheckerTests(
     def evaluate(self, case_spec):
         return realism.evaluate_realism_graded_synthetic_case(
             copy.deepcopy(case_spec),
-            test_only_authority=test_only_authority(),
+            test_only_authority=_make_test_only_authority(),
         )
 
     def test_green_01_fixture_is_closed_declared_synthetic_suite(self):
@@ -311,8 +311,8 @@ class M1PathAScienceRealismGradedReadonlyCheckerTests(
         authorities = (
             None,
             {},
-            {**test_only_authority(), "allow_write": True},
-            {**test_only_authority(), "unknown": False},
+            {**_make_test_only_authority(), "allow_write": True},
+            {**_make_test_only_authority(), "unknown": False},
         )
         for authority in authorities:
             with self.subTest(authority=authority):
