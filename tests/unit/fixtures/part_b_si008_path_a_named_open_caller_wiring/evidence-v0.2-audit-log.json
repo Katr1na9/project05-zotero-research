@@ -1,0 +1,62 @@
+{
+  "fixture_id": "PB_SI008_CALLER_EVIDENCE_V0_2_AUDIT_LOG",
+  "fixture_scope": "TEST_ONLY_PATH_A_STRUCTURAL_BINDING",
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "source_replay": {
+    "source_projection_path": "docs/llm-editor/fixtures/audit-log-public-projection-red-v0.1/synthetic-audit-log-public-projection-minimal-v0.1.json",
+    "source_projection_sha256": "3a2e1857e994dddd2fcf9137a106ab05294d5e952924eb2bcf84971f4c32f38a",
+    "package_pipeline": "M1_AUDIT_LOG_TO_CLAIM_IR_TEST_ONLY",
+    "package_schema_version": "claim-ir-external-evidence-v0.2",
+    "package_claim_count": 10,
+    "package_sha256": "072dff00872f7ee7a6a054ca5229b5fec2e8c46f00ca890e1d07fb768ac005d6"
+  },
+  "structural_validation_receipt": {
+    "receipt_version": "0.1",
+    "fixture_id": "PB_SI008_CALLER_EVIDENCE_V0_2_AUDIT_LOG",
+    "source_schema_version": "claim-ir-external-evidence-v0.2",
+    "source_schema_sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+    "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+    "consumer_contract_sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+    "package_sha256": "072dff00872f7ee7a6a054ca5229b5fec2e8c46f00ca890e1d07fb768ac005d6",
+    "structural_validation_status": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY",
+    "record_class": "public_evidence_declaration",
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "reference_access_mode": "CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE",
+    "test_only": true,
+    "write_side_effects": "none"
+  },
+  "structural_validation_receipt_sha256": "baab653591b493a0f231e1f8796618a8f4f68e2dbaef2c3e3a9d427655b8d13c",
+  "caller_input": {
+    "request_id": "PB-SI008-CALLER-V02-AUDIT-LOG",
+    "promotion_target": "EVIDENCE",
+    "reference_kind": "PATH_A_EVIDENCE_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+    "source_schema_version": "claim-ir-external-evidence-v0.2",
+    "source_schema_sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+    "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+    "consumer_contract_sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+    "package_sha256": "072dff00872f7ee7a6a054ca5229b5fec2e8c46f00ca890e1d07fb768ac005d6",
+    "structural_validation_receipt_sha256": "baab653591b493a0f231e1f8796618a8f4f68e2dbaef2c3e3a9d427655b8d13c",
+    "record_class": "public_evidence_declaration",
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "structural_validation_status": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+  },
+  "expected_gate": {
+    "pb_si_008_status": "OPENED_FOR_NAMED_TARGET_ONLY",
+    "part_b_status": "NAMED_TARGET_EVIDENCE_CANDIDACY_ONLY_NO_ADMISSION",
+    "decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+    "allow_is_admission": false,
+    "allow_is_part_b_pass": false,
+    "part_b_evidence_authority": false
+  },
+  "explicit_non_authorizations": {
+    "production_registration": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false
+  }
+}

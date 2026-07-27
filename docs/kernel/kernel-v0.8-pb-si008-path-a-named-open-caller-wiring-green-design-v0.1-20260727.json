@@ -1,0 +1,319 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-green-design-v0.1-20260727",
+  "artifact_type": "kernel_m3_pb_si008_path_a_named_open_caller_wiring_green_design_pending_owner_review",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "3328fd3db44aa3212cc54d55115780049b926dd4",
+  "reviewed_branch": "codex/pb-si008-path-a-named-open-caller-wiring-v0.1",
+  "phase": "GREEN_TEST_ONLY_CALLER_WIRING",
+  "status": "GREEN_IMPLEMENTED_PENDING_KERNEL_OWNER_REVIEW",
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "this_design_is_not_owner_approval": true,
+  "green_started": true,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "authority_basis": {
+    "owner_authorization": {
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-caller-wiring-authorization-v0.1-20260727.json",
+      "sha256": "1d7c72cfb67c48537609c529e52e672e036001a6f99c27d3f8543dcbb13ac067",
+      "decision": "AUTHORIZE_TEST_ONLY_CALLER_WIRING_FIXTURE"
+    },
+    "accepted_red_design": {
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-red-design-v0.1-20260727.json",
+      "sha256": "17bf977802b63ce8601d81dbdfcbfb2fb35be3a2504db7657087fdfec37cd20e",
+      "owner_decision": "accept"
+    },
+    "red_review_packet": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-named-open-caller-wiring-red-review-packet-v0.1-20260727.json",
+      "sha256": "03f56ac3f59f6196f25f996a9ebdf6b9179ed1c845343da03a28bacb52779ac2"
+    },
+    "exact_six_file_green_allowlist_authorized": true
+  },
+  "implementation": {
+    "caller": {
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf",
+      "api": "evaluate_path_a_structural_binding_for_named_open(caller_input, *, test_only_authority)",
+      "test_only_authority_field_count": 5,
+      "caller_input_field_count": 14,
+      "gate_request_field_count": 18,
+      "production_registration_enabled": false,
+      "package_or_receipt_dereference": false,
+      "network_or_filesystem_io": false
+    },
+    "v0_1_fixture": {
+      "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.1-system-log.json",
+      "sha256": "afb695d5730affe057e178be3e6b009b2cb641726e4e8610c67dffb9dc37e135",
+      "package_schema_version": "claim-ir-external-evidence-v0.1",
+      "package_claim_count": 9,
+      "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+      "structural_validation_receipt_sha256": "d37226dfe2d1567815763ea53c294f6dbc9377915841dbc199fb9b3945816286"
+    },
+    "v0_2_fixture": {
+      "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.2-audit-log.json",
+      "sha256": "46937b764485b8410b7e11e5e45e31a4068941a0ebf29d792f15a447a987ad54",
+      "package_schema_version": "claim-ir-external-evidence-v0.2",
+      "package_claim_count": 10,
+      "package_sha256": "072dff00872f7ee7a6a054ca5229b5fec2e8c46f00ca890e1d07fb768ac005d6",
+      "structural_validation_receipt_sha256": "baab653591b493a0f231e1f8796618a8f4f68e2dbaef2c3e3a9d427655b8d13c"
+    },
+    "tests": {
+      "path": "tests/unit/test_part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "6f91e377680f30641d5d931c947cd00f1970fbe0115f292d47996f5a26c847d5",
+      "test_methods": 11
+    }
+  },
+  "caller_contract": {
+    "test_only_authority": {
+      "field_count": 5,
+      "missing_unknown_or_mismatch": "RAISE_PATH_A_CALLER_WIRING_DENIED",
+      "reason_code": "CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED",
+      "gate_called": false
+    },
+    "caller_input": {
+      "field_count": 14,
+      "missing_unknown_path_uri_raw_or_empty_required_value": "RAISE_PATH_A_CALLER_WIRING_DENIED",
+      "reason_code": "CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
+      "gate_called": false
+    },
+    "injected_constants": {
+      "request_kind": "PROMOTE_TO_PART_B_NAMED_TARGET",
+      "named_target_id": "PATH_A_EVIDENCE_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+      "requested_authority_scope": "EVIDENCE_STRUCTURAL_CANDIDACY_ONLY",
+      "reference_access_mode": "CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE"
+    },
+    "gate_request_field_count": 18,
+    "gate_entry": "evaluate_si008_named_open_request",
+    "return_contract": "RETURN_GATE_OBJECT_WITHOUT_WRAPPING_OR_MUTATION"
+  },
+  "decision_matrix_results": [
+    {
+      "case": "exact_v0_1_system_log_fixture",
+      "decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+      "result": "PASS"
+    },
+    {
+      "case": "exact_v0_2_audit_log_fixture",
+      "decision": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+      "result": "PASS"
+    },
+    {
+      "case": "missing_or_wrong_test_authority",
+      "decision": "FAIL_CLOSED_BEFORE_GATE",
+      "reason_code": "CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED",
+      "result": "PASS"
+    },
+    {
+      "case": "missing_digest_unknown_field_path_uri_raw_or_empty_required_value",
+      "decision": "FAIL_CLOSED_BEFORE_GATE",
+      "reason_code": "CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
+      "result": "PASS"
+    },
+    {
+      "case": "wrong_pair_minted_admitted_wildcard_or_bad_hash",
+      "decision": "DENY",
+      "reason_code": "SI008-NAMED-003_REQUEST_NOT_QUALIFIED",
+      "result": "PASS"
+    },
+    {
+      "case": "claim_authority_or_pass_condition",
+      "decision": "DENY",
+      "reason_code": "SI008-NAMED-002_PROMOTION_TARGET_NOT_AUTHORIZED",
+      "result": "PASS"
+    }
+  ],
+  "deterministic_fixture_replay": {
+    "v0_1": {
+      "source_projection_path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_system_log_projection_v0.1.json",
+      "source_projection_sha256": "adaca38945a2068fc3a3b4649dcf450ca3385562907fc752427e9e4e921405b7",
+      "pipeline": "M1_EVIDENCE_TO_CLAIM_IR_TEST_ONLY",
+      "package_replay": "PASS",
+      "receipt_replay": "PASS"
+    },
+    "v0_2": {
+      "source_projection_path": "docs/llm-editor/fixtures/audit-log-public-projection-red-v0.1/synthetic-audit-log-public-projection-minimal-v0.1.json",
+      "source_projection_sha256": "3a2e1857e994dddd2fcf9137a106ab05294d5e952924eb2bcf84971f4c32f38a",
+      "pipeline": "M1_AUDIT_LOG_TO_CLAIM_IR_TEST_ONLY",
+      "package_replay": "PASS",
+      "receipt_replay": "PASS"
+    },
+    "hash_algorithm": "SHA-256 over canonical UTF-8 JSON with sorted keys, compact separators, and no NaN",
+    "raw_source_or_audit_download": false,
+    "production_registry": false
+  },
+  "non_mutation_and_authority_ceiling": {
+    "named_open_runtime_modified": false,
+    "named_open_manifest_modified": false,
+    "dual_track_deny_runtime_modified": false,
+    "dual_track_deny_manifest_modified": false,
+    "caller_output_equals_direct_gate_result": true,
+    "caller_adds_part_b_authority": false,
+    "allow_is_part_b_pass": false,
+    "allow_is_admission": false,
+    "part_b_evidence_authority": false,
+    "path_b_write": false,
+    "mint": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+  },
+  "exact_green_allowlist": [
+    "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+    "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.1-system-log.json",
+    "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.2-audit-log.json",
+    "tests/unit/test_part_b_si008_path_a_named_open_caller_wiring.py",
+    "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-green-design-v0.1-20260727.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-named-open-caller-wiring-green-review-packet-v0.1-20260727.json"
+  ],
+  "pin_table": [
+    {
+      "role": "owner_authorization",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-caller-wiring-authorization-v0.1-20260727.json",
+      "sha256": "1d7c72cfb67c48537609c529e52e672e036001a6f99c27d3f8543dcbb13ac067"
+    },
+    {
+      "role": "accepted_red_design",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-red-design-v0.1-20260727.json",
+      "sha256": "17bf977802b63ce8601d81dbdfcbfb2fb35be3a2504db7657087fdfec37cd20e"
+    },
+    {
+      "role": "red_review_packet",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-named-open-caller-wiring-red-review-packet-v0.1-20260727.json",
+      "sha256": "03f56ac3f59f6196f25f996a9ebdf6b9179ed1c845343da03a28bacb52779ac2"
+    },
+    {
+      "role": "named_open_green_acceptance",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "daa5b2b52816cec0d24876fd452c4499150067912de9be3b7c4fdc81ef4a369d"
+    },
+    {
+      "role": "named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    {
+      "role": "named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    },
+    {
+      "role": "dual_track_deny_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "dual_track_deny_manifest",
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    {
+      "role": "production_registration_gate",
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a"
+    },
+    {
+      "role": "external_evidence_schema_v0_1",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    {
+      "role": "consumer_contract_v0_2",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    },
+    {
+      "role": "external_evidence_schema_v0_2",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6"
+    },
+    {
+      "role": "consumer_contract_v0_3",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c"
+    },
+    {
+      "role": "v0_1_source_projection",
+      "path": "tests/compiler_contract/fixtures/m1_evidence_modality/synthetic_system_log_projection_v0.1.json",
+      "sha256": "adaca38945a2068fc3a3b4649dcf450ca3385562907fc752427e9e4e921405b7"
+    },
+    {
+      "role": "v0_1_mapper",
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    },
+    {
+      "role": "v0_2_source_projection",
+      "path": "docs/llm-editor/fixtures/audit-log-public-projection-red-v0.1/synthetic-audit-log-public-projection-minimal-v0.1.json",
+      "sha256": "3a2e1857e994dddd2fcf9137a106ab05294d5e952924eb2bcf84971f4c32f38a"
+    },
+    {
+      "role": "v0_2_adapter",
+      "path": "src/compiler/llm/m1_audit_log_projection_adapter.py",
+      "sha256": "93934bc6a28eaa1d7b23932bf5d1ca6c44221df2dc7a3c255b8e969cca311704"
+    },
+    {
+      "role": "v0_2_mapper",
+      "path": "src/compiler/llm/m1_audit_log_to_claim_ir_mapper.py",
+      "sha256": "4d0fccbdff2b8d902079f7bfa9a949a7fc6ec4660e946f6ad75deed4a4e8e0e9"
+    },
+    {
+      "role": "green_caller",
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    {
+      "role": "green_v0_1_fixture",
+      "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.1-system-log.json",
+      "sha256": "afb695d5730affe057e178be3e6b009b2cb641726e4e8610c67dffb9dc37e135"
+    },
+    {
+      "role": "green_v0_2_fixture",
+      "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.2-audit-log.json",
+      "sha256": "46937b764485b8410b7e11e5e45e31a4068941a0ebf29d792f15a447a987ad54"
+    },
+    {
+      "role": "green_caller_tests",
+      "path": "tests/unit/test_part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "6f91e377680f30641d5d931c947cd00f1970fbe0115f292d47996f5a26c847d5"
+    }
+  ],
+  "validation": {
+    "caller_tests": "11/11 PASS",
+    "named_open_tests": "15/15 PASS",
+    "legacy_si_008_tests": "16/16 PASS",
+    "combined_tests": "42/42 PASS",
+    "pin_reverify": "22/22 OK",
+    "fixture_package_and_receipt_replay": "4/4 PASS",
+    "decision_matrix": "6/6 PASS",
+    "protected_runtime_and_manifest_zero_drift": "4/4",
+    "production_registration_enabled": false,
+    "hard_ban_exact_in_all_six_green_artifacts": true,
+    "git_performed": false
+  },
+  "explicit_non_authorizations": {
+    "production_registration": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "part_b_pass": false,
+    "unrestricted_part_b_elevation": false,
+    "claim_promotion": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "holdout_release": false,
+    "si_006_download": false,
+    "b5_execution": false,
+    "certificate_or_certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "only_exact_6_green_allowlist_files",
+  "git_performed": false,
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW"
+}

@@ -1,0 +1,165 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-named-open-caller-wiring-red-review-packet-v0.1-20260727",
+  "artifact_type": "kernel_owner_pb_si008_path_a_named_open_caller_wiring_red_review_packet_not_approval",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "authority_base_commit": "3328fd3db44aa3212cc54d55115780049b926dd4",
+  "reviewed_branch": "codex/pb-si008-path-a-named-open-caller-wiring-v0.1",
+  "phase": "RED_ONLY",
+  "status": "PENDING_KERNEL_OWNER_REVIEW",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "green_started": false,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "red_design": {
+    "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-red-design-v0.1-20260727.json",
+    "sha256": "17bf977802b63ce8601d81dbdfcbfb2fb35be3a2504db7657087fdfec37cd20e",
+    "status": "ASSISTED_RED_PENDING_KERNEL_OWNER_REVIEW"
+  },
+  "review_pin_table": [
+    {
+      "role": "red_design",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-red-design-v0.1-20260727.json",
+      "sha256": "17bf977802b63ce8601d81dbdfcbfb2fb35be3a2504db7657087fdfec37cd20e"
+    },
+    {
+      "role": "caller_wiring_owner_authorization",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-caller-wiring-authorization-v0.1-20260727.json",
+      "sha256": "1d7c72cfb67c48537609c529e52e672e036001a6f99c27d3f8543dcbb13ac067"
+    },
+    {
+      "role": "named_open_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "daa5b2b52816cec0d24876fd452c4499150067912de9be3b7c4fdc81ef4a369d"
+    },
+    {
+      "role": "named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    {
+      "role": "named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    }
+  ],
+  "design_review_summary": {
+    "caller_module": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+    "caller_api": "evaluate_path_a_structural_binding_for_named_open(caller_input, *, test_only_authority)",
+    "caller_input_field_count": 14,
+    "named_open_request_field_count": 18,
+    "fixed_request_fields": [
+      "request_kind",
+      "named_target_id",
+      "requested_authority_scope",
+      "reference_access_mode"
+    ],
+    "qualifying_pair_count": 2,
+    "v0_1_pair": "claim-ir-external-evidence-v0.1 + consumer v0.2",
+    "v0_2_pair": "claim-ir-external-evidence-v0.2 + consumer v0.3",
+    "test_only_fixture_count": 2,
+    "package_digest_source": "canonical SHA-256 replay over in-memory synthetic Path A packages",
+    "receipt_digest_source": "canonical SHA-256 replay over a closed deterministic structural receipt preimage",
+    "caller_dereferences_package_or_receipt": false,
+    "production_registry": false,
+    "qualified_result": "ALLOW_NAMED_EVIDENCE_CANDIDACY_ONLY",
+    "qualified_result_is_part_b_pass": false,
+    "qualified_result_is_admission": false
+  },
+  "fail_closed_review": {
+    "missing_or_wrong_test_authority": "CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED",
+    "missing_digest_unknown_field_path_uri_or_raw_bytes": "CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
+    "wrong_schema_consumer_pair_or_hash": "DENY / SI008-NAMED-003_REQUEST_NOT_QUALIFIED",
+    "minted_or_admitted_input": "DENY / SI008-NAMED-003_REQUEST_NOT_QUALIFIED",
+    "claim_authority_or_pass_condition": "DENY / SI008-NAMED-002_PROMOTION_TARGET_NOT_AUTHORIZED",
+    "wildcard_or_implicit_default": "DENY / SI008-NAMED-003_REQUEST_NOT_QUALIFIED"
+  },
+  "proposed_green_allowlist_exact": [
+    "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+    "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.1-system-log.json",
+    "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.2-audit-log.json",
+    "tests/unit/test_part_b_si008_path_a_named_open_caller_wiring.py",
+    "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-green-design-v0.1-20260727.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-named-open-caller-wiring-green-review-packet-v0.1-20260727.json"
+  ],
+  "protected_bytes": {
+    "named_open_runtime_modified": false,
+    "named_open_manifest_modified": false,
+    "dual_track_deny_runtime_modified": false,
+    "dual_track_deny_manifest_modified": false,
+    "production_registration_enabled": false
+  },
+  "red_validation": {
+    "json_parse": "2/2 PASS",
+    "design_mandatory_pin_reverify": "16/16 OK",
+    "review_pin_reverify": "5/5 OK",
+    "named_open_tests": "15/15 PASS",
+    "legacy_si_008_tests": "16/16 PASS",
+    "combined_tests": "31/31 PASS",
+    "porcelain": "EXACT_AUTH_PLUS_TWO_RED_JSON_FILES",
+    "green_files_created": 0,
+    "tracked_diff": 0,
+    "cached_diff": 0
+  },
+  "review_questions": [
+    {
+      "id": "ORQ-PB-SI008-CALLER-RED-01",
+      "question": "Accept the proposed test-only module and authority-gated caller API?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CALLER-RED-02",
+      "question": "Accept the exact 14-field caller input to 18-field named-open request mapping?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CALLER-RED-03",
+      "question": "Accept the two synthetic fixture derivation chains and deterministic package/receipt digest contract?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CALLER-RED-04",
+      "question": "Accept the exact six-file GREEN allowlist while keeping all protected runtimes and manifests frozen?",
+      "proposed_answer": "accept"
+    }
+  ],
+  "acceptance_boundary": {
+    "accept_means": "Owner accepts this caller/wiring/fixture RED design and may separately authorize the exact six-file GREEN slice.",
+    "accept_does_not_authorize": [
+      "Starting GREEN without an explicit Owner GREEN instruction",
+      "Production registration or a production caller",
+      "Path B write, mint, admission, or Kernel/E_case write",
+      "CLAIM, AUTHORITY, or PASS_CONDITION promotion",
+      "Part B PASS or unrestricted Part B elevation",
+      "Certificate or CERTIFIED_STOP",
+      "Changing the named-open or dual-track deny runtimes or manifests",
+      "Git commit, push, PR, or merge"
+    ]
+  },
+  "explicit_non_authorizations": {
+    "green_started": false,
+    "caller_runtime_implemented": false,
+    "fixture_execution": false,
+    "production_registration": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "claim_promotion": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "part_b_pass": false,
+    "certificate_or_certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "docs_only_red",
+  "git_performed": false,
+  "stop": "STOP_FOR_KERNEL_OWNER_ACCEPT_REQUEST_REVISION_OR_REJECT"
+}
