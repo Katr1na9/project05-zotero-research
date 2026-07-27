@@ -1,0 +1,244 @@
+{
+  "artifact_id": "kernel-v0.8-part-b-reopen-scope-blockers-go-nogo-readonly-v0.1-20260727",
+  "artifact_type": "kernel_m3_part_b_readonly_reopen_scope_blockers_and_go_nogo_decision_packet",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "status": "readonly_reopen_packet_complete_pending_human_confirmation",
+  "this_packet_is_not_path_b_or_part_b_elevation_authority": true,
+  "owner_decision": null,
+  "requested_owner_decision": "confirm_recommended_no_go_elevation|revise_scope|authorize_named_readonly_alignment_slice_only",
+  "authority_base_commit": "dab7c32e76dadf6be9676ee3a7c2360803e98465",
+  "origin_main_tip_verified": "dab7c32e76dadf6be9676ee3a7c2360803e98465",
+  "authority_base_note": "origin/main after Merge PR #43 (Path A1+A2 RED/GREEN sufficiency chain).",
+  "recommended_decision": {
+    "part_b_elevation": "NO_GO",
+    "part_b_engineering_contracts_already_on_main": "ACKNOWLEDGE_EXISTING_DO_NOT_REBUILD",
+    "path_b_write_elevation_mint_admission_kernel": "NO_GO",
+    "a3_audit_log": "OPTIONAL_SEPARATE_RED_NOT_A_PART_B_PRECONDITION",
+    "allowed_now_without_new_elevation": [
+      "readonly_inventory_and_alignment_notes",
+      "continue_path_a_scientific_coverage",
+      "keep_si008_dual_track_deny_enforced"
+    ],
+    "rationale_one_line": "Part B engineering contracts already exist on main; what remains blocked is elevation into Part B evidence/claim/authority/pass tracks and write-path authority—not missing A3."
+  },
+  "scope_clarification": {
+    "two_distinct_meanings_must_not_be_collapsed": [
+      {
+        "name": "Part_B_engineering_slice_map",
+        "meaning": "Normative v0.8 planning/contracts track B0–B9 plus PB-SI gates (schemas, stubs, DENY audits).",
+        "current_state": "ALREADY_PRESENT_ON_ORIGIN_MAIN",
+        "examples": [
+          "B0_PLANNING_AND_CONTRACTS",
+          "B2_STOCHASTIC_OBSERVATION",
+          "B3_COST_INSTRUMENTATION",
+          "B4_BASELINE_PREREG",
+          "B5_PLANNER_INTERFACE",
+          "B6_CLOSED_LOOP_EVAL",
+          "B7_BROAD_CONNECTORS",
+          "B8_HOLDOUT_ANALYSIS",
+          "B9_FREEZE_AND_CLAIMS",
+          "PB-SI-006 source selection",
+          "PB-SI-008 dual-track DENY",
+          "claims/CERTIFIED_STOP DENY gate"
+        ]
+      },
+      {
+        "name": "Part_B_elevation",
+        "meaning": "Promoting experiment/LLM/path references into Part B evidence, claim, authority, or pass-condition; treating experiment PASS as Part B/L2 PASS; amalgamation into authoritative conclusion track.",
+        "current_state": "DEFAULT_DENY_AND_GATED",
+        "primary_runtime_gate": {
+          "path": "src/scope/part_b_si008_dual_track_deny.py",
+          "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb",
+          "part_b_status": "OUTSIDE_AUTHORIZED_TRACK_DENY",
+          "pb_si_008_status": "NOT_OPENED",
+          "experiment_track_status": "MAY_PROCEED_UNDER_SEPARATE_AUTHORITY"
+        }
+      }
+    ],
+    "explicit_non_equivalence": {
+      "path_a_evidence_claim_ir_ready": "Does not equal Part B elevation authority.",
+      "a3_audit_log_completion": "Does not unlock Part B elevation.",
+      "part_b_contracts_on_main": "Does not equal permission to elevate or execute blocked slices.",
+      "readonly_experiment_matrix_green": "Must not be treated as L2 or Part B pass."
+    },
+    "normative_phase_map_pin": {
+      "source": "src/scope/part-b-b0-spec-issues.md PB-SI-002",
+      "status": "CLOSED_APPROVED_FOR_NAMING_AND_VOCABULARY_ONLY"
+    }
+  },
+  "inventory_part_b_worktree_tips_vs_origin_main": [
+    {"slice": "part-b-b0", "tip": "09fe80d", "in_origin_main": true, "subject": "approve normative v0.8 slice map"},
+    {"slice": "part-b-b2-sampler-stub", "tip": "ece6382", "in_origin_main": true, "subject": "B2 local sampler stub runtime"},
+    {"slice": "part-b-b2-si003", "tip": "784df17", "in_origin_main": true, "subject": "PB-SI-003 finite decision semantics"},
+    {"slice": "part-b-b3-capture-fixture", "tip": "b86c2ff", "in_origin_main": true, "subject": "B3 synthetic capture fixture path"},
+    {"slice": "part-b-b3-cost", "tip": "e16a6fd", "in_origin_main": true, "subject": "B3 cost instrumentation"},
+    {"slice": "part-b-b4-prereg", "tip": "d6d5908", "in_origin_main": true, "subject": "B4 baseline preregistration contracts"},
+    {"slice": "part-b-b5-planner-admission", "tip": "f01762a", "in_origin_main": true, "subject": "B5 planner admission evidence skeleton"},
+    {"slice": "part-b-b5-planner-interface", "tip": "85c200a", "in_origin_main": true, "subject": "B5 planner interface contracts"},
+    {"slice": "part-b-b6-closed-loop-eval", "tip": "3d567d3", "in_origin_main": true, "subject": "B6 closed-loop evaluation contracts"},
+    {"slice": "part-b-b7-broad-connectors", "tip": "8544181", "in_origin_main": true, "subject": "B7 broad connector contracts"},
+    {"slice": "part-b-b8-holdout-analysis", "tip": "fc801ee", "in_origin_main": true, "subject": "B8 holdout analysis contracts"},
+    {"slice": "part-b-b8-holdout-deny-audit", "tip": "28cc9d8", "in_origin_main": true, "subject": "B8 holdout DENY audit path"},
+    {"slice": "part-b-b9-freeze-and-claims", "tip": "edbaa75", "in_origin_main": true, "subject": "B9 freeze-and-claims contracts"},
+    {"slice": "part-b-claims-stop-deny", "tip": "0032129", "in_origin_main": true, "subject": "claims and CERTIFIED_STOP DENY gate"},
+    {"slice": "part-b-si006-source-selection", "tip": "c3d6f96", "in_origin_main": true, "subject": "PB-SI-006 source selection contracts"},
+    {"slice": "part-b-si008-dual-track-deny", "tip": "a6d2bc8", "in_origin_main": true, "subject": "PB-SI-008 dual-track DENY gate"}
+  ],
+  "path_a_capability_snapshot_on_main": {
+    "evidence_modality_adapters_zero_claim": true,
+    "evidence_claim_ir_schema_effective": true,
+    "green_2_nonempty_mapper_test_only": true,
+    "readonly_e2e_accepted": true,
+    "coverage_expansion_a1": true,
+    "sufficiency_a2_red_and_test_only_green_evaluator": true,
+    "a3_audit_log": "STILL_OUT_OF_V0_1_UNLESS_SEPARATELY_AUTHORIZED",
+    "mint_admission_kernel_write": false,
+    "production_registration_enabled": false,
+    "production_registration_symbol": {
+      "path": "src/compiler/llm/claim_id_mainline_handoff.py",
+      "constant": "PRODUCTION_REGISTRATION_ENABLED",
+      "value": false,
+      "file_sha256": "304000b03ad273a26d864e2567c4b3f20ce06bdc5199387d57d46bc64152c35a"
+    }
+  },
+  "blocker_concentration": [
+    {
+      "blocker_id": "PB-BLOCK-01",
+      "cluster": "elevation_policy",
+      "severity": "critical",
+      "summary": "PB-SI-008 keeps Part B outside authorized track; promotion to evidence/claim/authority/pass is DENY; issue NOT_OPENED.",
+      "effect": "Cannot treat Path A or experiment outputs as Part B elevation."
+    },
+    {
+      "blocker_id": "PB-BLOCK-02",
+      "cluster": "write_path_authority",
+      "severity": "critical",
+      "summary": "Path B write elevation (registry/production execute → mint → admission → Kernel/E_case write) remains unauthorized across Kernel acceptances.",
+      "effect": "No authoritative ingestion of evidence claims into Kernel for Part B closeout."
+    },
+    {
+      "blocker_id": "PB-BLOCK-03",
+      "cluster": "production_registration",
+      "severity": "critical",
+      "summary": "PRODUCTION_REGISTRATION_ENABLED remains False; runners/executors guard against enabling it.",
+      "effect": "No production registration mainline for Part B-bound packages."
+    },
+    {
+      "blocker_id": "PB-BLOCK-04",
+      "cluster": "l2_and_part_b_pass_inference",
+      "severity": "high",
+      "summary": "Readonly experiment / overall mainline GREEN must not be inferred as L2 or Part B pass.",
+      "effect": "Scientific PASS on Path A does not close Part B claims."
+    },
+    {
+      "blocker_id": "PB-BLOCK-05",
+      "cluster": "scientific_sufficiency_scope",
+      "severity": "high",
+      "summary": "A2 sufficiency is synthetic declared-scope CONDITIONAL only; real Checker runtime not connected; A3 audit_log still OUT.",
+      "effect": "Insufficient for Part B evidence-authority or freeze-and-claims elevation."
+    },
+    {
+      "blocker_id": "PB-BLOCK-06",
+      "cluster": "slice_execution_gaps_inside_part_b_map",
+      "severity": "high",
+      "summary": "Many B-slices are contracts/skeletons with explicit non-authorities (e.g., B2 sampling_authority=false; B3 performance_claim_authority=false; B5 execution NOT_ESTABLISHED; holdout release DENY; PB-SI-006 download DENY; stop_authority=NONE).",
+      "effect": "Reopening Part B as 'run the map' still hits per-slice DENY walls."
+    },
+    {
+      "blocker_id": "PB-BLOCK-07",
+      "cluster": "four_family_and_llm_ingestion",
+      "severity": "high",
+      "summary": "four-family finetune/admission and generalized LLM→Kernel gates remain fail-closed follow-ons outside SI-LLM-001.",
+      "effect": "Model-output amalgamation into Part B remains blocked."
+    },
+    {
+      "blocker_id": "PB-BLOCK-08",
+      "cluster": "certificate_and_stop",
+      "severity": "high",
+      "summary": "certificate / CERTIFIED_STOP Part B pathways are gated DENY; stop_authority=NONE adjacent to SI-008.",
+      "effect": "Cannot close Part B with certified stop from current Path A state."
+    },
+    {
+      "blocker_id": "PB-BLOCK-09",
+      "cluster": "cross_track_alignment_debt",
+      "severity": "medium",
+      "summary": "Path A evidence Claim-IR identities and Part B schemas/contracts coexist on main but lack an Owner-accepted bridge that preserves dual-track separation.",
+      "effect": "Safe next work is alignment inventory, not amalgamation."
+    }
+  ],
+  "go_nogo_matrix": [
+    {
+      "proposal": "Open Part B elevation (evidence/claim/authority/pass)",
+      "decision": "NO_GO",
+      "binding_blockers": ["PB-BLOCK-01", "PB-BLOCK-02", "PB-BLOCK-04", "PB-BLOCK-05"]
+    },
+    {
+      "proposal": "Enable PRODUCTION_REGISTRATION_ENABLED or production execute for Part B",
+      "decision": "NO_GO",
+      "binding_blockers": ["PB-BLOCK-03", "PB-BLOCK-02"]
+    },
+    {
+      "proposal": "Mint/admit/write Kernel from evidence Claim-IR to satisfy Part B",
+      "decision": "NO_GO",
+      "binding_blockers": ["PB-BLOCK-02", "PB-BLOCK-01", "PB-BLOCK-08"]
+    },
+    {
+      "proposal": "Treat A3 audit_log completion as Part B unlock",
+      "decision": "NO_GO",
+      "binding_blockers": ["PB-BLOCK-01", "PB-BLOCK-05"]
+    },
+    {
+      "proposal": "Rebuild B0–B9 contracts from scratch",
+      "decision": "NO_GO_UNNECESSARY",
+      "binding_blockers": [],
+      "note": "All listed part-b slice tips are already ancestors of origin/main."
+    },
+    {
+      "proposal": "Readonly alignment packet: map Path A evidence package identities onto Part B dual-track boundary without elevation",
+      "decision": "GO_CANDIDATE_SEPARATE_SLICE_ONLY",
+      "binding_blockers": ["PB-BLOCK-09"],
+      "requires": "New explicit Owner authorization; still no elevation."
+    },
+    {
+      "proposal": "Continue Path A (optional A3 RED; larger real fixtures) under current DENY walls",
+      "decision": "GO",
+      "binding_blockers": []
+    }
+  ],
+  "adjacent_gate_snapshot_from_si008": {
+    "holdout_release": "DENY",
+    "pb_si_006_download": "DENY",
+    "pb_b5_execution": "NOT_ESTABLISHED",
+    "pb_b8_si_004": "OPEN",
+    "stop_authority": "NONE"
+  },
+  "what_would_be_required_to_reopen_elevation_later": [
+    "Explicit Owner RED that opens or narrows PB-SI-008 for a named promotion target only",
+    "Separate Path B write-authority chain (or a documented reason elevation can remain structural-only)",
+    "Sufficiency/Checker scope beyond synthetic CONDITIONAL, if claims require it",
+    "Per-slice execution authorities currently false/DENY (B5/B8/SI-006/holdout/stop as applicable)",
+    "Hard prohibition on inferring L2/Part B pass from Path A readonly GREEN"
+  ],
+  "explicit_non_authorizations": {
+    "part_b_elevation": false,
+    "path_b_write_elevation": false,
+    "production_registration_enablement": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "a3_audit_log_auto_start": false,
+    "four_family_ingestion": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "write_side_effects": {
+    "observed": "this_readonly_decision_packet_json_only",
+    "runtime_modified": false,
+    "part_b_gate_modified": false
+  }
+}
