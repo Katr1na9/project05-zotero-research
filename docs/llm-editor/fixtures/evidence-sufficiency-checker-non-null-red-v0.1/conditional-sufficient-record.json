@@ -1,0 +1,130 @@
+{
+  "schema_version": "m1-evidence-sufficiency-checker-red-v0.1",
+  "record_class": "evidence_sufficiency_checker_decision",
+  "record_id": "sufficiency_checker_conditional_001",
+  "status": "assisted_red_example_not_effective",
+  "surface_id": "project05_depth2_public",
+  "input_binding": {
+    "accepted_packages": [
+      {
+        "binding_id": "e2e_anchor_system_log_9",
+        "package_role": "E2E_ANCHOR",
+        "source_class": "system_log_public_projection",
+        "epistemic_modality": "observed",
+        "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+        "claim_count": 9,
+        "evidence_field_path_set_sha256": "482fdbe4f733365763bc4c267d3b79ba860db4db426acded32f27ffc467bbcfb"
+      },
+      {
+        "binding_id": "e2e_anchor_provenance_graph_16",
+        "package_role": "E2E_ANCHOR",
+        "source_class": "provenance_graph_public_projection",
+        "epistemic_modality": "observed",
+        "package_sha256": "7a9f36dc0188a0a9b199e51a77da4e194f1af6149651ec5149d46bd4b0fc8e3e",
+        "claim_count": 16,
+        "evidence_field_path_set_sha256": "780e435292348e9d6faeaf0f2bed92c00735df288a83d1414cbd563c37001cb5"
+      },
+      {
+        "binding_id": "e2e_anchor_cti_report_11",
+        "package_role": "E2E_ANCHOR",
+        "source_class": "cti_report_public_projection",
+        "epistemic_modality": "reported",
+        "package_sha256": "e7046afc7fb6cb2703f5e7bb3124a9753c2a5b4ba265ac11633e5ebeaa0ea3e5",
+        "claim_count": 11,
+        "evidence_field_path_set_sha256": "bdd232ab1b8ed03c71baf83e767341aeb4c267abd7ba75a7f89045b83d613509"
+      },
+      {
+        "binding_id": "a1_coverage_system_log_4",
+        "package_role": "A1_COVERAGE",
+        "source_class": "system_log_public_projection",
+        "epistemic_modality": "derived",
+        "package_sha256": "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb",
+        "claim_count": 4,
+        "evidence_field_path_set_sha256": "dcc31b3d421c60b4242ab10c9e8e347b404e30429ce98a54461264f88f08cbda"
+      },
+      {
+        "binding_id": "a1_coverage_provenance_graph_48",
+        "package_role": "A1_COVERAGE",
+        "source_class": "provenance_graph_public_projection",
+        "epistemic_modality": "observed",
+        "package_sha256": "46dc6d2de3302484e906d66e7e4fb69e6bb6eccc3765aea8de9517148a794c8d",
+        "claim_count": 48,
+        "evidence_field_path_set_sha256": "780e435292348e9d6faeaf0f2bed92c00735df288a83d1414cbd563c37001cb5"
+      },
+      {
+        "binding_id": "a1_coverage_cti_report_34",
+        "package_role": "A1_COVERAGE",
+        "source_class": "cti_report_public_projection",
+        "epistemic_modality": "reported",
+        "package_sha256": "4ed50b46473deb187acb112ba4a6394fa2b599637c6c135d60bf82ec3a9bcedf",
+        "claim_count": 34,
+        "evidence_field_path_set_sha256": "bdd232ab1b8ed03c71baf83e767341aeb4c267abd7ba75a7f89045b83d613509"
+      }
+    ],
+    "rejected_candidates": [],
+    "schema_validity_layer": "PASS_FOR_ACCEPTED_PACKAGES_ONLY",
+    "consumer_structural_layer": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+  },
+  "evidence_sufficiency_decision": {
+    "decision_id": "sufficiency_conditional_001",
+    "decision": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+    "basis_codes": [
+      "EXACT_PACKAGE_PINS_VERIFIED",
+      "EXACT_EVIDENCE_FIELD_SETS_VERIFIED",
+      "E2E_ANCHOR_SET_PRESENT",
+      "A1_COVERAGE_SET_PRESENT",
+      "THREE_MODALITIES_PRESENT",
+      "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+      "DECLARED_SYNTHETIC_SCOPE_ONLY",
+      "CTI_REPORTED_ONLY",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "fail_closed_reasons": [],
+    "pinned_package_sha256s": [
+      "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+      "7a9f36dc0188a0a9b199e51a77da4e194f1af6149651ec5149d46bd4b0fc8e3e",
+      "e7046afc7fb6cb2703f5e7bb3124a9753c2a5b4ba265ac11633e5ebeaa0ea3e5",
+      "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb",
+      "46dc6d2de3302484e906d66e7e4fb69e6bb6eccc3765aea8de9517148a794c8d",
+      "4ed50b46473deb187acb112ba4a6394fa2b599637c6c135d60bf82ec3a9bcedf"
+    ],
+    "pinned_identities": {
+      "external_evidence_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "consumer_v0_2_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "green_2_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    },
+    "scope": "DECLARED_SYNTHETIC_READONLY_REVIEW_ONLY",
+    "truth_asserted": false,
+    "admission_authority": false,
+    "ingestion_authority": false,
+    "stop_authority": "NONE"
+  },
+  "checker_decision": {
+    "decision_id": "checker_conditional_001",
+    "decision": "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY",
+    "sufficiency_decision_ref": "sufficiency_conditional_001",
+    "checker_decision_non_null": true,
+    "basis_codes": [
+      "CHECKER_OBJECT_SCHEMA_VALID",
+      "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+      "DECLARED_SYNTHETIC_SCOPE_ONLY",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "truth_asserted": false,
+    "admission_authority": false,
+    "kernel_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE"
+  },
+  "explicit_non_authorizations": {
+    "a3_audit_log": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate": false,
+    "certified_stop": false
+  }
+}

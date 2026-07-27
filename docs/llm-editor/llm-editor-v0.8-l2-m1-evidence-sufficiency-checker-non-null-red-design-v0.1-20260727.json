@@ -1,0 +1,800 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-m1-evidence-sufficiency-checker-non-null-red-design-v0.1-20260727",
+  "artifact_type": "m1_evidence_sufficiency_checker_non_null_readonly_red_contract_design",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "program_path": "Path_A",
+  "slice": "A2_evidence_sufficiency_checker_non_null_readonly_red",
+  "authority_base_commit": "5f8fddf0b43c7f74bcaa1316570d8bfd261247c7",
+  "status": "assisted_red_design_not_effective_pending_kernel_owner_review",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "this_design_is_not_owner_approval": true,
+  "this_design_is_not_an_effective_schema_or_runtime": true,
+  "goal": "Define a readonly, non-null evidence-sufficiency and Checker decision record over exact unminted evidence-package bindings while keeping structural validity, scientific sufficiency, truth, admission, ingestion, and STOP as separate layers.",
+  "authority_chain": {
+    "path_a1_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-coverage-expansion-owner-acceptance-v0.1-20260727.json",
+      "sha256": "f4b00bf3fd10cd8d70afa9cdf3ee71b7ed16bd2da694b6caf31b210a7c3443a4"
+    },
+    "readonly_e2e_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-readonly-e2e-owner-acceptance-v0.1-20260727.json",
+      "sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c"
+    },
+    "schema_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148"
+    },
+    "green_2_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4"
+    }
+  },
+  "protected_identities": {
+    "external_evidence_schema": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    "kernel_additive_schema": {
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+      "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5"
+    },
+    "consumer_v0_2": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    },
+    "green_2_mapper": {
+      "path": "src/compiler/llm/m1_evidence_to_claim_ir_mapper.py",
+      "sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+    }
+  },
+  "layering_contract": {
+    "layer_1_schema_validity": {
+      "meaning": "The package is structurally valid under the exact external evidence schema and each claim is valid under the additive Kernel oneOf.",
+      "automatically_implies_sufficiency": false,
+      "automatically_implies_truth": false,
+      "automatically_implies_admission": false
+    },
+    "layer_2_consumer_structural_pass": {
+      "meaning": "Consumer v0.2 exact dispatch accepts the package for structural-only, not-minted, not-admitted review with no ingestion authority.",
+      "automatically_implies_sufficiency": false,
+      "automatically_implies_truth": false,
+      "automatically_implies_ingestion": false
+    },
+    "layer_3_evidence_sufficiency": {
+      "meaning": "A separate readonly decision over exact package and evidence-field-set pins within one declared synthetic review scope.",
+      "may_be_non_null_in_this_assisted_record_shape": true,
+      "automatically_implies_truth": false,
+      "automatically_implies_admission": false,
+      "automatically_implies_ingestion": false,
+      "automatically_implies_certificate_or_stop": false
+    },
+    "layer_4_checker_decision": {
+      "meaning": "A non-null Checker review object may reference the separate sufficiency decision in this RED record shape only.",
+      "may_be_non_null_in_this_assisted_record_shape": true,
+      "automatically_implies_truth": false,
+      "automatically_implies_admission": false,
+      "automatically_implies_kernel_write": false,
+      "automatically_implies_certificate_or_stop": false
+    },
+    "layer_5_authority_transitions": {
+      "mint": false,
+      "admission": false,
+      "ingestion": false,
+      "kernel_or_e_case_write": false,
+      "certificate": false,
+      "certified_stop": false
+    }
+  },
+  "decision_enums": {
+    "evidence_sufficiency_decision": [
+      "PASS_DECLARED_SYNTHETIC_BOUNDARY_ONLY",
+      "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+      "FAIL_INSUFFICIENT_EVIDENCE",
+      "ABSTAIN_UNRESOLVED_EVIDENCE",
+      "DENY_INVALID_OR_LAUNDERED_INPUT"
+    ],
+    "checker_decision": [
+      "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY",
+      "ACCEPT_PASS_FOR_DECLARED_SYNTHETIC_BOUNDARY_ONLY",
+      "REJECT_FAIL_CLOSED",
+      "ABSTAIN_FAIL_CLOSED",
+      "DENY_INVALID_INPUT"
+    ],
+    "basis_codes": [
+      "EXACT_PACKAGE_PINS_VERIFIED",
+      "EXACT_EVIDENCE_FIELD_SETS_VERIFIED",
+      "E2E_ANCHOR_SET_PRESENT",
+      "A1_COVERAGE_SET_PRESENT",
+      "THREE_MODALITIES_PRESENT",
+      "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+      "DECLARED_SYNTHETIC_SCOPE_ONLY",
+      "REQUIRED_MODALITY_MISSING",
+      "UNKNOWN_MODALITY_NO_PACKAGE",
+      "CTI_REPORTED_ONLY",
+      "CTI_MODALITY_LAUNDERING",
+      "CHECKER_OBJECT_SCHEMA_VALID",
+      "NO_AUTHORITY_ELEVATION"
+    ],
+    "fail_closed_reason_codes": [
+      "MISSING_SYSTEM_LOG_EVIDENCE",
+      "MISSING_PROVENANCE_GRAPH_EVIDENCE",
+      "MISSING_CTI_REPORT_EVIDENCE",
+      "MISSING_REQUIRED_EVIDENCE_FIELD_SET",
+      "UNKNOWN_MODALITY_NO_PACKAGE",
+      "CTI_OBSERVED_LAUNDERING",
+      "CTI_DERIVED_LAUNDERING",
+      "PACKAGE_SHA_MISMATCH",
+      "EVIDENCE_FIELD_SET_MISMATCH",
+      "UNKNOWN_PACKAGE_BINDING",
+      "CROSS_MODALITY_INPUT",
+      "PLANNER_NAMESPACE_LEAK"
+    ]
+  },
+  "fail_closed_policy": [
+    {
+      "condition": "unknown epistemic modality before GREEN-2 package emission",
+      "required_sufficiency_decision": "ABSTAIN_UNRESOLVED_EVIDENCE",
+      "required_checker_decision": "ABSTAIN_FAIL_CLOSED",
+      "partial_package_emission_allowed": false,
+      "silent_pass_allowed": false
+    },
+    {
+      "condition": "one or more declared required modalities or exact evidence-field sets are missing",
+      "required_sufficiency_decision": "FAIL_INSUFFICIENT_EVIDENCE",
+      "required_checker_decision": "REJECT_FAIL_CLOSED",
+      "silent_pass_allowed": false
+    },
+    {
+      "condition": "CTI input declares observed or derived rather than reported",
+      "required_sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+      "required_checker_decision": "DENY_INVALID_INPUT",
+      "package_may_be_treated_as_valid": false,
+      "silent_pass_allowed": false
+    },
+    {
+      "condition": "package, schema, consumer, mapper, or evidence-field-set pin mismatch",
+      "required_sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+      "required_checker_decision": "DENY_INVALID_INPUT",
+      "silent_fallback_allowed": false
+    }
+  ],
+  "input_binding_catalog": [
+    {
+      "binding_id": "e2e_anchor_system_log_9",
+      "package_role": "E2E_ANCHOR",
+      "source_class": "system_log_public_projection",
+      "epistemic_modality": "observed",
+      "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+      "claim_count": 9,
+      "evidence_field_path_set": [
+        "evidence.system_log.event.event_id",
+        "evidence.system_log.event.event_time",
+        "evidence.system_log.event.provider",
+        "evidence.system_log.event.result_code",
+        "evidence.system_log.event.severity",
+        "evidence.system_log.principal.public_host_ref",
+        "evidence.system_log.principal.public_process_ref",
+        "evidence.system_log.principal.public_user_ref",
+        "evidence.system_log.transport_source_modality"
+      ],
+      "evidence_field_path_set_sha256": "482fdbe4f733365763bc4c267d3b79ba860db4db426acded32f27ffc467bbcfb"
+    },
+    {
+      "binding_id": "e2e_anchor_provenance_graph_16",
+      "package_role": "E2E_ANCHOR",
+      "source_class": "provenance_graph_public_projection",
+      "epistemic_modality": "observed",
+      "package_sha256": "7a9f36dc0188a0a9b199e51a77da4e194f1af6149651ec5149d46bd4b0fc8e3e",
+      "claim_count": 16,
+      "evidence_field_path_set": [
+        "evidence.provenance_graph.edge.edge_id",
+        "evidence.provenance_graph.edge.from_node_id",
+        "evidence.provenance_graph.edge.relationship_type",
+        "evidence.provenance_graph.edge.to_node_id",
+        "evidence.provenance_graph.graph.graph_id",
+        "evidence.provenance_graph.node.node_id",
+        "evidence.provenance_graph.node.node_type",
+        "evidence.provenance_graph.summary.edge_count",
+        "evidence.provenance_graph.summary.node_count",
+        "evidence.provenance_graph.summary.relationship_count",
+        "evidence.provenance_graph.summary.relationship_type",
+        "evidence.provenance_graph.time_window.end",
+        "evidence.provenance_graph.time_window.precision",
+        "evidence.provenance_graph.time_window.start"
+      ],
+      "evidence_field_path_set_sha256": "780e435292348e9d6faeaf0f2bed92c00735df288a83d1414cbd563c37001cb5"
+    },
+    {
+      "binding_id": "e2e_anchor_cti_report_11",
+      "package_role": "E2E_ANCHOR",
+      "source_class": "cti_report_public_projection",
+      "epistemic_modality": "reported",
+      "package_sha256": "e7046afc7fb6cb2703f5e7bb3124a9753c2a5b4ba265ac11633e5ebeaa0ea3e5",
+      "claim_count": 11,
+      "evidence_field_path_set": [
+        "evidence.cti_report.object.object_ref",
+        "evidence.cti_report.object.object_type",
+        "evidence.cti_report.publication_window.end",
+        "evidence.cti_report.publication_window.start",
+        "evidence.cti_report.relation.object_ref",
+        "evidence.cti_report.relation.relation_type",
+        "evidence.cti_report.relation.subject_ref",
+        "evidence.cti_report.report.publisher_ref",
+        "evidence.cti_report.report.report_id",
+        "evidence.cti_report.report.reported_marker",
+        "evidence.cti_report.technique.technique_ref"
+      ],
+      "evidence_field_path_set_sha256": "bdd232ab1b8ed03c71baf83e767341aeb4c267abd7ba75a7f89045b83d613509"
+    },
+    {
+      "binding_id": "a1_coverage_system_log_4",
+      "package_role": "A1_COVERAGE",
+      "source_class": "system_log_public_projection",
+      "epistemic_modality": "derived",
+      "package_sha256": "5001f60af734b442b2018980f8857408f8dca81e8af24a151c0398dd942948eb",
+      "claim_count": 4,
+      "evidence_field_path_set": [
+        "evidence.system_log.event.event_id",
+        "evidence.system_log.event.event_time",
+        "evidence.system_log.event.provider",
+        "evidence.system_log.transport_source_modality"
+      ],
+      "evidence_field_path_set_sha256": "dcc31b3d421c60b4242ab10c9e8e347b404e30429ce98a54461264f88f08cbda"
+    },
+    {
+      "binding_id": "a1_coverage_provenance_graph_48",
+      "package_role": "A1_COVERAGE",
+      "source_class": "provenance_graph_public_projection",
+      "epistemic_modality": "observed",
+      "package_sha256": "46dc6d2de3302484e906d66e7e4fb69e6bb6eccc3765aea8de9517148a794c8d",
+      "claim_count": 48,
+      "evidence_field_path_set": [
+        "evidence.provenance_graph.edge.edge_id",
+        "evidence.provenance_graph.edge.from_node_id",
+        "evidence.provenance_graph.edge.relationship_type",
+        "evidence.provenance_graph.edge.to_node_id",
+        "evidence.provenance_graph.graph.graph_id",
+        "evidence.provenance_graph.node.node_id",
+        "evidence.provenance_graph.node.node_type",
+        "evidence.provenance_graph.summary.edge_count",
+        "evidence.provenance_graph.summary.node_count",
+        "evidence.provenance_graph.summary.relationship_count",
+        "evidence.provenance_graph.summary.relationship_type",
+        "evidence.provenance_graph.time_window.end",
+        "evidence.provenance_graph.time_window.precision",
+        "evidence.provenance_graph.time_window.start"
+      ],
+      "evidence_field_path_set_sha256": "780e435292348e9d6faeaf0f2bed92c00735df288a83d1414cbd563c37001cb5"
+    },
+    {
+      "binding_id": "a1_coverage_cti_report_34",
+      "package_role": "A1_COVERAGE",
+      "source_class": "cti_report_public_projection",
+      "epistemic_modality": "reported",
+      "package_sha256": "4ed50b46473deb187acb112ba4a6394fa2b599637c6c135d60bf82ec3a9bcedf",
+      "claim_count": 34,
+      "evidence_field_path_set": [
+        "evidence.cti_report.object.object_ref",
+        "evidence.cti_report.object.object_type",
+        "evidence.cti_report.publication_window.end",
+        "evidence.cti_report.publication_window.start",
+        "evidence.cti_report.relation.object_ref",
+        "evidence.cti_report.relation.relation_type",
+        "evidence.cti_report.relation.subject_ref",
+        "evidence.cti_report.report.publisher_ref",
+        "evidence.cti_report.report.report_id",
+        "evidence.cti_report.report.reported_marker",
+        "evidence.cti_report.technique.technique_ref"
+      ],
+      "evidence_field_path_set_sha256": "bdd232ab1b8ed03c71baf83e767341aeb4c267abd7ba75a7f89045b83d613509"
+    }
+  ],
+  "input_binding_rules": {
+    "accepted_package_schema_version": "claim-ir-external-evidence-v0.1",
+    "accepted_package_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+    "accepted_kernel_additive_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+    "accepted_consumer_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+    "accepted_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+    "catalog_binding_must_match_exactly": true,
+    "wildcard_or_fallback": false,
+    "unknown_binding": "DENY_INVALID_OR_LAUNDERED_INPUT",
+    "unknown_modality": "ABSTAIN_UNRESOLVED_EVIDENCE",
+    "missing_key_evidence": "FAIL_INSUFFICIENT_EVIDENCE",
+    "cti_observed_or_derived": "DENY_INVALID_OR_LAUNDERED_INPUT"
+  },
+  "checker_integration_boundary": {
+    "non_null_checker_decision_authorized_in_this_red_record_shape": true,
+    "runtime_checker_execution_authorized": false,
+    "existing_e_case_checker_decision_field_change_authorized": false,
+    "existing_certificate_checker_decision_ref_change_authorized": false,
+    "existing_certified_stop_checker_or_sufficiency_ref_change_authorized": false,
+    "existing_certificate_and_certified_stop_null_policies_remain_unchanged": true,
+    "future_green_evaluator_and_checker_runtime_require_separate_authority": true
+  },
+  "draft_contract_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://project05.invalid/drafts/m1-evidence-sufficiency-checker-non-null-red-v0.1.schema.json",
+    "title": "Assisted RED evidence sufficiency and non-null Checker decision record",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "record_class",
+      "record_id",
+      "status",
+      "surface_id",
+      "input_binding",
+      "evidence_sufficiency_decision",
+      "checker_decision",
+      "explicit_non_authorizations"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "m1-evidence-sufficiency-checker-red-v0.1"
+      },
+      "record_class": {
+        "const": "evidence_sufficiency_checker_decision"
+      },
+      "record_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+      },
+      "status": {
+        "const": "assisted_red_example_not_effective"
+      },
+      "surface_id": {
+        "const": "project05_depth2_public"
+      },
+      "input_binding": {
+        "$ref": "#/$defs/input_binding"
+      },
+      "evidence_sufficiency_decision": {
+        "$ref": "#/$defs/evidence_sufficiency_decision"
+      },
+      "checker_decision": {
+        "$ref": "#/$defs/checker_decision"
+      },
+      "explicit_non_authorizations": {
+        "$ref": "#/$defs/non_authorizations"
+      }
+    },
+    "$defs": {
+      "sha256": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "package_binding": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "binding_id",
+          "package_role",
+          "source_class",
+          "epistemic_modality",
+          "package_sha256",
+          "claim_count",
+          "evidence_field_path_set_sha256"
+        ],
+        "properties": {
+          "binding_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+          },
+          "package_role": {
+            "enum": [
+              "E2E_ANCHOR",
+              "A1_COVERAGE"
+            ]
+          },
+          "source_class": {
+            "enum": [
+              "system_log_public_projection",
+              "provenance_graph_public_projection",
+              "cti_report_public_projection"
+            ]
+          },
+          "epistemic_modality": {
+            "enum": [
+              "observed",
+              "derived",
+              "reported"
+            ]
+          },
+          "package_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "claim_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_field_path_set_sha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "source_class": {
+                  "const": "cti_report_public_projection"
+                }
+              },
+              "required": [
+                "source_class"
+              ]
+            },
+            "then": {
+              "properties": {
+                "epistemic_modality": {
+                  "const": "reported"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "epistemic_modality": {
+                  "enum": [
+                    "observed",
+                    "derived"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "rejected_candidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_kind",
+          "source_class",
+          "candidate_projection_sha256",
+          "epistemic_modality",
+          "reason_code",
+          "package_emitted"
+        ],
+        "properties": {
+          "candidate_kind": {
+            "const": "projection_declaration_without_package"
+          },
+          "source_class": {
+            "enum": [
+              "system_log_public_projection",
+              "provenance_graph_public_projection",
+              "cti_report_public_projection"
+            ]
+          },
+          "candidate_projection_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "epistemic_modality": {
+            "enum": [
+              "unknown",
+              "observed",
+              "derived"
+            ]
+          },
+          "reason_code": {
+            "enum": [
+              "UNKNOWN_MODALITY_NO_PACKAGE",
+              "CTI_MODALITY_LAUNDERING_NO_PACKAGE"
+            ]
+          },
+          "package_emitted": {
+            "const": false
+          }
+        }
+      },
+      "input_binding": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "accepted_packages",
+          "rejected_candidates",
+          "schema_validity_layer",
+          "consumer_structural_layer"
+        ],
+        "properties": {
+          "accepted_packages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/package_binding"
+            },
+            "uniqueItems": true
+          },
+          "rejected_candidates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/rejected_candidate"
+            },
+            "uniqueItems": true
+          },
+          "schema_validity_layer": {
+            "const": "PASS_FOR_ACCEPTED_PACKAGES_ONLY"
+          },
+          "consumer_structural_layer": {
+            "const": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+          }
+        }
+      },
+      "pinned_identities": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "external_evidence_schema_sha256",
+          "kernel_additive_schema_sha256",
+          "consumer_v0_2_sha256",
+          "green_2_mapper_sha256"
+        ],
+        "properties": {
+          "external_evidence_schema_sha256": {
+            "const": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+          },
+          "kernel_additive_schema_sha256": {
+            "const": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5"
+          },
+          "consumer_v0_2_sha256": {
+            "const": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+          },
+          "green_2_mapper_sha256": {
+            "const": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b"
+          }
+        }
+      },
+      "evidence_sufficiency_decision": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "decision_id",
+          "decision",
+          "basis_codes",
+          "fail_closed_reasons",
+          "pinned_package_sha256s",
+          "pinned_identities",
+          "scope",
+          "truth_asserted",
+          "admission_authority",
+          "ingestion_authority",
+          "stop_authority"
+        ],
+        "properties": {
+          "decision_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+          },
+          "decision": {
+            "enum": [
+              "PASS_DECLARED_SYNTHETIC_BOUNDARY_ONLY",
+              "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+              "FAIL_INSUFFICIENT_EVIDENCE",
+              "ABSTAIN_UNRESOLVED_EVIDENCE",
+              "DENY_INVALID_OR_LAUNDERED_INPUT"
+            ]
+          },
+          "basis_codes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "EXACT_PACKAGE_PINS_VERIFIED",
+                "EXACT_EVIDENCE_FIELD_SETS_VERIFIED",
+                "E2E_ANCHOR_SET_PRESENT",
+                "A1_COVERAGE_SET_PRESENT",
+                "THREE_MODALITIES_PRESENT",
+                "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+                "DECLARED_SYNTHETIC_SCOPE_ONLY",
+                "REQUIRED_MODALITY_MISSING",
+                "UNKNOWN_MODALITY_NO_PACKAGE",
+                "CTI_REPORTED_ONLY",
+                "CTI_MODALITY_LAUNDERING",
+                "CHECKER_OBJECT_SCHEMA_VALID",
+                "NO_AUTHORITY_ELEVATION"
+              ]
+            }
+          },
+          "fail_closed_reasons": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "MISSING_SYSTEM_LOG_EVIDENCE",
+                "MISSING_PROVENANCE_GRAPH_EVIDENCE",
+                "MISSING_CTI_REPORT_EVIDENCE",
+                "MISSING_REQUIRED_EVIDENCE_FIELD_SET",
+                "UNKNOWN_MODALITY_NO_PACKAGE",
+                "CTI_OBSERVED_LAUNDERING",
+                "CTI_DERIVED_LAUNDERING",
+                "PACKAGE_SHA_MISMATCH",
+                "EVIDENCE_FIELD_SET_MISMATCH",
+                "UNKNOWN_PACKAGE_BINDING",
+                "CROSS_MODALITY_INPUT",
+                "PLANNER_NAMESPACE_LEAK"
+              ]
+            }
+          },
+          "pinned_package_sha256s": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "pinned_identities": {
+            "$ref": "#/$defs/pinned_identities"
+          },
+          "scope": {
+            "const": "DECLARED_SYNTHETIC_READONLY_REVIEW_ONLY"
+          },
+          "truth_asserted": {
+            "const": false
+          },
+          "admission_authority": {
+            "const": false
+          },
+          "ingestion_authority": {
+            "const": false
+          },
+          "stop_authority": {
+            "const": "NONE"
+          }
+        }
+      },
+      "checker_decision": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "decision_id",
+          "decision",
+          "sufficiency_decision_ref",
+          "checker_decision_non_null",
+          "basis_codes",
+          "truth_asserted",
+          "admission_authority",
+          "kernel_write_authority",
+          "certificate_authority",
+          "stop_authority"
+        ],
+        "properties": {
+          "decision_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+          },
+          "decision": {
+            "enum": [
+              "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY",
+              "ACCEPT_PASS_FOR_DECLARED_SYNTHETIC_BOUNDARY_ONLY",
+              "REJECT_FAIL_CLOSED",
+              "ABSTAIN_FAIL_CLOSED",
+              "DENY_INVALID_INPUT"
+            ]
+          },
+          "sufficiency_decision_ref": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+          },
+          "checker_decision_non_null": {
+            "const": true
+          },
+          "basis_codes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "CHECKER_OBJECT_SCHEMA_VALID",
+                "STRUCTURAL_VALIDITY_SEPARATE_FROM_SUFFICIENCY",
+                "DECLARED_SYNTHETIC_SCOPE_ONLY",
+                "REQUIRED_MODALITY_MISSING",
+                "UNKNOWN_MODALITY_NO_PACKAGE",
+                "CTI_MODALITY_LAUNDERING",
+                "NO_AUTHORITY_ELEVATION"
+              ]
+            }
+          },
+          "truth_asserted": {
+            "const": false
+          },
+          "admission_authority": {
+            "const": false
+          },
+          "kernel_write_authority": {
+            "const": false
+          },
+          "certificate_authority": {
+            "const": false
+          },
+          "stop_authority": {
+            "const": "NONE"
+          }
+        }
+      },
+      "non_authorizations": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "a3_audit_log",
+          "registry_activation",
+          "production_execute",
+          "claim_id_mint",
+          "admission",
+          "kernel_or_e_case_write",
+          "certificate",
+          "certified_stop"
+        ],
+        "properties": {
+          "a3_audit_log": {
+            "const": false
+          },
+          "registry_activation": {
+            "const": false
+          },
+          "production_execute": {
+            "const": false
+          },
+          "claim_id_mint": {
+            "const": false
+          },
+          "admission": {
+            "const": false
+          },
+          "kernel_or_e_case_write": {
+            "const": false
+          },
+          "certificate": {
+            "const": false
+          },
+          "certified_stop": {
+            "const": false
+          }
+        }
+      }
+    }
+  },
+  "example_records": [
+    {
+      "role": "positive_conditional",
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/conditional-sufficient-record.json"
+    },
+    {
+      "role": "negative_missing_modalities",
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/missing-modalities-fail-record.json"
+    },
+    {
+      "role": "negative_cti_laundering",
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/cti-laundering-deny-record.json"
+    }
+  ],
+  "explicit_non_authorizations": {
+    "green_sufficiency_evaluator_runtime": false,
+    "checker_runtime_connection": false,
+    "effective_schema_or_consumer_change": false,
+    "mapper_or_adapter_change": false,
+    "a3_audit_log": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_real_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "review_boundary": {
+    "acceptance_would_accept_red_contract_and_examples_only": true,
+    "acceptance_would_make_draft_schema_effective": false,
+    "acceptance_would_authorize_green_evaluator": false,
+    "acceptance_would_connect_real_checker_runtime": false,
+    "acceptance_would_start_a3": false,
+    "acceptance_would_authorize_path_b": false,
+    "acceptance_would_authorize_git_delivery": false
+  }
+}

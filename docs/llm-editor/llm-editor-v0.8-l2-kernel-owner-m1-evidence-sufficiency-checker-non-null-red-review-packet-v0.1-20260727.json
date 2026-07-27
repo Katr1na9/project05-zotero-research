@@ -1,0 +1,193 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-m1-evidence-sufficiency-checker-non-null-red-review-packet-v0.1-20260727",
+  "artifact_type": "kernel_owner_m1_evidence_sufficiency_checker_non_null_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "program_path": "Path_A",
+  "slice": "A2_evidence_sufficiency_checker_non_null_readonly_red",
+  "authority_base_commit": "5f8fddf0b43c7f74bcaa1316570d8bfd261247c7",
+  "origin_main_observed": "567ccdb0d0c5fac50e67f736c7b29cb42697892f",
+  "authority_base_selection": "A1 was not yet present on origin/main; the explicit Work Order authority base containing exact A1 acceptance was used.",
+  "reviewed_branch": "codex/m1-evidence-sufficiency-checker-non-null-red-v0.1",
+  "status": "assisted_a2_red_contract_pass_pending_kernel_owner_review",
+  "conclusion": "PASS",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "pinned_design": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-evidence-sufficiency-checker-non-null-red-design-v0.1-20260727.json",
+    "sha256": "82afa37e8e027b2c4e0a4d4de7668b0232d905787dd83278a6e41919a756250b",
+    "status": "assisted_red_design_not_effective_pending_kernel_owner_review"
+  },
+  "pinned_example_records": [
+    {
+      "role": "positive_conditional",
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/conditional-sufficient-record.json",
+      "sha256": "0c31ea39735f3ccc3ad86c4830a5994680a3da10a49f43e5a5ca695da5f75ef1",
+      "sufficiency_decision": "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+      "checker_decision": "ACCEPT_CONDITIONAL_FOR_READONLY_REVIEW_ONLY",
+      "checker_non_null": true,
+      "accepted_package_count": 6,
+      "bound_claim_count": 122
+    },
+    {
+      "role": "negative_missing_modalities",
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/missing-modalities-fail-record.json",
+      "sha256": "3591ef160d9a6a51c719f02ae34abef6f72806b4c0bf63d2b64cbe326ab24ef9",
+      "sufficiency_decision": "FAIL_INSUFFICIENT_EVIDENCE",
+      "checker_decision": "REJECT_FAIL_CLOSED",
+      "checker_non_null": true,
+      "reason": "provenance_graph_and_cti_report_missing_despite_structurally_valid_system_log_packages"
+    },
+    {
+      "role": "negative_cti_laundering",
+      "path": "docs/llm-editor/fixtures/evidence-sufficiency-checker-non-null-red-v0.1/cti-laundering-deny-record.json",
+      "sha256": "42fdba3766a9c6e91bab0f6a3a641949a12e06385170a0154b0360db9265a9bc",
+      "sufficiency_decision": "DENY_INVALID_OR_LAUNDERED_INPUT",
+      "checker_decision": "DENY_INVALID_INPUT",
+      "checker_non_null": true,
+      "reason": "cti_observed_laundering_rejected_before_package_emission"
+    }
+  ],
+  "pinned_contract_test": {
+    "path": "tests/compiler_contract/test_m1_evidence_sufficiency_contract.py",
+    "sha256": "acc9878c8fc0d1fc8ad2cfb9e91983712e220311e732842b17066c09e275d435",
+    "test_methods": 12,
+    "result": "12/12 PASS"
+  },
+  "authority_acceptance_pins": {
+    "path_a1_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-coverage-expansion-owner-acceptance-v0.1-20260727.json",
+      "sha256": "f4b00bf3fd10cd8d70afa9cdf3ee71b7ed16bd2da694b6caf31b210a7c3443a4",
+      "result": "OK"
+    },
+    "readonly_e2e_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-claim-ir-readonly-e2e-owner-acceptance-v0.1-20260727.json",
+      "sha256": "dd264de3f09a385070098969a5a4809c846ffde246e869a7f4382a8fbff4615c",
+      "result": "OK"
+    },
+    "schema_green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-claim-ir-evidence-claim-record-schema-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "60c31ffef0e4288f031b749ff89807904d13986025b56c769295ef80348ce148",
+      "result": "OK"
+    },
+    "green_2_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-m1-evidence-to-claim-ir-mapping-green-2-owner-acceptance-v0.1-20260727.json",
+      "sha256": "138715778a4a9ecc5cbaef913b56244b3b0c52e11e9f774a50bfc2e0b64a66f4",
+      "result": "OK"
+    }
+  },
+  "protected_pin_summary": {
+    "pins_checked": 14,
+    "pins_match": true,
+    "protected_bytes_before_equal_after": true,
+    "effective_external_evidence_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+    "effective_kernel_additive_schema_sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+    "effective_consumer_v0_2_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+    "green_2_mapper_sha256": "1dd8f407cc8fe840d90a7bf66c43e2cb11b5131877f2e46f92f2a1ffd372965b",
+    "zero_claim_adapters_unchanged": true,
+    "legacy_identities_unchanged": true,
+    "result": "OK"
+  },
+  "contract_summary": {
+    "input_catalog": "six exact package bindings covering E2E 9/16/11 and A1 4/48/34 with exact evidence-field-set SHA pins",
+    "output": "non-null evidence_sufficiency_decision plus non-null checker_decision in a standalone assisted RED record",
+    "decision_enum": [
+      "PASS_DECLARED_SYNTHETIC_BOUNDARY_ONLY",
+      "CONDITIONAL_SUFFICIENT_DECLARED_SCOPE_ONLY",
+      "FAIL_INSUFFICIENT_EVIDENCE",
+      "ABSTAIN_UNRESOLVED_EVIDENCE",
+      "DENY_INVALID_OR_LAUNDERED_INPUT"
+    ],
+    "schema_validity_auto_implies_sufficiency": false,
+    "consumer_structural_pass_auto_implies_sufficiency": false,
+    "sufficiency_auto_implies_truth_admission_ingestion_or_stop": false,
+    "checker_decision_auto_implies_truth_admission_kernel_write_or_stop": false,
+    "unknown_modality": "ABSTAIN_NO_PACKAGE_NO_PARTIAL_EMISSION",
+    "missing_key_evidence": "FAIL_INSUFFICIENT_EVIDENCE",
+    "cti_observed_or_derived": "DENY_INVALID_OR_LAUNDERED_INPUT"
+  },
+  "checker_integration_boundary": {
+    "non_null_checker_decision_exists_in_assisted_red_record": true,
+    "runtime_checker_execution_authorized": false,
+    "existing_e_case_checker_field_changed": false,
+    "existing_certificate_checker_ref_changed": false,
+    "existing_certified_stop_checker_or_sufficiency_ref_changed": false,
+    "green_evaluator_or_checker_runtime_requires_separate_authority": true
+  },
+  "commands_and_results": [
+    {
+      "command": "git fetch origin main",
+      "result": "PASS; origin/main=567ccdb0d0c5fac50e67f736c7b29cb42697892f; explicit authority base 5f8fddf0 used because it contains A1 acceptance"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_evidence_sufficiency_contract -v",
+      "result": "12/12 PASS"
+    },
+    {
+      "command": "python -m unittest tests.compiler_contract.test_m1_system_log_projection_adapter tests.compiler_contract.test_m1_provenance_graph_projection_adapter tests.compiler_contract.test_m1_cti_report_projection_adapter tests.compiler_contract.test_claim_ir_evidence_claim_record_schema_green tests.compiler_contract.test_m1_evidence_to_claim_ir_mapper tests.compiler_contract.test_m1_evidence_claim_ir_coverage_expansion tests.compiler_contract.test_m1_evidence_sufficiency_contract -v",
+      "result": "72/72 PASS"
+    }
+  ],
+  "write_side_effects": {
+    "observed": "only_one_design_json_three_example_json_files_one_contract_test_and_this_review_packet",
+    "runtime_modified": false,
+    "effective_schema_or_consumer_modified": false,
+    "mapper_or_adapter_modified": false,
+    "checker_runtime_invoked": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_stop": false
+  },
+  "owner_review_questions": [
+    {
+      "question_id": "PATH-A2-RED-ORQ-01",
+      "question": "Accept the standalone assisted RED shape for non-null evidence_sufficiency_decision and checker_decision?"
+    },
+    {
+      "question_id": "PATH-A2-RED-ORQ-02",
+      "question": "Accept the exact six-package E2E/A1 binding catalog and evidence-field-set pins as the v0.1 synthetic review scope?"
+    },
+    {
+      "question_id": "PATH-A2-RED-ORQ-03",
+      "question": "Accept CONDITIONAL, missing-evidence FAIL, unknown ABSTAIN, and CTI-laundering DENY semantics?"
+    },
+    {
+      "question_id": "PATH-A2-RED-ORQ-04",
+      "question": "Confirm that acceptance grants no GREEN evaluator, real Checker runtime connection, A3, Path B, authority transition, certificate, STOP, or git delivery?"
+    }
+  ],
+  "explicit_non_authorizations": {
+    "green_sufficiency_evaluator_runtime": false,
+    "checker_runtime_connection": false,
+    "effective_identity_change": false,
+    "mapper_or_adapter_change": false,
+    "a3_audit_log": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_real_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_ingestion_or_write": false,
+    "e_case_write": false,
+    "certificate_generation": false,
+    "certified_stop": false,
+    "l2_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "acceptance_boundary": {
+    "acceptance_would_accept_a2_red_contract_examples_and_tests_only": true,
+    "acceptance_would_make_embedded_draft_schema_effective": false,
+    "acceptance_would_authorize_green_evaluator": false,
+    "acceptance_would_connect_real_checker_runtime": false,
+    "acceptance_would_start_a3": false,
+    "acceptance_would_authorize_path_b": false,
+    "acceptance_would_authorize_git_delivery": false
+  }
+}
