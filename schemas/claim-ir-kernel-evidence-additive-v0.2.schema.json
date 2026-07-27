@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.invalid/schemas/claim-ir-kernel-evidence-additive-v0.2.schema.json",
+  "title": "Project05 Kernel Claim IR additive evidence union v0.2",
+  "description": "A3 GREEN candidate additive union. The legacy Kernel branch is unchanged; the evidence-v0.2 branch remains structural-only, unminted, and not admitted. No Kernel write, truth, sufficiency, certificate, or STOP authority is granted.",
+  "x-status": "candidate_effective_pending_kernel_owner_a3_green_acceptance",
+  "x-authority-base-commit": "ea04056e4121cea02a70ca588a42b9bef843078d",
+  "x-red-owner-acceptance": {
+    "path": "docs/kernel/kernel-v0.8-m1-audit-log-evidence-modality-red-owner-acceptance-v0.1-20260727.json",
+    "sha256": "2113590604e86ef82694b5c98632fb8f1132f1c2c88e54398a02a24f9f30b4a5"
+  },
+  "x-effective-legacy-kernel-schema": {
+    "path": "schemas/claim-ir-kernel.schema.json",
+    "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+    "modified": false
+  },
+  "x-preserved-evidence-v0.1": {
+    "path": "schemas/claim-ir-kernel-evidence-additive-v0.1.schema.json",
+    "sha256": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+    "modified": false
+  },
+  "x-external-evidence-v0.2-candidate": {
+    "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+    "sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+    "schema_version": "claim-ir-external-evidence-v0.2",
+    "claim_ceiling": "PUBLIC_AUDIT_DECLARATION_ONLY"
+  },
+  "oneOf": [
+    {
+      "$ref": "https://project05.local/schemas/claim-ir-kernel.schema.json"
+    },
+    {
+      "$ref": "https://project05.invalid/schemas/claim-ir-external-envelope-evidence-v0.2.schema.json#/$defs/evidence_claim_record_v0_2"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "artifact_id": "kernel-v0.8-m1-audit-log-evidence-modality-green-owner-acceptance-v0.1-20260727",
+  "artifact_type": "kernel_m3_m1_audit_log_evidence_modality_path_a3_green_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-27",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "path_a3_green_test_only_accepted_new_v0_2_v0_3_structural_identities_accepted",
+  "program_path": "Path_A",
+  "slice": "A3_audit_log_public_projection_green_test_only",
+  "authority_base_commit": "ea04056e4121cea02a70ca588a42b9bef843078d",
+  "reviewed_tip": "ea04056e4121cea02a70ca588a42b9bef843078d",
+  "reviewed_branch": "codex/m1-audit-log-evidence-modality-green-v0.1",
+  "pinned_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-m1-audit-log-evidence-modality-green-review-packet-v0.1-20260727.json",
+    "content_sha256": "76d4ce1035d3fe694ddff7c9a21830e778b9650fadaecc23b0c0787fa5ab64a3"
+  },
+  "pinned_green_design": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-m1-audit-log-evidence-modality-green-design-v0.1-20260727.json",
+    "content_sha256": "b485f6005d31cf2f1fc26cb3daef7dc8b82793f42f518af178ee51d543e39fac"
+  },
+  "accepted_structural_identities": {
+    "external_evidence_v0_2": {
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "content_sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+      "schema_version": "claim-ir-external-evidence-v0.2",
+      "role": "exact_structural_identity_for_audit_log_and_prior_three_modalities"
+    },
+    "kernel_additive_v0_2": {
+      "path": "schemas/claim-ir-kernel-evidence-additive-v0.2.schema.json",
+      "content_sha256": "ef4aa92e5130286c5da142a4f6780d372fbec2e9bd4f2830222e035e99c3f35f",
+      "role": "exact_additive_kernel_identity_including_audit_log_branch"
+    },
+    "consumer_v0_3": {
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "content_sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+      "role": "exact_dispatch_consumer_including_claim-ir-external-evidence-v0.2",
+      "wildcard_or_fallback": false
+    },
+    "preserved_prior_identities_unmodified": {
+      "evidence_v0_1_external": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "evidence_v0_1_kernel_additive": "d8cccbad36c6cca068fdc9d17ecbd8d0db2e08271f986127d0c0236353a79ce5",
+      "consumer_v0_2": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "legacy_external": "5bffd7e2cf0da224422ea0d8679c18ffeed4bbc0546bbfcd92c3137fce73419e",
+      "legacy_kernel": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d",
+      "legacy_consumer_v0_1": "a2a176fdeb2b93205a7f5e11c7c096236e2dc582d1c31f8f4a1534866c008d63"
+    }
+  },
+  "accepted_runtime": {
+    "adapter": {
+      "path": "src/compiler/llm/m1_audit_log_projection_adapter.py",
+      "content_sha256": "93934bc6a28eaa1d7b23932bf5d1ca6c44221df2dc7a3c255b8e969cca311704",
+      "adapter_id": "m1a_audit_log_projection_v0_1",
+      "authority": "test_only_in_memory"
+    },
+    "mapper": {
+      "path": "src/compiler/llm/m1_audit_log_to_claim_ir_mapper.py",
+      "content_sha256": "4d0fccbdff2b8d902079f7bfa9a949a7fc6ec4660e946f6ad75deed4a4e8e0e9",
+      "mapper_id": "m1m_audit_log_to_claim_ir_v0_1",
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted"
+    },
+    "adapter_tests": {
+      "path": "tests/compiler_contract/test_m1_audit_log_projection_adapter.py",
+      "content_sha256": "d9855e5c1aab12d3cf0bb0231bf24916571fddf0f4303f7af70c4aecc124a324"
+    },
+    "mapper_tests": {
+      "path": "tests/compiler_contract/test_m1_audit_log_to_claim_ir_mapper.py",
+      "content_sha256": "af2f55fbb053a4e40209891dd57496370dffe291d975fab4788d622a4a524da4"
+    }
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "branch_match": true,
+    "deliverable_sha_match": "9/9 OK",
+    "mandatory_pin_reverify": "27/27 OK",
+    "directed_tests": "17/17 PASS",
+    "protected_regression": "60/60 PASS",
+    "combined_tests": "77/77 PASS",
+    "reported_claim_count": 10,
+    "namespace_only_evidence_audit_log": true,
+    "unknown": "ABSTAIN_NO_PACKAGE",
+    "observed_or_derived": "DENY_MODALITY_LAUNDERING",
+    "old_evidence_v0_1_audit_claims": "EXPECTED_FAIL_CLOSED",
+    "a2_catalog_binding_count": 6,
+    "a2_catalog_extended": false,
+    "audit_binding_against_a2": "DENY_UNKNOWN_BINDING",
+    "porcelain_before_owner_acceptance": "exactly_9_untracked_green_files",
+    "write_side_effects_in_reviewed_delivery": "only_9_authorized_a3_green_files",
+    "prior_out_of_v0_1_disposition_bytes_unmodified": true,
+    "green_2_mapper_and_three_adapters_unmodified": true,
+    "a2_evaluator_unmodified": true
+  },
+  "answers_to_owner_questions": {
+    "A3-GREEN-ORQ-01_public_audit_declaration_only": "accept",
+    "A3-GREEN-ORQ-02_reported_unknown_observed_derived": "accept",
+    "A3-GREEN-ORQ-03_new_v0_2_v0_3_identities_preserve_priors": "accept",
+    "A3-GREEN-ORQ-04_ten_field_mapping_and_v0_1_fail_closed": "accept",
+    "A3-GREEN-ORQ-05_no_a2_extend_path_b_part_b_or_git": "accept"
+  },
+  "accepted_for": [
+    "path_a3_green_test_only_audit_log_adapter_and_mapper",
+    "public_audit_declaration_scientific_ceiling",
+    "reported_or_unknown_modality_with_observed_derived_deny",
+    "new_exact_structural_identities_evidence_v0_2_kernel_additive_v0_2_consumer_v0_3",
+    "preservation_of_legacy_and_evidence_v0_1_bytes_and_exact_routes",
+    "explicit_non_extension_of_a2_six_package_catalog"
+  ],
+  "scope_note": "Accepted A3 GREEN establishes a reproducible test-only audit_log_public_projection adapter/mapper and accepts new v0.2/v0.3 exact structural identities for evidence.audit_log.*. This does not prove operation occurrence, actor authorization, reported-outcome truth, or scientific sufficiency. It does not extend the A2 sufficiency catalog, activate registry/production, mint/admit claims, write Kernel/E_case, start Path B, or elevate Part B.",
+  "authorized_now": {
+    "path_a3_green_owner_acceptance_record": true,
+    "use_of_accepted_v0_2_v0_3_structural_identities_in_test_only_routes": true,
+    "a2_sufficiency_catalog_extension": false,
+    "registry_activation_or_production_execute": false,
+    "claim_id_mint_or_admission": false,
+    "kernel_or_e_case_write": false,
+    "path_b_or_part_b_elevation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "not_authorized": {
+    "a2_sufficiency_catalog_extension": false,
+    "registry_activation": false,
+    "production_execute": false,
+    "download_or_raw_audit_source_access": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "path_b": false,
+    "part_b_elevation": false,
+    "silent_rewrite_of_prior_disposition_or_v0_1_identities": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false,
+    "merge": false
+  },
+  "hard_stop": true,
+  "separate_authority_required_for_a2_catalog_extension": true,
+  "separate_authority_required_for_path_b_or_part_b": true,
+  "separate_authority_required_for_git_delivery": true,
+  "recommended_next_slice": "Optional: commit/push/PR this A3 GREEN (+ this acceptance). Functional next remains separately authorized: A2 catalog extension (if scientific need), or Path B (still NO_GO by default). Do not treat A3 as Part B elevation unlock."
+}
