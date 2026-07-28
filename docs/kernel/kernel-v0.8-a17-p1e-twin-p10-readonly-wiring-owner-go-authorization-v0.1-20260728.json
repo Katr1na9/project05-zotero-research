@@ -1,0 +1,232 @@
+{
+  "artifact_id": "kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-owner-go-authorization-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a17_p1e_twin_p10_readonly_caller_wiring_owner_go_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "decision": "AUTHORIZE_TEST_ONLY_D1_TWIN_P10_READONLY_CALLER_WIRING_RED_FIRST",
+  "authority_base_ref": "origin/main",
+  "authority_base_commit": "7ba5867f72c713fd8ee017439110984ff4ef30a5",
+  "authority_base_note": "origin/main after Merge PR #53 (A16 current-tip replay Owner acceptance). current_a16_go_reestablished=true only for Kernel v0.8 Part A frozen finite-domain scope evidenced at 651b75c / carried on this tip.",
+  "branch": "codex/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-v0.1",
+  "program_path": "KERNEL_V0_8_MAINLINE",
+  "slice_id": "A17_P1E_TWIN_P10_READONLY_CALLER_WIRING_TEST_ONLY_V0_1",
+  "start_authorized": true,
+  "authorized_sequence": [
+    "RED_design_and_owner_review_packet",
+    "Kernel_Owner_review",
+    "GREEN_test_only_caller_fixtures_and_tests_only_after_RED_acceptance",
+    "Kernel_Owner_review"
+  ],
+  "parallelism": "FORBIDDEN",
+  "current_phase_authorized": "RED_DOCS_ONLY",
+  "green_started": false,
+  "second_a17_grid_cell_opened": false,
+  "part_b_elevation": "NO_GO",
+  "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "prerequisites": {
+    "a16_current_tip_go": {
+      "path": "docs/kernel/kernel-v0.8-a16-current-tip-replay-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "cf956a00a80c66bdbd97b076dac1f1814143a973950e1b24de5c2f854560dd06",
+      "decision": "accept",
+      "current_a16_go_reestablished": true,
+      "scope": "KERNEL_V0_8_PART_A_FROZEN_FINITE_DOMAIN_ONLY_AT_651B75C",
+      "status": "SATISFIED_ON_ORIGIN_MAIN"
+    },
+    "p1e_green_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06",
+      "decision": "accept",
+      "status": "SATISFIED_ON_ORIGIN_MAIN"
+    },
+    "p1e_runtime": {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "entrypoints": [
+        "evaluate_depth1_planner_request",
+        "validate_resource_trace_binding"
+      ],
+      "select_action_is_candidacy_metadata_only": true,
+      "action_execution_enabled": false,
+      "stop_authority": false
+    }
+  },
+  "goal": {
+    "statement": "Design, then only after separate RED acceptance implement, a test-only Twin/P10 readonly caller that maps frozen Twin fixed-case public inputs into the exact fourteen-field A17-P1e depth-1 planner request, invokes evaluate_depth1_planner_request, optionally validates a readonly resource-trace binding receipt against the historical Twin resource_trace row(s), and returns the D1 decision record unmodified as candidacy sidecar metadata.",
+    "caller_class": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+    "gate_entry": "src.planner.deterministic_depth1.evaluate_depth1_planner_request",
+    "optional_binding_entry": "src.planner.deterministic_depth1.validate_resource_trace_binding",
+    "fixed_case": "TWIN-COUNTEREXAMPLE-001",
+    "p10_role": "FIXED_CASE_INPUT_AND_REGRESSION_BOUNDARY_NOT_EXECUTION_AUTHORITY",
+    "maximum_result": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY",
+    "maximum_result_is_action_execution": false,
+    "maximum_result_is_part_b_pass": false,
+    "maximum_result_is_mint_or_admission": false,
+    "maximum_result_is_write_authority": false,
+    "maximum_result_is_certificate_or_stop": false
+  },
+  "wiring_ceiling": {
+    "additive_separate_module_required": true,
+    "mutate_p1e_planner_runtime": false,
+    "mutate_p10_driver_core_outcome_schema": false,
+    "require_planner_decision_in_existing_p10_outcome_fields": false,
+    "execute_selected_action_from_select_action": false,
+    "rewrite_historical_resource_trace": false,
+    "expand_finite_domain": false,
+    "open_second_a17_grid_cell": false,
+    "open_part_b_or_path_b": false,
+    "widen_named_open": false,
+    "select_action_elevation_to_execution_or_stop": false
+  },
+  "required_red_contract_questions": [
+    "Freeze Twin fixed-case identity (TWIN-COUNTEREXAMPLE-001), gamma/evidence/catalog/checker/counterexample/P4 selection bindings, and historical resource_trace content hash used for readonly binding.",
+    "Define an exact public-input mapping from Twin kernel inputs into the fourteen-field A17-P1e request without hidden/oracle fields, stochastic models, or planning confidence.",
+    "Define caller return shape: unmodified D1 decision record plus optional binding receipt; SELECT_ACTION remains candidacy metadata only.",
+    "Prove P10 regression boundary: existing DeterministicKernelE2EDriver outcome fields and test_twin_kernel_e2e_p10 semantics stay zero-drift (no required planner_decision field).",
+    "Fail closed on any attempt to feed SELECT_ACTION into P5 execution, system-state authority, mint/admission, certificate, or CERTIFIED_STOP.",
+    "Plan directed tests that exercise Twin→D1 request build, decision hash stability, and readonly resource-trace binding without production registration or domain expansion."
+  ],
+  "red_phase_now": {
+    "authorized": true,
+    "deliverables": [
+      "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-red-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-twin-p10-readonly-wiring-red-review-packet-v0.1-20260728.json"
+    ],
+    "caller_runtime_implementation": false,
+    "fixture_creation": false,
+    "test_creation": false,
+    "p10_driver_modification": false,
+    "green_started": false,
+    "stop_for_owner_review": true,
+    "write_side_effects": "owner_go_json_plus_two_red_json_files_only"
+  },
+  "green_phase_later": {
+    "authorized_now": false,
+    "requires": "Owner accept on RED design + review packet, then a separate GREEN authorization or explicit Owner proceed-to-GREEN under this slice",
+    "intended_maximum_if_later_authorized": [
+      "additive test-only caller module",
+      "synthetic/fixed-case request fixture if needed",
+      "directed unit/integration tests for Twin→D1 wiring and readonly binding",
+      "GREEN design + Owner review packet"
+    ],
+    "still_forbidden_even_after_green": [
+      "production registration",
+      "P10 outcome schema elevation requiring planner_decision",
+      "action execution from SELECT_ACTION",
+      "Part B / Path B elevation",
+      "mint / admission / Kernel or E_case write",
+      "certificate / CERTIFIED_STOP",
+      "named-open widening",
+      "second A17 grid cell",
+      "finite-domain expansion"
+    ]
+  },
+  "protected_zero_drift": {
+    "p1e_planner_runtime": {
+      "path": "src/planner/deterministic_depth1.py",
+      "sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+    },
+    "p1e_unit_fixture": {
+      "path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b"
+    },
+    "p4_selection": {
+      "path": "src/actions/selection.py",
+      "sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83"
+    },
+    "p5_executor": {
+      "path": "src/executor/deterministic.py",
+      "sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a"
+    },
+    "p10_driver": {
+      "path": "src/cli/kernel_e2e.py",
+      "sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60"
+    },
+    "p10_regression_tests": {
+      "path": "tests/integration/test_twin_kernel_e2e_p10.py",
+      "sha256": "a332cbce5f8bdc9b0fd4467fbc09d0255d6099716c0405ffc5b47a13cdd26254"
+    },
+    "twin_kernel_inputs_helper": {
+      "path": "tests/integration/twin_kernel_inputs.py",
+      "sha256": "16323f3c415e903eeb2e72bdb94e116338c1770d8212bbf3f5917d48b4c4bdf3"
+    },
+    "twin_resource_trace": {
+      "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+      "sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318"
+    },
+    "supply_chain_resource_trace": {
+      "path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/resource_trace.jsonl",
+      "sha256": "102f43c3210208101f393580b6d4afe7573f9be0e081edabb97d28f19b9efee5"
+    }
+  },
+  "explicit_non_substitutes": [
+    {
+      "artifact": "P1e standalone unit/integration planner tests",
+      "reason": "prove D1 contract, not Twin/P10 caller wiring"
+    },
+    {
+      "artifact": "P4 distinguishing action selection",
+      "reason": "eligibility filter only; no D1 value / next-action candidacy policy"
+    },
+    {
+      "artifact": "P5 deterministic observation executor",
+      "reason": "replays frozen observations; must not become SELECT_ACTION execution path"
+    },
+    {
+      "artifact": "existing P10 DeterministicKernelE2EDriver",
+      "reason": "fixed-case E2E without planner decision authority; mutation of core outcome schema is forbidden in this slice"
+    },
+    {
+      "artifact": "Part B B5 planner",
+      "reason": "planner_execution_authority=false; not Part A D1 candidacy wiring"
+    },
+    {
+      "artifact": "PB-SI-008 named-open callers",
+      "reason": "structural candidacy only; named-open remains frozen/non-widened here"
+    }
+  ],
+  "still_not_authorized": {
+    "green_design_or_implementation": false,
+    "caller_runtime": false,
+    "fixture_or_test_implementation": false,
+    "p10_driver_core_mutation": false,
+    "p1e_planner_runtime_mutation": false,
+    "production_action_execution": false,
+    "select_action_as_execution_or_stop": false,
+    "part_b_or_path_b_opening": false,
+    "named_open_widening": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "second_a17_grid_cell": false,
+    "finite_domain_expansion": false,
+    "infer_part_b_pass_from_wiring_green": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_gate": {
+    "stop_after_red": true,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "green_requires_new_owner_authorization_after_red_acceptance": true
+  },
+  "git_delivery": {
+    "commit": "NOT_AUTHORIZED",
+    "push": "NOT_AUTHORIZED",
+    "pull_request": "NOT_AUTHORIZED"
+  },
+  "write_side_effects": {
+    "authorized": "owner_go_json_plus_red_design_json_plus_owner_review_packet_json_only",
+    "runtime_or_schema_change": false
+  },
+  "clarification": {
+    "what_this_authorizes_now": "Owner GO JSON plus RED design and Owner review packet for a separate test-only Twin/P10→D1 readonly caller wiring surface.",
+    "what_requires_later_red_acceptance": "Any caller module, fixture, directed test, P10-adjacent additive harness, or GREEN design/review artifact.",
+    "what_acceptance_would_not_mean": "Part B PASS, production registration, action execution, mint, admission, Kernel write, certificate/STOP, named-open widening, second A17 cell, or elevation of SELECT_ACTION beyond candidacy sidecar metadata.",
+    "a16_scope_note": "This slice rides the reestablished Part A A16 Go; it does not expand that Go beyond frozen finite-domain Part A, and does not open Part B."
+  },
+  "recommended_next_after_this_go": "Codex implements RED design + Owner review packet under this GO, then stop for Kernel Owner review. Do not start GREEN, runtime, fixtures, or tests until RED is accepted."
+}

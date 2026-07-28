@@ -1,0 +1,137 @@
+{
+  "artifact_id": "kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a17_p1e_twin_p10_readonly_caller_wiring_green_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "a17_p1e_twin_p10_readonly_caller_wiring_green_accepted_candidacy_sidecar_only",
+  "authority_base_commit": "7ba5867f72c713fd8ee017439110984ff4ef30a5",
+  "reviewed_tip": "7ba5867f72c713fd8ee017439110984ff4ef30a5",
+  "reviewed_branch": "codex/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-v0.1",
+  "phase_accepted": "A17_P1E_TWIN_P10_READONLY_CALLER_WIRING_GREEN",
+  "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "part_b_elevation": "NO_GO",
+  "effective_surface_after_acceptance": {
+    "caller_api": "evaluate_twin_p10_fixed_case_for_depth1_candidacy(caller_input, *, test_only_authority)",
+    "caller_class": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+    "fixed_case_id": "TWIN-COUNTEREXAMPLE-001",
+    "result_ceiling": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY",
+    "default_success_path": "CANDIDACY_SIDECAR_EMITTED_NO_TRACE_BINDING",
+    "selected_action_id": "query_auth_H1_1000_1015",
+    "select_action_is_candidacy_metadata_only": true,
+    "historical_trace_binding": "FAIL_CLOSED_DENY_TRACE_BINDING_MISMATCH_ONLY",
+    "action_execution_enabled": false,
+    "production_registration_enabled": false,
+    "system_state_authority": false,
+    "stop_authority": false,
+    "p10_driver_modified": false,
+    "p1e_runtime_modified": false,
+    "part_b_or_path_b_opened": false,
+    "named_open_widened": false,
+    "full_m3_star_opened": false,
+    "second_a17_grid_cell_opened": false
+  },
+  "pinned_owner_go_authorization": {
+    "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-owner-go-authorization-v0.1-20260728.json",
+    "content_sha256": "b582178822621c7407e97b847b795db62e6d5002ddda21024ce9b26173ea18c3"
+  },
+  "pinned_red_design": {
+    "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-red-design-v0.1-20260728.json",
+    "content_sha256": "0848ddf4b1cf5c495082d0e4d05c62eeff0542fb1c9840ab1c537c59fd0f75c4"
+  },
+  "pinned_red_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-twin-p10-readonly-wiring-red-review-packet-v0.1-20260728.json",
+    "content_sha256": "f94bcfcfe1621142bb2a5a16ef01b55038cac79da8d50c830202521ece277865"
+  },
+  "pinned_green_design": {
+    "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-design-v0.1-20260728.json",
+    "content_sha256": "9d1b547a5d23ae9f6465601479f3bad5aeb9ad90b2c79c6a64737b26226007be"
+  },
+  "pinned_green_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-twin-p10-readonly-wiring-green-review-packet-v0.1-20260728.json",
+    "content_sha256": "0e7a9a7e90194a0cd84b3c4628db6df80daf760afda5c0b43b386d61e0c06bc7"
+  },
+  "accepted_runtime_artifacts": {
+    "caller": {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "entrypoint": "evaluate_twin_p10_fixed_case_for_depth1_candidacy"
+    },
+    "fixture": {
+      "path": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json",
+      "content_sha256": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee"
+    },
+    "unit_tests": {
+      "path": "tests/unit/test_kernel_a17_p1e_twin_p10_readonly_wiring.py",
+      "content_sha256": "2fe602c2a8d01ede3c363726eed5bee20bc7f640f50ac1d8c9dd61e20e9b49b9"
+    },
+    "integration_tests": {
+      "path": "tests/integration/test_kernel_a17_p1e_twin_p10_readonly_wiring.py",
+      "content_sha256": "be0e0e2ae198dd1e9a5867ec2bbbf0d8e08882ecca6a59fae48325d04b2288e8"
+    }
+  },
+  "accepted_evidence_summary": {
+    "new_caller_tests": "13/13 PASS",
+    "owner_required_combined_regression": "29/29 PASS",
+    "red_and_protected_pins": "12/12 MATCH",
+    "green_json_parse": "6/6 PASS",
+    "historical_trace_sha_unchanged": true,
+    "historical_rows_deny_trace_binding_mismatch": "3/3",
+    "p10_outcome_has_planner_decision": false,
+    "production_registration_enabled": false,
+    "action_execution_enabled": false,
+    "system_state_authority": false,
+    "stop_authority": false,
+    "porcelain": "exact_3_red_plus_6_green",
+    "extra_paths": 0
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "branch_match": true,
+    "deliverable_sha_match": "9/9 OK",
+    "owner_local_combined_regression": "29/29 PASS",
+    "caller_ast_imports_p10_or_p5": false,
+    "caller_rejects_non_deny_historical_receipt": true,
+    "hard_ban_exact": true,
+    "porcelain_before_owner_acceptance": "exact_3_red_plus_6_green",
+    "write_side_effects_in_reviewed_delivery": "additive_test_only_caller_plus_docs"
+  },
+  "accepted_for": [
+    "test_only_twin_fixed_case_to_d1_readonly_caller_wiring",
+    "candidacy_sidecar_with_unmodified_p1e_decision",
+    "fail_closed_historical_trace_binding_without_rewrite",
+    "p10_zero_drift_regression_boundary"
+  ],
+  "scope_note": "Accepted GREEN closes the post-A16 Part A functional wiring of D1 into the Twin fixed-case loop as a test-only candidacy sidecar. Historical Twin resource_trace rows remain fail-closed negatives under P1E-TWIN-TRACE-FINDING-001. This does not open Part B/Path B, full M3*, production execution, mint, admission, Kernel/E_case write, certificate issuance, CERTIFIED_STOP, named-open widening, a second A17 grid cell, or companion MATCH fixtures.",
+  "authorized_now": {
+    "owner_acceptance_record": true,
+    "test_only_twin_p10_d1_readonly_caller_surface": true,
+    "part_b_or_path_b_elevation": false,
+    "full_m3_star": false,
+    "production_action_execution": false,
+    "mint_admission_kernel_write": false,
+    "certificate_or_certified_stop": false,
+    "git_commit": true,
+    "git_push": true,
+    "pull_request": true,
+    "merge": false
+  },
+  "not_authorized": {
+    "part_b_or_path_b_elevation": false,
+    "named_open_widening": false,
+    "production_registration": false,
+    "production_action_execution": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "companion_match_fixture": false,
+    "second_a17_grid_cell": false,
+    "full_m3_star": false,
+    "broad_domain_or_stochastic_evaluation": false,
+    "infer_part_b_pass_from_wiring_green": false,
+    "merge": false
+  },
+  "recommended_next": "Commit the full Twin/P10 D1 readonly wiring stack (3 RED + 6 GREEN + this acceptance), push/PR, Owner merges via browser. Part B / full M3* remain NO_GO without a new Owner GO. Companion MATCH fixture remains separately authorized."
+}
