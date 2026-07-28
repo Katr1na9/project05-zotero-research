@@ -1,0 +1,567 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-si002-bounded-evaluation-harness-contract.schema.json",
+  "title": "Part B B5 SI-002 local bounded-evaluation harness contract v0.1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/identity"
+    },
+    {
+      "$ref": "#/$defs/policy"
+    },
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/record"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "contentSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "resourceCaps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_public_state_bytes",
+        "max_feasible_action_ids",
+        "max_decision_wall_ms",
+        "max_decision_cpu_ms",
+        "max_memory_bytes",
+        "max_decisions_per_case"
+      ],
+      "properties": {
+        "max_public_state_bytes": {
+          "const": 1048576
+        },
+        "max_feasible_action_ids": {
+          "const": 4096
+        },
+        "max_decision_wall_ms": {
+          "const": 2000
+        },
+        "max_decision_cpu_ms": {
+          "const": 1000
+        },
+        "max_memory_bytes": {
+          "const": 536870912
+        },
+        "max_decisions_per_case": {
+          "const": 256
+        }
+      }
+    },
+    "failureSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeout",
+        "resource_exhaustion",
+        "infeasible",
+        "unknown",
+        "missing_measurement",
+        "infeasible_as_high_cost",
+        "timeout_as_unsat",
+        "resource_exhaustion_as_zero_or_loss",
+        "automatic_retry",
+        "fallback_to_hidden_state"
+      ],
+      "properties": {
+        "timeout": {
+          "const": "UNKNOWN_NO_RANK"
+        },
+        "resource_exhaustion": {
+          "const": "UNKNOWN_NO_RANK"
+        },
+        "infeasible": {
+          "const": "SEPARATE_NO_ACTION"
+        },
+        "unknown": {
+          "const": "FAIL_CLOSED_NO_RANK"
+        },
+        "missing_measurement": {
+          "const": "UNKNOWN_NOT_ZERO"
+        },
+        "infeasible_as_high_cost": {
+          "const": false
+        },
+        "timeout_as_unsat": {
+          "const": false
+        },
+        "resource_exhaustion_as_zero_or_loss": {
+          "const": false
+        },
+        "automatic_retry": {
+          "const": false
+        },
+        "fallback_to_hidden_state": {
+          "const": false
+        }
+      }
+    },
+    "allowedMetrics": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "INTERFACE_CONFORMANCE"
+        },
+        {
+          "const": "FAILURE_CHANNEL_COUNTS"
+        },
+        {
+          "const": "UNSCALARIZED_RESOURCE_VECTOR_SHAPE"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "authorityCeiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_scope",
+        "execution_requested",
+        "actual_runner_or_evaluator_invocation",
+        "planner_execution_authority",
+        "evaluation_execution_authority",
+        "scalarization_authority",
+        "performance_claim_authority",
+        "superiority_claim_authority",
+        "path_b_write_authority",
+        "mint_authority",
+        "kernel_or_e_case_write_authority",
+        "certificate_authority",
+        "stop_authority",
+        "full_m3_star",
+        "part_b_pass",
+        "production_registration_enabled",
+        "pb_b5_si_002_state",
+        "pb_b5_si_003_state"
+      ],
+      "properties": {
+        "record_scope": {
+          "const": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY"
+        },
+        "execution_requested": {
+          "const": false
+        },
+        "actual_runner_or_evaluator_invocation": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "scalarization_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "superiority_claim_authority": {
+          "const": false
+        },
+        "path_b_write_authority": {
+          "const": false
+        },
+        "mint_authority": {
+          "const": false
+        },
+        "kernel_or_e_case_write_authority": {
+          "const": false
+        },
+        "certificate_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "full_m3_star": {
+          "const": false
+        },
+        "part_b_pass": {
+          "const": false
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_002_state": {
+          "const": "CONTRACT_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED"
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "harness_contract_id",
+        "harness_contract_version",
+        "implementation_id",
+        "implementation_identity_hash",
+        "d1_admission_record_hash",
+        "bounded_evaluation_contract_hash",
+        "bounded_evaluation_config_content_sha256",
+        "bounded_evaluation_schema_content_sha256",
+        "frozen_resource_caps",
+        "frozen_failure_semantics",
+        "allowed_contract_metrics",
+        "authority_ceiling",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "harness_contract_id": {
+          "const": "part-b-b5-si002-local-bounded-evaluation-harness-contract-v0.1"
+        },
+        "harness_contract_version": {
+          "const": "0.1.0"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "implementation_identity_hash": {
+          "const": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+        },
+        "d1_admission_record_hash": {
+          "const": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65"
+        },
+        "bounded_evaluation_contract_hash": {
+          "const": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+        },
+        "bounded_evaluation_config_content_sha256": {
+          "const": "42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8"
+        },
+        "bounded_evaluation_schema_content_sha256": {
+          "const": "a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e"
+        },
+        "frozen_resource_caps": {
+          "$ref": "#/$defs/resourceCaps"
+        },
+        "frozen_failure_semantics": {
+          "$ref": "#/$defs/failureSemantics"
+        },
+        "allowed_contract_metrics": {
+          "$ref": "#/$defs/allowedMetrics"
+        },
+        "authority_ceiling": {
+          "$ref": "#/$defs/authorityCeiling"
+        },
+        "hash": {
+          "const": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "policy_id",
+        "policy_version",
+        "status",
+        "authorized_slice",
+        "admissible_implementation_ids",
+        "wildcards",
+        "fallback",
+        "expected_harness_contract_identity_hash",
+        "expected_d1_admission_evidence_hash",
+        "expected_bounded_evaluation_contract_hash",
+        "positive_decision",
+        "record_scope",
+        "reason_codes",
+        "failure_semantics",
+        "authority_ceiling",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "policy_id": {
+          "const": "part-b-b5-si002-bounded-evaluation-harness-policy-v0.1"
+        },
+        "policy_version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "const": "LOCAL_CONTRACT_RECORD_ONLY_NO_EXECUTION"
+        },
+        "authorized_slice": {
+          "const": "PART_B_B5_SI002_BOUNDED_EVALUATION_RUNNER_CONTRACT_RECORD_ONLY"
+        },
+        "admissible_implementation_ids": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+            }
+          ],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "wildcards": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        },
+        "expected_harness_contract_identity_hash": {
+          "const": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+        },
+        "expected_d1_admission_evidence_hash": {
+          "const": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c"
+        },
+        "expected_bounded_evaluation_contract_hash": {
+          "const": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+        },
+        "positive_decision": {
+          "const": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID"
+        },
+        "record_scope": {
+          "const": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY"
+        },
+        "reason_codes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID",
+            "DENY_UNKNOWN_IMPLEMENTATION",
+            "DENY_LEGACY_IMPLEMENTATION",
+            "DENY_MISSING_EVIDENCE",
+            "DENY_HASH_MISMATCH",
+            "DENY_INVALID_RESOURCE_LIMITS",
+            "DENY_AUTHORITY_REQUEST",
+            "DENY_NON_CONTRACT_INPUT"
+          ],
+          "properties": {
+            "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID": {
+              "const": "B5-SI002-000-CONTRACT-VALID"
+            },
+            "DENY_UNKNOWN_IMPLEMENTATION": {
+              "const": "B5-SI002-DENY-UNKNOWN-ID"
+            },
+            "DENY_LEGACY_IMPLEMENTATION": {
+              "const": "B5-SI002-DENY-LEGACY-ID"
+            },
+            "DENY_MISSING_EVIDENCE": {
+              "const": "B5-SI002-DENY-MISSING-EVIDENCE"
+            },
+            "DENY_HASH_MISMATCH": {
+              "const": "B5-SI002-DENY-HASH-MISMATCH"
+            },
+            "DENY_INVALID_RESOURCE_LIMITS": {
+              "const": "B5-SI002-DENY-INVALID-RESOURCE-LIMITS"
+            },
+            "DENY_AUTHORITY_REQUEST": {
+              "const": "B5-SI002-DENY-AUTHORITY-REQUEST"
+            },
+            "DENY_NON_CONTRACT_INPUT": {
+              "const": "B5-SI002-DENY-NON-CONTRACT-INPUT"
+            }
+          }
+        },
+        "failure_semantics": {
+          "$ref": "#/$defs/failureSemantics"
+        },
+        "authority_ceiling": {
+          "$ref": "#/$defs/authorityCeiling"
+        },
+        "hash": {
+          "const": "sha256:d18123c5946cad9d12736ef9d0d698710916100ce8eae6d247a5f69d214b5309"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_kind",
+        "request_version",
+        "implementation_id",
+        "implementation_identity_hash",
+        "d1_admission_record_hash",
+        "d1_admission_evidence_hash",
+        "bounded_evaluation_contract_hash",
+        "bounded_evaluation_config_content_sha256",
+        "bounded_evaluation_schema_content_sha256",
+        "harness_contract_identity_hash",
+        "declared_case_binding_hash",
+        "declared_resource_limits_hash",
+        "execution_requested",
+        "evaluation_execution_authority",
+        "planner_execution_authority"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "request_kind": {
+          "const": "ASSESS_LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT"
+        },
+        "request_version": {
+          "const": "0.1.0"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "implementation_identity_hash": {
+          "const": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+        },
+        "d1_admission_record_hash": {
+          "const": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65"
+        },
+        "d1_admission_evidence_hash": {
+          "const": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c"
+        },
+        "bounded_evaluation_contract_hash": {
+          "const": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+        },
+        "bounded_evaluation_config_content_sha256": {
+          "const": "42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8"
+        },
+        "bounded_evaluation_schema_content_sha256": {
+          "const": "a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e"
+        },
+        "harness_contract_identity_hash": {
+          "const": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+        },
+        "declared_case_binding_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "declared_resource_limits_hash": {
+          "const": "sha256:6ad34ed5443dae8244dbf3e4b5ce829ecb31429f38f7d9dcc27898dcd87f7c81"
+        },
+        "execution_requested": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_class",
+        "record_version",
+        "request_hash",
+        "harness_contract_identity_hash",
+        "implementation_id",
+        "implementation_identity_hash",
+        "d1_admission_record_hash",
+        "bounded_evaluation_contract_hash",
+        "decision",
+        "reason_codes",
+        "record_scope",
+        "declared_resource_limits_hash",
+        "failure_semantics_hash",
+        "planner_execution_authority",
+        "evaluation_execution_authority",
+        "stop_authority",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "record_class": {
+          "const": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_RECORD"
+        },
+        "record_version": {
+          "const": "0.1.0"
+        },
+        "request_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "harness_contract_identity_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "implementation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation_identity_hash": {
+          "const": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+        },
+        "d1_admission_record_hash": {
+          "const": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65"
+        },
+        "bounded_evaluation_contract_hash": {
+          "const": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+        },
+        "decision": {
+          "enum": [
+            "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID",
+            "DENY_UNKNOWN_IMPLEMENTATION",
+            "DENY_LEGACY_IMPLEMENTATION",
+            "DENY_MISSING_EVIDENCE",
+            "DENY_HASH_MISMATCH",
+            "DENY_INVALID_RESOURCE_LIMITS",
+            "DENY_AUTHORITY_REQUEST",
+            "DENY_NON_CONTRACT_INPUT"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "enum": [
+              "B5-SI002-000-CONTRACT-VALID",
+              "B5-SI002-DENY-UNKNOWN-ID",
+              "B5-SI002-DENY-LEGACY-ID",
+              "B5-SI002-DENY-MISSING-EVIDENCE",
+              "B5-SI002-DENY-HASH-MISMATCH",
+              "B5-SI002-DENY-INVALID-RESOURCE-LIMITS",
+              "B5-SI002-DENY-AUTHORITY-REQUEST",
+              "B5-SI002-DENY-NON-CONTRACT-INPUT"
+            ]
+          }
+        },
+        "record_scope": {
+          "const": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY"
+        },
+        "declared_resource_limits_hash": {
+          "const": "sha256:6ad34ed5443dae8244dbf3e4b5ce829ecb31429f38f7d9dcc27898dcd87f7c81"
+        },
+        "failure_semantics_hash": {
+          "const": "sha256:662294e36b8616d6eb94700b1b6f38dc758205eb4cbb42032ad184510d8e1c3e"
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}
