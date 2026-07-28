@@ -1,0 +1,474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-si002-evaluation-execution-authority-boundary.schema.json",
+  "title": "Part B B5 SI-002 evaluation-execution-authority boundary v0.1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/policy"
+    },
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/record"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "contentSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hardBan": {
+      "const": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+    },
+    "decision": {
+      "enum": [
+        "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_LEGACY_IMPLEMENTATION",
+        "DENY_MISSING_SI002_BINDING",
+        "DENY_HASH_MISMATCH",
+        "DENY_SILENT_AUTHORITY_FLIP",
+        "DENY_AUTHORITY_REQUEST",
+        "DENY_NON_CONTRACT_INPUT",
+        "DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION",
+        "DENY_SI003_REMAINS_OPEN"
+      ]
+    },
+    "reasonCode": {
+      "enum": [
+        "B5-SI002-AUTH-BOUNDARY-000-VALID-NO-FLIP",
+        "B5-SI002-AUTH-BOUNDARY-DENY-UNKNOWN-ID",
+        "B5-SI002-AUTH-BOUNDARY-DENY-LEGACY-ID",
+        "B5-SI002-AUTH-BOUNDARY-DENY-MISSING-BINDING",
+        "B5-SI002-AUTH-BOUNDARY-DENY-HASH-MISMATCH",
+        "B5-SI002-AUTH-BOUNDARY-DENY-SILENT-FLIP",
+        "B5-SI002-AUTH-BOUNDARY-DENY-AUTHORITY",
+        "B5-SI002-AUTH-BOUNDARY-DENY-NON-CONTRACT",
+        "B5-SI002-AUTH-BOUNDARY-DENY-NON-SUBSTITUTE",
+        "B5-SI002-AUTH-BOUNDARY-DENY-SI003-OPEN"
+      ]
+    },
+    "reasonCodes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_LEGACY_IMPLEMENTATION",
+        "DENY_MISSING_SI002_BINDING",
+        "DENY_HASH_MISMATCH",
+        "DENY_SILENT_AUTHORITY_FLIP",
+        "DENY_AUTHORITY_REQUEST",
+        "DENY_NON_CONTRACT_INPUT",
+        "DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION",
+        "DENY_SI003_REMAINS_OPEN"
+      ],
+      "properties": {
+        "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP": {
+          "const": "B5-SI002-AUTH-BOUNDARY-000-VALID-NO-FLIP"
+        },
+        "DENY_UNKNOWN_IMPLEMENTATION": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-UNKNOWN-ID"
+        },
+        "DENY_LEGACY_IMPLEMENTATION": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-LEGACY-ID"
+        },
+        "DENY_MISSING_SI002_BINDING": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-MISSING-BINDING"
+        },
+        "DENY_HASH_MISMATCH": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-HASH-MISMATCH"
+        },
+        "DENY_SILENT_AUTHORITY_FLIP": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-SILENT-FLIP"
+        },
+        "DENY_AUTHORITY_REQUEST": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-AUTHORITY"
+        },
+        "DENY_NON_CONTRACT_INPUT": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-NON-CONTRACT"
+        },
+        "DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-NON-SUBSTITUTE"
+        },
+        "DENY_SI003_REMAINS_OPEN": {
+          "const": "B5-SI002-AUTH-BOUNDARY-DENY-SI003-OPEN"
+        }
+      }
+    },
+    "authorityCeiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_scope",
+        "authority_effect",
+        "actual_runner_invocation_record_fact",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "evaluation_execution_authority_in_future_boundary_green_without_later_explicit_owner_flip_go",
+        "planner_execution_authority",
+        "scalarization_authority",
+        "performance_claim_authority",
+        "superiority_claim_authority",
+        "path_b_write_authority",
+        "mint_authority",
+        "kernel_or_e_case_write_authority",
+        "certificate_authority",
+        "stop_authority",
+        "production_registration_enabled",
+        "pb_b5_si_003_state",
+        "part_b_pass",
+        "full_m3_star"
+      ],
+      "properties": {
+        "record_scope": {
+          "const": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_BOUNDARY_RECORD_ONLY"
+        },
+        "actual_runner_invocation_record_fact": {
+          "const": true
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "evaluation_execution_authority_in_future_boundary_green_without_later_explicit_owner_flip_go": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "scalarization_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "superiority_claim_authority": {
+          "const": false
+        },
+        "path_b_write_authority": {
+          "const": false
+        },
+        "mint_authority": {
+          "const": false
+        },
+        "kernel_or_e_case_write_authority": {
+          "const": false
+        },
+        "certificate_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "part_b_pass": {
+          "const": false
+        },
+        "full_m3_star": {
+          "const": false
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "policy_id",
+        "policy_version",
+        "status",
+        "authorized_slice",
+        "admissible_implementation_ids",
+        "wildcards",
+        "fallback",
+        "expected_implementation_identity_hash",
+        "expected_harness_contract_identity_hash",
+        "expected_si002_contract_record_hash",
+        "expected_si002_contract_record_content_sha256",
+        "expected_si002_contract_policy_content_sha256",
+        "expected_si002_invocation_record_hash",
+        "expected_si002_invocation_record_content_sha256",
+        "expected_si002_invocation_policy_content_sha256",
+        "expected_invocation_decision",
+        "positive_decision",
+        "record_scope",
+        "authority_effect",
+        "reason_codes",
+        "authority_ceiling",
+        "hard_ban",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "policy_id": {
+          "const": "part-b-b5-si002-evaluation-execution-authority-boundary-policy-v0.1"
+        },
+        "policy_version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "const": "LOCAL_BOUNDARY_RECORD_ONLY_NO_AUTHORITY_FLIP"
+        },
+        "authorized_slice": {
+          "const": "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY"
+        },
+        "admissible_implementation_ids": {
+          "const": [
+            "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+          ]
+        },
+        "wildcards": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        },
+        "expected_implementation_identity_hash": {
+          "const": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+        },
+        "expected_harness_contract_identity_hash": {
+          "const": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+        },
+        "expected_si002_contract_record_hash": {
+          "const": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+        },
+        "expected_si002_contract_record_content_sha256": {
+          "const": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421"
+        },
+        "expected_si002_contract_policy_content_sha256": {
+          "const": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035"
+        },
+        "expected_si002_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "expected_si002_invocation_record_content_sha256": {
+          "const": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851"
+        },
+        "expected_si002_invocation_policy_content_sha256": {
+          "const": "0536a8a1b69c89af360df850be709bda1216296704ce872796420e553f9a1a9b"
+        },
+        "expected_invocation_decision": {
+          "const": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY"
+        },
+        "positive_decision": {
+          "const": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP"
+        },
+        "record_scope": {
+          "const": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_BOUNDARY_RECORD_ONLY"
+        },
+        "reason_codes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "authority_ceiling": {
+          "$ref": "#/$defs/authorityCeiling"
+        },
+        "hard_ban": {
+          "$ref": "#/$defs/hardBan"
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_kind",
+        "request_version",
+        "requested_assessment_scope",
+        "implementation_id",
+        "implementation_identity_hash",
+        "harness_contract_identity_hash",
+        "si002_contract_record_hash",
+        "si002_contract_record_content_sha256",
+        "si002_contract_policy_content_sha256",
+        "si002_invocation_record_hash",
+        "si002_invocation_record_content_sha256",
+        "si002_invocation_policy_content_sha256",
+        "invocation_decision",
+        "actual_runner_invocation",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "later_separate_owner_authority_flip_go_present"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "request_kind": {
+          "const": "ASSESS_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY"
+        },
+        "request_version": {
+          "const": "0.1.0"
+        },
+        "requested_assessment_scope": {
+          "const": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "implementation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation_identity_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "harness_contract_identity_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "si002_contract_record_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "si002_contract_record_content_sha256": {
+          "$ref": "#/$defs/contentSha256"
+        },
+        "si002_contract_policy_content_sha256": {
+          "$ref": "#/$defs/contentSha256"
+        },
+        "si002_invocation_record_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "si002_invocation_record_content_sha256": {
+          "$ref": "#/$defs/contentSha256"
+        },
+        "si002_invocation_policy_content_sha256": {
+          "$ref": "#/$defs/contentSha256"
+        },
+        "invocation_decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_runner_invocation": {
+          "type": "boolean"
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "later_separate_owner_authority_flip_go_present": {
+          "const": false
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_class",
+        "record_version",
+        "request_hash",
+        "implementation_id",
+        "implementation_identity_hash",
+        "harness_contract_identity_hash",
+        "si002_contract_record_hash",
+        "si002_invocation_record_hash",
+        "decision",
+        "reason_codes",
+        "record_scope",
+        "authority_effect",
+        "actual_runner_invocation",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "pb_b5_si_003_state",
+        "stop_authority",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "record_class": {
+          "const": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RECORD"
+        },
+        "record_version": {
+          "const": "0.1.0"
+        },
+        "request_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "implementation_identity_hash": {
+          "const": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+        },
+        "harness_contract_identity_hash": {
+          "const": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+        },
+        "si002_contract_record_hash": {
+          "const": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+        },
+        "si002_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        },
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/reasonCode"
+          }
+        },
+        "record_scope": {
+          "const": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_BOUNDARY_RECORD_ONLY"
+        },
+        "actual_runner_invocation": {
+          "const": true
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

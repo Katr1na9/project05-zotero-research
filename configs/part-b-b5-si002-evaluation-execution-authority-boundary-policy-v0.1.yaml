@@ -1,0 +1,54 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-si002-evaluation-execution-authority-boundary-policy-v0.1
+policy_version: "0.1.0"
+status: LOCAL_BOUNDARY_RECORD_ONLY_NO_AUTHORITY_FLIP
+authorized_slice: PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY
+admissible_implementation_ids:
+  - part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+wildcards: false
+fallback: false
+expected_implementation_identity_hash: "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+expected_harness_contract_identity_hash: "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+expected_si002_contract_record_hash: "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+expected_si002_contract_record_content_sha256: 24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421
+expected_si002_contract_policy_content_sha256: 4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035
+expected_si002_invocation_record_hash: "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+expected_si002_invocation_record_content_sha256: bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851
+expected_si002_invocation_policy_content_sha256: 0536a8a1b69c89af360df850be709bda1216296704ce872796420e553f9a1a9b
+expected_invocation_decision: LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY
+positive_decision: LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP
+record_scope: LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY
+authority_effect: NONE_BOUNDARY_RECORD_ONLY
+reason_codes:
+  LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP: B5-SI002-AUTH-BOUNDARY-000-VALID-NO-FLIP
+  DENY_UNKNOWN_IMPLEMENTATION: B5-SI002-AUTH-BOUNDARY-DENY-UNKNOWN-ID
+  DENY_LEGACY_IMPLEMENTATION: B5-SI002-AUTH-BOUNDARY-DENY-LEGACY-ID
+  DENY_MISSING_SI002_BINDING: B5-SI002-AUTH-BOUNDARY-DENY-MISSING-BINDING
+  DENY_HASH_MISMATCH: B5-SI002-AUTH-BOUNDARY-DENY-HASH-MISMATCH
+  DENY_SILENT_AUTHORITY_FLIP: B5-SI002-AUTH-BOUNDARY-DENY-SILENT-FLIP
+  DENY_AUTHORITY_REQUEST: B5-SI002-AUTH-BOUNDARY-DENY-AUTHORITY
+  DENY_NON_CONTRACT_INPUT: B5-SI002-AUTH-BOUNDARY-DENY-NON-CONTRACT
+  DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION: B5-SI002-AUTH-BOUNDARY-DENY-NON-SUBSTITUTE
+  DENY_SI003_REMAINS_OPEN: B5-SI002-AUTH-BOUNDARY-DENY-SI003-OPEN
+authority_ceiling:
+  record_scope: LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY
+  authority_effect: NONE_BOUNDARY_RECORD_ONLY
+  actual_runner_invocation_record_fact: true
+  actual_evaluator_invocation: false
+  evaluation_execution_authority: false
+  evaluation_execution_authority_in_future_boundary_green_without_later_explicit_owner_flip_go: false
+  planner_execution_authority: false
+  scalarization_authority: false
+  performance_claim_authority: false
+  superiority_claim_authority: false
+  path_b_write_authority: false
+  mint_authority: false
+  kernel_or_e_case_write_authority: false
+  certificate_authority: false
+  stop_authority: NONE
+  production_registration_enabled: false
+  pb_b5_si_003_state: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+  part_b_pass: false
+  full_m3_star: false
+hard_ban: "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+hash: "sha256:d22c12531973b67f052a9766fa91a26ddb996428cc502ca727aa8261f67c0d5a"

@@ -1,0 +1,689 @@
+{
+  "artifact_id": "part-b-b5-si002-evaluation-execution-authority-boundary-red-design-v0.1-20260728",
+  "artifact_type": "part_b_b5_si002_evaluation_execution_authority_boundary_red_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_DESIGN_COMPLETE_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RED_FIRST",
+    "authority_base_commit": "9a52f4e3e660fb998bf96c56a6251ba73e86b6bd",
+    "branch": "codex/part-b-b5-si002-evaluation-execution-authority-boundary-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RED_FIRST",
+    "owner_go": {
+      "path": "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "b29196a3001a30f0a98849edee90997e58e119af287baf1a7d241f683e2913a0",
+      "pin_status": "MATCH"
+    },
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "green_started": false,
+    "runtime_implementation_in_this_red": false,
+    "evaluation_execution_authority_flipped": false,
+    "write_side_effects": "exact_3_red_docs_only"
+  },
+  "prerequisite_step4_pins": {
+    "source_mode": "UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE",
+    "audit": {
+      "path": "docs/kernel/part-b-step4-readonly-b5-execution-gap-refresh-audit-v0.1-20260728.json",
+      "content_sha256": "77a99ce7ec242cfeafb15317eb5132a749455bc7e413196af59e2eb854d99cd5",
+      "status": "MATCH",
+      "only_next_authorized_cell": "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RED_FIRST"
+    },
+    "review_packet": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step4-readonly-b5-execution-gap-refresh-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "c862e741994dafa46394d84dae2a46338c2590fe9c7d68c54744c6a92a1c401a",
+      "status": "MATCH"
+    }
+  },
+  "design_decision": {
+    "subject": "EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT",
+    "selected_model": "ADDITIVE_PURE_BOUNDARY_VALIDATOR_AND_RECORD_ONLY",
+    "maximum_positive_design_ceiling": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+    "scientific_and_authority_question": "Given the exact accepted D1 identity, SI-002 harness contract record, and SI-002 test-only runner-invocation record, what is the closed-world boundary for considering a future evaluation_execution_authority flip, and which facts and authorities remain absent or denied?",
+    "answer_in_this_red": "The existing chain can support only a boundary-valid record that states evaluation_execution_authority=false. actual_runner_invocation=true is a test-only record fact, while actual_evaluator_invocation=false. A future authority flip is not derivable and may be considered only by a later separately authorized successor after an explicit Owner flip GO and separately accepted evaluator-execution evidence.",
+    "positive_boundary_decision": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+    "positive_boundary_decision_means": "The exact accepted SI-002 identity and record chain is recognized and the no-flip boundary is valid.",
+    "positive_boundary_decision_does_not_mean": [
+      "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+      "PLANNER_EXECUTION_AUTHORITY_TRUE",
+      "EVALUATOR_EXECUTION_OCCURRED",
+      "B6_CLOSED_LOOP_EXECUTION",
+      "SI003_CLOSURE",
+      "SCALARIZATION",
+      "PERFORMANCE_OR_SUPERIORITY_VALIDITY",
+      "PART_B_PASS",
+      "FULL_M3_STAR",
+      "PATH_B_WRITE",
+      "MINT",
+      "KERNEL_OR_E_CASE_WRITE",
+      "CERTIFICATE_OR_CERTIFIED_STOP"
+    ]
+  },
+  "exact_binding": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_id_count": 1,
+    "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+    "wildcards": false,
+    "fallback": false,
+    "legacy_id": "project05_m3star_h3_dual",
+    "legacy_disposition": "DENY_LEGACY_IMPLEMENTATION",
+    "unknown_id_disposition": "DENY_UNKNOWN_IMPLEMENTATION",
+    "si002_harness_contract_binding": {
+      "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+      "contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "contract_policy_content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+      "contract_decision": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID",
+      "record_scope": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY",
+      "evaluation_execution_authority": false
+    },
+    "si002_test_only_invocation_binding": {
+      "invocation_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+      "invocation_record_content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+      "invocation_policy_content_sha256": "0536a8a1b69c89af360df850be709bda1216296704ce872796420e553f9a1a9b",
+      "invocation_decision": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+      "record_scope": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY",
+      "actual_runner_invocation": true,
+      "actual_evaluator_invocation": false,
+      "authority_effect": "NONE_RECORD_ONLY",
+      "evaluation_execution_authority": false,
+      "planner_execution_authority": false
+    }
+  },
+  "pinned_artifact_table": [
+    {
+      "role": "SI002_HARNESS_GREEN_ACCEPTANCE",
+      "path": "docs/kernel/part-b-b5-si002-bounded-evaluation-harness-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "ccad3e5bf3d55614c1bf9b121f6b7f1e745562a2efb37291148799678bc37fb4",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_INVOCATION_GREEN_ACCEPTANCE",
+      "path": "docs/kernel/part-b-b5-si002-harness-runner-invocation-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "b57c59d4dc1186f9aa5ff2909a2bfff5e5af2f1beeffae4ed0b998b40421d2b8",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_HARNESS_SCHEMA",
+      "path": "schemas/part-b-b5-si002-bounded-evaluation-harness-contract.schema.json",
+      "content_sha256": "7de56a5598450c567702957c11bac7bfc9b6eb13ef2a272fd3a5dddef68443e0",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_HARNESS_IDENTITY",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-identity-v0.1.yaml",
+      "content_sha256": "3c6df2df7dce5b00d26c468d6aea0fc8991ade19c649aedc3b93188a247ee1b8",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_HARNESS_POLICY",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-policy-v0.1.yaml",
+      "content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_HARNESS_RECORD",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-record-v0.1.yaml",
+      "content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "canonical_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_INVOCATION_SCHEMA",
+      "path": "schemas/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation.schema.json",
+      "content_sha256": "ba04cb45d7c219c2cc5ae13d52a24b6c904004a1cca8b1342323279d7e1fa4eb",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_INVOCATION_POLICY",
+      "path": "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-policy-v0.1.yaml",
+      "content_sha256": "0536a8a1b69c89af360df850be709bda1216296704ce872796420e553f9a1a9b",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_INVOCATION_RECORD",
+      "path": "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-record-v0.1.yaml",
+      "content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+      "canonical_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_SYNTHETIC_FIXED_CASE",
+      "path": "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json",
+      "content_sha256": "5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086",
+      "status": "MATCH"
+    }
+  ],
+  "protected_zero_drift": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_bounded_evaluation_harness_contract.py",
+      "content_sha256": "6ec634666aaa4fc02ad009abf33a6f3141119f74792e50bb0724dc8a828c947b",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+      "content_sha256": "35a2cb52d19126d3934cc30e3989bfd1b8028d4542b614fbbaa649373aff863b",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+      "content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+      "content_sha256": "463dc34d1b8bed057e3c7629b9645a7de6a52a59e635398ea3e4f922ce9a4913",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-bounded-evaluation-v0.8.yaml",
+      "content_sha256": "42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8",
+      "status": "MATCH"
+    },
+    {
+      "path": "schemas/part-b-bounded-evaluation.schema.json",
+      "content_sha256": "a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e",
+      "status": "MATCH"
+    }
+  ],
+  "current_authority_state": {
+    "actual_runner_invocation_record_fact": true,
+    "actual_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "local_boundary_contract_record_authority": true,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "path_b_write": false,
+    "mint": false,
+    "kernel_or_e_case_write": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "part_b_pass": false,
+    "full_m3_star": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+  },
+  "authority_boundary_semantics": {
+    "boundary_valid_now": true,
+    "authority_flip_valid_now": false,
+    "current_blocking_facts": [
+      "NO_SEPARATE_OWNER_GO_AUTHORIZING_EVALUATION_EXECUTION_AUTHORITY_TRUE",
+      "ACTUAL_EVALUATOR_INVOCATION_FALSE",
+      "NO_ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_OR_RECORD",
+      "CURRENT_CELL_CEILING_IS_BOUNDARY_CONTRACT_OR_RECORD_ONLY"
+    ],
+    "necessary_but_not_sufficient_conditions_for_any_later_flip_consideration": [
+      "A later separate Kernel Owner GO names evaluation_execution_authority=true as the exact authorized cell and pins its authorization artifact.",
+      "A separately accepted successor RED and GREEN bind the exact implementation and all prerequisite SI-002 hashes without wildcard or fallback.",
+      "An explicit bounded evaluator execution capability and its local evidence record are separately designed, implemented, and accepted; current actual_evaluator_invocation=false cannot satisfy this condition.",
+      "The successor preserves planner_execution_authority=false unless separately authorized, and preserves SI-003 as open unless separately closed.",
+      "The successor remains fail-closed for Path B, mint, Kernel/E_case write, certificate, STOP, Part B PASS, full M3*, and production registration unless each is separately authorized."
+    ],
+    "predicate_result_on_current_chain": "NOT_ELIGIBLE_NO_AUTHORITY_FLIP",
+    "self_asserted_owner_go_field_can_satisfy_predicate": false,
+    "boundary_record_can_flip_authority": false,
+    "future_boundary_green_without_later_flip_go_can_flip_authority": false,
+    "later_owner_go_is_necessary_not_sufficient": true
+  },
+  "future_green_api_preview": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "module": "src/scope/part_b_b5_si002_evaluation_execution_authority_boundary.py",
+    "api": "evaluate_si002_evaluation_execution_authority_boundary",
+    "signature": "evaluate_si002_evaluation_execution_authority_boundary(boundary_request)",
+    "behavior": "Pure closed-world validator and deterministic boundary-record builder only.",
+    "must_not_call": [
+      "DETERMINISTIC_DEPTH1",
+      "TWIN_P10_RUNNER",
+      "SI002_TEST_ONLY_INVOCATION_RUNTIME",
+      "EVALUATOR",
+      "PROCESS_OR_CLOCK_OR_MEMORY_METER",
+      "PRODUCTION_REGISTRY",
+      "B6_B7_B8_B9",
+      "PATH_B_OR_KERNEL_WRITE"
+    ]
+  },
+  "future_boundary_request_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 19,
+    "required_fields_exact": [
+      "schema_version",
+      "request_kind",
+      "request_version",
+      "requested_assessment_scope",
+      "implementation_id",
+      "implementation_identity_hash",
+      "harness_contract_identity_hash",
+      "si002_contract_record_hash",
+      "si002_contract_record_content_sha256",
+      "si002_contract_policy_content_sha256",
+      "si002_invocation_record_hash",
+      "si002_invocation_record_content_sha256",
+      "si002_invocation_policy_content_sha256",
+      "invocation_decision",
+      "actual_runner_invocation",
+      "actual_evaluator_invocation",
+      "evaluation_execution_authority",
+      "planner_execution_authority",
+      "later_separate_owner_authority_flip_go_present"
+    ],
+    "constants": {
+      "schema_version": "0.8.0",
+      "request_kind": "ASSESS_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY",
+      "request_version": "0.1.0",
+      "requested_assessment_scope": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+      "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+      "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "si002_contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "si002_contract_policy_content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+      "si002_invocation_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+      "si002_invocation_record_content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+      "si002_invocation_policy_content_sha256": "0536a8a1b69c89af360df850be709bda1216296704ce872796420e553f9a1a9b",
+      "invocation_decision": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+      "actual_runner_invocation": true,
+      "actual_evaluator_invocation": false,
+      "evaluation_execution_authority": false,
+      "planner_execution_authority": false,
+      "later_separate_owner_authority_flip_go_present": false
+    },
+    "forbidden_request_material": [
+      "WILDCARD_OR_FALLBACK_ID",
+      "LEGACY_IMPLEMENTATION_ID",
+      "SELF_ASSERTED_OWNER_AUTHORIZATION_OR_UNPINNED_GO",
+      "ACTUAL_EVALUATOR_INVOCATION_TRUE_WITHOUT_SEPARATE_ACCEPTED_EVIDENCE",
+      "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+      "PLANNER_EXECUTION_AUTHORITY_TRUE",
+      "ACTION_PAYLOAD",
+      "EVALUATION_RESULT",
+      "ORACLE_OR_HIDDEN_GROUND_TRUTH_OR_HIDDEN_ID",
+      "HOLDOUT_MATERIAL",
+      "PERFORMANCE_OR_SCALAR_SCORE_OR_RANK_OR_SUPERIORITY",
+      "PATH_OR_URI_DEREFERENCE",
+      "PRODUCTION_REGISTRY_STATE",
+      "PATH_B_WRITE_OR_MINT_OR_KERNEL_E_CASE_WRITE",
+      "CERTIFICATE_OR_SYSTEM_STATE_OR_STOP_REQUEST",
+      "PART_B_PASS_OR_FULL_M3_STAR_REQUEST"
+    ]
+  },
+  "future_boundary_record_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 20,
+    "required_fields_exact": [
+      "schema_version",
+      "record_class",
+      "record_version",
+      "request_hash",
+      "implementation_id",
+      "implementation_identity_hash",
+      "harness_contract_identity_hash",
+      "si002_contract_record_hash",
+      "si002_invocation_record_hash",
+      "decision",
+      "reason_codes",
+      "record_scope",
+      "authority_effect",
+      "actual_runner_invocation",
+      "actual_evaluator_invocation",
+      "evaluation_execution_authority",
+      "planner_execution_authority",
+      "pb_b5_si_003_state",
+      "stop_authority",
+      "hash"
+    ],
+    "constants": {
+      "schema_version": "0.8.0",
+      "record_class": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RECORD",
+      "record_version": "0.1.0",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+      "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+      "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "si002_invocation_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+      "record_scope": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+      "authority_effect": "NONE_BOUNDARY_RECORD_ONLY",
+      "actual_runner_invocation": true,
+      "actual_evaluator_invocation": false,
+      "evaluation_execution_authority": false,
+      "planner_execution_authority": false,
+      "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+      "stop_authority": "NONE"
+    },
+    "decision_enum": [
+      "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+      "DENY_UNKNOWN_IMPLEMENTATION",
+      "DENY_LEGACY_IMPLEMENTATION",
+      "DENY_MISSING_SI002_BINDING",
+      "DENY_HASH_MISMATCH",
+      "DENY_SILENT_AUTHORITY_FLIP",
+      "DENY_AUTHORITY_REQUEST",
+      "DENY_NON_CONTRACT_INPUT",
+      "DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION",
+      "DENY_SI003_REMAINS_OPEN"
+    ],
+    "positive_decision_ceiling": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+    "partial_positive_record_on_failure": false,
+    "forbidden_output_fields": [
+      "evaluation_result",
+      "measured_performance",
+      "scalar_score",
+      "rank",
+      "superiority_claim",
+      "action_payload",
+      "path_b_write_receipt",
+      "minted_id",
+      "kernel_or_e_case_write_receipt",
+      "system_state",
+      "certificate",
+      "CERTIFIED_STOP",
+      "part_b_pass",
+      "full_m3_star"
+    ]
+  },
+  "canonical_hash_rules": {
+    "content_sha256": "SHA256_OF_RAW_FILE_BYTES_LOWERCASE_HEX_NO_PREFIX",
+    "request_hash": "sha256(canonical_json(exact_19_field_request))",
+    "record_hash": "sha256(canonical_json(exact_20_field_record_without_hash))",
+    "canonical_json": "UTF8_SORTED_KEYS_COMPACT_JSON_NO_NAN",
+    "hash_mismatch_disposition": "DENY_HASH_MISMATCH",
+    "dereference_external_paths_or_uris": false
+  },
+  "fail_closed_matrix": [
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-001",
+      "condition": "exact_one_id_exact_contract_and_invocation_bindings_all_authority_fields_false",
+      "expected_future_record": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+      "authority_effect": "NONE_BOUNDARY_RECORD_ONLY"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-002",
+      "condition": "unknown_implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-003",
+      "condition": "wildcard_or_fallback_implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-004",
+      "condition": "legacy_project05_m3star_h3_dual",
+      "expected": "DENY_LEGACY_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-005",
+      "condition": "missing_harness_identity_contract_record_or_contract_policy_binding",
+      "expected": "DENY_MISSING_SI002_BINDING"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-006",
+      "condition": "missing_invocation_record_policy_or_decision_binding",
+      "expected": "DENY_MISSING_SI002_BINDING"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-007",
+      "condition": "harness_identity_contract_record_or_contract_policy_hash_mismatch",
+      "expected": "DENY_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-008",
+      "condition": "invocation_record_or_invocation_policy_hash_mismatch",
+      "expected": "DENY_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-009",
+      "condition": "actual_runner_invocation_not_true_or_invocation_decision_not_exact",
+      "expected": "DENY_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-010",
+      "condition": "actual_evaluator_invocation_true_without_later_separate_accepted_evidence",
+      "expected": "DENY_SILENT_AUTHORITY_FLIP"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-011",
+      "condition": "evaluation_execution_authority_true",
+      "expected": "DENY_SILENT_AUTHORITY_FLIP"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-012",
+      "condition": "planner_execution_authority_true",
+      "expected": "DENY_AUTHORITY_REQUEST"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-013",
+      "condition": "later_separate_owner_authority_flip_go_present_self_asserted_true_or_unpinned",
+      "expected": "DENY_SILENT_AUTHORITY_FLIP"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-014",
+      "condition": "Path_B_write_mint_Kernel_or_E_case_write_requested",
+      "expected": "DENY_AUTHORITY_REQUEST"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-015",
+      "condition": "certificate_STOP_or_system_state_requested",
+      "expected": "DENY_AUTHORITY_REQUEST"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-016",
+      "condition": "B6_B7_B8_or_B9_execution_requested",
+      "expected": "DENY_AUTHORITY_REQUEST"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-017",
+      "condition": "performance_scalarization_rank_superiority_or_SI003_closure_requested",
+      "expected": "DENY_SI003_REMAINS_OPEN"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-018",
+      "condition": "interpret_boundary_valid_as_Part_B_PASS_full_M3_star_or_authority_flip",
+      "expected": "DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-019",
+      "condition": "extra_field_hidden_id_oracle_holdout_raw_source_path_URI_or_production_registry_state",
+      "expected": "DENY_NON_CONTRACT_INPUT"
+    },
+    {
+      "case_id": "B5-SI002-AUTH-BOUNDARY-FC-020",
+      "condition": "attempt_to_emit_partial_positive_record_after_any_failure",
+      "expected": "DENY_NON_CONTRACT_INPUT"
+    }
+  ],
+  "future_fixture_and_test_plan": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "fixture_strategy": "NO_NEW_EXECUTION_FIXTURE; deterministic exact request and expected boundary record are built from pinned in-repo SI-002 contract and invocation records inside directed tests.",
+    "test_groups": [
+      {
+        "group": "POSITIVE_NO_FLIP_BOUNDARY",
+        "coverage": "Exact one-ID chain returns LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP with all execution authorities false."
+      },
+      {
+        "group": "FAIL_CLOSED_MATRIX",
+        "coverage": "All 20 RED cases are asserted, including missing bindings, hash drift, silent flip, legacy/wildcard, forbidden authority, and non-substitute interpretation."
+      },
+      {
+        "group": "CANONICAL_HASH_REPLAY",
+        "coverage": "Same request produces byte-stable request and record hashes; content pins match raw bytes."
+      },
+      {
+        "group": "PROTECTED_REGRESSION",
+        "coverage": "Existing D1, Twin, SI-002 harness contract, and SI-002 invocation tests remain green with protected bytes unchanged."
+      },
+      {
+        "group": "NO_INVOCATION_PROOF",
+        "coverage": "Boundary validator does not call D1, Twin/P10, invocation runtime, evaluator, process, clock, memory meter, registry, or write paths."
+      }
+    ],
+    "positive_test_count_minimum": 1,
+    "fail_closed_case_count": 20,
+    "actual_evaluator_invocation_in_tests": false,
+    "evaluation_execution_authority_in_tests": false
+  },
+  "proposed_future_green_allowlist_not_authorized_now": [
+    "schemas/part-b-b5-si002-evaluation-execution-authority-boundary.schema.json",
+    "configs/part-b-b5-si002-evaluation-execution-authority-boundary-policy-v0.1.yaml",
+    "configs/part-b-b5-si002-evaluation-execution-authority-boundary-record-v0.1.yaml",
+    "src/scope/part_b_b5_si002_evaluation_execution_authority_boundary.py",
+    "tests/unit/test_part_b_b5_si002_evaluation_execution_authority_boundary.py",
+    "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluation-execution-authority-boundary-green-review-packet-v0.1-20260728.json"
+  ],
+  "future_green_preview_constraints": {
+    "separate_owner_green_go_required": true,
+    "additive_files_only": true,
+    "actual_runner_or_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "maximum_positive_decision": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+    "maximum_scope": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+    "network_or_download": false,
+    "production_registration": false,
+    "existing_d1_twin_si002_bytes_modified": false,
+    "si_003_closed": false,
+    "part_b_pass": false,
+    "authority_flip_requires_later_separate_owner_go_after_boundary_green": true
+  },
+  "non_substitutes": [
+    {
+      "surface": "D1_SELECT_ACTION_CANDIDACY",
+      "not_equivalent_to": "B5_PLANNER_EXECUTION"
+    },
+    {
+      "surface": "TWIN_P10_READONLY_WIRING",
+      "not_equivalent_to": "B6_CLOSED_LOOP_EVALUATION_EXECUTION"
+    },
+    {
+      "surface": "ADMITTED_CONFORMANCE_ONLY",
+      "not_equivalent_to": "EVALUATION_EXECUTION_AUTHORITY"
+    },
+    {
+      "surface": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID",
+      "not_equivalent_to": "EVALUATION_EXECUTION_OR_PART_B_PASS"
+    },
+    {
+      "surface": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+      "not_equivalent_to": "EVALUATION_EXECUTION_AUTHORITY_TRUE"
+    },
+    {
+      "surface": "ACTUAL_RUNNER_INVOCATION_TRUE_RECORD_FACT",
+      "not_equivalent_to": "AUTHORITY_ELEVATION"
+    },
+    {
+      "surface": "THIS_RED_OR_FUTURE_BOUNDARY_CONTRACT_RECORD",
+      "not_equivalent_to": "PB_B5_SI_003_CLOSURE"
+    },
+    {
+      "surface": "BOUNDARY_CONTRACT_OR_RECORD_VALID",
+      "not_equivalent_to": "AUTOMATIC_AUTHORITY_FLIP"
+    }
+  ],
+  "authority_ceiling": {
+    "record_scope": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+    "authority_effect": "NONE_BOUNDARY_RECORD_ONLY",
+    "evaluation_execution_authority": false,
+    "evaluation_execution_authority_in_any_future_green_without_later_explicit_owner_flip_go": false,
+    "planner_execution_authority": false,
+    "actual_evaluator_invocation": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "production_registration_enabled": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "part_b_pass": false,
+    "full_m3_star": false
+  },
+  "red_verification_plan": {
+    "json_parse": "OWNER_GO_RED_DESIGN_REVIEW_PACKET_3_OF_3",
+    "authority_base": "EXACT_MATCH",
+    "step4_accepted_pins": "MATCH_2_OF_2_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE",
+    "si002_contract_and_invocation_pins": "MATCH",
+    "protected_runtime_config_schema_fixture_bytes": "ZERO_DRIFT",
+    "runtime_schema_config_fixture_or_test_files_created_or_modified": 0,
+    "green_files_created": 0,
+    "porcelain": "EXACT_3_RED_DOCS_EXTRA_0",
+    "tests": "NOT_RUN_RED_DESIGN_ONLY"
+  },
+  "explicitly_not_authorized": [
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_GREEN_OR_IMPLEMENTATION",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "FULL_M3_STAR",
+    "B6_EXECUTION",
+    "B7_EXECUTION",
+    "B8_EXECUTION",
+    "B9_EXECUTION",
+    "PRODUCTION_REGISTRATION",
+    "ACTUAL_EVALUATOR_INVOCATION",
+    "ANY_RUNTIME_SCHEMA_CONFIG_FIXTURE_OR_TEST_EDIT_IN_THIS_RED",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "owner_review_questions": [
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-01",
+      "question": "Accept the exact one-ID binding to the existing SI-002 harness contract and test-only invocation record hashes?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-02",
+      "question": "Accept that current actual_runner_invocation=true with actual_evaluator_invocation=false supports only a no-flip boundary record?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-03",
+      "question": "Accept the closed 19-field request, 20-field record, deterministic hash rules, and 20-case fail-closed matrix?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-04",
+      "question": "Confirm evaluation_execution_authority remains false in this RED and any boundary-only GREEN unless a later separate Owner GO explicitly authorizes a flip?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-05",
+      "question": "Confirm SI-003 remains open and the seven-file future GREEN allowlist is only a preview requiring separate Owner authorization?"
+    }
+  ],
+  "exit": {
+    "red_design_complete": true,
+    "green_started": false,
+    "runtime_implemented": false,
+    "authority_flip_performed": false,
+    "owner_decision_required": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "commit_push_pr_performed": false
+  }
+}

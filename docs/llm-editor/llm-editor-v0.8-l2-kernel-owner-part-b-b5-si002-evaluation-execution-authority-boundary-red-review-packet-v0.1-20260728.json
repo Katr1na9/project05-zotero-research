@@ -1,0 +1,239 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluation-execution-authority-boundary-red-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_part_b_b5_si002_evaluation_execution_authority_boundary_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_READY_FOR_KERNEL_OWNER_REVIEW",
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RED_FIRST",
+    "authority_base_commit": "9a52f4e3e660fb998bf96c56a6251ba73e86b6bd",
+    "reviewed_branch": "codex/part-b-b5-si002-evaluation-execution-authority-boundary-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RED_FIRST",
+    "maximum_positive_design_ceiling": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "part_b_elevation": "NO_GO"
+  },
+  "red_artifacts": [
+    {
+      "role": "OWNER_GO_AUTHORIZATION",
+      "path": "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "b29196a3001a30f0a98849edee90997e58e119af287baf1a7d241f683e2913a0",
+      "json_parse": "PASS"
+    },
+    {
+      "role": "RED_DESIGN",
+      "path": "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-red-design-v0.1-20260728.json",
+      "content_sha256": "d0a7ee30c75f52417391cbd1633e7d9a1f01a9e89cde824f860f60687d98a995",
+      "json_parse": "PASS"
+    }
+  ],
+  "self_hash_policy": {
+    "embedded_self_sha256": false,
+    "reason": "The review packet raw content SHA is computed after serialization and reported in the Owner submission; no self-referential placeholder is used."
+  },
+  "prerequisite_step4_pin_table": [
+    {
+      "path": "docs/kernel/part-b-step4-readonly-b5-execution-gap-refresh-audit-v0.1-20260728.json",
+      "content_sha256": "77a99ce7ec242cfeafb15317eb5132a749455bc7e413196af59e2eb854d99cd5",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_RED_FIRST"
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step4-readonly-b5-execution-gap-refresh-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "c862e741994dafa46394d84dae2a46338c2590fe9c7d68c54744c6a92a1c401a",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE",
+      "owner_decision": "accept"
+    }
+  ],
+  "exact_binding_summary": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+    "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+    "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+    "si002_contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+    "si002_contract_policy_content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+    "si002_invocation_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+    "si002_invocation_record_content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+    "si002_invocation_policy_content_sha256": "0536a8a1b69c89af360df850be709bda1216296704ce872796420e553f9a1a9b",
+    "actual_runner_invocation": true,
+    "actual_evaluator_invocation": false,
+    "authority_effect": "NONE_RECORD_ONLY",
+    "wildcards": false,
+    "fallback": false
+  },
+  "accepted_surface_pin_summary": {
+    "si002_harness_green_acceptance": {
+      "path": "docs/kernel/part-b-b5-si002-bounded-evaluation-harness-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "ccad3e5bf3d55614c1bf9b121f6b7f1e745562a2efb37291148799678bc37fb4",
+      "status": "MATCH"
+    },
+    "si002_invocation_green_acceptance": {
+      "path": "docs/kernel/part-b-b5-si002-harness-runner-invocation-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "b57c59d4dc1186f9aa5ff2909a2bfff5e5af2f1beeffae4ed0b998b40421d2b8",
+      "status": "MATCH"
+    },
+    "pinned_contract_and_invocation_artifacts": {
+      "pin_count": 8,
+      "matched": 8,
+      "mismatched": 0,
+      "result": "PASS"
+    },
+    "protected_zero_drift": {
+      "pin_count": 9,
+      "matched": 9,
+      "mismatched": 0,
+      "result": "PASS"
+    }
+  },
+  "red_design_summary": {
+    "selected_model": "ADDITIVE_PURE_BOUNDARY_VALIDATOR_AND_RECORD_ONLY",
+    "positive_boundary_decision": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+    "positive_boundary_decision_authority_effect": "NONE_BOUNDARY_RECORD_ONLY",
+    "request_shape": "CLOSED_WORLD_EXACT_19_FIELDS",
+    "record_shape": "CLOSED_WORLD_EXACT_20_FIELDS",
+    "fail_closed_matrix": "20_CASES_FROZEN",
+    "canonical_hashing": "UTF8_SORTED_KEYS_COMPACT_JSON_NO_NAN",
+    "actual_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "evaluation_execution_authority_in_future_boundary_green_without_later_explicit_owner_flip_go": false,
+    "planner_execution_authority": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "part_b_pass": false,
+    "full_m3_star": false
+  },
+  "future_flip_boundary": {
+    "authority_flip_valid_now": false,
+    "later_separate_owner_flip_go_required": true,
+    "later_owner_go_is_necessary_not_sufficient": true,
+    "separately_accepted_evaluator_execution_capability_and_record_required": true,
+    "current_actual_evaluator_invocation_false_can_satisfy_flip": false,
+    "self_asserted_or_unpinned_go_can_satisfy_flip": false,
+    "boundary_contract_or_record_can_flip_authority": false
+  },
+  "fail_closed_coverage_summary": [
+    "UNKNOWN_OR_WILDCARD_IMPLEMENTATION",
+    "LEGACY_IMPLEMENTATION",
+    "MISSING_SI002_CONTRACT_OR_INVOCATION_BINDING",
+    "CONTRACT_OR_INVOCATION_HASH_MISMATCH",
+    "SILENT_OR_SELF_ASSERTED_AUTHORITY_FLIP",
+    "PLANNER_EXECUTION_AUTHORITY_REQUEST",
+    "PATH_B_MINT_KERNEL_E_CASE_WRITE_CERTIFICATE_OR_STOP",
+    "B6_B7_B8_B9_EXECUTION",
+    "SI003_CLOSURE_SCALARIZATION_PERFORMANCE_OR_SUPERIORITY",
+    "PART_B_PASS_OR_FULL_M3_STAR_INTERPRETATION",
+    "HIDDEN_OR_PRODUCTION_OR_EXTRA_INPUT",
+    "NO_PARTIAL_POSITIVE_RECORD_ON_FAILURE"
+  ],
+  "non_substitute_findings": [
+    "D1 SELECT_ACTION candidacy is not B5 planner execution.",
+    "Twin/P10 readonly wiring is not B6 closed-loop evaluation execution.",
+    "ADMITTED_CONFORMANCE_ONLY is not evaluation_execution_authority.",
+    "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID is not evaluation execution or Part B PASS.",
+    "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY is not evaluation_execution_authority=true.",
+    "actual_runner_invocation=true as a record fact is not authority elevation.",
+    "This RED or a boundary record does not close SI-003.",
+    "A valid boundary contract or record does not automatically flip authority."
+  ],
+  "proposed_future_green_allowlist_not_authorized_now": [
+    "schemas/part-b-b5-si002-evaluation-execution-authority-boundary.schema.json",
+    "configs/part-b-b5-si002-evaluation-execution-authority-boundary-policy-v0.1.yaml",
+    "configs/part-b-b5-si002-evaluation-execution-authority-boundary-record-v0.1.yaml",
+    "src/scope/part_b_b5_si002_evaluation_execution_authority_boundary.py",
+    "tests/unit/test_part_b_b5_si002_evaluation_execution_authority_boundary.py",
+    "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluation-execution-authority-boundary-green-review-packet-v0.1-20260728.json"
+  ],
+  "future_green_preview": {
+    "green_authorized_now": false,
+    "separate_owner_green_go_required": true,
+    "maximum_positive_decision": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_VALID_NO_FLIP",
+    "maximum_scope": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_CONTRACT_OR_RECORD_ONLY",
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "actual_runner_or_evaluator_invocation": false,
+    "existing_d1_twin_si002_bytes_modified": false,
+    "si_003_closed": false
+  },
+  "allowlist_audit": {
+    "authorized_paths": [
+      "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/part-b-b5-si002-evaluation-execution-authority-boundary-red-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluation-execution-authority-boundary-red-review-packet-v0.1-20260728.json"
+    ],
+    "authorized_path_count": 3,
+    "observed_path_count": 3,
+    "extra_paths": 0,
+    "runtime_schema_config_fixture_or_test_modified": false,
+    "green_files_created": 0,
+    "write_side_effects": "exact_3_red_docs_only",
+    "result": "PASS"
+  },
+  "explicitly_not_authorized": [
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_BOUNDARY_GREEN_OR_IMPLEMENTATION",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "FULL_M3_STAR",
+    "B6_EXECUTION",
+    "B7_EXECUTION",
+    "B8_EXECUTION",
+    "B9_EXECUTION",
+    "PRODUCTION_REGISTRATION",
+    "ACTUAL_EVALUATOR_INVOCATION",
+    "ANY_RUNTIME_SCHEMA_CONFIG_FIXTURE_OR_TEST_EDIT_IN_THIS_RED",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "verification": {
+    "head_expected": "9a52f4e3e660fb998bf96c56a6251ba73e86b6bd",
+    "head_observed": "9a52f4e3e660fb998bf96c56a6251ba73e86b6bd",
+    "head_status": "MATCH",
+    "origin_main_expected": "9a52f4e3e660fb998bf96c56a6251ba73e86b6bd",
+    "origin_main_observed": "9a52f4e3e660fb998bf96c56a6251ba73e86b6bd",
+    "origin_main_status": "MATCH",
+    "branch": "codex/part-b-b5-si002-evaluation-execution-authority-boundary-red-v0.1",
+    "step4_pins": "MATCH_2_OF_2_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE",
+    "si002_contract_and_invocation_pins": "MATCH",
+    "protected_pins": "MATCH_9_OF_9",
+    "json_parse": "PASS_3_OF_3",
+    "tests": "NOT_RUN_RED_DESIGN_ONLY",
+    "porcelain": "EXACT_3_RED_DOCS",
+    "extra_paths": 0,
+    "commit_push_pr_performed": false
+  },
+  "owner_review_questions": [
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-01",
+      "question": "Accept the exact one-ID binding to the existing SI-002 harness contract and test-only invocation record hashes?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-02",
+      "question": "Accept that current actual_runner_invocation=true with actual_evaluator_invocation=false supports only a no-flip boundary record?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-03",
+      "question": "Accept the closed 19-field request, 20-field record, deterministic hash rules, and 20-case fail-closed matrix?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-04",
+      "question": "Confirm evaluation_execution_authority remains false in this RED and any boundary-only GREEN unless a later separate Owner GO explicitly authorizes a flip?"
+    },
+    {
+      "id": "ORQ-B5-SI002-AUTH-BOUNDARY-RED-05",
+      "question": "Confirm SI-003 remains open and the seven-file future GREEN allowlist is only a preview requiring separate Owner authorization?"
+    }
+  ],
+  "owner_decision": null,
+  "owner_decision_requested": [
+    "accept",
+    "request_revision",
+    "reject"
+  ]
+}
