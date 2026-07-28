@@ -1,0 +1,534 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-red-design-v0.1-20260728",
+  "artifact_type": "kernel_m3_pb_si008_path_a_claim_named_open_caller_wiring_red_design_not_effective",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "authority_base_commit": "07a4b093a49e8a8ca2bb076dc1215d2dd11f19a1",
+  "reviewed_branch": "codex/pb-si008-path-a-claim-named-open-caller-wiring-v0.1",
+  "phase": "RED_ONLY",
+  "status": "ASSISTED_RED_PENDING_KERNEL_OWNER_REVIEW",
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "this_design_is_not_owner_approval": true,
+  "green_started": false,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "authority": {
+    "decision": "AUTHORIZE_TEST_ONLY_CLAIM_NAMED_OPEN_CALLER_WIRING_RED_FIRST",
+    "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-caller-wiring-owner-go-authorization-v0.1-20260728.json",
+    "sha256": "9c96d5271767736c994c974265aebe385ddbfffb3183de0eb32c84aadf05cdec",
+    "authorized_sequence": [
+      "RED_design_and_owner_review_packet",
+      "Kernel_Owner_review",
+      "GREEN_test_only_caller_fixtures_and_tests_only_after_RED_acceptance",
+      "Kernel_Owner_review"
+    ],
+    "parallelism": "FORBIDDEN",
+    "current_scope": "RED design and Owner review packet only; no caller implementation, fixture creation, or test creation"
+  },
+  "goal": {
+    "statement": "Design a separate test-only caller that converts one closed-world Path A CLAIM-IR structural binding into the exact eighteen-field CLAIM named-open request, invokes evaluate_si008_named_open_claim_request, and returns the successor gate record unchanged.",
+    "maximum_result": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "maximum_result_class": "NAMED_CLAIM_STRUCTURAL_CANDIDACY_CLASSIFICATION_ONLY",
+    "part_b_pass": false,
+    "claim_truth_or_sufficiency": false,
+    "mint_or_admission": false,
+    "write_path_elevation": false
+  },
+  "caller_identity_proposal": {
+    "module_path": "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "api": "evaluate_path_a_claim_structural_binding_for_named_open(caller_input, *, test_only_authority)",
+    "api_return_for_qualified_input": "UNMODIFIED_GATE_RECORD_FROM_evaluate_si008_named_open_claim_request",
+    "gate_entry": "src.scope.part_b_si008_named_open_path_a_claim_candidacy.evaluate_si008_named_open_claim_request",
+    "runtime_class": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+    "production_registration_enabled": false,
+    "separate_from_evidence_caller": true,
+    "caller_mints_or_admits": false,
+    "caller_dereferences_package_or_receipt": false,
+    "caller_validates_scientific_truth_or_sufficiency": false,
+    "caller_mutates_gate_record": false
+  },
+  "test_only_authority_contract": {
+    "keyword_argument": "test_only_authority",
+    "closed_world_field_count": 5,
+    "required_exact_fields": [
+      "authority_id",
+      "authorization_sha256",
+      "mode",
+      "allow_write",
+      "allow_dereference"
+    ],
+    "required_exact_values": {
+      "authority_id": "PB-SI008-PATH-A-CLAIM-CALLER-WIRING-TEST-ONLY-V0_1",
+      "authorization_sha256": "9c96d5271767736c994c974265aebe385ddbfffb3183de0eb32c84aadf05cdec",
+      "mode": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+      "allow_write": false,
+      "allow_dereference": false
+    },
+    "missing_unknown_or_mismatched": "RAISE_PATH_A_CLAIM_CALLER_WIRING_DENIED",
+    "reason_code": "CLAIM-CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED",
+    "gate_called_on_authority_failure": false,
+    "authority_forwarded_into_named_request": false,
+    "authority_is_part_b_authority": false
+  },
+  "caller_input_closed_world_contract": {
+    "field_count": 14,
+    "required_exact_fields": [
+      "request_id",
+      "promotion_target",
+      "reference_kind",
+      "source_schema_version",
+      "source_schema_sha256",
+      "consumer_contract_id",
+      "consumer_contract_sha256",
+      "package_sha256",
+      "structural_validation_receipt_sha256",
+      "record_class",
+      "claim_id",
+      "claim_id_state",
+      "admission_state",
+      "structural_validation_status"
+    ],
+    "qualified_values": {
+      "promotion_target": "CLAIM",
+      "record_class": "public_evidence_declaration",
+      "claim_id": null,
+      "claim_id_state": "not_minted",
+      "admission_state": "not_admitted",
+      "structural_validation_status": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+    },
+    "digest_fields": [
+      "source_schema_sha256",
+      "consumer_contract_sha256",
+      "package_sha256",
+      "structural_validation_receipt_sha256"
+    ],
+    "digest_format": "lowercase_sha256_64_hex",
+    "missing_or_unknown_fields": "RAISE_PATH_A_CLAIM_CALLER_WIRING_DENIED",
+    "missing_or_unknown_reason_code": "CLAIM-CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
+    "path_uri_raw_bytes_labels_oracle_hidden_id_fields": "DENY",
+    "wildcard": false,
+    "silent_default": false,
+    "caller_reads_package_or_receipt": false,
+    "value_qualification_owner": "CLAIM named-open successor gate after the caller has enforced exact field set and types"
+  },
+  "exact_18_field_request_mapping": [
+    {
+      "request_field": "request_id",
+      "source": "caller_input.request_id",
+      "constraint": "nonempty string; preserved exactly"
+    },
+    {
+      "request_field": "request_kind",
+      "source": "caller_constant",
+      "value": "PROMOTE_TO_PART_B_NAMED_TARGET"
+    },
+    {
+      "request_field": "promotion_target",
+      "source": "caller_input.promotion_target",
+      "qualified_value": "CLAIM",
+      "deny_values": [
+        "EVIDENCE",
+        "AUTHORITY",
+        "PASS_CONDITION"
+      ]
+    },
+    {
+      "request_field": "reference_kind",
+      "source": "caller_input.reference_kind",
+      "constraint": "exact CLAIM allowlisted pair identity; no wildcard"
+    },
+    {
+      "request_field": "named_target_id",
+      "source": "caller_constant",
+      "value": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1"
+    },
+    {
+      "request_field": "source_schema_version",
+      "source": "caller_input.source_schema_version",
+      "constraint": "must match reference_kind"
+    },
+    {
+      "request_field": "source_schema_sha256",
+      "source": "caller_input.source_schema_sha256",
+      "constraint": "must match reference_kind"
+    },
+    {
+      "request_field": "consumer_contract_id",
+      "source": "caller_input.consumer_contract_id",
+      "constraint": "must match reference_kind"
+    },
+    {
+      "request_field": "consumer_contract_sha256",
+      "source": "caller_input.consumer_contract_sha256",
+      "constraint": "must match reference_kind"
+    },
+    {
+      "request_field": "package_sha256",
+      "source": "caller_input.package_sha256",
+      "constraint": "bound by a pinned test fixture before caller invocation; never dereferenced by the caller"
+    },
+    {
+      "request_field": "structural_validation_receipt_sha256",
+      "source": "caller_input.structural_validation_receipt_sha256",
+      "constraint": "bound by a pinned deterministic structural receipt before caller invocation; never dereferenced by the caller"
+    },
+    {
+      "request_field": "record_class",
+      "source": "caller_input.record_class",
+      "qualified_value": "public_evidence_declaration"
+    },
+    {
+      "request_field": "claim_id",
+      "source": "caller_input.claim_id",
+      "qualified_value": null
+    },
+    {
+      "request_field": "claim_id_state",
+      "source": "caller_input.claim_id_state",
+      "qualified_value": "not_minted"
+    },
+    {
+      "request_field": "admission_state",
+      "source": "caller_input.admission_state",
+      "qualified_value": "not_admitted"
+    },
+    {
+      "request_field": "structural_validation_status",
+      "source": "caller_input.structural_validation_status",
+      "qualified_value": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY"
+    },
+    {
+      "request_field": "requested_authority_scope",
+      "source": "caller_constant",
+      "value": "CLAIM_STRUCTURAL_CANDIDACY_ONLY"
+    },
+    {
+      "request_field": "reference_access_mode",
+      "source": "caller_constant",
+      "value": "CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE"
+    }
+  ],
+  "qualifying_reference_pairs": [
+    {
+      "pair_id": "CLAIM_V0_1_CONSUMER_V0_2",
+      "reference_kind": "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "source_schema_version": "claim-ir-external-evidence-v0.1",
+      "source_schema_path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "source_schema_sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c",
+      "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2",
+      "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "consumer_contract_sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504",
+      "expected_gate_decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY"
+    },
+    {
+      "pair_id": "CLAIM_V0_2_CONSUMER_V0_3",
+      "reference_kind": "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+      "source_schema_version": "claim-ir-external-evidence-v0.2",
+      "source_schema_path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "source_schema_sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6",
+      "consumer_contract_id": "shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3",
+      "consumer_contract_path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "consumer_contract_sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c",
+      "expected_gate_decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY"
+    }
+  ],
+  "test_only_fixture_plan": [
+    {
+      "fixture_id": "PB_SI008_CLAIM_CALLER_V0_1_SYSTEM_LOG",
+      "proposed_path": "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.1-system-log.json",
+      "reference_pair_id": "CLAIM_V0_1_CONSUMER_V0_2",
+      "accepted_structural_binding_source": {
+        "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.1-system-log.json",
+        "sha256": "afb695d5730affe057e178be3e6b009b2cb641726e4e8610c67dffb9dc37e135",
+        "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+        "structural_validation_receipt_sha256": "d37226dfe2d1567815763ea53c294f6dbc9377915841dbc199fb9b3945816286"
+      },
+      "claim_binding_delta": {
+        "promotion_target": "CLAIM",
+        "reference_kind": "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+        "named_target_id_injected_by_caller": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+        "requested_authority_scope_injected_by_caller": "CLAIM_STRUCTURAL_CANDIDACY_ONLY"
+      },
+      "package_or_receipt_rewritten": false,
+      "raw_source_download": false,
+      "production_registry": false
+    },
+    {
+      "fixture_id": "PB_SI008_CLAIM_CALLER_V0_2_AUDIT_LOG",
+      "proposed_path": "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.2-audit-log.json",
+      "reference_pair_id": "CLAIM_V0_2_CONSUMER_V0_3",
+      "accepted_structural_binding_source": {
+        "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.2-audit-log.json",
+        "sha256": "46937b764485b8410b7e11e5e45e31a4068941a0ebf29d792f15a447a987ad54",
+        "package_sha256": "072dff00872f7ee7a6a054ca5229b5fec2e8c46f00ca890e1d07fb768ac005d6",
+        "structural_validation_receipt_sha256": "baab653591b493a0f231e1f8796618a8f4f68e2dbaef2c3e3a9d427655b8d13c"
+      },
+      "claim_binding_delta": {
+        "promotion_target": "CLAIM",
+        "reference_kind": "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+        "named_target_id_injected_by_caller": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+        "requested_authority_scope_injected_by_caller": "CLAIM_STRUCTURAL_CANDIDACY_ONLY"
+      },
+      "package_or_receipt_rewritten": false,
+      "raw_audit_log_download": false,
+      "production_registry": false
+    }
+  ],
+  "fixture_binding_and_receipt_contract": {
+    "binding_mode": "PINNED_TEST_ONLY_REPLAY_NO_DEREFERENCE",
+    "package_sha256_source": "exact accepted synthetic package identity declared in the pinned evidence caller fixture",
+    "structural_validation_receipt_sha256_source": "exact deterministic receipt identity declared in the pinned evidence caller fixture",
+    "claim_caller_fixture_may_copy_only": [
+      "closed-world structural metadata",
+      "package SHA-256",
+      "structural validation receipt SHA-256",
+      "schema and consumer exact identities"
+    ],
+    "claim_caller_fixture_may_not_copy": [
+      "raw bytes",
+      "path or URI as caller input",
+      "secret or account identifier",
+      "oracle label",
+      "minted claim identity",
+      "admission or truth assertion"
+    ],
+    "pin_replay_requirement": "GREEN tests must verify the accepted evidence fixture content SHA and the package/receipt digest values before invoking the claim caller.",
+    "caller_recomputes_or_dereferences_package": false,
+    "caller_recomputes_or_dereferences_receipt": false,
+    "receipt_is_admission_or_truth": false,
+    "receipt_is_kernel_write_authority": false
+  },
+  "fail_closed_matrix": [
+    {
+      "case": "missing_test_only_authority_or_wrong_authorization_sha",
+      "layer": "caller_precondition",
+      "result": "RAISE_PATH_A_CLAIM_CALLER_WIRING_DENIED",
+      "reason_code": "CLAIM-CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED",
+      "gate_called": false
+    },
+    {
+      "case": "missing_input_field_unknown_field_or_non_string_required_field",
+      "layer": "caller_closed_world_input",
+      "result": "RAISE_PATH_A_CLAIM_CALLER_WIRING_DENIED",
+      "reason_code": "CLAIM-CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
+      "gate_called": false
+    },
+    {
+      "case": "path_uri_raw_bytes_labels_oracle_or_hidden_id_as_extra_input",
+      "layer": "caller_closed_world_input",
+      "result": "RAISE_PATH_A_CLAIM_CALLER_WIRING_DENIED",
+      "reason_code": "CLAIM-CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED",
+      "gate_called": false
+    },
+    {
+      "case": "wrong_schema_consumer_reference_pair_hash_or_digest_format",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+    },
+    {
+      "case": "claim_id_non_null_or_claim_id_state_minted",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+    },
+    {
+      "case": "admission_state_admitted_or_structural_status_widened",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+    },
+    {
+      "case": "promotion_target_authority_or_pass_condition",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-002_PROMOTION_TARGET_NOT_AUTHORIZED"
+    },
+    {
+      "case": "promotion_target_evidence_with_claim_target_or_claim_scope",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+    },
+    {
+      "case": "evidence_reference_kind_used_as_claim_reference",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+    },
+    {
+      "case": "wildcard_reference_kind_implicit_pair_default_or_cross_pair",
+      "layer": "claim_named_open_gate",
+      "result": "DENY",
+      "reason_code": "SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+    }
+  ],
+  "relationship_to_existing_surfaces": {
+    "claim_named_open_successor_called": true,
+    "claim_named_open_successor_modified": false,
+    "claim_named_open_manifest_modified": false,
+    "evidence_named_open_runtime_or_manifest_modified": false,
+    "dual_track_deny_runtime_or_manifest_modified": false,
+    "evidence_caller_modified_or_widened": false,
+    "path_a_composition_modified_or_widened": false,
+    "existing_evidence_caller_remains_evidence_only": true,
+    "existing_composition_remains_evidence_only": true,
+    "legacy_four_field_behavior_preserved": true
+  },
+  "non_amalgamation_and_authority_boundary": {
+    "caller_returns_gate_record_without_wrapper_or_added_authority": true,
+    "allow_named_claim_candidacy_yields_part_b_pass": false,
+    "allow_named_claim_candidacy_yields_claim_truth": false,
+    "allow_named_claim_candidacy_yields_mint_or_admission": false,
+    "allow_named_claim_candidacy_yields_kernel_or_e_case_write": false,
+    "allow_named_claim_candidacy_opens_authority_or_pass_condition": false,
+    "fixture_or_receipt_is_certificate_or_stop": false,
+    "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+  },
+  "proposed_green_allowlist_exact": [
+    "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.1-system-log.json",
+    "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.2-audit-log.json",
+    "tests/unit/test_part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-green-review-packet-v0.1-20260728.json"
+  ],
+  "proposed_green_test_plan": [
+    "Require the exact five-field test authority before any claim gate call.",
+    "Require the exact fourteen-field caller input and build exactly eighteen request fields with four caller constants.",
+    "Replay the v0.1 accepted system-log structural binding pin and require ALLOW_NAMED_CLAIM_CANDIDACY_ONLY.",
+    "Replay the v0.2 accepted audit-log structural binding pin and require ALLOW_NAMED_CLAIM_CANDIDACY_ONLY.",
+    "Require caller output to equal the direct evaluate_si008_named_open_claim_request result value-for-value.",
+    "Require wrong pair, wrong digest, missing digest, minted/admitted state, EVIDENCE/AUTHORITY/PASS_CONDITION target, wildcard, unknown field, and path or URI attempts to fail closed at the declared layer.",
+    "Require same fixture and caller input to reproduce the same gate record, record_hash, and hash.",
+    "Require CLAIM named-open, evidence named-open, legacy deny, evidence caller, and composition regressions to remain green.",
+    "Require all protected runtime and manifest hashes to remain unchanged and all production registration flags to remain False."
+  ],
+  "mandatory_pin_table": [
+    {
+      "role": "claim_caller_wiring_owner_go_authorization",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-caller-wiring-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "9c96d5271767736c994c974265aebe385ddbfffb3183de0eb32c84aadf05cdec"
+    },
+    {
+      "role": "claim_named_open_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "55d29fd927b1eb9fdc740c090e3c2d40a3384e485e04fa2eb4eb5347065e7325"
+    },
+    {
+      "role": "claim_named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_claim_candidacy.py",
+      "sha256": "cc85829c8f9eb9cd49d0c856a6b4c7b590a8e922f28b5085f942f424554386ea"
+    },
+    {
+      "role": "claim_named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+      "sha256": "c660083eb776afd9e14d252a93c4e809439b0f63d313452ce96eb28ba25a89e8"
+    },
+    {
+      "role": "evidence_caller_green_owner_acceptance_reference_only",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "ac85c628eca128f65d3031548fc6257cc35c52663208958c5eff53ddff77ba0c"
+    },
+    {
+      "role": "protected_evidence_caller_runtime",
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    {
+      "role": "accepted_v0_1_system_log_structural_binding_fixture",
+      "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.1-system-log.json",
+      "sha256": "afb695d5730affe057e178be3e6b009b2cb641726e4e8610c67dffb9dc37e135"
+    },
+    {
+      "role": "accepted_v0_2_audit_log_structural_binding_fixture",
+      "path": "tests/unit/fixtures/part_b_si008_path_a_named_open_caller_wiring/evidence-v0.2-audit-log.json",
+      "sha256": "46937b764485b8410b7e11e5e45e31a4068941a0ebf29d792f15a447a987ad54"
+    },
+    {
+      "role": "external_evidence_schema_v0_1",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.1.schema.json",
+      "sha256": "9abc23e2258298038e137dbbe38168867d07108fa27719aa68c1c2b752ae2a7c"
+    },
+    {
+      "role": "consumer_contract_v0_2",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.2-20260727.json",
+      "sha256": "fe5222b9b4e0ddaf990761b34bdfc5004f45f55d3e2155b09388fb9596a1e504"
+    },
+    {
+      "role": "external_evidence_schema_v0_2",
+      "path": "schemas/claim-ir-external-envelope-evidence-v0.2.schema.json",
+      "sha256": "e246c44b7513a5bc2f3410a2739a53bd1f40dad3e767036bb1af3158c9e02ac6"
+    },
+    {
+      "role": "consumer_contract_v0_3",
+      "path": "docs/kernel/kernel-v0.8-shared-claim-ir-consumer-contract-evidence-candidate-effective-v0.3-20260727.json",
+      "sha256": "7662762d045381921b8f94a39753d0c491322b3a41d473226cc5fe3f4688457c"
+    },
+    {
+      "role": "protected_evidence_named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    {
+      "role": "protected_evidence_named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    },
+    {
+      "role": "protected_dual_track_deny_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "protected_dual_track_deny_manifest",
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    {
+      "role": "protected_path_a_composition_runtime",
+      "path": "src/compiler/llm/m1_path_a_named_open_composition_readonly.py",
+      "sha256": "3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3"
+    }
+  ],
+  "red_validation_plan": {
+    "json_parse": "3/3 including Owner GO",
+    "mandatory_pin_replay": "17/17",
+    "current_claim_named_open_tests": "17/17",
+    "current_evidence_named_open_tests": "15/15",
+    "legacy_si_008_tests": "16/16",
+    "existing_evidence_caller_tests": "11/11",
+    "existing_composition_tests": "14/14",
+    "combined_regression": "73/73",
+    "porcelain": "Owner GO authorization plus exactly two RED JSON files",
+    "green_file_count": 0,
+    "protected_runtime_or_manifest_diff": 0,
+    "production_registration_enabled": false
+  },
+  "explicit_non_authorizations": {
+    "green_caller_module": false,
+    "green_fixture_creation_or_execution": false,
+    "modify_claim_named_open_runtime_or_manifest": false,
+    "modify_evidence_named_open_runtime_or_manifest": false,
+    "modify_dual_track_deny_runtime_or_manifest": false,
+    "widen_evidence_caller_or_composition": false,
+    "production_registration": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "part_b_pass": false,
+    "certificate_or_certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "owner_go_json_plus_two_red_json_files_only",
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW_BEFORE_GREEN"
+}

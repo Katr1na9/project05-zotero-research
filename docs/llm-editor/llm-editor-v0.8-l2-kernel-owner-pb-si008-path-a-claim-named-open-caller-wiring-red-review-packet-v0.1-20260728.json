@@ -1,0 +1,201 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-red-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_pb_si008_path_a_claim_named_open_caller_wiring_red_review_packet_not_approval",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "authority_base_commit": "07a4b093a49e8a8ca2bb076dc1215d2dd11f19a1",
+  "reviewed_branch": "codex/pb-si008-path-a-claim-named-open-caller-wiring-v0.1",
+  "phase": "RED_ONLY",
+  "status": "PENDING_KERNEL_OWNER_REVIEW",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "green_started": false,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "red_design": {
+    "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-red-design-v0.1-20260728.json",
+    "sha256": "11c2bab7d947c84786883e13cbd181a97c7f32f244a268d42e835f0c02ce5443",
+    "status": "ASSISTED_RED_PENDING_KERNEL_OWNER_REVIEW"
+  },
+  "review_pin_table": [
+    {
+      "role": "red_design",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-red-design-v0.1-20260728.json",
+      "sha256": "11c2bab7d947c84786883e13cbd181a97c7f32f244a268d42e835f0c02ce5443"
+    },
+    {
+      "role": "claim_caller_wiring_owner_go_authorization",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-caller-wiring-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "9c96d5271767736c994c974265aebe385ddbfffb3183de0eb32c84aadf05cdec"
+    },
+    {
+      "role": "claim_named_open_green_owner_acceptance",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "55d29fd927b1eb9fdc740c090e3c2d40a3384e485e04fa2eb4eb5347065e7325"
+    },
+    {
+      "role": "claim_named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_claim_candidacy.py",
+      "sha256": "cc85829c8f9eb9cd49d0c856a6b4c7b590a8e922f28b5085f942f424554386ea"
+    },
+    {
+      "role": "claim_named_open_manifest",
+      "path": "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+      "sha256": "c660083eb776afd9e14d252a93c4e809439b0f63d313452ce96eb28ba25a89e8"
+    },
+    {
+      "role": "evidence_caller_green_owner_acceptance_reference_only",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "ac85c628eca128f65d3031548fc6257cc35c52663208958c5eff53ddff77ba0c"
+    },
+    {
+      "role": "protected_evidence_caller_runtime",
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    {
+      "role": "protected_evidence_named_open_runtime",
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    {
+      "role": "protected_dual_track_deny_runtime",
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    {
+      "role": "protected_path_a_composition_runtime",
+      "path": "src/compiler/llm/m1_path_a_named_open_composition_readonly.py",
+      "sha256": "3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3"
+    }
+  ],
+  "design_review_summary": {
+    "caller_module": "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "caller_api": "evaluate_path_a_claim_structural_binding_for_named_open(caller_input, *, test_only_authority)",
+    "caller_input_field_count": 14,
+    "claim_named_open_request_field_count": 18,
+    "fixed_request_fields": [
+      "request_kind",
+      "named_target_id",
+      "requested_authority_scope",
+      "reference_access_mode"
+    ],
+    "qualified_promotion_target": "CLAIM",
+    "qualified_named_target_id": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "qualified_authority_scope": "CLAIM_STRUCTURAL_CANDIDACY_ONLY",
+    "qualifying_pair_count": 2,
+    "v0_1_pair": "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE + claim-ir-external-evidence-v0.1 + consumer v0.2",
+    "v0_2_pair": "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE + claim-ir-external-evidence-v0.2 + consumer v0.3",
+    "test_only_fixture_count": 2,
+    "fixture_binding_source": "pinned accepted evidence caller structural bindings with unchanged package and deterministic receipt digests",
+    "caller_dereferences_package_or_receipt": false,
+    "production_registry": false,
+    "qualified_result": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "qualified_result_is_part_b_pass": false,
+    "qualified_result_is_mint_or_admission": false,
+    "qualified_result_is_write_authority": false
+  },
+  "fail_closed_review": {
+    "missing_or_wrong_test_authority": "CLAIM-CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED before gate call",
+    "missing_unknown_or_bad_type_input": "CLAIM-CALLER-WIRING-002_CLOSED_WORLD_INPUT_REQUIRED before gate call",
+    "wrong_schema_consumer_pair_hash_or_digest_format": "DENY / SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED",
+    "minted_or_admitted_input": "DENY / SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED",
+    "evidence_target_or_evidence_reference_kind": "DENY / SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED",
+    "authority_or_pass_condition_target": "DENY / SI008-NAMED-CLAIM-002_PROMOTION_TARGET_NOT_AUTHORIZED",
+    "wildcard_implicit_default_or_cross_pair": "DENY / SI008-NAMED-CLAIM-003_REQUEST_NOT_QUALIFIED"
+  },
+  "proposed_green_allowlist_exact": [
+    "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.1-system-log.json",
+    "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.2-audit-log.json",
+    "tests/unit/test_part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-green-review-packet-v0.1-20260728.json"
+  ],
+  "protected_bytes": {
+    "claim_named_open_runtime_modified": false,
+    "claim_named_open_manifest_modified": false,
+    "evidence_named_open_runtime_modified": false,
+    "evidence_named_open_manifest_modified": false,
+    "dual_track_deny_runtime_modified": false,
+    "dual_track_deny_manifest_modified": false,
+    "evidence_caller_modified_or_widened": false,
+    "composition_modified_or_widened": false,
+    "production_registration_enabled": false
+  },
+  "red_validation": {
+    "json_parse": "3/3 PASS",
+    "design_mandatory_pin_reverify": "17/17 OK",
+    "review_pin_reverify": "10/10 OK",
+    "claim_named_open_tests": "17/17 PASS",
+    "evidence_named_open_tests": "15/15 PASS",
+    "legacy_si_008_tests": "16/16 PASS",
+    "existing_evidence_caller_tests": "11/11 PASS",
+    "existing_composition_tests": "14/14 PASS",
+    "combined_regression": "73/73 PASS; 161 subtests PASS",
+    "porcelain": "EXACT_OWNER_GO_PLUS_TWO_RED_JSON_FILES",
+    "green_files_created": 0,
+    "tracked_diff": 0,
+    "cached_diff": 0
+  },
+  "review_questions": [
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-RED-01",
+      "question": "Accept the separate test-only CLAIM caller module and exact five-field authority gate?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-RED-02",
+      "question": "Accept the exact fourteen-field caller input to eighteen-field CLAIM named-open request mapping?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-RED-03",
+      "question": "Accept the two pinned claim fixture bindings that reuse unchanged synthetic package and receipt identities from the accepted evidence caller fixtures?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-RED-04",
+      "question": "Accept the exact six-file GREEN allowlist while keeping all named-open, deny, evidence caller, and composition bytes frozen?",
+      "proposed_answer": "accept"
+    }
+  ],
+  "acceptance_boundary": {
+    "accept_means": "Owner accepts this CLAIM caller/wiring/fixture RED design and may separately authorize the exact six-file GREEN slice.",
+    "accept_does_not_authorize": [
+      "Starting GREEN without an explicit Owner GREEN instruction",
+      "Production registration or a production caller",
+      "Path B write, mint, admission, or Kernel/E_case write",
+      "AUTHORITY or PASS_CONDITION opening",
+      "Part B PASS or unrestricted Part B elevation",
+      "Certificate or CERTIFIED_STOP",
+      "Changing the CLAIM named-open, evidence named-open, or dual-track deny runtimes or manifests",
+      "Widening the existing evidence caller or Path A composition to CLAIM",
+      "Git commit, push, PR, or merge"
+    ]
+  },
+  "explicit_non_authorizations": {
+    "green_started": false,
+    "caller_runtime_implemented": false,
+    "claim_fixture_creation_or_execution": false,
+    "production_registration": false,
+    "path_b_write": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "part_b_pass": false,
+    "certificate_or_certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "owner_go_json_plus_two_red_json_files_only",
+  "git_performed": false,
+  "stop": "STOP_FOR_KERNEL_OWNER_ACCEPT_REQUEST_REVISION_OR_REJECT"
+}

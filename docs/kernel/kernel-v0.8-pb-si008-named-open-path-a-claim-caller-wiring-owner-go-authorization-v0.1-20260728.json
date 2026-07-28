@@ -1,0 +1,156 @@
+{
+  "artifact_id": "kernel-v0.8-pb-si008-named-open-path-a-claim-caller-wiring-owner-go-authorization-v0.1-20260728",
+  "artifact_type": "kernel_m3_pb_si008_named_open_path_a_claim_caller_wiring_owner_go_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "decision": "AUTHORIZE_TEST_ONLY_CLAIM_NAMED_OPEN_CALLER_WIRING_RED_FIRST",
+  "authority_base_commit": "07a4b093a49e8a8ca2bb076dc1215d2dd11f19a1",
+  "authority_base_note": "origin/main after Merge PR #50, which lands the accepted PB-SI-008 Path A CLAIM named-open successor.",
+  "program_path": "PB_SI_008",
+  "slice_id": "PATH_A_CLAIM_NAMED_OPEN_CALLER_WIRING_TEST_ONLY_V0_1",
+  "start_authorized": true,
+  "authorized_sequence": [
+    "RED_design_and_owner_review_packet",
+    "Kernel_Owner_review",
+    "GREEN_test_only_caller_fixtures_and_tests_only_after_RED_acceptance",
+    "Kernel_Owner_review"
+  ],
+  "parallelism": "FORBIDDEN",
+  "current_phase_authorized": "RED_DOCS_ONLY",
+  "green_started": false,
+  "goal": {
+    "statement": "Design, then only after separate RED acceptance implement, a test-only caller that converts closed-world Path A CLAIM-IR structural metadata into the exact eighteen-field CLAIM named-open request, invokes evaluate_si008_named_open_claim_request, and returns the CLAIM successor gate record unmodified.",
+    "caller_class": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+    "gate_entry": "src.scope.part_b_si008_named_open_path_a_claim_candidacy.evaluate_si008_named_open_claim_request",
+    "maximum_result": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "maximum_result_is_part_b_pass": false,
+    "maximum_result_is_mint_or_admission": false,
+    "maximum_result_is_write_authority": false
+  },
+  "claim_named_open_prerequisite": {
+    "green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "55d29fd927b1eb9fdc740c090e3c2d40a3384e485e04fa2eb4eb5347065e7325",
+      "decision": "accept"
+    },
+    "runtime": {
+      "path": "src/scope/part_b_si008_named_open_path_a_claim_candidacy.py",
+      "sha256": "cc85829c8f9eb9cd49d0c856a6b4c7b590a8e922f28b5085f942f424554386ea",
+      "entry": "evaluate_si008_named_open_claim_request"
+    },
+    "manifest": {
+      "path": "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+      "sha256": "c660083eb776afd9e14d252a93c4e809439b0f63d313452ce96eb28ba25a89e8"
+    },
+    "status": "SATISFIED_ON_ORIGIN_MAIN"
+  },
+  "evidence_caller_reference_only": {
+    "green_owner_acceptance": {
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-named-open-caller-wiring-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "ac85c628eca128f65d3031548fc6257cc35c52663208958c5eff53ddff77ba0c"
+    },
+    "runtime": {
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    "reuse_policy": "DESIGN_REFERENCE_ONLY_DO_NOT_MUTATE_OR_WIDEN",
+    "claim_caller_must_be_additive_separate_module": true
+  },
+  "required_claim_request_ceiling": {
+    "field_count": 18,
+    "request_kind": "PROMOTE_TO_PART_B_NAMED_TARGET",
+    "promotion_target": "CLAIM",
+    "named_target_id": "PATH_A_CLAIM_IR_STRUCTURAL_CANDIDACY_V0_1",
+    "record_class": "public_evidence_declaration",
+    "claim_id": null,
+    "claim_id_state": "not_minted",
+    "admission_state": "not_admitted",
+    "structural_validation_status": "PASS_STRUCTURAL_ONLY_NO_INGESTION_AUTHORITY",
+    "requested_authority_scope": "CLAIM_STRUCTURAL_CANDIDACY_ONLY",
+    "reference_access_mode": "CLASSIFY_DECLARED_REFERENCE_ONLY_NO_DEREFERENCE",
+    "qualifying_reference_kinds": [
+      "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE"
+    ],
+    "wildcard_or_fallback": false,
+    "package_or_receipt_dereference": false
+  },
+  "red_phase_now": {
+    "authorized": true,
+    "deliverables": [
+      "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-red-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-red-review-packet-v0.1-20260728.json"
+    ],
+    "caller_runtime_implementation": false,
+    "fixture_creation": false,
+    "test_creation": false,
+    "green_started": false,
+    "stop_for_owner_review": true,
+    "write_side_effects": "owner_go_json_plus_two_red_json_files_only"
+  },
+  "protected_zero_drift": {
+    "claim_named_open_runtime": {
+      "path": "src/scope/part_b_si008_named_open_path_a_claim_candidacy.py",
+      "sha256": "cc85829c8f9eb9cd49d0c856a6b4c7b590a8e922f28b5085f942f424554386ea"
+    },
+    "claim_named_open_manifest": {
+      "path": "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+      "sha256": "c660083eb776afd9e14d252a93c4e809439b0f63d313452ce96eb28ba25a89e8"
+    },
+    "evidence_named_open_runtime": {
+      "path": "src/scope/part_b_si008_named_open_path_a_evidence_candidacy.py",
+      "sha256": "a71358d11a0495f0c6457f9f59061fd982dfda7c3d1921e2f62c7b39cbcaea29"
+    },
+    "evidence_named_open_manifest": {
+      "path": "configs/part-b-si008-named-open-path-a-evidence-candidacy-manifest-v0.8.yaml",
+      "sha256": "aa01c95f00c7757ae6adea046f2cee0fb4bdee7a404ea5ce40701aad61214ff8"
+    },
+    "dual_track_deny_runtime": {
+      "path": "src/scope/part_b_si008_dual_track_deny.py",
+      "sha256": "b43c647d45a4aa19722ca8c501a6cb41f0b1add1f4e501e9684033797c7b12fb"
+    },
+    "dual_track_deny_manifest": {
+      "path": "configs/part-b-si008-dual-track-deny-manifest-v0.8.yaml",
+      "sha256": "a3355c292e1a120fdc12adb32ccced310525f284751019551618d04bf9a023e9"
+    },
+    "evidence_caller_runtime": {
+      "path": "src/scope/part_b_si008_path_a_named_open_caller_wiring.py",
+      "sha256": "64fcc81ff7ae6f61ae58d6a8e5d9bb602a5c6f307feef1a25497048643d11ecf"
+    },
+    "path_a_composition_runtime": {
+      "path": "src/compiler/llm/m1_path_a_named_open_composition_readonly.py",
+      "sha256": "3b4f86288b1bb4b7d3e5366e24a6adabaddaa028a463c6b067c4470added0cc3"
+    }
+  },
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "still_not_authorized": {
+    "path_b_write": false,
+    "production_registration": false,
+    "claim_id_mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "modify_dual_track_deny_runtime_or_manifest": false,
+    "modify_evidence_named_open_runtime_or_manifest": false,
+    "modify_claim_named_open_runtime_or_manifest": false,
+    "widen_existing_evidence_caller_to_claim": false,
+    "widen_existing_composition_to_claim": false,
+    "infer_part_b_pass_from_caller_green": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "git_delivery": {
+    "commit": "NOT_AUTHORIZED",
+    "push": "NOT_AUTHORIZED",
+    "pull_request": "NOT_AUTHORIZED"
+  },
+  "clarification": {
+    "what_this_authorizes_now": "Owner GO JSON plus RED design and Owner review packet for a separate test-only CLAIM caller wiring surface.",
+    "what_requires_later_red_acceptance": "Any caller module, synthetic fixture, directed test, or GREEN design/review artifact.",
+    "what_acceptance_would_not_mean": "Part B PASS, production registration, mint, admission, Kernel write, AUTHORITY/PASS_CONDITION opening, or Path B write."
+  }
+}
