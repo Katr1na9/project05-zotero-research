@@ -1,0 +1,165 @@
+{
+  "artifact_id": "kernel-v0.8-a16-current-tip-replay-owner-go-authorization-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a16_current_tip_readonly_controlled_replay_owner_go_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "decision": "AUTHORIZE_KERNEL_V0_8_A16_CURRENT_TIP_READONLY_CONTROLLED_REPLAY_ONLY",
+  "authority_base_ref": "origin/main",
+  "authority_base_commit": "651b75cf1a261aec64f5da19031b414ac4fa0b65",
+  "branch": "codex/kernel-v0.8-a16-current-tip-replay-v0.1",
+  "goal": {
+    "question": "Does the current authority-base tip have fresh, reproducible evidence for every A16 Go condition and No-Go guard after A17-P1e merged?",
+    "mode": "READONLY_CONTROLLED_REPLAY",
+    "decision_ceiling": "EVIDENCE_PACKAGE_AND_RECOMMENDATION_FOR_KERNEL_OWNER_ONLY",
+    "owner_final_decision_required": true,
+    "current_a16_go_reestablished_by_this_authorization": false
+  },
+  "prerequisites": [
+    {
+      "role": "accepted_step_1_gap_audit",
+      "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+      "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2",
+      "historical_assessment": "P1e_NOT_SATISFIED_AT_AUDIT_TIP"
+    },
+    {
+      "role": "accepted_p1e_green",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json",
+      "sha256": "84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06",
+      "boundary": "P1e implementation gap closed by PR 52; A16 Go not automatically rebuilt"
+    },
+    {
+      "role": "historical_part_a_closeout",
+      "path": "04-progress/kernel-v0.8-part-a-closeout-20260722.md",
+      "sha256": "291cfd67b22dbdad3c5acc7fa0405194e96d7ad8df758b089a5f14e5ad064007",
+      "boundary": "historical scoped ruling only"
+    },
+    {
+      "role": "historical_a16_review_package",
+      "path": "08-writing/kernel-v0.8-a16-review-package-20260722.md",
+      "sha256": "8f5451e7c66bfbabb59b79651db34d8c11f1a2d454793f083b48832309fe4de8",
+      "historical_test_result": "131/131 PASS"
+    },
+    {
+      "role": "historical_scoped_authority_status",
+      "path": "08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md",
+      "sha256": "fd99ab91377ad0b7c3ac14ff4beec00b52455509f481b0050d3e620c185a47ad",
+      "boundary": "neither automatically extended nor revoked"
+    }
+  ],
+  "authorized_work": [
+    "Verify referenced-path existence for A16-GO-01 through A16-GO-14 and A16-NG-01 through A16-NG-11.",
+    "Reverify content SHA-256 pins for critical runtime, schema, config, contract, fixture, and accepted prerequisite artifacts.",
+    "Run existing unittest or pytest automation in readonly mode and record the exact commands, environment, results, and counts.",
+    "Classify every A16 Go condition and No-Go guard as PASS, FAIL, or NOT_RUN with evidence paths.",
+    "Compare fresh current-tip evidence with the historical 131/131 result and scoped 2026-07-22 ruling without claiming automatic inheritance.",
+    "Assess whether P1e introduced any No-Go violation, including SELECT_ACTION elevation, timeout-as-UNSAT, heuristic-as-complete, or STOP authority.",
+    "Recommend current_a16_go_reestablished true or false for Kernel Owner decision."
+  ],
+  "authorized_deliverables": [
+    "docs/kernel/kernel-v0.8-a16-current-tip-replay-owner-go-authorization-v0.1-20260728.json",
+    "docs/kernel/kernel-v0.8-a16-current-tip-replay-report-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a16-current-tip-replay-review-packet-v0.1-20260728.json"
+  ],
+  "required_replay_matrix": {
+    "go_condition_ids": [
+      "A16-GO-01",
+      "A16-GO-02",
+      "A16-GO-03",
+      "A16-GO-04",
+      "A16-GO-05",
+      "A16-GO-06",
+      "A16-GO-07",
+      "A16-GO-08",
+      "A16-GO-09",
+      "A16-GO-10",
+      "A16-GO-11",
+      "A16-GO-12",
+      "A16-GO-13",
+      "A16-GO-14"
+    ],
+    "no_go_guard_ids": [
+      "A16-NG-01",
+      "A16-NG-02",
+      "A16-NG-03",
+      "A16-NG-04",
+      "A16-NG-05",
+      "A16-NG-06",
+      "A16-NG-07",
+      "A16-NG-08",
+      "A16-NG-09",
+      "A16-NG-10",
+      "A16-NG-11"
+    ],
+    "assessment_enum": [
+      "PASS",
+      "FAIL",
+      "NOT_RUN"
+    ],
+    "path_presence_is_not_automatic_pass": true,
+    "historical_result_is_not_automatic_current_tip_pass": true
+  },
+  "recommended_test_scope": [
+    "Kernel schema",
+    "finite-domain Checker",
+    "epistemic firewall and promote/revoke",
+    "MinDiff and counterexample",
+    "level certificate and system-state derivation",
+    "P4/P5/P10",
+    "A17-P1e unit and resource-trace binding",
+    "Twin and supply-chain fixture integration"
+  ],
+  "test_execution_boundary": {
+    "existing_tests_only": true,
+    "readonly_code_consumption": true,
+    "test_or_fixture_modification": false,
+    "failure_may_be_ignored": false,
+    "production_action_execution": false,
+    "production_registration": false,
+    "runtime_or_schema_semantic_change": false
+  },
+  "hard_boundaries": [
+    "Specification is not authority; this GO authorizes only a current-tip A16 replay evidence package.",
+    "The historical scoped A16 GO does not automatically expand to broad-domain, stochastic, full M3*, or Part B authority.",
+    "Path A or Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "Replay PASS does not authorize Part B; Part B remains NO_GO without a separate Kernel Owner GO.",
+    "P1e SELECT_ACTION is candidacy metadata only and does not authorize execution or STOP."
+  ],
+  "forbidden_in_this_slice": {
+    "green_implementation": false,
+    "new_runtime": false,
+    "new_fixture": false,
+    "protected_byte_modification": false,
+    "gamma_or_catalog_hash_semantic_change": false,
+    "certificate_issue": false,
+    "certified_stop": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "part_b_or_path_b_opening": false,
+    "named_open_widening": false,
+    "production_registration": false,
+    "production_action_execution": false,
+    "second_a17_grid_cell": false,
+    "full_m3_star": false,
+    "stochastic_observation": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_gate": {
+    "stop_after_replay_package": true,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "owner_decides_current_a16_go_reestablished": true
+  },
+  "write_side_effects": {
+    "classification": "docs_only_a16_current_tip_replay",
+    "exact_allowed_files": [
+      "docs/kernel/kernel-v0.8-a16-current-tip-replay-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/kernel-v0.8-a16-current-tip-replay-report-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a16-current-tip-replay-review-packet-v0.1-20260728.json"
+    ],
+    "runtime_schema_config_test_fixture_or_contract_modified": false,
+    "git_delivery": "NOT_AUTHORIZED"
+  }
+}

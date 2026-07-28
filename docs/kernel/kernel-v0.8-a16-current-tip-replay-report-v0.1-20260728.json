@@ -1,0 +1,592 @@
+{
+  "artifact_id": "kernel-v0.8-a16-current-tip-replay-report-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a16_current_tip_readonly_controlled_replay_report",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "status": "replay_complete_pending_kernel_owner_decision",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "authority": {
+    "authority_base_ref": "origin/main",
+    "authority_base_commit": "651b75cf1a261aec64f5da19031b414ac4fa0b65",
+    "branch": "codex/kernel-v0.8-a16-current-tip-replay-v0.1",
+    "owner_go_path": "docs/kernel/kernel-v0.8-a16-current-tip-replay-owner-go-authorization-v0.1-20260728.json",
+    "owner_go_sha256": "9d74401a4842ec75c9b6554cbf993cae5b2358f12f5efc430422ec1b2140f9a5",
+    "mode": "READONLY_CONTROLLED_REPLAY",
+    "semantic_or_runtime_change_authorized": false
+  },
+  "replay_question": "At origin/main 651b75c after PR 52, which A16 Go conditions and No-Go guards have fresh automated evidence, did P1e introduce any prohibited elevation, and should the Kernel Owner reestablish the current-tip scoped A16 Go?",
+  "method": {
+    "matrix_source": {
+      "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+      "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2"
+    },
+    "assessment_enum": [
+      "PASS",
+      "FAIL",
+      "NOT_RUN"
+    ],
+    "path_presence_policy": "Path presence is recorded independently and never treated as automatic PASS.",
+    "test_policy": "Only existing repository tests were executed; no test, fixture, runtime, schema, config, or contract byte was changed.",
+    "historical_policy": "Historical test counts and the 2026-07-22 scoped Owner ruling are context, not inherited current-tip evidence or authority.",
+    "external_network_or_source_access": false
+  },
+  "prerequisite_reverify": [
+    {
+      "role": "step_1_gap_audit",
+      "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+      "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2",
+      "result": "MATCH"
+    },
+    {
+      "role": "p1e_green_acceptance",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json",
+      "sha256": "84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06",
+      "result": "MATCH"
+    },
+    {
+      "role": "historical_part_a_closeout",
+      "path": "04-progress/kernel-v0.8-part-a-closeout-20260722.md",
+      "sha256": "291cfd67b22dbdad3c5acc7fa0405194e96d7ad8df758b089a5f14e5ad064007",
+      "result": "MATCH"
+    },
+    {
+      "role": "historical_a16_review_package",
+      "path": "08-writing/kernel-v0.8-a16-review-package-20260722.md",
+      "sha256": "8f5451e7c66bfbabb59b79651db34d8c11f1a2d454793f083b48832309fe4de8",
+      "result": "MATCH"
+    },
+    {
+      "role": "historical_scoped_authority_status",
+      "path": "08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md",
+      "sha256": "fd99ab91377ad0b7c3ac14ff4beec00b52455509f481b0050d3e620c185a47ad",
+      "result": "MATCH"
+    }
+  ],
+  "path_presence": {
+    "matrix_reference_occurrences_checked": 101,
+    "unique_referenced_paths": 49,
+    "present_paths": 49,
+    "missing_paths": [],
+    "result": "49/49 PRESENT",
+    "automatic_go_inference": false
+  },
+  "test_executions": [
+    {
+      "command_id": "CMD-A16-01",
+      "command": "python -m unittest tests.unit.test_kernel_schemas tests.integration.test_twin_counterexample_fixture tests.integration.test_supply_chain_kernel_fixture tests.unit.test_promote_revoke_audit tests.integration.test_twin_promote_revoke_audit_p8 tests.unit.test_finite_domain_checker tests.integration.test_twin_checker_p1 tests.unit.test_level_certificate_issuer tests.unit.test_system_state_derivation tests.unit.test_mindiff tests.unit.test_formal_ceiling tests.unit.test_distinguishing_action_selection tests.unit.test_deterministic_observation_executor tests.integration.test_twin_kernel_e2e_p10 tests.unit.test_world_elimination_recertify tests.integration.test_twin_world_elimination_recertify_p6 tests.unit.test_epistemic_firewall_admission tests.unit.test_candidate_claim_ir_interface tests.unit.test_counterexample_artifact tests.unit.test_system_state_machine_contract tests.unit.test_evidence_gamma_problem_compiler tests.unit.test_kernel_a17_p1e_depth1_planner tests.integration.test_kernel_a17_p1e_resource_trace_binding -v",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "network": "not_used",
+        "production_action_execution": false
+      },
+      "result": "PASS",
+      "tests_run": 118,
+      "tests_passed": 118,
+      "tests_failed": 0,
+      "tests_errored": 0,
+      "elapsed_seconds": 3.175,
+      "coverage_role": "A16 matrix directed union plus P1e"
+    },
+    {
+      "command_id": "CMD-A16-02",
+      "command": "python -m unittest discover -s tests -p \"test_*.py\"",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "network": "not_used",
+        "production_action_execution": false
+      },
+      "result": "PASS",
+      "tests_run": 502,
+      "tests_passed": 502,
+      "tests_failed": 0,
+      "tests_errored": 0,
+      "elapsed_seconds": 8.999,
+      "coverage_role": "fresh full current-tip repository unittest replay"
+    },
+    {
+      "command_id": "CMD-A16-03",
+      "command": "git diff --check and git diff --cached --check",
+      "result": "PASS",
+      "tracked_diff_count": 0,
+      "cached_diff_count": 0
+    }
+  ],
+  "go_condition_matrix": [
+    {
+      "condition_id": "A16-GO-01",
+      "condition": "Schema validation",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "schemas/gamma-kernel.schema.json",
+        "schemas/action-kernel.schema.json",
+        "schemas/counterexample.schema.json",
+        "schemas/certificate.schema.json",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/integration/test_twin_counterexample_fixture.py",
+        "tests/integration/test_supply_chain_kernel_fixture.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Kernel schemas validate as Draft 2020-12; Twin and supply-chain fixture schema and hash checks pass."
+    },
+    {
+      "condition_id": "A16-GO-02",
+      "condition": "Promote does not change modality",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/firewall/lifecycle.py",
+        "tests/unit/test_promote_revoke_audit.py",
+        "tests/integration/test_twin_promote_revoke_audit_p8.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Reported promotion preserves modality and pointer; illegal or Firewall-denied promotion fails without audit mutation."
+    },
+    {
+      "condition_id": "A16-GO-03",
+      "condition": "Finite-domain truth table",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/integration/test_twin_checker_p1.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "All seven Checker truth-table rows and the Twin recomputation path pass."
+    },
+    {
+      "condition_id": "A16-GO-04",
+      "condition": "candidate certification remains below level certification",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "src/scope/system_state.py",
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_system_state_derivation.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Candidate-only results cannot issue a level certificate or STOP; only a bound complete level certificate can."
+    },
+    {
+      "condition_id": "A16-GO-05",
+      "condition": "heuristic evidence cannot raise the level-certificate bound",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_kernel_schemas.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Heuristic coverage is rejected by both schema and certificate issuer tests."
+    },
+    {
+      "condition_id": "A16-GO-06",
+      "condition": "timeout or resource exhaustion is not UNSAT and does not erase insufficiency",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "src/counterexample/mindiff.py",
+        "src/scope/formal_ceiling.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_formal_ceiling.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Checker and formal-ceiling exhaustion remain UNKNOWN/TIMEOUT; MinDiff timeout preserves the counterexample and emits no system state."
+    },
+    {
+      "condition_id": "A16-GO-07",
+      "condition": "deterministic observation reproducibly distinguishes frozen worlds",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/actions/selection.py",
+        "src/executor/deterministic.py",
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/unit/test_deterministic_observation_executor.py",
+        "tests/integration/test_twin_kernel_e2e_p10.py"
+      ],
+      "additional_p1e_evidence_paths": [
+        "src/planner/deterministic_depth1.py",
+        "tests/unit/test_kernel_a17_p1e_depth1_planner.py",
+        "tests/integration/test_kernel_a17_p1e_resource_trace_binding.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "P4/P5/P10 deterministic replay remains green; P1e adds exact candidacy selection and readonly trace binding without executing an action."
+    },
+    {
+      "condition_id": "A16-GO-08",
+      "condition": "zero-hit behavior is legal only under frozen absence semantics",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/scope/recertify.py",
+        "tests/unit/test_world_elimination_recertify.py",
+        "tests/integration/test_twin_world_elimination_recertify_p6.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Zero hit without frozen absence semantics is ignored; bounded complete absence is tested separately."
+    },
+    {
+      "condition_id": "A16-GO-09",
+      "condition": "positive and negative Kernel cases are represented by directed tests",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "tests/unit/test_kernel_schemas.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_epistemic_firewall_admission.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_system_state_derivation.py",
+        "tests/integration/test_twin_counterexample_fixture.py",
+        "tests/integration/test_supply_chain_kernel_fixture.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "The 118-test directed union includes positive paths, explicit abstentions, invalid inputs, tamper cases, timeout cases, and authority denials."
+    },
+    {
+      "condition_id": "A16-GO-10",
+      "condition": "Checker authority is distinct from LLM generation authority",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "contracts/compiler-kernel-boundary-v0.8.md",
+        "src/checker/finite_domain.py",
+        "tests/unit/test_candidate_claim_ir_interface.py",
+        "tests/unit/test_level_certificate_issuer.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Candidate compiler output excludes Kernel-owned fields; only Checker-bound level proof can issue a certificate."
+    },
+    {
+      "condition_id": "A16-GO-11",
+      "condition": "Gamma, catalog, and policy hashes are frozen and replayable",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "contracts/gamma-hash-v0.8.md",
+        "configs/gamma-kernel-v0.8.yaml",
+        "configs/action-catalog-kernel-v0.8.yaml",
+        "configs/admission-policy-kernel-v0.8.yaml",
+        "configs/admission-policy-approval-kernel-v0.8.yaml",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/integration/test_twin_counterexample_fixture.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Schema/hash replay and approved-policy tests pass; current content identities are recorded in the pin table."
+    },
+    {
+      "condition_id": "A16-GO-12",
+      "condition": "one-screen counterexample and MinDiff",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/counterexample/mindiff.py",
+        "src/counterexample/artifact.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_counterexample_artifact.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Deterministic minimal differences and schema-shaped counterexample assembly pass, including timeout and witness-mismatch denials."
+    },
+    {
+      "condition_id": "A16-GO-13",
+      "condition": "formal ceiling is model-relative, exact, and fail-closed outside the frozen domain",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "contracts/formal-ceiling-v0.8.md",
+        "src/scope/formal_ceiling.py",
+        "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/formal_ceiling.json",
+        "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/formal_ceiling.json",
+        "tests/unit/test_formal_ceiling.py"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02"],
+      "evidence": "Both distinct frozen ceilings replay exactly; outside-domain, resource-exhaustion, and tamper inputs fail closed."
+    },
+    {
+      "condition_id": "A16-GO-14",
+      "condition": "all Go conditions have automated tests and the final tip is cleanly replayed",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "docs/kernel/kernel-v0.8-a16-current-tip-replay-owner-go-authorization-v0.1-20260728.json",
+        "docs/kernel/kernel-v0.8-a16-current-tip-replay-report-v0.1-20260728.json"
+      ],
+      "test_command_ids": ["CMD-A16-01", "CMD-A16-02", "CMD-A16-03"],
+      "evidence": "Current tip produced 118/118 directed and 502/502 full unittest PASS; all 49 matrix paths exist; audit pins are 11/11 MATCH; P1e acceptance pins are 17/17 MATCH; tracked and cached diffs are zero.",
+      "historical_result_inherited": false
+    }
+  ],
+  "no_go_guard_matrix": [
+    {
+      "guard_id": "A16-NG-01",
+      "prohibited_interpretation": "handwritten counterexample as Checker proof",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/counterexample/artifact.py",
+        "tests/unit/test_counterexample_artifact.py"
+      ],
+      "evidence": "Assembler requires the bound Checker witness and rejects mismatched MinDiff."
+    },
+    {
+      "guard_id": "A16-NG-02",
+      "prohibited_interpretation": "forged or non-Checker certificate",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_system_state_derivation.py"
+      ],
+      "evidence": "Non-Checker and forged certificates are rejected and cannot STOP."
+    },
+    {
+      "guard_id": "A16-NG-03",
+      "prohibited_interpretation": "timeout as UNSAT",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "src/counterexample/mindiff.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_mindiff.py"
+      ],
+      "evidence": "Timeout and exhaustion remain UNKNOWN/TIMEOUT and never become UNSAT."
+    },
+    {
+      "guard_id": "A16-NG-04",
+      "prohibited_interpretation": "heuristic result as complete-domain proof",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "tests/unit/test_level_certificate_issuer.py"
+      ],
+      "evidence": "Heuristic and solver-complete caller declarations are not signed as complete-domain proof."
+    },
+    {
+      "guard_id": "A16-NG-05",
+      "prohibited_interpretation": "reported evidence laundered into observed evidence",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/firewall/admission.py",
+        "src/firewall/lifecycle.py",
+        "tests/unit/test_epistemic_firewall_admission.py",
+        "tests/unit/test_promote_revoke_audit.py"
+      ],
+      "evidence": "Modality, truth role, and authority are separate checks; lifecycle operations preserve modality."
+    },
+    {
+      "guard_id": "A16-NG-06",
+      "prohibited_interpretation": "missing observation model as evidence for a ceiling",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/actions/selection.py",
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/unit/test_kernel_a17_p1e_depth1_planner.py"
+      ],
+      "evidence": "Missing or stochastic models are rejected by P4/schema checks and P1e fail-closed coverage."
+    },
+    {
+      "guard_id": "A16-NG-07",
+      "prohibited_interpretation": "tri-state or unknown result collapsed into a success state",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "src/scope/system_state.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_system_state_machine_contract.py"
+      ],
+      "evidence": "Unknown and scope mismatch precede any success or STOP state."
+    },
+    {
+      "guard_id": "A16-NG-08",
+      "prohibited_interpretation": "MinDiff timeout or result directly producing STOP",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/counterexample/mindiff.py",
+        "src/scope/system_state.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_system_state_derivation.py"
+      ],
+      "evidence": "MinDiff emits no system state; timeout preserves the counterexample and cannot STOP."
+    },
+    {
+      "guard_id": "A16-NG-09",
+      "prohibited_interpretation": "hidden or oracle identifiers used for action selection",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/actions/selection.py",
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/integration/test_twin_counterexample_fixture.py",
+        "tests/unit/test_kernel_a17_p1e_depth1_planner.py"
+      ],
+      "evidence": "P4 and P1e reject hidden or oracle inputs; frozen generation artifacts contain neither."
+    },
+    {
+      "guard_id": "A16-NG-10",
+      "prohibited_interpretation": "gaming or silently changing Gamma, catalog, or policy identity",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "contracts/gamma-hash-v0.8.md",
+        "configs/admission-policy-approval-kernel-v0.8.yaml",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/unit/test_formal_ceiling.py"
+      ],
+      "evidence": "Canonical and raw content identities replay; tamper and stale artifacts are invalid rather than silently accepted."
+    },
+    {
+      "guard_id": "A16-NG-11",
+      "prohibited_interpretation": "expanded or out-of-domain input masking a failed finite-domain claim",
+      "assessment": "PASS",
+      "fresh_automation": true,
+      "evidence_paths": [
+        "src/scope/finite_problem.py",
+        "src/scope/formal_ceiling.py",
+        "tests/unit/test_evidence_gamma_problem_compiler.py",
+        "tests/unit/test_formal_ceiling.py"
+      ],
+      "evidence": "Unknown worlds, missing rules, nonunique evidence, and outside-domain targets fail closed."
+    }
+  ],
+  "matrix_summary": {
+    "go_conditions": {
+      "total": 14,
+      "pass": 14,
+      "fail": 0,
+      "not_run": 0
+    },
+    "no_go_guards": {
+      "total": 11,
+      "pass": 11,
+      "fail": 0,
+      "not_run": 0
+    }
+  },
+  "p1e_post_merge_no_go_review": {
+    "accepted_runtime_path": "src/planner/deterministic_depth1.py",
+    "accepted_runtime_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+    "accepted_fixture_sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b",
+    "production_registration_enabled": false,
+    "action_execution_enabled": false,
+    "system_state_authority": false,
+    "stop_authority": false,
+    "production_callers_outside_p1e_module": 0,
+    "select_action_semantics": "CANDIDACY_METADATA_ONLY",
+    "partial_action_or_attempt_on_abstain_or_deny": false,
+    "historical_resource_trace_rewrite": false,
+    "timeout_as_unsat": false,
+    "heuristic_as_complete": false,
+    "certificate_or_stop_emission": false,
+    "new_no_go_violation_detected": false
+  },
+  "historical_evidence_comparison": {
+    "historical_snapshot": {
+      "date": "2026-07-22",
+      "reported_result": "131/131 PASS",
+      "ruling": "A16 PASSED / GO for Kernel v0.8 Part A only",
+      "tip_scope": "historical frozen scope",
+      "automatically_inherited": false
+    },
+    "current_tip_snapshot": {
+      "tip": "651b75cf1a261aec64f5da19031b414ac4fa0b65",
+      "directed_result": "118/118 PASS",
+      "full_result": "502/502 PASS",
+      "matrix_path_presence": "49/49",
+      "audit_pin_replay": "11/11 MATCH",
+      "p1e_acceptance_pin_replay": "17/17 MATCH"
+    },
+    "comparison": "The current 502-test result replaces the historical 131-test count only as fresh automation evidence for this current tip; suite sizes are not treated as directly equivalent. It supplements but does not rewrite, revoke, expand, or automatically renew the historical Owner ruling.",
+    "historical_owner_decision_replaced": false,
+    "historical_scope_expanded": false
+  },
+  "critical_content_sha256_table": [
+    {"path": "schemas/claim-ir-kernel.schema.json", "sha256": "7c6fa2db0b75d69340be5a8843ba0c373e2d5b25b0d37cf8f1d1c416a787865d"},
+    {"path": "schemas/gamma-kernel.schema.json", "sha256": "eff6b2224bcc6c48718d407a052747303ee16dbb33e00a7c043d37a505230902"},
+    {"path": "schemas/action-kernel.schema.json", "sha256": "b64f4a3aa44d3aa221b8ab08d9bae0c9eb5118c07ebdbe05fce74563ee402dee"},
+    {"path": "schemas/certificate.schema.json", "sha256": "abd394cb950b350c9fbc4a13f6aca5243e59d6ade3a47ef37bde9be4d5b5bfba"},
+    {"path": "schemas/counterexample.schema.json", "sha256": "2cacb92b1c7641c3d4f43844241fcf6f273ec176b4fb9c5df5dd9081993846fb"},
+    {"path": "schemas/admission-policy.schema.json", "sha256": "92d96574dcc5c3d14544b19c4f19b82534af1fb23a8c03258a2beb2049b6b7d8"},
+    {"path": "schemas/policy-approval.schema.json", "sha256": "263f6814475feaa0a4858499703a1c3d22f12c825f3711ce51c947183e3d9e38"},
+    {"path": "schemas/formal-ceiling.schema.json", "sha256": "0c54ee008b4ab416f6cbdbe3dba1a69748d9f610259b6ddc0a6f751ef5d8389a"},
+    {"path": "configs/gamma-kernel-v0.8.yaml", "sha256": "6477d93af84295e9affa3f6c1fbf1639c1dda29a45ba810d672e4d9a8a350966"},
+    {"path": "configs/action-catalog-kernel-v0.8.yaml", "sha256": "6442c1099fd0e0a43f081b5e912b516c8feec3d2dbdd604b9a59020ee43c066b"},
+    {"path": "configs/admission-policy-kernel-v0.8.yaml", "sha256": "e2e9a042780f9ef430f506b0cda235bd6e9b3dc0e3d7b0d12ae4a6a036d0263c"},
+    {"path": "configs/admission-policy-approval-kernel-v0.8.yaml", "sha256": "874cc030b6650ebfe9717b316ee309ae1692d6cef1ca3f0cec685c19795ced9a"},
+    {"path": "contracts/gamma-hash-v0.8.md", "sha256": "40829563012ad3fa9ed9dc752ed1d9a02b5fb809cd5ef6c9686d2367f3d23106"},
+    {"path": "contracts/formal-ceiling-v0.8.md", "sha256": "dc102b03c349658242ad67d0574d54f8351d19419cdf43e27e8c80a5c6e10cb1"},
+    {"path": "contracts/compiler-kernel-boundary-v0.8.md", "sha256": "26237a01761dfa500047b2ea538d1bae812b9725902bd0fd86fb5f2f5f399c63"},
+    {"path": "src/scope/finite_problem.py", "sha256": "54a359bccb7a225a13849bfda41503874af61b2c6443282b233535f6a22528d2"},
+    {"path": "src/checker/finite_domain.py", "sha256": "e52b23538dd99e4a94d26faf865544e0268d17e13cf8bfbfd34ccb004c004d24"},
+    {"path": "src/counterexample/mindiff.py", "sha256": "13a828711e7aa8155ba96185a93bf745546a63fe863bdd43474424fa660f49ca"},
+    {"path": "src/counterexample/artifact.py", "sha256": "b8195a2043addb7f3e8374a045076319b77d1cb3225c5036b82dd3dfadb7125e"},
+    {"path": "src/actions/selection.py", "sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83"},
+    {"path": "src/executor/deterministic.py", "sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a"},
+    {"path": "src/scope/recertify.py", "sha256": "aa42d7ba39b50b397e8de0241793e7ee79be76844a7ae588ae686a2005f3e849"},
+    {"path": "src/firewall/admission.py", "sha256": "166d8175232bf496083200990eb60ef64acb5fd36cb8da0e0ee91a74629fcd26"},
+    {"path": "src/firewall/lifecycle.py", "sha256": "c1e8724046f0d6e0983e5aba74c9bbffa8ba74c1dee06200ca7c89bac8a6208b"},
+    {"path": "src/checker/level_certificate.py", "sha256": "5500fd2fc50f58bf39675e50570b3be8dfd196bcac3ed479b1b3abc6ddf3f73b"},
+    {"path": "src/scope/system_state.py", "sha256": "6d1961fa764c9c6387100685bef9a4eb86e8383197af26be9d1f696bec47c20b"},
+    {"path": "src/scope/formal_ceiling.py", "sha256": "4fa5cfe457d65546bc14f58202b668776abf272a4522bc90de994fa10f9b8597"},
+    {"path": "src/cli/kernel_e2e.py", "sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60"},
+    {"path": "src/planner/deterministic_depth1.py", "sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"},
+    {"path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json", "sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b"},
+    {"path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/formal_ceiling.json", "sha256": "7c41665826b67ff31c9b17d8d02edd1322a39ae7a10bc0f158fa53bd2f58d33b"},
+    {"path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl", "sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318"},
+    {"path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/formal_ceiling.json", "sha256": "70cc5e207dd0014e472f64b846f7fba374e3bab622af7d519082c5e573ba4331"},
+    {"path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/resource_trace.jsonl", "sha256": "102f43c3210208101f393580b6d4afe7573f9be0e081edabb97d28f19b9efee5"}
+  ],
+  "pin_reverify_summary": {
+    "step_1_audit_internal_pins": "11/11 MATCH",
+    "p1e_acceptance_internal_pins": "17/17 MATCH",
+    "critical_current_tip_content_sha256_recorded": "34/34",
+    "mismatch_count": 0
+  },
+  "recommendation": {
+    "current_a16_go_reestablished_recommended": true,
+    "recommended_scope": "KERNEL_V0_8_PART_A_FROZEN_FINITE_DOMAIN_ONLY_AT_651B75C",
+    "reason": "All fourteen Go conditions and eleven No-Go guards have fresh current-tip automated evidence; 502/502 full tests pass; all referenced paths and accepted pins replay; P1e introduced no detected authority or semantic violation.",
+    "current_a16_go_reestablished_actual": false,
+    "actual_status": "PENDING_KERNEL_OWNER_DECISION",
+    "owner_must_decide": true,
+    "part_b_elevation": "NO_GO"
+  },
+  "scope_boundaries": [
+    "This recommendation does not issue a certificate or CERTIFIED_STOP.",
+    "This recommendation does not authorize production action execution, production registration, mint, admission, or Kernel/E_case write.",
+    "The historical 2026-07-22 scoped GO remains historical and is neither revoked nor expanded by this report.",
+    "P1e SELECT_ACTION remains candidacy metadata only.",
+    "No second A17 cell, broad-domain evaluation, stochastic observation, full M3*, Part B, Path B, or named-open widening is authorized.",
+    "Path A or Kernel design GREEN is not L2 PASS, Part B PASS, or unrestricted Part B elevation."
+  ],
+  "write_side_effects": {
+    "classification": "docs_only_a16_current_tip_replay",
+    "created_files": [
+      "docs/kernel/kernel-v0.8-a16-current-tip-replay-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/kernel-v0.8-a16-current-tip-replay-report-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a16-current-tip-replay-review-packet-v0.1-20260728.json"
+    ],
+    "runtime_schema_config_test_fixture_or_contract_modified": false,
+    "authority_state_written": false,
+    "certificate_or_stop_written": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW"
+}
