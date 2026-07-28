@@ -1,0 +1,64 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-d1-conformance-admission-policy-v0.1
+policy_version: "0.1.0"
+status: B5_D1_CONFORMANCE_ADMISSION_LOCAL_ONLY
+authorized_slice: B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY
+admission_scope: INTERFACE_CONFORMANCE_ONLY
+admissible_implementation_ids:
+  - part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+wildcards: false
+fallback: false
+legacy_rejections:
+  project05_m3star_h3_dual: NOT_ADMITTED_UNVERIFIED
+unknown_implementation_behavior: FAIL_CLOSED_DENY_UNKNOWN_IMPLEMENTATION
+required_evidence_slots:
+  - dependency
+  - parameter
+  - feature_provenance
+  - runtime_conformance
+evidence_hash_bindings:
+  dependency: dependency_lock_hash
+  parameter: parameter_manifest_hash
+  feature_provenance: feature_provenance_hash
+  runtime_conformance: runtime_conformance_hash
+decision_table:
+  - condition: EXACT_D1_IDENTITY_AND_ALL_EVIDENCE_VERIFIED
+    decision: ADMITTED_CONFORMANCE_ONLY
+    reason_code: B5-ADM-000-CONFORMANCE-ONLY
+  - condition: LEGACY_UNVERIFIED_ID
+    decision: DENY_NOT_ADMITTED_UNVERIFIED
+    reason_code: B5-ADM-LEGACY-NOT-ADMITTED
+  - condition: UNKNOWN_OR_WILDCARD_IMPLEMENTATION_ID
+    decision: DENY_UNKNOWN_IMPLEMENTATION
+    reason_code: B5-ADM-UNKNOWN-ID
+  - condition: EVIDENCE_INCOMPLETE_OR_EXTRA_SLOT
+    decision: DENY_EVIDENCE_INCOMPLETE
+    reason_code: B5-ADM-EVIDENCE-INCOMPLETE
+  - condition: IDENTITY_EVIDENCE_POLICY_OR_SLOT_HASH_MISMATCH
+    decision: DENY_EVIDENCE_HASH_MISMATCH
+    reason_code: B5-ADM-EVIDENCE-HASH-MISMATCH
+  - condition: RUNTIME_CONFORMANCE_FAILED
+    decision: DENY_RUNTIME_CONFORMANCE_FAILED
+    reason_code: B5-ADM-RUNTIME-CONFORMANCE-FAILED
+authority_boundary:
+  local_conformance_admission_record: true
+  planner_execution: false
+  evaluation_execution: false
+  sampling: false
+  production_capture: false
+  path_b_write: false
+  mint: false
+  path_b_admission_or_ingestion: false
+  kernel_or_e_case_write: false
+  holdout_release: false
+  scalarization: false
+  performance_claim: false
+  superiority_claim: false
+  certificate: false
+  system_state: false
+  stop_authority: NONE
+protected_skeleton_policy:
+  path: configs/part-b-b5-planner-admission-policy-v0.8.yaml
+  content_sha256: 61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550
+  modified: false
+hash: "sha256:746378e547d67298a40b905d57f915265224ae5ae6bf66a4195c281613d5877e"

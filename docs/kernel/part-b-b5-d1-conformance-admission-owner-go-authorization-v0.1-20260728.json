@@ -1,0 +1,117 @@
+{
+  "artifact_id": "part-b-b5-d1-conformance-admission-owner-go-authorization-v0.1-20260728",
+  "artifact_type": "kernel_owner_part_b_b5_d1_conformance_admission_red_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "decision": "AUTHORIZE_PART_B_B5_D1_CONFORMANCE_ADMISSION_RED_FIRST",
+  "authority_base_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+  "branch": "codex/part-b-b5-d1-conformance-admission-v0.1",
+  "authorized_cell": "PART_B_B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+  "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "prerequisites": [
+    {
+      "role": "OWNER_ACCEPTED_PART_B_STEP1_READONLY_ELEVATION_GAP_AUDIT",
+      "path": "docs/kernel/part-b-step1-readonly-elevation-gap-audit-v0.1-20260728.json",
+      "content_sha256": "0978da374c2de2804b870d9656855c28052641cfdb24092eb34b2d93ba9062a5",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+      "pin_verification": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_COPIED_UNDER_EXACT_RED_ALLOWLIST"
+    },
+    {
+      "role": "OWNER_ACCEPTED_AUDIT_REVIEW_PACKET",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step1-readonly-elevation-gap-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "6bf9d014403b349361079d7a1a747efe92985ddfc41375e3c5e33d27ed53dc6d",
+      "owner_decision": "accept",
+      "pin_verification": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_COPIED_UNDER_EXACT_RED_ALLOWLIST"
+    }
+  ],
+  "authorized_now": {
+    "red_design_only": true,
+    "closed_d1_conformance_identity_design": true,
+    "four_slot_evidence_binding_design": true,
+    "admission_record_ceiling_design": true,
+    "fail_closed_matrix_design": true,
+    "future_green_allowlist_proposal": true,
+    "green_implementation": false,
+    "runtime_or_policy_execution": false
+  },
+  "maximum_positive_decision": "ADMITTED_CONFORMANCE_ONLY",
+  "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+  "required_authority_ceiling": {
+    "planner_execution_authority": false,
+    "evaluation_execution_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "path_b_admission_or_ingestion_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "holdout_release_authority": false,
+    "performance_claim_authority": false,
+    "scalarization_authority": false,
+    "certificate_authority": false,
+    "system_state_authority": false,
+    "stop_authority": "NONE",
+    "full_m3_star": false
+  },
+  "protected_zero_drift_pins": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+      "content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+      "status": "MATCH"
+    }
+  ],
+  "existing_b5_boundaries_to_preserve": {
+    "existing_identity": "part_b_b5_planner_admission_skeleton_v0.8",
+    "existing_identity_must_remain_admissible": true,
+    "existing_evaluator_must_not_be_modified_in_red": true,
+    "legacy_implementation_id": "project05_m3star_h3_dual",
+    "legacy_status": "NOT_ADMITTED_UNVERIFIED",
+    "legacy_decision": "DENY_NOT_ADMITTED_UNVERIFIED",
+    "legacy_must_not_be_admitted": true
+  },
+  "exact_red_write_allowlist": [
+    "docs/kernel/part-b-b5-d1-conformance-admission-owner-go-authorization-v0.1-20260728.json",
+    "docs/kernel/part-b-b5-d1-conformance-admission-red-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-d1-conformance-admission-red-review-packet-v0.1-20260728.json"
+  ],
+  "explicitly_not_authorized": [
+    "GREEN_DESIGN_OR_IMPLEMENTATION",
+    "POLICY_CONFIG_SCHEMA_RUNTIME_FIXTURE_OR_TEST_WRITES",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "ADMISSION_OR_INGESTION_INTO_PATH_B",
+    "KERNEL_OR_E_CASE_WRITE",
+    "FULL_M3_STAR_OR_LEGACY_M3_STAR_EXECUTION",
+    "B6_CLOSED_LOOP_EXECUTION",
+    "B2_EMPIRICAL_MODEL_ADMISSION",
+    "B7_CONNECTOR_EXECUTION",
+    "B8_HOLDOUT_RELEASE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "NAMED_OPEN_WIDENING",
+    "LLM_OR_09_EXPERIMENTS_PROMOTION_INTO_PART_B",
+    "PART_A_PLANNER_OR_TWIN_RUNTIME_MUTATION",
+    "P4_P5_P10_OR_HISTORICAL_TRACE_MUTATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "green_started": false,
+  "write_side_effects": "only_exact_3_red_docs",
+  "stop_condition": "STOP_FOR_KERNEL_OWNER_REVIEW_ACCEPT_REQUEST_REVISION_OR_REJECT"
+}

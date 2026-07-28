@@ -1,0 +1,1419 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-d1-conformance-admission.schema.json",
+  "title": "Part B B5 D1 conformance admission additive artifacts v0.1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/policy"
+    },
+    {
+      "$ref": "#/$defs/identity"
+    },
+    {
+      "$ref": "#/$defs/evidence"
+    },
+    {
+      "$ref": "#/$defs/record"
+    },
+    {
+      "$ref": "#/$defs/manifest"
+    }
+  ],
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "contentSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "gitCommit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sourceArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "path",
+        "content_sha256"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "D1_CANDIDACY_PLANNER",
+            "TWIN_P10_READONLY_CANDIDACY_WIRING",
+            "B5_NONEXECUTING_ADMISSION_EVALUATOR"
+          ]
+        },
+        "path": {
+          "enum": [
+            "src/planner/deterministic_depth1.py",
+            "src/planner/twin_p10_readonly_wiring.py",
+            "src/scope/part_b_b5_planner_admission.py"
+          ]
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/contentSha256"
+        }
+      }
+    },
+    "acceptancePin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "content_sha256"
+      ],
+      "properties": {
+        "path": {
+          "enum": [
+            "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json",
+            "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728.json"
+          ]
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/contentSha256"
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "implementation_id",
+        "implementation_version",
+        "implementation_kind",
+        "execution_requested",
+        "identity_inputs",
+        "identity_hashes",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "implementation_version": {
+          "const": "0.1.0"
+        },
+        "implementation_kind": {
+          "const": "ADMISSION_CONFORMANCE_NONEXECUTING"
+        },
+        "execution_requested": {
+          "const": false
+        },
+        "identity_inputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_tree",
+            "dependency_lock",
+            "parameter_manifest",
+            "feature_provenance",
+            "runtime_conformance"
+          ],
+          "properties": {
+            "source_tree": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "basis",
+                "baseline_commit",
+                "artifacts",
+                "acceptance_pins",
+                "forbidden_runtime_paths"
+              ],
+              "properties": {
+                "basis": {
+                  "const": "EXACT_CONTENT_SHA256_ALLOWLIST_AT_AUTHORITY_BASE"
+                },
+                "baseline_commit": {
+                  "const": "eb44bc1858d681e6763a1a1735d63f75f6d1b270"
+                },
+                "artifacts": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/sourceArtifact"
+                        },
+                        {
+                          "properties": {
+                            "role": {
+                              "const": "D1_CANDIDACY_PLANNER"
+                            },
+                            "path": {
+                              "const": "src/planner/deterministic_depth1.py"
+                            },
+                            "content_sha256": {
+                              "const": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/sourceArtifact"
+                        },
+                        {
+                          "properties": {
+                            "role": {
+                              "const": "TWIN_P10_READONLY_CANDIDACY_WIRING"
+                            },
+                            "path": {
+                              "const": "src/planner/twin_p10_readonly_wiring.py"
+                            },
+                            "content_sha256": {
+                              "const": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/sourceArtifact"
+                        },
+                        {
+                          "properties": {
+                            "role": {
+                              "const": "B5_NONEXECUTING_ADMISSION_EVALUATOR"
+                            },
+                            "path": {
+                              "const": "src/scope/part_b_b5_planner_admission.py"
+                            },
+                            "content_sha256": {
+                              "const": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "acceptance_pins": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/acceptancePin"
+                        },
+                        {
+                          "properties": {
+                            "path": {
+                              "const": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json"
+                            },
+                            "content_sha256": {
+                              "const": "84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/acceptancePin"
+                        },
+                        {
+                          "properties": {
+                            "path": {
+                              "const": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728.json"
+                            },
+                            "content_sha256": {
+                              "const": "7bdabc21d583e0b82ac08d26cfb6fd51a51b3d5aaa29b892b7f830a89ce8ca04"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "forbidden_runtime_paths": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "09-experiments/"
+                    },
+                    {
+                      "const": "training/"
+                    },
+                    {
+                      "const": "production_registry/"
+                    },
+                    {
+                      "const": "Path_B_write/"
+                    },
+                    {
+                      "const": "Kernel_E_case_write/"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 5,
+                  "maxItems": 5
+                }
+              }
+            },
+            "dependency_lock": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "runtime_dependencies",
+                "repository_dependencies",
+                "external_dependencies",
+                "network_dependencies",
+                "download_dependencies"
+              ],
+              "properties": {
+                "runtime_dependencies": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "python-stdlib"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                "repository_dependencies": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "src.actions.selection"
+                    },
+                    {
+                      "const": "src.ir.canonical_hash"
+                    },
+                    {
+                      "const": "src.planner.deterministic_depth1"
+                    },
+                    {
+                      "const": "src.planner.twin_p10_readonly_wiring"
+                    },
+                    {
+                      "const": "src.scope.finite_problem"
+                    },
+                    {
+                      "const": "src.scope.part_b_b5_planner_admission"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 6,
+                  "maxItems": 6
+                },
+                "external_dependencies": {
+                  "type": "array",
+                  "maxItems": 0,
+                  "items": false
+                },
+                "network_dependencies": {
+                  "type": "array",
+                  "maxItems": 0,
+                  "items": false
+                },
+                "download_dependencies": {
+                  "type": "array",
+                  "maxItems": 0,
+                  "items": false
+                }
+              }
+            },
+            "parameter_manifest": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "semantics",
+                "trained_state",
+                "learned_parameters",
+                "tunable_parameters",
+                "constants"
+              ],
+              "properties": {
+                "semantics": {
+                  "const": "FROZEN_CANDIDACY_CONSTANTS_NO_TRAINED_OR_TUNABLE_STATE"
+                },
+                "trained_state": {
+                  "const": false
+                },
+                "learned_parameters": {
+                  "type": "array",
+                  "maxItems": 0,
+                  "items": false
+                },
+                "tunable_parameters": {
+                  "type": "array",
+                  "maxItems": 0,
+                  "items": false
+                },
+                "constants": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "planner_mode",
+                    "request_kind",
+                    "execution_mode",
+                    "decision_scope",
+                    "partition_basis",
+                    "tie_break_rule",
+                    "trace_match_policy",
+                    "caller_class",
+                    "caller_result_scope",
+                    "production_registration_enabled",
+                    "action_execution_enabled",
+                    "system_state_authority",
+                    "stop_authority"
+                  ],
+                  "properties": {
+                    "planner_mode": {
+                      "const": "M3-KERNEL-D1"
+                    },
+                    "request_kind": {
+                      "const": "CLASSIFY_NEXT_ACTION_DEPTH_1"
+                    },
+                    "execution_mode": {
+                      "const": "READONLY_DECISION_ONLY_NO_ACTION_EXECUTION"
+                    },
+                    "decision_scope": {
+                      "const": "NEXT_ACTION_CANDIDACY_ONLY_NO_EXECUTE_NO_STOP"
+                    },
+                    "partition_basis": {
+                      "const": "FROZEN_MODEL_PROJECTION_NOT_OBSERVED_TRUTH"
+                    },
+                    "tie_break_rule": {
+                      "const": "MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1"
+                    },
+                    "trace_match_policy": {
+                      "const": "EXACT_ATTEMPT_ACTION_DECISION_BUDGET_HASH_MATCH_NO_FALLBACK"
+                    },
+                    "caller_class": {
+                      "const": "TEST_ONLY_NO_PRODUCTION_REGISTRATION"
+                    },
+                    "caller_result_scope": {
+                      "const": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY_NO_EXECUTE_NO_STOP"
+                    },
+                    "production_registration_enabled": {
+                      "const": false
+                    },
+                    "action_execution_enabled": {
+                      "const": false
+                    },
+                    "system_state_authority": {
+                      "const": false
+                    },
+                    "stop_authority": {
+                      "const": false
+                    }
+                  }
+                }
+              }
+            },
+            "feature_provenance": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "allowed_inputs",
+                "forbidden_inputs"
+              ],
+              "properties": {
+                "allowed_inputs": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "exact_14_field_depth1_request"
+                    },
+                    {
+                      "const": "frozen_finite_domain_binding"
+                    },
+                    {
+                      "const": "checker_and_counterexample_declarations"
+                    },
+                    {
+                      "const": "exact_action_catalog_identity"
+                    },
+                    {
+                      "const": "deterministic_outcome_partitions"
+                    },
+                    {
+                      "const": "resource_budget_declaration"
+                    },
+                    {
+                      "const": "pinned_TWIN_COUNTEREXAMPLE_001_public_fixture_metadata"
+                    },
+                    {
+                      "const": "readonly_resource_trace_binding_receipt"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 8,
+                  "maxItems": 8
+                },
+                "forbidden_inputs": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "oracle_label"
+                    },
+                    {
+                      "const": "hidden_ground_truth"
+                    },
+                    {
+                      "const": "hidden_identifier"
+                    },
+                    {
+                      "const": "holdout_data"
+                    },
+                    {
+                      "const": "holdout_label"
+                    },
+                    {
+                      "const": "holdout_result"
+                    },
+                    {
+                      "const": "realized_future_action_outcome"
+                    },
+                    {
+                      "const": "historical_performance_ranking"
+                    },
+                    {
+                      "const": "experiment_only_artifact"
+                    },
+                    {
+                      "const": "production_registry_state"
+                    },
+                    {
+                      "const": "raw_external_source"
+                    },
+                    {
+                      "const": "path_or_uri_dereference"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 12,
+                  "maxItems": 12
+                }
+              }
+            },
+            "runtime_conformance": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "evaluator_module",
+                "evaluator_function",
+                "evaluated_surfaces",
+                "deterministic",
+                "allowed_output",
+                "required_assertions",
+                "forbidden_outputs"
+              ],
+              "properties": {
+                "evaluator_module": {
+                  "const": "src.scope.part_b_b5_planner_admission"
+                },
+                "evaluator_function": {
+                  "const": "evaluate_admission"
+                },
+                "evaluated_surfaces": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "src.planner.deterministic_depth1.evaluate_depth1_planner_request"
+                    },
+                    {
+                      "const": "src.planner.deterministic_depth1.validate_resource_trace_binding"
+                    },
+                    {
+                      "const": "src.planner.twin_p10_readonly_wiring.evaluate_twin_p10_fixed_case_for_depth1_candidacy"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "deterministic": {
+                  "const": true
+                },
+                "allowed_output": {
+                  "const": "B5_ADMISSION_RECORD_ONLY"
+                },
+                "required_assertions": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "D1_SELECT_ACTION_IS_CANDIDACY_METADATA_ONLY"
+                    },
+                    {
+                      "const": "TWIN_WIRING_IS_TEST_ONLY_CANDIDACY_SIDECAR"
+                    },
+                    {
+                      "const": "PRODUCTION_REGISTRATION_ENABLED_FALSE"
+                    },
+                    {
+                      "const": "ACTION_EXECUTION_ENABLED_FALSE"
+                    },
+                    {
+                      "const": "SYSTEM_STATE_AUTHORITY_FALSE"
+                    },
+                    {
+                      "const": "STOP_AUTHORITY_FALSE"
+                    },
+                    {
+                      "const": "HISTORICAL_RESOURCE_TRACE_NOT_REWRITTEN"
+                    },
+                    {
+                      "const": "B5_RECORD_SCHEMA_VALID"
+                    },
+                    {
+                      "const": "PROTECTED_CONTENT_PINS_MATCH"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 9,
+                  "maxItems": 9
+                },
+                "forbidden_outputs": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "const": "planner_action_execution"
+                    },
+                    {
+                      "const": "evaluation_result"
+                    },
+                    {
+                      "const": "system_state"
+                    },
+                    {
+                      "const": "path_b_write"
+                    },
+                    {
+                      "const": "mint"
+                    },
+                    {
+                      "const": "kernel_or_e_case_write"
+                    },
+                    {
+                      "const": "performance_metric"
+                    },
+                    {
+                      "const": "scalarized_ranking"
+                    },
+                    {
+                      "const": "superiority_claim"
+                    },
+                    {
+                      "const": "certificate"
+                    },
+                    {
+                      "const": "CERTIFIED_STOP"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 11,
+                  "maxItems": 11
+                }
+              }
+            }
+          }
+        },
+        "identity_hashes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_tree_hash",
+            "dependency_lock_hash",
+            "parameter_manifest_hash",
+            "feature_provenance_hash",
+            "runtime_conformance_hash"
+          ],
+          "properties": {
+            "source_tree_hash": {
+              "$ref": "#/$defs/hash"
+            },
+            "dependency_lock_hash": {
+              "$ref": "#/$defs/hash"
+            },
+            "parameter_manifest_hash": {
+              "$ref": "#/$defs/hash"
+            },
+            "feature_provenance_hash": {
+              "$ref": "#/$defs/hash"
+            },
+            "runtime_conformance_hash": {
+              "$ref": "#/$defs/hash"
+            }
+          }
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        }
+      }
+    },
+    "evidenceSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "artifact_hash",
+        "verification_method",
+        "grants_execution_authority"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "VERIFIED",
+            "FAILED"
+          ]
+        },
+        "artifact_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "verification_method": {
+          "const": "CANONICAL_VALUE_HASH_REPLAY"
+        },
+        "grants_execution_authority": {
+          "const": false
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "evidence_id",
+        "evidence_version",
+        "implementation_id",
+        "implementation_identity_hash",
+        "evidence_scope",
+        "evidence_slots",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "evidence_id": {
+          "const": "part-b-b5-d1-conformance-admission-evidence-v0.1"
+        },
+        "evidence_version": {
+          "const": "0.1.0"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "implementation_identity_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "evidence_scope": {
+          "const": "LOCAL_D1_CONFORMANCE_EVIDENCE_ONLY"
+        },
+        "evidence_slots": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "dependency",
+            "parameter",
+            "feature_provenance",
+            "runtime_conformance"
+          ],
+          "properties": {
+            "dependency": {
+              "$ref": "#/$defs/evidenceSlot"
+            },
+            "parameter": {
+              "$ref": "#/$defs/evidenceSlot"
+            },
+            "feature_provenance": {
+              "$ref": "#/$defs/evidenceSlot"
+            },
+            "runtime_conformance": {
+              "$ref": "#/$defs/evidenceSlot"
+            }
+          }
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        }
+      }
+    },
+    "decisionRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "condition",
+        "decision",
+        "reason_code"
+      ],
+      "properties": {
+        "condition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decision": {
+          "enum": [
+            "ADMITTED_CONFORMANCE_ONLY",
+            "DENY_NOT_ADMITTED_UNVERIFIED",
+            "DENY_UNKNOWN_IMPLEMENTATION",
+            "DENY_EVIDENCE_INCOMPLETE",
+            "DENY_EVIDENCE_HASH_MISMATCH",
+            "DENY_RUNTIME_CONFORMANCE_FAILED"
+          ]
+        },
+        "reason_code": {
+          "pattern": "^B5-ADM-[A-Z0-9-]+$"
+        }
+      }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_conformance_admission_record",
+        "planner_execution",
+        "evaluation_execution",
+        "sampling",
+        "production_capture",
+        "path_b_write",
+        "mint",
+        "path_b_admission_or_ingestion",
+        "kernel_or_e_case_write",
+        "holdout_release",
+        "scalarization",
+        "performance_claim",
+        "superiority_claim",
+        "certificate",
+        "system_state",
+        "stop_authority"
+      ],
+      "properties": {
+        "local_conformance_admission_record": {
+          "const": true
+        },
+        "planner_execution": {
+          "const": false
+        },
+        "evaluation_execution": {
+          "const": false
+        },
+        "sampling": {
+          "const": false
+        },
+        "production_capture": {
+          "const": false
+        },
+        "path_b_write": {
+          "const": false
+        },
+        "mint": {
+          "const": false
+        },
+        "path_b_admission_or_ingestion": {
+          "const": false
+        },
+        "kernel_or_e_case_write": {
+          "const": false
+        },
+        "holdout_release": {
+          "const": false
+        },
+        "scalarization": {
+          "const": false
+        },
+        "performance_claim": {
+          "const": false
+        },
+        "superiority_claim": {
+          "const": false
+        },
+        "certificate": {
+          "const": false
+        },
+        "system_state": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "policy_id",
+        "policy_version",
+        "status",
+        "authorized_slice",
+        "admission_scope",
+        "admissible_implementation_ids",
+        "wildcards",
+        "fallback",
+        "legacy_rejections",
+        "unknown_implementation_behavior",
+        "required_evidence_slots",
+        "evidence_hash_bindings",
+        "decision_table",
+        "authority_boundary",
+        "protected_skeleton_policy",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "policy_id": {
+          "const": "part-b-b5-d1-conformance-admission-policy-v0.1"
+        },
+        "policy_version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "const": "B5_D1_CONFORMANCE_ADMISSION_LOCAL_ONLY"
+        },
+        "authorized_slice": {
+          "const": "B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY"
+        },
+        "admission_scope": {
+          "const": "INTERFACE_CONFORMANCE_ONLY"
+        },
+        "admissible_implementation_ids": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+            }
+          ],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "wildcards": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        },
+        "legacy_rejections": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project05_m3star_h3_dual"
+          ],
+          "properties": {
+            "project05_m3star_h3_dual": {
+              "const": "NOT_ADMITTED_UNVERIFIED"
+            }
+          }
+        },
+        "unknown_implementation_behavior": {
+          "const": "FAIL_CLOSED_DENY_UNKNOWN_IMPLEMENTATION"
+        },
+        "required_evidence_slots": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "dependency"
+            },
+            {
+              "const": "parameter"
+            },
+            {
+              "const": "feature_provenance"
+            },
+            {
+              "const": "runtime_conformance"
+            }
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "evidence_hash_bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "dependency",
+            "parameter",
+            "feature_provenance",
+            "runtime_conformance"
+          ],
+          "properties": {
+            "dependency": {
+              "const": "dependency_lock_hash"
+            },
+            "parameter": {
+              "const": "parameter_manifest_hash"
+            },
+            "feature_provenance": {
+              "const": "feature_provenance_hash"
+            },
+            "runtime_conformance": {
+              "const": "runtime_conformance_hash"
+            }
+          }
+        },
+        "decision_table": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/decisionRow"
+                },
+                {
+                  "properties": {
+                    "condition": {
+                      "const": "EXACT_D1_IDENTITY_AND_ALL_EVIDENCE_VERIFIED"
+                    },
+                    "decision": {
+                      "const": "ADMITTED_CONFORMANCE_ONLY"
+                    },
+                    "reason_code": {
+                      "const": "B5-ADM-000-CONFORMANCE-ONLY"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/decisionRow"
+                },
+                {
+                  "properties": {
+                    "condition": {
+                      "const": "LEGACY_UNVERIFIED_ID"
+                    },
+                    "decision": {
+                      "const": "DENY_NOT_ADMITTED_UNVERIFIED"
+                    },
+                    "reason_code": {
+                      "const": "B5-ADM-LEGACY-NOT-ADMITTED"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/decisionRow"
+                },
+                {
+                  "properties": {
+                    "condition": {
+                      "const": "UNKNOWN_OR_WILDCARD_IMPLEMENTATION_ID"
+                    },
+                    "decision": {
+                      "const": "DENY_UNKNOWN_IMPLEMENTATION"
+                    },
+                    "reason_code": {
+                      "const": "B5-ADM-UNKNOWN-ID"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/decisionRow"
+                },
+                {
+                  "properties": {
+                    "condition": {
+                      "const": "EVIDENCE_INCOMPLETE_OR_EXTRA_SLOT"
+                    },
+                    "decision": {
+                      "const": "DENY_EVIDENCE_INCOMPLETE"
+                    },
+                    "reason_code": {
+                      "const": "B5-ADM-EVIDENCE-INCOMPLETE"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/decisionRow"
+                },
+                {
+                  "properties": {
+                    "condition": {
+                      "const": "IDENTITY_EVIDENCE_POLICY_OR_SLOT_HASH_MISMATCH"
+                    },
+                    "decision": {
+                      "const": "DENY_EVIDENCE_HASH_MISMATCH"
+                    },
+                    "reason_code": {
+                      "const": "B5-ADM-EVIDENCE-HASH-MISMATCH"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/decisionRow"
+                },
+                {
+                  "properties": {
+                    "condition": {
+                      "const": "RUNTIME_CONFORMANCE_FAILED"
+                    },
+                    "decision": {
+                      "const": "DENY_RUNTIME_CONFORMANCE_FAILED"
+                    },
+                    "reason_code": {
+                      "const": "B5-ADM-RUNTIME-CONFORMANCE-FAILED"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "items": false,
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "authority_boundary": {
+          "$ref": "#/$defs/authorityBoundary"
+        },
+        "protected_skeleton_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "content_sha256",
+            "modified"
+          ],
+          "properties": {
+            "path": {
+              "const": "configs/part-b-b5-planner-admission-policy-v0.8.yaml"
+            },
+            "content_sha256": {
+              "const": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550"
+            },
+            "modified": {
+              "const": false
+            }
+          }
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_id",
+        "record_version",
+        "implementation_id",
+        "implementation_identity_hash",
+        "admission_evidence_hash",
+        "policy_hash",
+        "decision",
+        "reason_codes",
+        "admission_scope",
+        "planner_execution_authority",
+        "evaluation_execution_authority",
+        "holdout_release_authority",
+        "performance_claim_authority",
+        "scalarization_authority",
+        "stop_authority",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "record_id": {
+          "$ref": "#/$defs/hash"
+        },
+        "record_version": {
+          "const": "0.8.0"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "implementation_identity_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "admission_evidence_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "policy_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "decision": {
+          "const": "ADMITTED_CONFORMANCE_ONLY"
+        },
+        "reason_codes": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "B5-ADM-000-CONFORMANCE-ONLY"
+            }
+          ],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "admission_scope": {
+          "const": "INTERFACE_CONFORMANCE_ONLY"
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "holdout_release_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "scalarization_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        }
+      }
+    },
+    "manifestBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "existing_evaluator_content_sha256",
+        "existing_skeleton_policy_content_sha256",
+        "existing_skeleton_manifest_content_sha256",
+        "existing_record_schema_content_sha256",
+        "implementation_identity_hash",
+        "admission_evidence_hash",
+        "admission_policy_hash",
+        "admission_record_hash",
+        "red_owner_go_content_sha256",
+        "red_design_content_sha256",
+        "red_review_packet_content_sha256",
+        "prerequisite_audit_content_sha256",
+        "prerequisite_audit_review_packet_content_sha256"
+      ],
+      "properties": {
+        "existing_evaluator_content_sha256": {
+          "const": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1"
+        },
+        "existing_skeleton_policy_content_sha256": {
+          "const": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550"
+        },
+        "existing_skeleton_manifest_content_sha256": {
+          "const": "463dc34d1b8bed057e3c7629b9645a7de6a52a59e635398ea3e4f922ce9a4913"
+        },
+        "existing_record_schema_content_sha256": {
+          "const": "0c198b090d3e85dcb0d29b3c959226841c6c8847661a7ce55f2f68a93d804257"
+        },
+        "implementation_identity_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "admission_evidence_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "admission_policy_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "admission_record_hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "red_owner_go_content_sha256": {
+          "const": "f2578ccfabdfbe5b232024239a111fd7d7c0bce7b2da19167b5e63b3144a280c"
+        },
+        "red_design_content_sha256": {
+          "const": "169b1fa785013a15a470264c914bf9a9cce293e4cb4732873ea8fb3df0899931"
+        },
+        "red_review_packet_content_sha256": {
+          "const": "db4f8b1b6f5b4cb6fb59c62bce1e731b8b6570209be00b88fd77d09ae0589082"
+        },
+        "prerequisite_audit_content_sha256": {
+          "const": "0978da374c2de2804b870d9656855c28052641cfdb24092eb34b2d93ba9062a5"
+        },
+        "prerequisite_audit_review_packet_content_sha256": {
+          "const": "6bf9d014403b349361079d7a1a747efe92985ddfc41375e3c5e33d27ed53dc6d"
+        }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "manifest_id",
+        "manifest_version",
+        "status",
+        "authorized_slice",
+        "claim_ceiling",
+        "pb_b5_si_001_state",
+        "pb_b5_si_002_state",
+        "pb_b5_si_003_state",
+        "pb_si_006_state",
+        "local_conformance_admission_record_authority",
+        "planner_execution_authority",
+        "evaluation_execution_authority",
+        "sampling_authority",
+        "production_capture_authority",
+        "path_b_write_authority",
+        "mint_authority",
+        "path_b_admission_or_ingestion_authority",
+        "kernel_or_e_case_write_authority",
+        "holdout_release_authority",
+        "performance_claim_authority",
+        "scalarization_authority",
+        "certificate_authority",
+        "system_state_authority",
+        "stop_authority",
+        "full_m3_star",
+        "part_b_pass",
+        "legacy_m3star_status",
+        "legacy_m3star_decision",
+        "positive_decision",
+        "admission_scope",
+        "bindings",
+        "frozen_artifacts_modified",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "manifest_id": {
+          "const": "part-b-b5-d1-conformance-admission-manifest-v0.1"
+        },
+        "manifest_version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "const": "B5_D1_CONFORMANCE_PATH_LOCAL_ONLY"
+        },
+        "authorized_slice": {
+          "const": "B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY"
+        },
+        "claim_ceiling": {
+          "const": "CONTRACT_CONSISTENCY_ONLY"
+        },
+        "pb_b5_si_001_state": {
+          "const": "D1_CONFORMANCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED"
+        },
+        "pb_b5_si_002_state": {
+          "const": "OPEN_BLOCKS_EVALUATION_EXECUTION"
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "pb_si_006_state": {
+          "const": "OPEN_DEFAULT_DENY"
+        },
+        "local_conformance_admission_record_authority": {
+          "const": true
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "sampling_authority": {
+          "const": false
+        },
+        "production_capture_authority": {
+          "const": false
+        },
+        "path_b_write_authority": {
+          "const": false
+        },
+        "mint_authority": {
+          "const": false
+        },
+        "path_b_admission_or_ingestion_authority": {
+          "const": false
+        },
+        "kernel_or_e_case_write_authority": {
+          "const": false
+        },
+        "holdout_release_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "scalarization_authority": {
+          "const": false
+        },
+        "certificate_authority": {
+          "const": false
+        },
+        "system_state_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "full_m3_star": {
+          "const": false
+        },
+        "part_b_pass": {
+          "const": false
+        },
+        "legacy_m3star_status": {
+          "const": "NOT_ADMITTED_UNVERIFIED"
+        },
+        "legacy_m3star_decision": {
+          "const": "DENY_NOT_ADMITTED_UNVERIFIED"
+        },
+        "positive_decision": {
+          "const": "ADMITTED_CONFORMANCE_ONLY"
+        },
+        "admission_scope": {
+          "const": "INTERFACE_CONFORMANCE_ONLY"
+        },
+        "bindings": {
+          "$ref": "#/$defs/manifestBindings"
+        },
+        "frozen_artifacts_modified": {
+          "const": false
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        }
+      }
+    }
+  }
+}

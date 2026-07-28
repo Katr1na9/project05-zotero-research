@@ -1,0 +1,319 @@
+{
+  "artifact_id": "part-b-b5-d1-conformance-admission-green-design-v0.1-20260728",
+  "artifact_type": "part_b_b5_d1_conformance_admission_green_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "GREEN_IMPLEMENTED_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_D1_CONFORMANCE_ADMISSION_GREEN_ONLY",
+    "authority_base_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+    "branch": "codex/part-b-b5-d1-conformance-admission-v0.1",
+    "authorized_cell": "PART_B_B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+    "owner_go": {
+      "path": "docs/kernel/part-b-b5-d1-conformance-admission-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "f2578ccfabdfbe5b232024239a111fd7d7c0bce7b2da19167b5e63b3144a280c",
+      "pin_status": "MATCH"
+    },
+    "accepted_red_design": {
+      "path": "docs/kernel/part-b-b5-d1-conformance-admission-red-design-v0.1-20260728.json",
+      "content_sha256": "169b1fa785013a15a470264c914bf9a9cce293e4cb4732873ea8fb3df0899931",
+      "pin_status": "MATCH"
+    },
+    "accepted_red_review_packet": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-d1-conformance-admission-red-review-packet-v0.1-20260728.json",
+      "content_sha256": "db4f8b1b6f5b4cb6fb59c62bce1e731b8b6570209be00b88fd77d09ae0589082",
+      "pin_status": "MATCH"
+    },
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "green_started": true,
+    "write_side_effects": "exact_9_green_allowlist_files_plus_3_unchanged_red_docs"
+  },
+  "implementation_result": {
+    "strategy_id": "SEPARATE_ADDITIVE_D1_POLICY_AND_MANIFEST_USING_UNMODIFIED_EXISTING_EVALUATOR",
+    "strategy_option": 2,
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_kind": "ADMISSION_CONFORMANCE_NONEXECUTING",
+    "evaluator_module": "src.scope.part_b_b5_planner_admission",
+    "evaluator_function": "evaluate_admission",
+    "evaluator_modified": false,
+    "existing_skeleton_policy_modified": false,
+    "existing_skeleton_manifest_modified": false,
+    "runtime_files_created_or_modified": 0,
+    "positive_decision_ceiling": "ADMITTED_CONFORMANCE_ONLY",
+    "admission_scope_ceiling": "INTERFACE_CONFORMANCE_ONLY",
+    "legacy_project05_m3star_h3_dual": "NOT_ADMITTED_UNVERIFIED_DENY",
+    "unknown_or_wildcard_identity": "DENY_UNKNOWN_IMPLEMENTATION",
+    "cross_policy_replay": "DENY_UNKNOWN_IMPLEMENTATION",
+    "production_registration_enabled": false,
+    "execution_established": false,
+    "part_b_pass": false
+  },
+  "green_exact_allowlist": [
+    "schemas/part-b-b5-d1-conformance-admission.schema.json",
+    "configs/part-b-b5-d1-conformance-admission-policy-v0.1.yaml",
+    "configs/part-b-b5-d1-conformance-implementation-identity-v0.1.yaml",
+    "configs/part-b-b5-d1-conformance-admission-evidence-v0.1.yaml",
+    "configs/part-b-b5-d1-conformance-admission-record-v0.1.yaml",
+    "configs/part-b-b5-d1-conformance-admission-manifest-v0.1.yaml",
+    "tests/unit/test_part_b_b5_d1_conformance_admission.py",
+    "docs/kernel/part-b-b5-d1-conformance-admission-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-d1-conformance-admission-green-review-packet-v0.1-20260728.json"
+  ],
+  "implementation_artifacts": [
+    {
+      "role": "ADDITIVE_CLOSED_WORLD_SCHEMA",
+      "path": "schemas/part-b-b5-d1-conformance-admission.schema.json",
+      "content_sha256": "2fce82520ce68c2e60ecb437ddc758f8df59f0c328e734ee275f6464fd35bb06",
+      "status": "CREATED_SCHEMA_VALID"
+    },
+    {
+      "role": "ADDITIVE_ONE_ID_POLICY",
+      "path": "configs/part-b-b5-d1-conformance-admission-policy-v0.1.yaml",
+      "content_sha256": "0a1a11c1d4ab3ac6294297e6796a47ddc15f27d4e870be12249057271bd5c85f",
+      "canonical_document_hash": "sha256:746378e547d67298a40b905d57f915265224ae5ae6bf66a4195c281613d5877e",
+      "status": "CREATED_SCHEMA_VALID_HASH_REPLAY_PASS"
+    },
+    {
+      "role": "CLOSED_D1_TWIN_IMPLEMENTATION_IDENTITY",
+      "path": "configs/part-b-b5-d1-conformance-implementation-identity-v0.1.yaml",
+      "content_sha256": "7d2eaa638e378c9c3f50319753ad3a22fef9d86c86531ac3f69dca529f795990",
+      "canonical_document_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+      "status": "CREATED_SCHEMA_VALID_HASH_REPLAY_PASS"
+    },
+    {
+      "role": "EXACT_FOUR_SLOT_ADMISSION_EVIDENCE",
+      "path": "configs/part-b-b5-d1-conformance-admission-evidence-v0.1.yaml",
+      "content_sha256": "b44ca2c90e604d621e3cbbe79b311dd1860ba0ddd5b8b33bbc57892f1a704ebb",
+      "canonical_document_hash": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c",
+      "status": "CREATED_SCHEMA_VALID_HASH_REPLAY_PASS"
+    },
+    {
+      "role": "EXPECTED_CONFORMANCE_ONLY_RECORD",
+      "path": "configs/part-b-b5-d1-conformance-admission-record-v0.1.yaml",
+      "content_sha256": "c97f5682d219d5898a2edce6ae959a9798bbaca88ccecf49bdb7e783a9db6ecb",
+      "record_id": "sha256:dc91732216a3b549c23b90b75ab45650b9f7cd00d8dbca80c9dc8523d041c545",
+      "canonical_document_hash": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65",
+      "status": "CREATED_ADDITIVE_AND_GENERIC_SCHEMA_VALID_HASH_REPLAY_PASS"
+    },
+    {
+      "role": "ADDITIVE_AUTHORITY_CEILING_MANIFEST",
+      "path": "configs/part-b-b5-d1-conformance-admission-manifest-v0.1.yaml",
+      "content_sha256": "19fb231a2a328fb9e8d2b0e0415a08ea18d1338b25600725d43771c9c2c44bbd",
+      "canonical_document_hash": "sha256:70da87b6dbf0b2350dc9280121f78a3081c881e7d50ac8e753e10993f6a8c89e",
+      "status": "CREATED_SCHEMA_VALID_HASH_REPLAY_PASS"
+    },
+    {
+      "role": "DIRECTED_CONTRACT_AND_RUNTIME_TESTS",
+      "path": "tests/unit/test_part_b_b5_d1_conformance_admission.py",
+      "content_sha256": "fa842f2ac18453ec4778295dd4cc017a219c0521e62c824d641df048e37ceb50",
+      "status": "CREATED_15_OF_15_PASS"
+    }
+  ],
+  "identity_value_hashes": {
+    "source_tree_hash": "sha256:e0a9828b6188dfe80e153b0f86c52ae8b992b1081c1747b3ffbf6319b33484ae",
+    "dependency_lock_hash": "sha256:3d2f8ee4c99a4962bcb39dbbcea49e6c21c5cb6b49631d68f4cc32d52377e22e",
+    "parameter_manifest_hash": "sha256:df2c31c30a8d3d91d3e878bdbbefcb5d5335377b291b94c0e84d83983e1e1ce7",
+    "feature_provenance_hash": "sha256:7941dde3ee30f01eff74a0e7fa5962f7b9bd31b190954f3efad767ff7f01d410",
+    "runtime_conformance_hash": "sha256:8de588da52fad956ea7db858ae8b36c5e6d2b54911e2b311e1db153e10d69f01"
+  },
+  "evidence_contract_result": {
+    "evidence_scope": "LOCAL_D1_CONFORMANCE_EVIDENCE_ONLY",
+    "slot_count": 4,
+    "required_slots_exact": [
+      "dependency",
+      "parameter",
+      "feature_provenance",
+      "runtime_conformance"
+    ],
+    "all_slots_verified": true,
+    "all_slots_grant_execution_authority": false,
+    "missing_extra_failed_or_mismatched_slots_fail_closed": true,
+    "source_tree_bound_through_implementation_identity_hash": true
+  },
+  "record_authority_ceiling": {
+    "decision": "ADMITTED_CONFORMANCE_ONLY",
+    "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+    "planner_execution_authority": false,
+    "evaluation_execution_authority": false,
+    "sampling_authority": false,
+    "production_capture_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "path_b_admission_or_ingestion_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "holdout_release_authority": false,
+    "performance_claim_authority": false,
+    "scalarization_authority": false,
+    "certificate_authority": false,
+    "system_state_authority": false,
+    "stop_authority": "NONE",
+    "full_m3_star": false,
+    "part_b_pass": false
+  },
+  "fail_closed_coverage": [
+    {
+      "surface": "missing_or_extra_evidence_slot",
+      "result": "DENY_EVIDENCE_INCOMPLETE_OR_SCHEMA_REJECT"
+    },
+    {
+      "surface": "failed_or_hash_mismatched_evidence_slot",
+      "result": "DENY_RUNTIME_CONFORMANCE_FAILED_OR_DENY_EVIDENCE_HASH_MISMATCH"
+    },
+    {
+      "surface": "stale_source_pin_or_document_hash",
+      "result": "SCHEMA_OR_CANONICAL_HASH_PREFLIGHT_REJECT"
+    },
+    {
+      "surface": "old_policy_new_identity_or_new_policy_old_identity",
+      "result": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "surface": "legacy_project05_m3star_h3_dual",
+      "result": "DENY_NOT_ADMITTED_UNVERIFIED"
+    },
+    {
+      "surface": "unknown_or_wildcard_implementation_id",
+      "result": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "surface": "execution_requested_or_grants_execution_authority",
+      "result": "CLOSED_WORLD_SCHEMA_REJECT_BEFORE_EVALUATOR"
+    },
+    {
+      "surface": "write_mint_certificate_system_state_stop_or_part_b_pass_field_injection",
+      "result": "CLOSED_WORLD_SCHEMA_REJECT_NO_RECORD"
+    },
+    {
+      "surface": "identical_valid_inputs",
+      "result": "IDENTICAL_RECORD_ID_AND_RECORD_HASH"
+    }
+  ],
+  "test_results": [
+    {
+      "suite": "D1_DIRECTED",
+      "command": "python -m unittest tests.unit.test_part_b_b5_d1_conformance_admission",
+      "tests_run": 15,
+      "passed": 15,
+      "failed": 0,
+      "errors": 0,
+      "result": "PASS"
+    },
+    {
+      "suite": "UNCHANGED_B5_P1E_TWIN_REGRESSION",
+      "command": "python -m unittest tests.unit.test_part_b_b5_planner_admission_contracts tests.unit.test_part_b_b5_planner_admission_runtime tests.unit.test_kernel_a17_p1e_depth1_planner tests.integration.test_kernel_a17_p1e_resource_trace_binding tests.unit.test_kernel_a17_p1e_twin_p10_readonly_wiring tests.integration.test_kernel_a17_p1e_twin_p10_readonly_wiring",
+      "tests_run": 41,
+      "passed": 41,
+      "failed": 0,
+      "errors": 0,
+      "result": "PASS"
+    },
+    {
+      "suite": "COMBINED_OWNER_REQUIRED",
+      "command": "python -m unittest tests.unit.test_part_b_b5_planner_admission_contracts tests.unit.test_part_b_b5_planner_admission_runtime tests.unit.test_kernel_a17_p1e_depth1_planner tests.integration.test_kernel_a17_p1e_resource_trace_binding tests.unit.test_kernel_a17_p1e_twin_p10_readonly_wiring tests.integration.test_kernel_a17_p1e_twin_p10_readonly_wiring tests.unit.test_part_b_b5_d1_conformance_admission",
+      "tests_run": 56,
+      "passed": 56,
+      "failed": 0,
+      "errors": 0,
+      "result": "PASS"
+    }
+  ],
+  "protected_zero_drift_pin_table": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+      "content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+      "content_sha256": "463dc34d1b8bed057e3c7629b9645a7de6a52a59e635398ea3e4f922ce9a4913",
+      "status": "MATCH"
+    },
+    {
+      "path": "schemas/part-b-b5-planner-admission-record.schema.json",
+      "content_sha256": "0c198b090d3e85dcb0d29b3c959226841c6c8847661a7ce55f2f68a93d804257",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/actions/selection.py",
+      "content_sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/executor/deterministic.py",
+      "content_sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/cli/kernel_e2e.py",
+      "content_sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+      "content_sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318",
+      "status": "MATCH"
+    }
+  ],
+  "prerequisite_audit_pins": [
+    {
+      "path": "docs/kernel/part-b-step1-readonly-elevation-gap-audit-v0.1-20260728.json",
+      "content_sha256": "0978da374c2de2804b870d9656855c28052641cfdb24092eb34b2d93ba9062a5",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE"
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step1-readonly-elevation-gap-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "6bf9d014403b349361079d7a1a747efe92985ddfc41375e3c5e33d27ed53dc6d",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE"
+    }
+  ],
+  "pb_b5_si_001_state_note": {
+    "additive_manifest_state": "D1_CONFORMANCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED",
+    "historical_part_b_b5_spec_issues_bytes_rewritten": false,
+    "meaning": "The exact pinned D1/Twin implementation has a local conformance-record path only; execution remains not established."
+  },
+  "explicitly_not_authorized": [
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "ADMISSION_OR_INGESTION_INTO_PATH_B",
+    "KERNEL_OR_E_CASE_WRITE",
+    "FULL_M3_STAR_OR_LEGACY_M3_STAR_EXECUTION",
+    "B2_EMPIRICAL_SAMPLING",
+    "B6_CLOSED_LOOP_EXECUTION",
+    "B7_CONNECTOR_EXECUTION",
+    "B8_HOLDOUT_RELEASE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "NAMED_OPEN_WIDENING",
+    "PRODUCTION_REGISTRATION",
+    "PART_A_RUNTIME_MUTATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "exit": {
+    "green_allowlist_complete": true,
+    "owner_decision_required": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "commit_push_pr_performed": false
+  }
+}

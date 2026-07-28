@@ -1,0 +1,123 @@
+schema_version: "0.8.0"
+implementation_id: part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+implementation_version: "0.1.0"
+implementation_kind: ADMISSION_CONFORMANCE_NONEXECUTING
+execution_requested: false
+identity_inputs:
+  source_tree:
+    basis: EXACT_CONTENT_SHA256_ALLOWLIST_AT_AUTHORITY_BASE
+    baseline_commit: eb44bc1858d681e6763a1a1735d63f75f6d1b270
+    artifacts:
+      - role: D1_CANDIDACY_PLANNER
+        path: src/planner/deterministic_depth1.py
+        content_sha256: ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff
+      - role: TWIN_P10_READONLY_CANDIDACY_WIRING
+        path: src/planner/twin_p10_readonly_wiring.py
+        content_sha256: 1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9
+      - role: B5_NONEXECUTING_ADMISSION_EVALUATOR
+        path: src/scope/part_b_b5_planner_admission.py
+        content_sha256: c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1
+    acceptance_pins:
+      - path: docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json
+        content_sha256: 84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06
+      - path: docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728.json
+        content_sha256: 7bdabc21d583e0b82ac08d26cfb6fd51a51b3d5aaa29b892b7f830a89ce8ca04
+    forbidden_runtime_paths:
+      - 09-experiments/
+      - training/
+      - production_registry/
+      - Path_B_write/
+      - Kernel_E_case_write/
+  dependency_lock:
+    runtime_dependencies:
+      - python-stdlib
+    repository_dependencies:
+      - src.actions.selection
+      - src.ir.canonical_hash
+      - src.planner.deterministic_depth1
+      - src.planner.twin_p10_readonly_wiring
+      - src.scope.finite_problem
+      - src.scope.part_b_b5_planner_admission
+    external_dependencies: []
+    network_dependencies: []
+    download_dependencies: []
+  parameter_manifest:
+    semantics: FROZEN_CANDIDACY_CONSTANTS_NO_TRAINED_OR_TUNABLE_STATE
+    trained_state: false
+    learned_parameters: []
+    tunable_parameters: []
+    constants:
+      planner_mode: M3-KERNEL-D1
+      request_kind: CLASSIFY_NEXT_ACTION_DEPTH_1
+      execution_mode: READONLY_DECISION_ONLY_NO_ACTION_EXECUTION
+      decision_scope: NEXT_ACTION_CANDIDACY_ONLY_NO_EXECUTE_NO_STOP
+      partition_basis: FROZEN_MODEL_PROJECTION_NOT_OBSERVED_TRUTH
+      tie_break_rule: MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1
+      trace_match_policy: EXACT_ATTEMPT_ACTION_DECISION_BUDGET_HASH_MATCH_NO_FALLBACK
+      caller_class: TEST_ONLY_NO_PRODUCTION_REGISTRATION
+      caller_result_scope: NEXT_ACTION_CANDIDACY_SIDECAR_ONLY_NO_EXECUTE_NO_STOP
+      production_registration_enabled: false
+      action_execution_enabled: false
+      system_state_authority: false
+      stop_authority: false
+  feature_provenance:
+    allowed_inputs:
+      - exact_14_field_depth1_request
+      - frozen_finite_domain_binding
+      - checker_and_counterexample_declarations
+      - exact_action_catalog_identity
+      - deterministic_outcome_partitions
+      - resource_budget_declaration
+      - pinned_TWIN_COUNTEREXAMPLE_001_public_fixture_metadata
+      - readonly_resource_trace_binding_receipt
+    forbidden_inputs:
+      - oracle_label
+      - hidden_ground_truth
+      - hidden_identifier
+      - holdout_data
+      - holdout_label
+      - holdout_result
+      - realized_future_action_outcome
+      - historical_performance_ranking
+      - experiment_only_artifact
+      - production_registry_state
+      - raw_external_source
+      - path_or_uri_dereference
+  runtime_conformance:
+    evaluator_module: src.scope.part_b_b5_planner_admission
+    evaluator_function: evaluate_admission
+    evaluated_surfaces:
+      - src.planner.deterministic_depth1.evaluate_depth1_planner_request
+      - src.planner.deterministic_depth1.validate_resource_trace_binding
+      - src.planner.twin_p10_readonly_wiring.evaluate_twin_p10_fixed_case_for_depth1_candidacy
+    deterministic: true
+    allowed_output: B5_ADMISSION_RECORD_ONLY
+    required_assertions:
+      - D1_SELECT_ACTION_IS_CANDIDACY_METADATA_ONLY
+      - TWIN_WIRING_IS_TEST_ONLY_CANDIDACY_SIDECAR
+      - PRODUCTION_REGISTRATION_ENABLED_FALSE
+      - ACTION_EXECUTION_ENABLED_FALSE
+      - SYSTEM_STATE_AUTHORITY_FALSE
+      - STOP_AUTHORITY_FALSE
+      - HISTORICAL_RESOURCE_TRACE_NOT_REWRITTEN
+      - B5_RECORD_SCHEMA_VALID
+      - PROTECTED_CONTENT_PINS_MATCH
+    forbidden_outputs:
+      - planner_action_execution
+      - evaluation_result
+      - system_state
+      - path_b_write
+      - mint
+      - kernel_or_e_case_write
+      - performance_metric
+      - scalarized_ranking
+      - superiority_claim
+      - certificate
+      - CERTIFIED_STOP
+identity_hashes:
+  source_tree_hash: "sha256:e0a9828b6188dfe80e153b0f86c52ae8b992b1081c1747b3ffbf6319b33484ae"
+  dependency_lock_hash: "sha256:3d2f8ee4c99a4962bcb39dbbcea49e6c21c5cb6b49631d68f4cc32d52377e22e"
+  parameter_manifest_hash: "sha256:df2c31c30a8d3d91d3e878bdbbefcb5d5335377b291b94c0e84d83983e1e1ce7"
+  feature_provenance_hash: "sha256:7941dde3ee30f01eff74a0e7fa5962f7b9bd31b190954f3efad767ff7f01d410"
+  runtime_conformance_hash: "sha256:8de588da52fad956ea7db858ae8b36c5e6d2b54911e2b311e1db153e10d69f01"
+hash: "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"

@@ -1,0 +1,1072 @@
+{
+  "artifact_id": "part-b-step1-readonly-elevation-gap-audit-v0.1-20260728",
+  "artifact_type": "part_b_step1_readonly_elevation_and_gap_audit",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "READONLY_AUDIT_COMPLETE_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_STEP1_READONLY_ELEVATION_GAP_AUDIT_ONLY",
+    "authority_base_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+    "branch": "codex/part-b-step1-readonly-elevation-gap-audit-v0.1",
+    "scope": "PRESENCE_AND_AUTHORITY_STATE_INVENTORY_ONLY",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "part_b_execution_elevation": "NO_GO",
+    "path_b_write": "NO_GO",
+    "full_m3_star": "NO_GO",
+    "green_started": false,
+    "write_side_effects": "docs_only_audit"
+  },
+  "tip_and_method": {
+    "head_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+    "origin_main_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+    "head_matches_authority_base": true,
+    "origin_main_matches_authority_base": true,
+    "audit_mode": "READONLY_PRESENCE_AUTHORITY_AND_PIN_INVENTORY",
+    "broad_test_campaign_run": false,
+    "test_execution": {
+      "status": "NOT_RUN",
+      "reason": "Owner authorized a presence and authority-state inventory, not a fresh Part B PASS or execution campaign."
+    },
+    "runtime_schema_config_fixture_or_test_modified": false
+  },
+  "part_a_prerequisite_pins": [
+    {
+      "role": "CURRENT_A16_GO_PART_A_FROZEN_FINITE_DOMAIN_ONLY",
+      "path": "docs/kernel/kernel-v0.8-a16-current-tip-replay-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "cf956a00a80c66bdbd97b076dac1f1814143a973950e1b24de5c2f854560dd06",
+      "exists": true,
+      "decision": "accept",
+      "current_a16_go_reestablished": true,
+      "scope": "KERNEL_V0_8_PART_A_FROZEN_FINITE_DOMAIN_ONLY_AT_651B75C",
+      "part_b_elevation": "NO_GO"
+    },
+    {
+      "role": "A17_P1E_DETERMINISTIC_DEPTH1_CANDIDACY",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06",
+      "exists": true,
+      "decision": "accept",
+      "planner_mode": "M3-KERNEL-D1",
+      "select_action_is_candidacy_metadata_only": true,
+      "action_execution_enabled": false,
+      "production_registration_enabled": false,
+      "part_b_elevation": "NO_GO"
+    },
+    {
+      "role": "A17_P1E_TWIN_P10_READONLY_CALLER_WIRING",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "7bdabc21d583e0b82ac08d26cfb6fd51a51b3d5aaa29b892b7f830a89ce8ca04",
+      "exists": true,
+      "decision": "accept",
+      "result_ceiling": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY",
+      "action_execution_enabled": false,
+      "production_registration_enabled": false,
+      "part_b_elevation": "NO_GO"
+    }
+  ],
+  "key_content_pins": {
+    "part_a_runtime_surfaces": [
+      {
+        "path": "src/planner/deterministic_depth1.py",
+        "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+        "authority_ceiling": "NEXT_ACTION_CANDIDACY_ONLY_NO_EXECUTE_NO_STOP"
+      },
+      {
+        "path": "src/planner/twin_p10_readonly_wiring.py",
+        "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+        "authority_ceiling": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY_NO_EXECUTE_NO_STOP"
+      }
+    ],
+    "part_b_normative_manifests": [
+      {
+        "slice_id": "B0",
+        "path": "configs/part-b-b0-manifest-v0.8.yaml",
+        "content_sha256": "cf67934191076f566376458a4b1ee45c210c5d4042250678f13e8fff1137a4dd"
+      },
+      {
+        "slice_id": "B1",
+        "path": "configs/part-b-b1-manifest-v0.8.yaml",
+        "content_sha256": "ffcd218c2cda731e0fb659d122c196d3e77ca5df0c236fa1616697bdfb1037ae"
+      },
+      {
+        "slice_id": "B2",
+        "path": "configs/part-b-b2-manifest-v0.8.yaml",
+        "content_sha256": "f6a5e71ecd94c4455d73507088d69cf310a55f39e725540b88593053a05fb978"
+      },
+      {
+        "slice_id": "B3",
+        "path": "configs/part-b-b3-manifest-v0.8.yaml",
+        "content_sha256": "fa2989b7817931545afac8a5a9270b1e43a4741d1cbb5210ad676903f1faae92"
+      },
+      {
+        "slice_id": "B4",
+        "path": "configs/part-b-b4-manifest-v0.8.yaml",
+        "content_sha256": "ae058e9d7b26473263fc8e1efad97e950fbc1c1fd1d54760d47ab508632c3541"
+      },
+      {
+        "slice_id": "B5",
+        "path": "configs/part-b-b5-manifest-v0.8.yaml",
+        "content_sha256": "c6770ce22103b140ada0b8e423ca1be78703ea379f387a94324f3a3e2f9cea4f"
+      },
+      {
+        "slice_id": "B6",
+        "path": "configs/part-b-b6-manifest-v0.8.yaml",
+        "content_sha256": "303eac5d3501461716fa4c1692814580f5b29d550866316227aa514ba9ee9f0a"
+      },
+      {
+        "slice_id": "B7",
+        "path": "configs/part-b-b7-manifest-v0.8.yaml",
+        "content_sha256": "0b9832a51328717ae979b8596e0bca1ca1b0d90576a84b6e23b75c2c6d38a952"
+      },
+      {
+        "slice_id": "B8",
+        "path": "configs/part-b-b8-manifest-v0.8.yaml",
+        "content_sha256": "eec1a7cb24840798c0236c28139f80f43cc7355912b736ed5d60dfafce22171e"
+      },
+      {
+        "slice_id": "B9",
+        "path": "configs/part-b-b9-manifest-v0.8.yaml",
+        "content_sha256": "7ec2f307b3ec065512bfa4e9402e65943d367ef378dc88e9f729eafc97e1a82e"
+      }
+    ],
+    "local_stub_and_deny_surfaces": [
+      {
+        "path": "src/executor/part_b_b2_sampler_stub.py",
+        "content_sha256": "0c8ffcc4d2eb41139e1fa7f5af4d7ae23c2b683a1582537aaa98fda334f9b577",
+        "scope": "LOCAL_FIXTURE_SAMPLER_ONLY"
+      },
+      {
+        "path": "src/cost/part_b_b3_capture_fixture.py",
+        "content_sha256": "17f1bb4b2ad33f01c7998f27e86b249aa4d6ae718073856914e0455783cea8e1",
+        "scope": "LOCAL_CAPTURE_FIXTURE_ONLY"
+      },
+      {
+        "path": "src/scope/part_b_b5_planner_admission.py",
+        "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+        "scope": "LOCAL_CONFORMANCE_ADMISSION_RECORD_ONLY"
+      },
+      {
+        "path": "src/scope/part_b_si006_source_selection.py",
+        "content_sha256": "6232f044bbaa160f869256cba4b9203ca4f5b458bcbf5449db7df23998da8dbf",
+        "scope": "SOURCE_SELECTION_CLASSIFIER_ONLY_NO_RETRIEVAL_OR_DOWNLOAD"
+      },
+      {
+        "path": "src/scope/part_b_b8_holdout_deny_audit.py",
+        "content_sha256": "1cb0bcf532ccb489876c92d7acdec4535fd74aa9bc82508d4b485220cdc75ad3",
+        "scope": "HOLDOUT_DENY_AUDIT_ONLY"
+      },
+      {
+        "path": "src/scope/part_b_claims_stop_deny.py",
+        "content_sha256": "98cb5e73f7068e4b0c7bb63ec7a8f7040aa92ab81c036fbbc010a61d817919cc",
+        "scope": "CLAIMS_STOP_DENY_GATE_ONLY"
+      }
+    ],
+    "b5_admission_boundary": [
+      {
+        "path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+        "content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+        "only_positive_decision": "ADMITTED_CONFORMANCE_ONLY"
+      },
+      {
+        "path": "configs/part-b-b5-planner-admission-record-example-v0.8.yaml",
+        "content_sha256": "c7d3353c61842b4e8571247757feeb98532d114f207a0ac93baf5c81fd347886",
+        "planner_execution_authority": false,
+        "evaluation_execution_authority": false
+      }
+    ],
+    "named_open_non_write_boundary": {
+      "path": "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+      "content_sha256": "c660083eb776afd9e14d252a93c4e809439b0f63d313452ce96eb28ba25a89e8",
+      "named_claim_candidacy_classification_authority": true,
+      "path_b_write_authority": false,
+      "mint_authority": false,
+      "admission_authority": false,
+      "kernel_or_e_case_write_authority": false,
+      "certificate_authority": false,
+      "stop_authority": "NONE"
+    }
+  },
+  "part_b_slice_inventory": [
+    {
+      "slice_id": "B0",
+      "normative_name": "B0_PLANNING_AND_CONTRACTS",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": false,
+        "tests_present": true
+      },
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b0-boundary-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b0-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b0-manifest-v0.8.yaml"
+        ],
+        "runtimes": [],
+        "tests": [
+          "tests/unit/test_part_b_b0_contracts.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "execution_authority": false,
+        "stochastic_execution": false,
+        "broad_connectors": false,
+        "planner": false,
+        "m3star": false,
+        "baselines": false,
+        "cost_superiority_claims": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-SI-006",
+          "state": "SELECTION_CONTRACT_ONLY_DOWNLOAD_DENY"
+        },
+        {
+          "id": "B1_THROUGH_B9",
+          "state": "CLOSED_BY_B0_MANIFEST"
+        }
+      ],
+      "classification": "CONTRACT_ONLY",
+      "classification_basis": "B0 manifest grants planning/contract artifacts only and explicitly denies execution and all runtime authorities."
+    },
+    {
+      "slice_id": "B1",
+      "normative_name": "B1_FEDERATION_SCHEMAS",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": false,
+        "tests_present": true
+      },
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b1-boundary-v0.8.md",
+          "contracts/part-b-b1-adapter-conformance-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b1-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b1-manifest-v0.8.yaml"
+        ],
+        "runtimes": [],
+        "tests": [
+          "tests/unit/test_part_b_b1_contracts.py",
+          "tests/unit/test_part_b_b1_adapter_conformance.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "execution_authority": false,
+        "federation_runtime": false,
+        "real_connectors": false,
+        "data_downloads": false,
+        "real_data_access": false,
+        "stochastic_execution": false,
+        "planner": false,
+        "m3star": false,
+        "llm": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B1-SI-003",
+          "state": "OPEN_BLOCKS_CLOSED_WORLD_RUNTIME_USE"
+        },
+        {
+          "id": "PB-B1-SI-004",
+          "state": "OPEN_BLOCKS_FEDERATION_RUNTIME"
+        },
+        {
+          "id": "PB-B1-SI-006",
+          "state": "OPEN_RUNTIME_CONFORMANCE_CHECKING_ABSENT"
+        }
+      ],
+      "classification": "CONTRACT_ONLY",
+      "classification_basis": "Federation and adapter shapes exist, but no federation, connector, data, stochastic, planner, M3*, or LLM runtime authority exists."
+    },
+    {
+      "slice_id": "B2",
+      "normative_name": "B2_STOCHASTIC_OBSERVATION",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": true,
+        "tests_present": true
+      },
+      "runtime_scope": "B2_SAMPLER_STUB_LOCAL_FIXTURE_ONLY",
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b2-stochastic-observation-v0.8.md",
+          "contracts/part-b-b2-sampler-stub-boundary-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b2-manifest.schema.json",
+          "schemas/part-b-b2-sampler-stub-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b2-manifest-v0.8.yaml",
+          "configs/part-b-b2-sampler-stub-manifest-v0.8.yaml"
+        ],
+        "runtimes": [
+          "src/executor/part_b_b2_sampler_stub.py"
+        ],
+        "tests": [
+          "tests/unit/test_part_b_b2_contracts.py",
+          "tests/unit/test_part_b_b2_sampler_stub_runtime.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "execution_authority": false,
+        "sampling_authority": false,
+        "local_fixture_sampler_authority": true,
+        "production_sampling_authority": false,
+        "empirical_model_estimation": false,
+        "estimated_model_admission_authority": false,
+        "real_source_access_authority": false,
+        "planner_execution_authority": false,
+        "certificate_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B2-SI-002",
+          "state": "CLOSED_LOCAL_STUB_REPRODUCIBILITY_ONLY_REMAINDER_OPEN"
+        },
+        {
+          "id": "PB-B2-SI-003",
+          "state": "OPEN_BLOCKS_EMPIRICAL_MODEL_ADMISSION"
+        },
+        {
+          "id": "PB-B2-SI-004",
+          "state": "OPEN_CONTRACT_TEST_MITIGATION_ONLY"
+        },
+        {
+          "id": "PB-SI-006",
+          "state": "OPEN_DEFAULT_DENY"
+        }
+      ],
+      "classification": "STUB_RUNTIME",
+      "classification_basis": "A reproducible local-fixture sampler exists, but production sampling, empirical-model admission, real-source access, Planner execution, and certificates remain denied."
+    },
+    {
+      "slice_id": "B3",
+      "normative_name": "B3_COST_INSTRUMENTATION",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": true,
+        "tests_present": true
+      },
+      "runtime_scope": "B3_COST_INSTRUMENTATION_FIXTURE_ONLY",
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b3-cost-instrumentation-v0.8.md",
+          "contracts/part-b-b3-capture-fixture-boundary-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b3-manifest.schema.json",
+          "schemas/part-b-b3-capture-fixture-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b3-manifest-v0.8.yaml",
+          "configs/part-b-b3-capture-fixture-manifest-v0.8.yaml"
+        ],
+        "runtimes": [
+          "src/cost/part_b_b3_capture_fixture.py"
+        ],
+        "tests": [
+          "tests/unit/test_part_b_b3_contracts.py",
+          "tests/unit/test_part_b_b3_capture_fixture_runtime.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "instrumentation_authority": true,
+        "trace_aggregation": true,
+        "fixture_capture_authority": true,
+        "production_capture_authority": false,
+        "real_adapter_authority": false,
+        "action_execution_authority": false,
+        "sampling_authority": false,
+        "scalarization_authority": false,
+        "performance_claim_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B3-SI-001",
+          "state": "FIXTURE_PATH_ONLY_REAL_ADAPTER_OPEN"
+        },
+        {
+          "id": "PB-B3-SI-002",
+          "state": "OPEN"
+        },
+        {
+          "id": "PB-B3-SI-003",
+          "state": "OPEN"
+        },
+        {
+          "id": "PB-B3-SI-004",
+          "state": "OPEN"
+        }
+      ],
+      "classification": "STUB_RUNTIME",
+      "classification_basis": "Deterministic local trace aggregation/capture is present; production adapters, execution, sampling, scalarization, and performance authority are absent."
+    },
+    {
+      "slice_id": "B4",
+      "normative_name": "B4_BASELINE_PREREG",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": false,
+        "tests_present": true
+      },
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b4-baseline-preregistration-v0.8.md",
+          "contracts/part-b-b4-baseline-isolation-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b4-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b4-manifest-v0.8.yaml"
+        ],
+        "runtimes": [],
+        "tests": [
+          "tests/unit/test_part_b_b4_contracts.py",
+          "tests/unit/test_part_b_b4_baseline_prereg.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "execution_authority": false,
+        "sampling_authority": false,
+        "planner_authority": false,
+        "scalarization_authority": false,
+        "performance_claim_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B4-SI-001",
+          "state": "OPEN_BLOCKS_BASELINE_EXECUTION"
+        },
+        {
+          "id": "PB-B4-SI-002",
+          "state": "OPEN_BLOCKS_PLANNER_INTEGRATION"
+        },
+        {
+          "id": "PB-B4-SI-003",
+          "state": "OPEN_BLOCKS_RANDOMIZED_OR_LEARNED_BASELINE_EXECUTION"
+        },
+        {
+          "id": "PB-B4-SI-004",
+          "state": "OPEN_BLOCKS_ORACLE_ANALYSIS"
+        },
+        {
+          "id": "PB-B4-SI-005",
+          "state": "OPEN_BLOCKS_CONTAMINATION_FREE_EVALUATION_CLAIMS"
+        }
+      ],
+      "classification": "CONTRACT_ONLY",
+      "classification_basis": "Baseline roster and isolation rules are preregistered, but no implementation, parameter bundle, splitter, execution, or performance authority exists."
+    },
+    {
+      "slice_id": "B5",
+      "normative_name": "B5_PLANNER_INTERFACE",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": true,
+        "tests_present": true
+      },
+      "runtime_scope": "B5_PLANNER_IMPLEMENTATION_ADMISSION_SKELETON_LOCAL_ONLY",
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b5-planner-interface-v0.8.md",
+          "contracts/part-b-b5-planner-admission-boundary-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b5-manifest.schema.json",
+          "schemas/part-b-b5-planner-admission-record.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b5-manifest-v0.8.yaml",
+          "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+          "configs/part-b-b5-planner-admission-policy-v0.8.yaml"
+        ],
+        "runtimes": [
+          "src/scope/part_b_b5_planner_admission.py"
+        ],
+        "tests": [
+          "tests/unit/test_part_b_b5_contracts.py",
+          "tests/unit/test_part_b_b5_planner_admission_runtime.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "planner_interface_authority": true,
+        "bounded_evaluation_contract_authority": true,
+        "local_admission_record_authority": true,
+        "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+        "only_positive_decision": "ADMITTED_CONFORMANCE_ONLY",
+        "planner_execution_authority": false,
+        "evaluation_execution_authority": false,
+        "sampling_authority": false,
+        "production_capture_authority": false,
+        "scalarization_authority": false,
+        "performance_claim_authority": false,
+        "certificate_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B5-SI-001",
+          "state": "SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED"
+        },
+        {
+          "id": "PB-B5-SI-002",
+          "state": "OPEN_BLOCKS_EVALUATION_EXECUTION"
+        },
+        {
+          "id": "PB-B5-SI-003",
+          "state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        {
+          "id": "PB-SI-006",
+          "state": "OPEN_DEFAULT_DENY"
+        }
+      ],
+      "legacy_m3_star": {
+        "implementation_id": "project05_m3star_h3_dual",
+        "status": "NOT_ADMITTED_UNVERIFIED",
+        "decision": "DENY_NOT_ADMITTED_UNVERIFIED"
+      },
+      "classification": "STUB_RUNTIME",
+      "classification_basis": "The only positive runtime surface is a local INTERFACE_CONFORMANCE_ONLY admission skeleton. No Planner or evaluation execution authority follows."
+    },
+    {
+      "slice_id": "B6",
+      "normative_name": "B6_CLOSED_LOOP_EVAL",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": false,
+        "tests_present": true
+      },
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b6-closed-loop-evaluation-v0.8.md",
+          "contracts/part-b-b6-preregistration-envelope-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b6-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b6-manifest-v0.8.yaml"
+        ],
+        "runtimes": [],
+        "tests": [
+          "tests/unit/test_part_b_b6_contracts.py",
+          "tests/unit/test_part_b_b6_closed_loop_eval.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "closed_loop_contract_authority": true,
+        "preregistration_contract_authority": true,
+        "planner_implementation_admission_authority": false,
+        "planner_execution_authority": false,
+        "evaluation_execution_authority": false,
+        "sampling_authority": false,
+        "production_capture_authority": false,
+        "connector_authority": false,
+        "scalarization_authority": false,
+        "performance_claim_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B5-SI-001",
+          "state": "SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED"
+        },
+        {
+          "id": "PB-B6-SI-001",
+          "state": "OPEN_BLOCKS_EVALUATION_EXECUTION"
+        },
+        {
+          "id": "PB-B6-SI-002",
+          "state": "OPEN_BLOCKS_REAL_FEEDBACK_USE"
+        },
+        {
+          "id": "PB-B6-SI-003",
+          "state": "OPEN_BLOCKS_RANKING_AND_PERFORMANCE_CLAIMS"
+        },
+        {
+          "id": "PB-B6-SI-004",
+          "state": "OPEN_DEFERRED_TO_B7_B8_B9"
+        }
+      ],
+      "classification": "BLOCKED",
+      "classification_basis": "Closed-loop shapes and tests exist, but no evaluator runtime, admitted executable Planner, sampling, feedback provenance, connector, or evaluation authority exists."
+    },
+    {
+      "slice_id": "B7",
+      "normative_name": "B7_BROAD_CONNECTORS",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": true,
+        "tests_present": true
+      },
+      "runtime_scope": "PB_SI_006_SOURCE_SELECTION_CLASSIFIER_ONLY_NO_CONNECTOR_EXECUTION",
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b7-broad-connectors-v0.8.md",
+          "contracts/part-b-si006-source-selection-boundary-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b7-manifest.schema.json",
+          "schemas/part-b-si006-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b7-manifest-v0.8.yaml",
+          "configs/part-b-si006-manifest-v0.8.yaml"
+        ],
+        "runtimes": [
+          "src/scope/part_b_si006_source_selection.py"
+        ],
+        "tests": [
+          "tests/unit/test_part_b_b7_contracts.py",
+          "tests/unit/test_part_b_si006_source_selection_runtime.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "connector_contract_authority": true,
+        "provenance_contract_authority": true,
+        "source_selection_contract_authority": true,
+        "local_selection_evaluation_authority": true,
+        "source_authorization_authority": false,
+        "connector_execution_authority": false,
+        "retrieval_authority": false,
+        "download_authority": false,
+        "credential_use_authority": false,
+        "planner_execution_authority": false,
+        "evaluation_execution_authority": false,
+        "performance_claim_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-SI-006",
+          "state": "SELECTION_CONTRACT_ONLY_DOWNLOAD_DENY"
+        },
+        {
+          "id": "PB-B7-SI-001",
+          "state": "OPEN_DEFAULT_DENY"
+        },
+        {
+          "id": "PB-B7-SI-002",
+          "state": "OPEN_DEFAULT_DENY"
+        },
+        {
+          "id": "PB-B7-SI-003",
+          "state": "OPEN_BLOCKS_CLOSED_WORLD_USE"
+        },
+        {
+          "id": "PB-B7-SI-004",
+          "state": "OPEN_BLOCKS_EXTERNAL_VALIDITY"
+        },
+        {
+          "id": "PB-B7-SI-005",
+          "state": "OPEN_DEFERRED_TO_B8_B9"
+        }
+      ],
+      "classification": "BLOCKED",
+      "classification_basis": "A local source-selection classifier can deny or classify declarations, but no source authorization, connector, retrieval, download, credentials, or external-validity runtime is authorized."
+    },
+    {
+      "slice_id": "B8",
+      "normative_name": "B8_HOLDOUT_ANALYSIS",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": true,
+        "tests_present": true
+      },
+      "runtime_scope": "B8_HOLDOUT_DENY_AUDIT_ONLY",
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b8-holdout-analysis-v0.8.md",
+          "contracts/part-b-b8-holdout-deny-audit-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b8-manifest.schema.json",
+          "schemas/part-b-b8-holdout-deny-audit-record.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b8-manifest-v0.8.yaml",
+          "configs/part-b-b8-holdout-deny-audit-manifest-v0.8.yaml"
+        ],
+        "runtimes": [
+          "src/scope/part_b_b8_holdout_deny_audit.py"
+        ],
+        "tests": [
+          "tests/unit/test_part_b_b8_contracts.py",
+          "tests/unit/test_part_b_b8_holdout_deny_audit_runtime.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "holdout_preregistration_contract_authority": true,
+        "statistical_analysis_contract_authority": true,
+        "analysis_envelope_contract_authority": true,
+        "holdout_data_access_authority": false,
+        "holdout_label_access_authority": false,
+        "holdout_result_access_authority": false,
+        "statistical_analysis_execution_authority": false,
+        "release_decision": "DENY",
+        "planner_execution_authority": false,
+        "evaluation_execution_authority": false,
+        "performance_claim_authority": false,
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B8-SI-001",
+          "state": "OPEN_BLOCKS_HOLDOUT_RELEASE"
+        },
+        {
+          "id": "PB-B8-SI-002",
+          "state": "OPEN_BLOCKS_DATA_LABEL_AND_RESULT_ACCESS"
+        },
+        {
+          "id": "PB-B8-SI-003",
+          "state": "OPEN_BLOCKS_STATISTICAL_EXECUTION"
+        },
+        {
+          "id": "PB-B8-SI-004",
+          "state": "OPEN_NO_EMPIRICAL_PERFORMANCE_OR_SUPERIORITY_CLAIM"
+        },
+        {
+          "id": "PB-SI-006",
+          "state": "DENY"
+        },
+        {
+          "id": "PB-B5-SI-001",
+          "state": "NOT_ESTABLISHED"
+        }
+      ],
+      "classification": "BLOCKED",
+      "classification_basis": "The only runtime is a deterministic DENY audit; no holdout payload, label, result, statistical runner, release, performance claim, or STOP authority exists."
+    },
+    {
+      "slice_id": "B9",
+      "normative_name": "B9_FREEZE_AND_CLAIMS",
+      "presence": {
+        "contract_present": true,
+        "schema_present": true,
+        "config_present": true,
+        "runtime_present": true,
+        "tests_present": true
+      },
+      "runtime_scope": "CLAIMS_STOP_DENY_GATE_ONLY",
+      "evidence_paths": {
+        "contracts": [
+          "contracts/part-b-b9-freeze-and-claims-v0.8.md",
+          "contracts/part-b-b9-audit-and-claim-boundary-v0.8.md"
+        ],
+        "schemas": [
+          "schemas/part-b-b9-manifest.schema.json"
+        ],
+        "configs": [
+          "configs/part-b-b9-manifest-v0.8.yaml"
+        ],
+        "runtimes": [
+          "src/scope/part_b_claims_stop_deny.py"
+        ],
+        "tests": [
+          "tests/unit/test_part_b_b9_contracts.py",
+          "tests/unit/test_part_b_claims_stop_deny_runtime.py"
+        ]
+      },
+      "declared_authority_flags": {
+        "freeze_contract_authority": true,
+        "audit_contract_authority": true,
+        "claim_boundary_contract_authority": true,
+        "execution_authority": false,
+        "holdout_release_authority": false,
+        "statistical_analysis_execution_authority": false,
+        "planner_implementation_admission_authority": false,
+        "planner_execution_authority": false,
+        "evaluation_execution_authority": false,
+        "scalarization_authority": false,
+        "performance_claim_authority": false,
+        "claim_release_authority": false,
+        "certificate_authority": false,
+        "certified_stop": "NOT_AUTHORIZED",
+        "stop_authority": "NONE"
+      },
+      "blocking_gates": [
+        {
+          "id": "PB-B9-SI-001",
+          "state": "CLOSED_CONTRACT_INVENTORY_FIXED_FOR_LOCAL_REVIEW"
+        },
+        {
+          "id": "PB-B9-SI-002",
+          "state": "CLOSED_CONTRACT_CONSISTENCY_ONLY"
+        },
+        {
+          "id": "PB-SI-006",
+          "state": "OPEN_BLOCKS_CONNECTOR_DATA_HOLDOUT_ACCESS"
+        },
+        {
+          "id": "PB-B5-SI-001",
+          "state": "SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED"
+        },
+        {
+          "id": "PB-B8-SI-004",
+          "state": "OPEN_REQUIRES_SEPARATE_EXECUTION_EVIDENCE"
+        },
+        {
+          "id": "PB-B9-SI-003",
+          "state": "OPEN_NO_DELIVERY_AUTHORITY"
+        }
+      ],
+      "classification": "BLOCKED",
+      "classification_basis": "Freeze and claim-boundary contracts replay, but the runtime is deny-only; there is no delivery, empirical claim, claim release, certificate, system status, or CERTIFIED_STOP authority."
+    }
+  ],
+  "classification_summary": {
+    "CONTRACT_ONLY": [
+      "B0",
+      "B1",
+      "B4"
+    ],
+    "STUB_RUNTIME": [
+      "B2",
+      "B3",
+      "B5"
+    ],
+    "EXECUTION_AUTHORIZED": [],
+    "BLOCKED": [
+      "B6",
+      "B7",
+      "B8",
+      "B9"
+    ],
+    "part_b_execution_authorized_slice_count": 0
+  },
+  "critical_open_gate_matrix": [
+    {
+      "gate_id": "PART_B_EXECUTION_ELEVATION",
+      "state": "NO_GO",
+      "blocking_evidence": [
+        "configs/part-b-b5-manifest-v0.8.yaml",
+        "configs/part-b-b6-manifest-v0.8.yaml",
+        "docs/kernel/kernel-v0.8-a16-current-tip-replay-green-owner-acceptance-v0.1-20260728.json",
+        "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728.json"
+      ],
+      "finding": "No B0-B9 row has EXECUTION_AUTHORIZED classification; Part A acceptance records explicitly retain part_b_elevation=NO_GO."
+    },
+    {
+      "gate_id": "PB-B5-SI-001",
+      "state": "SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED",
+      "blocking_evidence": [
+        "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+        "src/scope/part-b-b5-spec-issues.md"
+      ],
+      "finding": "A local conformance-evidence path exists only for the current closed skeleton identity; it does not admit D1 or legacy M3* for execution."
+    },
+    {
+      "gate_id": "PB-B5-SI-002",
+      "state": "OPEN_BLOCKS_EVALUATION_EXECUTION",
+      "blocking_evidence": [
+        "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+        "src/scope/part-b-b5-spec-issues.md"
+      ],
+      "finding": "The bounded-evaluation document is a contract, not a runner."
+    },
+    {
+      "gate_id": "PB-B5-SI-003",
+      "state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+      "blocking_evidence": [
+        "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+        "src/scope/part-b-b5-spec-issues.md"
+      ],
+      "finding": "No scalarization, performance, superiority, or stop authority exists."
+    },
+    {
+      "gate_id": "PB-B2-SI-003",
+      "state": "OPEN_BLOCKS_EMPIRICAL_MODEL_ADMISSION",
+      "blocking_evidence": [
+        "configs/part-b-b2-sampler-stub-manifest-v0.8.yaml",
+        "src/scope/part-b-b2-spec-issues.md"
+      ],
+      "finding": "The local sampler stub does not establish estimator provenance, calibration, uncertainty governance, real data access, or production sampling."
+    },
+    {
+      "gate_id": "PB-SI-006",
+      "state": "SELECTION_CONTRACT_ONLY_DOWNLOAD_DENY",
+      "blocking_evidence": [
+        "configs/part-b-si006-manifest-v0.8.yaml",
+        "src/scope/part-b-si006-source-selection-spec-issues.md"
+      ],
+      "finding": "Local source-selection evaluation is present, but authorization, retrieval, download, credentials, and connector execution remain false."
+    },
+    {
+      "gate_id": "PLANNER_EXECUTION_AUTHORITY",
+      "state": "FALSE",
+      "blocking_evidence": [
+        "configs/part-b-b5-manifest-v0.8.yaml",
+        "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+        "configs/part-b-b6-manifest-v0.8.yaml"
+      ],
+      "finding": "M3-KERNEL-D1 SELECT_ACTION is candidacy metadata only and has not been admitted into B5 as an executable implementation."
+    },
+    {
+      "gate_id": "EVALUATION_EXECUTION_AUTHORITY",
+      "state": "FALSE",
+      "blocking_evidence": [
+        "configs/part-b-b5-manifest-v0.8.yaml",
+        "configs/part-b-b6-manifest-v0.8.yaml"
+      ],
+      "finding": "Twin/P10 readonly caller wiring is a fixed-case candidacy sidecar, not a B6 evaluator or execution loop."
+    },
+    {
+      "gate_id": "PATH_B_WRITE_MINT_ADMISSION_KERNEL_E_CASE_WRITE",
+      "state": "NO_GO",
+      "blocking_evidence": [
+        "configs/part-b-si008-named-open-path-a-claim-candidacy-manifest-v0.8.yaml",
+        "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-owner-acceptance-v0.1-20260727.json"
+      ],
+      "finding": "Named-open permits exact structural candidacy classification only; path_b_write, mint, admission, Kernel/E_case write, certificate, and STOP authorities are all false/NONE."
+    },
+    {
+      "gate_id": "FULL_M3_STAR_AND_LEGACY_PROJECT05_M3STAR_H3_DUAL",
+      "state": "NOT_ADMITTED_UNVERIFIED",
+      "blocking_evidence": [
+        "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+        "configs/part-b-b5-planner-admission-manifest-v0.8.yaml"
+      ],
+      "finding": "The legacy implementation remains DENY_NOT_ADMITTED_UNVERIFIED, and no full M3* closed loop is present."
+    },
+    {
+      "gate_id": "CERTIFIED_STOP_AND_CERTIFICATE_AUTHORITY",
+      "state": "NONE_DENY",
+      "blocking_evidence": [
+        "configs/part-b-b9-manifest-v0.8.yaml",
+        "src/scope/part_b_claims_stop_deny.py"
+      ],
+      "finding": "B9 is contract-consistency-only; certificate_authority=false, stop_authority=NONE, and CERTIFIED_STOP=NOT_AUTHORIZED."
+    }
+  ],
+  "non_substitutes": [
+    {
+      "surface": "M3-KERNEL-D1_SELECT_ACTION_CANDIDACY",
+      "does_not_substitute_for": "PART_B_B5_PLANNER_EXECUTION",
+      "reason": "The P1e acceptance and runtime set action_execution_enabled=false and define SELECT_ACTION as candidacy metadata only."
+    },
+    {
+      "surface": "TWIN_P10_READONLY_D1_CALLER_WIRING",
+      "does_not_substitute_for": "PART_B_B6_CLOSED_LOOP_EVALUATION_EXECUTION",
+      "reason": "The wiring is test-only, fixed-case, sidecar-only, and does not import or invoke the P10/P5 execution driver."
+    },
+    {
+      "surface": "B5_ADMITTED_CONFORMANCE_ONLY_SKELETON",
+      "does_not_substitute_for": "FULL_M3_STAR",
+      "reason": "Its admission_scope is INTERFACE_CONFORMANCE_ONLY and both planner_execution_authority and evaluation_execution_authority remain false."
+    },
+    {
+      "surface": "PATH_A_NAMED_OPEN_EVIDENCE_OR_CLAIM_CANDIDACY",
+      "does_not_substitute_for": "PATH_B_WRITE",
+      "reason": "Named-open manifests explicitly deny mint, admission, Path B write, Kernel/E_case write, AUTHORITY/PASS_CONDITION, certificate, and STOP."
+    },
+    {
+      "surface": "B2_LOCAL_FIXTURE_SAMPLER_STUB",
+      "does_not_substitute_for": "EMPIRICAL_STOCHASTIC_VALIDITY_OR_PRODUCTION_SAMPLING",
+      "reason": "PB-B2-SI-003 remains OPEN_BLOCKS_EMPIRICAL_MODEL_ADMISSION and production_sampling_authority=false."
+    }
+  ],
+  "finding_summary": {
+    "part_b_contract_inventory": "PRESENT_FOR_B0_THROUGH_B9",
+    "part_b_execution_elevation": "NOT_ESTABLISHED",
+    "planner_implementation_admission_beyond_skeleton": "NOT_ESTABLISHED",
+    "planner_execution_authority": false,
+    "evaluation_execution_authority": false,
+    "sampling_beyond_local_stub": false,
+    "path_b_write": false,
+    "mint": false,
+    "path_b_admission": false,
+    "kernel_or_e_case_write": false,
+    "full_m3_star_closed_loop": false,
+    "certificate_authority": false,
+    "certified_stop": "NOT_AUTHORIZED",
+    "legacy_project05_m3star_h3_dual": "NOT_ADMITTED_UNVERIFIED",
+    "overall": "Contracts and several local/deny-only surfaces are present, but no Part B normative slice is execution-authorized."
+  },
+  "single_recommendation": {
+    "only_next_authorized_cell": "PART_B_B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+    "why_this_cell_first": "The accepted M3-KERNEL-D1 and Twin/P10 readonly surfaces have pinned identities and deterministic tests, while the current B5 policy admits only the legacy local skeleton identity. The smallest honest next step is a new closed B5 identity and conformance-only evidence/admission record, not execution.",
+    "proposed_scope_if_separately_authorized": {
+      "new_closed_identity_for": [
+        "src/planner/deterministic_depth1.py",
+        "src/planner/twin_p10_readonly_wiring.py"
+      ],
+      "maximum_positive_decision": "ADMITTED_CONFORMANCE_ONLY",
+      "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+      "planner_execution_authority": false,
+      "evaluation_execution_authority": false,
+      "path_b_write_authority": false,
+      "mint_authority": false,
+      "kernel_or_e_case_write_authority": false,
+      "certificate_authority": false,
+      "stop_authority": "NONE",
+      "full_m3_star": false
+    },
+    "recommendation_is_current_authorization": false
+  },
+  "explicitly_not_authorized_now": [
+    "PART_B_EXECUTION_ELEVATION_OR_PASS_CLAIM",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PATH_B_WRITE",
+    "MINT",
+    "ADMISSION_OR_INGESTION_INTO_PATH_B",
+    "KERNEL_OR_E_CASE_WRITE",
+    "FULL_M3_STAR_OR_LEGACY_M3_STAR_ADMISSION_FOR_EXECUTION",
+    "B7_CONNECTOR_EXECUTION_OR_DOWNLOAD",
+    "B8_HOLDOUT_ACCESS_RELEASE_OR_STATISTICAL_EXECUTION",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "NAMED_OPEN_WIDENING",
+    "LLM_OR_09_EXPERIMENTS_PROMOTION_INTO_PART_B",
+    "PART_A_RUNTIME_MUTATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "verification": {
+    "head_exact": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+    "prerequisite_acceptance_paths_exist": "3/3",
+    "part_b_normative_manifest_paths_exist": "10/10",
+    "key_content_sha_pins_reverified": true,
+    "broad_tests": "NOT_RUN_BY_DESIGN",
+    "green_started": false,
+    "runtime_files_touched": 0,
+    "schema_files_touched": 0,
+    "config_files_touched": 0,
+    "test_or_fixture_files_touched": 0,
+    "expected_porcelain": "exact_2_untracked_audit_docs"
+  }
+}
