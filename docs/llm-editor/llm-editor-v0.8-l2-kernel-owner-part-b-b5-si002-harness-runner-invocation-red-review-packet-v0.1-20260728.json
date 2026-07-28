@@ -1,0 +1,184 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-harness-runner-invocation-red-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_READY_FOR_KERNEL_OWNER_REVIEW",
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RED_FIRST",
+    "authority_base_commit": "3b410bf78309a16111edd7009048b03e119cedc3",
+    "reviewed_branch": "codex/part-b-b5-si002-harness-runner-invocation-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RED_FIRST",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "part_b_elevation": "NO_GO"
+  },
+  "red_artifacts": [
+    {
+      "role": "OWNER_GO_AUTHORIZATION",
+      "path": "docs/kernel/part-b-b5-si002-harness-runner-invocation-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "82db453eb72cad79e686f274496374a713e992ec05a7066186267f08d994caef",
+      "json_parse": "PASS"
+    },
+    {
+      "role": "RED_DESIGN",
+      "path": "docs/kernel/part-b-b5-si002-harness-runner-invocation-red-design-v0.1-20260728.json",
+      "content_sha256": "b269df49acc47fe723bc25bda702264c65d6df17ebdde682a7bc34bf46e1f437",
+      "json_parse": "PASS"
+    }
+  ],
+  "self_hash_policy": {
+    "embedded_self_sha256": false,
+    "reason": "The review packet raw content SHA is computed after serialization and reported in the Owner submission; no self-referential placeholder is used."
+  },
+  "prerequisite_step3_pins": [
+    {
+      "path": "docs/kernel/part-b-step3-readonly-b5-execution-gap-refresh-audit-v0.1-20260728.json",
+      "content_sha256": "073992937ab66c3e9cfba3281f44d5afede4f718a0cd9fba76e01b7a03785798",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RED_FIRST",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE"
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step3-readonly-b5-execution-gap-refresh-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "bdb649fbebfddcff40794af0f0c58209fc4b6c5e8046872c32655f0edded5932",
+      "owner_decision": "accept",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE"
+    }
+  ],
+  "design_summary": {
+    "subject": "LOCAL_SYNTHETIC_DECLARATION_BOUND_HARNESS_RUNNER_INVOCATION_CONTRACT_AND_ADMISSION_IDENTITY_BINDING_ENVELOPE",
+    "maximum_positive_design_ceiling": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY",
+    "bound_implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "bound_harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+    "bound_si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+    "fixture_scope": "SYNTHETIC_LOCAL_DECLARATION_ONLY",
+    "production_registration_enabled": false,
+    "runner_implementation_in_this_red": false,
+    "runner_invocation_in_this_red": false,
+    "green_started": false
+  },
+  "closed_world_contract_summary": {
+    "future_test_only_authority_field_count": 8,
+    "future_invocation_request_field_count": 24,
+    "future_invocation_record_field_count": 26,
+    "additional_properties": false,
+    "future_api": "invoke_local_bounded_evaluation_harness_for_test_only_record(invocation_request, *, test_only_authority)",
+    "future_delegate": "evaluate_twin_p10_fixed_case_for_depth1_candidacy",
+    "direct_deterministic_depth1_call_allowed": false,
+    "future_positive_decision": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+    "future_positive_record_scope": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY",
+    "future_positive_actual_runner_invocation_fact": true,
+    "future_positive_actual_evaluator_invocation_fact": false,
+    "future_positive_authority_effect": "NONE_RECORD_ONLY",
+    "future_green_is_authorized_now": false
+  },
+  "fail_closed_summary": {
+    "matrix_rows": 20,
+    "unknown_id": "DENY_UNKNOWN_IMPLEMENTATION",
+    "wildcard_or_fallback": "DENY_UNKNOWN_IMPLEMENTATION",
+    "legacy_project05_m3star_h3_dual": "DENY_LEGACY_IMPLEMENTATION",
+    "missing_si002_binding": "DENY_MISSING_SI002_BINDING",
+    "hash_mismatch": "DENY_HASH_MISMATCH",
+    "non_synthetic_or_production_input": "DENY_NON_SYNTHETIC_OR_PRODUCTION_INPUT",
+    "authority_flip_or_Path_B_write_mint_Kernel_write_certificate_STOP": "DENY_AUTHORITY_REQUEST",
+    "timeout": "ABSTAIN_TIMEOUT_UNKNOWN_NO_RANK",
+    "resource_exhaustion": "ABSTAIN_RESOURCE_EXHAUSTION_UNKNOWN_NO_RANK",
+    "infeasible": "ABSTAIN_INFEASIBLE_SEPARATE_NO_ACTION",
+    "unknown": "ABSTAIN_UNKNOWN_NO_RANK",
+    "pre_invocation_failure_delegate_called": false,
+    "partial_positive_record": false
+  },
+  "authority_ceiling": {
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "full_m3_star": false,
+    "part_b_pass": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+  },
+  "non_substitute_findings": [
+    "D1 candidacy is not planner execution.",
+    "Twin/P10 readonly wiring is not B6 closed loop.",
+    "ADMITTED_CONFORMANCE_ONLY is not evaluation_execution_authority.",
+    "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID is not actual runner execution or Part B PASS.",
+    "This RED design does not close SI-003.",
+    "A future test-only invocation contract or record is not evaluation_execution_authority=true."
+  ],
+  "pin_verification_summary": {
+    "accepted_step3_sibling_pins": "MATCH_2_OF_2",
+    "si002_and_D1_and_bounded_contract_pins": "MATCH_11_OF_11",
+    "protected_runtime_pins": "MATCH_3_OF_3",
+    "mismatched": 0,
+    "result": "PASS"
+  },
+  "proposed_future_green_allowlist_not_authorized_now": [
+    "schemas/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation.schema.json",
+    "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-policy-v0.1.yaml",
+    "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-record-v0.1.yaml",
+    "src/scope/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+    "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json",
+    "tests/unit/test_part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+    "docs/kernel/part-b-b5-si002-harness-runner-invocation-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-harness-runner-invocation-green-review-packet-v0.1-20260728.json"
+  ],
+  "allowlist_audit": {
+    "authorized_paths": [
+      "docs/kernel/part-b-b5-si002-harness-runner-invocation-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/part-b-b5-si002-harness-runner-invocation-red-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-harness-runner-invocation-red-review-packet-v0.1-20260728.json"
+    ],
+    "authorized_path_count": 3,
+    "observed_path_count": 3,
+    "extra_paths": 0,
+    "runtime_schema_config_fixture_or_test_modified": false,
+    "write_side_effects": "exact_3_red_docs_only",
+    "result": "PASS"
+  },
+  "explicitly_not_authorized": [
+    "PART_B_B5_SI002_RUNNER_INVOCATION_GREEN_OR_IMPLEMENTATION",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "FULL_M3_STAR",
+    "B6_EXECUTION",
+    "B7_EXECUTION",
+    "B8_EXECUTION",
+    "B9_EXECUTION",
+    "PRODUCTION_REGISTRATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "verification": {
+    "head_expected": "3b410bf78309a16111edd7009048b03e119cedc3",
+    "head_observed": "3b410bf78309a16111edd7009048b03e119cedc3",
+    "head_status": "MATCH",
+    "branch": "codex/part-b-b5-si002-harness-runner-invocation-red-v0.1",
+    "json_parse": "PASS_3_OF_3",
+    "closed_world_field_counts": "PASS",
+    "fail_closed_matrix": "20_ROWS_FROZEN",
+    "porcelain": "EXACT_3_RED_DOCS_ONLY",
+    "extra_paths": 0,
+    "green_files_created": false,
+    "runtime_schema_config_fixture_or_test_modified": false,
+    "commit_push_pr_performed": false
+  },
+  "owner_decision": null,
+  "owner_decision_requested": [
+    "accept",
+    "request_revision",
+    "reject"
+  ]
+}
