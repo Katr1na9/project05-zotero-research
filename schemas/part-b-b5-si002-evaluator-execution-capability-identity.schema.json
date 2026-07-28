@@ -1,0 +1,735 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-si002-evaluator-execution-capability-identity.schema.json",
+  "title": "Part B B5 SI-002 evaluator-execution capability identity v0.1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/policy"
+    },
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/record"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "contentSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hardBan": {
+      "const": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+    },
+    "decision": {
+      "enum": [
+        "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_UNKNOWN_CAPABILITY_ID",
+        "DENY_LEGACY_IMPLEMENTATION",
+        "DENY_MISSING_CHAIN_BINDING",
+        "DENY_HASH_MISMATCH",
+        "DENY_CAPABILITY_SURFACE_MISMATCH",
+        "DENY_NONDETERMINISTIC_INPUT",
+        "DENY_EXECUTION_OR_EVIDENCE_REQUEST",
+        "DENY_AUTHORITY_REQUEST",
+        "DENY_CATALOG_SCOPE_OVERREACH",
+        "DENY_SI003_OR_PART_B_SCOPE",
+        "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT"
+      ]
+    },
+    "reasonCode": {
+      "enum": [
+        "B5-SI002-EVAL-CAP-ID-000-VALID-NO-EXECUTION-NO-FLIP",
+        "B5-SI002-EVAL-CAP-ID-DENY-UNKNOWN-IMPLEMENTATION",
+        "B5-SI002-EVAL-CAP-ID-DENY-UNKNOWN-CAPABILITY",
+        "B5-SI002-EVAL-CAP-ID-DENY-LEGACY",
+        "B5-SI002-EVAL-CAP-ID-DENY-MISSING-CHAIN",
+        "B5-SI002-EVAL-CAP-ID-DENY-HASH-MISMATCH",
+        "B5-SI002-EVAL-CAP-ID-DENY-SURFACE",
+        "B5-SI002-EVAL-CAP-ID-DENY-NONDETERMINISTIC",
+        "B5-SI002-EVAL-CAP-ID-DENY-EXECUTION-EVIDENCE",
+        "B5-SI002-EVAL-CAP-ID-DENY-AUTHORITY",
+        "B5-SI002-EVAL-CAP-ID-DENY-CATALOG-OVERREACH",
+        "B5-SI002-EVAL-CAP-ID-DENY-SI003-PART-B",
+        "B5-SI002-EVAL-CAP-ID-DENY-NON-CONTRACT"
+      ]
+    },
+    "reasonCodes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_UNKNOWN_CAPABILITY_ID",
+        "DENY_LEGACY_IMPLEMENTATION",
+        "DENY_MISSING_CHAIN_BINDING",
+        "DENY_HASH_MISMATCH",
+        "DENY_CAPABILITY_SURFACE_MISMATCH",
+        "DENY_NONDETERMINISTIC_INPUT",
+        "DENY_EXECUTION_OR_EVIDENCE_REQUEST",
+        "DENY_AUTHORITY_REQUEST",
+        "DENY_CATALOG_SCOPE_OVERREACH",
+        "DENY_SI003_OR_PART_B_SCOPE",
+        "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT"
+      ],
+      "properties": {
+        "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP": {
+          "const": "B5-SI002-EVAL-CAP-ID-000-VALID-NO-EXECUTION-NO-FLIP"
+        },
+        "DENY_UNKNOWN_IMPLEMENTATION": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-UNKNOWN-IMPLEMENTATION"
+        },
+        "DENY_UNKNOWN_CAPABILITY_ID": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-UNKNOWN-CAPABILITY"
+        },
+        "DENY_LEGACY_IMPLEMENTATION": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-LEGACY"
+        },
+        "DENY_MISSING_CHAIN_BINDING": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-MISSING-CHAIN"
+        },
+        "DENY_HASH_MISMATCH": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-HASH-MISMATCH"
+        },
+        "DENY_CAPABILITY_SURFACE_MISMATCH": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-SURFACE"
+        },
+        "DENY_NONDETERMINISTIC_INPUT": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-NONDETERMINISTIC"
+        },
+        "DENY_EXECUTION_OR_EVIDENCE_REQUEST": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-EXECUTION-EVIDENCE"
+        },
+        "DENY_AUTHORITY_REQUEST": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-AUTHORITY"
+        },
+        "DENY_CATALOG_SCOPE_OVERREACH": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-CATALOG-OVERREACH"
+        },
+        "DENY_SI003_OR_PART_B_SCOPE": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-SI003-PART-B"
+        },
+        "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT": {
+          "const": "B5-SI002-EVAL-CAP-ID-DENY-NON-CONTRACT"
+        }
+      }
+    },
+    "identityBasis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evaluator_capability_id",
+        "evaluator_capability_class",
+        "capability_profile",
+        "candidate_module_path",
+        "candidate_entrypoint",
+        "candidate_module_content_sha256",
+        "deterministic_dependency_module_path",
+        "deterministic_dependency_content_sha256",
+        "twin_fixture_path",
+        "twin_fixture_content_sha256",
+        "p1e_fixture_path",
+        "p1e_fixture_content_sha256",
+        "si002_invocation_fixture_path",
+        "si002_invocation_fixture_content_sha256",
+        "matching_rule_profile",
+        "deterministic_only"
+      ],
+      "properties": {
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_class": {
+          "const": "LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY"
+        },
+        "capability_profile": {
+          "const": "PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE"
+        },
+        "candidate_module_path": {
+          "const": "src/planner/twin_p10_readonly_wiring.py"
+        },
+        "candidate_entrypoint": {
+          "const": "evaluate_twin_p10_fixed_case_for_depth1_candidacy"
+        },
+        "candidate_module_content_sha256": {
+          "const": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9"
+        },
+        "deterministic_dependency_module_path": {
+          "const": "src/planner/deterministic_depth1.py"
+        },
+        "deterministic_dependency_content_sha256": {
+          "const": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+        },
+        "twin_fixture_path": {
+          "const": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json"
+        },
+        "twin_fixture_content_sha256": {
+          "const": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee"
+        },
+        "p1e_fixture_path": {
+          "const": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json"
+        },
+        "p1e_fixture_content_sha256": {
+          "const": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b"
+        },
+        "si002_invocation_fixture_path": {
+          "const": "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json"
+        },
+        "si002_invocation_fixture_content_sha256": {
+          "const": "5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086"
+        },
+        "matching_rule_profile": {
+          "const": "EXACT_TWIN_COUNTEREXAMPLE_001_P1E_DETERMINISTIC_MATCHING_NO_RANDOM_NO_HIDDEN_GT"
+        },
+        "deterministic_only": {
+          "const": true
+        }
+      }
+    },
+    "si002ChainBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "si002_contract_record_hash",
+        "si002_contract_record_content_sha256",
+        "si002_invocation_record_hash",
+        "si002_invocation_record_content_sha256",
+        "si002_boundary_record_hash",
+        "si002_boundary_record_content_sha256",
+        "si002_gap_catalog_record_hash",
+        "si002_gap_catalog_record_content_sha256",
+        "si002_gap_catalog_acceptance_content_sha256"
+      ],
+      "properties": {
+        "si002_contract_record_hash": {
+          "const": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+        },
+        "si002_contract_record_content_sha256": {
+          "const": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421"
+        },
+        "si002_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "si002_invocation_record_content_sha256": {
+          "const": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851"
+        },
+        "si002_boundary_record_hash": {
+          "const": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe"
+        },
+        "si002_boundary_record_content_sha256": {
+          "const": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5"
+        },
+        "si002_gap_catalog_record_hash": {
+          "const": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092"
+        },
+        "si002_gap_catalog_record_content_sha256": {
+          "const": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3"
+        },
+        "si002_gap_catalog_acceptance_content_sha256": {
+          "const": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd"
+        }
+      }
+    },
+    "catalogPrerequisiteEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_prerequisite_addressed",
+        "catalog_class_1_status",
+        "catalog_class_3_status",
+        "catalog_class_4_status",
+        "catalog_class_5_status",
+        "existing_gap_catalog_mutated",
+        "all_flip_prerequisites_satisfied"
+      ],
+      "properties": {
+        "catalog_prerequisite_addressed": {
+          "const": "ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY"
+        },
+        "catalog_class_1_status": {
+          "const": "MISSING"
+        },
+        "catalog_class_3_status": {
+          "const": "MISSING"
+        },
+        "catalog_class_4_status": {
+          "const": "MISSING"
+        },
+        "catalog_class_5_status": {
+          "const": "MISSING"
+        },
+        "existing_gap_catalog_mutated": {
+          "const": false
+        },
+        "all_flip_prerequisites_satisfied": {
+          "const": false
+        }
+      }
+    },
+    "authorityCeiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_scope",
+        "authority_effect",
+        "catalog_prerequisite_addressed",
+        "other_catalog_prerequisites_satisfied",
+        "all_flip_prerequisites_satisfied",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "scalarization_authority",
+        "performance_claim_authority",
+        "superiority_claim_authority",
+        "path_b_write_authority",
+        "mint_authority",
+        "kernel_or_e_case_write_authority",
+        "certificate_authority",
+        "stop_authority",
+        "production_registration_enabled",
+        "pb_b5_si_003_state",
+        "part_b_pass",
+        "full_m3_star"
+      ],
+      "properties": {
+        "record_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_IDENTITY_RECORD_ONLY"
+        },
+        "catalog_prerequisite_addressed": {
+          "const": "ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY"
+        },
+        "other_catalog_prerequisites_satisfied": {
+          "const": false
+        },
+        "all_flip_prerequisites_satisfied": {
+          "const": false
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "scalarization_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "superiority_claim_authority": {
+          "const": false
+        },
+        "path_b_write_authority": {
+          "const": false
+        },
+        "mint_authority": {
+          "const": false
+        },
+        "kernel_or_e_case_write_authority": {
+          "const": false
+        },
+        "certificate_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "part_b_pass": {
+          "const": false
+        },
+        "full_m3_star": {
+          "const": false
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "policy_id",
+        "policy_version",
+        "status",
+        "authorized_slice",
+        "admissible_implementation_ids",
+        "admissible_evaluator_capability_ids",
+        "wildcards",
+        "fallback",
+        "identity_basis",
+        "evaluator_capability_identity_hash",
+        "si002_chain_bindings",
+        "positive_decision",
+        "record_scope",
+        "authority_effect",
+        "catalog_prerequisite_effect",
+        "reason_codes",
+        "authority_ceiling",
+        "hard_ban",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "policy_id": {
+          "const": "part-b-b5-si002-evaluator-execution-capability-identity-policy-v0.1"
+        },
+        "policy_version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "const": "LOCAL_CAPABILITY_IDENTITY_RECORD_ONLY_NO_EXECUTION_NO_FLIP"
+        },
+        "authorized_slice": {
+          "const": "PART_B_B5_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY"
+        },
+        "admissible_implementation_ids": {
+          "const": [
+            "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+          ]
+        },
+        "admissible_evaluator_capability_ids": {
+          "const": [
+            "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+          ]
+        },
+        "wildcards": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        },
+        "identity_basis": {
+          "$ref": "#/$defs/identityBasis"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "si002_chain_bindings": {
+          "$ref": "#/$defs/si002ChainBindings"
+        },
+        "positive_decision": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP"
+        },
+        "record_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_IDENTITY_RECORD_ONLY"
+        },
+        "catalog_prerequisite_effect": {
+          "$ref": "#/$defs/catalogPrerequisiteEffect"
+        },
+        "reason_codes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "authority_ceiling": {
+          "$ref": "#/$defs/authorityCeiling"
+        },
+        "hard_ban": {
+          "const": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_kind",
+        "request_version",
+        "requested_scope",
+        "implementation_id",
+        "evaluator_capability_id",
+        "evaluator_capability_identity_hash",
+        "evaluator_capability_class",
+        "capability_profile",
+        "candidate_module_path",
+        "candidate_entrypoint",
+        "candidate_module_content_sha256",
+        "deterministic_dependency_module_path",
+        "deterministic_dependency_content_sha256",
+        "twin_fixture_path",
+        "twin_fixture_content_sha256",
+        "p1e_fixture_path",
+        "p1e_fixture_content_sha256",
+        "si002_invocation_fixture_path",
+        "si002_invocation_fixture_content_sha256",
+        "matching_rule_profile",
+        "deterministic_only",
+        "si002_contract_record_hash",
+        "si002_contract_record_content_sha256",
+        "si002_invocation_record_hash",
+        "si002_invocation_record_content_sha256",
+        "si002_boundary_record_hash",
+        "si002_boundary_record_content_sha256",
+        "si002_gap_catalog_record_hash",
+        "si002_gap_catalog_record_content_sha256",
+        "si002_gap_catalog_acceptance_content_sha256",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "production_registration_enabled",
+        "pb_b5_si_003_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "request_kind": {
+          "const": "ASSESS_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY"
+        },
+        "request_version": {
+          "const": "0.1.0"
+        },
+        "requested_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "evaluator_capability_class": {
+          "const": "LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY"
+        },
+        "capability_profile": {
+          "const": "PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE"
+        },
+        "candidate_module_path": {
+          "const": "src/planner/twin_p10_readonly_wiring.py"
+        },
+        "candidate_entrypoint": {
+          "const": "evaluate_twin_p10_fixed_case_for_depth1_candidacy"
+        },
+        "candidate_module_content_sha256": {
+          "const": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9"
+        },
+        "deterministic_dependency_module_path": {
+          "const": "src/planner/deterministic_depth1.py"
+        },
+        "deterministic_dependency_content_sha256": {
+          "const": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+        },
+        "twin_fixture_path": {
+          "const": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json"
+        },
+        "twin_fixture_content_sha256": {
+          "const": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee"
+        },
+        "p1e_fixture_path": {
+          "const": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json"
+        },
+        "p1e_fixture_content_sha256": {
+          "const": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b"
+        },
+        "si002_invocation_fixture_path": {
+          "const": "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json"
+        },
+        "si002_invocation_fixture_content_sha256": {
+          "const": "5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086"
+        },
+        "matching_rule_profile": {
+          "const": "EXACT_TWIN_COUNTEREXAMPLE_001_P1E_DETERMINISTIC_MATCHING_NO_RANDOM_NO_HIDDEN_GT"
+        },
+        "deterministic_only": {
+          "const": true
+        },
+        "si002_contract_record_hash": {
+          "const": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+        },
+        "si002_contract_record_content_sha256": {
+          "const": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421"
+        },
+        "si002_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "si002_invocation_record_content_sha256": {
+          "const": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851"
+        },
+        "si002_boundary_record_hash": {
+          "const": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe"
+        },
+        "si002_boundary_record_content_sha256": {
+          "const": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5"
+        },
+        "si002_gap_catalog_record_hash": {
+          "const": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092"
+        },
+        "si002_gap_catalog_record_content_sha256": {
+          "const": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3"
+        },
+        "si002_gap_catalog_acceptance_content_sha256": {
+          "const": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd"
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_class",
+        "record_version",
+        "request_hash",
+        "implementation_id",
+        "evaluator_capability_id",
+        "evaluator_capability_identity_hash",
+        "evaluator_capability_class",
+        "capability_profile",
+        "candidate_module_path",
+        "candidate_entrypoint",
+        "candidate_module_content_sha256",
+        "deterministic_dependency_content_sha256",
+        "decision",
+        "reason_codes",
+        "record_scope",
+        "authority_effect",
+        "capability_identity_contract_valid",
+        "catalog_prerequisite_addressed",
+        "other_catalog_prerequisites_satisfied",
+        "all_flip_prerequisites_satisfied",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "production_registration_enabled",
+        "pb_b5_si_003_state",
+        "stop_authority",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "record_class": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_RECORD"
+        },
+        "record_version": {
+          "const": "0.1.0"
+        },
+        "request_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "evaluator_capability_class": {
+          "const": "LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY"
+        },
+        "capability_profile": {
+          "const": "PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE"
+        },
+        "candidate_module_path": {
+          "const": "src/planner/twin_p10_readonly_wiring.py"
+        },
+        "candidate_entrypoint": {
+          "const": "evaluate_twin_p10_fixed_case_for_depth1_candidacy"
+        },
+        "candidate_module_content_sha256": {
+          "const": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9"
+        },
+        "deterministic_dependency_content_sha256": {
+          "const": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        },
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/reasonCode"
+          }
+        },
+        "record_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_IDENTITY_RECORD_ONLY"
+        },
+        "capability_identity_contract_valid": {
+          "type": "boolean"
+        },
+        "catalog_prerequisite_addressed": {
+          "enum": [
+            "ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY",
+            "NONE"
+          ]
+        },
+        "other_catalog_prerequisites_satisfied": {
+          "const": false
+        },
+        "all_flip_prerequisites_satisfied": {
+          "const": false
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,697 @@
+{
+  "artifact_id": "part-b-b5-si002-evaluator-execution-capability-identity-red-design-v0.1-20260728",
+  "artifact_type": "part_b_b5_si002_evaluator_execution_capability_identity_red_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_DESIGN_COMPLETE_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_RED_FIRST",
+    "authority_base_commit": "cb1d57a311395fff095e24e262576425dffb4ec9",
+    "branch": "codex/part-b-b5-si002-evaluator-execution-capability-identity-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_RED_FIRST",
+    "owner_go": {
+      "path": "docs/kernel/part-b-b5-si002-evaluator-execution-capability-identity-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "95836fd33051ff6b4e0030aaae59325dd1b72788d567837ca987cec54fefbf8a",
+      "status": "MATCH"
+    },
+    "maximum_positive_design_ceiling": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY",
+    "maximum_positive_record": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "green_started": false,
+    "runtime_implementation_in_this_red": false,
+    "write_side_effects": "docs_only_exact_3_red_files"
+  },
+  "accepted_step6_pins": {
+    "source_mode": "UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE",
+    "audit": {
+      "path": "docs/kernel/part-b-step6-readonly-b5-execution-gap-refresh-audit-v0.1-20260728.json",
+      "content_sha256": "83beaf676f47d37acbcc81adba09cbc968818ccd3510eec64ba0494eceaa581c",
+      "status": "MATCH",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_RED_FIRST"
+    },
+    "review_packet": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step6-readonly-b5-execution-gap-refresh-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "776181c6a042e81151525ed23b1f9172ccbf616a4162db8a3d4399d988ea9d5d",
+      "status": "MATCH",
+      "owner_decision": "accept"
+    }
+  },
+  "design_decision": {
+    "subject": "EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD",
+    "selected_model": "ADDITIVE_PURE_SINGLE_ID_HASH_BOUND_CAPABILITY_IDENTITY_VALIDATOR_NO_EXECUTION",
+    "question": "Can one exact existing deterministic fixed-case matching callable be identified as the sole local evaluator-execution capability identity without invoking it, producing evaluator evidence, or granting authority?",
+    "answer_in_this_red": "Yes. The future identity validator may recognize exactly one hash-bound Twin/P10 depth-1 candidacy callable and emit only an identity-valid no-execution no-flip record. This RED does not implement the validator and does not invoke or retroactively reclassify the callable.",
+    "positive_record_means": "The exact capability ID, callable surface, deterministic dependency, fixed-case declarations, and accepted SI-002 chain identity match the closed contract.",
+    "positive_record_does_not_mean": [
+      "ACTUAL_EVALUATOR_INVOCATION",
+      "EVALUATOR_EXECUTION_EVIDENCE_OR_RECORD",
+      "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+      "PLANNER_EXECUTION_AUTHORITY_TRUE",
+      "AUTHORITY_FLIP",
+      "ALL_CATALOG_PREREQUISITES_SATISFIED",
+      "PB_B5_SI_003_CLOSURE",
+      "SCALARIZATION_PERFORMANCE_OR_SUPERIORITY",
+      "PART_B_PASS",
+      "FULL_M3_STAR",
+      "B6_B7_B8_B9_EXECUTION",
+      "PATH_B_WRITE",
+      "LLM_OR_FOUR_FAMILY_REOPEN"
+    ]
+  },
+  "single_capability_identity": {
+    "identity_count": 1,
+    "evaluator_capability_id": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1",
+    "evaluator_capability_identity_hash": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30",
+    "evaluator_capability_class": "LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY",
+    "capability_profile": "PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE",
+    "candidate_module_path": "src/planner/twin_p10_readonly_wiring.py",
+    "candidate_entrypoint": "evaluate_twin_p10_fixed_case_for_depth1_candidacy",
+    "candidate_module_content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+    "deterministic_dependency_module_path": "src/planner/deterministic_depth1.py",
+    "deterministic_dependency_content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+    "twin_fixture_path": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json",
+    "twin_fixture_content_sha256": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee",
+    "p1e_fixture_path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+    "p1e_fixture_content_sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b",
+    "si002_invocation_fixture_path": "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json",
+    "si002_invocation_fixture_content_sha256": "5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086",
+    "matching_rule_profile": "EXACT_TWIN_COUNTEREXAMPLE_001_P1E_DETERMINISTIC_MATCHING_NO_RANDOM_NO_HIDDEN_GT",
+    "deterministic_only": true,
+    "wildcards": false,
+    "fallback": false,
+    "resource_trace_binding_mode": "NONE",
+    "identity_basis_canonicalization": "UTF8_SORTED_KEYS_COMPACT_JSON_NO_NAN",
+    "identity_basis_field_count": 16
+  },
+  "identity_scope_interpretation": {
+    "candidate_callable_current_surface": "TEST_ONLY_READONLY_NEXT_ACTION_CANDIDACY_SIDECAR",
+    "identity_contract_role": "CAPABILITY_IDENTITY_ONLY",
+    "historical_test_only_delegate_call_reclassified_as_actual_evaluator_invocation": false,
+    "callable_invoked_by_future_identity_validator": false,
+    "d1_invoked_by_future_identity_validator": false,
+    "fixture_dereference_beyond_content_sha_check": false,
+    "execution_or_system_state_output": false,
+    "production_registration": false
+  },
+  "exact_si002_chain_binding": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+    "si002_contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+    "si002_invocation_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+    "si002_invocation_record_content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+    "si002_boundary_record_hash": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe",
+    "si002_boundary_record_content_sha256": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5",
+    "si002_gap_catalog_record_hash": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092",
+    "si002_gap_catalog_record_content_sha256": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3",
+    "si002_gap_catalog_acceptance_content_sha256": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd",
+    "actual_runner_invocation_record_fact": true,
+    "actual_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false
+  },
+  "catalog_prerequisite_effect": {
+    "current_gap_catalog_entry_count": 5,
+    "current_gap_catalog_all_missing": true,
+    "red_design_itself_satisfies_any_prerequisite": false,
+    "future_positive_identity_record_addresses": "ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY",
+    "future_positive_identity_record_class_number": 2,
+    "future_positive_identity_record_may_establish_class_2_identity_contract_valid": true,
+    "existing_gap_catalog_bytes_mutated": false,
+    "separate_catalog_status_refresh_required_if_owner_wants_materialized_transition": true,
+    "class_1_explicit_owner_flip_go_status_after_future_identity_record": "MISSING",
+    "class_3_evaluator_evidence_or_record_status_after_future_identity_record": "MISSING",
+    "class_4_actual_evaluator_invocation_evidence_status_after_future_identity_record": "MISSING",
+    "class_5_evidence_to_authority_binding_status_after_future_identity_record": "MISSING",
+    "all_flip_prerequisites_satisfied": false,
+    "authority_flip_eligible": false
+  },
+  "pinned_artifact_table": [
+    {
+      "role": "GAP_CATALOG_GREEN_OWNER_ACCEPTANCE",
+      "path": "docs/kernel/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd",
+      "status": "MATCH"
+    },
+    {
+      "role": "GAP_CATALOG_RECORD",
+      "path": "configs/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-record-v0.1.yaml",
+      "content_sha256": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3",
+      "canonical_record_hash": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092",
+      "status": "MATCH"
+    },
+    {
+      "role": "BOUNDARY_RECORD",
+      "path": "configs/part-b-b5-si002-evaluation-execution-authority-boundary-record-v0.1.yaml",
+      "content_sha256": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5",
+      "canonical_record_hash": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe",
+      "status": "MATCH"
+    },
+    {
+      "role": "INVOCATION_RECORD",
+      "path": "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-record-v0.1.yaml",
+      "content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+      "canonical_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+      "status": "MATCH"
+    },
+    {
+      "role": "HARNESS_CONTRACT_RECORD",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-record-v0.1.yaml",
+      "content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "canonical_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "status": "MATCH"
+    },
+    {
+      "role": "TWIN_P10_CAPABILITY_MODULE",
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "role": "D1_DETERMINISTIC_DEPENDENCY",
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "role": "TWIN_P10_FIXED_CASE_FIXTURE",
+      "path": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json",
+      "content_sha256": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee",
+      "status": "MATCH"
+    },
+    {
+      "role": "P1E_FIXED_CASE_FIXTURE",
+      "path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "content_sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_INVOCATION_FIXED_CASE_FIXTURE",
+      "path": "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json",
+      "content_sha256": "5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086",
+      "status": "MATCH"
+    }
+  ],
+  "protected_zero_drift": [
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_bounded_evaluation_harness_contract.py",
+      "content_sha256": "6ec634666aaa4fc02ad009abf33a6f3141119f74792e50bb0724dc8a828c947b",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+      "content_sha256": "35a2cb52d19126d3934cc30e3989bfd1b8028d4542b614fbbaa649373aff863b",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_evaluation_execution_authority_boundary.py",
+      "content_sha256": "a6c60358a935fbbe9cacd5d703f343a8dba6d177b5a26442749a270ebb76e5cf",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+      "content_sha256": "c97d813817c4dbf7a789a187de65aad594ef9f93787280c7cb10a24e52afd793",
+      "status": "MATCH"
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-capacity-audit-metadata-only-v0.1-20260722.json",
+      "content_sha256": "711080b388af102a2d55fb1cc22853c0ed0cbdb738483d4d7de709f6459f9db6",
+      "freeze_role": "FOUR_FAMILY_LLM_CAPACITY_SURFACE",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/compiler/llm/kernel_readonly_experiment_matrix_runner.py",
+      "content_sha256": "1df1cf43c88289c6877b73ce934ccd6e429641c2a91774b1d59d820292522e0e",
+      "freeze_role": "DETERMINISTIC_READONLY_TRACK_ONLY",
+      "status": "MATCH"
+    },
+    {
+      "path": "docs/llm-editor/fixtures/kernel-readonly-experiment-matrix/project05-depth2-public-v0.1/matrix-result.json",
+      "content_sha256": "9cdfdb7fc87e9ac41ad58c8975ad6428202fd974ef8c9cf453d9a8e67611ff42",
+      "four_family_ingestion_authorized": false,
+      "status": "MATCH"
+    }
+  ],
+  "future_green_api_preview": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "module": "src/scope/part_b_b5_si002_evaluator_execution_capability_identity.py",
+    "api": "evaluate_si002_evaluator_execution_capability_identity",
+    "signature": "evaluate_si002_evaluator_execution_capability_identity(identity_request)",
+    "behavior": "Pure closed-world single-ID identity validator and deterministic identity record builder only.",
+    "must_not_call": [
+      "TWIN_P10_CAPABILITY_ENTRYPOINT",
+      "DETERMINISTIC_DEPTH1",
+      "SI002_HARNESS_INVOCATION_OR_BOUNDARY_RUNTIME",
+      "RUNNER_OR_EVALUATOR",
+      "PROCESS_CLOCK_OR_MEMORY_METER",
+      "NETWORK_DOWNLOAD_OR_PRODUCTION_REGISTRY",
+      "LLM_OR_FOUR_FAMILY_TRACK",
+      "B6_B7_B8_B9",
+      "PATH_B_OR_KERNEL_WRITE"
+    ]
+  },
+  "future_identity_request_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 36,
+    "required_fields_exact": [
+      "schema_version",
+      "request_kind",
+      "request_version",
+      "requested_scope",
+      "implementation_id",
+      "evaluator_capability_id",
+      "evaluator_capability_identity_hash",
+      "evaluator_capability_class",
+      "capability_profile",
+      "candidate_module_path",
+      "candidate_entrypoint",
+      "candidate_module_content_sha256",
+      "deterministic_dependency_module_path",
+      "deterministic_dependency_content_sha256",
+      "twin_fixture_path",
+      "twin_fixture_content_sha256",
+      "p1e_fixture_path",
+      "p1e_fixture_content_sha256",
+      "si002_invocation_fixture_path",
+      "si002_invocation_fixture_content_sha256",
+      "matching_rule_profile",
+      "deterministic_only",
+      "si002_contract_record_hash",
+      "si002_contract_record_content_sha256",
+      "si002_invocation_record_hash",
+      "si002_invocation_record_content_sha256",
+      "si002_boundary_record_hash",
+      "si002_boundary_record_content_sha256",
+      "si002_gap_catalog_record_hash",
+      "si002_gap_catalog_record_content_sha256",
+      "si002_gap_catalog_acceptance_content_sha256",
+      "actual_evaluator_invocation",
+      "evaluation_execution_authority",
+      "planner_execution_authority",
+      "production_registration_enabled",
+      "pb_b5_si_003_state"
+    ],
+    "constants": {
+      "schema_version": "0.8.0",
+      "request_kind": "ASSESS_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY",
+      "request_version": "0.1.0",
+      "requested_scope": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "evaluator_capability_id": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1",
+      "evaluator_capability_identity_hash": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30",
+      "evaluator_capability_class": "LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY",
+      "capability_profile": "PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE",
+      "candidate_module_path": "src/planner/twin_p10_readonly_wiring.py",
+      "candidate_entrypoint": "evaluate_twin_p10_fixed_case_for_depth1_candidacy",
+      "candidate_module_content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "deterministic_dependency_module_path": "src/planner/deterministic_depth1.py",
+      "deterministic_dependency_content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "twin_fixture_path": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json",
+      "twin_fixture_content_sha256": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee",
+      "p1e_fixture_path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "p1e_fixture_content_sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b",
+      "si002_invocation_fixture_path": "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json",
+      "si002_invocation_fixture_content_sha256": "5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086",
+      "matching_rule_profile": "EXACT_TWIN_COUNTEREXAMPLE_001_P1E_DETERMINISTIC_MATCHING_NO_RANDOM_NO_HIDDEN_GT",
+      "deterministic_only": true,
+      "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "si002_contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "si002_invocation_record_hash": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c",
+      "si002_invocation_record_content_sha256": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851",
+      "si002_boundary_record_hash": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe",
+      "si002_boundary_record_content_sha256": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5",
+      "si002_gap_catalog_record_hash": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092",
+      "si002_gap_catalog_record_content_sha256": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3",
+      "si002_gap_catalog_acceptance_content_sha256": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd",
+      "actual_evaluator_invocation": false,
+      "evaluation_execution_authority": false,
+      "planner_execution_authority": false,
+      "production_registration_enabled": false,
+      "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+    }
+  },
+  "future_identity_record_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 28,
+    "required_fields_exact": [
+      "schema_version",
+      "record_class",
+      "record_version",
+      "request_hash",
+      "implementation_id",
+      "evaluator_capability_id",
+      "evaluator_capability_identity_hash",
+      "evaluator_capability_class",
+      "capability_profile",
+      "candidate_module_path",
+      "candidate_entrypoint",
+      "candidate_module_content_sha256",
+      "deterministic_dependency_content_sha256",
+      "decision",
+      "reason_codes",
+      "record_scope",
+      "authority_effect",
+      "capability_identity_contract_valid",
+      "catalog_prerequisite_addressed",
+      "other_catalog_prerequisites_satisfied",
+      "all_flip_prerequisites_satisfied",
+      "actual_evaluator_invocation",
+      "evaluation_execution_authority",
+      "planner_execution_authority",
+      "production_registration_enabled",
+      "pb_b5_si_003_state",
+      "stop_authority",
+      "hash"
+    ],
+    "positive_constants": {
+      "schema_version": "0.8.0",
+      "record_class": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_RECORD",
+      "record_version": "0.1.0",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "evaluator_capability_id": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1",
+      "evaluator_capability_identity_hash": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30",
+      "evaluator_capability_class": "LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY",
+      "capability_profile": "PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE",
+      "candidate_module_path": "src/planner/twin_p10_readonly_wiring.py",
+      "candidate_entrypoint": "evaluate_twin_p10_fixed_case_for_depth1_candidacy",
+      "candidate_module_content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "deterministic_dependency_content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "decision": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+      "record_scope": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY",
+      "authority_effect": "NONE_IDENTITY_RECORD_ONLY",
+      "capability_identity_contract_valid": true,
+      "catalog_prerequisite_addressed": "ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY",
+      "other_catalog_prerequisites_satisfied": false,
+      "all_flip_prerequisites_satisfied": false,
+      "actual_evaluator_invocation": false,
+      "evaluation_execution_authority": false,
+      "planner_execution_authority": false,
+      "production_registration_enabled": false,
+      "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+      "stop_authority": "NONE"
+    },
+    "decision_enum": [
+      "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+      "DENY_UNKNOWN_IMPLEMENTATION",
+      "DENY_UNKNOWN_CAPABILITY_ID",
+      "DENY_LEGACY_IMPLEMENTATION",
+      "DENY_MISSING_CHAIN_BINDING",
+      "DENY_HASH_MISMATCH",
+      "DENY_CAPABILITY_SURFACE_MISMATCH",
+      "DENY_NONDETERMINISTIC_INPUT",
+      "DENY_EXECUTION_OR_EVIDENCE_REQUEST",
+      "DENY_AUTHORITY_REQUEST",
+      "DENY_CATALOG_SCOPE_OVERREACH",
+      "DENY_SI003_OR_PART_B_SCOPE",
+      "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT"
+    ],
+    "positive_decision_ceiling": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+    "partial_positive_record_on_failure": false
+  },
+  "canonical_hash_rules": {
+    "content_sha256": "SHA256_OF_RAW_FILE_BYTES_LOWERCASE_HEX_NO_PREFIX",
+    "identity_hash": "sha256(canonical_json(exact_16_field_identity_basis))",
+    "request_hash": "sha256(canonical_json(exact_36_field_request))",
+    "record_hash": "sha256(canonical_json(exact_28_field_record_without_hash))",
+    "canonical_json": "UTF8_SORTED_KEYS_COMPACT_JSON_NO_NAN",
+    "external_dereference": false
+  },
+  "fail_closed_matrix": [
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-001",
+      "condition": "exact_single_identity_exact_deterministic_surface_exact_si002_chain_all_authority_fields_false",
+      "expected_future_record": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-002",
+      "condition": "unknown_implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-003",
+      "condition": "unknown_evaluator_capability_id",
+      "expected": "DENY_UNKNOWN_CAPABILITY_ID"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-004",
+      "condition": "wildcard_fallback_or_multiple_capability_ids",
+      "expected": "DENY_UNKNOWN_CAPABILITY_ID"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-005",
+      "condition": "legacy_project05_m3star_h3_dual",
+      "expected": "DENY_LEGACY_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-006",
+      "condition": "candidate_module_path_mismatch",
+      "expected": "DENY_CAPABILITY_SURFACE_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-007",
+      "condition": "candidate_entrypoint_or_capability_profile_mismatch",
+      "expected": "DENY_CAPABILITY_SURFACE_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-008",
+      "condition": "candidate_module_or_identity_hash_mismatch",
+      "expected": "DENY_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-009",
+      "condition": "deterministic_dependency_path_or_hash_mismatch",
+      "expected": "DENY_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-010",
+      "condition": "twin_p1e_or_si002_invocation_fixture_path_or_hash_mismatch",
+      "expected": "DENY_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-011",
+      "condition": "missing_or_mismatched_si002_contract_record_binding",
+      "expected": "DENY_MISSING_CHAIN_BINDING"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-012",
+      "condition": "missing_or_mismatched_si002_invocation_record_binding",
+      "expected": "DENY_MISSING_CHAIN_BINDING"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-013",
+      "condition": "missing_or_mismatched_si002_no_flip_boundary_binding",
+      "expected": "DENY_MISSING_CHAIN_BINDING"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-014",
+      "condition": "missing_or_mismatched_gap_catalog_record_or_acceptance_binding",
+      "expected": "DENY_MISSING_CHAIN_BINDING"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-015",
+      "condition": "random_probability_learning_hidden_ground_truth_or_nondeterministic_matching_input",
+      "expected": "DENY_NONDETERMINISTIC_INPUT"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-016",
+      "condition": "actual_evaluator_invocation_true_or_evaluator_evidence_or_execution_requested",
+      "expected": "DENY_EXECUTION_OR_EVIDENCE_REQUEST"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-017",
+      "condition": "evaluation_or_planner_execution_authority_true_or_authority_flip_requested",
+      "expected": "DENY_AUTHORITY_REQUEST"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-018",
+      "condition": "claim_catalog_class_1_3_4_or_5_satisfied_or_all_prerequisites_satisfied",
+      "expected": "DENY_CATALOG_SCOPE_OVERREACH"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-019",
+      "condition": "si003_closure_scalarization_performance_part_b_full_m3_b6_b9_path_b_mint_write_certificate_or_stop",
+      "expected": "DENY_SI003_OR_PART_B_SCOPE"
+    },
+    {
+      "case_id": "B5-SI002-EVAL-CAP-ID-FC-020",
+      "condition": "llm_or_four_family_reopen_extra_hidden_production_or_partial_positive_record_attempt",
+      "expected": "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT"
+    }
+  ],
+  "future_fixture_and_test_plan": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "fixture_strategy": "No evaluator output fixture and no invocation. Tests construct the exact identity request from existing content pins and assert a pure identity record.",
+    "test_groups": [
+      "POSITIVE_SINGLE_ID_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+      "FAIL_CLOSED_MATRIX_20_CASES",
+      "IDENTITY_HASH_CANONICAL_REPLAY",
+      "REQUEST_36_AND_RECORD_28_CLOSED_WORLD",
+      "NO_CALL_INTO_TWIN_D1_SI002_RUNNER_OR_EVALUATOR",
+      "CATALOG_CLASS_1_3_4_5_REMAIN_MISSING",
+      "FOUR_FAMILY_AND_LLM_ZERO_DRIFT",
+      "PROTECTED_SI002_D1_TWIN_B5_ZERO_DRIFT"
+    ],
+    "fail_closed_case_count": 20,
+    "actual_evaluator_invocation_in_tests": false,
+    "evaluation_execution_authority_in_tests": false
+  },
+  "proposed_future_green_allowlist_not_authorized_now": [
+    "schemas/part-b-b5-si002-evaluator-execution-capability-identity.schema.json",
+    "configs/part-b-b5-si002-evaluator-execution-capability-identity-policy-v0.1.yaml",
+    "configs/part-b-b5-si002-evaluator-execution-capability-identity-record-v0.1.yaml",
+    "src/scope/part_b_b5_si002_evaluator_execution_capability_identity.py",
+    "tests/unit/test_part_b_b5_si002_evaluator_execution_capability_identity.py",
+    "docs/kernel/part-b-b5-si002-evaluator-execution-capability-identity-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluator-execution-capability-identity-green-review-packet-v0.1-20260728.json"
+  ],
+  "future_green_preview_constraints": {
+    "separate_owner_green_go_required": true,
+    "additive_files_only": true,
+    "maximum_positive_record": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP",
+    "maximum_scope": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY",
+    "single_capability_id_only": true,
+    "actual_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "authority_flip": false,
+    "evaluator_evidence_or_invocation_record": false,
+    "si003_closed": false,
+    "llm_or_four_family_reopened": false,
+    "part_b_pass": false
+  },
+  "non_substitutes": [
+    {
+      "surface": "CAPABILITY_IDENTITY_VALID",
+      "not_equivalent_to": "ACTUAL_EVALUATOR_INVOCATION_OR_EVIDENCE"
+    },
+    {
+      "surface": "CAPABILITY_IDENTITY_VALID",
+      "not_equivalent_to": "EVALUATION_EXECUTION_AUTHORITY_TRUE"
+    },
+    {
+      "surface": "EXISTING_TEST_ONLY_TWIN_DELEGATE_CALL",
+      "not_equivalent_to": "RETROACTIVE_ACTUAL_EVALUATOR_INVOCATION"
+    },
+    {
+      "surface": "DETERMINISTIC_MATCHING_IDENTITY",
+      "not_equivalent_to": "LLM_OR_FOUR_FAMILY_TRACK"
+    },
+    {
+      "surface": "CATALOG_CLASS_2_IDENTITY_RECORD",
+      "not_equivalent_to": "CATALOG_CLASS_1_3_4_5_SATISFIED_OR_FLIP_ELIGIBLE"
+    }
+  ],
+  "authority_ceiling": {
+    "record_scope": "LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY",
+    "authority_effect": "NONE_IDENTITY_RECORD_ONLY",
+    "actual_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "authority_flip": false,
+    "evaluator_evidence_authority": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "production_registration_enabled": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "part_b_pass": false,
+    "full_m3_star": false,
+    "llm_or_four_family_reopen": false
+  },
+  "red_verification_plan": {
+    "json_parse": "OWNER_GO_RED_DESIGN_REVIEW_PACKET_3_OF_3",
+    "authority_base": "EXACT_MATCH",
+    "step6_accepted_sibling_pins": "MATCH_2_OF_2",
+    "single_capability_identity_hash": "CANONICAL_REPLAY_MATCH",
+    "si002_chain_and_gap_catalog_pins": "MATCH",
+    "d1_twin_b5_si002_and_four_family_llm_pins": "ZERO_DRIFT",
+    "future_request_record_counts": "REQUEST_36_RECORD_28",
+    "fail_closed_matrix": "20_CASES",
+    "runtime_schema_config_fixture_or_test_files_created_or_modified": 0,
+    "green_files_created": 0,
+    "porcelain": "EXACT_3_RED_DOCS_EXTRA_0",
+    "tests": "NOT_RUN_RED_DESIGN_ONLY"
+  },
+  "explicitly_not_authorized": [
+    "CAPABILITY_IDENTITY_GREEN_OR_RUNTIME_IMPLEMENTATION",
+    "EVALUATOR_RUNTIME_EVIDENCE_RECORD_OR_INVOCATION",
+    "ACTUAL_EVALUATOR_INVOCATION_TRUE",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "AUTHORITY_FLIP",
+    "CATALOG_CLASS_1_3_4_OR_5_SATISFACTION_CLAIM",
+    "LLM_OR_FOUR_FAMILY_REOPEN",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "FULL_M3_STAR",
+    "B6_B7_B8_B9_EXECUTION",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "PRODUCTION_REGISTRATION",
+    "ANY_RUNTIME_SCHEMA_CONFIG_FIXTURE_OR_TEST_EDIT_IN_THIS_RED",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "owner_review_questions": [
+    {
+      "id": "ORQ-B5-SI002-EVAL-CAP-ID-RED-01",
+      "question": "Accept the exact single capability ID and its canonical 16-field identity basis?"
+    },
+    {
+      "id": "ORQ-B5-SI002-EVAL-CAP-ID-RED-02",
+      "question": "Accept the no-trace Twin/P10 callable as the identity surface without invocation or retroactive evaluator-evidence semantics?"
+    },
+    {
+      "id": "ORQ-B5-SI002-EVAL-CAP-ID-RED-03",
+      "question": "Accept the closed 36-field request, 28-field record, canonical hash rules, and 20-case fail-closed matrix?"
+    },
+    {
+      "id": "ORQ-B5-SI002-EVAL-CAP-ID-RED-04",
+      "question": "Confirm a future positive identity record may address only catalog class 2 while classes 1, 3, 4, and 5 remain missing and no flip is eligible?"
+    },
+    {
+      "id": "ORQ-B5-SI002-EVAL-CAP-ID-RED-05",
+      "question": "Confirm SI-003 and the LLM/four-family track remain frozen and the seven-file GREEN allowlist is only a preview requiring separate Owner GO?"
+    }
+  ],
+  "exit": {
+    "red_design_complete": true,
+    "green_started": false,
+    "runtime_implemented": false,
+    "actual_evaluator_invocation_performed": false,
+    "authority_flip_performed": false,
+    "owner_decision_required": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "commit_push_pr_performed": false
+  }
+}
