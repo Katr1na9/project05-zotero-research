@@ -1,0 +1,952 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-si002-evaluator-execution-evidence-record.schema.json",
+  "title": "Part B B5 SI-002 evaluator-execution evidence-record contract v0.1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/policy"
+    },
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/record"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "contentSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hardBan": {
+      "const": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+    },
+    "decision": {
+      "enum": [
+        "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_VALID_NO_INVOCATION_NO_FLIP",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_UNKNOWN_CAPABILITY_ID",
+        "DENY_LEGACY_IMPLEMENTATION",
+        "DENY_MISSING_IDENTITY_BINDING",
+        "DENY_IDENTITY_HASH_MISMATCH",
+        "DENY_EVIDENCE_CONTRACT_SURFACE_MISMATCH",
+        "DENY_EVIDENCE_CONTRACT_HASH_MISMATCH",
+        "DENY_EVIDENCE_FIELD_CATALOG_MISMATCH",
+        "DENY_MISSING_SI002_CHAIN_BINDING",
+        "DENY_SI002_CHAIN_HASH_MISMATCH",
+        "DENY_RUNNER_INVOCATION_RECLASSIFICATION",
+        "DENY_ACTUAL_EVIDENCE_OR_INVOCATION",
+        "DENY_AUTHORITY_REQUEST",
+        "DENY_CATALOG_SCOPE_OVERREACH",
+        "DENY_NONDETERMINISTIC_OR_PAYLOAD_INPUT",
+        "DENY_SI003_OR_PART_B_SCOPE",
+        "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT"
+      ]
+    },
+    "reasonCode": {
+      "enum": [
+        "B5-SI002-EVAL-EVIDENCE-000-CONTRACT-VALID-NO-INVOCATION-NO-FLIP",
+        "B5-SI002-EVAL-EVIDENCE-DENY-UNKNOWN-IMPLEMENTATION",
+        "B5-SI002-EVAL-EVIDENCE-DENY-UNKNOWN-CAPABILITY",
+        "B5-SI002-EVAL-EVIDENCE-DENY-LEGACY",
+        "B5-SI002-EVAL-EVIDENCE-DENY-MISSING-IDENTITY",
+        "B5-SI002-EVAL-EVIDENCE-DENY-IDENTITY-HASH",
+        "B5-SI002-EVAL-EVIDENCE-DENY-CONTRACT-SURFACE",
+        "B5-SI002-EVAL-EVIDENCE-DENY-CONTRACT-HASH",
+        "B5-SI002-EVAL-EVIDENCE-DENY-FIELD-CATALOG",
+        "B5-SI002-EVAL-EVIDENCE-DENY-MISSING-SI002-CHAIN",
+        "B5-SI002-EVAL-EVIDENCE-DENY-SI002-CHAIN-HASH",
+        "B5-SI002-EVAL-EVIDENCE-DENY-RUNNER-RECLASSIFICATION",
+        "B5-SI002-EVAL-EVIDENCE-DENY-ACTUAL-EVIDENCE-INVOCATION",
+        "B5-SI002-EVAL-EVIDENCE-DENY-AUTHORITY",
+        "B5-SI002-EVAL-EVIDENCE-DENY-CATALOG-OVERREACH",
+        "B5-SI002-EVAL-EVIDENCE-DENY-NONDETERMINISTIC-PAYLOAD",
+        "B5-SI002-EVAL-EVIDENCE-DENY-SI003-PART-B",
+        "B5-SI002-EVAL-EVIDENCE-DENY-NON-CONTRACT"
+      ]
+    },
+    "reasonCodes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_VALID_NO_INVOCATION_NO_FLIP",
+        "DENY_UNKNOWN_IMPLEMENTATION",
+        "DENY_UNKNOWN_CAPABILITY_ID",
+        "DENY_LEGACY_IMPLEMENTATION",
+        "DENY_MISSING_IDENTITY_BINDING",
+        "DENY_IDENTITY_HASH_MISMATCH",
+        "DENY_EVIDENCE_CONTRACT_SURFACE_MISMATCH",
+        "DENY_EVIDENCE_CONTRACT_HASH_MISMATCH",
+        "DENY_EVIDENCE_FIELD_CATALOG_MISMATCH",
+        "DENY_MISSING_SI002_CHAIN_BINDING",
+        "DENY_SI002_CHAIN_HASH_MISMATCH",
+        "DENY_RUNNER_INVOCATION_RECLASSIFICATION",
+        "DENY_ACTUAL_EVIDENCE_OR_INVOCATION",
+        "DENY_AUTHORITY_REQUEST",
+        "DENY_CATALOG_SCOPE_OVERREACH",
+        "DENY_NONDETERMINISTIC_OR_PAYLOAD_INPUT",
+        "DENY_SI003_OR_PART_B_SCOPE",
+        "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT"
+      ],
+      "properties": {
+        "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_VALID_NO_INVOCATION_NO_FLIP": {
+          "const": "B5-SI002-EVAL-EVIDENCE-000-CONTRACT-VALID-NO-INVOCATION-NO-FLIP"
+        },
+        "DENY_UNKNOWN_IMPLEMENTATION": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-UNKNOWN-IMPLEMENTATION"
+        },
+        "DENY_UNKNOWN_CAPABILITY_ID": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-UNKNOWN-CAPABILITY"
+        },
+        "DENY_LEGACY_IMPLEMENTATION": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-LEGACY"
+        },
+        "DENY_MISSING_IDENTITY_BINDING": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-MISSING-IDENTITY"
+        },
+        "DENY_IDENTITY_HASH_MISMATCH": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-IDENTITY-HASH"
+        },
+        "DENY_EVIDENCE_CONTRACT_SURFACE_MISMATCH": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-CONTRACT-SURFACE"
+        },
+        "DENY_EVIDENCE_CONTRACT_HASH_MISMATCH": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-CONTRACT-HASH"
+        },
+        "DENY_EVIDENCE_FIELD_CATALOG_MISMATCH": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-FIELD-CATALOG"
+        },
+        "DENY_MISSING_SI002_CHAIN_BINDING": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-MISSING-SI002-CHAIN"
+        },
+        "DENY_SI002_CHAIN_HASH_MISMATCH": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-SI002-CHAIN-HASH"
+        },
+        "DENY_RUNNER_INVOCATION_RECLASSIFICATION": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-RUNNER-RECLASSIFICATION"
+        },
+        "DENY_ACTUAL_EVIDENCE_OR_INVOCATION": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-ACTUAL-EVIDENCE-INVOCATION"
+        },
+        "DENY_AUTHORITY_REQUEST": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-AUTHORITY"
+        },
+        "DENY_CATALOG_SCOPE_OVERREACH": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-CATALOG-OVERREACH"
+        },
+        "DENY_NONDETERMINISTIC_OR_PAYLOAD_INPUT": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-NONDETERMINISTIC-PAYLOAD"
+        },
+        "DENY_SI003_OR_PART_B_SCOPE": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-SI003-PART-B"
+        },
+        "DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT": {
+          "const": "B5-SI002-EVAL-EVIDENCE-DENY-NON-CONTRACT"
+        }
+      }
+    },
+    "futureEvidenceRequiredFields": {
+      "type": "array",
+      "minItems": 17,
+      "maxItems": 17,
+      "prefixItems": [
+        {
+          "const": "schema_version"
+        },
+        {
+          "const": "evidence_record_class"
+        },
+        {
+          "const": "evidence_record_version"
+        },
+        {
+          "const": "implementation_id"
+        },
+        {
+          "const": "evaluator_capability_id"
+        },
+        {
+          "const": "evaluator_capability_identity_hash"
+        },
+        {
+          "const": "evidence_contract_id"
+        },
+        {
+          "const": "evidence_contract_identity_hash"
+        },
+        {
+          "const": "evaluator_invocation_attempt_id"
+        },
+        {
+          "const": "evaluator_invocation_request_hash"
+        },
+        {
+          "const": "evaluator_input_hash"
+        },
+        {
+          "const": "evaluator_output_hash"
+        },
+        {
+          "const": "invocation_mode"
+        },
+        {
+          "const": "actual_evaluator_invocation"
+        },
+        {
+          "const": "evaluation_execution_authority"
+        },
+        {
+          "const": "production_registration_enabled"
+        },
+        {
+          "const": "evidence_hash"
+        }
+      ],
+      "items": false
+    },
+    "futureEvidenceHashBindingFields": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        {
+          "const": "implementation_id"
+        },
+        {
+          "const": "evaluator_capability_id"
+        },
+        {
+          "const": "evaluator_capability_identity_hash"
+        },
+        {
+          "const": "evidence_contract_identity_hash"
+        },
+        {
+          "const": "evaluator_invocation_attempt_id"
+        },
+        {
+          "const": "evaluator_invocation_request_hash"
+        },
+        {
+          "const": "evaluator_input_hash"
+        },
+        {
+          "const": "evaluator_output_hash"
+        }
+      ],
+      "items": false
+    },
+    "class2IdentityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "implementation_id",
+        "evaluator_capability_id",
+        "evaluator_capability_identity_hash",
+        "evaluator_capability_identity_record_hash",
+        "evaluator_capability_identity_record_content_sha256",
+        "evaluator_capability_identity_acceptance_content_sha256",
+        "catalog_class_2_status"
+      ],
+      "properties": {
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "evaluator_capability_identity_record_hash": {
+          "const": "sha256:9e56686e8da6a9747f0d438305db72e2efa0b3cf84ee407e573eb2c182d706d4"
+        },
+        "evaluator_capability_identity_record_content_sha256": {
+          "const": "cc3f169f9b0c365659b6f897ee9ae76d3941f2fe143e480422fcf4f77b7c4c43"
+        },
+        "evaluator_capability_identity_acceptance_content_sha256": {
+          "const": "2f97fffe9a3fc41a7c5243e096b83a83a31bee8e755572784038ed473ac5ed7d"
+        },
+        "catalog_class_2_status": {
+          "const": "ESTABLISHED"
+        }
+      }
+    },
+    "evidenceContractIdentityBasis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_contract_id",
+        "evidence_record_class",
+        "evidence_origin_mode",
+        "evidence_binding_profile",
+        "implementation_id",
+        "evaluator_capability_id",
+        "evaluator_capability_identity_hash",
+        "evaluator_capability_identity_record_hash",
+        "evaluator_capability_identity_acceptance_content_sha256",
+        "future_evidence_required_fields_hash",
+        "future_evidence_required_field_count",
+        "future_evidence_hash_binding_fields_hash",
+        "future_evidence_hash_binding_field_count",
+        "test_only_runner_invocation_reclassified_as_evaluator_evidence"
+      ],
+      "properties": {
+        "evidence_contract_id": {
+          "const": "part_b_b5_si002_local_hash_bound_evaluator_execution_evidence_contract_v0.1"
+        },
+        "evidence_record_class": {
+          "const": "LOCAL_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_RECORD"
+        },
+        "evidence_origin_mode": {
+          "const": "LOCAL_SYNTHETIC_DECLARATION_BOUND_NO_PRODUCTION"
+        },
+        "evidence_binding_profile": {
+          "const": "CAPABILITY_ID_ATTEMPT_REQUEST_INPUT_OUTPUT_HASH_BOUND_V0_1"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "evaluator_capability_identity_record_hash": {
+          "const": "sha256:9e56686e8da6a9747f0d438305db72e2efa0b3cf84ee407e573eb2c182d706d4"
+        },
+        "evaluator_capability_identity_acceptance_content_sha256": {
+          "const": "2f97fffe9a3fc41a7c5243e096b83a83a31bee8e755572784038ed473ac5ed7d"
+        },
+        "future_evidence_required_fields_hash": {
+          "const": "sha256:42040c0d8e656899caaf4eff27e46bac11bdbddbcfe8ab11d9b20a14047566ad"
+        },
+        "future_evidence_required_field_count": {
+          "const": 17
+        },
+        "future_evidence_hash_binding_fields_hash": {
+          "const": "sha256:f3e4994a2d39e35e4381dd93ad6423ccd902d70e7a5730f380689abe79f303e7"
+        },
+        "future_evidence_hash_binding_field_count": {
+          "const": 8
+        },
+        "test_only_runner_invocation_reclassified_as_evaluator_evidence": {
+          "const": false
+        }
+      }
+    },
+    "si002ChainBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "si002_contract_record_hash",
+        "si002_contract_record_content_sha256",
+        "si002_invocation_record_hash",
+        "si002_invocation_record_content_sha256",
+        "si002_boundary_record_hash",
+        "si002_boundary_record_content_sha256",
+        "si002_gap_catalog_record_hash",
+        "si002_gap_catalog_record_content_sha256",
+        "si002_gap_catalog_acceptance_content_sha256",
+        "test_only_runner_invocation_record_hash"
+      ],
+      "properties": {
+        "si002_contract_record_hash": {
+          "const": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+        },
+        "si002_contract_record_content_sha256": {
+          "const": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421"
+        },
+        "si002_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "si002_invocation_record_content_sha256": {
+          "const": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851"
+        },
+        "si002_boundary_record_hash": {
+          "const": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe"
+        },
+        "si002_boundary_record_content_sha256": {
+          "const": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5"
+        },
+        "si002_gap_catalog_record_hash": {
+          "const": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092"
+        },
+        "si002_gap_catalog_record_content_sha256": {
+          "const": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3"
+        },
+        "si002_gap_catalog_acceptance_content_sha256": {
+          "const": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd"
+        },
+        "test_only_runner_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        }
+      }
+    },
+    "catalogPrerequisiteEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_prerequisite_addressed",
+        "class_2_identity_status",
+        "class_1_status",
+        "class_4_status",
+        "class_5_status",
+        "evaluator_evidence_instance_present",
+        "existing_gap_catalog_mutated",
+        "other_catalog_prerequisites_satisfied",
+        "all_flip_prerequisites_satisfied"
+      ],
+      "properties": {
+        "catalog_prerequisite_addressed": {
+          "const": "ACCEPTED_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_OR_RECORD"
+        },
+        "class_2_identity_status": {
+          "const": "ESTABLISHED"
+        },
+        "class_1_status": {
+          "const": "MISSING"
+        },
+        "class_4_status": {
+          "const": "MISSING"
+        },
+        "class_5_status": {
+          "const": "MISSING"
+        },
+        "evaluator_evidence_instance_present": {
+          "const": false
+        },
+        "existing_gap_catalog_mutated": {
+          "const": false
+        },
+        "other_catalog_prerequisites_satisfied": {
+          "const": false
+        },
+        "all_flip_prerequisites_satisfied": {
+          "const": false
+        }
+      }
+    },
+    "authorityCeiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_scope",
+        "authority_effect",
+        "evaluator_evidence_instance_present",
+        "catalog_prerequisite_addressed",
+        "class_2_identity_status",
+        "other_catalog_prerequisites_satisfied",
+        "all_flip_prerequisites_satisfied",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "evidence_to_authority_binding_present",
+        "scalarization_authority",
+        "performance_claim_authority",
+        "path_b_write_authority",
+        "mint_authority",
+        "kernel_or_e_case_write_authority",
+        "certificate_authority",
+        "stop_authority",
+        "production_registration_enabled",
+        "pb_b5_si_003_state",
+        "part_b_pass",
+        "full_m3_star"
+      ],
+      "properties": {
+        "record_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_EVIDENCE_CONTRACT_RECORD_ONLY"
+        },
+        "evaluator_evidence_instance_present": {
+          "const": false
+        },
+        "catalog_prerequisite_addressed": {
+          "const": "ACCEPTED_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_OR_RECORD"
+        },
+        "class_2_identity_status": {
+          "const": "ESTABLISHED"
+        },
+        "other_catalog_prerequisites_satisfied": {
+          "const": false
+        },
+        "all_flip_prerequisites_satisfied": {
+          "const": false
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "evidence_to_authority_binding_present": {
+          "const": false
+        },
+        "scalarization_authority": {
+          "const": false
+        },
+        "performance_claim_authority": {
+          "const": false
+        },
+        "path_b_write_authority": {
+          "const": false
+        },
+        "mint_authority": {
+          "const": false
+        },
+        "kernel_or_e_case_write_authority": {
+          "const": false
+        },
+        "certificate_authority": {
+          "const": false
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "part_b_pass": {
+          "const": false
+        },
+        "full_m3_star": {
+          "const": false
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "policy_id",
+        "policy_version",
+        "status",
+        "authorized_slice",
+        "admissible_implementation_ids",
+        "admissible_evaluator_capability_ids",
+        "wildcards",
+        "fallback",
+        "class_2_identity_binding",
+        "evidence_contract_identity_basis",
+        "evidence_contract_identity_hash",
+        "future_evidence_required_fields",
+        "future_evidence_required_fields_hash",
+        "future_evidence_hash_binding_fields",
+        "future_evidence_hash_binding_fields_hash",
+        "si002_chain_bindings",
+        "positive_decision",
+        "record_scope",
+        "authority_effect",
+        "catalog_prerequisite_effect",
+        "reason_codes",
+        "authority_ceiling",
+        "hard_ban",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "policy_id": {
+          "const": "part-b-b5-si002-evaluator-execution-evidence-record-policy-v0.1"
+        },
+        "policy_version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "const": "LOCAL_EVALUATOR_EVIDENCE_RECORD_CONTRACT_ONLY_NO_INSTANCE_NO_INVOCATION_NO_FLIP"
+        },
+        "authorized_slice": {
+          "const": "PART_B_B5_SI002_EVALUATOR_EXECUTION_EVIDENCE_RECORD"
+        },
+        "admissible_implementation_ids": {
+          "const": [
+            "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+          ]
+        },
+        "admissible_evaluator_capability_ids": {
+          "const": [
+            "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+          ]
+        },
+        "wildcards": {
+          "const": false
+        },
+        "fallback": {
+          "const": false
+        },
+        "class_2_identity_binding": {
+          "$ref": "#/$defs/class2IdentityBinding"
+        },
+        "evidence_contract_identity_basis": {
+          "$ref": "#/$defs/evidenceContractIdentityBasis"
+        },
+        "evidence_contract_identity_hash": {
+          "const": "sha256:bafdbfe4251bf353d2d7220497e81fbd9ed955a2bebe566bab39783cb5926be5"
+        },
+        "future_evidence_required_fields": {
+          "$ref": "#/$defs/futureEvidenceRequiredFields"
+        },
+        "future_evidence_required_fields_hash": {
+          "const": "sha256:42040c0d8e656899caaf4eff27e46bac11bdbddbcfe8ab11d9b20a14047566ad"
+        },
+        "future_evidence_hash_binding_fields": {
+          "$ref": "#/$defs/futureEvidenceHashBindingFields"
+        },
+        "future_evidence_hash_binding_fields_hash": {
+          "const": "sha256:f3e4994a2d39e35e4381dd93ad6423ccd902d70e7a5730f380689abe79f303e7"
+        },
+        "si002_chain_bindings": {
+          "$ref": "#/$defs/si002ChainBindings"
+        },
+        "positive_decision": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_VALID_NO_INVOCATION_NO_FLIP"
+        },
+        "record_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_EVIDENCE_CONTRACT_RECORD_ONLY"
+        },
+        "catalog_prerequisite_effect": {
+          "$ref": "#/$defs/catalogPrerequisiteEffect"
+        },
+        "reason_codes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "authority_ceiling": {
+          "$ref": "#/$defs/authorityCeiling"
+        },
+        "hard_ban": {
+          "const": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "request_kind",
+        "request_version",
+        "requested_scope",
+        "implementation_id",
+        "evaluator_capability_id",
+        "evaluator_capability_identity_hash",
+        "evaluator_capability_identity_record_hash",
+        "evaluator_capability_identity_record_content_sha256",
+        "evaluator_capability_identity_acceptance_content_sha256",
+        "evidence_contract_id",
+        "evidence_contract_identity_hash",
+        "evidence_record_class",
+        "evidence_origin_mode",
+        "evidence_binding_profile",
+        "future_evidence_required_fields_hash",
+        "future_evidence_required_field_count",
+        "future_evidence_hash_binding_fields_hash",
+        "future_evidence_hash_binding_field_count",
+        "si002_contract_record_hash",
+        "si002_contract_record_content_sha256",
+        "si002_invocation_record_hash",
+        "si002_invocation_record_content_sha256",
+        "si002_boundary_record_hash",
+        "si002_boundary_record_content_sha256",
+        "si002_gap_catalog_record_hash",
+        "si002_gap_catalog_record_content_sha256",
+        "si002_gap_catalog_acceptance_content_sha256",
+        "test_only_runner_invocation_record_hash",
+        "test_only_runner_invocation_reclassified_as_evaluator_evidence",
+        "evaluator_evidence_instance_present",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "production_registration_enabled",
+        "catalog_class_2_status",
+        "catalog_class_1_status",
+        "catalog_class_4_status",
+        "catalog_class_5_status",
+        "pb_b5_si_003_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "request_kind": {
+          "const": "ASSESS_SI002_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT"
+        },
+        "request_version": {
+          "const": "0.1.0"
+        },
+        "requested_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_OR_RECORD_ONLY"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "evaluator_capability_identity_record_hash": {
+          "const": "sha256:9e56686e8da6a9747f0d438305db72e2efa0b3cf84ee407e573eb2c182d706d4"
+        },
+        "evaluator_capability_identity_record_content_sha256": {
+          "const": "cc3f169f9b0c365659b6f897ee9ae76d3941f2fe143e480422fcf4f77b7c4c43"
+        },
+        "evaluator_capability_identity_acceptance_content_sha256": {
+          "const": "2f97fffe9a3fc41a7c5243e096b83a83a31bee8e755572784038ed473ac5ed7d"
+        },
+        "evidence_contract_id": {
+          "const": "part_b_b5_si002_local_hash_bound_evaluator_execution_evidence_contract_v0.1"
+        },
+        "evidence_contract_identity_hash": {
+          "const": "sha256:bafdbfe4251bf353d2d7220497e81fbd9ed955a2bebe566bab39783cb5926be5"
+        },
+        "evidence_record_class": {
+          "const": "LOCAL_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_RECORD"
+        },
+        "evidence_origin_mode": {
+          "const": "LOCAL_SYNTHETIC_DECLARATION_BOUND_NO_PRODUCTION"
+        },
+        "evidence_binding_profile": {
+          "const": "CAPABILITY_ID_ATTEMPT_REQUEST_INPUT_OUTPUT_HASH_BOUND_V0_1"
+        },
+        "future_evidence_required_fields_hash": {
+          "const": "sha256:42040c0d8e656899caaf4eff27e46bac11bdbddbcfe8ab11d9b20a14047566ad"
+        },
+        "future_evidence_required_field_count": {
+          "const": 17
+        },
+        "future_evidence_hash_binding_fields_hash": {
+          "const": "sha256:f3e4994a2d39e35e4381dd93ad6423ccd902d70e7a5730f380689abe79f303e7"
+        },
+        "future_evidence_hash_binding_field_count": {
+          "const": 8
+        },
+        "si002_contract_record_hash": {
+          "const": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+        },
+        "si002_contract_record_content_sha256": {
+          "const": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421"
+        },
+        "si002_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "si002_invocation_record_content_sha256": {
+          "const": "bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851"
+        },
+        "si002_boundary_record_hash": {
+          "const": "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe"
+        },
+        "si002_boundary_record_content_sha256": {
+          "const": "df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5"
+        },
+        "si002_gap_catalog_record_hash": {
+          "const": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092"
+        },
+        "si002_gap_catalog_record_content_sha256": {
+          "const": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3"
+        },
+        "si002_gap_catalog_acceptance_content_sha256": {
+          "const": "69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd"
+        },
+        "test_only_runner_invocation_record_hash": {
+          "const": "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+        },
+        "test_only_runner_invocation_reclassified_as_evaluator_evidence": {
+          "const": false
+        },
+        "evaluator_evidence_instance_present": {
+          "const": false
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "catalog_class_2_status": {
+          "const": "ESTABLISHED"
+        },
+        "catalog_class_1_status": {
+          "const": "MISSING"
+        },
+        "catalog_class_4_status": {
+          "const": "MISSING"
+        },
+        "catalog_class_5_status": {
+          "const": "MISSING"
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_class",
+        "record_version",
+        "request_hash",
+        "implementation_id",
+        "evaluator_capability_id",
+        "evaluator_capability_identity_hash",
+        "evidence_contract_id",
+        "evidence_contract_identity_hash",
+        "evidence_record_class",
+        "evidence_origin_mode",
+        "evidence_binding_profile",
+        "future_evidence_required_fields_hash",
+        "future_evidence_hash_binding_fields_hash",
+        "decision",
+        "reason_codes",
+        "record_scope",
+        "authority_effect",
+        "evidence_record_contract_valid",
+        "evaluator_evidence_instance_present",
+        "catalog_prerequisite_addressed",
+        "class_2_identity_status",
+        "other_catalog_prerequisites_satisfied",
+        "all_flip_prerequisites_satisfied",
+        "actual_evaluator_invocation",
+        "evaluation_execution_authority",
+        "planner_execution_authority",
+        "production_registration_enabled",
+        "pb_b5_si_003_state",
+        "stop_authority",
+        "hash"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.8.0"
+        },
+        "record_class": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_DECISION"
+        },
+        "record_version": {
+          "const": "0.1.0"
+        },
+        "request_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "implementation_id": {
+          "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+        },
+        "evaluator_capability_id": {
+          "const": "part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1"
+        },
+        "evaluator_capability_identity_hash": {
+          "const": "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+        },
+        "evidence_contract_id": {
+          "const": "part_b_b5_si002_local_hash_bound_evaluator_execution_evidence_contract_v0.1"
+        },
+        "evidence_contract_identity_hash": {
+          "const": "sha256:bafdbfe4251bf353d2d7220497e81fbd9ed955a2bebe566bab39783cb5926be5"
+        },
+        "evidence_record_class": {
+          "const": "LOCAL_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_RECORD"
+        },
+        "evidence_origin_mode": {
+          "const": "LOCAL_SYNTHETIC_DECLARATION_BOUND_NO_PRODUCTION"
+        },
+        "evidence_binding_profile": {
+          "const": "CAPABILITY_ID_ATTEMPT_REQUEST_INPUT_OUTPUT_HASH_BOUND_V0_1"
+        },
+        "future_evidence_required_fields_hash": {
+          "const": "sha256:42040c0d8e656899caaf4eff27e46bac11bdbddbcfe8ab11d9b20a14047566ad"
+        },
+        "future_evidence_hash_binding_fields_hash": {
+          "const": "sha256:f3e4994a2d39e35e4381dd93ad6423ccd902d70e7a5730f380689abe79f303e7"
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        },
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/reasonCode"
+          }
+        },
+        "record_scope": {
+          "const": "LOCAL_EVALUATOR_EXECUTION_EVIDENCE_RECORD_CONTRACT_OR_RECORD_ONLY"
+        },
+        "authority_effect": {
+          "const": "NONE_EVIDENCE_CONTRACT_RECORD_ONLY"
+        },
+        "evidence_record_contract_valid": {
+          "type": "boolean"
+        },
+        "evaluator_evidence_instance_present": {
+          "const": false
+        },
+        "catalog_prerequisite_addressed": {
+          "enum": [
+            "ACCEPTED_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_OR_RECORD",
+            "NONE"
+          ]
+        },
+        "class_2_identity_status": {
+          "const": "ESTABLISHED"
+        },
+        "other_catalog_prerequisites_satisfied": {
+          "const": false
+        },
+        "all_flip_prerequisites_satisfied": {
+          "const": false
+        },
+        "actual_evaluator_invocation": {
+          "const": false
+        },
+        "evaluation_execution_authority": {
+          "const": false
+        },
+        "planner_execution_authority": {
+          "const": false
+        },
+        "production_registration_enabled": {
+          "const": false
+        },
+        "pb_b5_si_003_state": {
+          "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+        },
+        "stop_authority": {
+          "const": "NONE"
+        },
+        "hash": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}
