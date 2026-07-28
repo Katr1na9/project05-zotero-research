@@ -1,0 +1,192 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-green-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_pb_si008_path_a_claim_named_open_caller_wiring_green_review_packet_not_approval",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "authority_base_commit": "07a4b093a49e8a8ca2bb076dc1215d2dd11f19a1",
+  "reviewed_branch": "codex/pb-si008-path-a-claim-named-open-caller-wiring-v0.1",
+  "phase": "GREEN_TEST_ONLY",
+  "status": "PENDING_KERNEL_OWNER_REVIEW",
+  "this_packet_is_not_owner_approval": true,
+  "owner_decision": null,
+  "requested_owner_decision": [
+    "accept",
+    "request_revision",
+    "reject"
+  ],
+  "green_started": true,
+  "hard_ban": "Path A readonly GREEN MUST NOT be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "authority_and_red_pins": [
+    {
+      "role": "owner_go",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-caller-wiring-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "9c96d5271767736c994c974265aebe385ddbfffb3183de0eb32c84aadf05cdec"
+    },
+    {
+      "role": "accepted_red_design",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-red-design-v0.1-20260728.json",
+      "sha256": "11c2bab7d947c84786883e13cbd181a97c7f32f244a268d42e835f0c02ce5443"
+    },
+    {
+      "role": "accepted_red_review_packet",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-red-review-packet-v0.1-20260728.json",
+      "sha256": "dcfac2fcaeb54112647fab43fd0bdee3a5e40b8632126ac94746a67c6618fc81"
+    }
+  ],
+  "green_review_pin_table": [
+    {
+      "role": "green_design",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-green-design-v0.1-20260728.json",
+      "sha256": "b4ab129c602d44da1427e95b0a6c2ca3b0ab5c5781e3a9d3a6ada42394de0adc"
+    },
+    {
+      "role": "claim_caller_runtime",
+      "path": "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+      "sha256": "39ff803c10d4ff94c431b674f83368fd63baa9211912cb01775871c5ac22f31d"
+    },
+    {
+      "role": "claim_v0_1_system_log_binding_fixture",
+      "path": "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.1-system-log.json",
+      "sha256": "1ba7108b88ad28b9ce4a1c9cee684f8ffbf169b559dbfae68c0e40d5d94eaf75"
+    },
+    {
+      "role": "claim_v0_2_audit_log_binding_fixture",
+      "path": "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.2-audit-log.json",
+      "sha256": "0ecab69897da48cc964c6dc951560cf209e67f91bbd1d29bea5773b4b7705cde"
+    },
+    {
+      "role": "directed_tests",
+      "path": "tests/unit/test_part_b_si008_path_a_claim_named_open_caller_wiring.py",
+      "sha256": "2cde3aa277af2c4b00f2c10ded60447c1a7fe644caf3d08a70443f0a55041f69"
+    }
+  ],
+  "self_identity_policy": {
+    "self_sha256_embedded": false,
+    "reason": "avoid a self-referential placeholder or fixed-point identity",
+    "packet_content_sha256": "reported in the final Owner review submission"
+  },
+  "implementation_review_summary": {
+    "module": "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "api": "evaluate_path_a_claim_structural_binding_for_named_open(caller_input, *, test_only_authority)",
+    "authority_field_count": 5,
+    "authority_failure_code": "CLAIM-CALLER-WIRING-001_TEST_ONLY_AUTHORITY_REQUIRED",
+    "caller_input_field_count": 14,
+    "gate_request_field_count": 18,
+    "fixed_fields_injected": [
+      "request_kind",
+      "named_target_id",
+      "requested_authority_scope",
+      "reference_access_mode"
+    ],
+    "gate_entry": "evaluate_si008_named_open_claim_request",
+    "gate_record_returned_unmodified": true,
+    "qualifying_pair_count": 2,
+    "maximum_decision": "ALLOW_NAMED_CLAIM_CANDIDACY_ONLY",
+    "package_or_receipt_dereferenced": false,
+    "production_registration_enabled": false
+  },
+  "fixture_review_summary": {
+    "fixture_count": 2,
+    "v0_1_binding": {
+      "reference_kind": "PATH_A_CLAIM_IR_V0_1_STRUCTURAL_REFERENCE",
+      "source_fixture_sha256": "afb695d5730affe057e178be3e6b009b2cb641726e4e8610c67dffb9dc37e135",
+      "package_sha256": "5f66cb8ce8745fcc2c689903db16cdf1190976c4a224a82f958aa77f37ee4ea7",
+      "receipt_sha256": "d37226dfe2d1567815763ea53c294f6dbc9377915841dbc199fb9b3945816286"
+    },
+    "v0_2_binding": {
+      "reference_kind": "PATH_A_CLAIM_IR_V0_2_STRUCTURAL_REFERENCE",
+      "source_fixture_sha256": "46937b764485b8410b7e11e5e45e31a4068941a0ebf29d792f15a447a987ad54",
+      "package_sha256": "072dff00872f7ee7a6a054ca5229b5fec2e8c46f00ca890e1d07fb768ac005d6",
+      "receipt_sha256": "baab653591b493a0f231e1f8796618a8f4f68e2dbaef2c3e3a9d427655b8d13c"
+    },
+    "package_or_receipt_rewritten": false,
+    "raw_source_or_audit_download": false
+  },
+  "fail_closed_review": {
+    "authority_failure_before_gate": "PASS",
+    "closed_world_input_failure_before_gate": "PASS",
+    "wrong_pair_or_bad_digest": "DENY",
+    "minted_or_admitted": "DENY",
+    "wildcard_or_implicit_default": "DENY",
+    "evidence_target_under_claim_caller": "DENY",
+    "authority_or_pass_condition": "DENY",
+    "path_uri_or_raw_bytes": "DENY"
+  },
+  "verification": {
+    "fixture_json_parse": "2/2 PASS",
+    "directed_claim_caller_tests": "11/11 PASS; 23 subtests PASS",
+    "combined_claim_evidence_deny_caller_composition_regression": "84/84 PASS; 184 subtests PASS",
+    "protected_pins_in_directed_test": "19/19 OK",
+    "protected_runtime_and_manifest_drift": 0,
+    "caller_output_equals_direct_gate_output": "PASS",
+    "caller_returns_same_gate_object_under_mock": "PASS",
+    "same_input_same_record_hash": "PASS",
+    "production_registration_enabled": false,
+    "tracked_diff_outside_allowlist": 0,
+    "cached_diff": 0
+  },
+  "exact_green_allowlist": [
+    "src/scope/part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.1-system-log.json",
+    "tests/unit/fixtures/part_b_si008_path_a_claim_named_open_caller_wiring/claim-v0.2-audit-log.json",
+    "tests/unit/test_part_b_si008_path_a_claim_named_open_caller_wiring.py",
+    "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-pb-si008-path-a-claim-named-open-caller-wiring-green-review-packet-v0.1-20260728.json"
+  ],
+  "review_questions": [
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-GREEN-01",
+      "question": "Accept the separate exact-authority-gated test-only CLAIM caller implementation?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-GREEN-02",
+      "question": "Accept the exact fourteen-to-eighteen-field mapping and unmodified successor gate return?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-GREEN-03",
+      "question": "Accept the two pinned fixture bindings with unchanged package and receipt identities?",
+      "proposed_answer": "accept"
+    },
+    {
+      "id": "ORQ-PB-SI008-CLAIM-CALLER-GREEN-04",
+      "question": "Accept the fail-closed matrix and zero drift of every protected named-open, deny, caller, and composition surface?",
+      "proposed_answer": "accept"
+    }
+  ],
+  "acceptance_boundary": {
+    "accept_means": "Accept this test-only CLAIM caller wiring implementation and its deterministic regression evidence.",
+    "accept_does_not_mean": [
+      "L2 PASS or Part B PASS",
+      "Unrestricted Part B elevation",
+      "Path B write",
+      "Production registration",
+      "Mint or admission",
+      "Kernel or E_case write",
+      "AUTHORITY or PASS_CONDITION opening",
+      "Certificate or CERTIFIED_STOP",
+      "Widening the evidence caller or composition",
+      "Git commit, push, PR, or merge"
+    ]
+  },
+  "explicit_non_authorizations": {
+    "part_b_pass": false,
+    "path_b_write": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "authority_promotion": false,
+    "pass_condition_promotion": false,
+    "modify_protected_runtimes_or_manifests": false,
+    "widen_evidence_caller_or_composition": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": "exact_six_file_green_allowlist_plus_unchanged_owner_go_and_red_docs",
+  "git_performed": false,
+  "stop": "STOP_FOR_KERNEL_OWNER_ACCEPT_REQUEST_REVISION_OR_REJECT"
+}
