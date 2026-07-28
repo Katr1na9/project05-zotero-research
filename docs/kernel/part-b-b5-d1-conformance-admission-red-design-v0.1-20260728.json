@@ -1,0 +1,774 @@
+{
+  "artifact_id": "part-b-b5-d1-conformance-admission-red-design-v0.1-20260728",
+  "artifact_type": "part_b_b5_d1_conformance_admission_red_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_DESIGN_COMPLETE_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_D1_CONFORMANCE_ADMISSION_RED_FIRST",
+    "authority_base_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+    "branch": "codex/part-b-b5-d1-conformance-admission-v0.1",
+    "authorized_cell": "PART_B_B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+    "owner_go": {
+      "path": "docs/kernel/part-b-b5-d1-conformance-admission-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "f2578ccfabdfbe5b232024239a111fd7d7c0bce7b2da19167b5e63b3144a280c"
+    },
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "green_started": false,
+    "write_side_effects": "only_exact_3_red_docs"
+  },
+  "prerequisite_audit": {
+    "audit": {
+      "path": "docs/kernel/part-b-step1-readonly-elevation-gap-audit-v0.1-20260728.json",
+      "content_sha256": "0978da374c2de2804b870d9656855c28052641cfdb24092eb34b2d93ba9062a5",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+      "pin_verification": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE"
+    },
+    "review_packet": {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step1-readonly-elevation-gap-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "6bf9d014403b349361079d7a1a747efe92985ddfc41375e3c5e33d27ed53dc6d",
+      "owner_decision": "accept",
+      "pin_verification": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE"
+    },
+    "not_copied_into_fresh_worktree_reason": "The RED write allowlist contains exactly three new RED documents; accepted audit bytes were reverified in the unchanged sibling worktree and are referenced by content SHA."
+  },
+  "design_decision": {
+    "strategy_id": "SEPARATE_ADDITIVE_D1_POLICY_AND_MANIFEST_USING_UNMODIFIED_EXISTING_EVALUATOR",
+    "strategy_option": 2,
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_kind": "ADMISSION_CONFORMANCE_NONEXECUTING",
+    "maximum_positive_decision": "ADMITTED_CONFORMANCE_ONLY",
+    "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+    "why": [
+      "The existing evaluator already returns evidence-bound deterministic conformance-only records from identity, evidence, and policy mappings.",
+      "A separate additive policy keeps the existing skeleton policy, manifest, identity, evidence, and record bytes unchanged and avoids a frozen-hash cascade.",
+      "The additive policy can admit exactly one new closed D1/Twin identity while cross-policy replay and every unknown or legacy identity remain fail-closed.",
+      "No new runtime or production registration is scientifically or contractually required for a conformance-record-only cell."
+    ],
+    "existing_skeleton_path": "PRESERVED_UNCHANGED_AND_SEPARATE",
+    "legacy_m3_star_path": "PRESERVED_DENY_NOT_ADMITTED_UNVERIFIED",
+    "execution_elevation": false
+  },
+  "closed_implementation_identity_contract": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_version": "0.1.0",
+    "implementation_kind": "ADMISSION_CONFORMANCE_NONEXECUTING",
+    "execution_requested": false,
+    "closed_world": true,
+    "additional_properties": false,
+    "required_top_level_fields": [
+      "schema_version",
+      "implementation_id",
+      "implementation_version",
+      "implementation_kind",
+      "execution_requested",
+      "identity_inputs",
+      "identity_hashes",
+      "hash"
+    ],
+    "identity_inputs_required_fields": [
+      "source_tree",
+      "dependency_lock",
+      "parameter_manifest",
+      "feature_provenance",
+      "runtime_conformance"
+    ],
+    "source_tree_contract": {
+      "basis": "EXACT_CONTENT_SHA256_ALLOWLIST_AT_AUTHORITY_BASE",
+      "baseline_commit": "eb44bc1858d681e6763a1a1735d63f75f6d1b270",
+      "artifacts": [
+        {
+          "role": "D1_CANDIDACY_PLANNER",
+          "path": "src/planner/deterministic_depth1.py",
+          "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+        },
+        {
+          "role": "TWIN_P10_READONLY_CANDIDACY_WIRING",
+          "path": "src/planner/twin_p10_readonly_wiring.py",
+          "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9"
+        },
+        {
+          "role": "B5_NONEXECUTING_ADMISSION_EVALUATOR",
+          "path": "src/scope/part_b_b5_planner_admission.py",
+          "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1"
+        }
+      ],
+      "acceptance_pins": [
+        {
+          "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728.json",
+          "content_sha256": "84a3a2b402aa4355604410812f435d8142eba4042d53b5512f2833365a2c6d06"
+        },
+        {
+          "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-owner-acceptance-v0.1-20260728.json",
+          "content_sha256": "7bdabc21d583e0b82ac08d26cfb6fd51a51b3d5aaa29b892b7f830a89ce8ca04"
+        }
+      ],
+      "forbidden_runtime_paths": [
+        "09-experiments/",
+        "training/",
+        "production_registry/",
+        "Path_B_write/",
+        "Kernel_E_case_write/"
+      ]
+    },
+    "dependency_lock_contract": {
+      "runtime_dependencies": [
+        "python-stdlib"
+      ],
+      "repository_dependencies": [
+        "src.actions.selection",
+        "src.ir.canonical_hash",
+        "src.planner.deterministic_depth1",
+        "src.planner.twin_p10_readonly_wiring",
+        "src.scope.finite_problem",
+        "src.scope.part_b_b5_planner_admission"
+      ],
+      "external_dependencies": [],
+      "network_dependencies": [],
+      "download_dependencies": []
+    },
+    "parameter_manifest_contract": {
+      "semantics": "FROZEN_CANDIDACY_CONSTANTS_NO_TRAINED_OR_TUNABLE_STATE",
+      "trained_state": false,
+      "learned_parameters": [],
+      "tunable_parameters": [],
+      "constants": {
+        "planner_mode": "M3-KERNEL-D1",
+        "request_kind": "CLASSIFY_NEXT_ACTION_DEPTH_1",
+        "execution_mode": "READONLY_DECISION_ONLY_NO_ACTION_EXECUTION",
+        "decision_scope": "NEXT_ACTION_CANDIDACY_ONLY_NO_EXECUTE_NO_STOP",
+        "partition_basis": "FROZEN_MODEL_PROJECTION_NOT_OBSERVED_TRUTH",
+        "tie_break_rule": "MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1",
+        "trace_match_policy": "EXACT_ATTEMPT_ACTION_DECISION_BUDGET_HASH_MATCH_NO_FALLBACK",
+        "caller_class": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+        "caller_result_scope": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY_NO_EXECUTE_NO_STOP",
+        "production_registration_enabled": false,
+        "action_execution_enabled": false,
+        "system_state_authority": false,
+        "stop_authority": false
+      }
+    },
+    "feature_provenance_contract": {
+      "allowed_inputs": [
+        "exact_14_field_depth1_request",
+        "frozen_finite_domain_binding",
+        "checker_and_counterexample_declarations",
+        "exact_action_catalog_identity",
+        "deterministic_outcome_partitions",
+        "resource_budget_declaration",
+        "pinned_TWIN_COUNTEREXAMPLE_001_public_fixture_metadata",
+        "readonly_resource_trace_binding_receipt"
+      ],
+      "forbidden_inputs": [
+        "oracle_label",
+        "hidden_ground_truth",
+        "hidden_identifier",
+        "holdout_data",
+        "holdout_label",
+        "holdout_result",
+        "realized_future_action_outcome",
+        "historical_performance_ranking",
+        "experiment_only_artifact",
+        "production_registry_state",
+        "raw_external_source",
+        "path_or_uri_dereference"
+      ]
+    },
+    "runtime_conformance_contract": {
+      "evaluator_module": "src.scope.part_b_b5_planner_admission",
+      "evaluator_function": "evaluate_admission",
+      "evaluated_surfaces": [
+        "src.planner.deterministic_depth1.evaluate_depth1_planner_request",
+        "src.planner.deterministic_depth1.validate_resource_trace_binding",
+        "src.planner.twin_p10_readonly_wiring.evaluate_twin_p10_fixed_case_for_depth1_candidacy"
+      ],
+      "deterministic": true,
+      "allowed_output": "B5_ADMISSION_RECORD_ONLY",
+      "required_assertions": [
+        "D1_SELECT_ACTION_IS_CANDIDACY_METADATA_ONLY",
+        "TWIN_WIRING_IS_TEST_ONLY_CANDIDACY_SIDECAR",
+        "PRODUCTION_REGISTRATION_ENABLED_FALSE",
+        "ACTION_EXECUTION_ENABLED_FALSE",
+        "SYSTEM_STATE_AUTHORITY_FALSE",
+        "STOP_AUTHORITY_FALSE",
+        "HISTORICAL_RESOURCE_TRACE_NOT_REWRITTEN",
+        "B5_RECORD_SCHEMA_VALID",
+        "PROTECTED_CONTENT_PINS_MATCH"
+      ],
+      "forbidden_outputs": [
+        "planner_action_execution",
+        "evaluation_result",
+        "system_state",
+        "path_b_write",
+        "mint",
+        "kernel_or_e_case_write",
+        "performance_metric",
+        "scalarized_ranking",
+        "superiority_claim",
+        "certificate",
+        "CERTIFIED_STOP"
+      ]
+    },
+    "identity_hash_rules": {
+      "source_tree_hash": "canonical_value_hash(identity_inputs.source_tree)",
+      "dependency_lock_hash": "canonical_value_hash(identity_inputs.dependency_lock)",
+      "parameter_manifest_hash": "canonical_value_hash(identity_inputs.parameter_manifest)",
+      "feature_provenance_hash": "canonical_value_hash(identity_inputs.feature_provenance)",
+      "runtime_conformance_hash": "canonical_value_hash(identity_inputs.runtime_conformance)",
+      "identity_hash": "canonical_document_hash(identity_document)",
+      "canonicalization": "UTF8_SORTED_KEYS_COMPACT_JSON_NO_NAN_REMOVE_TOP_LEVEL_HASH_FOR_DOCUMENT_HASH"
+    },
+    "candidacy_only_boundary": {
+      "select_action_is_execution": false,
+      "twin_sidecar_is_b6_evaluation": false,
+      "admission_elevates_part_a_authority": false,
+      "admission_elevates_part_b_authority": false
+    }
+  },
+  "four_slot_evidence_contract": {
+    "evidence_scope": "LOCAL_D1_CONFORMANCE_EVIDENCE_ONLY",
+    "required_slots_exact_order": [
+      "dependency",
+      "parameter",
+      "feature_provenance",
+      "runtime_conformance"
+    ],
+    "slot_count": 4,
+    "additional_slots": false,
+    "slot_shape": {
+      "required_fields": [
+        "status",
+        "artifact_hash",
+        "verification_method",
+        "grants_execution_authority"
+      ],
+      "additional_properties": false,
+      "positive_status": "VERIFIED",
+      "verification_method": "CANONICAL_VALUE_HASH_REPLAY",
+      "grants_execution_authority": false
+    },
+    "deterministic_hash_bindings": [
+      {
+        "slot": "dependency",
+        "identity_hash_field": "dependency_lock_hash",
+        "artifact_hash_rule": "evidence_slots.dependency.artifact_hash == identity.identity_hashes.dependency_lock_hash"
+      },
+      {
+        "slot": "parameter",
+        "identity_hash_field": "parameter_manifest_hash",
+        "artifact_hash_rule": "evidence_slots.parameter.artifact_hash == identity.identity_hashes.parameter_manifest_hash"
+      },
+      {
+        "slot": "feature_provenance",
+        "identity_hash_field": "feature_provenance_hash",
+        "artifact_hash_rule": "evidence_slots.feature_provenance.artifact_hash == identity.identity_hashes.feature_provenance_hash"
+      },
+      {
+        "slot": "runtime_conformance",
+        "identity_hash_field": "runtime_conformance_hash",
+        "artifact_hash_rule": "evidence_slots.runtime_conformance.artifact_hash == identity.identity_hashes.runtime_conformance_hash"
+      }
+    ],
+    "envelope_bindings": {
+      "implementation_id_rule": "evidence.implementation_id == identity.implementation_id",
+      "implementation_identity_hash_rule": "evidence.implementation_identity_hash == identity.hash",
+      "evidence_hash_rule": "evidence.hash == canonical_document_hash(evidence)",
+      "all_slots_verified_required": true,
+      "source_tree_binding": "The evidence implementation_identity_hash binds the full identity, including exact source-tree content SHA pins; no fifth evidence slot is added."
+    }
+  },
+  "additive_policy_contract": {
+    "policy_id": "part-b-b5-d1-conformance-admission-policy-v0.1",
+    "policy_version": "0.1.0",
+    "status": "B5_D1_CONFORMANCE_ADMISSION_LOCAL_ONLY",
+    "authorized_slice": "B5_D1_CONFORMANCE_ADMISSION_RECORD_ONLY",
+    "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+    "admissible_implementation_ids": [
+      "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1"
+    ],
+    "wildcards": false,
+    "fallback": false,
+    "legacy_rejections": {
+      "project05_m3star_h3_dual": "NOT_ADMITTED_UNVERIFIED"
+    },
+    "unknown_implementation_behavior": "FAIL_CLOSED_DENY_UNKNOWN_IMPLEMENTATION",
+    "required_evidence_slots": [
+      "dependency",
+      "parameter",
+      "feature_provenance",
+      "runtime_conformance"
+    ],
+    "evidence_hash_bindings": {
+      "dependency": "dependency_lock_hash",
+      "parameter": "parameter_manifest_hash",
+      "feature_provenance": "feature_provenance_hash",
+      "runtime_conformance": "runtime_conformance_hash"
+    },
+    "decision_table": [
+      {
+        "condition": "EXACT_D1_IDENTITY_AND_ALL_EVIDENCE_VERIFIED",
+        "decision": "ADMITTED_CONFORMANCE_ONLY",
+        "reason_code": "B5-ADM-000-CONFORMANCE-ONLY"
+      },
+      {
+        "condition": "LEGACY_UNVERIFIED_ID",
+        "decision": "DENY_NOT_ADMITTED_UNVERIFIED",
+        "reason_code": "B5-ADM-LEGACY-NOT-ADMITTED"
+      },
+      {
+        "condition": "UNKNOWN_OR_WILDCARD_IMPLEMENTATION_ID",
+        "decision": "DENY_UNKNOWN_IMPLEMENTATION",
+        "reason_code": "B5-ADM-UNKNOWN-ID"
+      },
+      {
+        "condition": "EVIDENCE_INCOMPLETE_OR_EXTRA_SLOT",
+        "decision": "DENY_EVIDENCE_INCOMPLETE",
+        "reason_code": "B5-ADM-EVIDENCE-INCOMPLETE"
+      },
+      {
+        "condition": "IDENTITY_EVIDENCE_POLICY_OR_SLOT_HASH_MISMATCH",
+        "decision": "DENY_EVIDENCE_HASH_MISMATCH",
+        "reason_code": "B5-ADM-EVIDENCE-HASH-MISMATCH"
+      },
+      {
+        "condition": "RUNTIME_CONFORMANCE_FAILED",
+        "decision": "DENY_RUNTIME_CONFORMANCE_FAILED",
+        "reason_code": "B5-ADM-RUNTIME-CONFORMANCE-FAILED"
+      }
+    ],
+    "authority_boundary": {
+      "local_conformance_admission_record": true,
+      "planner_execution": false,
+      "evaluation_execution": false,
+      "sampling": false,
+      "production_capture": false,
+      "path_b_write": false,
+      "mint": false,
+      "path_b_admission_or_ingestion": false,
+      "kernel_or_e_case_write": false,
+      "holdout_release": false,
+      "scalarization": false,
+      "performance_claim": false,
+      "superiority_claim": false,
+      "certificate": false,
+      "system_state": false,
+      "stop_authority": "NONE"
+    },
+    "policy_hash_rule": "policy.hash == canonical_document_hash(policy)",
+    "relationship_to_existing_policy": {
+      "existing_policy_path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+      "existing_policy_content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+      "existing_policy_modified": false,
+      "existing_skeleton_identity_preserved": "part_b_b5_planner_admission_skeleton_v0.8",
+      "new_policy_accepts_existing_skeleton_identity": false,
+      "old_policy_accepts_new_d1_identity": false,
+      "cross_policy_replay_result": "DENY_UNKNOWN_IMPLEMENTATION"
+    }
+  },
+  "admission_record_contract": {
+    "exact_field_count": 17,
+    "required_fields_exact": [
+      "schema_version",
+      "record_id",
+      "record_version",
+      "implementation_id",
+      "implementation_identity_hash",
+      "admission_evidence_hash",
+      "policy_hash",
+      "decision",
+      "reason_codes",
+      "admission_scope",
+      "planner_execution_authority",
+      "evaluation_execution_authority",
+      "holdout_release_authority",
+      "performance_claim_authority",
+      "scalarization_authority",
+      "stop_authority",
+      "hash"
+    ],
+    "additional_properties": false,
+    "positive_constants": {
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "decision": "ADMITTED_CONFORMANCE_ONLY",
+      "reason_codes": [
+        "B5-ADM-000-CONFORMANCE-ONLY"
+      ],
+      "admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+      "planner_execution_authority": false,
+      "evaluation_execution_authority": false,
+      "holdout_release_authority": false,
+      "performance_claim_authority": false,
+      "scalarization_authority": false,
+      "stop_authority": "NONE"
+    },
+    "identity_and_evidence_bindings": {
+      "implementation_identity_hash": "identity.hash",
+      "admission_evidence_hash": "evidence.hash",
+      "policy_hash": "additive_policy.hash",
+      "record_id": "canonical_value_hash({implementation_id,implementation_identity_hash,admission_evidence_hash,policy_hash,decision,reason_codes,admission_scope})",
+      "record_hash": "canonical_document_hash(record)"
+    },
+    "forbidden_fields_and_outputs": [
+      "selected_action_id",
+      "action_payload",
+      "execution_receipt",
+      "evaluation_result",
+      "path_b_write",
+      "mint",
+      "admission_or_ingestion_into_path_b",
+      "kernel_or_e_case_write",
+      "holdout_result",
+      "performance_metric",
+      "scalar_score",
+      "rank",
+      "superiority_claim",
+      "system_state",
+      "certificate",
+      "CERTIFIED_STOP"
+    ],
+    "interpretation_ceiling": "A positive record means only that the exact pinned D1/Twin identity satisfied the B5 interface-conformance evidence contract. It is not truth, execution, evaluation, write, PASS, or STOP authority."
+  },
+  "future_green_evaluation_pipeline": {
+    "mode": "TEST_ONLY_LOCAL_CONFORMANCE_RECORD_GENERATION",
+    "production_registration_enabled": false,
+    "steps": [
+      "Load only the five additive artifacts from exact allowlisted paths.",
+      "Validate each artifact against the additive closed-world schema before evaluator invocation.",
+      "Replay exact protected content SHA pins and canonical value/document hashes.",
+      "Require the additive policy ID and exact one-element implementation allowlist.",
+      "Call the unmodified src.scope.part_b_b5_planner_admission.evaluate_admission with the validated D1 identity, D1 evidence, and additive D1 policy.",
+      "Validate the returned record with the existing generic B5 admission-record schema and the additive schema ceiling.",
+      "Require byte-for-structure equality with the pinned expected D1 admission record.",
+      "Emit no runtime registration, execution, Path B write, mint, Kernel/E_case write, certificate, system state, or STOP."
+    ],
+    "invalid_input_behavior": "REJECT_BEFORE_EVALUATOR_NO_ADMISSION_RECORD",
+    "existing_evaluator_behavior_modified": false,
+    "historical_skeleton_artifacts_modified": false
+  },
+  "fail_closed_matrix": [
+    {
+      "case_id": "B5-D1-FC-001",
+      "condition": "exact_new_identity_and_all_four_verified_hash_bound_slots",
+      "expected": "ADMITTED_CONFORMANCE_ONLY"
+    },
+    {
+      "case_id": "B5-D1-FC-002",
+      "condition": "legacy_project05_m3star_h3_dual_under_new_or_old_policy",
+      "expected": "DENY_NOT_ADMITTED_UNVERIFIED"
+    },
+    {
+      "case_id": "B5-D1-FC-003",
+      "condition": "unknown_or_wildcard_implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-D1-FC-004",
+      "condition": "missing_any_required_evidence_slot",
+      "expected": "DENY_EVIDENCE_INCOMPLETE"
+    },
+    {
+      "case_id": "B5-D1-FC-005",
+      "condition": "extra_evidence_slot",
+      "expected": "REJECT_CLOSED_WORLD_OR_DENY_EVIDENCE_INCOMPLETE_NO_RECORD"
+    },
+    {
+      "case_id": "B5-D1-FC-006",
+      "condition": "evidence_implementation_id_differs_from_identity",
+      "expected": "DENY_EVIDENCE_INCOMPLETE"
+    },
+    {
+      "case_id": "B5-D1-FC-007",
+      "condition": "implementation_identity_hash_mismatch",
+      "expected": "DENY_EVIDENCE_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-D1-FC-008",
+      "condition": "any_slot_artifact_hash_mismatch",
+      "expected": "DENY_EVIDENCE_HASH_MISMATCH"
+    },
+    {
+      "case_id": "B5-D1-FC-009",
+      "condition": "runtime_conformance_status_failed",
+      "expected": "DENY_RUNTIME_CONFORMANCE_FAILED"
+    },
+    {
+      "case_id": "B5-D1-FC-010",
+      "condition": "dependency_parameter_or_feature_status_failed",
+      "expected": "DENY_EVIDENCE_INCOMPLETE"
+    },
+    {
+      "case_id": "B5-D1-FC-011",
+      "condition": "source_module_content_sha_stale_or_mismatched",
+      "expected": "REJECT_PIN_REPLAY_BEFORE_EVALUATOR_NO_RECORD"
+    },
+    {
+      "case_id": "B5-D1-FC-012",
+      "condition": "identity_evidence_policy_or_expected_record_document_hash_stale",
+      "expected": "REJECT_CANONICAL_HASH_REPLAY_NO_RECORD"
+    },
+    {
+      "case_id": "B5-D1-FC-013",
+      "condition": "old_skeleton_identity_presented_to_new_d1_policy",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-D1-FC-014",
+      "condition": "new_d1_identity_presented_to_old_skeleton_policy",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "B5-D1-FC-015",
+      "condition": "execution_requested_true_or_grants_execution_authority_true",
+      "expected": "REJECT_SCHEMA_BEFORE_EVALUATOR_NO_RECORD"
+    },
+    {
+      "case_id": "B5-D1-FC-016",
+      "condition": "hidden_ground_truth_oracle_holdout_raw_source_or_experiment_input",
+      "expected": "REJECT_FEATURE_PROVENANCE_CONTRACT_NO_RECORD"
+    },
+    {
+      "case_id": "B5-D1-FC-017",
+      "condition": "attempt_to_emit_selected_action_execution_evaluation_or_system_state",
+      "expected": "REJECT_RECORD_SCHEMA_NO_RECORD"
+    },
+    {
+      "case_id": "B5-D1-FC-018",
+      "condition": "attempt_to_interpret_record_as_part_b_pass_planner_or_evaluation_execution",
+      "expected": "DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION"
+    },
+    {
+      "case_id": "B5-D1-FC-019",
+      "condition": "attempt_path_b_write_mint_ingestion_kernel_or_e_case_write",
+      "expected": "DENY_NO_WRITE_AUTHORITY"
+    },
+    {
+      "case_id": "B5-D1-FC-020",
+      "condition": "attempt_full_m3_star_b6_closed_loop_or_b2_empirical_validity_inference",
+      "expected": "DENY_NON_SUBSTITUTE"
+    },
+    {
+      "case_id": "B5-D1-FC-021",
+      "condition": "attempt_certificate_system_state_or_certified_stop",
+      "expected": "DENY_NO_CERTIFICATE_OR_STOP_AUTHORITY"
+    }
+  ],
+  "non_substitutes": [
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "PART_B_PASS"
+    },
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "PLANNER_EXECUTION_AUTHORITY"
+    },
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "EVALUATION_EXECUTION_AUTHORITY_OR_B6_CLOSED_LOOP"
+    },
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "PATH_B_WRITE_MINT_ADMISSION_OR_KERNEL_E_CASE_WRITE"
+    },
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "FULL_M3_STAR_OR_LEGACY_M3_STAR_EXECUTION_ADMISSION"
+    },
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "B2_EMPIRICAL_SAMPLING_VALIDITY"
+    },
+    {
+      "surface": "D1_CONFORMANCE_ADMISSION_RECORD",
+      "not_equivalent_to": "CERTIFICATE_OR_CERTIFIED_STOP"
+    }
+  ],
+  "proposed_pb_b5_si_001_additive_state": {
+    "current_state": "SKELETON_EVIDENCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED",
+    "future_additive_manifest_state": "D1_CONFORMANCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED",
+    "historical_spec_issue_bytes_rewritten": false,
+    "execution_established": false,
+    "owner_ruling_required": true
+  },
+  "planned_green_exact_allowlist_not_authorized_now": [
+    {
+      "path": "schemas/part-b-b5-d1-conformance-admission.schema.json",
+      "purpose": "One additive closed-world JSON Schema with exact oneOf branches for the D1 policy, identity, evidence, expected record, and additive manifest."
+    },
+    {
+      "path": "configs/part-b-b5-d1-conformance-admission-policy-v0.1.yaml",
+      "purpose": "Separate exact-one-ID additive policy consumed by the unchanged evaluator."
+    },
+    {
+      "path": "configs/part-b-b5-d1-conformance-implementation-identity-v0.1.yaml",
+      "purpose": "Closed D1/Twin nonexecuting implementation identity with exact source pins."
+    },
+    {
+      "path": "configs/part-b-b5-d1-conformance-admission-evidence-v0.1.yaml",
+      "purpose": "Exact four-slot evidence envelope with deterministic hash bindings."
+    },
+    {
+      "path": "configs/part-b-b5-d1-conformance-admission-record-v0.1.yaml",
+      "purpose": "Expected evidence-bound ADMITTED_CONFORMANCE_ONLY record."
+    },
+    {
+      "path": "configs/part-b-b5-d1-conformance-admission-manifest-v0.1.yaml",
+      "purpose": "Additive bindings, PB-B5-SI-001 state token, authority ceiling, and protected old-path pins."
+    },
+    {
+      "path": "tests/unit/test_part_b_b5_d1_conformance_admission.py",
+      "purpose": "Closed-world schema, hash replay, evaluator, fail-closed, cross-policy, legacy, pin, and zero-drift tests."
+    },
+    {
+      "path": "docs/kernel/part-b-b5-d1-conformance-admission-green-design-v0.1-20260728.json",
+      "purpose": "Future GREEN implementation and verification record."
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-d1-conformance-admission-green-review-packet-v0.1-20260728.json",
+      "purpose": "Future Kernel Owner GREEN review packet."
+    }
+  ],
+  "planned_green_file_count": 9,
+  "planned_green_test_matrix": {
+    "directed_contract_and_runtime_cases": [
+      "validate_all_five_additive_artifacts_against_oneOf_closed_world_schema",
+      "replay_all_canonical_value_and_document_hashes",
+      "exact_D1_identity_positive_ADMITTED_CONFORMANCE_ONLY",
+      "record_exact_17_fields_and_existing_generic_record_schema_PASS",
+      "four_slot_missing_extra_failed_and_mismatch_negatives",
+      "source_pin_and_document_hash_staleness_negatives",
+      "old_policy_new_identity_and_new_policy_old_identity_cross_replay_DENY",
+      "legacy_project05_m3star_h3_dual_DENY",
+      "unknown_and_wildcard_identity_DENY",
+      "execution_or_write_or_STOP_field_injection_REJECT",
+      "same_inputs_same_record_and_hash",
+      "protected_runtime_policy_manifest_schema_trace_zero_drift"
+    ],
+    "existing_regressions": [
+      "tests.unit.test_part_b_b5_planner_admission_contracts",
+      "tests.unit.test_part_b_b5_planner_admission_runtime",
+      "tests.unit.test_kernel_a17_p1e_depth1_planner",
+      "tests.integration.test_kernel_a17_p1e_resource_trace_binding",
+      "tests.unit.test_kernel_a17_p1e_twin_p10_readonly_wiring",
+      "tests.integration.test_kernel_a17_p1e_twin_p10_readonly_wiring"
+    ],
+    "test_result_claim_in_red": "NOT_RUN_NOT_IMPLEMENTED",
+    "part_b_pass_inference": false
+  },
+  "protected_zero_drift_pins": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+      "content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-manifest-v0.8.yaml",
+      "content_sha256": "463dc34d1b8bed057e3c7629b9645a7de6a52a59e635398ea3e4f922ce9a4913",
+      "status": "MATCH"
+    },
+    {
+      "path": "schemas/part-b-b5-planner-admission-record.schema.json",
+      "content_sha256": "0c198b090d3e85dcb0d29b3c959226841c6c8847661a7ce55f2f68a93d804257",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/actions/selection.py",
+      "content_sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/executor/deterministic.py",
+      "content_sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/cli/kernel_e2e.py",
+      "content_sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+      "content_sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318",
+      "status": "MATCH"
+    }
+  ],
+  "protected_adjacent_surfaces": [
+    "P4_ACTION_SELECTION",
+    "P5_DETERMINISTIC_EXECUTOR",
+    "P10_KERNEL_E2E",
+    "TWIN_HISTORICAL_RESOURCE_TRACE",
+    "PART_B_B5_EXISTING_SKELETON_IDENTITY_POLICY_EVIDENCE_RECORD_AND_MANIFEST",
+    "PART_B_B6_THROUGH_B9_DENY_GATES",
+    "PB_SI_008_NAMED_OPEN_AND_CALLER_SURFACES",
+    "PATH_B_WRITE_SURFACES"
+  ],
+  "explicitly_not_authorized": [
+    "GREEN_DESIGN_OR_IMPLEMENTATION",
+    "ANY_POLICY_CONFIG_SCHEMA_RUNTIME_FIXTURE_OR_TEST_WRITE",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "ADMISSION_OR_INGESTION_INTO_PATH_B",
+    "KERNEL_OR_E_CASE_WRITE",
+    "FULL_M3_STAR_OR_LEGACY_M3_STAR_EXECUTION",
+    "B6_CLOSED_LOOP_EXECUTION",
+    "B2_EMPIRICAL_MODEL_ADMISSION",
+    "B7_CONNECTOR_EXECUTION",
+    "B8_HOLDOUT_RELEASE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "NAMED_OPEN_WIDENING",
+    "LLM_OR_09_EXPERIMENTS_PROMOTION_INTO_PART_B",
+    "PART_A_RUNTIME_MUTATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "owner_review_questions": [
+    {
+      "id": "ORQ-B5-D1-RED-01",
+      "question": "Accept the exact implementation_id part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1 and ADMISSION_CONFORMANCE_NONEXECUTING kind?"
+    },
+    {
+      "id": "ORQ-B5-D1-RED-02",
+      "question": "Accept strategy option 2: a separate additive one-ID policy/manifest consumed by the unmodified existing evaluator, preserving the skeleton policy bytes?"
+    },
+    {
+      "id": "ORQ-B5-D1-RED-03",
+      "question": "Accept the exact four-slot canonical hash-binding contract and fail-closed preflight/evaluator matrix?"
+    },
+    {
+      "id": "ORQ-B5-D1-RED-04",
+      "question": "Accept the exact 17-field record ceiling with ADMITTED_CONFORMANCE_ONLY as the only positive outcome and no execution/write/certificate/STOP fields?"
+    },
+    {
+      "id": "ORQ-B5-D1-RED-05",
+      "question": "Accept the exact nine-file future GREEN allowlist, with no runtime modification and no historical spec-issue rewrite?"
+    }
+  ],
+  "exit": {
+    "red_complete": true,
+    "green_started": false,
+    "owner_decision_required": [
+      "accept",
+      "request_revision",
+      "reject"
+    ]
+  }
+}
