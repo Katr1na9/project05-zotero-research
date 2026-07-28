@@ -1,0 +1,252 @@
+{
+  "artifact_id": "kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-design-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a17_p1e_deterministic_depth1_planner_resource_trace_binding_green_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "status": "assisted_green_complete_pending_kernel_owner_review",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "authority": {
+    "authority_base_commit": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+    "branch": "codex/kernel-v0.8-a17-p1e-red-v0.1",
+    "phase": "A17_P1E_GREEN_ONLY",
+    "green_started": true,
+    "green_complete": true,
+    "red_owner_decision": "accept",
+    "red_owner_review_questions": {
+      "ORQ-01": "accept",
+      "ORQ-02": "accept",
+      "ORQ-03": "accept",
+      "ORQ-04": "accept",
+      "ORQ-05": "accept"
+    },
+    "specification_is_not_authority": true
+  },
+  "authority_chain": [
+    {
+      "role": "accepted_step_1_gap_audit",
+      "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+      "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2"
+    },
+    {
+      "role": "p1e_owner_go",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "c6005320921bf28a8bbf0bbfd92b46e815a8d1bcc520a434f3d38048922b7dee"
+    },
+    {
+      "role": "accepted_red_design",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-design-v0.1-20260728.json",
+      "sha256": "04a0f4337d04d63a9b026c400b8769bf4dca92f27b9aba3dd4bc0cfb4ce55927"
+    },
+    {
+      "role": "accepted_red_review_packet",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-review-packet-v0.1-20260728.json",
+      "sha256": "9dab0e81d89afefd1a6fd69dfc07a2522673527115001f80539b5f657488babd"
+    }
+  ],
+  "implementation": {
+    "module_path": "src/planner/deterministic_depth1.py",
+    "planner_api": "evaluate_depth1_planner_request(request)",
+    "resource_trace_api": "validate_resource_trace_binding(decision_record, trace_row)",
+    "runtime_class": "READONLY_CANDIDACY_EVALUATOR_NOT_PRODUCTION_REGISTERED",
+    "request_top_level_field_count": 14,
+    "decision_top_level_field_count": 17,
+    "request_additional_properties": false,
+    "decision_additional_properties": false,
+    "value_function": {
+      "symbol": "V(a)=E[|U|-|U_o|]",
+      "measure": "UNIFORM_EXACT_COUNTING_OVER_FROZEN_CURRENT_U",
+      "raw_numerator": "sum_o n_o*(N-n_o)",
+      "raw_denominator": "N",
+      "recorded_arithmetic": "INTEGER_AND_GCD_REDUCED_RATIONAL_ONLY",
+      "floating_point": false,
+      "learned_probability": false,
+      "planning_confidence": null,
+      "hidden_ground_truth": false
+    },
+    "action_eligibility": {
+      "p4_role": "ELIGIBILITY_FILTER_ONLY",
+      "catalog_binding": "EXACT_REPO_LOCAL_PATH_PLUS_RAW_SHA256_PLUS_DECLARED_CANONICAL_HASH",
+      "outcome_partition": "TOTAL_HASH_BOUND_DETERMINISTIC_PARTITION_FOR_EVERY_P4_ALLOWED_ACTION",
+      "missing_or_stochastic_model": "DENY"
+    },
+    "tie_break": {
+      "primary": "MAXIMUM_RAW_WORLD_REDUCTION_NUMERATOR",
+      "secondary": "UTF8_ACTION_ID_ASCENDING",
+      "rule_id": "MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1",
+      "resource_cost_used": false,
+      "catalog_order_used": false
+    },
+    "select_action_boundary": {
+      "decision": "SELECT_ACTION",
+      "meaning": "CANDIDACY_METADATA_ONLY",
+      "attempt_id_derivation": "p1e-attempt:<canonical decision-basis sha256>",
+      "action_execution": false,
+      "system_state_output": false,
+      "stop_authority": false
+    },
+    "abstain_boundary": {
+      "decisions": [
+        "ABSTAIN_NO_FORMALLY_ELIGIBLE_ACTION",
+        "ABSTAIN_NO_POSITIVE_EXPECTED_REDUCTION",
+        "ABSTAIN_ALREADY_SINGLETON_NO_ACQUISITION",
+        "ABSTAIN_RESOURCE_BUDGET_EXHAUSTED"
+      ],
+      "partial_action_emission": false,
+      "attempt_id_emission": false
+    },
+    "resource_trace_binding": {
+      "receipt_schema_version": "kernel-a17-p1e-resource-trace-binding-receipt-v0.1",
+      "match_policy": "EXACT_ATTEMPT_ACTION_DECISION_BUDGET_HASH_MATCH_NO_FALLBACK",
+      "valid_result": "MATCH_TEST_ONLY_REPLAY",
+      "invalid_result": "DENY_TRACE_BINDING_MISMATCH",
+      "input_mutation": false,
+      "historical_resource_trace_rewrite": false,
+      "action_execution": false
+    },
+    "production_registration_enabled": false,
+    "write_side_effects_at_evaluation": "none"
+  },
+  "fixture": {
+    "path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+    "origin": "SYNTHETIC_FROZEN_MODEL_DECLARATION_ONLY",
+    "case_id": "TWIN-COUNTEREXAMPLE-001",
+    "current_u_count": 2,
+    "eligible_action_count": 2,
+    "expected_exact_tie_value": {
+      "raw": "2/2",
+      "reduced": "1/1"
+    },
+    "expected_selected_action_id": "query_auth_H1_1000_1015",
+    "historical_resource_trace_modified": false,
+    "test_only_execution_attempt_count": 0,
+    "real_source_or_download": false
+  },
+  "fail_closed_coverage": [
+    {
+      "case_ids": ["P1E-FC-001", "P1E-FC-002"],
+      "coverage": "closed-world shape and exact scope or mode mismatch",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT"
+    },
+    {
+      "case_ids": ["P1E-FC-003", "P1E-FC-004", "P1E-FC-005"],
+      "coverage": "stale identity, finite-domain mismatch, Checker or counterexample mismatch",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT"
+    },
+    {
+      "case_ids": ["P1E-FC-006", "P1E-FC-007"],
+      "coverage": "wildcard or stale catalog and hidden or oracle input",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT"
+    },
+    {
+      "case_ids": ["P1E-FC-008", "P1E-FC-009", "P1E-FC-010"],
+      "coverage": "missing or stochastic observation model and invalid total partition",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT"
+    },
+    {
+      "case_ids": ["P1E-FC-011", "P1E-FC-012", "P1E-FC-013"],
+      "coverage": "P4 mismatch, budget mismatch, execution or STOP or authority request",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT"
+    },
+    {
+      "case_ids": ["P1E-FC-014", "P1E-FC-015", "P1E-FC-016", "P1E-FC-017"],
+      "coverage": "no action, no value, singleton, and exhausted-budget explicit abstentions",
+      "result": "ABSTAIN_WITHOUT_PARTIAL_ACTION_OR_ATTEMPT"
+    },
+    {
+      "case_ids": ["P1E-FC-018", "P1E-FC-019", "P1E-FC-020"],
+      "coverage": "attempt, action, decision-record, or resource-budget trace mismatch",
+      "result": "DENY_TRACE_BINDING_MISMATCH"
+    }
+  ],
+  "green_artifact_pin_table": [
+    {
+      "role": "readonly_depth1_planner_and_trace_binding",
+      "path": "src/planner/deterministic_depth1.py",
+      "sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff"
+    },
+    {
+      "role": "frozen_depth1_fixture",
+      "path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b"
+    },
+    {
+      "role": "planner_directed_unit_tests",
+      "path": "tests/unit/test_kernel_a17_p1e_depth1_planner.py",
+      "sha256": "8ecb98b04bb29c87f4739c8aae63716d2a39aac36ceb9d1164639d54052687ff"
+    },
+    {
+      "role": "resource_trace_binding_integration_tests",
+      "path": "tests/integration/test_kernel_a17_p1e_resource_trace_binding.py",
+      "sha256": "f856fc97623a1972e85bb9e29a13da793aadde5013bcd8076d94bf866d3cd668"
+    }
+  ],
+  "protected_zero_drift_summary": {
+    "reverified_pin_count": 23,
+    "matched_pin_count": 23,
+    "mismatched_pin_count": 0,
+    "protected_categories": [
+      "accepted audit and RED authority chain",
+      "Kernel v0.8 normative comparison, Gamma schema, and frozen Gamma",
+      "finite-domain compiler, Checker, counterexample, action schema, and action catalog",
+      "P4 selection, P5 executor, and P10 e2e runtime and tests",
+      "Twin and supply-chain historical resource traces",
+      "Part B B5 contract and manifest",
+      "PB-SI-008 CLAIM named-open acceptance"
+    ]
+  },
+  "verification": {
+    "p1e_directed_tests": "12/12 PASS",
+    "adjacent_regression": "35/35 PASS",
+    "combined_test_total": "47/47 PASS",
+    "request_shape": "14/14 exact",
+    "decision_shape": "17/17 exact",
+    "fail_closed_matrix": "P1E-FC-001 through P1E-FC-020 covered",
+    "resource_trace_binding": "PASS",
+    "historical_trace_zero_drift": "2/2 PASS",
+    "protected_pin_reverify": "23/23 MATCH",
+    "production_registration_enabled": false
+  },
+  "exact_green_allowlist": [
+    "src/planner/deterministic_depth1.py",
+    "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+    "tests/unit/test_kernel_a17_p1e_depth1_planner.py",
+    "tests/integration/test_kernel_a17_p1e_resource_trace_binding.py",
+    "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-review-packet-v0.1-20260728.json"
+  ],
+  "hard_boundaries": [
+    "SELECT_ACTION is candidacy metadata only and does not authorize execution.",
+    "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "The historical 2026-07-22 scoped A16 GO is not replayed, renewed, or expanded.",
+    "No second A17 grid cell, full M3*, stochastic observation model, certificate, or CERTIFIED_STOP is opened."
+  ],
+  "explicit_non_authorizations": {
+    "a16_gate_replay_or_go": false,
+    "part_b_or_path_b_elevation": false,
+    "named_open_widening": false,
+    "production_action_execution": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "system_state_authority": false,
+    "certificate_issue": false,
+    "certified_stop": false,
+    "gamma_hash_semantic_change": false,
+    "second_a17_grid_cell": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": {
+    "classification": "exact_six_file_a17_p1e_green_allowlist",
+    "runtime_side_effects": "none",
+    "protected_files_modified": [],
+    "historical_resource_trace_rows_modified": false,
+    "authority_state_elevated": false,
+    "git_delivery": "NOT_AUTHORIZED"
+  },
+  "stop": "STOP_FOR_KERNEL_OWNER_REVIEW"
+}

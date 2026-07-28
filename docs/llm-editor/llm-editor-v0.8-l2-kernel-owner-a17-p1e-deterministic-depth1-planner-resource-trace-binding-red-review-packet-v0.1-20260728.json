@@ -1,0 +1,240 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_a17_p1e_deterministic_depth1_planner_resource_trace_binding_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "status": "red_review_packet_complete_pending_kernel_owner_decision",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "authority_base_commit": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+  "branch": "codex/kernel-v0.8-a17-p1e-red-v0.1",
+  "phase": "A17_P1E_RED_ONLY",
+  "green_started": false,
+  "runtime_implemented": false,
+  "deliverable_pins": [
+    {
+      "role": "accepted_prerequisite_audit",
+      "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+      "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2",
+      "status": "OWNER_ACCEPTED"
+    },
+    {
+      "role": "owner_go_authorization",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "c6005320921bf28a8bbf0bbfd92b46e815a8d1bcc520a434f3d38048922b7dee",
+      "decision": "AUTHORIZE_KERNEL_V0_8_A17_P1E_RED_ONLY"
+    },
+    {
+      "role": "red_design",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-design-v0.1-20260728.json",
+      "sha256": "04a0f4337d04d63a9b026c400b8769bf4dca92f27b9aba3dd4bc0cfb4ce55927",
+      "owner_decision": null
+    }
+  ],
+  "scope_review": {
+    "opened_grid_cell": "A17-P1e",
+    "opened_phase": "RED_DESIGN_ONLY",
+    "second_grid_cell_opened": false,
+    "green_authorized": false,
+    "a16_gate_entered": false,
+    "part_b_or_path_b_opened": false,
+    "named_open_widened": false,
+    "gamma_hash_semantics_changed": false
+  },
+  "required_contract_coverage": [
+    {
+      "requirement": "frozen finite-domain input U",
+      "design_location": "closed_world_request_contract.field_contracts.finite_domain_binding",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "Checker and counterexample result binding",
+      "design_location": "closed_world_request_contract.field_contracts.checker_binding and counterexample_binding",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "exact action catalog identity",
+      "design_location": "closed_world_request_contract.field_contracts.action_catalog_binding",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "current resource budget declaration",
+      "design_location": "closed_world_request_contract.field_contracts.resource_budget_declaration",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "deterministic V(a)=E[|U|-|U_o|] without learned probability or hidden GT",
+      "design_location": "depth1_value_contract",
+      "status": "COVERED_WITH_OWNER_REVIEW_QUESTION_ORQ_01"
+    },
+    {
+      "requirement": "exact deterministic tie-break and explicit ABSTAIN or DENY",
+      "design_location": "exact_tie_break_contract, planner_decision_record_contract, and fail_closed_matrix",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "decision record binds selected action, inputs, value, tie-break, and subsequent attempt ID",
+      "design_location": "planner_decision_record_contract and resource_trace_binding_contract",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "fail closed on stochastic or missing model, stale hash, wildcard catalog, hidden ID, trace mismatch, and STOP request",
+      "design_location": "fail_closed_matrix P1E-FC-003, 006 through 010, 013, and 018 through 020",
+      "status": "COVERED"
+    },
+    {
+      "requirement": "fixed-case decision to resource-trace test plan without production execution or domain expansion",
+      "design_location": "fixture_and_test_plan_for_separately_authorized_green",
+      "status": "COVERED_DESIGN_ONLY"
+    }
+  ],
+  "design_decisions_for_owner": [
+    {
+      "id": "ORQ-01",
+      "decision_requested": "accept|request_revision|reject",
+      "proposal": "Use exact uniform counting over frozen current U to operationalize the expectation, recording integer and rational values only.",
+      "boundary": "This is not a learned probability, posterior, confidence, or actual-world belief.",
+      "recommended_owner_decision": "accept"
+    },
+    {
+      "id": "ORQ-02",
+      "decision_requested": "accept|request_revision|reject",
+      "proposal": "Require a total hash-bound deterministic outcome partition for every P4-allowed action.",
+      "boundary": "The declaration must derive from the frozen model projection and may not contain actual-world or hidden-GT fields.",
+      "recommended_owner_decision": "accept"
+    },
+    {
+      "id": "ORQ-03",
+      "decision_requested": "accept|request_revision|reject",
+      "proposal": "Break exact value ties by UTF-8 action_id ascending only.",
+      "boundary": "Resource cost is trace-bound but is not part of V(a) or tie-breaking.",
+      "recommended_owner_decision": "accept"
+    },
+    {
+      "id": "ORQ-04",
+      "decision_requested": "accept|request_revision|reject",
+      "proposal": "Derive attempt_id from a decision-basis SHA and later verify a separate test-only binding receipt.",
+      "boundary": "No historical resource-trace row is rewritten and no action is executed.",
+      "recommended_owner_decision": "accept"
+    },
+    {
+      "id": "ORQ-05",
+      "decision_requested": "accept|request_revision|reject",
+      "proposal": "Keep all proposed GREEN files unauthorized until a new Owner GO locks an exact allowlist.",
+      "boundary": "RED acceptance alone does not start implementation.",
+      "recommended_owner_decision": "accept"
+    }
+  ],
+  "fail_closed_review_summary": {
+    "matrix_rows": 20,
+    "deny_invalid_or_unauthorized_input": [
+      "closed-world shape violation",
+      "scope or mode mismatch",
+      "stale or mismatched identity hash",
+      "invalid finite-domain binding",
+      "invalid Checker/counterexample binding",
+      "wildcard, fallback, URI, or stale catalog",
+      "hidden or oracle field",
+      "missing observation model",
+      "stochastic observation model",
+      "invalid outcome partition",
+      "invalid P4 selection binding",
+      "invalid resource budget",
+      "execution, state, certificate, STOP, Part B PASS, mint, admission, or write request"
+    ],
+    "explicit_abstain": [
+      "no formally eligible action",
+      "no positive exact expected reduction",
+      "current U already singleton",
+      "resource budget exhausted"
+    ],
+    "deny_trace_binding_mismatch": [
+      "attempt ID mismatch",
+      "action ID mismatch",
+      "decision record or budget hash mismatch"
+    ],
+    "partial_action_emission_on_deny_or_abstain": false
+  },
+  "non_substitution_review": [
+    {
+      "artifact": "Part B B5 planner",
+      "disposition": "NOT_A_SUBSTITUTE",
+      "reason": "execution NOT_ESTABLISHED and planner_execution_authority=false"
+    },
+    {
+      "artifact": "experiment-track planner-decision or cost records",
+      "disposition": "NOT_A_SUBSTITUTE",
+      "reason": "outside the frozen Part A Kernel D1 runtime"
+    },
+    {
+      "artifact": "PB-SI-008 named-open",
+      "disposition": "NOT_A_SUBSTITUTE",
+      "reason": "candidacy classification only"
+    },
+    {
+      "artifact": "P4/P5/P10",
+      "disposition": "DEPENDENCIES_WITH_ZERO_DRIFT_NOT_A_SUBSTITUTE",
+      "reason": "eligibility, replay, and wiring surfaces contain no D1 decision policy"
+    }
+  ],
+  "pin_reverify_plan": {
+    "owner_go_and_prerequisite_audit": "REQUIRE_MATCH",
+    "red_design_dependency_pins": "REQUIRE_ALL_MATCH",
+    "protected_non_substitute_pins": "REQUIRE_ALL_MATCH",
+    "runtime_schema_config_test_fixture_drift": "REQUIRE_ZERO",
+    "review_packet_self_sha_placeholder": false
+  },
+  "verification_scope": {
+    "json_parse_required": true,
+    "content_sha_reverify_required": true,
+    "referenced_existing_paths_required": true,
+    "runtime_tests_required_in_red": false,
+    "reason_runtime_tests_not_required": "This slice creates docs only and does not modify runtime, schema, config, test, or fixture bytes.",
+    "green_file_presence_required": false,
+    "green_file_presence_expected": false
+  },
+  "hard_boundaries": [
+    "Specification is not authority; this GO opens only A17-P1e RED.",
+    "Path A readonly or design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "The historical 2026-07-22 scoped A16 GO is not replayed or expanded.",
+    "A planner SELECT_ACTION record does not authorize action execution, mint, admission, write, certificate, system-state change, or CERTIFIED_STOP."
+  ],
+  "explicit_non_authorizations": {
+    "green_implementation": false,
+    "planner_runtime": false,
+    "fixture_or_test_implementation": false,
+    "production_action_execution": false,
+    "a16_gate_replay_or_go": false,
+    "part_b_or_path_b_elevation": false,
+    "named_open_widening": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop": false,
+    "gamma_hash_semantic_change": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": {
+    "classification": "docs_only_a17_p1e_red",
+    "new_files_in_this_slice": [
+      "docs/kernel/kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-review-packet-v0.1-20260728.json"
+    ],
+    "retained_accepted_prerequisite": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+    "modified_existing_files": [],
+    "runtime_schema_config_fixture_or_test_modified": false,
+    "git_delivery": "NOT_AUTHORIZED"
+  },
+  "stop_condition": {
+    "red_deliverables_complete": true,
+    "stop_for_kernel_owner_review": true,
+    "next_action_requires_owner_decision": true,
+    "green_must_not_start": true
+  }
+}
