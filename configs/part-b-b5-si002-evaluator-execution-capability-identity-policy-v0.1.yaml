@@ -1,0 +1,87 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-si002-evaluator-execution-capability-identity-policy-v0.1
+policy_version: "0.1.0"
+status: LOCAL_CAPABILITY_IDENTITY_RECORD_ONLY_NO_EXECUTION_NO_FLIP
+authorized_slice: PART_B_B5_SI002_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY
+admissible_implementation_ids:
+  - part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+admissible_evaluator_capability_ids:
+  - part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1
+wildcards: false
+fallback: false
+identity_basis:
+  evaluator_capability_id: part_b_b5_si002_twin_p10_fixed_case_depth1_candidacy_evaluator_v0.1
+  evaluator_capability_class: LOCAL_DETERMINISTIC_FIXED_CASE_MATCHING_EVALUATOR_CAPABILITY
+  capability_profile: PINNED_TWIN_P10_D1_READONLY_CANDIDACY_NO_TRACE
+  candidate_module_path: src/planner/twin_p10_readonly_wiring.py
+  candidate_entrypoint: evaluate_twin_p10_fixed_case_for_depth1_candidacy
+  candidate_module_content_sha256: 1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9
+  deterministic_dependency_module_path: src/planner/deterministic_depth1.py
+  deterministic_dependency_content_sha256: ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff
+  twin_fixture_path: tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json
+  twin_fixture_content_sha256: 1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee
+  p1e_fixture_path: tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json
+  p1e_fixture_content_sha256: 1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b
+  si002_invocation_fixture_path: tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json
+  si002_invocation_fixture_content_sha256: 5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086
+  matching_rule_profile: EXACT_TWIN_COUNTEREXAMPLE_001_P1E_DETERMINISTIC_MATCHING_NO_RANDOM_NO_HIDDEN_GT
+  deterministic_only: true
+evaluator_capability_identity_hash: "sha256:7a0a87b85585d2277f1a0ea27d5cb7a30a5cbbafb7b7759abf1214a84610da30"
+si002_chain_bindings:
+  si002_contract_record_hash: "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+  si002_contract_record_content_sha256: 24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421
+  si002_invocation_record_hash: "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+  si002_invocation_record_content_sha256: bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851
+  si002_boundary_record_hash: "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe"
+  si002_boundary_record_content_sha256: df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5
+  si002_gap_catalog_record_hash: "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092"
+  si002_gap_catalog_record_content_sha256: 9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3
+  si002_gap_catalog_acceptance_content_sha256: 69e350764c99ea752675b8848894ac876ce5f1bf4eec791f7850b14dd49802fd
+positive_decision: LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP
+record_scope: LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY
+authority_effect: NONE_IDENTITY_RECORD_ONLY
+catalog_prerequisite_effect:
+  catalog_prerequisite_addressed: ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY
+  catalog_class_1_status: MISSING
+  catalog_class_3_status: MISSING
+  catalog_class_4_status: MISSING
+  catalog_class_5_status: MISSING
+  existing_gap_catalog_mutated: false
+  all_flip_prerequisites_satisfied: false
+reason_codes:
+  LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_VALID_NO_EXECUTION_NO_FLIP: B5-SI002-EVAL-CAP-ID-000-VALID-NO-EXECUTION-NO-FLIP
+  DENY_UNKNOWN_IMPLEMENTATION: B5-SI002-EVAL-CAP-ID-DENY-UNKNOWN-IMPLEMENTATION
+  DENY_UNKNOWN_CAPABILITY_ID: B5-SI002-EVAL-CAP-ID-DENY-UNKNOWN-CAPABILITY
+  DENY_LEGACY_IMPLEMENTATION: B5-SI002-EVAL-CAP-ID-DENY-LEGACY
+  DENY_MISSING_CHAIN_BINDING: B5-SI002-EVAL-CAP-ID-DENY-MISSING-CHAIN
+  DENY_HASH_MISMATCH: B5-SI002-EVAL-CAP-ID-DENY-HASH-MISMATCH
+  DENY_CAPABILITY_SURFACE_MISMATCH: B5-SI002-EVAL-CAP-ID-DENY-SURFACE
+  DENY_NONDETERMINISTIC_INPUT: B5-SI002-EVAL-CAP-ID-DENY-NONDETERMINISTIC
+  DENY_EXECUTION_OR_EVIDENCE_REQUEST: B5-SI002-EVAL-CAP-ID-DENY-EXECUTION-EVIDENCE
+  DENY_AUTHORITY_REQUEST: B5-SI002-EVAL-CAP-ID-DENY-AUTHORITY
+  DENY_CATALOG_SCOPE_OVERREACH: B5-SI002-EVAL-CAP-ID-DENY-CATALOG-OVERREACH
+  DENY_SI003_OR_PART_B_SCOPE: B5-SI002-EVAL-CAP-ID-DENY-SI003-PART-B
+  DENY_LLM_FAMILY_OR_NON_CONTRACT_INPUT: B5-SI002-EVAL-CAP-ID-DENY-NON-CONTRACT
+authority_ceiling:
+  record_scope: LOCAL_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY_CONTRACT_OR_RECORD_ONLY
+  authority_effect: NONE_IDENTITY_RECORD_ONLY
+  catalog_prerequisite_addressed: ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY
+  other_catalog_prerequisites_satisfied: false
+  all_flip_prerequisites_satisfied: false
+  actual_evaluator_invocation: false
+  evaluation_execution_authority: false
+  planner_execution_authority: false
+  scalarization_authority: false
+  performance_claim_authority: false
+  superiority_claim_authority: false
+  path_b_write_authority: false
+  mint_authority: false
+  kernel_or_e_case_write_authority: false
+  certificate_authority: false
+  stop_authority: NONE
+  production_registration_enabled: false
+  pb_b5_si_003_state: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+  part_b_pass: false
+  full_m3_star: false
+hard_ban: "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+hash: "sha256:d2d6a1cb33f7cf225aaec9db3a71c9fcca193f822d69477a305d16c02f3ade83"
