@@ -1,0 +1,847 @@
+{
+  "artifact_id": "kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-design-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a17_p1e_deterministic_depth1_planner_and_resource_trace_binding_red_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "status": "red_design_complete_pending_kernel_owner_review",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "authority": {
+    "authority_base_commit": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+    "branch": "codex/kernel-v0.8-a17-p1e-red-v0.1",
+    "owner_go": {
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "c6005320921bf28a8bbf0bbfd92b46e815a8d1bcc520a434f3d38048922b7dee",
+      "decision": "AUTHORIZE_KERNEL_V0_8_A17_P1E_RED_ONLY"
+    },
+    "prerequisite_audit": {
+      "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+      "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2",
+      "owner_decision": "accept",
+      "finding": "P1e_NOT_SATISFIED_RESOURCE_TRACE_ONLY"
+    },
+    "specification_is_not_authority": true,
+    "current_phase": "RED_DESIGN_ONLY",
+    "green_started": false
+  },
+  "design_goal": {
+    "a17_grid_cell": "P1e",
+    "planner_depth": "M3-KERNEL-D1",
+    "question": "How can a frozen finite-domain Kernel deterministically classify exactly one next action by one-step world reduction and bind that decision to a later resource-trace attempt without executing the action or gaining STOP authority?",
+    "success_ceiling": "DESIGN_CONTRACT_ACCEPTED_ONLY",
+    "not_a_goal": [
+      "planner runtime implementation",
+      "production action execution",
+      "probabilistic or learned planning",
+      "cost-utility optimization",
+      "A16 Gate replay",
+      "Part B or Path B elevation",
+      "system-state or STOP decision"
+    ]
+  },
+  "pinned_dependency_table": [
+    {
+      "role": "A17_A12_A13_normative_comparison",
+      "path": "08-writing/active-attribution-experiment-revision-plan-v0.8-20260721.md",
+      "sha256": "99fa98b9489cfe49d4da6fe02e06b457201a59d9024ca62233c5dd82f7b7baa9"
+    },
+    {
+      "role": "gamma_schema",
+      "path": "schemas/gamma-kernel.schema.json",
+      "sha256": "eff6b2224bcc6c48718d407a052747303ee16dbb33e00a7c043d37a505230902"
+    },
+    {
+      "role": "frozen_gamma",
+      "path": "configs/gamma-kernel-v0.8.yaml",
+      "sha256": "6477d93af84295e9affa3f6c1fbf1639c1dda29a45ba810d672e4d9a8a350966"
+    },
+    {
+      "role": "compiled_finite_problem_and_legal_world_hash",
+      "path": "src/scope/finite_problem.py",
+      "sha256": "54a359bccb7a225a13849bfda41503874af61b2c6443282b233535f6a22528d2"
+    },
+    {
+      "role": "checker_result",
+      "path": "src/checker/finite_domain.py",
+      "sha256": "e52b23538dd99e4a94d26faf865544e0268d17e13cf8bfbfd34ccb004c004d24"
+    },
+    {
+      "role": "counterexample_result",
+      "path": "src/counterexample/artifact.py",
+      "sha256": "b8195a2043addb7f3e8374a045076319b77d1cb3225c5036b82dd3dfadb7125e"
+    },
+    {
+      "role": "action_catalog_schema",
+      "path": "schemas/action-kernel.schema.json",
+      "sha256": "b64f4a3aa44d3aa221b8ab08d9bae0c9eb5118c07ebdbe05fce74563ee402dee"
+    },
+    {
+      "role": "frozen_action_catalog",
+      "path": "configs/action-catalog-kernel-v0.8.yaml",
+      "sha256": "6442c1099fd0e0a43f081b5e912b516c8feec3d2dbdd604b9a59020ee43c066b"
+    },
+    {
+      "role": "P4_filter_not_planner",
+      "path": "src/actions/selection.py",
+      "sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83"
+    },
+    {
+      "role": "P5_replay_not_planner",
+      "path": "src/executor/deterministic.py",
+      "sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a"
+    },
+    {
+      "role": "P10_wiring_not_planner",
+      "path": "src/cli/kernel_e2e.py",
+      "sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60"
+    },
+    {
+      "role": "twin_resource_trace_baseline",
+      "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+      "sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318"
+    },
+    {
+      "role": "supply_chain_resource_trace_baseline",
+      "path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/resource_trace.jsonl",
+      "sha256": "102f43c3210208101f393580b6d4afe7573f9be0e081edabb97d28f19b9efee5"
+    },
+    {
+      "role": "P4_test_boundary",
+      "path": "tests/integration/test_twin_distinguishing_action_selection_p4.py",
+      "sha256": "25687ce677a29d9c3b0e78ae71e3932e1478ee657e8e64403f9538bb34e5934a"
+    },
+    {
+      "role": "P5_test_boundary",
+      "path": "tests/integration/test_twin_deterministic_observation_executor_p5.py",
+      "sha256": "70fd2f64e79e6168495c561b717b88444f0dfe852f64981346419a6418a983ad"
+    },
+    {
+      "role": "P10_no_planner_regression",
+      "path": "tests/integration/test_twin_kernel_e2e_p10.py",
+      "sha256": "a332cbce5f8bdc9b0fd4467fbc09d0255d6099716c0405ffc5b47a13cdd26254"
+    }
+  ],
+  "protected_non_substitute_pins": [
+    {
+      "artifact": "Part_B_B5_planner_admission_boundary",
+      "path": "contracts/part-b-b5-planner-admission-boundary-v0.8.md",
+      "sha256": "cd1144f6054807521e5ede4ec38afb89f2d03227edd1ccce8a708b41580e9f47",
+      "boundary": "planner_execution_authority=false; execution NOT_ESTABLISHED"
+    },
+    {
+      "artifact": "Part_B_B5_manifest",
+      "path": "configs/part-b-b5-manifest-v0.8.yaml",
+      "sha256": "c6770ce22103b140ada0b8e423ca1be78703ea379f387a94324f3a3e2f9cea4f",
+      "boundary": "planner_execution_authority=false"
+    },
+    {
+      "artifact": "PB_SI_008_claim_named_open_acceptance",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "sha256": "55d29fd927b1eb9fdc740c090e3c2d40a3384e485e04fa2eb4eb5347065e7325",
+      "boundary": "structural candidacy only; not planner execution, Part B PASS, mint, admission, or write"
+    }
+  ],
+  "contract_principles": {
+    "closed_world": true,
+    "deterministic": true,
+    "depth_exactly_one": true,
+    "no_action_execution": true,
+    "no_observation_sampling": true,
+    "no_probability_model": true,
+    "no_planning_confidence": true,
+    "no_hidden_ground_truth": true,
+    "no_system_state_output": true,
+    "no_stop_authority": true,
+    "fail_closed": true,
+    "canonical_hash_algorithm": "SHA-256 over UTF-8 RFC-8785-style canonical JSON with the hash field omitted",
+    "input_mutation": false
+  },
+  "closed_world_request_contract": {
+    "schema_version": "kernel-a17-p1e-depth1-planner-request-v0.1",
+    "additional_properties": false,
+    "top_level_field_count": 14,
+    "required_top_level_fields": [
+      "schema_version",
+      "request_kind",
+      "planner_mode",
+      "execution_mode",
+      "case_binding",
+      "finite_domain_binding",
+      "checker_binding",
+      "counterexample_binding",
+      "action_catalog_binding",
+      "p4_selection_binding",
+      "deterministic_outcome_partitions",
+      "resource_budget_declaration",
+      "requested_decision_scope",
+      "request_hash"
+    ],
+    "field_contracts": {
+      "schema_version": {
+        "const": "kernel-a17-p1e-depth1-planner-request-v0.1"
+      },
+      "request_kind": {
+        "const": "CLASSIFY_NEXT_ACTION_DEPTH_1"
+      },
+      "planner_mode": {
+        "const": "M3-KERNEL-D1"
+      },
+      "execution_mode": {
+        "const": "READONLY_DECISION_ONLY_NO_ACTION_EXECUTION"
+      },
+      "case_binding": {
+        "additional_properties": false,
+        "required": [
+          "case_id",
+          "gamma_hash",
+          "evidence_hash",
+          "compilation_profile"
+        ],
+        "constraints": [
+          "case_id is nonempty and not a hidden or oracle identifier",
+          "gamma_hash and evidence_hash are canonical sha256:<64 lowercase hex>",
+          "compilation_profile exactly matches the compiled finite problem"
+        ]
+      },
+      "finite_domain_binding": {
+        "additional_properties": false,
+        "required": [
+          "compiled_legal_world_count",
+          "compiled_legal_worlds_hash",
+          "compiled_legal_world_ids",
+          "current_u_count",
+          "current_u_hash",
+          "current_u_world_ids",
+          "target_variable"
+        ],
+        "constraints": [
+          "compiled_legal_world_ids and current_u_world_ids are sorted unique nonempty arrays",
+          "current_u_world_ids is an exact subset of compiled_legal_world_ids",
+          "both declared counts equal their array lengths",
+          "both hashes replay from canonical ordered world documents",
+          "current_u_count is at least 2 for SELECT_ACTION; a singleton yields ABSTAIN_ALREADY_SINGLETON_NO_ACQUISITION",
+          "the planner may not add a world, variable, domain value, or predicate"
+        ]
+      },
+      "checker_binding": {
+        "additional_properties": false,
+        "required": [
+          "checker_run_hash",
+          "checker_status",
+          "base_status",
+          "support_status",
+          "alternative_status",
+          "support_world_id",
+          "alternative_world_id"
+        ],
+        "constraints": [
+          "checker_status is COUNTEREXAMPLE_FOUND",
+          "base_status, support_status, and alternative_status are SAT",
+          "support and alternative world IDs differ and both occur in current U",
+          "checker_run_hash replays from the bound Checker record"
+        ]
+      },
+      "counterexample_binding": {
+        "additional_properties": false,
+        "required": [
+          "counterexample_id",
+          "counterexample_hash",
+          "target_level",
+          "distinguishing_predicates",
+          "distinguishing_predicates_hash"
+        ],
+        "constraints": [
+          "the counterexample binds the same case, gamma, support world, alternative world, and Checker status",
+          "distinguishing_predicates is sorted, unique, and nonempty",
+          "distinguishing_predicates_hash replays exactly",
+          "counterexample input contains no system-state or STOP field"
+        ]
+      },
+      "action_catalog_binding": {
+        "additional_properties": false,
+        "required": [
+          "schema_version",
+          "catalog_id",
+          "catalog_version",
+          "declared_catalog_hash",
+          "catalog_content_sha256",
+          "catalog_path",
+          "reference_mode"
+        ],
+        "constraints": [
+          "reference_mode is EXACT_PATH_AND_HASH_NO_WILDCARD",
+          "catalog_path is an in-repository declared path, not a URI",
+          "declared_catalog_hash and catalog_content_sha256 both match disk and canonical content",
+          "catalog identity has no wildcard, fallback, prefix, or latest selector"
+        ]
+      },
+      "p4_selection_binding": {
+        "additional_properties": false,
+        "required": [
+          "selection_record_hash",
+          "allowed_action_ids",
+          "forbidden_action_ids"
+        ],
+        "constraints": [
+          "both arrays are sorted and duplicate-free",
+          "no action appears in both arrays",
+          "every ID resolves exactly in the bound catalog",
+          "P4 is an eligibility filter only and does not supply V(a), a selected next action, or planner authority"
+        ]
+      },
+      "deterministic_outcome_partitions": {
+        "type": "array",
+        "coverage": "exactly one declaration for every P4 allowed action and no other action",
+        "item_required_fields": [
+          "action_id",
+          "observation_model_hash",
+          "projection_rule_id",
+          "output_domain",
+          "partition_basis",
+          "world_outcomes",
+          "partition_hash"
+        ],
+        "item_constraints": [
+          "the action observation model is non-null and noise_model=deterministic",
+          "partition_basis is FROZEN_MODEL_PROJECTION_NOT_OBSERVED_TRUTH",
+          "world_outcomes contains exactly one row for every current U world ID",
+          "each outcome is a member of the action output_domain",
+          "output_domain and world IDs are ordered canonically",
+          "partition_hash replays from the declaration with partition_hash omitted",
+          "actual_world_id, ground_truth, true_outcome, recoverable_claim_ids, hidden_claim_ids, oracle_effects, posterior, probability, and confidence are forbidden at any depth"
+        ],
+        "why_required": "The existing action catalog declares output domains and world dependencies but does not itself provide the total world-to-outcome function needed to compute each U_o."
+      },
+      "resource_budget_declaration": {
+        "additional_properties": false,
+        "required": [
+          "budget_id",
+          "budget_hash",
+          "as_of_state_hash",
+          "budget_policy",
+          "hard_limits",
+          "consumed",
+          "remaining",
+          "budget_status"
+        ],
+        "dimensions": [
+          "wall_seconds",
+          "cpu_seconds",
+          "records_scanned",
+          "bytes_scanned",
+          "analyst_seconds"
+        ],
+        "constraints": [
+          "budget_policy is TRACE_BINDING_ONLY_NO_COST_UTILITY_NO_CHANCE_CONSTRAINT",
+          "all values are finite nonnegative integers or exact decimal strings; NaN and infinity are forbidden",
+          "remaining equals hard_limits minus consumed for every dimension",
+          "budget_status is AVAILABLE or EXHAUSTED and is recomputed from the declaration",
+          "budget is not a term in V(a), does not turn infeasibility into high cost, and cannot grant execution authority",
+          "budget_hash replays from the declaration with budget_hash omitted"
+        ]
+      },
+      "requested_decision_scope": {
+        "const": "NEXT_ACTION_CANDIDACY_ONLY_NO_EXECUTE_NO_STOP"
+      },
+      "request_hash": {
+        "constraint": "canonical SHA-256 of the complete request with request_hash omitted"
+      }
+    }
+  },
+  "eligible_action_contract": {
+    "all_conditions_required": [
+      "action ID is in the exact P4 allowed_action_ids and absent from forbidden_action_ids",
+      "action resolves uniquely in the exact pinned catalog",
+      "formal_analysis_eligibility is formal",
+      "authority.current_status is executable",
+      "feasibility.status is executable",
+      "observation_model is non-null",
+      "observation_model.noise_model is deterministic",
+      "observation_model.world_dependencies intersects the counterexample distinguishing predicates",
+      "state_effect.world_elimination_rule_ids is nonempty",
+      "resource_instrumentation declares wall_seconds, records_scanned, and bytes_scanned",
+      "one exact deterministic outcome partition covers every world in current U"
+    ],
+    "whole_request_deny_not_silent_drop": [
+      "a P4 allowed action is absent from the catalog",
+      "a P4 allowed action has a missing or stochastic observation model",
+      "a partition is missing, duplicated, partial, outside output_domain, or hash-stale",
+      "hidden or oracle fields appear anywhere"
+    ],
+    "abstain_cases": [
+      "P4 allowed_action_ids is empty after a valid eligibility computation",
+      "all valid action values are zero",
+      "current U is already a singleton",
+      "the exact current resource budget is exhausted"
+    ]
+  },
+  "depth1_value_contract": {
+    "symbol": "V(a)=E[|U|-|U_o|]",
+    "observation_semantics": "DETERMINISTIC_TOTAL_FUNCTION_FROM_EACH_CURRENT_U_WORLD_TO_EXACTLY_ONE_DECLARED_OUTCOME",
+    "counting_measure": "UNIFORM_COUNTING_MEASURE_OVER_THE_FROZEN_CURRENT_U_ONLY",
+    "probability_model": null,
+    "planning_confidence": null,
+    "scientific_boundary": "The expectation is an exact arithmetic mean over the enumerated current U, not an empirical probability, posterior belief, learned prior, likelihood, or claim about which world is true.",
+    "exact_calculation": {
+      "N": "current_u_count",
+      "U_o": "the subset of current U mapped to outcome o by the action's frozen deterministic partition",
+      "n_o": "|U_o|",
+      "raw_value_numerator": "sum over outcomes o of n_o * (N - n_o)",
+      "raw_value_denominator": "N",
+      "equivalent_form": "N*N - sum over outcomes o of n_o*n_o, all divided by N",
+      "recorded_form": "raw numerator and denominator plus gcd-reduced numerator and denominator",
+      "floating_point": false,
+      "probability_or_confidence_field": false
+    },
+    "invariants": [
+      "outcome counts sum exactly to N",
+      "0 <= raw_value_numerator <= N*(N-1)",
+      "V(a)=0 when every world produces the same outcome",
+      "reordering worlds, catalog actions, or partition rows cannot change any value",
+      "no actual-world label is selected or inferred"
+    ],
+    "owner_review_question": "Accept the exact uniform counting measure as the only probability-free operationalization of the spec's expectation for this frozen finite-domain D1 slice, or request a revision before any GREEN."
+  },
+  "exact_tie_break_contract": {
+    "primary_order": "maximize raw_value_numerator; all actions share the same denominator N",
+    "secondary_order": "lexicographically smallest UTF-8 action_id among exact primary ties",
+    "catalog_order_used": false,
+    "resource_cost_used": false,
+    "hidden_ground_truth_used": false,
+    "recorded_basis": [
+      "maximum raw value numerator",
+      "sorted tied_action_ids",
+      "tie_break_rule_id=MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1",
+      "selected_action_id"
+    ],
+    "no_positive_value_result": "ABSTAIN_NO_POSITIVE_EXPECTED_REDUCTION"
+  },
+  "planner_decision_record_contract": {
+    "schema_version": "kernel-a17-p1e-depth1-planner-decision-v0.1",
+    "record_class": "kernel_a17_p1e_depth1_planner_decision",
+    "additional_properties": false,
+    "top_level_field_count": 17,
+    "required_top_level_fields": [
+      "schema_version",
+      "record_class",
+      "planner_mode",
+      "decision",
+      "reason_codes",
+      "request_hash",
+      "input_bindings",
+      "current_u_summary",
+      "eligible_action_ids",
+      "action_value_table",
+      "selected_action_id",
+      "tie_break",
+      "resource_trace_binding",
+      "authority_ceiling",
+      "probability_model",
+      "planning_confidence",
+      "record_hash"
+    ],
+    "decision_enum": [
+      "SELECT_ACTION",
+      "ABSTAIN_NO_FORMALLY_ELIGIBLE_ACTION",
+      "ABSTAIN_NO_POSITIVE_EXPECTED_REDUCTION",
+      "ABSTAIN_ALREADY_SINGLETON_NO_ACQUISITION",
+      "ABSTAIN_RESOURCE_BUDGET_EXHAUSTED",
+      "DENY_INVALID_OR_UNAUTHORIZED_INPUT"
+    ],
+    "input_bindings_required": [
+      "case_id",
+      "gamma_hash",
+      "evidence_hash",
+      "compiled_legal_worlds_hash",
+      "current_u_hash",
+      "checker_run_hash",
+      "counterexample_hash",
+      "action_catalog_declared_hash",
+      "action_catalog_content_sha256",
+      "p4_selection_record_hash",
+      "outcome_partitions_hash",
+      "resource_budget_hash"
+    ],
+    "current_u_summary_required": [
+      "world_count",
+      "world_ids",
+      "world_ids_hash"
+    ],
+    "action_value_table_item_required": [
+      "action_id",
+      "outcome_counts",
+      "raw_value_numerator",
+      "raw_value_denominator",
+      "reduced_value_numerator",
+      "reduced_value_denominator",
+      "partition_hash"
+    ],
+    "select_action_constraints": [
+      "selected_action_id is non-null and appears in eligible_action_ids",
+      "selected action has the maximum exact value under the tie-break contract",
+      "tie_break is non-null and fully records the comparison",
+      "resource_trace_binding is non-null",
+      "reason_codes contains P1E-SELECT-001_EXACT_DEPTH1_WORLD_REDUCTION"
+    ],
+    "abstain_or_deny_constraints": [
+      "selected_action_id is null",
+      "resource_trace_binding is null",
+      "tie_break is null unless values were computed and tied before a valid abstention",
+      "at least one exact reason code is present",
+      "no partial planner decision or action attempt ID is emitted"
+    ],
+    "authority_ceiling_constants": {
+      "action_execution_authority": false,
+      "mint_authority": false,
+      "admission_authority": false,
+      "kernel_write_authority": false,
+      "certificate_authority": false,
+      "stop_authority": false,
+      "part_b_pass_authority": false
+    },
+    "probability_model": null,
+    "planning_confidence": null,
+    "record_hash": "canonical SHA-256 of the complete decision record with record_hash omitted"
+  },
+  "resource_trace_binding_contract": {
+    "present_only_when_decision": "SELECT_ACTION",
+    "decision_basis_hash_payload": [
+      "request_hash",
+      "selected_action_id",
+      "selected action raw and reduced value",
+      "tie_break_rule_id",
+      "sorted tied_action_ids",
+      "resource_budget_hash"
+    ],
+    "decision_basis_hash": "canonical SHA-256 of the decision basis payload",
+    "attempt_id": "p1e-attempt:sha256:<the 64 lowercase hex decision_basis_hash>",
+    "binding_fields": [
+      "decision_basis_hash",
+      "attempt_id",
+      "selected_action_id",
+      "action_catalog_declared_hash",
+      "resource_budget_hash",
+      "required_trace_dimensions",
+      "trace_match_policy"
+    ],
+    "required_trace_dimensions": [
+      "wall_seconds",
+      "records_scanned",
+      "bytes_scanned",
+      "cpu_seconds when catalog instrumentation is true",
+      "analyst_seconds when catalog instrumentation is true"
+    ],
+    "trace_match_policy": "EXACT_ATTEMPT_ACTION_DECISION_BUDGET_HASH_MATCH_NO_FALLBACK",
+    "later_test_only_binding_receipt_shape": {
+      "schema_version": "kernel-a17-p1e-resource-trace-binding-receipt-v0.1",
+      "record_class": "kernel_a17_p1e_resource_trace_binding_receipt",
+      "required_fields": [
+        "planner_decision_record_hash",
+        "attempt_id",
+        "action_id",
+        "resource_budget_hash",
+        "trace_row_sha256",
+        "match_status",
+        "reason_codes",
+        "receipt_hash"
+      ],
+      "match_status_enum": [
+        "MATCH_TEST_ONLY_REPLAY",
+        "DENY_TRACE_BINDING_MISMATCH"
+      ],
+      "side_effects": "none",
+      "does_not_modify_historical_resource_trace_rows": true
+    },
+    "execution_boundary": "The decision and receipt may bind a synthetic or frozen replay row in a later separately authorized GREEN test. They do not invoke DeterministicObservationExecutor or any production action."
+  },
+  "fail_closed_matrix": [
+    {
+      "case_id": "P1E-FC-001",
+      "condition": "unknown, missing, duplicated, or extra closed-world request field",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-001_CLOSED_WORLD_REQUEST_SHAPE"
+    },
+    {
+      "case_id": "P1E-FC-002",
+      "condition": "request kind, planner mode, execution mode, or requested scope differs from the exact constants",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-002_SCOPE_OR_MODE_MISMATCH"
+    },
+    {
+      "case_id": "P1E-FC-003",
+      "condition": "gamma, evidence, compiled-world, current-U, Checker, counterexample, selection, partition, budget, or request hash is stale or mismatched",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-003_STALE_OR_MISMATCHED_HASH"
+    },
+    {
+      "case_id": "P1E-FC-004",
+      "condition": "current U adds an unknown world, omits its exact hash, contains duplicates, or disagrees with the compiled legal-world table",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-004_FINITE_DOMAIN_BINDING_INVALID"
+    },
+    {
+      "case_id": "P1E-FC-005",
+      "condition": "Checker is not COUNTEREXAMPLE_FOUND with three bound SAT results, or the counterexample witnesses do not match",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-005_CHECKER_COUNTEREXAMPLE_BINDING_INVALID"
+    },
+    {
+      "case_id": "P1E-FC-006",
+      "condition": "catalog path or identity uses wildcard, prefix, latest, fallback, URI, stale declared hash, or stale content SHA",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-006_CATALOG_NOT_EXACT"
+    },
+    {
+      "case_id": "P1E-FC-007",
+      "condition": "ground_truth, actual_world_id, true_outcome, recoverable_claim_ids, hidden_claim_ids, oracle_effects, posterior, probability, confidence, or equivalent hidden field appears anywhere",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-007_HIDDEN_OR_ORACLE_FIELD"
+    },
+    {
+      "case_id": "P1E-FC-008",
+      "condition": "a P4 allowed action has a null or missing observation model",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-008_OBSERVATION_MODEL_MISSING"
+    },
+    {
+      "case_id": "P1E-FC-009",
+      "condition": "a P4 allowed action observation model is stochastic or has a non-deterministic noise model",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-009_STOCHASTIC_OBSERVATION_MODEL"
+    },
+    {
+      "case_id": "P1E-FC-010",
+      "condition": "outcome partition is missing, duplicated, partial, contains an out-of-domain outcome, or is not bound to the exact observation model",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-010_OUTCOME_PARTITION_INVALID"
+    },
+    {
+      "case_id": "P1E-FC-011",
+      "condition": "P4 allowed or forbidden IDs do not resolve exactly, overlap, or contradict catalog eligibility",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-011_P4_SELECTION_BINDING_INVALID"
+    },
+    {
+      "case_id": "P1E-FC-012",
+      "condition": "resource budget arithmetic, status, dimensions, or hash is invalid",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-012_RESOURCE_BUDGET_INVALID"
+    },
+    {
+      "case_id": "P1E-FC-013",
+      "condition": "request asks for action execution, system state, certificate, STOP, Part B PASS, mint, admission, or write authority",
+      "result": "DENY_INVALID_OR_UNAUTHORIZED_INPUT",
+      "reason_code": "P1E-013_AUTHORITY_OR_STOP_REQUEST_FORBIDDEN"
+    },
+    {
+      "case_id": "P1E-FC-014",
+      "condition": "valid request has no formally eligible P4 action",
+      "result": "ABSTAIN_NO_FORMALLY_ELIGIBLE_ACTION",
+      "reason_code": "P1E-014_NO_FORMALLY_ELIGIBLE_ACTION"
+    },
+    {
+      "case_id": "P1E-FC-015",
+      "condition": "all valid eligible actions have exact V(a)=0",
+      "result": "ABSTAIN_NO_POSITIVE_EXPECTED_REDUCTION",
+      "reason_code": "P1E-015_NO_POSITIVE_EXPECTED_REDUCTION"
+    },
+    {
+      "case_id": "P1E-FC-016",
+      "condition": "current U contains exactly one world",
+      "result": "ABSTAIN_ALREADY_SINGLETON_NO_ACQUISITION",
+      "reason_code": "P1E-016_ALREADY_SINGLETON"
+    },
+    {
+      "case_id": "P1E-FC-017",
+      "condition": "valid exact resource budget is exhausted",
+      "result": "ABSTAIN_RESOURCE_BUDGET_EXHAUSTED",
+      "reason_code": "P1E-017_RESOURCE_BUDGET_EXHAUSTED"
+    },
+    {
+      "case_id": "P1E-FC-018",
+      "condition": "later trace attempt ID does not equal the decision-bound deterministic attempt ID",
+      "result": "DENY_TRACE_BINDING_MISMATCH",
+      "reason_code": "P1E-018_TRACE_ATTEMPT_ID_MISMATCH"
+    },
+    {
+      "case_id": "P1E-FC-019",
+      "condition": "later trace action ID differs from selected_action_id",
+      "result": "DENY_TRACE_BINDING_MISMATCH",
+      "reason_code": "P1E-019_TRACE_ACTION_ID_MISMATCH"
+    },
+    {
+      "case_id": "P1E-FC-020",
+      "condition": "later trace decision record hash or resource budget hash differs",
+      "result": "DENY_TRACE_BINDING_MISMATCH",
+      "reason_code": "P1E-020_TRACE_DECISION_OR_BUDGET_HASH_MISMATCH"
+    }
+  ],
+  "fixture_and_test_plan_for_separately_authorized_green": {
+    "green_is_not_authorized_by_this_design": true,
+    "fixture_origin": "SYNTHETIC_FROZEN_MODEL_DECLARATION_ONLY",
+    "real_source_or_download": false,
+    "historical_fixture_bytes_modified": false,
+    "planned_fixed_cases": [
+      {
+        "case_id": "P1E-D1-FIXTURE-SELECT-001",
+        "purpose": "decision to resource-trace binding happy path",
+        "current_u": ["W-A", "W-B"],
+        "action_partitions": {
+          "a_distinguishing": {
+            "outcome_counts": [1, 1],
+            "raw_value": "2/2",
+            "reduced_value": "1/1"
+          },
+          "z_nondistinguishing": {
+            "outcome_counts": [2],
+            "raw_value": "0/2",
+            "reduced_value": "0/1"
+          }
+        },
+        "expected_decision": "SELECT_ACTION",
+        "expected_selected_action": "a_distinguishing",
+        "closure": "decision record hash and deterministic attempt ID must match a synthetic replay resource-trace binding receipt"
+      },
+      {
+        "case_id": "P1E-D1-FIXTURE-TIE-002",
+        "purpose": "exact tie-break independent of input order",
+        "current_u": ["W-A", "W-B", "W-C"],
+        "equal_value_action_ids": [
+          "action_alpha",
+          "action_beta"
+        ],
+        "expected_selected_action": "action_alpha",
+        "expected_tie_break_rule": "MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1"
+      },
+      {
+        "case_id": "P1E-D1-FIXTURE-ABSTAIN-003",
+        "purpose": "valid no-action and zero-value abstention records emit no attempt ID",
+        "expected_decisions": [
+          "ABSTAIN_NO_FORMALLY_ELIGIBLE_ACTION",
+          "ABSTAIN_NO_POSITIVE_EXPECTED_REDUCTION"
+        ]
+      }
+    ],
+    "planned_directed_test_groups": [
+      "request closed-world shape and all input hash replays",
+      "exact integer/rational V(a) calculation and permutation invariance",
+      "exact UTF-8 action-ID tie-break",
+      "SELECT_ACTION decision hash and deterministic attempt-ID replay",
+      "test-only resource-trace receipt exact match",
+      "all twenty fail-closed matrix rows",
+      "no probability, confidence, actual-world, hidden, oracle, state, or STOP fields",
+      "P4, P5, P10, Gamma, catalog, resource-trace, Part B B5, and PB-SI-008 protected pin zero drift",
+      "PRODUCTION_REGISTRATION_ENABLED remains false where applicable",
+      "write_side_effects equals none during evaluator and receipt replay"
+    ],
+    "regression_plan": [
+      "existing P4 directed tests",
+      "existing P5 directed tests",
+      "existing P10 directed tests",
+      "finite-domain Checker and counterexample directed tests",
+      "schema and Twin fixture validation"
+    ],
+    "test_execution_in_this_red": false,
+    "new_fixture_created_in_this_red": false,
+    "new_test_created_in_this_red": false
+  },
+  "proposed_green_surface_not_authorized": {
+    "status": "PROPOSAL_FOR_OWNER_REVIEW_ONLY",
+    "candidate_files": [
+      "src/planner/deterministic_depth1.py",
+      "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "tests/unit/test_kernel_a17_p1e_depth1_planner.py",
+      "tests/integration/test_kernel_a17_p1e_resource_trace_binding.py",
+      "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-review-packet-v0.1-20260728.json"
+    ],
+    "schema_strategy": "Prefer closed-world validation inside the test-only module or separately authorized draft schemas; do not modify effective Kernel schemas without a distinct Owner decision.",
+    "exact_allowlist_must_be_reconfirmed_after_red_acceptance": true
+  },
+  "non_amalgamation_and_non_substitution": {
+    "part_b_b5_planner": "NOT_A_SUBSTITUTE_EXECUTION_NOT_ESTABLISHED",
+    "experiment_track_planner_or_cost_records": "NOT_A_SUBSTITUTE_OUTSIDE_PART_A_KERNEL_RUNTIME",
+    "pb_si008_named_open": "NOT_A_SUBSTITUTE_CANDIDACY_CLASSIFICATION_ONLY",
+    "p4_action_selection": "ELIGIBILITY_FILTER_ONLY_NOT_D1_DECISION",
+    "p5_deterministic_executor": "FROZEN_REPLAY_ONLY_NOT_D1_DECISION",
+    "p10_e2e": "WIRING_ONLY_NO_DECISION_POLICY",
+    "resource_trace_planner_decision_count": "DECLARED_FIXTURE_COUNT_NOT_PROOF_OF_A_GENERATED_DECISION"
+  },
+  "hard_boundaries": [
+    "Specification is not authority; this RED opens no GREEN or second A17 grid cell.",
+    "Path A readonly or design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "The historical 2026-07-22 scoped A16 GO is not replayed, renewed, expanded, or revoked by this design.",
+    "A SELECT_ACTION record is candidacy-only metadata and does not authorize execution.",
+    "No D1 planner output can issue a certificate, set system state, or request CERTIFIED_STOP."
+  ],
+  "explicit_non_authorizations": {
+    "planner_runtime": false,
+    "green_implementation": false,
+    "fixture_or_test_implementation": false,
+    "production_action_execution": false,
+    "probabilistic_planning": false,
+    "gamma_hash_semantic_change": false,
+    "a16_gate_replay_or_go": false,
+    "part_b_or_path_b_elevation": false,
+    "named_open_widening": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "owner_review_questions": [
+    {
+      "id": "ORQ-01",
+      "question": "Accept exact uniform counting over frozen current U as the deterministic, probability-model-free operationalization of V(a)'s expectation?",
+      "recommended": "accept",
+      "impact_if_revision": "No GREEN should start until the measure and comparison rule are replaced explicitly."
+    },
+    {
+      "id": "ORQ-02",
+      "question": "Accept the requirement for a total, hash-bound deterministic outcome partition for each P4-allowed action because the current catalog alone cannot derive every U_o?",
+      "recommended": "accept",
+      "impact_if_revision": "Without this declaration the planner cannot honestly compute V(a)."
+    },
+    {
+      "id": "ORQ-03",
+      "question": "Accept UTF-8 action_id ascending as the only secondary tie-break, with resource cost excluded from V(a) and tie-breaking?",
+      "recommended": "accept",
+      "impact_if_revision": "Any cost-aware rule would require a separate authorized cost-utility contract."
+    },
+    {
+      "id": "ORQ-04",
+      "question": "Accept the deterministic attempt ID derived from a decision-basis hash and the separate test-only binding receipt without modifying historical resource trace rows?",
+      "recommended": "accept",
+      "impact_if_revision": "A different trace envelope or mutation authority must be designed before GREEN."
+    },
+    {
+      "id": "ORQ-05",
+      "question": "Accept that RED closes only the contract and test plan, while all proposed GREEN files remain unauthorized?",
+      "recommended": "accept",
+      "impact_if_revision": "Revise the future allowlist, not the current RED scope."
+    }
+  ],
+  "red_exit": {
+    "design_contract_complete": true,
+    "closed_world_request_shape_complete": true,
+    "decision_record_shape_complete": true,
+    "resource_trace_binding_shape_complete": true,
+    "fail_closed_matrix_complete": true,
+    "fixture_and_test_plan_complete": true,
+    "runtime_or_green_started": false,
+    "stop_for_kernel_owner_review": true
+  },
+  "write_side_effects": {
+    "classification": "docs_only_a17_p1e_red",
+    "runtime_modified": false,
+    "schema_or_config_modified": false,
+    "fixture_or_test_modified": false,
+    "authority_state_elevated": false
+  }
+}

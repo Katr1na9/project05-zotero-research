@@ -1,0 +1,730 @@
+{
+  "artifact_id": "kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_mainline_step_1_readonly_gap_audit",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "status": "readonly_audit_complete_pending_kernel_owner_review",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "authority": {
+    "decision": "OWNER_GO_KERNEL_V0_8_MAINLINE_ALIGNMENT_STEP_1_READONLY_GAP_AUDIT_ONLY",
+    "authority_base_ref": "origin/main",
+    "authority_base_commit": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+    "verified_head": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+    "branch": "codex/kernel-v0.8-step1-readonly-gap-audit-v0.1",
+    "specification_is_not_authority": true,
+    "authorized_activity": [
+      "readonly inventory of repository artifacts and test sources against A17 P0 through Gate",
+      "readonly A16 Go and No-Go evidence-path matrix",
+      "identify exactly one recommended next grid cell"
+    ],
+    "not_authorized_by_this_go": [
+      "new Kernel main implementation",
+      "gamma hash semantic change",
+      "named-open change",
+      "Path B or unrestricted Part B elevation",
+      "mint",
+      "admission",
+      "Kernel or E_case write path",
+      "certificate issuance",
+      "CERTIFIED_STOP declaration",
+      "git commit",
+      "git push",
+      "pull request"
+    ]
+  },
+  "audit_method": {
+    "mode": "READONLY_ARTIFACT_AND_TEST_SOURCE_INVENTORY",
+    "evidence_claim_separation": true,
+    "assessment_vocabulary": {
+      "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED": "Required implementation and relevant test sources are present at the audited tip; this audit did not execute them and does not assert a fresh PASS.",
+      "PARTIAL_RESOURCE_TRACE_ONLY": "A required sub-part is present, but the phase exit condition is not met.",
+      "NOT_SATISFIED": "A required implementation or closure artifact is absent or explicitly excluded by current code.",
+      "HISTORICALLY_ACCEPTED_SCOPED_NOT_REPLAYED_IN_THIS_AUDIT": "A prior Owner ruling exists for a narrower frozen scope, but this audit did not replay or renew it.",
+      "NOT_ENTERED_BY_THIS_AUDIT": "The gate is not opened, executed, or decided by this Step-1 audit."
+    },
+    "source_read": true,
+    "test_source_read": true,
+    "tests_executed": false,
+    "historical_test_results_treated_as_current_replay": false,
+    "network_access": false,
+    "runtime_invocation": false,
+    "repository_state_mutation_excluding_this_report": false,
+    "limitations": [
+      "Artifact and test presence does not establish that the current main tip passes those tests.",
+      "Historical 131/131 and later slice-specific test reports are provenance evidence, not a fresh A16 replay.",
+      "The audit does not independently validate scientific external validity, real-world completeness, or Part B performance.",
+      "The A17-to-historical-P0-through-P11 mapping below is semantic; similarly named phase labels are not assumed equivalent."
+    ]
+  },
+  "pinned_inputs": [
+    {
+      "role": "normative_comparison_specification",
+      "path": "08-writing/active-attribution-experiment-revision-plan-v0.8-20260721.md",
+      "content_sha256": "99fa98b9489cfe49d4da6fe02e06b457201a59d9024ca62233c5dd82f7b7baa9"
+    },
+    {
+      "role": "historical_part_a_closeout",
+      "path": "04-progress/kernel-v0.8-part-a-closeout-20260722.md",
+      "content_sha256": "291cfd67b22dbdad3c5acc7fa0405194e96d7ad8df758b089a5f14e5ad064007"
+    },
+    {
+      "role": "historical_a16_review_package",
+      "path": "08-writing/kernel-v0.8-a16-review-package-20260722.md",
+      "content_sha256": "8f5451e7c66bfbabb59b79651db34d8c11f1a2d454793f083b48832309fe4de8"
+    },
+    {
+      "role": "historical_81_file_diff_audit",
+      "path": "08-writing/kernel-v0.8-81-file-diff-audit-20260722.md",
+      "content_sha256": "0ab1a5592a27516d476752eac253e6309ce17987ed26c7f526a989e200cfe2b7"
+    },
+    {
+      "role": "historical_scoped_authority_status",
+      "path": "08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md",
+      "content_sha256": "fd99ab91377ad0b7c3ac14ff4beec00b52455509f481b0050d3e620c185a47ad"
+    },
+    {
+      "role": "kernel_part_a_issue_register",
+      "path": "src/scope/kernel-v0.8-spec-issues.md",
+      "content_sha256": "34d670d1f77da73f353cc2cc7a311ce0cf472aac754f45c4cca54ea275ac94f7"
+    },
+    {
+      "role": "part_b_elevation_no_go_baseline",
+      "path": "docs/kernel/kernel-v0.8-part-b-reopen-scope-blockers-go-nogo-readonly-v0.1-20260727.json",
+      "content_sha256": "09a1a4d68570f9898eafa5d88d06fdbae2c75c751bd5dcf6f32665a97fd34cf1"
+    },
+    {
+      "role": "part_b_elevation_no_go_confirmation",
+      "path": "docs/kernel/kernel-v0.8-part-b-elevation-no-go-and-next-slices-authorization-v0.1-20260727.json",
+      "content_sha256": "08f491fd3a0806eca4078455fb2f7558637710d6e3bcd71ce85599d2e2479220"
+    },
+    {
+      "role": "current_named_evidence_candidacy_only_boundary",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-evidence-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "content_sha256": "daa5b2b52816cec0d24876fd452c4499150067912de9be3b7c4fdc81ef4a369d"
+    },
+    {
+      "role": "current_named_claim_candidacy_only_boundary",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-named-open-path-a-claim-candidacy-green-owner-acceptance-v0.1-20260727.json",
+      "content_sha256": "55d29fd927b1eb9fdc740c090e3c2d40a3384e485e04fa2eb4eb5347065e7325"
+    },
+    {
+      "role": "current_test_only_claim_caller_boundary",
+      "path": "docs/kernel/kernel-v0.8-pb-si008-path-a-claim-named-open-caller-wiring-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "9a01ad147a5a913f2d801daad14f21a8ae09c84f724fb449be7b9af2eee8bc75"
+    }
+  ],
+  "authority_boundary_snapshot": {
+    "historical_part_a_a16_ruling": {
+      "decision": "PASSED_GO_KERNEL_V0_8_PART_A_ONLY",
+      "date": "2026-07-22",
+      "scope": "frozen finite-domain Gamma, approved policy and catalog hashes, declared completeness assumptions, and recorded solver/proof policy",
+      "source_paths": [
+        "04-progress/kernel-v0.8-part-a-closeout-20260722.md",
+        "08-writing/kernel-v0.8-a16-review-package-20260722.md",
+        "08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md"
+      ],
+      "still_not_evidence_of": [
+        "real-world exhaustiveness",
+        "broad-input external validity",
+        "stochastic observation",
+        "persistent audit",
+        "complete M3 star",
+        "Part B performance",
+        "current-tip replay"
+      ]
+    },
+    "current_named_open_state": {
+      "qualified_exact_evidence_requests": "OPENED_FOR_NAMED_TARGET_ONLY",
+      "qualified_exact_claim_requests": "OPENED_FOR_NAMED_TARGET_ONLY_EVIDENCE_AND_CLAIM",
+      "ceiling": "STRUCTURAL_CANDIDACY_CLASSIFICATION_ONLY",
+      "allow_is_mint": false,
+      "allow_is_admission": false,
+      "allow_is_part_b_pass": false,
+      "allow_is_write_authority": false,
+      "authority_and_pass_condition_remain_denied": true
+    },
+    "current_broad_part_b_elevation": "NO_GO",
+    "this_audit_changes_named_open_or_part_b_authority": false,
+    "this_audit_establishes_certified_stop": false
+  },
+  "a17_phase_matrix": [
+    {
+      "phase": "P0",
+      "spec_requirement": "Schema JSON, gamma-kernel-v0.8.yaml, at least one Twin fixture, and state-machine test skeleton; exit when artifacts are complete and the finite-domain catalog passes.",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "implementation_artifacts": [
+        "schemas/gamma-kernel.schema.json",
+        "schemas/action-kernel.schema.json",
+        "schemas/counterexample.schema.json",
+        "schemas/certificate.schema.json",
+        "schemas/claim-ir-kernel.schema.json",
+        "configs/gamma-kernel-v0.8.yaml",
+        "configs/action-catalog-kernel-v0.8.yaml",
+        "configs/admission-policy-kernel-v0.8.yaml",
+        "tests/fixtures/TWIN-COUNTEREXAMPLE-001/",
+        "tests/fixtures/TWIN-SUPPLY-CHAIN-002/"
+      ],
+      "test_evidence": [
+        "tests/unit/test_kernel_schemas.py",
+        "tests/unit/test_system_state_machine_contract.py",
+        "tests/integration/test_twin_counterexample_fixture.py",
+        "tests/integration/test_supply_chain_kernel_fixture.py"
+      ],
+      "scope_note": "Two non-isomorphic frozen finite-domain fixture families are present. Presence is recorded; this audit did not rerun validation."
+    },
+    {
+      "phase": "P1",
+      "spec_requirement": "base/support/alternative with an automated truth table.",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "implementation_artifacts": [
+        "src/scope/finite_problem.py",
+        "src/checker/finite_domain.py"
+      ],
+      "test_evidence": [
+        "tests/unit/test_evidence_gamma_problem_compiler.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/integration/test_twin_checker_p1.py",
+        "tests/integration/test_supply_chain_kernel_fixture.py"
+      ],
+      "scope_note": "The finite-domain Checker separates base, candidate/support, and alternative queries and exposes a seven-row truth-table test."
+    },
+    {
+      "phase": "P1a",
+      "spec_requirement": "candidate versus level separation with coverage tests.",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "implementation_artifacts": [
+        "src/checker/level_certificate.py",
+        "src/scope/system_state.py",
+        "schemas/certificate.schema.json"
+      ],
+      "test_evidence": [
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_system_state_derivation.py",
+        "tests/unit/test_system_state_machine_contract.py",
+        "tests/integration/test_twin_system_state_p9.py"
+      ],
+      "scope_note": "Candidate certification is kept below level-complete certification; only a bound level certificate can reach the scoped STOP state."
+    },
+    {
+      "phase": "P1b",
+      "spec_requirement": "Firewall, Promote, and Revoke with K-E1/2 and K-N2/6 coverage.",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "implementation_artifacts": [
+        "src/firewall/admission.py",
+        "src/firewall/policy.py",
+        "src/firewall/lifecycle.py"
+      ],
+      "test_evidence": [
+        "tests/unit/test_epistemic_firewall_admission.py",
+        "tests/unit/test_promote_revoke_audit.py",
+        "tests/integration/test_twin_epistemic_firewall_admission_p7.py",
+        "tests/integration/test_twin_promote_revoke_audit_p8.py"
+      ],
+      "scope_note": "The sources and tests preserve modality, separate authority, and keep frozen promotion policy fail-closed."
+    },
+    {
+      "phase": "P1c",
+      "spec_requirement": "Counterexample plus MinDiff with K-E3 and K-N4 coverage.",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "implementation_artifacts": [
+        "src/counterexample/mindiff.py",
+        "src/counterexample/artifact.py"
+      ],
+      "test_evidence": [
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_counterexample_artifact.py",
+        "tests/integration/test_twin_mindiff_p2.py",
+        "tests/integration/test_twin_counterexample_artifact_p3.py"
+      ],
+      "scope_note": "MinDiff timeout preserves the counterexample state and the artifact assembler binds output to a Checker witness pair."
+    },
+    {
+      "phase": "P1d",
+      "spec_requirement": "deterministic observation plus distinguishability with K-E4 and K-N5 coverage.",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "implementation_artifacts": [
+        "src/actions/selection.py",
+        "src/executor/deterministic.py",
+        "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/action_observations.jsonl",
+        "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/action_observations.jsonl"
+      ],
+      "test_evidence": [
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/unit/test_deterministic_observation_executor.py",
+        "tests/integration/test_twin_distinguishing_action_selection_p4.py",
+        "tests/integration/test_twin_deterministic_observation_executor_p5.py"
+      ],
+      "scope_note": "The selector identifies catalog-declared feasible distinguishing actions; the executor deterministically replays selected frozen rows. Neither component is a D1 planner."
+    },
+    {
+      "phase": "P1e",
+      "spec_requirement": "resource trace plus D1 planner; exit through a closed fixed-case loop.",
+      "assessment": "NOT_SATISFIED",
+      "partial_assessment": "PARTIAL_RESOURCE_TRACE_ONLY",
+      "present_partial_artifacts": [
+        {
+          "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+          "content_sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318"
+        },
+        {
+          "path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/resource_trace.jsonl",
+          "content_sha256": "102f43c3210208101f393580b6d4afe7573f9be0e081edabb97d28f19b9efee5"
+        },
+        {
+          "path": "src/executor/deterministic.py",
+          "content_sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a"
+        }
+      ],
+      "gap_critical_evidence": [
+        {
+          "path": "src/actions/selection.py",
+          "content_sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83",
+          "evidence_span": "It does not invoke an executor or observation model, feed observations back, plan, promote authority, or emit a system state."
+        },
+        {
+          "path": "src/cli/kernel_e2e.py",
+          "content_sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60",
+          "evidence_span": "The driver adds no decision policy or algorithm. P4 supplies the action set; P5 executes that set;"
+        },
+        {
+          "path": "tests/integration/test_twin_kernel_e2e_p10.py",
+          "content_sha256": "a332cbce5f8bdc9b0fd4467fbc09d0255d6099716c0405ffc5b47a13cdd26254",
+          "evidence_span": "self.assertNotIn(\"planner_decision\", first)"
+        },
+        {
+          "path": "04-progress/kernel-v0.8-part-a-closeout-20260722.md",
+          "content_sha256": "291cfd67b22dbdad3c5acc7fa0405194e96d7ad8df758b089a5f14e5ad064007",
+          "evidence_span": "P10 没有增加规划算法，而是把既有组件串为一条确定性 Twin 主链"
+        }
+      ],
+      "missing_required_capability": [
+        "No Part A runtime computes the specified D1 value V(a)=E[|U|-|U_o|].",
+        "No closed-world D1 decision record chooses exactly one next action using a frozen deterministic tie-break.",
+        "No fixed-case test binds a generated D1 planner decision to its resource trace and then closes the P1e loop.",
+        "Frozen planner_decision_count values in expected resource traces are declared replay data, not proof that a planner decision was produced by the Kernel runtime."
+      ],
+      "non_substitutes": [
+        {
+          "artifact": "Part B B5 planner contracts and skeleton",
+          "reason": "planner_execution_authority=false and execution is explicitly NOT_ESTABLISHED",
+          "evidence": [
+            {
+              "path": "contracts/part-b-b5-planner-admission-boundary-v0.8.md",
+              "content_sha256": "cd1144f6054807521e5ede4ec38afb89f2d03227edd1ccce8a708b41580e9f47"
+            },
+            {
+              "path": "configs/part-b-b5-manifest-v0.8.yaml",
+              "content_sha256": "c6770ce22103b140ada0b8e423ca1be78703ea379f387a94324f3a3e2f9cea4f"
+            }
+          ]
+        },
+        {
+          "artifact": "09-experiments planner-decision or cost measurement records",
+          "reason": "Experiment-track records are outside the frozen Part A Kernel runtime and do not implement the A17 P1e D1 decision contract."
+        },
+        {
+          "artifact": "PB-SI-008 EVIDENCE or CLAIM named-open candidacy",
+          "reason": "Named-open gates classify exact structural references only and explicitly do not establish Part B PASS, planner execution, mint, admission, or write authority."
+        }
+      ]
+    },
+    {
+      "phase": "Gate",
+      "spec_requirement": "A16; only after Go may Part B proceed.",
+      "assessment": "NOT_ENTERED_BY_THIS_AUDIT",
+      "historical_evidence": "HISTORICALLY_ACCEPTED_SCOPED_NOT_REPLAYED_IN_THIS_AUDIT",
+      "blocking_alignment_gap": "A17_P1E_D1_PLANNER_AND_RESOURCE_TRACE_BINDING",
+      "current_tip_full_replay_performed": false,
+      "current_a16_go_reestablished": false,
+      "part_b_elevation": "NO_GO",
+      "scope_note": "The 2026-07-22 scoped Part A A16 GO remains a historical Owner ruling for its recorded frozen scope. This Step-1 audit neither revokes it nor renews it for the current tip, and it cannot be used to bypass the missing A17 P1e grid cell."
+    }
+  ],
+  "a16_go_condition_matrix": [
+    {
+      "condition_id": "A16-GO-01",
+      "condition": "Schema validation",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "schemas/gamma-kernel.schema.json",
+        "schemas/action-kernel.schema.json",
+        "schemas/counterexample.schema.json",
+        "schemas/certificate.schema.json",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/integration/test_twin_counterexample_fixture.py",
+        "tests/integration/test_supply_chain_kernel_fixture.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-02",
+      "condition": "Promote does not change modality",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/firewall/lifecycle.py",
+        "tests/unit/test_promote_revoke_audit.py",
+        "tests/integration/test_twin_promote_revoke_audit_p8.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-03",
+      "condition": "Finite-domain truth table",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/integration/test_twin_checker_p1.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-04",
+      "condition": "candidate certification remains below level certification",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "src/scope/system_state.py",
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_system_state_derivation.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-05",
+      "condition": "heuristic evidence cannot raise the level-certificate bound",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_kernel_schemas.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-06",
+      "condition": "timeout or resource exhaustion is not UNSAT and does not erase insufficiency",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "src/counterexample/mindiff.py",
+        "src/scope/formal_ceiling.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_formal_ceiling.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-07",
+      "condition": "deterministic observation reproducibly distinguishes frozen worlds",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/actions/selection.py",
+        "src/executor/deterministic.py",
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/unit/test_deterministic_observation_executor.py",
+        "tests/integration/test_twin_kernel_e2e_p10.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-08",
+      "condition": "zero-hit behavior is legal only under frozen absence semantics",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/scope/recertify.py",
+        "tests/unit/test_world_elimination_recertify.py",
+        "tests/integration/test_twin_world_elimination_recertify_p6.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-09",
+      "condition": "positive and negative Kernel cases are represented by directed tests",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "tests/unit/test_kernel_schemas.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_epistemic_firewall_admission.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_system_state_derivation.py",
+        "tests/integration/test_twin_counterexample_fixture.py",
+        "tests/integration/test_supply_chain_kernel_fixture.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-10",
+      "condition": "Checker authority is distinct from LLM generation authority",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "contracts/compiler-kernel-boundary-v0.8.md",
+        "src/checker/finite_domain.py",
+        "tests/unit/test_candidate_claim_ir_interface.py",
+        "tests/unit/test_level_certificate_issuer.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-11",
+      "condition": "Gamma, catalog, and policy hashes are frozen and replayable",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "contracts/gamma-hash-v0.8.md",
+        "configs/gamma-kernel-v0.8.yaml",
+        "configs/action-catalog-kernel-v0.8.yaml",
+        "configs/admission-policy-kernel-v0.8.yaml",
+        "configs/admission-policy-approval-kernel-v0.8.yaml",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/integration/test_twin_counterexample_fixture.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-12",
+      "condition": "one-screen counterexample and MinDiff",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/counterexample/mindiff.py",
+        "src/counterexample/artifact.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_counterexample_artifact.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-13",
+      "condition": "formal ceiling is model-relative, exact, and fail-closed outside the frozen domain",
+      "assessment": "SATISFIED_BY_ARTIFACT_AND_TEST_PRESENCE_NOT_REPLAYED",
+      "evidence_paths": [
+        "contracts/formal-ceiling-v0.8.md",
+        "src/scope/formal_ceiling.py",
+        "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/formal_ceiling.json",
+        "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/formal_ceiling.json",
+        "tests/unit/test_formal_ceiling.py"
+      ]
+    },
+    {
+      "condition_id": "A16-GO-14",
+      "condition": "all Go conditions have automated tests and the final tip is cleanly replayed",
+      "assessment": "HISTORICALLY_ACCEPTED_SCOPED_NOT_REPLAYED_IN_THIS_AUDIT",
+      "historical_evidence_paths": [
+        "04-progress/kernel-v0.8-part-a-closeout-20260722.md",
+        "08-writing/kernel-v0.8-a16-review-package-20260722.md",
+        "08-writing/KERNEL-V0.8-AUTHORITY-STATUS-20260722.md"
+      ],
+      "historical_result": "131/131 PASS before the scoped 2026-07-22 Owner ruling",
+      "current_tip_result": "NOT_RUN_IN_THIS_AUDIT",
+      "currently_satisfied_as_fresh_go": false
+    }
+  ],
+  "a16_no_go_guard_matrix": [
+    {
+      "guard_id": "A16-NG-01",
+      "prohibited_interpretation": "handwritten counterexample as Checker proof",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/counterexample/artifact.py",
+        "tests/unit/test_counterexample_artifact.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-02",
+      "prohibited_interpretation": "forged or non-Checker certificate",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "tests/unit/test_level_certificate_issuer.py",
+        "tests/unit/test_system_state_derivation.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-03",
+      "prohibited_interpretation": "timeout as UNSAT",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "src/counterexample/mindiff.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_mindiff.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-04",
+      "prohibited_interpretation": "heuristic result as complete-domain proof",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/level_certificate.py",
+        "tests/unit/test_level_certificate_issuer.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-05",
+      "prohibited_interpretation": "reported evidence laundered into observed evidence",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/firewall/admission.py",
+        "src/firewall/lifecycle.py",
+        "tests/unit/test_epistemic_firewall_admission.py",
+        "tests/unit/test_promote_revoke_audit.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-06",
+      "prohibited_interpretation": "missing observation model as evidence for a ceiling",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/actions/selection.py",
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/unit/test_kernel_schemas.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-07",
+      "prohibited_interpretation": "tri-state or unknown result collapsed into a success state",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/checker/finite_domain.py",
+        "src/scope/system_state.py",
+        "tests/unit/test_finite_domain_checker.py",
+        "tests/unit/test_system_state_machine_contract.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-08",
+      "prohibited_interpretation": "MinDiff timeout or result directly producing STOP",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/counterexample/mindiff.py",
+        "src/scope/system_state.py",
+        "tests/unit/test_mindiff.py",
+        "tests/unit/test_system_state_derivation.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-09",
+      "prohibited_interpretation": "hidden or oracle identifiers used for action selection",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/actions/selection.py",
+        "tests/unit/test_distinguishing_action_selection.py",
+        "tests/integration/test_twin_counterexample_fixture.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-10",
+      "prohibited_interpretation": "gaming or silently changing Gamma, catalog, or policy identity",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "contracts/gamma-hash-v0.8.md",
+        "configs/admission-policy-approval-kernel-v0.8.yaml",
+        "tests/unit/test_kernel_schemas.py",
+        "tests/unit/test_formal_ceiling.py"
+      ]
+    },
+    {
+      "guard_id": "A16-NG-11",
+      "prohibited_interpretation": "expanded or out-of-domain input masking a failed finite-domain claim",
+      "assessment": "GUARD_ARTIFACT_AND_TEST_PRESENT_NOT_REPLAYED",
+      "evidence_paths": [
+        "src/scope/finite_problem.py",
+        "src/scope/formal_ceiling.py",
+        "tests/unit/test_evidence_gamma_problem_compiler.py",
+        "tests/unit/test_formal_ceiling.py"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F01",
+      "severity": "blocking_for_full_A17_alignment",
+      "dimension": "A17_phase_completeness",
+      "observation": "P1e has frozen resource traces and deterministic replay, but no Part A D1 planner decision implementation or fixed-case planner-to-resource-trace closure test.",
+      "reasoning": "The normative P1e exit requires both resource tracking and a D1 planner closed loop. P4 selects the set of feasible distinguishing actions, P5 replays that set, and P10 explicitly adds no decision policy. Resource rows alone cannot substantiate a generated D1 decision.",
+      "suggestion": "Open exactly one RED design slice for a deterministic depth-1 planner and resource-trace binding contract."
+    },
+    {
+      "finding_id": "F02",
+      "severity": "authority_boundary",
+      "dimension": "scope_calibration",
+      "observation": "A scoped 2026-07-22 Part A A16 GO exists, while this audit did not execute the current-tip regression or re-enter the A16 Gate.",
+      "reasoning": "Treating source/test presence or a historical result as a fresh current-tip Go would exceed the evidence and the Step-1 authorization.",
+      "suggestion": "Preserve the historical ruling verbatim for its frozen scope and record current_a16_go_reestablished=false."
+    },
+    {
+      "finding_id": "F03",
+      "severity": "authority_boundary",
+      "dimension": "non_amalgamation",
+      "observation": "Current main contains exact EVIDENCE and CLAIM structural-candidacy named-open gates, but their accepted ceiling remains no mint, no admission, no Part B PASS, and no write authority.",
+      "reasoning": "Those gates cannot fill A17 P1e, renew A16, or authorize a second grid cell.",
+      "suggestion": "Keep named-open and Part B artifacts as explicit non-substitutes in any P1e RED."
+    }
+  ],
+  "exact_next_slice_recommendation": {
+    "open_exactly_one_grid_cell": "A17-P1e",
+    "slice_title": "A17-P1e RED — deterministic depth-1 planner plus resource-trace binding contract",
+    "phase": "RED_DESIGN_ONLY",
+    "implementation_started": false,
+    "authorized_by_this_audit": false,
+    "requires_separate_kernel_owner_go": true,
+    "scientific_and_contract_questions": [
+      "Define the closed frozen finite-domain input state, including U, the Checker/counterexample result, exact action catalog identity, and current resource budget declaration.",
+      "Define V(a)=E[|U|-|U_o|] for deterministic observation without probability or hidden ground truth.",
+      "Define a deterministic exact tie-break and an explicit ABSTAIN or DENY result when no formally eligible action exists.",
+      "Define a planner decision record whose hash binds the selected action, input identities, value calculation, tie-break basis, and a subsequent resource-trace attempt identifier.",
+      "Define fail-closed behavior for stochastic or missing observation models, stale hashes, wildcard catalogs, hidden IDs, resource-trace mismatch, and attempts to request STOP.",
+      "Define the fixed-case closure test without executing production actions or expanding the finite domain."
+    ],
+    "red_exit_only": [
+      "design contract",
+      "closed-world request and decision shapes",
+      "fail-closed matrix",
+      "fixture and test plan",
+      "Owner review packet"
+    ],
+    "must_not_open_in_same_slice": [
+      "A16 Gate replay or decision",
+      "Part B B5 execution",
+      "named-open widening",
+      "Path B write",
+      "mint",
+      "admission",
+      "Kernel or E_case write",
+      "certificate issuance",
+      "CERTIFIED_STOP"
+    ],
+    "green_requires_separate_authorization": true
+  },
+  "conclusion": {
+    "a17_alignment": "INCOMPLETE_AT_P1E",
+    "p0_through_p1d": "ARTIFACT_AND_TEST_PRESENCE_FOUND_NOT_REPLAYED",
+    "p1e": "NOT_SATISFIED_RESOURCE_TRACE_ONLY",
+    "historical_scoped_a16_go_present": true,
+    "historical_scoped_a16_go_revoked_by_this_audit": false,
+    "current_a16_replay_performed": false,
+    "current_a16_go_reestablished": false,
+    "a16_gate_entered": false,
+    "part_b_elevation": "NO_GO",
+    "next_grid_cell": "A17-P1e_RED_ONLY",
+    "second_grid_cell_opened": false
+  },
+  "explicit_non_authorizations": {
+    "kernel_new_main_implementation": false,
+    "gamma_hash_semantic_change": false,
+    "d1_planner_green": false,
+    "a16_gate_execution_or_go": false,
+    "named_open_change": false,
+    "part_b_or_path_b_elevation": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": {
+    "classification": "docs_only_step_1_readonly_audit",
+    "created": [
+      "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json"
+    ],
+    "modified_existing_files": [],
+    "runtime_modified": false,
+    "schema_or_config_modified": false,
+    "test_or_fixture_modified": false,
+    "authority_state_modified": false
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "fixture_id": "kernel-a17-p1e-depth1-planner-v0.1",
+  "fixture_origin": "SYNTHETIC_FROZEN_MODEL_DECLARATION_ONLY",
+  "case_id": "TWIN-COUNTEREXAMPLE-001",
+  "source_pins": {
+    "gamma_path": "configs/gamma-kernel-v0.8.yaml",
+    "gamma_content_sha256": "6477d93af84295e9affa3f6c1fbf1639c1dda29a45ba810d672e4d9a8a350966",
+    "counterexample_path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/counterexample.json",
+    "action_catalog_path": "configs/action-catalog-kernel-v0.8.yaml",
+    "action_catalog_content_sha256": "6442c1099fd0e0a43f081b5e912b516c8feec3d2dbdd604b9a59020ee43c066b",
+    "historical_resource_trace_path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+    "historical_resource_trace_content_sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318"
+  },
+  "request_seed": {
+    "case_binding": {
+      "case_id": "TWIN-COUNTEREXAMPLE-001",
+      "gamma_hash": "sha256:0bad34b682c0b4f79b2423a241880932d655b886ad539d90d53e37917cbf41d2",
+      "evidence_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "compilation_profile": "evidence_gamma_v0.8:frozen_twin"
+    },
+    "finite_domain_binding": {
+      "compiled_legal_world_count": 2,
+      "compiled_legal_worlds_hash": "sha256:6d4bbedd4bf705be0e6a0dce9cc5440948be163e496cf96c55ba2d33fd0a080c",
+      "compiled_legal_world_ids": [
+        "W-ALTERNATIVE-H3",
+        "W-SUPPORT-H1"
+      ],
+      "current_u_count": 2,
+      "current_u_hash": "sha256:7c5a081a49f45cc455bd38847d49ba219ec002fb819eda5ce880ae297fcf9a8b",
+      "current_u_world_ids": [
+        "W-ALTERNATIVE-H3",
+        "W-SUPPORT-H1"
+      ],
+      "target_variable": "initial_foothold"
+    },
+    "checker_seed": {
+      "checker_status": "COUNTEREXAMPLE_FOUND",
+      "base_status": "SAT",
+      "support_status": "SAT",
+      "alternative_status": "SAT",
+      "support_world_id": "W-SUPPORT-H1",
+      "alternative_world_id": "W-ALTERNATIVE-H3"
+    },
+    "counterexample_seed": {
+      "counterexample_id": "CEX-TWIN-001",
+      "target_level": "initial_foothold",
+      "distinguishing_predicates": [
+        "authentication_origin:H3",
+        "credential_activity:H1"
+      ]
+    },
+    "action_catalog_binding": {
+      "schema_version": "0.8.0",
+      "catalog_id": "action-catalog-kernel-v0.8",
+      "catalog_version": "0.8.0",
+      "declared_catalog_hash": "sha256:0cd3ee1331aef81ca955e973ae9bc30c364acd2a2f6c34247438f4dd94add8eb",
+      "catalog_content_sha256": "6442c1099fd0e0a43f081b5e912b516c8feec3d2dbdd604b9a59020ee43c066b",
+      "catalog_path": "configs/action-catalog-kernel-v0.8.yaml",
+      "reference_mode": "EXACT_PATH_AND_HASH_NO_WILDCARD"
+    },
+    "p4_seed": {
+      "allowed_action_ids": [
+        "query_auth_H1_1000_1015",
+        "query_logon_origin_H3"
+      ],
+      "forbidden_action_ids": [
+        "oracle_reveal_true_initial_foothold",
+        "use_hidden_recoverable_claim_ids"
+      ],
+      "catalog_actions_examined": 8
+    },
+    "partition_seeds": [
+      {
+        "action_id": "query_auth_H1_1000_1015",
+        "world_outcomes": [
+          {
+            "world_id": "W-ALTERNATIVE-H3",
+            "outcome": "absent"
+          },
+          {
+            "world_id": "W-SUPPORT-H1",
+            "outcome": "present"
+          }
+        ]
+      },
+      {
+        "action_id": "query_logon_origin_H3",
+        "world_outcomes": [
+          {
+            "world_id": "W-ALTERNATIVE-H3",
+            "outcome": "EXTERNAL"
+          },
+          {
+            "world_id": "W-SUPPORT-H1",
+            "outcome": "H1"
+          }
+        ]
+      }
+    ],
+    "resource_budget_seed": {
+      "budget_id": "P1E-BUDGET-TWIN-001",
+      "as_of_state_hash": "sha256:3c58a7e36c9a4f6ea0307c31b4e5be497976468004ade54c50ca233a9cf19603",
+      "budget_policy": "TRACE_BINDING_ONLY_NO_COST_UTILITY_NO_CHANCE_CONSTRAINT",
+      "hard_limits": {
+        "wall_seconds": 1000,
+        "cpu_seconds": 1000,
+        "records_scanned": 100000,
+        "bytes_scanned": 10000000,
+        "analyst_seconds": 1000
+      },
+      "consumed": {
+        "wall_seconds": 0,
+        "cpu_seconds": 0,
+        "records_scanned": 0,
+        "bytes_scanned": 0,
+        "analyst_seconds": 0
+      },
+      "remaining": {
+        "wall_seconds": 1000,
+        "cpu_seconds": 1000,
+        "records_scanned": 100000,
+        "bytes_scanned": 10000000,
+        "analyst_seconds": 1000
+      },
+      "budget_status": "AVAILABLE"
+    }
+  },
+  "expected": {
+    "decision": "SELECT_ACTION",
+    "selected_action_id": "query_auth_H1_1000_1015",
+    "tied_action_ids": [
+      "query_auth_H1_1000_1015",
+      "query_logon_origin_H3"
+    ],
+    "raw_value_numerator": 2,
+    "raw_value_denominator": 2,
+    "reduced_value_numerator": 1,
+    "reduced_value_denominator": 1,
+    "tie_break_rule": "MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1"
+  },
+  "test_only_trace_seed": {
+    "status": "test_only_replay_no_execution",
+    "counts": {
+      "planner_decision_count": 1,
+      "execution_attempt_count": 0,
+      "primitive_operation_count": 0
+    },
+    "resources": {
+      "wall_seconds": 0,
+      "cpu_seconds": 0,
+      "records_scanned": 0,
+      "bytes_scanned": 0,
+      "analyst_seconds": 0
+    }
+  },
+  "authority_ceiling": {
+    "action_execution_authority": false,
+    "mint_authority": false,
+    "admission_authority": false,
+    "kernel_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": false,
+    "part_b_pass_authority": false
+  }
+}

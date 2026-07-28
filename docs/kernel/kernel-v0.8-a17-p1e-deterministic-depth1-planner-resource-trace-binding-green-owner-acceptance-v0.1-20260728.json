@@ -1,0 +1,168 @@
+{
+  "artifact_id": "kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-owner-acceptance-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a17_p1e_deterministic_depth1_planner_resource_trace_binding_green_owner_acceptance",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "decision": "accept",
+  "status": "a17_p1e_deterministic_depth1_planner_green_accepted_candidacy_only",
+  "authority_base_commit": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+  "reviewed_tip": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+  "reviewed_branch": "codex/kernel-v0.8-a17-p1e-red-v0.1",
+  "phase_accepted": "A17_P1E_GREEN_DETERMINISTIC_DEPTH1_PLANNER_AND_RESOURCE_TRACE_BINDING",
+  "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+  "part_b_elevation": "NO_GO",
+  "effective_surface_after_acceptance": {
+    "planner_api": "evaluate_depth1_planner_request(request)",
+    "resource_trace_api": "validate_resource_trace_binding(decision_record, trace_row)",
+    "planner_mode": "M3-KERNEL-D1",
+    "request_field_count": 14,
+    "decision_field_count": 17,
+    "value_measure": "UNIFORM_EXACT_INTEGER_AND_RATIONAL_COUNTING_OVER_FROZEN_CURRENT_U",
+    "tie_break": "MAX_EXACT_WORLD_REDUCTION_THEN_UTF8_ACTION_ID_ASC_V0_1",
+    "select_action_is_candidacy_metadata_only": true,
+    "action_execution_enabled": false,
+    "production_registration_enabled": false,
+    "system_state_authority": false,
+    "stop_authority": false,
+    "probability_model": null,
+    "planning_confidence": null,
+    "historical_resource_trace_rewrite": false,
+    "a16_gate_reestablished": false,
+    "second_a17_grid_cell_opened": false
+  },
+  "pinned_step1_gap_audit": {
+    "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+    "content_sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2",
+    "owner_decision": "accept"
+  },
+  "pinned_owner_go_authorization": {
+    "path": "docs/kernel/kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728.json",
+    "content_sha256": "c6005320921bf28a8bbf0bbfd92b46e815a8d1bcc520a434f3d38048922b7dee",
+    "decision": "AUTHORIZE_KERNEL_V0_8_A17_P1E_RED_ONLY"
+  },
+  "pinned_red_design": {
+    "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-design-v0.1-20260728.json",
+    "content_sha256": "04a0f4337d04d63a9b026c400b8769bf4dca92f27b9aba3dd4bc0cfb4ce55927",
+    "owner_decision": "accept"
+  },
+  "pinned_red_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-review-packet-v0.1-20260728.json",
+    "content_sha256": "9dab0e81d89afefd1a6fd69dfc07a2522673527115001f80539b5f657488babd"
+  },
+  "pinned_green_design": {
+    "path": "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-design-v0.1-20260728.json",
+    "content_sha256": "084ecdacfb248453ecbc2ab8d3ecefe32cc807b9e668aa688be42dd157143693"
+  },
+  "pinned_green_review_packet": {
+    "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-green-review-packet-v0.1-20260728.json",
+    "content_sha256": "feeb10dfafc48fe39c5045f1d0de260682a28795bfcdecf1beda1a270fe0c171"
+  },
+  "accepted_runtime_artifacts": {
+    "planner": {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "entrypoints": [
+        "evaluate_depth1_planner_request",
+        "validate_resource_trace_binding"
+      ]
+    },
+    "fixture": {
+      "path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "content_sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b"
+    },
+    "unit_tests": {
+      "path": "tests/unit/test_kernel_a17_p1e_depth1_planner.py",
+      "content_sha256": "8ecb98b04bb29c87f4739c8aae63716d2a39aac36ceb9d1164639d54052687ff"
+    },
+    "integration_tests": {
+      "path": "tests/integration/test_kernel_a17_p1e_resource_trace_binding.py",
+      "content_sha256": "f856fc97623a1972e85bb9e29a13da793aadde5013bcd8076d94bf866d3cd668"
+    }
+  },
+  "protected_dependency_zero_drift": {
+    "gamma": {
+      "path": "configs/gamma-kernel-v0.8.yaml",
+      "content_sha256": "6477d93af84295e9affa3f6c1fbf1639c1dda29a45ba810d672e4d9a8a350966"
+    },
+    "action_catalog": {
+      "path": "configs/action-catalog-kernel-v0.8.yaml",
+      "content_sha256": "6442c1099fd0e0a43f081b5e912b516c8feec3d2dbdd604b9a59020ee43c066b"
+    },
+    "p4_selection": {
+      "path": "src/actions/selection.py",
+      "content_sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83"
+    },
+    "p5_executor": {
+      "path": "src/executor/deterministic.py",
+      "content_sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a"
+    },
+    "p10_e2e": {
+      "path": "src/cli/kernel_e2e.py",
+      "content_sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60"
+    },
+    "twin_resource_trace": {
+      "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+      "content_sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318"
+    },
+    "supply_chain_resource_trace": {
+      "path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/resource_trace.jsonl",
+      "content_sha256": "102f43c3210208101f393580b6d4afe7573f9be0e081edabb97d28f19b9efee5"
+    }
+  },
+  "independent_verification": {
+    "tip_match": true,
+    "branch_match": true,
+    "green_deliverable_sha_match": "6/6 OK",
+    "auth_and_red_sha_match": "4/4 OK",
+    "protected_pins_zero_drift": true,
+    "owner_local_p1e_tests": "12/12 PASS",
+    "combined_reported": "47/47 PASS",
+    "fail_closed_matrix_coverage": "P1E-FC-001_through_P1E-FC-020",
+    "historical_resource_trace_zero_drift": "2/2",
+    "production_registration_enabled": false,
+    "action_execution_enabled": false,
+    "hard_ban_exact": true,
+    "self_sha_placeholder_count": 0,
+    "porcelain_before_owner_acceptance": "exact_4_prereq_docs_plus_6_green",
+    "write_side_effects_in_reviewed_delivery": "only_exact_6_green_allowlist_files"
+  },
+  "accepted_for": [
+    "a17_p1e_deterministic_depth1_candidacy_planner",
+    "exact_14_field_request_and_17_field_decision_shapes",
+    "uniform_exact_rational_V_a_and_utf8_action_id_tie_break",
+    "decision_basis_attempt_id_and_readonly_resource_trace_binding",
+    "fail_closed_matrix_and_protected_zero_drift"
+  ],
+  "scope_note": "Accepted GREEN closes the A17-P1e gap identified by the Step-1 readonly audit: a frozen finite-domain depth-1 next-action candidacy classifier with exact V(a) counting and a readonly resource-trace binding receipt. It does not execute actions, rewrite historical traces, re-enter A16, open a second A17 cell, grant Part B/Path B elevation, mint, admission, Kernel/E_case write, certificate, system-state authority, or CERTIFIED_STOP.",
+  "authorized_now": {
+    "green_owner_acceptance_record": true,
+    "use_of_accepted_depth1_planner_for_exact_candidacy_classification": true,
+    "a16_gate_replay_or_go": false,
+    "part_b_or_path_b_elevation": false,
+    "production_action_execution": false,
+    "mint_admission_kernel_write": false,
+    "git_commit": true,
+    "git_push": true,
+    "pull_request": true,
+    "merge": false
+  },
+  "not_authorized": {
+    "a16_gate_replay_or_go": false,
+    "second_a17_grid_cell": false,
+    "full_m3_star": false,
+    "part_b_or_path_b_elevation": false,
+    "named_open_widening": false,
+    "production_action_execution": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "system_state_authority": false,
+    "certificate_or_certified_stop": false,
+    "gamma_hash_semantic_change": false,
+    "infer_part_b_pass_from_kernel_green": false,
+    "merge": false
+  },
+  "recommended_next": "Commit full A17-P1e stack (Step-1 audit + RED + GREEN + this acceptance), push/PR, Owner merges via browser. Functional next remains separately authorized (for example current-tip A16 replay or another A17 cell). Do not treat SELECT_ACTION as execution authority or unrestricted Part B elevation."
+}

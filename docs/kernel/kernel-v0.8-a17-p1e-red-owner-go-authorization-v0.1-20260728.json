@@ -1,0 +1,105 @@
+{
+  "artifact_id": "kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728",
+  "artifact_type": "kernel_v0_8_a17_p1e_red_only_owner_go_authorization",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel",
+  "decision": "AUTHORIZE_KERNEL_V0_8_A17_P1E_RED_ONLY",
+  "authority_base_ref": "origin/main",
+  "authority_base_commit": "b526dfc72f32d125b25d0cf327b8fcdab6a71466",
+  "branch": "codex/kernel-v0.8-a17-p1e-red-v0.1",
+  "prerequisite_audit": {
+    "path": "docs/kernel/kernel-v0.8-mainline-step1-readonly-gap-audit-v0.1-20260728.json",
+    "sha256": "9458786fb63980c1dd9d6d639156199af748dee335e634cd65baa3a6c7c825e2",
+    "owner_decision": "accept",
+    "p1e_assessment": "NOT_SATISFIED",
+    "only_next_grid_cell": "A17-P1e_RED_ONLY"
+  },
+  "specification_boundary": {
+    "specification_is_not_authority": true,
+    "opened_grid_cell": "A17-P1e",
+    "opened_phase": "RED_DESIGN_ONLY",
+    "second_grid_cell_opened": false,
+    "green_authorized": false,
+    "runtime_authorized": false
+  },
+  "goal": {
+    "slice_title": "deterministic depth-1 planner plus resource-trace binding contract",
+    "planner_depth": "M3-KERNEL-D1",
+    "design_ceiling": "CLOSED_WORLD_DETERMINISTIC_DECISION_CONTRACT_ONLY",
+    "statement": "Design a fail-closed, frozen finite-domain depth-1 action decision and deterministic resource-trace binding contract without implementing or executing a planner."
+  },
+  "authorized_deliverables": [
+    "docs/kernel/kernel-v0.8-a17-p1e-red-owner-go-authorization-v0.1-20260728.json",
+    "docs/kernel/kernel-v0.8-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-deterministic-depth1-planner-resource-trace-binding-red-review-packet-v0.1-20260728.json"
+  ],
+  "required_contract_questions": [
+    "Freeze U, Checker and counterexample results, exact action-catalog identity, and current resource-budget declaration.",
+    "Define V(a)=E[|U|-|U_o|] for deterministic observations without learned probabilities, stochastic observation, planning confidence, or hidden ground truth.",
+    "Define an exact deterministic tie-break and explicit ABSTAIN or DENY when no qualifying action exists.",
+    "Define a planner decision record that binds the selected action, all input identities, exact value calculation, tie-break basis, and a deterministic subsequent resource-trace attempt identifier.",
+    "Fail closed on stochastic or missing observation models, stale hashes, wildcard catalogs, hidden or oracle identifiers, resource-trace mismatch, and any STOP request.",
+    "Plan fixed-case decision-to-resource-trace binding tests without production action execution or finite-domain expansion."
+  ],
+  "red_exit_only": [
+    "design contract",
+    "closed-world request and decision shapes",
+    "fail-closed matrix",
+    "fixture and test plan",
+    "Kernel Owner review packet"
+  ],
+  "explicit_non_substitutes": [
+    {
+      "artifact": "Part B B5 planner",
+      "reason": "execution is NOT_ESTABLISHED and planner_execution_authority=false"
+    },
+    {
+      "artifact": "experiment-track planner-decision or cost records",
+      "reason": "not a frozen Part A Kernel D1 decision implementation"
+    },
+    {
+      "artifact": "PB-SI-008 named-open",
+      "reason": "structural candidacy classification only"
+    },
+    {
+      "artifact": "P4 action selection, P5 deterministic executor, or P10 E2E driver",
+      "reason": "no D1 value or next-action decision policy"
+    }
+  ],
+  "hard_boundaries": [
+    "Specification is not authority; this GO opens only the A17-P1e RED grid cell.",
+    "Path A readonly or design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "The historical 2026-07-22 scoped A16 GO is neither replayed nor expanded by this slice."
+  ],
+  "forbidden_in_this_slice": {
+    "green_design_or_implementation": false,
+    "planner_runtime": false,
+    "fixture_implementation": false,
+    "test_implementation": false,
+    "production_action_execution": false,
+    "a16_gate_replay_or_go_reestablishment": false,
+    "part_b_or_path_b_opening": false,
+    "named_open_widening": false,
+    "production_registration": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_issue": false,
+    "certified_stop": false,
+    "gamma_hash_semantic_change": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "review_gate": {
+    "stop_after_red": true,
+    "requested_owner_decision": "accept|request_revision|reject",
+    "green_requires_new_owner_authorization_after_red_acceptance": true
+  },
+  "write_side_effects": {
+    "authorized": "owner_go_json_plus_red_design_json_plus_owner_review_packet_json_only",
+    "runtime_or_schema_change": false,
+    "git_delivery": "NOT_AUTHORIZED"
+  }
+}
