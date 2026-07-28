@@ -1,0 +1,272 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-a17-p1e-twin-p10-readonly-wiring-green-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_a17_p1e_twin_p10_readonly_caller_wiring_green_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "green_review_packet_complete_pending_kernel_owner_decision",
+  "owner_decision": null,
+  "requested_owner_decision": "accept|request_revision|reject",
+  "authority_base_commit": "7ba5867f72c713fd8ee017439110984ff4ef30a5",
+  "branch": "codex/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-v0.1",
+  "phase": "A17_P1E_TWIN_P10_READONLY_CALLER_WIRING_GREEN",
+  "green_started": true,
+  "green_implementation_complete": true,
+  "deliverable_pins": [
+    {
+      "role": "owner_go_authorization",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-owner-go-authorization-v0.1-20260728.json",
+      "sha256": "b582178822621c7407e97b847b795db62e6d5002ddda21024ce9b26173ea18c3",
+      "status": "UNCHANGED_MATCH"
+    },
+    {
+      "role": "accepted_red_design",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-red-design-v0.1-20260728.json",
+      "sha256": "0848ddf4b1cf5c495082d0e4d05c62eeff0542fb1c9840ab1c537c59fd0f75c4",
+      "status": "UNCHANGED_MATCH"
+    },
+    {
+      "role": "accepted_red_review_packet",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-twin-p10-readonly-wiring-red-review-packet-v0.1-20260728.json",
+      "sha256": "f94bcfcfe1621142bb2a5a16ef01b55038cac79da8d50c830202521ece277865",
+      "status": "UNCHANGED_MATCH"
+    },
+    {
+      "role": "green_caller_runtime",
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9"
+    },
+    {
+      "role": "green_fixture",
+      "path": "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json",
+      "sha256": "1191ba71a41c19131d7368df65ac8d345d8865af1aec59e300f7435d7536ddee"
+    },
+    {
+      "role": "green_unit_tests",
+      "path": "tests/unit/test_kernel_a17_p1e_twin_p10_readonly_wiring.py",
+      "sha256": "2fe602c2a8d01ede3c363726eed5bee20bc7f640f50ac1d8c9dd61e20e9b49b9"
+    },
+    {
+      "role": "green_integration_tests",
+      "path": "tests/integration/test_kernel_a17_p1e_twin_p10_readonly_wiring.py",
+      "sha256": "be0e0e2ae198dd1e9a5867ec2bbbf0d8e08882ecca6a59fae48325d04b2288e8"
+    },
+    {
+      "role": "green_design",
+      "path": "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-design-v0.1-20260728.json",
+      "sha256": "9d1b547a5d23ae9f6465601479f3bad5aeb9ad90b2c79c6a64737b26226007be"
+    }
+  ],
+  "review_summary": {
+    "implemented_api": "evaluate_twin_p10_fixed_case_for_depth1_candidacy(caller_input, *, test_only_authority)",
+    "caller_class": "TEST_ONLY_NO_PRODUCTION_REGISTRATION",
+    "case_scope": "TWIN-COUNTEREXAMPLE-001_ONLY",
+    "result_ceiling": "NEXT_ACTION_CANDIDACY_SIDECAR_ONLY",
+    "default_success": "CANDIDACY_SIDECAR_EMITTED_NO_TRACE_BINDING",
+    "selected_action_id": "query_auth_H1_1000_1015",
+    "decision_returned_unmodified": true,
+    "historical_receipts_returned_unmodified": true,
+    "P10_modified": false,
+    "P5_called_by_caller": false,
+    "production_registration_enabled": false
+  },
+  "accepted_red_contract_execution": [
+    {
+      "contract": "exact five-field test-only authority before gate",
+      "status": "PASS",
+      "evidence": "Unit negative matrix includes missing, empty, extra, wrong SHA, registration true, and integer-zero type confusion; gate call count remains zero."
+    },
+    {
+      "contract": "exact twelve-field caller input and fixed case",
+      "status": "PASS",
+      "evidence": "Fixture pins NONE plus three exact historical modes; wrong case, wildcard, stale hash, extra fields, U expansion, and authority requests deny before gate."
+    },
+    {
+      "contract": "exact Twin public input to fourteen-field P1e request mapping",
+      "status": "PASS",
+      "evidence": "Captured request equals the accepted field set and pinned request/world/catalog/P4/partition/budget hashes."
+    },
+    {
+      "contract": "unmodified direct P1e decision inside eight-field sidecar",
+      "status": "PASS",
+      "evidence": "Unit test compares the nested decision value-for-value with a direct call using the captured request."
+    },
+    {
+      "contract": "no observation-as-model laundering",
+      "status": "PASS",
+      "evidence": "The observation JSONL is SHA-checked only; a load recorder proves it is never parsed for partition construction."
+    },
+    {
+      "contract": "determinism and candidacy-only ceiling",
+      "status": "PASS",
+      "evidence": "Identical calls return identical sidecars; request, record, attempt, and receipt hashes replay; probability/confidence are null and all authority flags are false."
+    },
+    {
+      "contract": "P1E-TWIN-TRACE-FINDING-001 fail-closed historical binding",
+      "status": "PASS",
+      "evidence": "All three exact five-field historical rows are passed unmodified and return DENY_TRACE_BINDING_MISMATCH; no MATCH is fabricated and the trace SHA is unchanged."
+    },
+    {
+      "contract": "P10 zero drift and sidecar non-amalgamation",
+      "status": "PASS",
+      "evidence": "Protected P10 bytes match, existing tests pass, and outcome fields before/after an independent caller invocation are equal with planner_decision absent."
+    }
+  ],
+  "P1E_TWIN_TRACE_FINDING_001_review": {
+    "owner_accepted": true,
+    "green_wording_correction": "Historical rows have five top-level fields; the earlier RED word 'seven' is not repeated as a factual claim in GREEN docs.",
+    "historical_row_fields": [
+      "attempt_id",
+      "action_id",
+      "status",
+      "counts",
+      "resources"
+    ],
+    "missing_required_P1e_hash_fields": [
+      "planner_decision_record_hash",
+      "resource_budget_hash"
+    ],
+    "attempts_checked": "3/3",
+    "deny_receipts": "3/3",
+    "historical_bytes_rewritten_or_enriched": false,
+    "fabricated_MATCH_TEST_ONLY_REPLAY": false,
+    "companion_match_fixture_created": false,
+    "historical_trace_sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318",
+    "status": "PASS"
+  },
+  "test_results": [
+    {
+      "suite": "new caller directed tests",
+      "command": "python -m unittest tests.unit.test_kernel_a17_p1e_twin_p10_readonly_wiring tests.integration.test_kernel_a17_p1e_twin_p10_readonly_wiring",
+      "tests_run": 13,
+      "passed": 13,
+      "failed": 0,
+      "errors": 0,
+      "status": "PASS"
+    },
+    {
+      "suite": "Owner-required combined P1e/P10/caller regression",
+      "command": "python -m unittest tests.unit.test_kernel_a17_p1e_depth1_planner tests.integration.test_kernel_a17_p1e_resource_trace_binding tests.integration.test_twin_kernel_e2e_p10 tests.unit.test_kernel_a17_p1e_twin_p10_readonly_wiring tests.integration.test_kernel_a17_p1e_twin_p10_readonly_wiring",
+      "tests_run": 29,
+      "passed": 29,
+      "failed": 0,
+      "errors": 0,
+      "status": "PASS"
+    }
+  ],
+  "protected_pin_reverify": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/unit/fixtures/kernel_a17_p1e_depth1_planner_v0.1.json",
+      "sha256": "1154c5dec1073e0f42efa734212a6658d9fd9c4492016bbfd484ed7a502d088b",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/actions/selection.py",
+      "sha256": "16f26fa8ca5fa0fe39a9b901b8b13a099f5527ed0c21f77718fd57763f847a83",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/executor/deterministic.py",
+      "sha256": "4e5ec71edc536bfef70fe19f86a723ac57b4ab5370bc845fa074ad2d107ba32a",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/cli/kernel_e2e.py",
+      "sha256": "8a7807c32d70e98ac5a36bda3a56f2279ebffbe23e0d2c6a11286bdba9208d60",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/integration/test_twin_kernel_e2e_p10.py",
+      "sha256": "a332cbce5f8bdc9b0fd4467fbc09d0255d6099716c0405ffc5b47a13cdd26254",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/integration/twin_kernel_inputs.py",
+      "sha256": "16323f3c415e903eeb2e72bdb94e116338c1770d8212bbf3f5917d48b4c4bdf3",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/fixtures/TWIN-COUNTEREXAMPLE-001/expected/resource_trace.jsonl",
+      "sha256": "2c3e5da8692070fb44e594666e337bcca6c4d3d09ad8662eabcbd1ee45c92318",
+      "status": "MATCH"
+    },
+    {
+      "path": "tests/fixtures/TWIN-SUPPLY-CHAIN-002/expected/resource_trace.jsonl",
+      "sha256": "102f43c3210208101f393580b6d4afe7573f9be0e081edabb97d28f19b9efee5",
+      "status": "MATCH"
+    }
+  ],
+  "P10_zero_drift_review": {
+    "driver_byte_match": true,
+    "existing_test_byte_match": true,
+    "existing_planner_decision_absence_assertion_preserved": true,
+    "existing_P10_outcome_schema_changed": false,
+    "caller_imports_or_calls_P10_driver": false,
+    "sidecar_merged_into_P10": false,
+    "status": "PASS"
+  },
+  "allowlist_audit": {
+    "authorized_green_paths": 6,
+    "green_paths_created_or_modified": 6,
+    "extra_paths": 0,
+    "accepted_red_paths_retained_unchanged": 3,
+    "protected_paths_modified": 0,
+    "status": "PASS"
+  },
+  "hard_boundaries": [
+    "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "SELECT_ACTION remains candidacy metadata only and grants no execution or STOP authority.",
+    "Default NONE-mode success grants no trace authority.",
+    "A denied historical trace receipt does not modify or invalidate the independent candidacy decision, but grants no trace-bound authority.",
+    "P10 remains an unchanged fixed-case regression boundary."
+  ],
+  "explicit_non_authorizations": {
+    "production_registration": false,
+    "action_execution": false,
+    "P5_wiring": false,
+    "P10_outcome_schema_change": false,
+    "system_state_authority": false,
+    "historical_trace_rewrite_or_enrichment": false,
+    "fabricated_historical_match": false,
+    "companion_match_fixture": false,
+    "part_b_or_path_b": false,
+    "named_open_widening": false,
+    "full_m3_star": false,
+    "second_a17_grid_cell": false,
+    "finite_domain_expansion": false,
+    "mint": false,
+    "admission": false,
+    "kernel_or_e_case_write": false,
+    "certificate_or_certified_stop": false,
+    "git_commit": false,
+    "git_push": false,
+    "pull_request": false
+  },
+  "write_side_effects": {
+    "classification": "exact_six_file_green_allowlist_plus_three_unchanged_red_files",
+    "green_files": [
+      "src/planner/twin_p10_readonly_wiring.py",
+      "tests/unit/fixtures/kernel_a17_p1e_twin_p10_readonly_wiring_v0.1.json",
+      "tests/unit/test_kernel_a17_p1e_twin_p10_readonly_wiring.py",
+      "tests/integration/test_kernel_a17_p1e_twin_p10_readonly_wiring.py",
+      "docs/kernel/kernel-v0.8-a17-p1e-twin-p10-readonly-wiring-green-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-a17-p1e-twin-p10-readonly-wiring-green-review-packet-v0.1-20260728.json"
+    ],
+    "extra_files": [],
+    "protected_file_changes": 0,
+    "git_delivery": "NOT_AUTHORIZED",
+    "self_sha256_placeholder": false
+  },
+  "stop_condition": {
+    "green_deliverables_complete": true,
+    "owner_decision": null,
+    "stop_for_kernel_owner_review": true,
+    "requested_decision": "accept|request_revision|reject",
+    "commit_push_or_pull_request": false
+  }
+}
