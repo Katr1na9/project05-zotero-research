@@ -1,0 +1,79 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-policy-v0.1
+policy_version: "0.1.0"
+status: LOCAL_GAP_CATALOG_RECORD_ONLY_NO_AUTHORITY_FLIP
+authorized_slice: PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP
+admissible_implementation_ids:
+  - part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+wildcards: false
+fallback: false
+expected_implementation_identity_hash: "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+expected_si002_contract_record_hash: "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+expected_si002_contract_record_content_sha256: 24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421
+expected_si002_invocation_record_hash: "sha256:1ebee7beb9621d90f87b4f192c19c650a3db4bb4a1c4558546f2e5168e52860c"
+expected_si002_invocation_record_content_sha256: bdbb4a6aea269503eb127bbbc949517ee995f042d09a3810e8af96bfbe30b851
+expected_si002_boundary_record_hash: "sha256:440ebcc9489c3a6a850e541f78331be992e6ffede4f9c468676de66aad344afe"
+expected_si002_boundary_record_content_sha256: df8a28daeb194a99019dc348e45a51d0906da8b8db9fda154f4c7a0848b923a5
+expected_si002_boundary_acceptance_content_sha256: faf1df2bdd62352690cf9b7871d3c618d99c36ec84d29425c788a740d9226b8b
+catalog_id: part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-catalog-v0.1
+prerequisite_catalog:
+  - prerequisite_id: EXPLICIT_LATER_OWNER_FLIP_GO
+    class: AUTHORITY
+    current_status: MISSING
+    satisfaction_rule: "Requires a later separate Kernel Owner authorization artifact whose exact cell explicitly permits evaluation_execution_authority=true; a request field or catalog claim cannot self-satisfy it."
+  - prerequisite_id: ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY
+    class: CAPABILITY_IDENTITY
+    current_status: MISSING
+    satisfaction_rule: "Requires a separately reviewed and accepted closed-world evaluator capability identity with exact implementation and dependency hashes, no wildcard, and no fallback."
+  - prerequisite_id: ACCEPTED_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_OR_RECORD
+    class: EVIDENCE_RECORD
+    current_status: MISSING
+    satisfaction_rule: "Requires a separately accepted local hash-bound evaluator-execution evidence or record contract; the existing test-only runner-invocation record is not a substitute."
+  - prerequisite_id: ACTUAL_EVALUATOR_INVOCATION_EVIDENCE
+    class: OBSERVATION
+    current_status: MISSING
+    satisfaction_rule: "Requires evidence that an accepted evaluator capability was actually invoked under the separately authorized bounded mode; current actual_evaluator_invocation=false cannot satisfy it."
+  - prerequisite_id: CLOSED_WORLD_EVIDENCE_TO_AUTHORITY_DECISION_BINDING
+    class: DECISION_BINDING
+    current_status: MISSING
+    satisfaction_rule: "Requires a separately accepted fail-closed mapping from exact accepted evidence and Owner authority to an authority decision; evidence alone and Owner GO alone are each insufficient."
+catalog_hash: "sha256:7b15dfbf0a8580a1cc697591343617c148b0e9b29215547a62621efd6c6db54c"
+positive_decision: LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CATALOG_VALID_NO_FLIP
+record_scope: LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CONTRACT_OR_RECORD_ONLY
+authority_effect: NONE_GAP_CATALOG_RECORD_ONLY
+reason_codes:
+  LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CATALOG_VALID_NO_FLIP: B5-SI002-FLIP-GAP-000-VALID-NO-FLIP
+  DENY_UNKNOWN_IMPLEMENTATION: B5-SI002-FLIP-GAP-DENY-UNKNOWN-ID
+  DENY_LEGACY_IMPLEMENTATION: B5-SI002-FLIP-GAP-DENY-LEGACY-ID
+  DENY_MISSING_CHAIN_BINDING: B5-SI002-FLIP-GAP-DENY-MISSING-BINDING
+  DENY_HASH_MISMATCH: B5-SI002-FLIP-GAP-DENY-HASH-MISMATCH
+  DENY_CATALOG_SHAPE_MISMATCH: B5-SI002-FLIP-GAP-DENY-CATALOG-SHAPE
+  DENY_UNVERIFIED_PREREQUISITE_SATISFACTION: B5-SI002-FLIP-GAP-DENY-UNVERIFIED
+  DENY_SILENT_AUTHORITY_FLIP: B5-SI002-FLIP-GAP-DENY-SILENT-FLIP
+  DENY_AUTHORITY_REQUEST: B5-SI002-FLIP-GAP-DENY-AUTHORITY
+  DENY_NON_CONTRACT_INPUT: B5-SI002-FLIP-GAP-DENY-NON-CONTRACT
+  DENY_NON_SUBSTITUTE_NO_AUTHORITY_ELEVATION: B5-SI002-FLIP-GAP-DENY-NON-SUBSTITUTE
+  DENY_SI003_REMAINS_OPEN: B5-SI002-FLIP-GAP-DENY-SI003-OPEN
+authority_ceiling:
+  record_scope: LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CONTRACT_OR_RECORD_ONLY
+  authority_effect: NONE_GAP_CATALOG_RECORD_ONLY
+  missing_prerequisite_count: 5
+  prerequisites_satisfied: false
+  actual_runner_invocation_record_fact: true
+  actual_evaluator_invocation: false
+  evaluation_execution_authority: false
+  planner_execution_authority: false
+  scalarization_authority: false
+  performance_claim_authority: false
+  superiority_claim_authority: false
+  path_b_write_authority: false
+  mint_authority: false
+  kernel_or_e_case_write_authority: false
+  certificate_authority: false
+  stop_authority: NONE
+  production_registration_enabled: false
+  pb_b5_si_003_state: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+  part_b_pass: false
+  full_m3_star: false
+hard_ban: "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+hash: "sha256:5f2ff813625b4e0f3abfbe954210a04f8569435a6b2819e36814921709c85da1"

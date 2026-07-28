@@ -1,0 +1,237 @@
+{
+  "artifact_id": "part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-green-design-v0.1-20260728",
+  "artifact_type": "part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap_green_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "GREEN_IMPLEMENTED_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_GREEN",
+    "authority_base_commit": "77b3407214e954116e5c826e8c4fc4444325e94d",
+    "branch": "codex/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_GREEN",
+    "maximum_positive_record": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CATALOG_VALID_NO_FLIP",
+    "maximum_scope": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CONTRACT_OR_RECORD_ONLY",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "part_b_elevation": "NO_GO"
+  },
+  "accepted_red_pins": [
+    {
+      "role": "OWNER_GO_AUTHORIZATION",
+      "path": "docs/kernel/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "fbe9540fb50f3a6193844bc6913fadc27bf11d373ff78454a9ca1fa892c451c6",
+      "status": "MATCH"
+    },
+    {
+      "role": "RED_DESIGN",
+      "path": "docs/kernel/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-red-design-v0.1-20260728.json",
+      "content_sha256": "dae6da53a735c3b9b9961dc17f59c9d7127b882592037861847636e8b7fefc37",
+      "status": "MATCH",
+      "owner_decision": "accept"
+    },
+    {
+      "role": "RED_REVIEW_PACKET",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-red-review-packet-v0.1-20260728.json",
+      "content_sha256": "a07b42a79c7466393cb29ebe26c1983fa5771b770957989e2985c63c0274933b",
+      "status": "MATCH",
+      "owner_decision": "accept"
+    }
+  ],
+  "implementation": {
+    "module": "src/scope/part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+    "api": "evaluate_si002_evaluation_execution_authority_flip_prerequisite_gap_catalog",
+    "signature": "evaluate_si002_evaluation_execution_authority_flip_prerequisite_gap_catalog(catalog_request)",
+    "behavior": "Pure closed-world missing-prerequisite catalog validator and deterministic no-flip record builder only.",
+    "calls_d1": false,
+    "calls_twin": false,
+    "calls_si002_harness_runtime": false,
+    "calls_si002_invocation_runtime": false,
+    "calls_si002_boundary_runtime": false,
+    "calls_runner_or_evaluator": false,
+    "writes_state": false,
+    "production_registration_enabled": false
+  },
+  "new_artifact_pin_table": [
+    {
+      "role": "CLOSED_WORLD_SCHEMA",
+      "path": "schemas/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap.schema.json",
+      "content_sha256": "504cc39ba0409f253867294e3de0554e53ef1d51526ed737c5bbf62fc531777a",
+      "status": "MATCH"
+    },
+    {
+      "role": "NO_FLIP_POLICY",
+      "path": "configs/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-policy-v0.1.yaml",
+      "content_sha256": "11cba6498f136e10367d3884bcf863bc9d2da66a92a17d54ccd781afa823bf3d",
+      "canonical_document_hash": "sha256:5f2ff813625b4e0f3abfbe954210a04f8569435a6b2819e36814921709c85da1",
+      "status": "MATCH"
+    },
+    {
+      "role": "POSITIVE_NO_FLIP_RECORD",
+      "path": "configs/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-record-v0.1.yaml",
+      "content_sha256": "9066ca092e6d0cf6888e3846a85b3656d574bf590b856da7e993ba69a0d1d5f3",
+      "canonical_document_hash": "sha256:520cac2587d29fb2fe569f17300d2ac28c8184e1f2a62f129136e6b738e0b092",
+      "status": "MATCH"
+    },
+    {
+      "role": "PURE_CATALOG_VALIDATOR",
+      "path": "src/scope/part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+      "content_sha256": "c97d813817c4dbf7a789a187de65aad594ef9f93787280c7cb10a24e52afd793",
+      "status": "MATCH"
+    },
+    {
+      "role": "DIRECTED_TESTS",
+      "path": "tests/unit/test_part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+      "content_sha256": "395886ef9d6a9e3adcc8cc0fd253dd08b34a862d6aedb07541f63dd1ef1b2c63",
+      "status": "MATCH"
+    }
+  ],
+  "closed_world_contract": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_id_count": 1,
+    "wildcards": false,
+    "fallback": false,
+    "request_field_count": 24,
+    "record_field_count": 22,
+    "decision_enum_count": 12,
+    "additional_properties": false,
+    "catalog_id": "part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-catalog-v0.1",
+    "catalog_entry_count": 5,
+    "catalog_hash": "sha256:7b15dfbf0a8580a1cc697591343617c148b0e9b29215547a62621efd6c6db54c",
+    "allowed_catalog_status_enum": [
+      "MISSING"
+    ],
+    "missing_prerequisite_ids_ordered_exact": [
+      "EXPLICIT_LATER_OWNER_FLIP_GO",
+      "ACCEPTED_EVALUATOR_EXECUTION_CAPABILITY_IDENTITY",
+      "ACCEPTED_HASH_BOUND_EVALUATOR_EXECUTION_EVIDENCE_OR_RECORD",
+      "ACTUAL_EVALUATOR_INVOCATION_EVIDENCE",
+      "CLOSED_WORLD_EVIDENCE_TO_AUTHORITY_DECISION_BINDING"
+    ]
+  },
+  "positive_record_semantics": {
+    "decision": "LOCAL_EVALUATION_EXECUTION_AUTHORITY_FLIP_PREREQUISITE_GAP_CATALOG_VALID_NO_FLIP",
+    "authority_effect": "NONE_GAP_CATALOG_RECORD_ONLY",
+    "means": "The exact five-entry missing-prerequisite catalog is structurally valid and hash-bound to the accepted SI-002 chain.",
+    "does_not_mean": [
+      "ANY_PREREQUISITE_IS_SATISFIED",
+      "ACTUAL_EVALUATOR_INVOCATION_TRUE",
+      "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+      "PLANNER_EXECUTION_AUTHORITY_TRUE",
+      "SI003_CLOSURE",
+      "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY",
+      "PART_B_PASS",
+      "FULL_M3_STAR",
+      "B6_B7_B8_B9_EXECUTION",
+      "PATH_B_WRITE",
+      "MINT",
+      "KERNEL_OR_E_CASE_WRITE",
+      "CERTIFICATE_OR_CERTIFIED_STOP"
+    ]
+  },
+  "authority_ceiling": {
+    "missing_prerequisite_count": 5,
+    "prerequisites_satisfied": false,
+    "actual_runner_invocation_record_fact": true,
+    "actual_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "production_registration_enabled": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "part_b_pass": false,
+    "full_m3_star": false
+  },
+  "fail_closed_coverage": {
+    "case_count": 20,
+    "case_ids": "B5-SI002-FLIP-GAP-FC-001_THROUGH_020",
+    "expected_decisions_in_closed_enum": "PASS_20_OF_20",
+    "no_partial_positive_record_on_failure": true,
+    "covered": [
+      "UNKNOWN_WILDCARD_OR_LEGACY_IMPLEMENTATION",
+      "MISSING_CONTRACT_INVOCATION_OR_BOUNDARY_BINDING",
+      "CONTRACT_INVOCATION_OR_BOUNDARY_HASH_MISMATCH",
+      "UNVERIFIED_PREREQUISITE_SATISFACTION",
+      "ACTUAL_EVALUATOR_INVOCATION_OR_SILENT_FLIP",
+      "PLANNER_EVALUATOR_RUNNER_OR_B6_B7_B8_B9_EXECUTION_REQUEST",
+      "SI003_CLOSURE_SCALARIZATION_PERFORMANCE_OR_SUPERIORITY",
+      "PART_B_PASS_FULL_M3_STAR_PATH_B_MINT_WRITE_CERTIFICATE_OR_STOP",
+      "EXTRA_HIDDEN_PRODUCTION_OR_PARTIAL_POSITIVE_INPUT"
+    ]
+  },
+  "protected_pin_summary": {
+    "accepted_si002_chain_pins": {
+      "pin_count": 10,
+      "matched": 10,
+      "mismatched": 0,
+      "result": "PASS"
+    },
+    "d1_twin_b5_si002_runtime_pins": {
+      "pin_count": 6,
+      "matched": 6,
+      "mismatched": 0,
+      "result": "PASS"
+    }
+  },
+  "verification": {
+    "directed_command": "python -m pytest -q tests/unit/test_part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+    "directed_result": "PASS_27_TESTS_79_SUBTESTS",
+    "regression_scope": "SI002_BOUNDARY_INVOCATION_HARNESS_D1_RESOURCE_TRACE_TWIN_B5_ADMISSION",
+    "regression_result": "PASS_119_TESTS_261_SUBTESTS",
+    "schema_policy_request_record": "PASS",
+    "canonical_policy_record_catalog_hash_replay": "PASS",
+    "accepted_red_pins": "MATCH_3_OF_3",
+    "protected_pins": "MATCH_16_OF_16",
+    "head": "77b3407214e954116e5c826e8c4fc4444325e94d",
+    "origin_main": "77b3407214e954116e5c826e8c4fc4444325e94d",
+    "commit_push_pr_performed": false
+  },
+  "exact_green_allowlist": [
+    "schemas/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap.schema.json",
+    "configs/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-policy-v0.1.yaml",
+    "configs/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-record-v0.1.yaml",
+    "src/scope/part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+    "tests/unit/test_part_b_b5_si002_evaluation_execution_authority_flip_prerequisite_gap.py",
+    "docs/kernel/part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evaluation-execution-authority-flip-prerequisite-gap-green-review-packet-v0.1-20260728.json"
+  ],
+  "write_side_effects": "exact_7_green_allowlist_files_plus_unchanged_3_red_docs",
+  "explicitly_not_authorized": [
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "ACTUAL_EVALUATOR_INVOCATION_TRUE",
+    "EVALUATOR_OR_RUNNER_INVOCATION_OR_IMPLEMENTATION",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "FULL_M3_STAR",
+    "B6_EXECUTION",
+    "B7_EXECUTION",
+    "B8_EXECUTION",
+    "B9_EXECUTION",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "PRODUCTION_REGISTRATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "exit": {
+    "green_implemented": true,
+    "authority_flip_performed": false,
+    "actual_evaluator_invocation_performed": false,
+    "owner_decision_required": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "commit_push_pr_performed": false
+  }
+}
