@@ -1,0 +1,71 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-policy-v0.1
+policy_version: "0.1.0"
+status: LOCAL_TEST_ONLY_INVOCATION_RECORD_NO_AUTHORITY_ELEVATION
+authorized_slice: PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION
+admissible_implementation_ids:
+  - part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+wildcards: false
+fallback: false
+expected_implementation_identity_hash: "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+expected_d1_admission_record_hash: "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65"
+expected_d1_admission_evidence_hash: "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c"
+expected_harness_contract_identity_hash: "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+expected_si002_contract_record_hash: "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be"
+expected_si002_contract_record_content_sha256: 24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421
+expected_si002_policy_content_sha256: 4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035
+expected_bounded_evaluation_contract_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+expected_declared_resource_limits_hash: "sha256:6ad34ed5443dae8244dbf3e4b5ce829ecb31429f38f7d9dcc27898dcd87f7c81"
+expected_failure_semantics_hash: "sha256:662294e36b8616d6eb94700b1b6f38dc758205eb4cbb42032ad184510d8e1c3e"
+synthetic_fixture_registry:
+  - fixture_id: part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-synthetic-fixed-case-v0.1
+    declared_case_id: TWIN-COUNTEREXAMPLE-001
+    fixture_origin: SYNTHETIC_LOCAL_DECLARATION_ONLY
+    fixture_content_sha256: 5587569a376a087cd648ae8bee00081fc10a5d48b17c63087407542d4412e086
+    declared_case_binding_hash: "sha256:b63a045e1b9ba151a1d1e31ffa3bcedec09306ff02a66fe09e8d2a7055d3d105"
+positive_decision: LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY
+record_scope: LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY
+authority_effect: NONE_RECORD_ONLY
+reason_codes:
+  LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY: B5-SI002-INV-000-RECORDED-TEST-ONLY
+  ABSTAIN_TIMEOUT_UNKNOWN_NO_RANK: B5-SI002-INV-ABSTAIN-TIMEOUT
+  ABSTAIN_RESOURCE_EXHAUSTION_UNKNOWN_NO_RANK: B5-SI002-INV-ABSTAIN-RESOURCE
+  ABSTAIN_UNKNOWN_NO_RANK: B5-SI002-INV-ABSTAIN-UNKNOWN
+  ABSTAIN_INFEASIBLE_SEPARATE_NO_ACTION: B5-SI002-INV-ABSTAIN-INFEASIBLE
+  DENY_TEST_ONLY_AUTHORITY_MISMATCH: B5-SI002-INV-DENY-TEST-AUTHORITY
+  DENY_UNKNOWN_IMPLEMENTATION: B5-SI002-INV-DENY-UNKNOWN-ID
+  DENY_LEGACY_IMPLEMENTATION: B5-SI002-INV-DENY-LEGACY-ID
+  DENY_MISSING_SI002_BINDING: B5-SI002-INV-DENY-MISSING-BINDING
+  DENY_HASH_MISMATCH: B5-SI002-INV-DENY-HASH-MISMATCH
+  DENY_NON_SYNTHETIC_OR_PRODUCTION_INPUT: B5-SI002-INV-DENY-NON-SYNTHETIC
+  DENY_AUTHORITY_REQUEST: B5-SI002-INV-DENY-AUTHORITY-REQUEST
+  DENY_NON_CONTRACT_INPUT: B5-SI002-INV-DENY-NON-CONTRACT
+failure_semantics:
+  timeout: ABSTAIN_TIMEOUT_UNKNOWN_NO_RANK
+  resource_exhaustion: ABSTAIN_RESOURCE_EXHAUSTION_UNKNOWN_NO_RANK
+  infeasible: ABSTAIN_INFEASIBLE_SEPARATE_NO_ACTION
+  unknown: ABSTAIN_UNKNOWN_NO_RANK
+  missing_measurement: ABSTAIN_UNKNOWN_NO_RANK
+  timeout_as_unsat: false
+  resource_exhaustion_as_zero_or_loss: false
+  infeasible_as_high_cost: false
+  automatic_retry: false
+  fallback_to_hidden_state: false
+  scalarization: false
+authority_ceiling:
+  production_registration_enabled: false
+  planner_execution_authority: false
+  evaluation_execution_authority: false
+  scalarization_authority: false
+  performance_claim_authority: false
+  superiority_claim_authority: false
+  path_b_write_authority: false
+  mint_authority: false
+  kernel_or_e_case_write_authority: false
+  certificate_authority: false
+  stop_authority: NONE
+  part_b_pass: false
+  full_m3_star: false
+  pb_b5_si_003_state: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+hard_ban: "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+hash: "sha256:dc8c78bb1cd666b1814b10fac9ca3e25544a00cb2b0d25977ae7a7ab2ddb2b7f"

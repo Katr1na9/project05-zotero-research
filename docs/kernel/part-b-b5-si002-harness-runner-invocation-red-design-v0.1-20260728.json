@@ -1,0 +1,672 @@
+{
+  "artifact_id": "part-b-b5-si002-harness-runner-invocation-red-design-v0.1-20260728",
+  "artifact_type": "part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation_red_design",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_DESIGN_COMPLETE_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RED_FIRST",
+    "authority_base_commit": "3b410bf78309a16111edd7009048b03e119cedc3",
+    "branch": "codex/part-b-b5-si002-harness-runner-invocation-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RED_FIRST",
+    "owner_go": {
+      "path": "docs/kernel/part-b-b5-si002-harness-runner-invocation-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "82db453eb72cad79e686f274496374a713e992ec05a7066186267f08d994caef",
+      "pin_status": "MATCH"
+    },
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "green_started": false,
+    "runner_implementation_in_this_red": false,
+    "write_side_effects": "exact_3_red_docs_only"
+  },
+  "prerequisite_step3_pins": [
+    {
+      "role": "STEP3_EXECUTION_GAP_REFRESH_AUDIT",
+      "path": "docs/kernel/part-b-step3-readonly-b5-execution-gap-refresh-audit-v0.1-20260728.json",
+      "content_sha256": "073992937ab66c3e9cfba3281f44d5afede4f718a0cd9fba76e01b7a03785798",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RED_FIRST",
+      "pin_status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE"
+    },
+    {
+      "role": "STEP3_EXECUTION_GAP_REFRESH_REVIEW_PACKET",
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step3-readonly-b5-execution-gap-refresh-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "bdb649fbebfddcff40794af0f0c58209fc4b6c5e8046872c32655f0edded5932",
+      "owner_decision": "accept",
+      "pin_status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE_NOT_LANDED_ON_AUTHORITY_BASE"
+    }
+  ],
+  "design_decision": {
+    "subject": "LOCAL_SYNTHETIC_DECLARATION_BOUND_HARNESS_RUNNER_INVOCATION_CONTRACT_AND_ADMISSION_IDENTITY_BINDING_ENVELOPE",
+    "scope_kind": "RED_CONTRACT_AND_RECORD_DESIGN_ONLY",
+    "maximum_positive_design_ceiling": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY",
+    "runner_implementation_in_this_red": false,
+    "runner_invocation_in_this_red": false,
+    "future_green_runner_invocation_authorized_by_this_red": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "pb_b5_si_002_state_after_this_red": "CONTRACT_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED",
+    "pb_b5_si_003_state_after_this_red": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "why": [
+      "The accepted SI-002 GREEN establishes an exact local bounded-evaluation harness contract/record path but explicitly records no actual runner or evaluator invocation.",
+      "The next honest increment is a separately reviewable contract for one deterministic local test-only runner invocation over synthetic declaration-bound cases.",
+      "A future positive invocation record may establish only that the test-only local runner was invoked under exact bindings; it cannot grant planner or evaluation execution authority.",
+      "No performance, scalarization, superiority, Path B, write, mint, certificate, STOP, full M3*, or Part B PASS conclusion follows."
+    ]
+  },
+  "exact_binding": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "implementation_id_count": 1,
+    "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+    "d1_admission_evidence_hash": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c",
+    "d1_admission_record_hash": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65",
+    "d1_admission_decision": "ADMITTED_CONFORMANCE_ONLY",
+    "d1_admission_scope": "INTERFACE_CONFORMANCE_ONLY",
+    "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+    "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+    "si002_contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+    "si002_policy_content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+    "bounded_evaluation_contract_hash": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858",
+    "declared_resource_limits_hash": "sha256:6ad34ed5443dae8244dbf3e4b5ce829ecb31429f38f7d9dcc27898dcd87f7c81",
+    "failure_semantics_hash": "sha256:662294e36b8616d6eb94700b1b6f38dc758205eb4cbb42032ad184510d8e1c3e",
+    "wildcards": false,
+    "fallback": false,
+    "unknown_id_behavior": "DENY_UNKNOWN_IMPLEMENTATION",
+    "legacy_project05_m3star_h3_dual_behavior": "DENY_LEGACY_IMPLEMENTATION",
+    "production_registration_enabled": false
+  },
+  "pinned_artifact_table": [
+    {
+      "role": "SI002_GREEN_OWNER_ACCEPTANCE",
+      "path": "docs/kernel/part-b-b5-si002-bounded-evaluation-harness-green-owner-acceptance-v0.1-20260728.json",
+      "content_sha256": "ccad3e5bf3d55614c1bf9b121f6b7f1e745562a2efb37291148799678bc37fb4",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_CONTRACT_SCHEMA",
+      "path": "schemas/part-b-b5-si002-bounded-evaluation-harness-contract.schema.json",
+      "content_sha256": "7de56a5598450c567702957c11bac7bfc9b6eb13ef2a272fd3a5dddef68443e0",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_HARNESS_IDENTITY",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-identity-v0.1.yaml",
+      "content_sha256": "3c6df2df7dce5b00d26c468d6aea0fc8991ade19c649aedc3b93188a247ee1b8",
+      "canonical_document_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_HARNESS_POLICY",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-policy-v0.1.yaml",
+      "content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_CONTRACT_RECORD",
+      "path": "configs/part-b-b5-si002-bounded-evaluation-harness-record-v0.1.yaml",
+      "content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "canonical_document_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_CONTRACT_VALIDATOR",
+      "path": "src/scope/part_b_b5_si002_bounded_evaluation_harness_contract.py",
+      "content_sha256": "6ec634666aaa4fc02ad009abf33a6f3141119f74792e50bb0724dc8a828c947b",
+      "status": "MATCH"
+    },
+    {
+      "role": "D1_IMPLEMENTATION_IDENTITY",
+      "path": "configs/part-b-b5-d1-conformance-implementation-identity-v0.1.yaml",
+      "content_sha256": "7d2eaa638e378c9c3f50319753ad3a22fef9d86c86531ac3f69dca529f795990",
+      "canonical_document_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+      "status": "MATCH"
+    },
+    {
+      "role": "D1_ADMISSION_EVIDENCE",
+      "path": "configs/part-b-b5-d1-conformance-admission-evidence-v0.1.yaml",
+      "content_sha256": "b44ca2c90e604d621e3cbbe79b311dd1860ba0ddd5b8b33bbc57892f1a704ebb",
+      "canonical_document_hash": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c",
+      "status": "MATCH"
+    },
+    {
+      "role": "D1_ADMISSION_RECORD",
+      "path": "configs/part-b-b5-d1-conformance-admission-record-v0.1.yaml",
+      "content_sha256": "c97f5682d219d5898a2edce6ae959a9798bbaca88ccecf49bdb7e783a9db6ecb",
+      "canonical_document_hash": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65",
+      "status": "MATCH"
+    },
+    {
+      "role": "BOUNDED_EVALUATION_CONFIG",
+      "path": "configs/part-b-bounded-evaluation-v0.8.yaml",
+      "content_sha256": "42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8",
+      "canonical_document_hash": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858",
+      "status": "MATCH"
+    },
+    {
+      "role": "BOUNDED_EVALUATION_SCHEMA",
+      "path": "schemas/part-b-bounded-evaluation.schema.json",
+      "content_sha256": "a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e",
+      "status": "MATCH"
+    }
+  ],
+  "protected_zero_drift": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    }
+  ],
+  "future_green_api_preview": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "module": "src/scope/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+    "api": "invoke_local_bounded_evaluation_harness_for_test_only_record(invocation_request, *, test_only_authority)",
+    "mode": "LOCAL_SYNTHETIC_DECLARATION_ONLY",
+    "delegate_target": {
+      "module": "src/planner/twin_p10_readonly_wiring.py",
+      "api": "evaluate_twin_p10_fixed_case_for_depth1_candidacy",
+      "mutation_allowed": false,
+      "direct_deterministic_depth1_call_allowed": false,
+      "production_registration_enabled": false
+    },
+    "positive_fact_if_future_green_is_separately_accepted": "ONE_LOCAL_TEST_ONLY_RUNNER_INVOCATION_RECORDED_UNDER_EXACT_BINDINGS",
+    "positive_fact_does_not_grant_authority": true,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "runner_implementation_in_this_red": false
+  },
+  "future_test_only_authority_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 8,
+    "required_fields_exact": [
+      "authority_mode",
+      "authorized_cell",
+      "owner_go_content_sha256",
+      "allowed_implementation_id",
+      "synthetic_declaration_only",
+      "production_registration_enabled",
+      "planner_execution_authority",
+      "evaluation_execution_authority"
+    ],
+    "constants": {
+      "authority_mode": "TEST_ONLY_LOCAL_READONLY_INVOCATION_RECORD",
+      "authorized_cell": "PART_B_B5_SI002_LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION",
+      "owner_go_content_sha256": "82db453eb72cad79e686f274496374a713e992ec05a7066186267f08d994caef",
+      "allowed_implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "synthetic_declaration_only": true,
+      "production_registration_enabled": false,
+      "planner_execution_authority": false,
+      "evaluation_execution_authority": false
+    },
+    "failure_before_any_delegate_call": "DENY_TEST_ONLY_AUTHORITY_MISMATCH"
+  },
+  "future_invocation_request_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 24,
+    "required_fields_exact": [
+      "schema_version",
+      "request_kind",
+      "request_version",
+      "implementation_id",
+      "implementation_identity_hash",
+      "d1_admission_record_hash",
+      "d1_admission_evidence_hash",
+      "harness_contract_identity_hash",
+      "si002_contract_record_hash",
+      "si002_contract_record_content_sha256",
+      "si002_policy_content_sha256",
+      "bounded_evaluation_contract_hash",
+      "declared_case_id",
+      "declared_case_binding_hash",
+      "declared_case_origin",
+      "synthetic_fixture_content_sha256",
+      "declared_resource_limits_hash",
+      "failure_semantics_hash",
+      "invocation_mode",
+      "test_only_runner_invocation_requested",
+      "production_evaluation_execution_requested",
+      "planner_execution_authority",
+      "evaluation_execution_authority",
+      "stop_authority"
+    ],
+    "constants": {
+      "schema_version": "0.8.0",
+      "request_kind": "INVOKE_LOCAL_BOUNDED_EVALUATION_HARNESS_FOR_TEST_ONLY_RECORD",
+      "request_version": "0.1.0",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+      "d1_admission_record_hash": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65",
+      "d1_admission_evidence_hash": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c",
+      "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+      "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "si002_contract_record_content_sha256": "24c2d212c133f4ba921cb46547be0868523e4dcda42bb3e59fa3f7a49bf0d421",
+      "si002_policy_content_sha256": "4263369a1a5fd6f2bdd39ba58cbff1392ecbb90678766f23f39ac3954a364035",
+      "bounded_evaluation_contract_hash": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858",
+      "declared_case_origin": "SYNTHETIC_LOCAL_DECLARATION_ONLY",
+      "declared_resource_limits_hash": "sha256:6ad34ed5443dae8244dbf3e4b5ce829ecb31429f38f7d9dcc27898dcd87f7c81",
+      "failure_semantics_hash": "sha256:662294e36b8616d6eb94700b1b6f38dc758205eb4cbb42032ad184510d8e1c3e",
+      "invocation_mode": "TEST_ONLY_LOCAL_READONLY_FIXED_CASE",
+      "test_only_runner_invocation_requested": true,
+      "production_evaluation_execution_requested": false,
+      "planner_execution_authority": false,
+      "evaluation_execution_authority": false,
+      "stop_authority": "NONE"
+    },
+    "bound_fixture_fields": {
+      "declared_case_id": "nonempty_closed_registry_member",
+      "declared_case_binding_hash": "sha256_of_closed_synthetic_case_declaration",
+      "synthetic_fixture_content_sha256": "raw_file_sha256_of_future_allowlisted_fixture"
+    },
+    "forbidden_request_material": [
+      "WILDCARD_OR_FALLBACK_IMPLEMENTATION_ID",
+      "RAW_EXTERNAL_SOURCE",
+      "PATH_OR_URI_DEREFERENCE",
+      "ORACLE_LABEL",
+      "HIDDEN_GROUND_TRUTH",
+      "HIDDEN_IDENTIFIER",
+      "HOLDOUT_DATA_OR_LABEL",
+      "REALIZED_FUTURE_OUTCOME",
+      "PRODUCTION_REGISTRY_STATE",
+      "ACTION_PAYLOAD",
+      "SCALAR_SCORE_OR_RANK",
+      "PERFORMANCE_OR_SUPERIORITY_CLAIM",
+      "PATH_B_WRITE_REQUEST",
+      "MINT_REQUEST",
+      "KERNEL_OR_E_CASE_WRITE_REQUEST",
+      "CERTIFICATE_OR_SYSTEM_STATE",
+      "STOP_REQUEST"
+    ]
+  },
+  "future_invocation_record_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 26,
+    "required_fields_exact": [
+      "schema_version",
+      "record_class",
+      "record_version",
+      "request_hash",
+      "implementation_id",
+      "implementation_identity_hash",
+      "d1_admission_record_hash",
+      "harness_contract_identity_hash",
+      "si002_contract_record_hash",
+      "declared_case_id",
+      "declared_case_binding_hash",
+      "synthetic_fixture_content_sha256",
+      "declared_resource_limits_hash",
+      "failure_semantics_hash",
+      "invocation_mode",
+      "decision",
+      "reason_codes",
+      "invocation_outcome_class",
+      "actual_runner_invocation",
+      "actual_evaluator_invocation",
+      "delegated_decision_record_hash",
+      "record_scope",
+      "planner_execution_authority",
+      "evaluation_execution_authority",
+      "stop_authority",
+      "hash"
+    ],
+    "constants": {
+      "schema_version": "0.8.0",
+      "record_class": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORD",
+      "record_version": "0.1.0",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+      "d1_admission_record_hash": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65",
+      "harness_contract_identity_hash": "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900",
+      "si002_contract_record_hash": "sha256:c3701736df903e9b7f4d4512c9a7e5c816b999f5ed8ab59ce4a188235f1403be",
+      "declared_resource_limits_hash": "sha256:6ad34ed5443dae8244dbf3e4b5ce829ecb31429f38f7d9dcc27898dcd87f7c81",
+      "failure_semantics_hash": "sha256:662294e36b8616d6eb94700b1b6f38dc758205eb4cbb42032ad184510d8e1c3e",
+      "invocation_mode": "TEST_ONLY_LOCAL_READONLY_FIXED_CASE",
+      "record_scope": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY",
+      "planner_execution_authority": false,
+      "evaluation_execution_authority": false,
+      "stop_authority": "NONE"
+    },
+    "decision_enum": [
+      "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+      "ABSTAIN_TIMEOUT_UNKNOWN_NO_RANK",
+      "ABSTAIN_RESOURCE_EXHAUSTION_UNKNOWN_NO_RANK",
+      "ABSTAIN_UNKNOWN_NO_RANK",
+      "ABSTAIN_INFEASIBLE_SEPARATE_NO_ACTION",
+      "DENY_TEST_ONLY_AUTHORITY_MISMATCH",
+      "DENY_UNKNOWN_IMPLEMENTATION",
+      "DENY_LEGACY_IMPLEMENTATION",
+      "DENY_MISSING_SI002_BINDING",
+      "DENY_HASH_MISMATCH",
+      "DENY_NON_SYNTHETIC_OR_PRODUCTION_INPUT",
+      "DENY_AUTHORITY_REQUEST",
+      "DENY_NON_CONTRACT_INPUT"
+    ],
+    "positive_decision": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+    "positive_record_semantics": {
+      "actual_runner_invocation": true,
+      "actual_evaluator_invocation": false,
+      "delegated_decision_record_hash": "non_null_sha256_of_unmodified_test_only_Twin_P10_D1_candidacy_record",
+      "authority_effect": "NONE_RECORD_ONLY"
+    },
+    "pre_invocation_deny_semantics": {
+      "actual_runner_invocation": false,
+      "actual_evaluator_invocation": false,
+      "delegated_decision_record_hash": null,
+      "partial_record_emission": false
+    },
+    "positive_decision_does_not_mean": [
+      "PLANNER_EXECUTION_AUTHORITY",
+      "EVALUATION_EXECUTION_AUTHORITY",
+      "B6_CLOSED_LOOP",
+      "PERFORMANCE_VALIDITY",
+      "SCALARIZATION_OR_RANK",
+      "SUPERIORITY_CLAIM",
+      "PART_B_PASS",
+      "PATH_B_WRITE",
+      "MINT",
+      "KERNEL_OR_E_CASE_WRITE",
+      "CERTIFICATE_OR_STOP",
+      "FULL_M3_STAR"
+    ],
+    "forbidden_output_fields": [
+      "selected_action_payload",
+      "raw_evaluation_result",
+      "measured_performance",
+      "scalar_score",
+      "rank",
+      "superiority_claim",
+      "path_b_write_receipt",
+      "minted_id",
+      "kernel_or_e_case_write_receipt",
+      "system_state",
+      "certificate",
+      "CERTIFIED_STOP"
+    ]
+  },
+  "canonical_hash_rules": {
+    "canonicalization": "UTF8_SORTED_KEYS_COMPACT_JSON_NO_NAN",
+    "request_hash": "sha256(canonical_json(exact_24_field_request))",
+    "delegated_decision_record_hash": "sha256(canonical_json(unmodified_delegate_record))",
+    "record_hash": "sha256(canonical_json(exact_26_field_record_without_hash))",
+    "randomness": false,
+    "clock_value_in_identity_or_hash": false,
+    "hidden_state": false,
+    "external_dereference": false
+  },
+  "failure_semantics": {
+    "timeout": "ABSTAIN_TIMEOUT_UNKNOWN_NO_RANK",
+    "resource_exhaustion": "ABSTAIN_RESOURCE_EXHAUSTION_UNKNOWN_NO_RANK",
+    "infeasible": "ABSTAIN_INFEASIBLE_SEPARATE_NO_ACTION",
+    "unknown": "ABSTAIN_UNKNOWN_NO_RANK",
+    "missing_measurement": "ABSTAIN_UNKNOWN_NO_RANK",
+    "timeout_as_unsat": false,
+    "resource_exhaustion_as_zero_or_loss": false,
+    "infeasible_as_high_cost": false,
+    "automatic_retry": false,
+    "fallback_to_hidden_state": false,
+    "scalarization": false
+  },
+  "fail_closed_matrix": [
+    {
+      "case_id": "B5-SI002-INV-FC-001",
+      "condition": "exact_test_only_authority_exact_bindings_and_registered_synthetic_fixture",
+      "expected_future_record": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_RECORDED_TEST_ONLY",
+      "authority_effect": "NONE_RECORD_ONLY"
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-002",
+      "condition": "test_only_authority_missing_or_not_exact",
+      "expected": "DENY_TEST_ONLY_AUTHORITY_MISMATCH",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-003",
+      "condition": "unknown_implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-004",
+      "condition": "wildcard_or_fallback_implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-005",
+      "condition": "legacy_project05_m3star_h3_dual",
+      "expected": "DENY_LEGACY_IMPLEMENTATION",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-006",
+      "condition": "missing_harness_identity_contract_record_policy_or_D1_admission_binding",
+      "expected": "DENY_MISSING_SI002_BINDING",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-007",
+      "condition": "any_identity_admission_contract_record_policy_fixture_resource_or_failure_hash_mismatch",
+      "expected": "DENY_HASH_MISMATCH",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-008",
+      "condition": "non_synthetic_origin_raw_source_path_URI_or_external_dereference",
+      "expected": "DENY_NON_SYNTHETIC_OR_PRODUCTION_INPUT",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-009",
+      "condition": "production_registration_or_production_execution_requested",
+      "expected": "DENY_NON_SYNTHETIC_OR_PRODUCTION_INPUT",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-010",
+      "condition": "evaluation_execution_authority_true",
+      "expected": "DENY_AUTHORITY_REQUEST",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-011",
+      "condition": "planner_execution_authority_true",
+      "expected": "DENY_AUTHORITY_REQUEST",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-012",
+      "condition": "Path_B_write_mint_Kernel_or_E_case_write_certificate_or_STOP_requested",
+      "expected": "DENY_AUTHORITY_REQUEST",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-013",
+      "condition": "scalarization_performance_rank_or_superiority_requested",
+      "expected": "DENY_AUTHORITY_REQUEST",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-014",
+      "condition": "unknown_or_extra_request_field",
+      "expected": "DENY_NON_CONTRACT_INPUT",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-015",
+      "condition": "oracle_hidden_ground_truth_hidden_identifier_or_holdout_material_present",
+      "expected": "DENY_NON_CONTRACT_INPUT",
+      "delegate_called": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-016",
+      "condition": "delegate_timeout",
+      "expected": "ABSTAIN_TIMEOUT_UNKNOWN_NO_RANK",
+      "performance_claim": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-017",
+      "condition": "delegate_resource_exhaustion",
+      "expected": "ABSTAIN_RESOURCE_EXHAUSTION_UNKNOWN_NO_RANK",
+      "performance_claim": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-018",
+      "condition": "delegate_infeasible_no_action",
+      "expected": "ABSTAIN_INFEASIBLE_SEPARATE_NO_ACTION",
+      "performance_claim": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-019",
+      "condition": "delegate_unknown_or_missing_measurement",
+      "expected": "ABSTAIN_UNKNOWN_NO_RANK",
+      "performance_claim": false
+    },
+    {
+      "case_id": "B5-SI002-INV-FC-020",
+      "condition": "attempt_to_emit_partial_positive_record_after_pre_invocation_failure",
+      "expected": "DENY_NON_CONTRACT_INPUT_NO_PARTIAL_RECORD",
+      "delegate_called": false
+    }
+  ],
+  "future_fixture_and_test_plan": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "fixture_origin": "SYNTHETIC_LOCAL_DECLARATION_ONLY",
+    "fixture_count_minimum": 1,
+    "fixture_contract": {
+      "closed_world": true,
+      "raw_path_or_uri": false,
+      "external_source_download": false,
+      "oracle_or_hidden_ground_truth": false,
+      "hidden_identifier": false,
+      "production_registry_reference": false,
+      "scalar_score_or_rank": false,
+      "expected_decision_is_test_oracle_only": true
+    },
+    "directed_tests_required": [
+      "positive_exact_binding_records_one_test_only_runner_invocation",
+      "record_is_deterministic_for_same_fixture_and_bindings",
+      "delegate_record_is_returned_only_by_hash_and_not_reinterpreted_as_performance",
+      "all_20_fail_closed_rows",
+      "authority_gate_fails_before_delegate",
+      "evaluation_and_planner_execution_authority_remain_false",
+      "SI003_remains_open",
+      "PRODUCTION_REGISTRATION_ENABLED_remains_false",
+      "protected_pins_zero_drift",
+      "no_Path_B_write_mint_Kernel_or_E_case_write_certificate_or_STOP"
+    ],
+    "regression_plan": [
+      "existing_SI002_contract_tests",
+      "existing_D1_conformance_tests",
+      "existing_Twin_P10_readonly_wiring_tests"
+    ],
+    "broad_test_campaign_required": false
+  },
+  "proposed_future_green_allowlist_not_authorized_now": [
+    "schemas/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation.schema.json",
+    "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-policy-v0.1.yaml",
+    "configs/part-b-b5-si002-local-bounded-evaluation-harness-runner-invocation-record-v0.1.yaml",
+    "src/scope/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+    "tests/unit/fixtures/part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation/synthetic-fixed-case-v0.1.json",
+    "tests/unit/test_part_b_b5_si002_local_bounded_evaluation_harness_runner_invocation.py",
+    "docs/kernel/part-b-b5-si002-harness-runner-invocation-green-design-v0.1-20260728.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-harness-runner-invocation-green-review-packet-v0.1-20260728.json"
+  ],
+  "non_substitutes": [
+    {
+      "surface": "D1_CANDIDACY",
+      "not_equivalent_to": "PLANNER_EXECUTION",
+      "equivalent": false
+    },
+    {
+      "surface": "TWIN_P10_READONLY_WIRING",
+      "not_equivalent_to": "B6_CLOSED_LOOP",
+      "equivalent": false
+    },
+    {
+      "surface": "ADMITTED_CONFORMANCE_ONLY",
+      "not_equivalent_to": "EVALUATION_EXECUTION_AUTHORITY",
+      "equivalent": false
+    },
+    {
+      "surface": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID",
+      "not_equivalent_to": "ACTUAL_RUNNER_EXECUTION_OR_PART_B_PASS",
+      "equivalent": false
+    },
+    {
+      "surface": "THIS_RED_DESIGN",
+      "not_equivalent_to": "PB_B5_SI003_CLOSURE",
+      "equivalent": false
+    },
+    {
+      "surface": "FUTURE_TEST_ONLY_INVOCATION_CONTRACT_OR_RECORD",
+      "not_equivalent_to": "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+      "equivalent": false
+    }
+  ],
+  "authority_ceiling": {
+    "maximum_positive_design_ceiling": "LOCAL_BOUNDED_EVALUATION_HARNESS_RUNNER_INVOCATION_CONTRACT_OR_RECORD_ONLY",
+    "runner_implementation_in_this_red": false,
+    "runner_invocation_in_this_red": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "path_b_write_authority": false,
+    "mint_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "full_m3_star": false,
+    "part_b_pass": false,
+    "production_registration_enabled": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+  },
+  "explicitly_not_authorized": [
+    "PART_B_B5_SI002_RUNNER_INVOCATION_GREEN_OR_IMPLEMENTATION",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "FULL_M3_STAR",
+    "B6_EXECUTION",
+    "B7_EXECUTION",
+    "B8_EXECUTION",
+    "B9_EXECUTION",
+    "PRODUCTION_REGISTRATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "exit": {
+    "red_design_complete": true,
+    "green_started": false,
+    "runner_implemented": false,
+    "runtime_schema_config_fixture_or_test_modified": false,
+    "owner_decision_required": [
+      "accept",
+      "request_revision",
+      "reject"
+    ],
+    "commit_push_pr_performed": false
+  }
+}
