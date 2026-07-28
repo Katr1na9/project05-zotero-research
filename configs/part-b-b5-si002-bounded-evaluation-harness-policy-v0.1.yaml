@@ -1,0 +1,54 @@
+schema_version: "0.8.0"
+policy_id: part-b-b5-si002-bounded-evaluation-harness-policy-v0.1
+policy_version: "0.1.0"
+status: LOCAL_CONTRACT_RECORD_ONLY_NO_EXECUTION
+authorized_slice: PART_B_B5_SI002_BOUNDED_EVALUATION_RUNNER_CONTRACT_RECORD_ONLY
+admissible_implementation_ids:
+  - part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+wildcards: false
+fallback: false
+expected_harness_contract_identity_hash: "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
+expected_d1_admission_evidence_hash: "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c"
+expected_bounded_evaluation_contract_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+positive_decision: LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID
+record_scope: LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY
+reason_codes:
+  LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID: B5-SI002-000-CONTRACT-VALID
+  DENY_UNKNOWN_IMPLEMENTATION: B5-SI002-DENY-UNKNOWN-ID
+  DENY_LEGACY_IMPLEMENTATION: B5-SI002-DENY-LEGACY-ID
+  DENY_MISSING_EVIDENCE: B5-SI002-DENY-MISSING-EVIDENCE
+  DENY_HASH_MISMATCH: B5-SI002-DENY-HASH-MISMATCH
+  DENY_INVALID_RESOURCE_LIMITS: B5-SI002-DENY-INVALID-RESOURCE-LIMITS
+  DENY_AUTHORITY_REQUEST: B5-SI002-DENY-AUTHORITY-REQUEST
+  DENY_NON_CONTRACT_INPUT: B5-SI002-DENY-NON-CONTRACT-INPUT
+failure_semantics:
+  timeout: UNKNOWN_NO_RANK
+  resource_exhaustion: UNKNOWN_NO_RANK
+  infeasible: SEPARATE_NO_ACTION
+  unknown: FAIL_CLOSED_NO_RANK
+  missing_measurement: UNKNOWN_NOT_ZERO
+  infeasible_as_high_cost: false
+  timeout_as_unsat: false
+  resource_exhaustion_as_zero_or_loss: false
+  automatic_retry: false
+  fallback_to_hidden_state: false
+authority_ceiling:
+  record_scope: LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY
+  execution_requested: false
+  actual_runner_or_evaluator_invocation: false
+  planner_execution_authority: false
+  evaluation_execution_authority: false
+  scalarization_authority: false
+  performance_claim_authority: false
+  superiority_claim_authority: false
+  path_b_write_authority: false
+  mint_authority: false
+  kernel_or_e_case_write_authority: false
+  certificate_authority: false
+  stop_authority: NONE
+  full_m3_star: false
+  part_b_pass: false
+  production_registration_enabled: false
+  pb_b5_si_002_state: CONTRACT_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED
+  pb_b5_si_003_state: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+hash: "sha256:d18123c5946cad9d12736ef9d0d698710916100ce8eae6d247a5f69d214b5309"

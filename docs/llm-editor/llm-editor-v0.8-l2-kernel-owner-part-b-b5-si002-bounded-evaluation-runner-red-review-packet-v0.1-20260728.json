@@ -1,0 +1,197 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-bounded-evaluation-runner-red-review-packet-v0.1-20260728",
+  "artifact_type": "kernel_owner_part_b_b5_si002_bounded_evaluation_runner_red_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-28",
+  "owner": "Kernel/M3*",
+  "status": "RED_READY_FOR_KERNEL_OWNER_REVIEW",
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI002_BOUNDED_EVALUATION_RUNNER_RED_FIRST",
+    "authority_base_commit": "142de7979a219b53cb2d744ce79041041acc1a05",
+    "reviewed_branch": "codex/part-b-b5-si002-bounded-evaluation-runner-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_BOUNDED_EVALUATION_RUNNER_RED_FIRST",
+    "maximum_positive_design_ceiling": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation."
+  },
+  "red_artifact_pins": [
+    {
+      "role": "OWNER_GO_AUTHORIZATION",
+      "path": "docs/kernel/part-b-b5-si002-bounded-evaluation-runner-owner-go-authorization-v0.1-20260728.json",
+      "content_sha256": "e3ee8b663b1286689289cfbd580764f2b83786f6126637e2bd98e801d343f502",
+      "json_parse": "PASS"
+    },
+    {
+      "role": "RED_DESIGN",
+      "path": "docs/kernel/part-b-b5-si002-bounded-evaluation-runner-red-design-v0.1-20260728.json",
+      "content_sha256": "1aa722b65a4bb4f5cbcaf66d7858c319605d82c9ebf36ac9b946fc18d7076e38",
+      "json_parse": "PASS"
+    }
+  ],
+  "self_hash_policy": {
+    "embedded_self_sha256": false,
+    "reason": "The review packet SHA is computed after serialization and reported in the Owner submission; no self-referential placeholder is used."
+  },
+  "accepted_step2_prerequisite_pins": [
+    {
+      "path": "docs/kernel/part-b-step2-readonly-b5-execution-gap-refresh-audit-v0.1-20260728.json",
+      "content_sha256": "088c815c1bf69e36bfe2253c67bf2db8846a9cc30e1178c19e13249076736371",
+      "owner_decision": "accept",
+      "only_next_authorized_cell": "PART_B_B5_SI002_BOUNDED_EVALUATION_RUNNER_RED_FIRST",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE"
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-step2-readonly-b5-execution-gap-refresh-audit-review-packet-v0.1-20260728.json",
+      "content_sha256": "6556f9637c3373dfc59d14af9632928ca01b0d9272edf8cd8e213ee050872b9e",
+      "owner_decision": "accept",
+      "status": "MATCH_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE"
+    }
+  ],
+  "design_summary": {
+    "subject": "BOUNDED_EVALUATION_RUNNER_CONTRACT_AND_ADMISSION_IDENTITY_BINDING_ENVELOPE",
+    "scope_kind": "CONTRACT_AND_RECORD_DESIGN_ONLY",
+    "bound_implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "bound_implementation_count": 1,
+    "wildcards": false,
+    "fallback": false,
+    "legacy_project05_m3star_h3_dual": "DENY_NOT_ADMITTED_UNVERIFIED",
+    "future_request_field_count": 16,
+    "future_record_field_count": 18,
+    "fail_closed_case_count": 20,
+    "future_positive_record_ceiling": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID",
+    "future_record_scope_ceiling": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY",
+    "runner_implementation_in_red": false,
+    "green_started": false
+  },
+  "identity_and_contract_pin_summary": {
+    "d1_implementation_identity_content_sha256": "7d2eaa638e378c9c3f50319753ad3a22fef9d86c86531ac3f69dca529f795990",
+    "d1_implementation_identity_hash": "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d",
+    "d1_admission_evidence_content_sha256": "b44ca2c90e604d621e3cbbe79b311dd1860ba0ddd5b8b33bbc57892f1a704ebb",
+    "d1_admission_evidence_hash": "sha256:ff6cc57c5ec974d55a95527aceb90bf71f5b58e11d82aafddb9fd06300fc3b3c",
+    "d1_admission_record_content_sha256": "c97f5682d219d5898a2edce6ae959a9798bbaca88ccecf49bdb7e783a9db6ecb",
+    "d1_admission_record_hash": "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65",
+    "d1_admission_manifest_content_sha256": "19fb231a2a328fb9e8d2b0e0415a08ea18d1338b25600725d43771c9c2c44bbd",
+    "b5_bounded_evaluation_config_content_sha256": "42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8",
+    "b5_bounded_evaluation_contract_hash": "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858",
+    "b5_bounded_evaluation_schema_content_sha256": "a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e",
+    "pin_status": "MATCH"
+  },
+  "frozen_semantics": {
+    "resource_caps": {
+      "max_public_state_bytes": 1048576,
+      "max_feasible_action_ids": 4096,
+      "max_decision_wall_ms": 2000,
+      "max_decision_cpu_ms": 1000,
+      "max_memory_bytes": 536870912,
+      "max_decisions_per_case": 256
+    },
+    "auto_retry": false,
+    "fallback_to_hidden_state": false,
+    "timeout": "UNKNOWN_NO_RANK",
+    "resource_exhaustion": "UNKNOWN_NO_RANK",
+    "infeasible": "SEPARATE_NO_ACTION",
+    "unknown": "FAIL_CLOSED_NO_RANK",
+    "missing_measurement": "UNKNOWN_NOT_ZERO",
+    "cost_representation": "B3_EIGHT_DIMENSION_VECTOR_ONLY",
+    "scalarization_enabled": false
+  },
+  "authority_ceiling": {
+    "local_bounded_evaluation_contract_or_record_authority": true,
+    "planner_execution_authority": false,
+    "evaluation_execution_authority": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "path_b_write": false,
+    "mint": false,
+    "kernel_or_e_case_write": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "full_m3_star": false,
+    "part_b_pass": false
+  },
+  "si_state_after_red": {
+    "PB-B5-SI-001": "D1_CONFORMANCE_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED",
+    "PB-B5-SI-002": "OPEN_BLOCKS_EVALUATION_EXECUTION",
+    "PB-B5-SI-003": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "PB-SI-006": "OPEN_DEFAULT_DENY",
+    "si_003_ruling": "DO_NOT_CLOSE_IN_THIS_OR_NEXT_CONTRACT_ONLY_CELL"
+  },
+  "non_substitute_findings": [
+    "D1 SELECT_ACTION candidacy is not Planner execution.",
+    "Twin/P10 readonly wiring is not B6 closed-loop evaluation execution.",
+    "ADMITTED_CONFORMANCE_ONLY is not evaluation_execution_authority.",
+    "SI-002 RED design or a future contract record is not SI-003 closure.",
+    "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_VALID is not actual runner execution or Part B PASS."
+  ],
+  "proposed_future_green": {
+    "authorization_status": "NOT_AUTHORIZED_REQUIRES_SEPARATE_OWNER_GO",
+    "proposed_file_count": 8,
+    "maximum_scope": "LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY",
+    "actual_runner_process_or_evaluator_invocation": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "si_003_closed": false,
+    "production_registration": false,
+    "part_b_pass": false
+  },
+  "exact_red_allowlist_audit": {
+    "authorized_paths": [
+      "docs/kernel/part-b-b5-si002-bounded-evaluation-runner-owner-go-authorization-v0.1-20260728.json",
+      "docs/kernel/part-b-b5-si002-bounded-evaluation-runner-red-design-v0.1-20260728.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-bounded-evaluation-runner-red-review-packet-v0.1-20260728.json"
+    ],
+    "authorized_path_count": 3,
+    "observed_path_count": 3,
+    "extra_paths": 0,
+    "runtime_schema_config_fixture_or_test_modified": false,
+    "green_files_created": 0,
+    "write_side_effects": "exact_3_red_docs_only",
+    "result": "PASS"
+  },
+  "verification": {
+    "head_expected": "142de7979a219b53cb2d744ce79041041acc1a05",
+    "head_observed": "142de7979a219b53cb2d744ce79041041acc1a05",
+    "head_status": "MATCH",
+    "branch": "codex/part-b-b5-si002-bounded-evaluation-runner-red-v0.1",
+    "json_parse": "PASS_3_OF_3",
+    "step2_pins": "MATCH_2_OF_2_FROM_UNCHANGED_ACCEPTED_SIBLING_WORKTREE",
+    "d1_and_bounded_evaluation_pins": "MATCH",
+    "protected_bytes": "ZERO_DRIFT",
+    "tests_run": "NOT_RUN_RED_DESIGN_ONLY",
+    "porcelain": "EXACT_3_RED_DOCS_EXTRA_0",
+    "commit_push_pr_performed": false
+  },
+  "explicitly_not_authorized": [
+    "PART_B_B5_SI002_GREEN_OR_RUNNER_IMPLEMENTATION",
+    "ACTUAL_PLANNER_OR_EVALUATOR_INVOCATION",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_OR_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "PATH_B_WRITE",
+    "MINT",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "FULL_M3_STAR",
+    "B6_EXECUTION",
+    "B7_EXECUTION",
+    "B8_EXECUTION",
+    "B9_EXECUTION",
+    "PRODUCTION_REGISTRATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "owner_review_questions": [
+    "ORQ-B5-SI002-RED-01",
+    "ORQ-B5-SI002-RED-02",
+    "ORQ-B5-SI002-RED-03",
+    "ORQ-B5-SI002-RED-04",
+    "ORQ-B5-SI002-RED-05"
+  ],
+  "owner_decision": null,
+  "owner_decision_requested": [
+    "accept",
+    "request_revision",
+    "reject"
+  ]
+}

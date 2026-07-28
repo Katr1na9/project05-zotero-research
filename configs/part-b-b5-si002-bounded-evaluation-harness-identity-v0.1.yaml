@@ -1,0 +1,51 @@
+schema_version: "0.8.0"
+harness_contract_id: part-b-b5-si002-local-bounded-evaluation-harness-contract-v0.1
+harness_contract_version: "0.1.0"
+implementation_id: part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1
+implementation_identity_hash: "sha256:25e89d3eef7f13f5b65b839b06895b7c498753dcf4c955aa4d6c375235a0246d"
+d1_admission_record_hash: "sha256:a43e7baeaae5f32e14c60694b9cc6cfa258e46c5315f79d4bfdb83c0b641cc65"
+bounded_evaluation_contract_hash: "sha256:9c1cae4643b95f7e2c87b6398cd096db1836ca3533cca67a1842dd037ec66858"
+bounded_evaluation_config_content_sha256: 42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8
+bounded_evaluation_schema_content_sha256: a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e
+frozen_resource_caps:
+  max_public_state_bytes: 1048576
+  max_feasible_action_ids: 4096
+  max_decision_wall_ms: 2000
+  max_decision_cpu_ms: 1000
+  max_memory_bytes: 536870912
+  max_decisions_per_case: 256
+frozen_failure_semantics:
+  timeout: UNKNOWN_NO_RANK
+  resource_exhaustion: UNKNOWN_NO_RANK
+  infeasible: SEPARATE_NO_ACTION
+  unknown: FAIL_CLOSED_NO_RANK
+  missing_measurement: UNKNOWN_NOT_ZERO
+  infeasible_as_high_cost: false
+  timeout_as_unsat: false
+  resource_exhaustion_as_zero_or_loss: false
+  automatic_retry: false
+  fallback_to_hidden_state: false
+allowed_contract_metrics:
+  - INTERFACE_CONFORMANCE
+  - FAILURE_CHANNEL_COUNTS
+  - UNSCALARIZED_RESOURCE_VECTOR_SHAPE
+authority_ceiling:
+  record_scope: LOCAL_BOUNDED_EVALUATION_HARNESS_CONTRACT_OR_RECORD_ONLY
+  execution_requested: false
+  actual_runner_or_evaluator_invocation: false
+  planner_execution_authority: false
+  evaluation_execution_authority: false
+  scalarization_authority: false
+  performance_claim_authority: false
+  superiority_claim_authority: false
+  path_b_write_authority: false
+  mint_authority: false
+  kernel_or_e_case_write_authority: false
+  certificate_authority: false
+  stop_authority: NONE
+  full_m3_star: false
+  part_b_pass: false
+  production_registration_enabled: false
+  pb_b5_si_002_state: CONTRACT_PATH_ESTABLISHED_EXECUTION_NOT_ESTABLISHED
+  pb_b5_si_003_state: OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION
+hash: "sha256:80794e2a91f271881b902ae386047c608c53bad9b6ff53acf4af9c9f984bd900"
