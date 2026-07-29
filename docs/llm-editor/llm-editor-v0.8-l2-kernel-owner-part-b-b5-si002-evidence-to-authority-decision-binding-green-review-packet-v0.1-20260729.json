@@ -1,0 +1,199 @@
+{
+  "artifact_id": "llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evidence-to-authority-decision-binding-green-review-packet-v0.1-20260729",
+  "artifact_type": "kernel_owner_part_b_b5_si002_evidence_to_authority_decision_binding_green_review_packet",
+  "version": "0.1",
+  "created_date": "2026-07-29",
+  "owner": "Kernel/M3*",
+  "status": "GREEN_READY_FOR_KERNEL_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "authority_base_commit": "3e2f6b011e0bc4770e68dd601d3e5a99015ba671",
+    "reviewed_branch": "codex/part-b-b5-si002-evidence-to-authority-decision-binding-green-v0.1",
+    "authorized_cell": "PART_B_B5_SI002_EVIDENCE_TO_AUTHORITY_DECISION_BINDING_GREEN",
+    "maximum_positive_scope": "LOCAL_EVIDENCE_TO_AUTHORITY_DECISION_BINDING_CONTRACT_OR_RECORD_ONLY",
+    "maximum_positive_record": "LOCAL_EVIDENCE_TO_AUTHORITY_DECISION_BINDING_VALID_NO_AUTHORITY_NO_FLIP",
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "part_b_elevation": "NO_GO"
+  },
+  "accepted_red_artifacts": [
+    {
+      "path": "docs/kernel/part-b-b5-si002-evidence-to-authority-decision-binding-owner-go-authorization-v0.1-20260729.json",
+      "content_sha256": "0b1a2b2823c946a15eca0f2abbb7fadd142b6a2cbf9bd6d846c73e6e710b204a",
+      "status": "MATCH"
+    },
+    {
+      "path": "docs/kernel/part-b-b5-si002-evidence-to-authority-decision-binding-red-design-v0.1-20260729.json",
+      "content_sha256": "3d3f43e04ac49ad41271b2bafda8f1daa477c0bd7ab5ecaf48934c5c36e4af5d",
+      "status": "MATCH"
+    },
+    {
+      "path": "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evidence-to-authority-decision-binding-red-review-packet-v0.1-20260729.json",
+      "content_sha256": "92b04b3560d38af35ef556fa6fa17fa6f9c3ea8cbf0dcca70f62c9c8768fcccf",
+      "status": "MATCH",
+      "owner_decision": "accept"
+    }
+  ],
+  "green_artifacts": [
+    {
+      "role": "CLOSED_WORLD_SCHEMA",
+      "path": "schemas/part-b-b5-si002-evidence-to-authority-decision-binding.schema.json",
+      "content_sha256": "e2c79ca5118bcd6b2f32d7187b56051496c7c9212b044b6bb7197d164da50cd1"
+    },
+    {
+      "role": "NO_FLIP_POLICY",
+      "path": "configs/part-b-b5-si002-evidence-to-authority-decision-binding-policy-v0.1.yaml",
+      "content_sha256": "7a5db0b75dc31a8d35a9307c5ffea70d4d88571f82bd144ce70554856d5320a2",
+      "canonical_document_hash": "sha256:b067b50b94ccf7c6456c7fa5e6d206c41e2e7d53a39ff4874ba95deaeea4bd4a"
+    },
+    {
+      "role": "POSITIVE_EXPECTED_RECORD",
+      "path": "configs/part-b-b5-si002-evidence-to-authority-decision-binding-record-v0.1.yaml",
+      "content_sha256": "024710ac2c26a5601654059913bac4d7bc57c0ff07fb43450373677acf57278a",
+      "canonical_document_hash": "sha256:3b770d5d41fc8620643fc6b65a9827e97f0167dd9c49d6de39a63730fe0768b9"
+    },
+    {
+      "role": "PURE_VALIDATOR",
+      "path": "src/scope/part_b_b5_si002_evidence_to_authority_decision_binding.py",
+      "content_sha256": "e0b8c48868ac9ed4dbcfc3ee13cfec27e7287d391f8d7f6a5f2e3ec58f3dac9f"
+    },
+    {
+      "role": "DIRECTED_TESTS",
+      "path": "tests/unit/test_part_b_b5_si002_evidence_to_authority_decision_binding.py",
+      "content_sha256": "8ab17cf9e86e7bc82434bd3cd0350be212c09f52c46735bd0e1c0d995baa8815"
+    },
+    {
+      "role": "GREEN_DESIGN",
+      "path": "docs/kernel/part-b-b5-si002-evidence-to-authority-decision-binding-green-design-v0.1-20260729.json",
+      "content_sha256": "347671068fbc8e289ed39a0b10af09977ea88ee6184952ae862763918ffa50e9"
+    }
+  ],
+  "self_hash_policy": {
+    "embedded_self_sha256": false,
+    "reason": "The review packet raw SHA-256 is computed after serialization and reported in the Owner submission."
+  },
+  "implementation_summary": {
+    "api": "evaluate_si002_evidence_to_authority_decision_binding",
+    "mode": "PURE_CLOSED_WORLD_METADATA_VALIDATOR_NO_CALLABLES",
+    "test_only_authority_shape": "CLOSED_WORLD_EXACT_5_FIELDS",
+    "request_shape": "CLOSED_WORLD_EXACT_52_FIELDS",
+    "decision_record_shape": "CLOSED_WORLD_EXACT_38_FIELDS",
+    "binding_identity_shape": "CLOSED_WORLD_EXACT_11_COMPONENTS",
+    "decision_enum_count": 25,
+    "fail_closed_matrix": "PASS_32_OF_32_ENUM_CLOSED_BAD_EXPECTED_0",
+    "calls_twin_d1_evaluator_runner_or_class4_runtime": false,
+    "filesystem_or_process_execution": false,
+    "production_registration_enabled": false
+  },
+  "positive_binding_summary": {
+    "decision": "LOCAL_EVIDENCE_TO_AUTHORITY_DECISION_BINDING_VALID_NO_AUTHORITY_NO_FLIP",
+    "request_hash": "sha256:58bcce9a8de0159c96cbc677164a639b466c2e9eeddd468fe41278930dba6965",
+    "record_hash": "sha256:3b770d5d41fc8620643fc6b65a9827e97f0167dd9c49d6de39a63730fe0768b9",
+    "binding_contract_identity_hash": "sha256:524af6a553b9d41313b4b8463a939357da70ee8ade9f6e33d0369d5d737d8325",
+    "binding_contract_valid": true,
+    "evidence_to_authority_decision_binding_established": true,
+    "bound_evidence_decision": "LOCAL_ACTUAL_EVALUATOR_INVOCATION_EVIDENCE_VALID_NO_AUTHORITY_NO_FLIP",
+    "bound_authority_decision": "KEEP_EVALUATION_EXECUTION_AUTHORITY_FALSE_PENDING_EXPLICIT_LATER_OWNER_FLIP_GO",
+    "same_request_same_record_and_hash": true
+  },
+  "authority_and_catalog_result": {
+    "class_2_status": "ESTABLISHED",
+    "class_3_status": "ESTABLISHED_CONTRACT_SURFACE_ONLY",
+    "class_4_status": "ESTABLISHED_TEST_ONLY_EVIDENCE",
+    "class_5_status": "ESTABLISHED_BINDING_SURFACE_ONLY",
+    "class_1_status": "MISSING",
+    "other_catalog_prerequisites_satisfied": false,
+    "all_flip_prerequisites_satisfied": false,
+    "actual_evaluator_invocation_reused_fact": true,
+    "new_evaluator_invocation_performed": false,
+    "evaluation_execution_authority": false,
+    "planner_execution_authority": false,
+    "authority_flip_eligible": false,
+    "explicit_later_owner_flip_go_present": false,
+    "production_registration_enabled": false,
+    "existing_gap_catalog_mutated": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "four_family_or_llm_reopened": false,
+    "part_b_pass": false
+  },
+  "fail_closed_result": {
+    "case_count": 32,
+    "result": "PASS_32_OF_32",
+    "bad_expected_count": 0,
+    "denied_record_partial_positive_binding": false,
+    "denied_record_binding_contract_valid": false,
+    "denied_record_binding_established": false,
+    "denied_record_bound_decisions": null,
+    "denied_record_catalog_prerequisite_addressed": "NONE",
+    "denied_record_class_5_status": "MISSING",
+    "denied_record_actual_evaluator_invocation": false
+  },
+  "pin_and_regression_result": {
+    "accepted_red": "MATCH_3_OF_3",
+    "primary_class2_class3_class4_si002": "MATCH_14_OF_14",
+    "protected_d1_twin_b5_si002_class2_class3_class4_four_family_llm": "MATCH_13_OF_13",
+    "directed_tests": "PASS_10_TESTS_82_SUBTESTS",
+    "combined_regression": "PASS_239_TESTS_758_SUBTESTS",
+    "schema_policy_record_and_canonical_hash_replay": "PASS",
+    "gap_catalog_modified": false,
+    "class2_class3_or_class4_modified": false,
+    "four_family_llm_modified": false
+  },
+  "non_substitute_findings": [
+    "A valid class-5 binding keeps evaluation execution authority false and is not a flip.",
+    "Class-5 binding is not class-1 EXPLICIT_LATER_OWNER_FLIP_GO; class 1 remains missing.",
+    "The class-4 actual evaluator invocation is reused as a pinned fact; this validator performs no new invocation.",
+    "The test-only runner remains distinct and is not reclassified as class-4 or class-5 evidence.",
+    "This GREEN is not SI-003 closure, Part B PASS, B6-B9, full M3*, Path B, mint, write, certificate, or STOP."
+  ],
+  "allowlist_audit": {
+    "accepted_red_paths_observed": 3,
+    "exact_green_paths": [
+      "schemas/part-b-b5-si002-evidence-to-authority-decision-binding.schema.json",
+      "configs/part-b-b5-si002-evidence-to-authority-decision-binding-policy-v0.1.yaml",
+      "configs/part-b-b5-si002-evidence-to-authority-decision-binding-record-v0.1.yaml",
+      "src/scope/part_b_b5_si002_evidence_to_authority_decision_binding.py",
+      "tests/unit/test_part_b_b5_si002_evidence_to_authority_decision_binding.py",
+      "docs/kernel/part-b-b5-si002-evidence-to-authority-decision-binding-green-design-v0.1-20260729.json",
+      "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si002-evidence-to-authority-decision-binding-green-review-packet-v0.1-20260729.json"
+    ],
+    "green_path_count": 7,
+    "observed_green_path_count": 7,
+    "extra_paths": 0,
+    "result": "PASS_RED_3_PLUS_GREEN_7_EXTRA_0"
+  },
+  "explicitly_not_authorized": [
+    "CLASS1_EXPLICIT_LATER_OWNER_FLIP_GO",
+    "EVALUATION_EXECUTION_AUTHORITY_TRUE",
+    "PLANNER_EXECUTION_AUTHORITY_TRUE",
+    "AUTHORITY_FLIP_OR_FLIP_ELIGIBILITY",
+    "NEW_EVALUATOR_RUNNER_TWIN_OR_D1_INVOCATION",
+    "GAP_CATALOG_MATERIALIZED_TRANSITION_OR_BYTE_MUTATION",
+    "CLASS2_CLASS3_CLASS4_OR_SI002_BYTE_MUTATION",
+    "FOUR_FAMILY_OR_LLM_REOPEN",
+    "PB_B5_SI_003_CLOSURE",
+    "SCALARIZATION_PERFORMANCE_OR_SUPERIORITY_CLAIM",
+    "PART_B_PASS",
+    "FULL_M3_STAR",
+    "B6_B7_B8_B9_EXECUTION",
+    "PATH_B_WRITE",
+    "MINT_OR_ADMISSION",
+    "KERNEL_OR_E_CASE_WRITE",
+    "CERTIFICATE_OR_CERTIFIED_STOP",
+    "PRODUCTION_REGISTRATION",
+    "GIT_COMMIT_PUSH_PR_OR_MERGE"
+  ],
+  "verification": {
+    "head_expected": "3e2f6b011e0bc4770e68dd601d3e5a99015ba671",
+    "head_observed": "3e2f6b011e0bc4770e68dd601d3e5a99015ba671",
+    "head_status": "MATCH",
+    "origin_main_expected": "3e2f6b011e0bc4770e68dd601d3e5a99015ba671",
+    "origin_main_observed": "3e2f6b011e0bc4770e68dd601d3e5a99015ba671",
+    "origin_main_status": "MATCH",
+    "branch": "codex/part-b-b5-si002-evidence-to-authority-decision-binding-green-v0.1",
+    "json_yaml_parse": "PASS_ALL",
+    "porcelain": "EXACT_ACCEPTED_RED_3_PLUS_GREEN_7",
+    "extra_paths": 0,
+    "commit_push_pr_performed": false
+  },
+  "owner_decision_requested": ["accept", "request_revision", "reject"]
+}
