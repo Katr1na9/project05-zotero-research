@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-si002-explicit-owner-evaluation-execution-authority-flip.schema.json",
+  "title": "Part B B5 SI-002 explicit Owner evaluation execution authority flip",
+  "oneOf": [
+    { "$ref": "#/$defs/authority" },
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/record" }
+  ],
+  "$defs": {
+    "authority": {
+      "type": "object",
+      "minProperties": 7,
+      "maxProperties": 7,
+      "propertyNames": {
+        "enum": [
+          "schema_version",
+          "authority_kind",
+          "authorized_cell",
+          "authority_base_commit",
+          "explicit_owner_flip_go_artifact_id",
+          "explicit_owner_flip_go_content_sha256",
+          "explicit_owner_flip_go_decision"
+        ]
+      },
+      "properties": {
+        "schema_version": { "const": "0.8.0" },
+        "authority_kind": { "const": "EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FLIP_GREEN_ONLY" },
+        "authorized_cell": { "const": "PART_B_B5_SI002_EXPLICIT_OWNER_FLIP_GO_GREEN" },
+        "authority_base_commit": { "const": "508919e0f07da3b13f95cae115c098fdee49a617" },
+        "explicit_owner_flip_go_artifact_id": { "const": "part-b-b5-si002-explicit-owner-evaluation-execution-authority-flip-green-authorization-v0.1-20260729" },
+        "explicit_owner_flip_go_content_sha256": { "const": "ccb5863d7cd096428365eb7fdb6720e2871928385beb685b73ab38411db55f4c" },
+        "explicit_owner_flip_go_decision": { "const": "AUTHORIZE_LOCAL_EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FALSE_TO_TRUE_FLIP_RECORD_GREEN_ONLY" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "minProperties": 65,
+      "maxProperties": 65,
+      "propertyNames": {
+        "enum": [
+          "schema_version", "request_kind", "request_version", "requested_scope",
+          "implementation_id", "evaluator_capability_id", "evaluator_capability_identity_hash",
+          "class_2_acceptance_content_sha256", "evidence_contract_id", "evidence_contract_identity_hash",
+          "class_3_acceptance_content_sha256", "class_4_positive_decision", "class_4_record_hash",
+          "class_4_record_content_sha256", "class_4_acceptance_content_sha256", "class_4_evidence_hash",
+          "class_4_actual_evaluator_invocation", "class_4_evaluation_execution_authority",
+          "class_4_planner_execution_authority", "class_5_positive_decision", "class_5_binding_contract_id",
+          "class_5_binding_contract_identity_hash", "class_5_record_hash", "class_5_record_content_sha256",
+          "class_5_acceptance_content_sha256", "class_5_bound_authority_decision", "class_5_binding_established",
+          "class_5_evaluation_execution_authority", "class_5_planner_execution_authority",
+          "class_5_authority_flip_eligible", "si002_contract_record_hash",
+          "si002_contract_record_content_sha256", "si002_invocation_record_hash",
+          "si002_invocation_record_content_sha256", "si002_boundary_record_hash",
+          "si002_boundary_record_content_sha256", "si002_gap_catalog_record_hash",
+          "si002_gap_catalog_record_content_sha256", "si002_gap_catalog_acceptance_content_sha256",
+          "flip_contract_id", "flip_contract_identity_hash", "catalog_prerequisite_id",
+          "catalog_class_number", "class_2_status", "class_3_status", "class_4_status", "class_5_status",
+          "class_1_status_before", "pre_flip_binding_satisfied", "pre_flip_evaluation_execution_authority",
+          "requested_post_flip_evaluation_execution_authority", "requested_post_flip_planner_execution_authority",
+          "requested_transition", "explicit_owner_flip_go_artifact_id", "explicit_owner_flip_go_content_sha256",
+          "explicit_owner_flip_go_decision", "explicit_owner_flip_go_authority_base_commit",
+          "flip_go_is_separate_from_red_go", "production_registration_enabled", "pb_b5_si_003_state",
+          "pb_b5_si_003_close_requested", "part_b_pass_requested", "path_b_write_requested",
+          "stop_requested", "full_m3_star_requested"
+        ]
+      },
+      "properties": {
+        "schema_version": { "const": "0.8.0" },
+        "request_kind": { "const": "EVALUATE_SI002_EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FLIP" },
+        "requested_scope": { "const": "LOCAL_EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FLIP_GO_OR_RECORD_ONLY" },
+        "implementation_id": { "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1" },
+        "catalog_prerequisite_id": { "const": "EXPLICIT_LATER_OWNER_FLIP_GO" },
+        "catalog_class_number": { "const": 1 },
+        "pre_flip_binding_satisfied": { "const": true },
+        "pre_flip_evaluation_execution_authority": { "const": false },
+        "requested_post_flip_evaluation_execution_authority": { "const": true },
+        "requested_post_flip_planner_execution_authority": { "const": false },
+        "requested_transition": { "const": "EVALUATION_EXECUTION_AUTHORITY_FALSE_TO_TRUE" },
+        "production_registration_enabled": { "const": false },
+        "pb_b5_si_003_state": { "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION" },
+        "pb_b5_si_003_close_requested": { "const": false },
+        "part_b_pass_requested": { "const": false },
+        "path_b_write_requested": { "const": false },
+        "stop_requested": { "const": false },
+        "full_m3_star_requested": { "const": false }
+      }
+    },
+    "record": {
+      "type": "object",
+      "minProperties": 44,
+      "maxProperties": 44,
+      "propertyNames": {
+        "enum": [
+          "schema_version", "record_class", "record_version", "request_hash", "implementation_id",
+          "flip_contract_id", "flip_contract_identity_hash", "explicit_owner_flip_go_artifact_id",
+          "explicit_owner_flip_go_content_sha256", "explicit_owner_flip_go_decision",
+          "evaluator_capability_identity_hash", "evidence_contract_identity_hash", "class_4_record_hash",
+          "class_4_evidence_hash", "class_5_binding_contract_identity_hash", "class_5_record_hash",
+          "decision", "reason_codes", "record_scope", "authority_effect", "flip_contract_valid",
+          "explicit_owner_flip_go_valid", "pre_flip_binding_satisfied", "pre_flip_bound_authority_decision",
+          "flip_performed", "authority_transition", "pre_flip_evaluation_execution_authority",
+          "post_flip_evaluation_execution_authority", "planner_execution_authority", "class_1_status",
+          "class_2_status", "class_3_status", "class_4_status", "class_5_status",
+          "all_flip_prerequisites_satisfied", "authority_flip_eligible_before",
+          "authority_flip_eligible_after", "production_registration_enabled", "pb_b5_si_003_state",
+          "part_b_pass", "path_b_write_authority", "stop_authority", "full_m3_star", "hash"
+        ]
+      },
+      "properties": {
+        "schema_version": { "const": "0.8.0" },
+        "record_class": { "const": "LOCAL_EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FLIP_RECORD" },
+        "decision": {
+          "enum": [
+            "LOCAL_EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FLIP_RECORDED_NO_PLANNER_NO_PART_B",
+            "DENY_EXPLICIT_OWNER_FLIP_AUTHORITY", "DENY_UNKNOWN_IMPLEMENTATION",
+            "DENY_MISSING_CLASS2_BINDING", "DENY_CLASS2_HASH_MISMATCH",
+            "DENY_MISSING_CLASS3_BINDING", "DENY_CLASS3_HASH_MISMATCH",
+            "DENY_MISSING_CLASS4_BINDING", "DENY_CLASS4_HASH_OR_STATE_MISMATCH",
+            "DENY_MISSING_CLASS5_BINDING", "DENY_CLASS5_HASH_OR_KEEP_FALSE_BINDING_MISMATCH",
+            "DENY_MISSING_SI002_CHAIN_BINDING", "DENY_SI002_CHAIN_HASH_MISMATCH",
+            "DENY_MISSING_EXPLICIT_OWNER_FLIP_GO",
+            "DENY_EXPLICIT_OWNER_FLIP_GO_HASH_OR_DECISION_MISMATCH",
+            "DENY_RED_GO_REUSED_AS_FLIP_GO", "DENY_PRE_FLIP_BINDING_NOT_SATISFIED",
+            "DENY_PRE_FLIP_AUTHORITY_NOT_FALSE", "DENY_FLIP_TRANSITION_MISMATCH",
+            "DENY_PLANNER_EXECUTION_AUTHORITY_REQUEST", "DENY_PRODUCTION_SCOPE",
+            "DENY_SI003_SCOPE", "DENY_PART_B_PATH_B_OR_FULL_M3_SCOPE",
+            "DENY_STOP_OR_CERTIFICATE_SCOPE", "DENY_NONDETERMINISTIC_OR_NON_CONTRACT_INPUT"
+          ]
+        },
+        "reason_codes": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "type": "string" } },
+        "flip_performed": { "type": "boolean" },
+        "post_flip_evaluation_execution_authority": { "type": "boolean" },
+        "planner_execution_authority": { "const": false },
+        "production_registration_enabled": { "const": false },
+        "pb_b5_si_003_state": { "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION" },
+        "part_b_pass": { "const": false },
+        "path_b_write_authority": { "const": false },
+        "stop_authority": { "const": "NONE" },
+        "full_m3_star": { "const": false },
+        "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    }
+  }
+}
