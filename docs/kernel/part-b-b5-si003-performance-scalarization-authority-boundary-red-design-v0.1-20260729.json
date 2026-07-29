@@ -1,0 +1,463 @@
+{
+  "artifact_id": "part-b-b5-si003-performance-scalarization-authority-boundary-red-design-v0.1-20260729",
+  "artifact_type": "part_b_b5_si003_performance_scalarization_authority_boundary_red_design",
+  "version": "0.1",
+  "created_date": "2026-07-29",
+  "owner": "Kernel/M3*",
+  "status": "RED_DESIGN_COMPLETE_PENDING_OWNER_REVIEW",
+  "owner_decision": null,
+  "authority": {
+    "decision": "AUTHORIZE_PART_B_B5_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_RED_FIRST_ONLY",
+    "authority_base_commit": "2fe4831f81f994ceff6f70ac01b51b980df77fcc",
+    "branch": "codex/part-b-b5-si003-performance-scalarization-authority-boundary-red-v0.1",
+    "authorized_cell": "PART_B_B5_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_RED_FIRST",
+    "owner_go": {
+      "path": "docs/kernel/part-b-b5-si003-performance-scalarization-authority-boundary-owner-go-authorization-v0.1-20260729.json",
+      "content_sha256": "fa17377fb9934381e5eb66b79db6fd127e98f794aebc6194c8d5c81d83c14aa7",
+      "pin_status": "MATCH"
+    },
+    "hard_ban": "Path A / Kernel design GREEN must not be inferred as L2 PASS, Part B PASS, or unrestricted Part B elevation.",
+    "green_started": false,
+    "runtime_implementation_in_this_red": false,
+    "si003_closed_in_this_red": false,
+    "write_side_effects": "exact_3_red_docs_only"
+  },
+  "scientific_question": "After accepted SI-002 catalog classes 1-5 and the explicit Owner flip that records only evaluation_execution_authority false-to-true with planner still false, what closed-world boundary freezes PB-B5-SI-003 as still open, keeps scalarization/performance/superiority authority false, and makes clear that evaluation_execution_authority=true is not a performance or scalarization grant?",
+  "design_decision": {
+    "subject": "PB_B5_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY",
+    "selected_model": "ADDITIVE_PURE_BOUNDARY_VALIDATOR_AND_RECORD_ONLY",
+    "maximum_positive_design_ceiling": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_OR_GAP_RECORD_ONLY",
+    "answer_in_this_red": "The post-flip SI-002 chain supports only a boundary-valid record that restates PB-B5-SI-003 as OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION and keeps scalarization_authority, performance_claim_authority, and superiority_claim_authority false. evaluation_execution_authority=true is an accepted local flip-record fact and is not reinterpreted as performance validity, scalarization, superiority, Part B PASS, Path B, or SI-003 closure. Any future SI-003 close requires a separate hash-bound Owner close GO after a separately authorized GREEN.",
+    "positive_boundary_decision": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_VALID_NO_CLOSE_NO_CLAIM",
+    "positive_boundary_decision_means": "The exact accepted post-flip SI-002 chain is recognized and the SI-003 no-close/no-claim boundary is valid.",
+    "positive_boundary_decision_does_not_mean": [
+      "PB_B5_SI_003_CLOSED",
+      "SCALARIZATION_AUTHORITY_TRUE",
+      "PERFORMANCE_CLAIM_AUTHORITY_TRUE",
+      "SUPERIORITY_CLAIM_AUTHORITY_TRUE",
+      "PERFORMANCE_VALIDITY",
+      "SCALARIZATION_OF_EIGHT_DIMENSIONAL_RESOURCE_VECTOR",
+      "PLANNER_EXECUTION_AUTHORITY_TRUE",
+      "B6_B7_B8_B9_EXECUTION",
+      "PART_B_PASS",
+      "FULL_M3_STAR",
+      "PATH_B_WRITE",
+      "MINT",
+      "KERNEL_OR_E_CASE_WRITE",
+      "CERTIFICATE_OR_CERTIFIED_STOP"
+    ]
+  },
+  "exact_binding": {
+    "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+    "wildcards": false,
+    "fallback": false,
+    "issue_id": "PB-B5-SI-003",
+    "required_si003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "post_flip_evaluation_execution_authority": true,
+    "planner_execution_authority": false,
+    "flip_binding": {
+      "flip_contract_id": "part_b_b5_si002_explicit_owner_evaluation_execution_authority_flip_v0.1",
+      "flip_contract_identity_hash": "sha256:4ed46d2474cda603bdbd850c288d35193d96760f242ac83b236ae7939d80bdb3",
+      "flip_decision": "LOCAL_EXPLICIT_OWNER_EVALUATION_EXECUTION_AUTHORITY_FLIP_RECORDED_NO_PLANNER_NO_PART_B",
+      "flip_record_hash": "sha256:b4e4cabb30b1d41e389a59606e26efd02a2b3386dea9c90c41a45dfca8839fbf",
+      "flip_record_content_sha256": "414e710b16c9073ca463d4f23afbc20253eb91d83bf427e1c38c5abfb8cb27f0",
+      "flip_policy_content_sha256": "1dff6c26f19a61f50738dde655b389b3ff2222e10e31763f8667c6114ea3661c",
+      "flip_policy_canonical_hash": "sha256:0ce90a2a5560c38023eb06bf6439b1e3cc63b5c37bf739a955c812e3a2e2b866",
+      "explicit_owner_flip_go_content_sha256": "ccb5863d7cd096428365eb7fdb6720e2871928385beb685b73ab38411db55f4c",
+      "flip_acceptance_content_sha256": "b8a97b460a70d1eaa2a26533ca997956086ee494f0b5ce77f32142abbdfaa4de",
+      "pb_b5_si_003_state_in_flip_record": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION"
+    },
+    "class5_binding_reminder": {
+      "class_5_record_hash": "sha256:3b770d5d41fc8620643fc6b65a9827e97f0167dd9c49d6de39a63730fe0768b9",
+      "class_5_record_content_sha256": "024710ac2c26a5601654059913bac4d7bc57c0ff07fb43450373677acf57278a",
+      "note": "Class-5 KEEP_FALSE was the pre-flip binding; the accepted class-1 flip supersedes only evaluation_execution_authority and does not grant SI-003 close or claims."
+    }
+  },
+  "pinned_artifact_table": [
+    {
+      "role": "OWNER_GO",
+      "path": "docs/kernel/part-b-b5-si003-performance-scalarization-authority-boundary-owner-go-authorization-v0.1-20260729.json",
+      "content_sha256": "fa17377fb9934381e5eb66b79db6fd127e98f794aebc6194c8d5c81d83c14aa7",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_FLIP_ACCEPTANCE",
+      "path": "docs/kernel/part-b-b5-si002-explicit-owner-flip-go-green-owner-acceptance-v0.1-20260729.json",
+      "content_sha256": "b8a97b460a70d1eaa2a26533ca997956086ee494f0b5ce77f32142abbdfaa4de",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_FLIP_GO",
+      "path": "docs/kernel/part-b-b5-si002-explicit-owner-evaluation-execution-authority-flip-green-authorization-v0.1-20260729.json",
+      "content_sha256": "ccb5863d7cd096428365eb7fdb6720e2871928385beb685b73ab38411db55f4c",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_FLIP_RED_GO",
+      "path": "docs/kernel/part-b-b5-si002-explicit-owner-flip-go-owner-go-authorization-v0.1-20260729.json",
+      "content_sha256": "e5b8febc62fb314772133d5a0edccaa6c704e8ebcb0c95259ecb2c4f0d5cc302",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_FLIP_POLICY",
+      "path": "configs/part-b-b5-si002-explicit-owner-evaluation-execution-authority-flip-policy-v0.1.yaml",
+      "content_sha256": "1dff6c26f19a61f50738dde655b389b3ff2222e10e31763f8667c6114ea3661c",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_FLIP_RECORD",
+      "path": "configs/part-b-b5-si002-explicit-owner-evaluation-execution-authority-flip-record-v0.1.yaml",
+      "content_sha256": "414e710b16c9073ca463d4f23afbc20253eb91d83bf427e1c38c5abfb8cb27f0",
+      "canonical_record_hash": "sha256:b4e4cabb30b1d41e389a59606e26efd02a2b3386dea9c90c41a45dfca8839fbf",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_FLIP_RUNTIME",
+      "path": "src/scope/part_b_b5_si002_explicit_owner_evaluation_execution_authority_flip.py",
+      "content_sha256": "4c193be77ced32872dbce38fbb9128bdb41933b5df8be9b2393b293ac888ecfc",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_CLASS5_ACCEPTANCE",
+      "path": "docs/kernel/part-b-b5-si002-evidence-to-authority-decision-binding-green-owner-acceptance-v0.1-20260729.json",
+      "content_sha256": "54348bf13cfa367e58a0224080da00e2f6301e1443e6a06ea4fda6dd9801ddbd",
+      "status": "MATCH"
+    },
+    {
+      "role": "SI002_CLASS5_RECORD",
+      "path": "configs/part-b-b5-si002-evidence-to-authority-decision-binding-record-v0.1.yaml",
+      "content_sha256": "024710ac2c26a5601654059913bac4d7bc57c0ff07fb43450373677acf57278a",
+      "status": "MATCH"
+    },
+    {
+      "role": "B5_SPEC_ISSUES",
+      "path": "src/scope/part-b-b5-spec-issues.md",
+      "content_sha256": "2fdba30519333919ad1b3919203d0ebe9d92350c3d409527da05c612c07a2cba",
+      "status": "MATCH"
+    }
+  ],
+  "protected_zero_drift": [
+    {
+      "path": "src/planner/deterministic_depth1.py",
+      "content_sha256": "ada6a8065e71fda58dde7e2b71ca19d7aded9a39f4cf5f67fb20d6fc5d7e38ff",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/planner/twin_p10_readonly_wiring.py",
+      "content_sha256": "1e1434e40191469f17f255905f4021fb273a323672604f0a017afe0384b5b4f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_planner_admission.py",
+      "content_sha256": "c6af7e4cbfa9bd98fbc525887456cb2dfaefa19362f4104c5147d1f3943d0be1",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-planner-admission-policy-v0.8.yaml",
+      "content_sha256": "61496f051f4a7450846928f39ddce7d6d32f1bb0cd7075dcba721eccbc539550",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-bounded-evaluation-v0.8.yaml",
+      "content_sha256": "42195a832ee1e88922433aa17d407da78825a8b6bafe94cea5bd804c880890c8",
+      "status": "MATCH"
+    },
+    {
+      "path": "schemas/part-b-bounded-evaluation.schema.json",
+      "content_sha256": "a6e6466f00a34bc469b1fe9264004a14c8906f5b9bb1b4634f88c5a39f20e44e",
+      "status": "MATCH"
+    },
+    {
+      "path": "src/scope/part_b_b5_si002_explicit_owner_evaluation_execution_authority_flip.py",
+      "content_sha256": "4c193be77ced32872dbce38fbb9128bdb41933b5df8be9b2393b293ac888ecfc",
+      "status": "MATCH"
+    },
+    {
+      "path": "configs/part-b-b5-si002-explicit-owner-evaluation-execution-authority-flip-record-v0.1.yaml",
+      "content_sha256": "414e710b16c9073ca463d4f23afbc20253eb91d83bf427e1c38c5abfb8cb27f0",
+      "status": "MATCH"
+    }
+  ],
+  "current_authority_state": {
+    "evaluation_execution_authority": true,
+    "planner_execution_authority": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+    "contract_claim_ceiling": "CONTRACT_CONSISTENCY_ONLY",
+    "path_b_write": false,
+    "mint": false,
+    "kernel_or_e_case_write": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "production_registration_enabled": false,
+    "part_b_pass": false,
+    "full_m3_star": false,
+    "b6_b7_b8_b9_execution": false,
+    "four_family_and_llm_frozen": true
+  },
+  "authority_boundary_semantics": {
+    "boundary_valid_now_as_design": true,
+    "si003_close_valid_now": false,
+    "current_blocking_facts": [
+      "NO_SEPARATE_OWNER_GO_AUTHORIZING_SI003_CLOSE",
+      "NO_ACCEPTED_PERFORMANCE_OR_SCALARIZATION_EVIDENCE_SURFACE",
+      "EIGHT_DIMENSIONAL_RESOURCE_VECTOR_REMAINS_UNSCALARIZED",
+      "CURRENT_CELL_CEILING_IS_BOUNDARY_OR_GAP_RECORD_ONLY",
+      "EVALUATION_EXECUTION_AUTHORITY_TRUE_IS_NOT_PERFORMANCE_OR_SCALARIZATION_AUTHORITY"
+    ],
+    "necessary_but_not_sufficient_conditions_for_any_later_si003_close": [
+      "A later separate Kernel Owner close GO names PB-B5-SI-003 closure as the exact authorized cell and is hash-bound independently of this RED GO.",
+      "A separately authorized GREEN implements the boundary/gap validator first; this RED does not implement it.",
+      "Any close successor must preserve planner_execution_authority=false unless separately authorized, and must not invent scalarization of the B3 eight-dimensional resource vector without an explicit scalarization authority cell.",
+      "Performance or superiority claims remain fail-closed unless each is separately authorized with accepted evidence; CONTRACT_CONSISTENCY_ONLY remains the claim ceiling until then.",
+      "B6-B9, Part B PASS, Path B, mint, Kernel/E_case write, certificate, STOP, and production registration remain separately gated."
+    ],
+    "predicate_result_on_current_chain": "NOT_ELIGIBLE_NO_SI003_CLOSE_NO_CLAIM",
+    "self_asserted_owner_go_field_can_satisfy_predicate": false,
+    "this_red_go_is_not_the_si003_close_go": true,
+    "boundary_record_can_close_si003": false,
+    "future_boundary_green_without_later_close_go_can_close_si003": false,
+    "later_owner_close_go_is_necessary_not_sufficient": true
+  },
+  "future_green_api_preview": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "module": "src/scope/part_b_b5_si003_performance_scalarization_authority_boundary.py",
+    "api": "evaluate_si003_performance_scalarization_authority_boundary",
+    "signature": "evaluate_si003_performance_scalarization_authority_boundary(boundary_request, *, explicit_owner_boundary_authority)",
+    "behavior": "Pure closed-world validator and deterministic SI-003 boundary-record builder only; no planner/evaluator/baseline invocation.",
+    "must_not_call": [
+      "DETERMINISTIC_DEPTH1",
+      "TWIN_P10_RUNNER",
+      "SI002_FLIP_OR_CLASS4_RUNTIME",
+      "BASELINE_OR_SAMPLER",
+      "PROCESS_OR_CLOCK_OR_MEMORY_METER",
+      "PRODUCTION_REGISTRY",
+      "B6_B7_B8_B9",
+      "PATH_B_OR_KERNEL_WRITE"
+    ]
+  },
+  "future_boundary_request_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "closed_world": true,
+    "additional_properties": false,
+    "exact_field_count": 22,
+    "required_fields_exact": [
+      "schema_version",
+      "request_kind",
+      "request_version",
+      "requested_assessment_scope",
+      "implementation_id",
+      "issue_id",
+      "pb_b5_si_003_state",
+      "pb_b5_si_003_close_requested",
+      "evaluation_execution_authority",
+      "planner_execution_authority",
+      "scalarization_authority",
+      "performance_claim_authority",
+      "superiority_claim_authority",
+      "flip_contract_identity_hash",
+      "flip_record_hash",
+      "flip_record_content_sha256",
+      "flip_acceptance_content_sha256",
+      "explicit_owner_flip_go_content_sha256",
+      "resource_vector_model",
+      "contract_claim_ceiling",
+      "later_separate_owner_si003_close_go_present",
+      "this_red_go_reused_as_close_go"
+    ],
+    "constants": {
+      "schema_version": "0.8.0",
+      "request_kind": "ASSESS_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY",
+      "request_version": "0.1.0",
+      "requested_assessment_scope": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_OR_GAP_RECORD_ONLY",
+      "implementation_id": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1",
+      "issue_id": "PB-B5-SI-003",
+      "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+      "pb_b5_si_003_close_requested": false,
+      "evaluation_execution_authority": true,
+      "planner_execution_authority": false,
+      "scalarization_authority": false,
+      "performance_claim_authority": false,
+      "superiority_claim_authority": false,
+      "flip_contract_identity_hash": "sha256:4ed46d2474cda603bdbd850c288d35193d96760f242ac83b236ae7939d80bdb3",
+      "flip_record_hash": "sha256:b4e4cabb30b1d41e389a59606e26efd02a2b3386dea9c90c41a45dfca8839fbf",
+      "flip_record_content_sha256": "414e710b16c9073ca463d4f23afbc20253eb91d83bf427e1c38c5abfb8cb27f0",
+      "flip_acceptance_content_sha256": "b8a97b460a70d1eaa2a26533ca997956086ee494f0b5ce77f32142abbdfaa4de",
+      "explicit_owner_flip_go_content_sha256": "ccb5863d7cd096428365eb7fdb6720e2871928385beb685b73ab38411db55f4c",
+      "resource_vector_model": "EIGHT_DIMENSIONAL_NO_SCALARIZATION",
+      "contract_claim_ceiling": "CONTRACT_CONSISTENCY_ONLY",
+      "later_separate_owner_si003_close_go_present": false,
+      "this_red_go_reused_as_close_go": false
+    }
+  },
+  "future_boundary_record_shape": {
+    "authorization_status": "NOT_AUTHORIZED_UNTIL_SEPARATE_OWNER_GREEN_GO",
+    "exact_field_count_preview": 24,
+    "positive_record": {
+      "decision": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_VALID_NO_CLOSE_NO_CLAIM",
+      "record_scope": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_OR_GAP_RECORD_ONLY",
+      "authority_effect": "NONE_BOUNDARY_RECORD_ONLY_SI003_REMAINS_OPEN",
+      "pb_b5_si_003_state": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+      "si003_closed": false,
+      "evaluation_execution_authority": true,
+      "planner_execution_authority": false,
+      "scalarization_authority": false,
+      "performance_claim_authority": false,
+      "superiority_claim_authority": false,
+      "contract_claim_ceiling": "CONTRACT_CONSISTENCY_ONLY",
+      "part_b_pass": false,
+      "path_b_write_authority": false,
+      "stop_authority": "NONE",
+      "full_m3_star": false
+    }
+  },
+  "fail_closed_matrix_preview": [
+    {
+      "case_id": "FC-001",
+      "condition": "unknown or wildcard implementation_id",
+      "expected": "DENY_UNKNOWN_IMPLEMENTATION"
+    },
+    {
+      "case_id": "FC-002",
+      "condition": "issue_id not PB-B5-SI-003",
+      "expected": "DENY_WRONG_ISSUE"
+    },
+    {
+      "case_id": "FC-003",
+      "condition": "pb_b5_si_003_state not OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION",
+      "expected": "DENY_SI003_STATE"
+    },
+    {
+      "case_id": "FC-004",
+      "condition": "pb_b5_si_003_close_requested true",
+      "expected": "DENY_SI003_CLOSE_REQUEST"
+    },
+    {
+      "case_id": "FC-005",
+      "condition": "flip hash or acceptance mismatch",
+      "expected": "DENY_FLIP_BINDING_MISMATCH"
+    },
+    {
+      "case_id": "FC-006",
+      "condition": "evaluation_execution_authority not true after accepted flip",
+      "expected": "DENY_POST_FLIP_EVAL_AUTHORITY_MISMATCH"
+    },
+    {
+      "case_id": "FC-007",
+      "condition": "planner_execution_authority true",
+      "expected": "DENY_PLANNER_SCOPE"
+    },
+    {
+      "case_id": "FC-008",
+      "condition": "scalarization_authority true",
+      "expected": "DENY_SCALARIZATION_SCOPE"
+    },
+    {
+      "case_id": "FC-009",
+      "condition": "performance_claim_authority true",
+      "expected": "DENY_PERFORMANCE_CLAIM_SCOPE"
+    },
+    {
+      "case_id": "FC-010",
+      "condition": "superiority_claim_authority true",
+      "expected": "DENY_SUPERIORITY_SCOPE"
+    },
+    {
+      "case_id": "FC-011",
+      "condition": "resource_vector_model not EIGHT_DIMENSIONAL_NO_SCALARIZATION",
+      "expected": "DENY_RESOURCE_VECTOR_MODEL"
+    },
+    {
+      "case_id": "FC-012",
+      "condition": "contract_claim_ceiling not CONTRACT_CONSISTENCY_ONLY",
+      "expected": "DENY_CLAIM_CEILING"
+    },
+    {
+      "case_id": "FC-013",
+      "condition": "this RED GO reused as close GO",
+      "expected": "DENY_RED_GO_REUSED_AS_CLOSE_GO"
+    },
+    {
+      "case_id": "FC-014",
+      "condition": "later_separate_owner_si003_close_go_present true without separate close GO",
+      "expected": "DENY_SELF_ASSERTED_CLOSE_GO"
+    },
+    {
+      "case_id": "FC-015",
+      "condition": "part_b_pass or path_b or stop or full_m3_star requested",
+      "expected": "DENY_PART_B_OR_PATH_B_OR_STOP_SCOPE"
+    },
+    {
+      "case_id": "FC-016",
+      "condition": "B6-B9 execution requested",
+      "expected": "DENY_B6_B9_SCOPE"
+    },
+    {
+      "case_id": "FC-017",
+      "condition": "extra/hidden/production input",
+      "expected": "DENY_EXTRA_INPUT"
+    },
+    {
+      "case_id": "FC-018",
+      "condition": "mutation of SI-002 class1-5 bytes implied",
+      "expected": "DENY_PROTECTED_BYTE_MUTATION"
+    }
+  ],
+  "future_green_preview_constraints": {
+    "authorization_status": "NOT_AUTHORIZED_NOW",
+    "separate_owner_green_go_required": true,
+    "positive_may_record_boundary_valid": true,
+    "si003_closed": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "planner_execution_authority": false,
+    "evaluation_execution_authority": true,
+    "part_b_pass": false,
+    "path_b_write": false,
+    "full_m3_star": false,
+    "calls_any_runtime": false
+  },
+  "proposed_future_green_allowlist_not_authorized_now": [
+    "schemas/part-b-b5-si003-performance-scalarization-authority-boundary.schema.json",
+    "configs/part-b-b5-si003-performance-scalarization-authority-boundary-policy-v0.1.yaml",
+    "configs/part-b-b5-si003-performance-scalarization-authority-boundary-record-v0.1.yaml",
+    "src/scope/part_b_b5_si003_performance_scalarization_authority_boundary.py",
+    "tests/unit/test_part_b_b5_si003_performance_scalarization_authority_boundary.py",
+    "docs/kernel/part-b-b5-si003-performance-scalarization-authority-boundary-green-design-v0.1-20260729.json",
+    "docs/llm-editor/llm-editor-v0.8-l2-kernel-owner-part-b-b5-si003-performance-scalarization-authority-boundary-green-review-packet-v0.1-20260729.json"
+  ],
+  "authority_ceiling": {
+    "scope": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_OR_GAP_RECORD_ONLY",
+    "positive_record_preview": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_VALID_NO_CLOSE_NO_CLAIM",
+    "si003_closed_in_red": false,
+    "future_si003_closed_without_separate_close_go": false,
+    "scalarization_authority": false,
+    "performance_claim_authority": false,
+    "superiority_claim_authority": false,
+    "evaluation_execution_authority": true,
+    "planner_execution_authority": false,
+    "part_b_pass": false,
+    "path_b_write_authority": false,
+    "full_m3_star": false,
+    "b6_b7_b8_b9_execution": false,
+    "mint_authority": false,
+    "kernel_or_e_case_write_authority": false,
+    "certificate_authority": false,
+    "stop_authority": "NONE",
+    "production_registration_enabled": false
+  },
+  "exit": {
+    "red_docs_only": true,
+    "green_started": false,
+    "si003_closed": false,
+    "stop_for_owner_review": true,
+    "owner_decision_requested": [
+      "accept",
+      "request_revision",
+      "reject"
+    ]
+  }
+}

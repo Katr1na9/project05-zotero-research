@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project05.local/schemas/part-b-b5-si003-performance-scalarization-authority-boundary.schema.json",
+  "title": "Part B B5 SI-003 performance and scalarization authority boundary",
+  "oneOf": [
+    { "$ref": "#/$defs/authority" },
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/record" }
+  ],
+  "$defs": {
+    "authority": {
+      "type": "object",
+      "minProperties": 6,
+      "maxProperties": 6,
+      "propertyNames": {
+        "enum": ["schema_version", "authority_kind", "authorized_cell", "authority_base_commit", "green_go_content_sha256", "green_go_decision"]
+      },
+      "properties": {
+        "schema_version": { "const": "0.8.0" },
+        "authority_kind": { "const": "EXPLICIT_OWNER_SI003_AUTHORITY_BOUNDARY_GREEN_ONLY" },
+        "authorized_cell": { "const": "PART_B_B5_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_GREEN" },
+        "authority_base_commit": { "const": "2fe4831f81f994ceff6f70ac01b51b980df77fcc" },
+        "green_go_content_sha256": { "const": "900603dcaf0276e778e17d6b7bc24114c81d4ef9f3c7356ba9f1316cd686bac7" },
+        "green_go_decision": { "const": "AUTHORIZE_PART_B_B5_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_GREEN_ONLY" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "minProperties": 22,
+      "maxProperties": 22,
+      "propertyNames": {
+        "enum": [
+          "schema_version", "request_kind", "request_version", "requested_assessment_scope",
+          "implementation_id", "issue_id", "pb_b5_si_003_state", "pb_b5_si_003_close_requested",
+          "evaluation_execution_authority", "planner_execution_authority", "scalarization_authority",
+          "performance_claim_authority", "superiority_claim_authority", "flip_contract_identity_hash",
+          "flip_record_hash", "flip_record_content_sha256", "flip_acceptance_content_sha256",
+          "explicit_owner_flip_go_content_sha256", "resource_vector_model", "contract_claim_ceiling",
+          "later_separate_owner_si003_close_go_present", "this_red_go_reused_as_close_go"
+        ]
+      },
+      "properties": {
+        "schema_version": { "const": "0.8.0" },
+        "request_kind": { "const": "ASSESS_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY" },
+        "requested_assessment_scope": { "const": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_OR_GAP_RECORD_ONLY" },
+        "implementation_id": { "const": "part_b_b5_m3_kernel_d1_twin_readonly_conformance_v0.1" },
+        "issue_id": { "const": "PB-B5-SI-003" },
+        "pb_b5_si_003_state": { "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION" },
+        "pb_b5_si_003_close_requested": { "const": false },
+        "evaluation_execution_authority": { "const": true },
+        "planner_execution_authority": { "const": false },
+        "scalarization_authority": { "const": false },
+        "performance_claim_authority": { "const": false },
+        "superiority_claim_authority": { "const": false },
+        "resource_vector_model": { "const": "EIGHT_DIMENSIONAL_NO_SCALARIZATION" },
+        "contract_claim_ceiling": { "const": "CONTRACT_CONSISTENCY_ONLY" },
+        "later_separate_owner_si003_close_go_present": { "const": false },
+        "this_red_go_reused_as_close_go": { "const": false }
+      }
+    },
+    "record": {
+      "type": "object",
+      "minProperties": 24,
+      "maxProperties": 24,
+      "propertyNames": {
+        "enum": [
+          "schema_version", "record_class", "record_version", "request_hash", "implementation_id", "issue_id",
+          "decision", "reason_codes", "record_scope", "authority_effect", "pb_b5_si_003_state", "si003_closed",
+          "evaluation_execution_authority", "planner_execution_authority", "scalarization_authority",
+          "performance_claim_authority", "superiority_claim_authority", "resource_vector_model",
+          "contract_claim_ceiling", "part_b_pass", "path_b_write_authority", "stop_authority", "full_m3_star", "hash"
+        ]
+      },
+      "properties": {
+        "schema_version": { "const": "0.8.0" },
+        "record_class": { "const": "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_RECORD" },
+        "issue_id": { "const": "PB-B5-SI-003" },
+        "decision": {
+          "enum": [
+            "LOCAL_SI003_PERFORMANCE_AND_SCALARIZATION_AUTHORITY_BOUNDARY_VALID_NO_CLOSE_NO_CLAIM",
+            "DENY_EXPLICIT_OWNER_BOUNDARY_AUTHORITY", "DENY_UNKNOWN_IMPLEMENTATION", "DENY_WRONG_ISSUE",
+            "DENY_SI003_STATE", "DENY_SI003_CLOSE_REQUEST", "DENY_FLIP_BINDING_MISMATCH",
+            "DENY_POST_FLIP_EVAL_AUTHORITY_MISMATCH", "DENY_PLANNER_SCOPE", "DENY_SCALARIZATION_SCOPE",
+            "DENY_PERFORMANCE_CLAIM_SCOPE", "DENY_SUPERIORITY_SCOPE", "DENY_RESOURCE_VECTOR_MODEL",
+            "DENY_CLAIM_CEILING", "DENY_RED_GO_REUSED_AS_CLOSE_GO", "DENY_SELF_ASSERTED_CLOSE_GO",
+            "DENY_PART_B_OR_PATH_B_OR_STOP_SCOPE", "DENY_B6_B9_SCOPE", "DENY_EXTRA_INPUT",
+            "DENY_PROTECTED_BYTE_MUTATION"
+          ]
+        },
+        "reason_codes": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "type": "string" } },
+        "pb_b5_si_003_state": { "const": "OPEN_BLOCKS_PERFORMANCE_AND_SCALARIZATION" },
+        "si003_closed": { "const": false },
+        "evaluation_execution_authority": { "const": true },
+        "planner_execution_authority": { "const": false },
+        "scalarization_authority": { "const": false },
+        "performance_claim_authority": { "const": false },
+        "superiority_claim_authority": { "const": false },
+        "resource_vector_model": { "const": "EIGHT_DIMENSIONAL_NO_SCALARIZATION" },
+        "contract_claim_ceiling": { "const": "CONTRACT_CONSISTENCY_ONLY" },
+        "part_b_pass": { "const": false },
+        "path_b_write_authority": { "const": false },
+        "stop_authority": { "const": "NONE" },
+        "full_m3_star": { "const": false },
+        "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    }
+  }
+}
